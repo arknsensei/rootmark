@@ -61,3 +61,27 @@ def test_cell_query_count_mismatch_is_an_error(monkeypatch):
                 return [("k0", 1.0)]
 
         R.run_queries(Short(), "flat", FakeIdx, qs, [[{"a"}]])
+
+
+@pytest.mark.skipif(not R.SPLITS.exists(), reason="needs data/splits/d4.json")
+def test_expected_counts_come_from_the_split_file():
+    s = json.loads(R.SPLITS.read_text())
+    e = R.expected_counts("test")
+    assert e["single"] + e["multi"] == len(s["test"])
+    assert e == {t: sum(1 for q in R.load_split("test") if q["type"] == t) for t in R.TYPES}
+
+
+def test_load_split_does_not_parse_other_split(monkeypatch, tmp_path):
+    d4 = tmp_path / "d4"
+    d4.mkdir()
+    (d4 / "single.jsonl").write_text(
+        '{"id": "s000", "type": "single"}\n{"id": "s001", "broken json\n'
+    )
+    (d4 / "multi.jsonl").write_text("")
+    sp = tmp_path / "d4.json"
+    sp.write_text(json.dumps({"tune": ["s000"], "test": ["s001"]}))
+    monkeypatch.setattr(R, "D4", d4)
+    monkeypatch.setattr(R, "SPLITS", sp)
+    assert [q["id"] for q in R.load_split("tune")] == [
+        "s000"
+    ]  # the malformed test record is never parsed

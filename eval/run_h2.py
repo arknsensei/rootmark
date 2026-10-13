@@ -50,18 +50,41 @@ def verify_d3(vault) -> None:
         raise RuntimeError(f"data/d3 events_hash {vault.events_hash()} != MANIFEST.d3.json {want}")
 
 
-def load_split(split: str) -> list[dict]:
-    """Questions of one split only; the other split's records are discarded unread."""
-    ids = set(json.loads(SPLITS.read_text())[split])
-    other = set(json.loads(SPLITS.read_text())["tune" if split == "test" else "test"])
-    if ids & other:
+ID_RE = re.compile(r'"id": "([^"]+)"')
+
+
+def split_ids(split: str) -> set[str]:
+    s = json.loads(SPLITS.read_text())
+    if set(s["tune"]) & set(s["test"]):
         raise RuntimeError("D4 tune/test splits intersect")
+    return set(s[split])
+
+
+def expected_counts(split: str) -> dict[str, int]:
+    """Per-type question counts of a split, from the split file (ids s… / m…)."""
+    ids = split_ids(split)
+    return {
+        "single": sum(i.startswith("s") for i in ids),
+        "multi": sum(i.startswith("m") for i in ids),
+    }
+
+
+def load_split(split: str) -> list[dict]:
+    """Questions of one split only. Each line's id is matched first; records of
+    the other split are skipped without being parsed."""
+    ids = split_ids(split)
     out = []
     for kind in TYPES:
         for line in (D4 / f"{kind}.jsonl").read_text().splitlines():
+            m = ID_RE.search(line)
+            if m is None:
+                raise RuntimeError(f"data/d4/{kind}.jsonl: line without id")
+            if m.group(1) not in ids:
+                continue
             q = json.loads(line)
-            if q["id"] in ids:
-                out.append(q)
+            if q["id"] != m.group(1):
+                raise RuntimeError(f"id mismatch in data/d4/{kind}.jsonl: {m.group(1)}")
+            out.append(q)
     if {q["id"] for q in out} != ids:
         raise RuntimeError(f"split {split}: {len(ids) - len(out)} questions missing from data/d4")
     return out
@@ -159,7 +182,7 @@ def phase_test(run: str) -> None:
     qs = load_split("test")
     if set(tuning["tune_ids"]) & {q["id"] for q in qs}:
         raise RuntimeError("tuning questions leak into the test split")
-    expected = {t: sum(1 for q in qs if q["type"] == t) for t in TYPES}
+    expected = expected_counts("test")
     groups = resolve_groups(vault, qs)
     warm = load_split("tune")[:WARMUP]
     cells: dict = {}
