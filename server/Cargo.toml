@@ -1,0 +1,13 @@
+[package]
+name = "mdkernel-server"
+version = "0.2.0"
+edition = "2021"
+description = "mdk CLI, MCP and HTTP surfaces (P1-D). P1-A: empty crate."
+
+[lib]
+name = "mdkserver"
+path = "src/lib.rs"
+
+[dependencies]
+mdkernel-core = { path = "../core" }
+mdkernel-index = { path = "../index" }

@@ -1,0 +1,13 @@
+[package]
+name = "mdkernel-index"
+version = "0.2.0"
+edition = "2021"
+description = "Derived indexes over mdkernel-core (spec §9). P1-A: trait definitions only."
+
+[lib]
+name = "mdkindex"
+path = "src/lib.rs"
+
+[dependencies]
+anyhow = "1.0.104"
+mdkernel-core = { path = "../core" }

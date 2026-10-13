@@ -1,0 +1,33 @@
+# build
+/target/
+.venv/
+__pycache__/
+*.pyc
+*.so
+.pytest_cache/
+.ruff_cache/
+node_modules/
+
+# secrets
+.env
+
+# research data: everything ignored except manifests, the API-generated question set and splits
+/research/data/*
+!/research/data/MANIFEST.*.json
+!/research/data/d4/
+!/research/data/splits/
+
+# research run outputs (local; reference runs and round reports are committed explicitly)
+/research/reports/runs/*
+!/research/reports/runs/.gitkeep
+!/research/reports/runs/20261013T154851Z-f133d0b/
+!/research/reports/runs/20261013T182004Z-f82dabd/
+
+# conformance output (written by `make conformance`)
+/reports/conformance.json
+
+# test scratch vaults
+**/fixtures/**/.mdkernel/
+
+# macOS
+.DS_Store

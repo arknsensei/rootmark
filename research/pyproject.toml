@@ -1,0 +1,41 @@
+[build-system]
+requires = ["maturin>=1.7,<2"]
+build-backend = "maturin"
+
+[project]
+name = "mdkernel"
+version = "0.2.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "sentence-transformers==6.1.0",
+  "torch==2.14.1",
+  "lancedb==0.40.0",
+  "pyarrow==26.0.0",
+  "rank-bm25==0.2.2",
+  "networkx==3.7",
+  "scipy==1.18.1",
+  "numpy==2.5.4",
+  "tiktoken==0.14.0",
+  "anthropic==1.13.0",
+  "matplotlib==3.11.2",
+  "blake3==1.0.11",
+]
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "ruff==0.17.0", "maturin==1.15.0"]
+
+[tool.maturin]
+manifest-path = "../bindings/python/Cargo.toml"
+module-name = "mdkernel_core"
+features = ["pyo3/extension-module"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
