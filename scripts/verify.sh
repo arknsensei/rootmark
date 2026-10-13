@@ -74,7 +74,7 @@ case "${1:-}" in
   pair) pair "${2:?source repo}" "${3:?workdir A}" "${4:?workdir B}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
-    base="$(mktemp -d "${TMPDIR:-/tmp}/mdk-verify.XXXXXX")"
+    base="$(mktemp -d -t mdk-verify.XXXXXX)"
     log "workdirs under $base"
     pair "$src" "$base/A" "$base/B"
     ;;
