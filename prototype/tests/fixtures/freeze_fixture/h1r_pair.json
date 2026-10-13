@@ -1,0 +1,38 @@
+{
+ "commit": "fixture",
+ "hunks": [
+  {
+   "new": [
+    8,
+    1
+   ],
+   "old": [
+    8,
+    1
+   ]
+  },
+  {
+   "new": [
+    17,
+    1
+   ],
+   "old": [
+    16,
+    0
+   ]
+  },
+  {
+   "new": [
+    22,
+    0
+   ],
+   "old": [
+    22,
+    2
+   ]
+  }
+ ],
+ "new": "h1r/new.md",
+ "old": "h1r/old.md",
+ "path": "roasting.md"
+}

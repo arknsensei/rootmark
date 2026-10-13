@@ -1,0 +1,57 @@
+{
+ "H1-S1": 1.0,
+ "H1-S2": 0.037953795379537955,
+ "H1-S3": 0.961082910321489,
+ "H1-S3_detail": {
+  "f1": 0.961082910321489,
+  "n_pred": 284,
+  "n_truth": 307,
+  "precision": 1.0,
+  "recall": 0.9250814332247557,
+  "tp": 284
+ },
+ "H1-S4": 1.0,
+ "n_docs": 150,
+ "n_s1": 799,
+ "n_s2": 606,
+ "n_s4": 300,
+ "n_steps": 1500,
+ "per_op": {
+  "delete": {
+   "steps": 73
+  },
+  "dup_delete": {
+   "retention": 1.0,
+   "steps": 150
+  },
+  "insert": {
+   "false_match": 0.0,
+   "steps": 171
+  },
+  "merge": {
+   "event_recall": 0.8770949720670391,
+   "false_match": 0.12290502793296089,
+   "steps": 179
+  },
+  "move": {
+   "retention": 1.0,
+   "steps": 230
+  },
+  "rephrase_heavy": {
+   "retention": 1.0,
+   "steps": 222
+  },
+  "rephrase_light": {
+   "retention": 1.0,
+   "steps": 347
+  },
+  "split": {
+   "event_recall": 0.9921875,
+   "false_match": 0.00390625,
+   "steps": 128
+  }
+ },
+ "split": "test",
+ "theta": 0.6,
+ "theta_split": 0.7
+}
