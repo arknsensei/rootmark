@@ -136,27 +136,48 @@ fn top_level_ranges(body: &str) -> Vec<(BlockType, Option<u8>, Range<usize>)> {
 /// Parses a document into block drafts and its raw frontmatter (SPEC §1.2).
 pub fn parse_document(text: &str, _doc_path: &str) -> Result<(Vec<BlockDraft>, Option<String>)> {
     let (frontmatter, body) = split_frontmatter(text);
-    let mut items: Vec<(BlockType, Option<u8>, String, String)> = Vec::new();
+    let body_off = text.len() - body.len();
+    // line number (1-based) of a byte offset in `text`
+    let line_of = |off: usize| {
+        1 + text.as_bytes()[..off]
+            .iter()
+            .filter(|&&b| b == b'\n')
+            .count() as u32
+    };
+    let mut items: Vec<(BlockType, Option<u8>, String, String, u32, u32)> = Vec::new();
     for (bt, level, range) in top_level_ranges(body) {
+        let start = range.start;
         let raw = body[range].trim_end_matches(['\n', '\r']).to_string();
         let norm = normalize(&raw, bt == BlockType::Code);
         if norm.trim().is_empty() {
             continue;
         }
-        items.push((bt, level, raw, norm));
+        let (ls, le) = (
+            line_of(body_off + start),
+            line_of(body_off + start + raw.len().max(1) - 1),
+        );
+        items.push((bt, level, raw, norm, ls, le));
     }
-    let paths = heading_paths(items.iter().map(|(bt, l, _, n)| (*bt, *l, n.as_str())));
+    let paths = heading_paths(
+        items
+            .iter()
+            .map(|(bt, l, _, n, _, _)| (*bt, *l, n.as_str())),
+    );
     let drafts = items
         .into_iter()
         .zip(paths)
-        .map(|((bt, level, raw, norm), heading_path)| BlockDraft {
-            version_id: version_id(bt, &norm),
-            block_type: bt,
-            text: raw,
-            normalized_text: norm,
-            heading_path,
-            heading_level: level,
-        })
+        .map(
+            |((bt, level, raw, norm, line_start, line_end), heading_path)| BlockDraft {
+                version_id: version_id(bt, &norm),
+                block_type: bt,
+                text: raw,
+                normalized_text: norm,
+                heading_path,
+                heading_level: level,
+                line_start,
+                line_end,
+            },
+        )
         .collect();
     Ok((drafts, frontmatter))
 }

@@ -55,11 +55,21 @@ def verify_or_write_manifest(path: Path, manifest: dict, write: bool) -> None:
     print(f"{path.relative_to(ROOT)} verified")
 
 
-def git(*args: str, cwd: Path | None = None) -> str:
-    r = subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True, check=False)
+def git(*args: str, cwd: Path | None = None, input: str | None = None) -> str:
+    """Runs git; stdout decoded as UTF-8 without newline translation (file
+    contents must reach the parser byte-for-byte)."""
+    r = subprocess.run(
+        ["git", *args],
+        cwd=cwd,
+        capture_output=True,
+        input=None if input is None else input.encode("utf-8"),
+        check=False,
+    )
     if r.returncode != 0:
-        raise RuntimeError(f"git {' '.join(args)} failed: {r.stderr.strip()}")
-    return r.stdout
+        raise RuntimeError(
+            f"git {' '.join(args)} failed: {r.stderr.decode('utf-8', 'replace').strip()}"
+        )
+    return r.stdout.decode("utf-8")
 
 
 def clone_at(url: str, rev: str, dest: Path, retries: int = 3) -> str:

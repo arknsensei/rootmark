@@ -172,3 +172,12 @@ fn heading_titles_atx_and_setext() {
     assert_eq!(b[0].heading_level, Some(1));
     assert_eq!(b[1].heading_path, vec!["Top"]);
 }
+
+#[test]
+fn line_spans_count_from_document_start() {
+    let md =
+        "---\na: 1\n---\n\n# H\n\npara one\ncontinues\n\n- item\n  - nested\n\n```\ncode\n```\n";
+    let (b, _) = parse_document(md, "t.md").unwrap();
+    let spans: Vec<_> = b.iter().map(|x| (x.line_start, x.line_end)).collect();
+    assert_eq!(spans, vec![(5, 5), (7, 8), (10, 11), (13, 15)]);
+}

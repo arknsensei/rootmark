@@ -71,6 +71,10 @@ pub struct BlockDraft {
     pub normalized_text: String,
     pub heading_path: Vec<String>,
     pub heading_level: Option<u8>,
+    /// first and last source line (1-based, inclusive, counted in the whole
+    /// document including frontmatter)
+    pub line_start: u32,
+    pub line_end: u32,
 }
 
 /// A block occurrence with its lineage (SPEC §1).

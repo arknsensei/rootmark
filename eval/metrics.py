@@ -120,3 +120,104 @@ def h1s_aggregate(records: Sequence[dict]) -> dict:
 def h1s_objective(m: dict) -> float:
     """SPEC §5.3 tuning rule: S1 + (1 − S2) + S3 + S4."""
     return m["H1-S1"] + (1 - m["H1-S2"]) + m["H1-S3"] + m["H1-S4"]
+
+
+# ------------------------------------------------------------------- H1-R
+
+LOSS_CATEGORIES = ("dup_content", "hunk_adjacent", "type_change", "other")
+
+
+def touched_lines(hunks: Sequence[dict]) -> set[int]:
+    """Old-side lines that count as touched (EVAL §D2).
+
+    A hunk `-a,b` covers old lines a..a+b-1; the lines directly bordering it
+    (a-1 and a+b) are touched too. A pure insertion `-a,0` sits between old
+    lines a and a+1, so both of those are touched.
+    """
+    out: set[int] = set()
+    for h in hunks:
+        a, b = h["old"]
+        if b > 0:
+            out.update(range(a - 1, a + b + 1))  # a-1 .. a+b (adjacent lines included)
+        else:
+            out.update((a, a + 1))
+    return out
+
+
+def is_touched(line_start: int, line_end: int, touched: set[int]) -> bool:
+    return any(ln in touched for ln in range(line_start, line_end + 1))
+
+
+def h1r_pair_record(
+    old_blocks: Sequence[dict],
+    hunks: Sequence[dict],
+    new_lineages: Iterable[str],
+    new_blocks: Sequence[dict],
+) -> dict:
+    """One (commit, file) pair.
+
+    `old_blocks`: old-snapshot blocks in order with `lineage_id`, `version_id`,
+    `block_type`, `normalized_text`, `line_start`, `line_end`.
+    `new_blocks`: new-snapshot blocks with `version_id`, `block_type`,
+    `normalized_text`. `new_lineages`: lineages of the new snapshot.
+    """
+    live = set(new_lineages)
+    t = touched_lines(hunks)
+    flags = [is_touched(b["line_start"], b["line_end"], t) for b in old_blocks]
+    old_vids = [b["version_id"] for b in old_blocks]
+    new_vids = [b["version_id"] for b in new_blocks]
+    new_texts = {(b["normalized_text"]) for b in new_blocks}
+    new_typed = {(b["normalized_text"], b["block_type"]) for b in new_blocks}
+    rec = {"untouched": 0, "untouched_kept": 0, "touched": 0, "touched_kept": 0, "losses": []}
+    for i, (b, touched) in enumerate(zip(old_blocks, flags)):
+        kept = b["lineage_id"] in live
+        if touched:
+            rec["touched"] += 1
+            rec["touched_kept"] += kept
+            continue
+        rec["untouched"] += 1
+        rec["untouched_kept"] += kept
+        if kept:
+            continue
+        if old_vids.count(b["version_id"]) > 1 or new_vids.count(b["version_id"]) > 1:
+            cat = "dup_content"
+        elif (
+            b["normalized_text"] in new_texts
+            and (b["normalized_text"], b["block_type"]) not in new_typed
+        ):
+            cat = "type_change"
+        elif (i > 0 and flags[i - 1]) or (i + 1 < len(flags) and flags[i + 1]):
+            cat = "hunk_adjacent"
+        else:
+            cat = "other"
+        rec["losses"].append({"category": cat, "version_id": b["version_id"]})
+    return rec
+
+
+def h1r_aggregate(records: Sequence[dict], pairs: Sequence[dict]) -> dict:
+    """R1 (untouched retention), R2 (all old blocks), touched_retention, loss categories."""
+    u = sum(r["untouched"] for r in records)
+    uk = sum(r["untouched_kept"] for r in records)
+    t = sum(r["touched"] for r in records)
+    tk = sum(r["touched_kept"] for r in records)
+    cats = {c: 0 for c in LOSS_CATEGORIES}
+    other = []
+    for r, p in zip(records, pairs, strict=True):
+        for loss in r["losses"]:
+            cats[loss["category"]] += 1
+            if loss["category"] == "other":
+                other.append(
+                    {"commit": p["commit"], "doc": p["path"], "version_id": loss["version_id"]}
+                )
+    return {
+        "H1-R1": _ratio(uk, u, "H1-R1"),
+        "H1-R2": _ratio(uk + tk, u + t, "H1-R2"),
+        "touched_retention": _ratio(tk, t, "touched_retention"),
+        "blocks": u + t,
+        "untouched": u,
+        "touched": t,
+        "untouched_lost": u - uk,
+        "loss_categories": cats,
+        "other_examples": other[:5] if len(other) >= 5 else other,
+        "other_count": len(other),
+    }
