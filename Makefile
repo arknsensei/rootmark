@@ -13,6 +13,9 @@ setup:
 build:
 	cargo build --release
 	uv run --frozen maturin develop --release --quiet
+	@# macOS ld-27037 can emit an 8-byte-misaligned LINKEDIT string pool that dyld
+	@# rejects; fail here, loudly, instead of at first use (see ASSUMPTIONS T5).
+	uv run --frozen python -c "import mdkernel_core"
 
 test: test-rust test-py
 
@@ -26,6 +29,7 @@ lint:
 	cargo fmt --check
 	cargo clippy --all-targets -- -D warnings
 	uv run --frozen ruff check .
+	uv run --frozen ruff format --check .
 
 require-run:
 	@if [ -z "$(RUN)" ]; then echo "error: RUN=<run_id> is required" >&2; exit 1; fi

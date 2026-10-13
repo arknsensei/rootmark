@@ -304,8 +304,11 @@ checksum = "ce5d3ddc6d3fa000eb1536d85e147bfe31aacaba692ed6a876f95cb7c855be78"
 name = "mdkernel-bindings"
 version = "0.2.0"
 dependencies = [
+ "anyhow",
  "mdkernel-core",
  "pyo3",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
