@@ -24,3 +24,8 @@ Her satırın başındaki etiket, varsayımın etkileyebileceği hipotezi göste
 - [H1] H1-H1 op kümesi `00_GOAL.md` tablosundaki listeye birebir uyar (`rephrase_*`, `move_edit`, `split_edit`, `merge_edit` baskın parçalar); `split_three` H1-H1'e girmez ama baskın olmayan parçaları H1-H2 paydasına, olayları H1-H3'e girer.
 - [H1] Bölme olayının gerçeği K4 ile: sonuç soy kümesi `{eski soy} ∪ {baskın olmayan parçaların (tahmin edilen) soyları}`, dominant = eski soy. Böylece baskın parça yeni soy alırsa veya `meta.dominant` başka bir soyu gösterirse olay yanlış sayılır. v2 olayları (`dominant` yok) hiçbir zaman doğru sayılmaz.
 - [-] `T23: freeze eval v3` commit mesajı, v2'deki `T9: freeze eval` gibi ek satırsız yazıldı ("tam olarak").
+
+## T24
+- [H1] Ayar ızgarasında THETA_SPLIT (0.55/0.65/0.75) hiçbir metriği değiştirmedi; D1-hard bölme/birleştirme örnekleri bu aralığın hepsinde aynı biçimde yakalanıyor. H1-G yalnız THETA'dan dolayı 4. Seçilen THETA_SPLIT_V3 = 0.65 eşitlik-kırma kuralının sonucudur, veriden öğrenilmiş bir değer değildir.
+- [-] `make eval-h1s-v3` EVAL_DELTA'daki `--phase` argümanını `PHASE=tune|test` değişkeniyle alır (`make` komut satırı bayrak geçiremez); ayrıca `eval-h1s-v3-tune` kısayolu.
+- [H1] `freeze-check-v3` denetleyicisi T24 sabitlerinden bağımsız hale getirildi (FREEZE_EXCEPTIONS v3/T24).

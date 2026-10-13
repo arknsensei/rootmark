@@ -36,6 +36,10 @@ EDIT_SOURCES = ("roasting.md", "maintenance.md", "espresso.md", "cupping.md", "s
 EDIT_STEPS = 3
 MAX_EDIT_RUNS = 80
 GRID = ((0.55, 0.55), (0.60, 0.65), (0.70, 0.75))
+# THETA / THETA_SPLIT of every non-grid ingest: the compiled V3 constants at
+# freeze time (T23), pinned so that tuning (T24 writes THETA_V3/THETA_SPLIT_V3)
+# cannot change this output (FREEZE_EXCEPTIONS.md, T24)
+PARAMS = (0.60, 0.65)
 
 
 def _rec_lists(rec: dict) -> dict:
@@ -63,7 +67,7 @@ def _dominant_index(step: dict) -> int | None:
     return i
 
 
-def _records(truth: dict, out_dir: Path, vault_dir: Path, params=(None, None)) -> list[dict]:
+def _records(truth: dict, out_dir: Path, vault_dir: Path, params=PARAMS) -> list[dict]:
     v = mdkernel_core.Vault(str(vault_dir), params[0], params[1], matcher=MATCHER)
     doc = truth["doc_path"]
     v.ingest(doc, (out_dir / truth["base_file"]).read_text(encoding="utf-8"), "Synthetic", "d1")
@@ -165,7 +169,7 @@ def check_h1r(tmp: Path) -> dict:
     old = (FIX / pair["old"]).read_bytes().decode("utf-8")
     new = (FIX / pair["new"]).read_bytes().decode("utf-8")
     drafts, _ = mdkernel_core.parse_document(old, pair["path"])
-    v = mdkernel_core.Vault(str(tmp / "h1r"), matcher=MATCHER)
+    v = mdkernel_core.Vault(str(tmp / "h1r"), PARAMS[0], PARAMS[1], matcher=MATCHER)
     v.ingest(pair["path"], old)
     old_blocks = v.snapshot_blocks(pair["path"])
     for b, d in zip(old_blocks, drafts, strict=True):
@@ -263,7 +267,9 @@ def run() -> dict:
         tmp = Path(t)
         return {
             "matcher": MATCHER,
-            "matcher_defaults": list(mdkernel_core.matcher_defaults(MATCHER)),
+            # key kept for bit-identity with expected.json: the pinned PARAMS
+            # (equal to the compiled V3 defaults when the fixture was frozen)
+            "matcher_defaults": list(PARAMS),
             "easy": check_easy(tmp),
             "hard": check_hard(tmp),
             "h1r": check_h1r(tmp),
