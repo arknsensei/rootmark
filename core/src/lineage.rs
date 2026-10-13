@@ -1,23 +1,74 @@
-//! Lineage matcher v2 (SPEC §5).
+//! Lineage matcher (SPEC §5; v3: SPEC_DELTA §5.3). `MatcherVersion::V2`
+//! reproduces the v2-final matcher byte for byte; `V3` adds K4 (the dominant
+//! part keeps the lineage), drops the minimum part ratio and adds the
+//! merge-direction residual check.
 
 use crate::events::{Event, EventKind};
 use crate::model::{hash32, Block, BlockDraft, BlockType, Provenance};
+use anyhow::{bail, Result};
 use pathfinding::kuhn_munkres::kuhn_munkres;
 use pathfinding::matrix::Matrix;
+use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, HashMap, HashSet};
 
-/// Similarity-assignment threshold (SPEC §5.3 step 4). Set by T6 tuning.
+/// V2 similarity-assignment threshold (SPEC §5.3 step 4). Set by T6 tuning; frozen.
 pub const THETA: f64 = 0.60;
-/// Split/merge threshold (SPEC §5.3 steps 2–3). Set by T6 tuning.
+/// V2 split/merge threshold (SPEC §5.3 steps 2–3). Set by T6 tuning; frozen.
 pub const THETA_SPLIT: f64 = 0.70;
-/// Minimum part length relative to the whole for split/merge candidates.
+/// V3 similarity-assignment threshold. Written only by the T24 tuning phase.
+pub const THETA_V3: f64 = 0.60;
+/// V3 split/merge threshold. Written only by the T24 tuning phase.
+pub const THETA_SPLIT_V3: f64 = 0.65;
+/// V2 only: minimum part length relative to the whole for split/merge candidates.
 pub const MIN_PART_RATIO: f64 = 0.15;
-/// Residual check margin (SPEC §5.3 step 5).
+/// Residual check margin (SPEC §5.3 steps 5 and, in V3, 6).
 pub const RESIDUAL_MARGIN: f64 = 0.10;
 /// Largest split/merge window (SPEC §5.3 steps 2–3).
 pub const MAX_WINDOW: usize = 4;
-pub const MATCHER_VERSION: &str = "v2";
+/// V3: largest old-block window of the merge-direction residual check (step 6).
+pub const MAX_RESIDUAL_MERGE: usize = 3;
+
+#[derive(
+    Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize,
+)]
+pub enum MatcherVersion {
+    V2,
+    #[default]
+    V3,
+}
+
+impl MatcherVersion {
+    /// The value written to `meta.matcher_version`.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            MatcherVersion::V2 => "v2",
+            MatcherVersion::V3 => "v3",
+        }
+    }
+
+    pub fn parse(s: &str) -> Result<Self> {
+        match s {
+            "v2" => Ok(MatcherVersion::V2),
+            "v3" => Ok(MatcherVersion::V3),
+            _ => bail!("unknown matcher version {s:?} (expected v2 or v3)"),
+        }
+    }
+
+    /// Compiled THETA / THETA_SPLIT of this version.
+    pub fn defaults(self) -> MatchParams {
+        match self {
+            MatcherVersion::V2 => MatchParams {
+                theta: THETA,
+                theta_split: THETA_SPLIT,
+            },
+            MatcherVersion::V3 => MatchParams {
+                theta: THETA_V3,
+                theta_split: THETA_SPLIT_V3,
+            },
+        }
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct MatchParams {
@@ -25,12 +76,10 @@ pub struct MatchParams {
     pub theta_split: f64,
 }
 
+/// The V2 constants (unchanged from v2-final).
 impl Default for MatchParams {
     fn default() -> Self {
-        MatchParams {
-            theta: THETA,
-            theta_split: THETA_SPLIT,
-        }
+        MatcherVersion::V2.defaults()
     }
 }
 
@@ -114,6 +163,7 @@ enum NewKind {
     Merged {
         olds: Vec<usize>,
         score: f64,
+        residual: bool,
     },
     Created,
 }
@@ -146,6 +196,22 @@ fn event(
 
 fn char_len(s: &str) -> usize {
     s.chars().count()
+}
+
+/// V3 split/merge part condition: at least one word.
+fn has_word(s: &str) -> bool {
+    s.split_whitespace().next().is_some()
+}
+
+/// Index of the longest element (ties → first).
+fn longest(idx: &[usize], len: &[usize]) -> usize {
+    let mut best = idx[0];
+    for &k in &idx[1..] {
+        if len[k] > len[best] {
+            best = k;
+        }
+    }
+    best
 }
 
 /// Longest strictly increasing subsequence; returns a membership mask.
@@ -183,7 +249,10 @@ pub fn match_blocks(
     used: &HashSet<String>,
     params: MatchParams,
     provenance: &Provenance,
+    matcher: MatcherVersion,
 ) -> MatchResult {
+    let v3 = matcher == MatcherVersion::V3;
+    let mv = matcher.as_str();
     let n_old = prev.len();
     let n_new = drafts.len();
     let mut new_kind: Vec<Option<NewKind>> = vec![None; n_new];
@@ -269,9 +338,12 @@ pub fn match_blocks(
                 let mut parts = String::new();
                 let mut plen = 0usize;
                 for j in i..(i + MAX_WINDOW).min(n_new) {
-                    if new_kind[j].is_some()
-                        || (new_len[j] as f64) < MIN_PART_RATIO * old_len[o] as f64
-                    {
+                    let small = if v3 {
+                        !has_word(new_norm[j])
+                    } else {
+                        (new_len[j] as f64) < MIN_PART_RATIO * old_len[o] as f64
+                    };
+                    if new_kind[j].is_some() || small {
                         break;
                     }
                     if j > i {
@@ -321,7 +393,12 @@ pub fn match_blocks(
                 let mut parts = String::new();
                 let mut plen = 0usize;
                 for j in i..(i + MAX_WINDOW).min(n_old) {
-                    if old_taken[j] || (old_len[j] as f64) < MIN_PART_RATIO * new_len[n] as f64 {
+                    let small = if v3 {
+                        !has_word(old_norm[j])
+                    } else {
+                        (old_len[j] as f64) < MIN_PART_RATIO * new_len[n] as f64
+                    };
+                    if old_taken[j] || small {
                         break;
                     }
                     if j > i {
@@ -354,6 +431,7 @@ pub fn match_blocks(
             new_kind[n] = Some(NewKind::Merged {
                 olds: (i..=j).collect(),
                 score: s,
+                residual: false,
             });
         }
     }
@@ -485,7 +563,50 @@ pub fn match_blocks(
         }
     }
 
-    // ---- step 6: remaining → created / deleted
+    // ---- V3 step 6: residual check, merge direction (matched old + adjacent
+    // unmatched old → merge). Windows of 2..=3 consecutive old blocks around `o`.
+    if v3 {
+        for &(o, n, _) in &updated {
+            if !matches!(new_kind[n], Some(NewKind::Updated { .. })) {
+                continue;
+            }
+            let mut lo = o;
+            while lo > 0 && o - (lo - 1) < MAX_RESIDUAL_MERGE && !old_taken[lo - 1] {
+                lo -= 1;
+            }
+            let mut hi = o;
+            while hi + 1 < n_old && hi + 1 - o < MAX_RESIDUAL_MERGE && !old_taken[hi + 1] {
+                hi += 1;
+            }
+            if lo == o && hi == o {
+                continue;
+            }
+            let base = sim(old_norm[o], new_norm[n]);
+            let mut best: Option<(f64, usize, usize)> = None;
+            for i in lo..=o {
+                for j in o..=hi {
+                    if j == i || j - i + 1 > MAX_RESIDUAL_MERGE {
+                        continue;
+                    }
+                    let concat = old_norm[i..=j].join(" ");
+                    let s = sim(&concat, new_norm[n]);
+                    if s > base + RESIDUAL_MARGIN && best.is_none_or(|(bs, _, _)| s > bs) {
+                        best = Some((s, i, j));
+                    }
+                }
+            }
+            if let Some((s, i, j)) = best {
+                old_taken[i..=j].fill(true);
+                new_kind[n] = Some(NewKind::Merged {
+                    olds: (i..=j).collect(),
+                    score: s,
+                    residual: true,
+                });
+            }
+        }
+    }
+
+    // ---- step 6 (V3: step 7): remaining → created / deleted
     for k in new_kind.iter_mut() {
         if k.is_none() {
             *k = Some(NewKind::Created);
@@ -502,6 +623,12 @@ pub fn match_blocks(
             NewKind::Exact { old, .. } | NewKind::Updated { old, .. } => {
                 prev[*old].lineage_id.clone()
             }
+            // K4: the longest part of a split keeps the old lineage
+            NewKind::Split { old, group, .. } if v3 && longest(group, &new_len) == n => {
+                prev[*old].lineage_id.clone()
+            }
+            // K4: a merge result keeps the lineage of the longest old block
+            NewKind::Merged { olds, .. } if v3 => prev[longest(olds, &old_len)].lineage_id.clone(),
             _ => {
                 let vid = new_vid(n);
                 let k = next_k.entry(vid).or_insert(0);
@@ -577,7 +704,7 @@ pub fn match_blocks(
                         vec![lineage[n].clone()],
                         vec![v.clone()],
                         vec![v],
-                        json!({"matcher_version": MATCHER_VERSION, "anchor_kind": anchor, "from_pos": old, "to_pos": n}),
+                        json!({"matcher_version": mv, "anchor_kind": anchor, "from_pos": old, "to_pos": n}),
                     ));
                 }
             }
@@ -587,39 +714,62 @@ pub fn match_blocks(
                 vec![lineage[n].clone()],
                 vec![prev[*old].version_id.clone()],
                 vec![v],
-                json!({"matcher_version": MATCHER_VERSION, "score": round6(*score), "provenance": prov_json}),
+                json!({"matcher_version": mv, "score": round6(*score), "provenance": prov_json}),
             )),
-            NewKind::Split { old, group, score, residual } => {
+            NewKind::Split {
+                old,
+                group,
+                score,
+                residual,
+            } => {
                 if group[0] == n {
+                    let mut meta = json!({"matcher_version": mv, "score": round6(*score),
+                               "from_lineages": [prev[*old].lineage_id], "residual": residual,
+                               "provenance": prov_json});
+                    if v3 {
+                        meta["dominant"] = json!(lineage[longest(group, &new_len)]);
+                    }
                     events.push(event(
                         doc_path,
                         EventKind::BlockSplit,
                         group.iter().map(|&k| lineage[k].clone()).collect(),
                         vec![prev[*old].version_id.clone()],
-                        group.iter().map(|&k| drafts[k].version_id.clone()).collect(),
-                        json!({"matcher_version": MATCHER_VERSION, "score": round6(*score),
-                               "from_lineages": [prev[*old].lineage_id], "residual": residual,
-                               "provenance": prov_json}),
+                        group
+                            .iter()
+                            .map(|&k| drafts[k].version_id.clone())
+                            .collect(),
+                        meta,
                     ));
                 }
             }
-            NewKind::Merged { olds, score } => events.push(event(
-                doc_path,
-                EventKind::BlockMerged,
-                vec![lineage[n].clone()],
-                olds.iter().map(|&o| prev[o].version_id.clone()).collect(),
-                vec![v],
-                json!({"matcher_version": MATCHER_VERSION, "score": round6(*score),
+            NewKind::Merged {
+                olds,
+                score,
+                residual,
+            } => {
+                let mut meta = json!({"matcher_version": mv, "score": round6(*score),
                        "from_lineages": olds.iter().map(|&o| prev[o].lineage_id.clone()).collect::<Vec<_>>(),
-                       "provenance": prov_json}),
-            )),
+                       "provenance": prov_json});
+                if v3 {
+                    meta["dominant"] = json!(lineage[n]);
+                    meta["residual"] = json!(residual);
+                }
+                events.push(event(
+                    doc_path,
+                    EventKind::BlockMerged,
+                    vec![lineage[n].clone()],
+                    olds.iter().map(|&o| prev[o].version_id.clone()).collect(),
+                    vec![v],
+                    meta,
+                ))
+            }
             NewKind::Created => events.push(event(
                 doc_path,
                 EventKind::BlockCreated,
                 vec![lineage[n].clone()],
                 vec![],
                 vec![v],
-                json!({"matcher_version": MATCHER_VERSION, "provenance": prov_json}),
+                json!({"matcher_version": mv, "provenance": prov_json}),
             )),
         }
     }
@@ -630,7 +780,7 @@ pub fn match_blocks(
             vec![prev[o].lineage_id.clone()],
             vec![prev[o].version_id.clone()],
             vec![],
-            json!({"matcher_version": MATCHER_VERSION}),
+            json!({"matcher_version": mv}),
         ));
     }
     MatchResult { blocks, events }

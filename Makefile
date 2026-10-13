@@ -1,6 +1,9 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -euo pipefail -c
 PY := uv run python
+# v2 code paths (frozen eval, v2 runners) never pass a matcher: run them under
+# matcher v2 so they reproduce v2 behaviour exactly (docs/progress/v3/ASSUMPTIONS T21)
+PY2 := MDK_MATCHER=v2 uv run python
 MDK := ./target/release/mdk
 
 .PHONY: setup build test test-rust test-py lint d1 d2 d3 freeze-check \
@@ -35,40 +38,40 @@ require-run:
 	@if [ -z "$(RUN)" ]; then echo "error: RUN=<run_id> is required" >&2; exit 1; fi
 
 d2:
-	$(PY) -m eval.datasets.git_history $(ARGS)
+	$(PY2) -m eval.datasets.git_history $(ARGS)
 
 d3:
-	$(PY) -m eval.datasets.vault $(ARGS)
+	$(PY2) -m eval.datasets.vault $(ARGS)
 
 d1: d3
-	$(PY) -m eval.datasets.synthetic_edits $(ARGS)
+	$(PY2) -m eval.datasets.synthetic_edits $(ARGS)
 
 freeze-check:
-	$(PY) -m eval.freeze_check
+	$(PY2) -m eval.freeze_check
 
 eval-h1s-tune: require-run
-	$(PY) -m eval.run_h1s --phase tune --run $(RUN)
+	$(PY2) -m eval.run_h1s --phase tune --run $(RUN)
 
 eval-h1s: require-run
-	$(PY) -m eval.run_h1s --phase test --run $(RUN)
+	$(PY2) -m eval.run_h1s --phase test --run $(RUN)
 
 eval-h1r: require-run
-	$(PY) -m eval.run_h1r --run $(RUN)
+	$(PY2) -m eval.run_h1r --run $(RUN)
 
 eval-h2-tune: require-run
-	$(PY) -m eval.run_h2 --phase tune --run $(RUN)
+	$(PY2) -m eval.run_h2 --phase tune --run $(RUN)
 
 eval-h2: require-run
-	$(PY) -m eval.run_h2 --phase test --run $(RUN)
+	$(PY2) -m eval.run_h2 --phase test --run $(RUN)
 
 eval-h3: require-run
-	$(PY) -m eval.run_h3 --run $(RUN)
+	$(PY2) -m eval.run_h3 --run $(RUN)
 
 eval-h4: require-run
-	$(PY) -m eval.run_h4 --run $(RUN)
+	$(PY2) -m eval.run_h4 --run $(RUN)
 
 report: require-run
-	$(PY) -m eval.report --run $(RUN)
+	$(PY2) -m eval.report --run $(RUN)
 
 verify:
 	bash scripts/verify.sh

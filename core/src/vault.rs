@@ -1,7 +1,7 @@
 //! Vault: object store + event log + per-document heads (SPEC §2–4, §7).
 
 use crate::events::{append_events, read_events, Event, EventKind};
-use crate::lineage::{match_blocks, PrevBlock, MATCHER_VERSION};
+use crate::lineage::{match_blocks, MatchParams, MatcherVersion, PrevBlock};
 use crate::model::{hash32, Block, Provenance};
 use crate::parse::heading_paths;
 use crate::parse::parse_document;
@@ -240,29 +240,58 @@ pub struct Vault {
     meta_dir: PathBuf,
     next_seq: u64,
     docs: BTreeMap<String, DocState>,
-    pub params: crate::lineage::MatchParams,
+    /// THETA / THETA_SPLIT override; `None` → the compiled defaults of the
+    /// matcher version passed to `ingest`.
+    pub params: Option<MatchParams>,
+    /// Matcher version of the first logged event (SPEC_DELTA §7): every later
+    /// ingest must use the same version.
+    lock: Option<MatcherVersion>,
 }
 
 impl Vault {
     /// Opens (or initialises) `<root>/.mdkernel` and replays the log into memory.
     pub fn open(root: impl AsRef<Path>) -> Result<Vault> {
-        Self::open_with(root, crate::lineage::MatchParams::default())
+        Self::open_inner(root, None)
     }
 
-    pub fn open_with(root: impl AsRef<Path>, params: crate::lineage::MatchParams) -> Result<Vault> {
+    /// Like `open`, with THETA / THETA_SPLIT fixed for every ingest.
+    pub fn open_with(root: impl AsRef<Path>, params: MatchParams) -> Result<Vault> {
+        Self::open_inner(root, Some(params))
+    }
+
+    fn open_inner(root: impl AsRef<Path>, params: Option<MatchParams>) -> Result<Vault> {
         let root = root.as_ref().to_path_buf();
         let meta_dir = root.join(".mdkernel");
         fs::create_dir_all(meta_dir.join("objects"))?;
         fs::create_dir_all(meta_dir.join("snapshots"))?;
         let events = read_events(&meta_dir.join("events.jsonl"))?;
         let docs = replay_all(&events)?;
+        let lock = match events.first() {
+            None => None,
+            Some(ev) => {
+                let v = meta_str(ev, "matcher_version")
+                    .with_context(|| format!("event seq {}: no meta.matcher_version", ev.seq))?;
+                Some(MatcherVersion::parse(&v)?)
+            }
+        };
         Ok(Vault {
             root,
             meta_dir,
             next_seq: events.len() as u64,
             docs,
             params,
+            lock,
         })
+    }
+
+    /// Matcher version this vault is locked to (`None` while the log is empty).
+    pub fn matcher_lock(&self) -> Option<MatcherVersion> {
+        self.lock
+    }
+
+    /// THETA / THETA_SPLIT an ingest with `matcher` uses.
+    pub fn params_for(&self, matcher: MatcherVersion) -> MatchParams {
+        self.params.unwrap_or_else(|| matcher.defaults())
     }
 
     pub fn root(&self) -> &Path {
@@ -424,7 +453,24 @@ impl Vault {
 
     /// parse → match → store → log (SPEC §7). Re-ingesting identical block
     /// content and frontmatter produces no events.
-    pub fn ingest(&mut self, doc_path: &str, text: &str, prov: Provenance) -> Result<IngestResult> {
+    /// A vault is locked to the matcher version of its first event; ingesting
+    /// with another version is an error (SPEC_DELTA §7).
+    pub fn ingest(
+        &mut self,
+        doc_path: &str,
+        text: &str,
+        prov: Provenance,
+        matcher: MatcherVersion,
+    ) -> Result<IngestResult> {
+        if let Some(lock) = self.lock {
+            if lock != matcher {
+                bail!(
+                    "vault is locked to matcher {}; ingest with {} refused",
+                    lock.as_str(),
+                    matcher.as_str()
+                );
+            }
+        }
         let (drafts, frontmatter) = parse_document(text, doc_path)?;
         let st = self.docs.get(doc_path);
         let head = st.and_then(|s| s.head.clone());
@@ -437,7 +483,8 @@ impl Vault {
             None => Vec::new(),
         };
         let used = st.map(|s| s.used.clone()).unwrap_or_default();
-        let r = match_blocks(doc_path, &prev, &drafts, &used, self.params, &prov);
+        let params = self.params_for(matcher);
+        let r = match_blocks(doc_path, &prev, &drafts, &used, params, &prov, matcher);
         let fm_changed = head.as_ref().is_none_or(|h| h.frontmatter != frontmatter);
         if r.events.is_empty() && !fm_changed {
             let snapshot = head.expect("head exists when frontmatter is unchanged");
@@ -475,7 +522,7 @@ impl Vault {
             new_version_ids: r.blocks.iter().map(|b| b.version_id.clone()).collect(),
             snapshot_id: Some(sid),
             meta: serde_json::json!({
-                "matcher_version": MATCHER_VERSION,
+                "matcher_version": matcher.as_str(),
                 "frontmatter": frontmatter,
                 "parent_snapshot": parent,
             }),
@@ -491,6 +538,7 @@ impl Vault {
             })
             .collect();
         let events = self.commit(&objects, events)?;
+        self.lock.get_or_insert(matcher);
         let snapshot = self.snapshot(doc_path)?.context("snapshot after commit")?;
         Ok(IngestResult {
             snapshot,
@@ -518,11 +566,15 @@ impl Vault {
 
     /// Ingests every `*.md` under `dir` in byte-wise `doc_path` order
     /// (deterministic); `doc_path` is relative to `dir`.
-    pub fn ingest_dir(&mut self, dir: &Path) -> Result<Vec<IngestSummary>> {
+    pub fn ingest_dir(
+        &mut self,
+        dir: &Path,
+        matcher: MatcherVersion,
+    ) -> Result<Vec<IngestSummary>> {
         let mut out = Vec::new();
         for (doc, p) in crate::files::markdown_files(dir)? {
             let text = fs::read_to_string(&p).with_context(|| format!("read {}", p.display()))?;
-            let r = self.ingest(&doc, &text, Provenance::default())?;
+            let r = self.ingest(&doc, &text, Provenance::default(), matcher)?;
             out.push(IngestSummary::new(&doc, &r));
         }
         Ok(out)

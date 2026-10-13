@@ -1,4 +1,4 @@
-//! mdkernel-core: markdown-native versioned block kernel (v2).
+//! mdkernel-core: markdown-native versioned block kernel (v2 core; matcher v2 and v3).
 
 pub mod chunk;
 pub mod events;
@@ -13,7 +13,7 @@ pub mod wikilink;
 
 pub use chunk::{chunk, Chunk, Strategy};
 pub use events::{Event, EventKind};
-pub use lineage::MatchParams;
+pub use lineage::{MatchParams, MatcherVersion};
 pub use model::{
     hash32, version_id, AuthorKind, Block, BlockDraft, BlockType, Provenance, WikiLink,
 };

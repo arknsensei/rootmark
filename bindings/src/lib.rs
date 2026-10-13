@@ -3,7 +3,7 @@
 //! Core `Err` → `RuntimeError`.
 
 use mdkcore::chunk::{chunk, count_tokens as core_count_tokens, Strategy};
-use mdkcore::{AuthorKind, MatchParams, Provenance};
+use mdkcore::{AuthorKind, MatchParams, MatcherVersion, Provenance};
 use pyo3::exceptions::PyRuntimeError;
 use pyo3::prelude::*;
 use serde::Serialize;
@@ -66,28 +66,48 @@ fn lineage_formula(doc_path: &str, version_id: &str, k: usize) -> String {
     mdkcore::lineage::lineage_formula(doc_path, version_id, k)
 }
 
+/// Matcher version: explicit argument, else `$MDK_MATCHER`, else "v3"
+/// (SPEC_DELTA §7). The environment variable lets frozen v2 code, which never
+/// passes a matcher, run under v2 unchanged.
+fn matcher_of(matcher: Option<&str>) -> PyResult<MatcherVersion> {
+    let env = std::env::var("MDK_MATCHER").ok();
+    let name = matcher.or(env.as_deref()).unwrap_or("v3");
+    MatcherVersion::parse(name).map_err(err)
+}
+
+/// Compiled (THETA, THETA_SPLIT) of the matcher version.
 #[pyfunction]
-fn matcher_defaults() -> (f64, f64) {
-    (mdkcore::lineage::THETA, mdkcore::lineage::THETA_SPLIT)
+#[pyo3(signature = (matcher=None))]
+fn matcher_defaults(matcher: Option<&str>) -> PyResult<(f64, f64)> {
+    let p = matcher_of(matcher)?.defaults();
+    Ok((p.theta, p.theta_split))
 }
 
 #[pyclass(unsendable)]
 struct Vault {
     inner: mdkcore::Vault,
+    matcher: MatcherVersion,
 }
 
 #[pymethods]
 impl Vault {
     #[new]
-    #[pyo3(signature = (root, theta=None, theta_split=None))]
-    fn new(root: &str, theta: Option<f64>, theta_split: Option<f64>) -> PyResult<Self> {
-        let d = MatchParams::default();
+    #[pyo3(signature = (root, theta=None, theta_split=None, matcher=None))]
+    fn new(
+        root: &str,
+        theta: Option<f64>,
+        theta_split: Option<f64>,
+        matcher: Option<&str>,
+    ) -> PyResult<Self> {
+        let m = matcher_of(matcher)?;
+        let d = m.defaults();
         let p = MatchParams {
             theta: theta.unwrap_or(d.theta),
             theta_split: theta_split.unwrap_or(d.theta_split),
         };
         Ok(Vault {
             inner: mdkcore::Vault::open_with(root, p).map_err(err)?,
+            matcher: m,
         })
     }
 
@@ -104,14 +124,17 @@ impl Vault {
             author_kind: author(author_kind)?,
             source: source.to_string(),
         };
-        let r = self.inner.ingest(doc_path, text, prov).map_err(err)?;
+        let r = self
+            .inner
+            .ingest(doc_path, text, prov, self.matcher)
+            .map_err(err)?;
         to_py(py, &r)
     }
 
     fn ingest_dir(&mut self, py: Python<'_>, dir: &str) -> PyResult<Py<PyAny>> {
         let r = self
             .inner
-            .ingest_dir(std::path::Path::new(dir))
+            .ingest_dir(std::path::Path::new(dir), self.matcher)
             .map_err(err)?;
         to_py(py, &r)
     }
@@ -157,7 +180,18 @@ impl Vault {
     }
 
     fn params(&self) -> (f64, f64) {
-        (self.inner.params.theta, self.inner.params.theta_split)
+        let p = self.inner.params_for(self.matcher);
+        (p.theta, p.theta_split)
+    }
+
+    /// Matcher version this handle ingests with ("v2" / "v3").
+    fn matcher(&self) -> &'static str {
+        self.matcher.as_str()
+    }
+
+    /// Matcher version the vault's log is locked to, or None while empty.
+    fn matcher_lock(&self) -> Option<&'static str> {
+        self.inner.matcher_lock().map(|m| m.as_str())
     }
 }
 

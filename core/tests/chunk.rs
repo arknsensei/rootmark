@@ -1,5 +1,5 @@
 use mdkcore::chunk::{count_tokens, FIXED_OVERLAP, MAX_TOKENS};
-use mdkcore::{chunk, hash32, Provenance, Strategy, Vault};
+use mdkcore::{chunk, hash32, MatcherVersion, Provenance, Strategy, Vault};
 use std::path::PathBuf;
 use std::process::Command;
 
@@ -16,7 +16,9 @@ fn mini_vault() -> PathBuf {
 
 fn chunks_of(text: &str, strategy: Strategy, name: &str) -> (Vault, Vec<mdkcore::Chunk>) {
     let mut v = Vault::open(tmp(name)).unwrap();
-    let r = v.ingest("d.md", text, Provenance::default()).unwrap();
+    let r = v
+        .ingest("d.md", text, Provenance::default(), MatcherVersion::V2)
+        .unwrap();
     let c = chunk(&r.snapshot, &v, strategy).unwrap();
     (v, c)
 }
@@ -121,7 +123,7 @@ fn fixed_windows_overlap_and_cover_lineages() {
 fn chunking_changes_no_lineage_and_writes_no_event() {
     let root = tmp("noevent");
     let mut v = Vault::open(&root).unwrap();
-    v.ingest_dir(&mini_vault()).unwrap();
+    v.ingest_dir(&mini_vault(), MatcherVersion::V2).unwrap();
     let h = v.events_hash().unwrap();
     let before: Vec<_> = v
         .doc_paths()

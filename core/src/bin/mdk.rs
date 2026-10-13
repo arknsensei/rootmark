@@ -5,16 +5,20 @@ use clap::{Parser, Subcommand};
 use mdkcore::chunk::{chunk, Strategy};
 use mdkcore::files::rel_slash;
 use mdkcore::vault::IngestSummary;
-use mdkcore::{Provenance, Vault};
+use mdkcore::{MatcherVersion, Provenance, Vault};
 use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
 
 #[derive(Parser)]
-#[command(name = "mdk", about = "mdkernel v2 core CLI")]
+#[command(name = "mdk", about = "mdkernel core CLI")]
 struct Cli {
     /// Indent JSON output
     #[arg(long, global = true)]
     pretty: bool,
+    /// Lineage matcher version for ingest (v2|v3; default: $MDK_MATCHER, else v3).
+    /// A vault is locked to the version of its first event.
+    #[arg(long, global = true, value_parser = ["v2", "v3"])]
+    matcher: Option<String>,
     #[command(subcommand)]
     cmd: Cmd,
 }
@@ -45,13 +49,13 @@ enum Cmd {
     },
 }
 
-fn ingest_one(v: &mut Vault, doc: &str, path: &Path) -> Result<Value> {
+fn ingest_one(v: &mut Vault, doc: &str, path: &Path, m: MatcherVersion) -> Result<Value> {
     let text = std::fs::read_to_string(path).with_context(|| format!("read {}", path.display()))?;
-    let r = v.ingest(doc, &text, Provenance::default())?;
+    let r = v.ingest(doc, &text, Provenance::default(), m)?;
     Ok(serde_json::to_value(IngestSummary::new(doc, &r))?)
 }
 
-fn run(cmd: Cmd) -> Result<Value> {
+fn run(cmd: Cmd, m: MatcherVersion) -> Result<Value> {
     Ok(match cmd {
         Cmd::Ingest { vault, files } => {
             let mut v = Vault::open(&vault)?;
@@ -60,13 +64,13 @@ fn run(cmd: Cmd) -> Result<Value> {
             for f in files {
                 let p = std::fs::canonicalize(&f).with_context(|| format!("{}", f.display()))?;
                 let doc = rel_slash(&p, &root)?;
-                out.push(ingest_one(&mut v, &doc, &p)?);
+                out.push(ingest_one(&mut v, &doc, &p, m)?);
             }
             json!({"ingested": out, "events_hash": v.events_hash()?})
         }
         Cmd::IngestDir { vault, dir } => {
             let mut v = Vault::open(&vault)?;
-            let out = v.ingest_dir(&dir)?;
+            let out = v.ingest_dir(&dir, m)?;
             json!({"ingested": out, "events_hash": v.events_hash()?})
         }
         Cmd::Replay { vault, doc } => {
@@ -102,7 +106,12 @@ fn run(cmd: Cmd) -> Result<Value> {
 
 fn main() {
     let cli = Cli::parse();
-    match run(cli.cmd) {
+    let name = cli
+        .matcher
+        .or_else(|| std::env::var("MDK_MATCHER").ok())
+        .unwrap_or_else(|| "v3".to_string());
+    let res = MatcherVersion::parse(&name).and_then(|m| run(cli.cmd, m));
+    match res {
         Ok(v) => {
             let s = if cli.pretty {
                 serde_json::to_string_pretty(&v)

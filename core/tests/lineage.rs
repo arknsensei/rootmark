@@ -1,5 +1,5 @@
 use mdkcore::lineage::{ctx_anchor, lineage_formula};
-use mdkcore::{parse_document, EventKind, MatchParams, Provenance, Vault};
+use mdkcore::{parse_document, EventKind, MatchParams, MatcherVersion, Provenance, Vault};
 use std::path::PathBuf;
 
 fn tmp(name: &str) -> PathBuf {
@@ -14,7 +14,8 @@ fn vault(name: &str) -> Vault {
 }
 
 fn ingest(v: &mut Vault, text: &str) -> mdkcore::IngestResult {
-    v.ingest("d.md", text, Provenance::default()).unwrap()
+    v.ingest("d.md", text, Provenance::default(), MatcherVersion::V2)
+        .unwrap()
 }
 
 fn lineages(v: &Vault) -> Vec<String> {
@@ -387,7 +388,12 @@ fn first_ingest_creates_everything_and_empty_doc_has_snapshot() {
         vec![EventKind::BlockCreated, EventKind::BlockCreated]
     );
     let r = v
-        .ingest("empty.md", "---\na: 1\n---\n", Provenance::default())
+        .ingest(
+            "empty.md",
+            "---\na: 1\n---\n",
+            Provenance::default(),
+            MatcherVersion::V2,
+        )
         .unwrap();
     assert!(r.snapshot.blocks.is_empty());
     assert_eq!(r.events.len(), 1);
