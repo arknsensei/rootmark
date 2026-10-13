@@ -26,6 +26,9 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/run_split_grid.py` | `P1-A/A5:` | A-7 koşturucusu (bilgi) |
 | `research/data/MANIFEST.d1ho.json` | `P1-A/A5:` | holdout manifest'i |
 | `research/data/MANIFEST.d1sh.json` | `P1-A/A5:` | split_hard manifest'i |
+| `research/eval/compare_p1a.py` | `P1-A/A6:` | A-4 karşılaştırıcısı (dondurulmuş `compare_runs.compare` ile) |
+| `research/eval/run_p1a_checks.py` | `P1-A/A6:` | A-1 / A-5 / A-6 RUN kaydı |
+| `scripts/test_tamper.sh` | `P1-A/A6:` | kasıtlı bozma testleri |
 | `scripts/verify.sh` | `P1-A/A6:` | doğrulama zinciri (A6'da tamamlanır) |
 | `scripts/check_frozen.sh` | `P1-A/A6:` | dondurma denetleyicisi |
 <!-- /frozen-table -->

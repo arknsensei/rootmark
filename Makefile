@@ -14,9 +14,9 @@ V3_REF_RUN := 20261013T182004Z-f82dabd
 PHASE ?= test
 TS_PKGS := $(wildcard clients/*/package.json)
 
-.PHONY: check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
+.PHONY: test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
-        eval-h4-v2repro d1ho d1sh eval-holdout eval-split-grid test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
+        eval-h4-v2repro d1ho d1sh eval-holdout eval-split-grid p1a-checks test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps conformance regress verify
 
 setup: setup-py build
@@ -72,6 +72,11 @@ check-deps:
 # Frozen files unchanged since their freeze commit (research/FROZEN.md)
 check-frozen:
 	bash scripts/check_frozen.sh
+
+# Deliberate corruptions must fail (TASKS A6, VERIFY V8); RUN_DIR = a complete P1-A RUN
+test-tamper:
+	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
+	bash scripts/test_tamper.sh "$(RUN_DIR)"
 
 # Deliberate reverse dependency in a scratch copy must make check_deps.sh fail
 test-check-deps:
@@ -160,6 +165,14 @@ eval-holdout: require-run
 
 eval-split-grid: require-run
 	$(PY) -m eval.run_split_grid --run $(RUN)
+
+# A-1 / A-5 / A-6 recorded in the RUN (the round report reads one RUN only)
+p1a-checks: require-run
+	$(MAKE) conformance
+	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
+	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
+	$(PY) -m eval.run_p1a_checks --run $(RUN) --conformance ../reports/conformance.json \
+	  --deps-log reports/runs/$(RUN)/check_deps.log
 
 # Quality regression (TASKS A4, GOAL A-3): v2 phases + v3 D1-easy/hard, D2, H3,
 # H4, H4-V2 under RUN, then every quality field compared with the v3-final

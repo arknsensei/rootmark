@@ -6,13 +6,15 @@
 #       verify every research dataset against its committed manifest, run both
 #       freeze checkers, `make conformance`, then under one RUN id the quality
 #       regression (`make regress`: v2 phases, v3 D1-easy/hard, D2, H3, H4,
-#       H4-V2, compared field by field with the v3-final reference run);
-#       prints "RUN=<id>" and "RUN_DIR=<path>".
+#       H4-V2, compared field by field with the v3-final reference run), the
+#       holdout (A-2), the THETA_SPLIT grid (A-7) and `make p1a-checks` (A-1,
+#       A-5, A-6 into the RUN); prints "RUN=<id>" and "RUN_DIR=<path>".
 #   scripts/verify.sh pair <source-repo> <workdir-A> <workdir-B>
 #       two independent chains, then `compare` A ↔ B.
 #   scripts/verify.sh compare <repo> <run-dir-A> <run-dir-B> [<out.json>]
-#       research/eval/compare_runs.py --set v3 run inside <repo>/research;
-#       exits non-zero when any quality field differs.
+#       research/eval/compare_p1a.py (v3 result set + holdout + split_grid)
+#       run inside <repo>/research; exits non-zero when any quality field
+#       differs (A-4) or a file/field is missing.
 #   scripts/verify.sh            (what `make verify` runs)
 #       pair mode with <source-repo> = this repository and two fresh temp dirs.
 #
@@ -55,6 +57,11 @@ chain() {
   log "RUN=$run"
   log "regress (v2 + v3 phases, compared with v3-final)"
   make regress RUN="$run"
+  log "holdout (A-2) and THETA_SPLIT grid (A-7)"
+  make eval-holdout RUN="$run"
+  make eval-split-grid RUN="$run"
+  log "A-1 / A-5 / A-6 into the RUN"
+  make p1a-checks RUN="$run"
   log "chain finished in $((SECONDS - t0)) s"
   echo "RUN=$run" >&3
   echo "RUN_DIR=$work/repo/research/reports/runs/$run" >&3
@@ -86,7 +93,7 @@ compare() {
   local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
   log "compare $dir_a $dir_b"
   local rc=0
-  (cd "$repo/research" && uv run --frozen python -m eval.compare_runs "$dir_a" "$dir_b" --set v3 \
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p1a "$dir_a" "$dir_b" \
     ${out:+--out "$out"}) >&2 || rc=$?
   if [ "$rc" -ne 0 ]; then
     echo "error: run comparison failed (compare_runs exit $rc)" >&2
