@@ -1,10 +1,12 @@
 """H3 on D3: incremental indexing latency and re-chunk lineage stability.
 
-H3-1: on a temporary copy of D3, a probe paragraph is appended to N documents
-one at a time; the clock runs from the file write through `Watcher.process`
-(ingest → re-chunk → embed → hot layer) until a `flat` search for the probe
-text returns one of the newly added hot chunks. The embedding model is loaded
-before timing (ASSUMPTIONS H3). Warm-up edits are not measured.
+H3-1 (as in v1): on a temporary copy of D3, 200 documents (SEED) each get one
+`rephrase_light` edit (the frozen D1 operation); the clock runs from the file
+write through `Watcher.process` (ingest → re-chunk → embed → hot layer) until
+`hot.search(<first sentence of the new block>, 10)` returns. hit@1 / hit@10
+(the re-embedded chunk among the results) are reported as information. The
+embedding model is loaded before timing (ASSUMPTIONS H3); 5 warm-up edits are
+not measured.
 
 H3-2: for every D3 document, the lineages covered by `fixed` chunks and by
 `structural` chunks must both equal the snapshot's lineages (loss/gain 0), and
@@ -18,6 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 import random
+import re
 import shutil
 import tempfile
 import time
@@ -27,17 +30,16 @@ import mdkernel_core
 
 from eval import metrics, runinfo
 from eval.build_index import load_or_build
+from eval.datasets import synthetic_edits as se
 from eval.datasets.common import DATA, SEED, die, load_manifest
 from mdkernel import embed as E
 from mdkernel.hot import HotLayer
-from mdkernel.retrieval import Retriever
 from mdkernel.watcher import Watcher
 
 D3 = DATA / "d3"
-N_EDITS = 50
+N_EDITS = 200
 WARMUP = 5
 K = 10
-TIMEOUT_MS = 10_000
 
 
 def verify_d3(vault) -> None:
@@ -47,41 +49,89 @@ def verify_d3(vault) -> None:
         raise RuntimeError(f"data/d3 events_hash {got} != MANIFEST.d3.json {want}")
 
 
-def probe_text(i: int) -> str:
-    return f"Probe paragraph {i}: the zephyrine quartz marmot{i} catalogue lists harbour lanterns."
+SENT_RE = re.compile(r"(?<=[.!?])\s+")
+
+
+def query_sentence(text: str) -> str:
+    """First sentence of ≥ 5 words of the edited block's new text (else the whole block)."""
+    flat = mdkernel_core.normalize(text)
+    for sent in SENT_RE.split(flat):
+        if len(sent.split()) >= 5:
+            return sent
+    return flat
+
+
+def plan_edits(vault, docs_dir: Path, rng: random.Random) -> list[tuple[str, str, str, str]]:
+    """(doc_path, old_raw_block, new_raw_block, query) — one `rephrase_light` edit
+    (frozen D1 operation) per document, for N_EDITS + WARMUP documents."""
+    order = sorted(vault.doc_paths())
+    rng.shuffle(order)
+    plans = []
+    for d in order:
+        text = (docs_dir / d).read_bytes().decode("utf-8")
+        blocks, fm = se.parse_blocks(text)
+        vocab = sorted(
+            {
+                m.group(2)
+                for t in text.split()
+                if (m := se.WORD_RE.match(t)) and len(m.group(2)) >= 4
+            }
+        )
+        if len(vocab) < 2:
+            continue
+        res = se.op_rephrase(se.Doc(blocks, fm), rng, vocab, heavy=False)
+        if res is None:
+            continue
+        new_blocks, [(i, _)] = res
+        old_raw, new_raw = blocks[i].text, new_blocks[i].text
+        if text.count(old_raw) != 1:
+            continue  # the block must be locatable in the file
+        plans.append((d, old_raw, new_raw, query_sentence(new_raw)))
+        if len(plans) == N_EDITS + WARMUP:
+            return plans
+    raise RuntimeError(f"only {len(plans)} editable documents")
 
 
 def h3_latency(tmp: Path) -> dict:
     shutil.copytree(D3, tmp / "d3")
+    docs_dir = tmp / "d3" / "docs"
     vault = mdkernel_core.Vault(str(tmp / "d3"))
     _, index, _ = load_or_build("structural", mdkernel_core.Vault(str(D3)))
     hot = HotLayer(index)
-    r = Retriever(index, hot)
-    w = Watcher(vault, hot, "structural", tmp / "d3" / "docs")
+    w = Watcher(vault, hot, "structural", docs_dir)
+    plans = plan_edits(vault, docs_dir, random.Random(f"{SEED}:h3"))
     E.embed_query("warm up the model")  # model load is excluded from H3-1
-    docs = sorted(vault.doc_paths())
-    rng = random.Random(f"{SEED}:h3")
-    picks = rng.sample(docs, N_EDITS + WARMUP)
-    latencies, found = [], []
-    for i, doc in enumerate(picks):
-        path = tmp / "d3" / "docs" / doc
-        text = path.read_bytes().decode("utf-8")
+    rows = []
+    for i, (doc, old_raw, new_raw, query) in enumerate(plans):
+        path = docs_dir / doc
+        new_text = path.read_bytes().decode("utf-8").replace(old_raw, new_raw, 1)
         t0 = time.perf_counter()
-        path.write_bytes((text.rstrip("\n") + "\n\n" + probe_text(i) + "\n").encode("utf-8"))
+        path.write_bytes(new_text.encode("utf-8"))
         out = w.process(path)
-        new = set(out["hot_added"])
-        hit = False
-        while (time.perf_counter() - t0) * 1000 < TIMEOUT_MS:
-            if new & {k for k, _ in r.flat(probe_text(i), K)}:
-                hit = True
-                break
+        results = hot.search(query, K)
         ms = (time.perf_counter() - t0) * 1000
-        if i >= WARMUP:
-            latencies.append(ms)
-            found.append(hit)
-    if not all(found):
-        raise RuntimeError(f"{found.count(False)} probe edits never became searchable")
-    return {"latencies_ms": latencies, "n_edits": len(latencies), "warmup": WARMUP}
+        if not out["hot_added"] or not results:
+            raise RuntimeError(f"{doc}: edit produced no searchable hot chunk")
+        fresh = set(out["hot_added"])
+        rows.append(
+            {
+                "doc_path": doc,
+                "ms": ms,
+                "warmup": i < WARMUP,
+                "reembedded_chunks": len(fresh),
+                "hit_at_1": results[0][0] in fresh,
+                "hit_at_10": any(k in fresh for k, _ in results),
+            }
+        )
+    measured = [r for r in rows if not r["warmup"]]
+    return {
+        "latencies_ms": [r["ms"] for r in measured],
+        "n_edits": len(measured),
+        "warmup": WARMUP,
+        "hit_at_1_rate": sum(r["hit_at_1"] for r in measured) / len(measured),
+        "hit_at_10_rate": sum(r["hit_at_10"] for r in measured) / len(measured),
+        "rows": rows,
+    }
 
 
 def h3_rechunk() -> dict:
@@ -138,6 +188,7 @@ def main(argv: list[str] | None = None) -> None:
     }
     runinfo.write_json(a.run, "h3.json", out)
     runinfo.record_phase(a.run, "h3", {"n_edits": N_EDITS, "warmup": WARMUP, "k": K}, ["h3.json"])
+    print(f"hit@1 {lat['hit_at_1_rate']:.3f} hit@10 {lat['hit_at_10_rate']:.3f}")
     print(
         json.dumps(
             {"H3-1": out["H3-1"], "H3-2": out["H3-2"], "log_equal": rc["log_equal"]}, indent=1
