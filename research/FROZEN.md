@@ -21,11 +21,16 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/gen_fixtures.sh` | `P1-A/A3:` | fixture üreteci |
 | `scripts/fixture-gen/**` | `P1-A/A3:` | fixture üreteci |
 | `scripts/test_freeze_indep.sh` | `P1-A/A4:` | denetleyici sabit-bağımsızlık testi |
+| `research/eval/datasets/synthetic_edits_v3.py` | `P1-A/A5:` | holdout + split_hard üreteci |
+| `research/eval/run_holdout.py` | `P1-A/A5:` | A-2 koşturucusu |
+| `research/eval/run_split_grid.py` | `P1-A/A5:` | A-7 koşturucusu (bilgi) |
+| `research/data/MANIFEST.d1ho.json` | `P1-A/A5:` | holdout manifest'i |
+| `research/data/MANIFEST.d1sh.json` | `P1-A/A5:` | split_hard manifest'i |
 | `scripts/verify.sh` | `P1-A/A6:` | doğrulama zinciri (A6'da tamamlanır) |
 | `scripts/check_frozen.sh` | `P1-A/A6:` | dondurma denetleyicisi |
 <!-- /frozen-table -->
 
 ## Notlar
-- `research/eval/**` altında A5'te eklenen yeni dosyalar (`datasets/synthetic_edits_v3.py`, `run_holdout.py`, `run_split_grid.py`) eklendikleri commit'ten sonra dondurulmuş sayılır; A5 bu tabloya satır ekler.
+- `research/eval/**` altında A5'te eklenen dosyalar (`datasets/synthetic_edits_v3.py`, `run_holdout.py`, `run_split_grid.py`) ve yeni manifest'ler A5 commit'inden itibaren kendi satırlarıyla dondurulmuştur.
 - Bir satır yalnız dondurulduğu commit'te **var olan** dosyaları kapsar; sonradan eklenen dosyalar kendi satırlarıyla dondurulur. Satırın commit'i henüz yoksa (görev commit'lenmemiş) satır "henüz dondurulmadı" diye raporlanır.
 - `research/docs/progress/**` ve `research/reports/{commentary.md,v3/commentary.md}` prototipin tarihsel kayıtlarıdır; yalnız dondurulmuş rapor üreteçleri (`eval/report*.py`) ve onların testleri için `v3-final`'den aynen geri yüklendi.

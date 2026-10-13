@@ -16,7 +16,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
 
 .PHONY: check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
-        eval-h4-v2repro test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
+        eval-h4-v2repro d1ho d1sh eval-holdout eval-split-grid test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps conformance regress verify
 
 setup: setup-py build
@@ -109,7 +109,14 @@ d1k4: d3
 d1h: d3
 	$(PY) -m eval.datasets.synthetic_edits_v2 --set d1h $(ARGS)
 
-datasets: d2 d3 d1 d1k4 d1h
+# P1-A holdout (GOAL A-2) and split-threshold difficulty slice (A-7)
+d1ho: d3 d1h
+	$(PY) -m eval.datasets.synthetic_edits_v3 --set holdout $(ARGS)
+
+d1sh: d3 d1h
+	$(PY) -m eval.datasets.synthetic_edits_v3 --set split_hard $(ARGS)
+
+datasets: d2 d3 d1 d1k4 d1h d1ho d1sh
 
 # ---- freeze checkers (research/FROZEN.md)
 freeze-check:
@@ -146,6 +153,13 @@ eval-h4: require-run
 
 eval-h4-v2repro: require-run
 	$(PY) -m eval.run_h4_v2repro --run $(RUN)
+
+# P1-A: holdout at the compiled v3 parameters (A-2) and THETA_SPLIT grid (A-7)
+eval-holdout: require-run
+	$(PY) -m eval.run_holdout --run $(RUN)
+
+eval-split-grid: require-run
+	$(PY) -m eval.run_split_grid --run $(RUN)
 
 # Quality regression (TASKS A4, GOAL A-3): v2 phases + v3 D1-easy/hard, D2, H3,
 # H4, H4-V2 under RUN, then every quality field compared with the v3-final

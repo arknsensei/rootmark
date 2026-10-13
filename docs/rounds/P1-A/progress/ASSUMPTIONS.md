@@ -22,3 +22,9 @@ Etiketler: `[spec]` spesifikasyon yorumu, `[arch]` mimari/paket yapısı, `[-]` 
 - [arch] `research/tests/test_bindings*.py` CLI↔Python eşdeğerliğini sınamak için `target/release/mdk` ikilisini alt süreç olarak çağırır; bu bir import/paket bağımlılığı değildir, `check_deps.sh` import tarayıcısı Python import'larını ve yol erişimlerini denetler.
 - [-] `make regress` çıktıları `research/reports/runs/<RUN>/` (prototip düzeni) altında üretilir ve `reports/rounds/P1-A/runs/<RUN>/`'a kopyalanır.
 - [-] Prototipin rapor üreteçleri (`eval/report.py`, `eval/report_v3.py`) dondurulmuş olarak taşındı ama P1-A zincirinde koşmaz; P1-A raporu A7'de ayrı üreteçle.
+
+## A5
+- [spec] Holdout uygunluk kuralı: ≥3 blok, ≥1 paragraf, ≥1 düzyazı blok, render geri dönüşü (D1-hard kuralı easy ∪ hard dışında yalnız 5 doküman bırakıyor). Op tablosu ve op fonksiyonları D1-hard'ınkiyle aynı; uygulanamayan op D1-hard'daki gibi yeniden çekilir, bu yüzden gerçekleşen dağılım sapar (manifest `realised`).
+- [spec] `split_hard` op adları dondurulmuş metriklerin tanıdığı adlardır (`split_edit`, `merge_edit`, `dup_delete_adjacent`); varyant `variant` alanında. `dup_delete_adjacent` (%10) dondurulmuş amacın (S1+(1−S2)+S3+S4) tanımlı olması için dilimde tutuldu.
+- [spec] "≤ 8 kelimelik parçalar": iki parçalı bölmede kısa parça ≤ 8 kelime; "iki parçası da düzenlenmiş": her parçaya `rephrase_light`; "≥ %15 düzenlemeli birleştirme": birleşik metnin kelimelerinin ≥ %15'i değişmiş (`rephrase_heavy` aralığı, ölçülerek zorunlu).
+- [-] A-7 ızgarasında THETA derlenmiş v3 değeridir (0.50); ızgara yalnız THETA_SPLIT'i değiştirir.
