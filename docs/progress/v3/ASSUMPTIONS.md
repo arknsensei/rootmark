@@ -29,3 +29,8 @@ Her satırın başındaki etiket, varsayımın etkileyebileceği hipotezi göste
 - [H1] Ayar ızgarasında THETA_SPLIT (0.55/0.65/0.75) hiçbir metriği değiştirmedi; D1-hard bölme/birleştirme örnekleri bu aralığın hepsinde aynı biçimde yakalanıyor. H1-G yalnız THETA'dan dolayı 4. Seçilen THETA_SPLIT_V3 = 0.65 eşitlik-kırma kuralının sonucudur, veriden öğrenilmiş bir değer değildir.
 - [-] `make eval-h1s-v3` EVAL_DELTA'daki `--phase` argümanını `PHASE=tune|test` değişkeniyle alır (`make` komut satırı bayrak geçiremez); ayrıca `eval-h1s-v3-tune` kısayolu.
 - [H1] `freeze-check-v3` denetleyicisi T24 sabitlerinden bağımsız hale getirildi (FREEZE_EXCEPTIONS v3/T24).
+
+## T26
+- [H4] D3 (`data/d3`) v2 eşleyiciyle kurulu kalır (v2 manifest'i ve dondurulmuş kurucu); v3 günlüğü aynı dokümanların ayrı bir vault'a eşleyici v3 ile taze ingest'idir. İlk ingest'te önceki snapshot olmadığından iki eşleyici aynı soyları atar; fark yalnız `meta.matcher_version` etiketindedir — H4-1 (v3) bu nedenle esasen kurulumun determinizmini sınar, eşleyici farkını değil (eşleyici farkı H1 ve H3-1 düzenlemelerinde devrededir).
+- [H3] H3 v3, v2 gömme indeksini (`data/d3_index`, D3 v2 günlüğüne göre anahtarlı) yeniden kullanır; bu, v3 ikizinin soy/sürüm listelerinin doküman doküman `data/d3` ile aynı olduğu doğrulandıktan sonra yapılır.
+- [-] `make eval-h3`/`eval-h4` artık v3 koşturucularıdır (T26); v2 koşturucular `eval-h3-v2`/`eval-h4-v2` olarak `MDK_MATCHER=v2` altında korunur. `make d3` dondurulmuş `eval.datasets.vault`'u doğrudan çağırmaz (o modülün `main()`'i eklenen `events_hash_v3` alanı yüzünden manifest'i tümüyle eşit bulamaz); `eval/d3_v3.py` aynı `build()`'i çağırıp v2 alanlarını ayrı karşılaştırır.
