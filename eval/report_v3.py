@@ -178,9 +178,15 @@ def decision(st: dict) -> list[str]:
             "- H1 geçti ancak H3 geçmedi → karar kuralının dondurma koşulu (H3) sağlanmadı; "
             "`01_SPEC.md` dondurulmaz, H3 regresyonu ele alınır."
         )
-    elif set(failing) <= {"H1-S2", "H1-H2"}:
+    elif set(failing) <= {"H1-S2", "H1-H2"} and h3:
         lines.append(
             f"- **{' ve '.join(failing)} kaldı, diğerleri geçti → eşleyici bir tur daha; diğer sonuçlar saklanır.**"
+        )
+    elif set(failing) <= {"H1-S2", "H1-H2"}:
+        lines.append(
+            f"- {' ve '.join(failing)} kaldı ve H3 de geçmedi → 'diğerleri geçti' koşulu sağlanmadığından "
+            "karar kuralının eşleyici-turu dalı uygulanmaz; `01_SPEC.md` dondurulmaz, eşleyici ve H3 regresyonu "
+            "birlikte ele alınır."
         )
     else:
         lines.append(

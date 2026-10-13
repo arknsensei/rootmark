@@ -68,6 +68,14 @@ def test_only_false_match_fails_means_one_more_matcher_round():
     assert "eşleyici bir tur daha" in text(st)
 
 
+def test_false_match_branch_requires_the_others_including_h3():
+    st = all_pass()
+    st["H1-S2"] = "KALDI"
+    st["H3-1"] = "KALDI"
+    t = text(st)
+    assert "eşleyici bir tur daha" not in t and "dondurulur" not in t
+
+
 def test_other_h1_failure_revisits_data_model():
     st = all_pass()
     st["H1-R1"] = "KALDI"
