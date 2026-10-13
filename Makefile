@@ -7,7 +7,7 @@ PY2 := MDK_MATCHER=v2 uv run python
 MDK := ./target/release/mdk
 
 .PHONY: setup build test test-rust test-py lint d1 d2 d3 d1k4 d1h freeze-check freeze-check-v3 \
-        eval-h1s-tune eval-h1s eval-h1r eval-h2-tune eval-h2 eval-h3 eval-h4 report verify require-run
+        eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3-tune eval-h1s-v3 eval-h2-tune eval-h2 eval-h3 eval-h4 report verify require-run
 
 setup:
 	uv sync --frozen
@@ -63,6 +63,14 @@ eval-h1s-tune: require-run
 
 eval-h1s: require-run
 	$(PY2) -m eval.run_h1s --phase test --run $(RUN)
+
+# v3 (docs/v3/03_EVAL_DELTA.md §Koşturma): `make eval-h1s-v3 RUN=<id> PHASE=tune|test`
+PHASE ?= test
+eval-h1s-v3: require-run
+	$(PY) -m eval.run_h1s_v3 --phase $(PHASE) --run $(RUN) $(ARGS)
+
+eval-h1s-v3-tune: require-run
+	$(PY) -m eval.run_h1s_v3 --phase tune --run $(RUN) $(ARGS)
 
 eval-h1r: require-run
 	$(PY2) -m eval.run_h1r --run $(RUN)
