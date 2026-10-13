@@ -198,7 +198,7 @@ H4-2: doğrulama aşamasında ölçülür (`VERIFICATION.md`).
 - T8: Embedding modeli HF revizyonu `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`'e sabitlendi; `torch.set_num_threads(4)`, batch 64, CPU. Aynı metinler aynı sırada kodlanır (iki koşturmada aynı batch bileşimi).
 - T14: `make eval-h4` `data/d3`'ü siler ve yeniden kurar; kaynak git klonu (`data/src/dendron-site`) önbellek olarak yerinde kalır ve sabit rev'e yeniden checkout edilir. Tam bağımsızlık (klon dahil) H4-2 / `make verify`'da iki temiz dizinde sağlanır. Hash uyuşmazlığı hata değil, H4-1 "geçmedi" sonucudur.
 - T15 (gözden geçirici turu 1 sonrası): H4-2 karşılaştırması sonuç dosyalarının (`h1s_tuning, h1s, h1r, h2_tuning, h2, h3, h4`) **tüm** JSON yapraklarını (listeler eleman eleman) kapsar; yalnız `eval/compare_runs.py::LATENCY_PATHS`'te sabit listelenen duvar saati gecikme alanları hariçtir (`h2: H2-3, latency_ms`; `h3: H3-1, summary.p50/p95, latency.latencies_ms, latency.rows[*].ms`). Bir koşturmada olup diğerinde olmayan alan hata. (Önceki dar alan listesi maddesinin yerine geçer.)
-**[-]** (11 madde)
+**[-]** (12 madde)
 - T0: `ASSUMPTIONS.md`, `FREEZE_EXCEPTIONS.md`, `STOP.md`, `EVAL_FREEZE_ISSUES.md` dosyaları `docs/progress/` altında tutulur (CLAUDE.md yol vermiyor).
 - T0: Python sürümü 3.12'ye sabitlendi (`requires-python = ">=3.12,<3.13"`); `networkx==3.7` 3.11'i desteklemiyor. CLAUDE.md "3.11+" koşulu sağlanır.
 - T0: Rust çekirdek crate'inin kütüphane adı `mdkcore`; Python modül adı `mdkernel_core` bağlama crate'ine ayrıldığı için çakışmayı önler.
@@ -210,6 +210,7 @@ H4-2: doğrulama aşamasında ölçülür (`VERIFICATION.md`).
 - T10: İndeks + graf önbelleği `data/d3_index/<strategy>/` (D3 `events_hash`, model revizyonu ve graf parametreleriyle damgalı; uyuşmazlıkta sıfırdan kurulur). `data/d3` dışında tutulur ki H4 yeniden kurulumu silmesin.
 - T15: Rapor `reports/runs/<RUN>/FINAL.md` ve `figs/` üretir, aynısını `reports/FINAL.md` ve `reports/figs/`'e kopyalar. Serbest yorum (§8) `reports/commentary.md`'den okunur; rakam içerirse rapor hata verir ("sayı içermez" kuralı mekanik). Eşikler ve karar kuralı `eval/report.py` içinde `00_GOAL.md`'den aynen kodlanmıştır; H4-2 raporda "doğrulamada" durumundadır ve karar satırları H4-2'ye koşullu yazılır.
 - T15: Rapor başlığındaki veri manifest hash'leri koşturmanın `manifest.json` kaydından alınır; fazlar arasında veya güncel commit'li manifest'lerle uyuşmazsa ya da fazlar arasında araç sürümleri farklıysa rapor hata verir. T12 park yolunda `h2.json` bulunmayacağı için rapor da hata verir (T17 zaten T12'yi bekler; park yaşanmadı).
+- T18: Nihai koşturmanın ham çıktıları (`reports/runs/<RUN>/*.json`, `FINAL.md`, `figs/`) `.gitignore`'a rağmen `git add -f` ile commit'lenir; böylece `reports/FINAL.md`'deki her sayı git'teki ham JSON'a izlenebilir. Diğer ara koşturmalar yerel kalır.
 
 **Park:** Park edilen görev yok.
 
