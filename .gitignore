@@ -22,3 +22,6 @@ __pycache__/
 
 # test scratch vaults
 tests/fixtures/**/.mdkernel/
+
+# macOS
+.DS_Store
