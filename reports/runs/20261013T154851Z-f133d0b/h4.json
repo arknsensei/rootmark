@@ -1,0 +1,15 @@
+{
+ "H4-1": {
+  "equal": true,
+  "manifest_hash": "e6945bbc2da9c47376e017e815d7e51b",
+  "rebuilt_hash": "e6945bbc2da9c47376e017e815d7e51b"
+ },
+ "docs_equal": true,
+ "rev": "fbc07769235bca514f88be79a523311d72c7cafd",
+ "stats": {
+  "docs": 1012,
+  "structural_chunks": 5998,
+  "wikilink_docs": 534,
+  "wikilink_share": 0.527668
+ }
+}

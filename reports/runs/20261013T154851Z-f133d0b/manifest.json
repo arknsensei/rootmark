@@ -1,0 +1,176 @@
+{
+ "phases": {
+  "h1r": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "a1ab3a08573f2f6f32ce769234fdf365"
+   },
+   "git_sha": "f133d0b80d416b4bced3f2ec3f6938e5e4e5ecf0",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h1r.json"
+   ],
+   "params": {
+    "theta": 0.6
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h1s_test": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "a1ab3a08573f2f6f32ce769234fdf365"
+   },
+   "git_sha": "f133d0b80d416b4bced3f2ec3f6938e5e4e5ecf0",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h1s.json"
+   ],
+   "params": {
+    "theta": 0.6,
+    "theta_split": 0.7
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h1s_tune": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "a1ab3a08573f2f6f32ce769234fdf365"
+   },
+   "git_sha": "f133d0b80d416b4bced3f2ec3f6938e5e4e5ecf0",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h1s_tuning.json"
+   ],
+   "params": {
+    "theta": 0.6,
+    "theta_split": 0.7
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h2_test": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "a1ab3a08573f2f6f32ce769234fdf365"
+   },
+   "git_sha": "f133d0b80d416b4bced3f2ec3f6938e5e4e5ecf0",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h2.json"
+   ],
+   "params": {
+    "alpha": 0.9
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h2_tune": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "a1ab3a08573f2f6f32ce769234fdf365"
+   },
+   "git_sha": "f133d0b80d416b4bced3f2ec3f6938e5e4e5ecf0",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h2_tuning.json"
+   ],
+   "params": {
+    "selected_alpha": 0.9
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h3": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "a1ab3a08573f2f6f32ce769234fdf365"
+   },
+   "git_sha": "f133d0b80d416b4bced3f2ec3f6938e5e4e5ecf0",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h3.json"
+   ],
+   "params": {
+    "k": 10,
+    "n_edits": 200,
+    "warmup": 5
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h4": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "a1ab3a08573f2f6f32ce769234fdf365"
+   },
+   "git_sha": "f133d0b80d416b4bced3f2ec3f6938e5e4e5ecf0",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h4.json"
+   ],
+   "params": {},
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  }
+ },
+ "run_id": "20261013T154851Z-f133d0b",
+ "seed": 20261013
+}
