@@ -1,0 +1,11 @@
+# P1-A — Dondurma istisnaları
+
+Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/sonra bit eşitliği kaydı, (c) gözden geçirici onayı.
+
+## F1 · A4 · Dondurma denetleyicilerinin parametreleri fixture'a taşındı
+- **Ne:** `research/eval/freeze_check.py` vault'ları `mdkernel_core.Vault(path)` yerine `_vault(path)` ile açar; `_vault`, eşleyici sürümünü ve THETA/THETA_SPLIT'i `tests/fixtures/freeze_fixture/params.json`'dan okur (`{"matcher": "v2", "theta": 0.60, "theta_split": 0.70}`). `research/eval/freeze_check_v3.py` modül sabitleri `MATCHER`, `GRID`, `PARAMS`'ı `tests/fixtures/freeze_fixture_v3/params.json`'dan okur (`{"matcher": "v3", "params": [0.60, 0.65], "grid": [[0.55,0.55],[0.60,0.65],[0.70,0.75]]}`).
+- **Neden:** GOAL P1-A "denetleyiciler derlenmiş sabitlere bağlı olamaz (fixture kendi parametrelerini taşır)" ve v3 doğrulayıcı önerisi 3. v3-final `freeze_check.py` derlenmiş V2 sabitlerini (`MDK_MATCHER=v2` + varsayılan) okuyordu: sabitler değişince denetleyici sonucu değişiyordu (`scripts/test_freeze_indep.sh` kontrol 2 bunu gösterir).
+- **Diff:** `git diff v3-final:eval/freeze_check.py research/eval/freeze_check.py` — yalnız `PARAMS_FILE` + `_vault()` eklendi ve üç `mdkernel_core.Vault(...)` çağrısı `_vault(...)` oldu; `freeze_check_v3.py` — `_P = json.loads(params.json)`, `MATCHER = _P["matcher"]`, `GRID = tuple(tuple(c) for c in _P["grid"])`, `PARAMS = tuple(_P["params"])` (değerler aynı). Fixture'lara yalnız `params.json` eklendi; `expected.json` değişmedi.
+- **Önce/sonra bit eşitliği:** önce `freeze-check OK (d489a0ed44b15d3aeb272e16cdd4a5af)`, `freeze-check-v3 OK (d138cddcde1d0978a020a6fe8df2f610)`; sonra aynı iki digest (aynı `expected.json` ile bayt karşılaştırması). Ayrıca sabitler 0.91/0.92/0.93/0.94 yapılarak derlenmiş kopyada da aynı iki digest (`make test-freeze-indep`).
+- **Gözden geçirici onayı:** A4.review.md (aşağıya gözden geçirici yazar).
+  - **ONAYLANDI** (A4 gözden geçirici, 2026-10-14): diff asgari ve davranış-nötr (yalnız parametre kaynağı fixture'a taşındı, değerler aynı); `make freeze-check` d489a0ed…, `make freeze-check-v3` d138cddc… önce/sonra aynı, bağımsız olarak yeniden koşuldu; `make test-freeze-indep` OK (kontrol 1 ve 2 dahil); `research/eval/**` v3-final'den yalnız bu iki dosyada farklı.

@@ -5,23 +5,40 @@ SHELL := /bin/bash
 # Python lives only in research/ (its own uv project); TypeScript only in clients/.
 
 UVR := cd research && uv run --frozen
+PY := cd research && uv run --frozen python
+# v2 code paths (frozen eval, v2 runners) never pass a matcher: run them under
+# matcher v2 so they reproduce v2 behaviour exactly (prototype ASSUMPTIONS T21)
+PY2 := cd research && MDK_MATCHER=v2 uv run --frozen python
+# v3-final reference run (docs/rounds/P1-A/progress/SOURCE.md); A-3 compares against it
+V3_REF_RUN := 20261013T182004Z-f82dabd
+PHASE ?= test
 TS_PKGS := $(wildcard clients/*/package.json)
 
-.PHONY: setup setup-py test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
+.PHONY: check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
+        test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
+        eval-h4-v2repro test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps conformance regress verify
 
-setup: setup-py
-	cargo build --workspace --release
+setup: setup-py build
 
 setup-py:
-	cd research && uv sync --frozen
+	@# --inexact: keep the maturin-installed mdkernel_core (research is `package = false`)
+	cd research && uv sync --frozen --inexact
+
+# Rust workspace + the mdkernel_core extension into research/.venv
+build:
+	cargo build --workspace --release
+	$(UVR) maturin develop --release --quiet
+	@# macOS ld can emit a misaligned LINKEDIT string pool that dyld rejects;
+	@# fail here, loudly, instead of at first use (prototype ASSUMPTIONS T5)
+	$(PY) -c "import mdkernel_core"
 
 test: test-rust test-py test-ts
 
 test-rust:
 	cargo test --workspace --release
 
-test-py: setup-py
+test-py: setup-py build
 	$(UVR) pytest -q
 
 test-ts:
@@ -31,7 +48,7 @@ else
 	@for p in $(dir $(TS_PKGS)); do (cd "$$p" && npm ci && npx vitest run); done
 endif
 
-lint: lint-rust lint-py lint-ts check-deps test-check-deps
+lint: lint-rust lint-py lint-ts check-deps test-check-deps check-frozen
 
 lint-rust:
 	cargo fmt --all --check
@@ -52,6 +69,10 @@ endif
 check-deps:
 	bash scripts/check_deps.sh
 
+# Frozen files unchanged since their freeze commit (research/FROZEN.md)
+check-frozen:
+	bash scripts/check_frozen.sh
+
 # Deliberate reverse dependency in a scratch copy must make check_deps.sh fail
 test-check-deps:
 	bash scripts/test_check_deps.sh
@@ -68,8 +89,79 @@ conformance:
 	  || { echo "error: conformance level 1 not reached (reports/conformance.json)" >&2; exit 1; }
 	@echo "conformance: level 1, $$(jq -r '"\(.passed)/\(.total)"' reports/conformance.json) (reports/conformance.json)"
 
-regress:
-	@echo "error: make regress is implemented in P1-A/A4" >&2; exit 1
+require-run:
+	@if [ -z "$(RUN)" ]; then echo "error: RUN=<run_id> is required (cd research && uv run --frozen python -m eval.runinfo)" >&2; exit 1; fi
 
+# ---- research datasets (git-ignored; rebuilt and verified against committed MANIFESTs)
+d2:
+	$(PY2) -m eval.datasets.git_history $(ARGS)
+
+# D3: frozen v2 builder under matcher v2 + the v3 log hash (`events_hash_v3`)
+d3:
+	$(PY) -m eval.d3_v3 $(ARGS)
+
+d1: d3
+	$(PY2) -m eval.datasets.synthetic_edits $(ARGS)
+
+d1k4: d3
+	$(PY) -m eval.datasets.synthetic_edits_v2 --set d1k4 $(ARGS)
+
+d1h: d3
+	$(PY) -m eval.datasets.synthetic_edits_v2 --set d1h $(ARGS)
+
+datasets: d2 d3 d1 d1k4 d1h
+
+# ---- freeze checkers (research/FROZEN.md)
+freeze-check:
+	$(PY2) -m eval.freeze_check
+
+freeze-check-v3:
+	$(PY) -m eval.freeze_check_v3
+
+# the checkers must not depend on compiled matcher constants (GOAL P1-A)
+test-freeze-indep:
+	bash scripts/test_freeze_indep.sh
+
+# ---- prototype phases (frozen runners; outputs in research/reports/runs/<RUN>/)
+eval-h1s-tune: require-run
+	$(PY2) -m eval.run_h1s --phase tune --run $(RUN)
+
+eval-h1s: require-run
+	$(PY2) -m eval.run_h1s --phase test --run $(RUN)
+
+eval-h1r: require-run
+	$(PY2) -m eval.run_h1r --run $(RUN)
+
+eval-h1s-v3: require-run
+	$(PY) -m eval.run_h1s_v3 --phase $(PHASE) --run $(RUN) $(ARGS)
+
+eval-h1r-v3: require-run
+	$(PY) -m eval.run_h1r_v3 --run $(RUN)
+
+eval-h3: require-run
+	$(PY) -m eval.run_h3_v3 --run $(RUN)
+
+eval-h4: require-run
+	$(PY) -m eval.run_h4_v3 --run $(RUN)
+
+eval-h4-v2repro: require-run
+	$(PY) -m eval.run_h4_v2repro --run $(RUN)
+
+# Quality regression (TASKS A4, GOAL A-3): v2 phases + v3 D1-easy/hard, D2, H3,
+# H4, H4-V2 under RUN, then every quality field compared with the v3-final
+# reference run (compare_runs --set v3; latency fields excluded, non-zero exit
+# on any difference). Results are copied to reports/rounds/P1-A/runs/<RUN>/.
+regress: require-run
+	$(MAKE) eval-h1s-tune eval-h1s eval-h1r RUN=$(RUN)
+	$(MAKE) eval-h1s-v3 RUN=$(RUN) PHASE=tune
+	$(MAKE) eval-h1s-v3 RUN=$(RUN) PHASE=test
+	$(MAKE) eval-h1r-v3 eval-h3 eval-h4 eval-h4-v2repro RUN=$(RUN)
+	$(PY) -m eval.compare_runs reports/runs/$(V3_REF_RUN) reports/runs/$(RUN) --set v3 \
+	  --out reports/runs/$(RUN)/regress_vs_v3final.json
+	mkdir -p reports/rounds/P1-A/runs/$(RUN)
+	cp research/reports/runs/$(RUN)/*.json reports/rounds/P1-A/runs/$(RUN)/
+	@echo "regress: RUN=$(RUN) equal to v3-final $(V3_REF_RUN) (reports/rounds/P1-A/runs/$(RUN)/regress_vs_v3final.json)"
+
+# Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:
-	@echo "error: make verify is implemented in P1-A/A6" >&2; exit 1
+	bash scripts/verify.sh

@@ -1,6 +1,0 @@
-# pyo3 extension modules resolve Python symbols at load time on macOS.
-[target.aarch64-apple-darwin]
-rustflags = ["-C", "link-arg=-undefined", "-C", "link-arg=dynamic_lookup"]
-
-[target.x86_64-apple-darwin]
-rustflags = ["-C", "link-arg=-undefined", "-C", "link-arg=dynamic_lookup"]

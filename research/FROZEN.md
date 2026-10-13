@@ -1,0 +1,31 @@
+# Dondurma listesi (P1-A)
+
+docs/DEV_PROCESS.md §4 ve kök `CLAUDE.md`: aşağıdaki dosyalar, "dondurulduğu commit" sütunundaki commit'ten (konu satırı öneki) sonra tur içinde **değişmez**. İstisna yalnız `docs/rounds/<tur>/progress/FREEZE_EXCEPTIONS.md` girdisi + önce/sonra bit eşitliği (`make freeze-check`, `make freeze-check-v3`, `make conformance`) + gözden geçirici onayı ile. Denetleyicilerin kendisi listededir ve derlenmiş, ayarlanabilir sabitlere bağlı olamaz: parametreleri fixture taşır (`tests/fixtures/freeze_fixture*/params.json`, `spec/fixtures/C1-*/case.json`); bu `make test-freeze-indep` ile sınanır.
+
+Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_frozen.sh` bu tabloyu okur.
+
+<!-- frozen-table -->
+| Yol kalıbı | Dondurulduğu commit | Not |
+|---|---|---|
+| `research/eval/**` | `P1-A/A4:` | prototip ölçüm kodu (v2 + v3 dondurmaları aynen geçerli); A5'te eklenen dosyalar kendi satırlarıyla |
+| `research/tests/fixtures/freeze_fixture/**` | `P1-A/A4:` | v2 dondurma fixture'ı + `params.json` (F1) |
+| `research/tests/fixtures/freeze_fixture_v3/**` | `P1-A/A4:` | v3 dondurma fixture'ı + `params.json` (F1) |
+| `research/data/MANIFEST.*.json` | `P1-A/A4:` | veri manifest'leri (v3-final ile bayt eşit) |
+| `research/data/d4/**` | `P1-A/A4:` | API ile üretilmiş soru seti (H2; bu turda koşturulmaz) |
+| `research/data/splits/**` | `P1-A/A4:` | bölünmeler |
+| `research/reports/runs/20261013T154851Z-f133d0b/**` | `P1-A/A4:` | v2 nihai RUN (H4-V2 referansı) |
+| `research/reports/runs/20261013T182004Z-f82dabd/**` | `P1-A/A4:` | v3 nihai RUN (A-3 referansı) |
+| `spec/fixtures/**` | `P1-A/A3:` | C1 uyumluluk fixture'ları (v3-final'den üretildi) |
+| `core/tests/conformance.rs` | `P1-A/A3:` | uyumluluk denetleyicisi |
+| `core/tests/conformance/eval.rs` | `P1-A/A3:` | uyumluluk değerlendiricisi (üreteçle ortak) |
+| `scripts/gen_fixtures.sh` | `P1-A/A3:` | fixture üreteci |
+| `scripts/fixture-gen/**` | `P1-A/A3:` | fixture üreteci |
+| `scripts/test_freeze_indep.sh` | `P1-A/A4:` | denetleyici sabit-bağımsızlık testi |
+| `scripts/verify.sh` | `P1-A/A6:` | doğrulama zinciri (A6'da tamamlanır) |
+| `scripts/check_frozen.sh` | `P1-A/A6:` | dondurma denetleyicisi |
+<!-- /frozen-table -->
+
+## Notlar
+- `research/eval/**` altında A5'te eklenen yeni dosyalar (`datasets/synthetic_edits_v3.py`, `run_holdout.py`, `run_split_grid.py`) eklendikleri commit'ten sonra dondurulmuş sayılır; A5 bu tabloya satır ekler.
+- Bir satır yalnız dondurulduğu commit'te **var olan** dosyaları kapsar; sonradan eklenen dosyalar kendi satırlarıyla dondurulur. Satırın commit'i henüz yoksa (görev commit'lenmemiş) satır "henüz dondurulmadı" diye raporlanır.
+- `research/docs/progress/**` ve `research/reports/{commentary.md,v3/commentary.md}` prototipin tarihsel kayıtlarıdır; yalnız dondurulmuş rapor üreteçleri (`eval/report*.py`) ve onların testleri için `v3-final`'den aynen geri yüklendi.

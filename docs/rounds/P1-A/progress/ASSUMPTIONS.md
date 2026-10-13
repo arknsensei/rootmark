@@ -16,3 +16,9 @@ Etiketler: `[spec]` spesifikasyon yorumu, `[arch]` mimari/paket yapısı, `[-]` 
 - [spec] C1 fixture'larının beklenen değerleri v3-final çekirdeğinin çıktısıdır (TASKS A3); tür adları v3-final yazımıyla (`Heading`, `Human`) kayıtlıdır (K15-T).
 - [spec] C1-06 hata mesajları (geçici yol içerir) fixture'a girmez; yalnız `ok`/`error` sonucu ve dosya baytlarının değişmediği. C1-15 mesajı (yol içermez) aynen kayıtlıdır.
 - [-] Gözlem: `[X, A, Y] → [X, A', Y']` (A ve komşusu Y birlikte hafif düzenlenmiş) v3'te `BlockSplit(A → A', Y') + BlockDeleted(Y)` üretiyor; Y'nin soyu kopuyor. v3-final davranışı; P1-A'da değiştirilmez. Holdout/split_hard sonuçları yorumlanırken dikkate alınmalı (A5).
+
+## A4
+- [arch] `research/` prototip kökünün yerini alır (`eval/`, `mdkernel/`, `tests/`, `data/`, `reports/runs/`); dondurulmuş kod `ROOT = parents[2]` ile `research/`'ü kök görür, böylece dondurulmuş dosyalarda yol değişikliği gerekmez.
+- [arch] `research/tests/test_bindings*.py` CLI↔Python eşdeğerliğini sınamak için `target/release/mdk` ikilisini alt süreç olarak çağırır; bu bir import/paket bağımlılığı değildir, `check_deps.sh` import tarayıcısı Python import'larını ve yol erişimlerini denetler.
+- [-] `make regress` çıktıları `research/reports/runs/<RUN>/` (prototip düzeni) altında üretilir ve `reports/rounds/P1-A/runs/<RUN>/`'a kopyalanır.
+- [-] Prototipin rapor üreteçleri (`eval/report.py`, `eval/report_v3.py`) dondurulmuş olarak taşındı ama P1-A zincirinde koşmaz; P1-A raporu A7'de ayrı üreteçle.
