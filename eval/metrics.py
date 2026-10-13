@@ -1,0 +1,122 @@
+"""Metric definitions (EVAL §Metrikler). Frozen by `T9: freeze eval`.
+
+Every function is pure: it takes already-resolved lineage ids (see
+`eval/truth.py`) and returns numbers. An empty denominator is an error, never
+a silent zero.
+"""
+
+from __future__ import annotations
+
+from collections.abc import Iterable, Sequence
+
+
+class MetricError(RuntimeError):
+    pass
+
+
+def _ratio(num: int, den: int, what: str) -> float:
+    if den <= 0:
+        raise MetricError(f"{what}: empty denominator")
+    return num / den
+
+
+# ----------------------------------------------------------------------- H1
+
+RETENTION_OPS_S1 = ("rephrase_light", "rephrase_heavy", "move")
+RETENTION_OPS_S4 = ("dup_delete",)
+NEW_BLOCK_OPS = ("insert", "split", "merge")
+EVENT_OPS = ("split", "merge")
+
+
+def h1s_step_record(
+    op: str, mapping: Sequence, prev_lineages: Iterable[str], events: Sequence[dict]
+) -> dict:
+    """One scored D1 step.
+
+    `mapping` is the truth mapping with references already resolved to
+    lineage ids: `[[old_lineage | None, [new_lineage, ...]], ...]` (old ids
+    resolved before ingest, new ids after). `prev_lineages` are the lineages
+    of the snapshot before the step; `events` are the step's ingest events.
+    """
+    prev = set(prev_lineages)
+    rec: dict = {"op": op, "retained": [], "new_linked": [], "truth_events": [], "pred_events": []}
+    if op in RETENTION_OPS_S1 or op in RETENTION_OPS_S4:
+        for old, news in mapping:
+            for new in news:  # dup_delete: the deleted copy has no new block
+                rec["retained"].append(old == new)
+    if op == "insert":
+        for _old, news in mapping:
+            rec["new_linked"].extend(n in prev for n in news)
+    if op == "split":
+        ((old, news),) = mapping
+        rec["new_linked"].extend(n in prev for n in news)
+        rec["truth_events"].append(("BlockSplit", frozenset([old]), frozenset(news)))
+    if op == "merge":
+        olds = [o for o, _ in mapping]
+        new = {n for _, ns in mapping for n in ns}
+        if len(new) != 1:
+            raise MetricError(f"merge truth must map to one block, got {new}")
+        rec["new_linked"].extend(n in prev for n in new)
+        rec["truth_events"].append(("BlockMerged", frozenset(olds), frozenset(new)))
+    for e in events:
+        if e["kind"] in ("BlockSplit", "BlockMerged"):
+            rec["pred_events"].append(
+                (e["kind"], frozenset(e["meta"]["from_lineages"]), frozenset(e["lineage_ids"]))
+            )
+    return rec
+
+
+def f1(tp: int, n_pred: int, n_truth: int) -> dict:
+    if n_truth <= 0:
+        raise MetricError("F1: no truth events")
+    p = tp / n_pred if n_pred else 0.0
+    r = tp / n_truth
+    f = 2 * p * r / (p + r) if p + r else 0.0
+    return {"precision": p, "recall": r, "f1": f, "tp": tp, "n_pred": n_pred, "n_truth": n_truth}
+
+
+def h1s_aggregate(records: Sequence[dict]) -> dict:
+    """H1-S1..S4 plus per-op breakdown (EVAL §H1)."""
+    s1 = [x for r in records if r["op"] in RETENTION_OPS_S1 for x in r["retained"]]
+    s4 = [x for r in records if r["op"] in RETENTION_OPS_S4 for x in r["retained"]]
+    linked = [x for r in records for x in r["new_linked"]]
+    tp = n_pred = n_truth = 0
+    for r in records:
+        truth = list(r["truth_events"])
+        n_truth += len(truth)
+        n_pred += len(r["pred_events"])
+        for p in r["pred_events"]:
+            if p in truth:
+                truth.remove(p)
+                tp += 1
+    per_op: dict = {}
+    for op in sorted({r["op"] for r in records}):
+        rs = [r for r in records if r["op"] == op]
+        row: dict = {"steps": len(rs)}
+        ret = [x for r in rs for x in r["retained"]]
+        if ret:
+            row["retention"] = sum(ret) / len(ret)
+        lk = [x for r in rs for x in r["new_linked"]]
+        if lk:
+            row["false_match"] = sum(lk) / len(lk)
+        if op in EVENT_OPS:
+            t = sum(len(r["truth_events"]) for r in rs)
+            ok = sum(1 for r in rs for p in r["pred_events"] if p in r["truth_events"])
+            row["event_recall"] = ok / t if t else None
+        per_op[op] = row
+    return {
+        "H1-S1": _ratio(sum(s1), len(s1), "H1-S1"),
+        "H1-S2": _ratio(sum(linked), len(linked), "H1-S2"),
+        "H1-S3": f1(tp, n_pred, n_truth)["f1"],
+        "H1-S3_detail": f1(tp, n_pred, n_truth),
+        "H1-S4": _ratio(sum(s4), len(s4), "H1-S4"),
+        "n_s1": len(s1),
+        "n_s2": len(linked),
+        "n_s4": len(s4),
+        "per_op": per_op,
+    }
+
+
+def h1s_objective(m: dict) -> float:
+    """SPEC §5.3 tuning rule: S1 + (1 − S2) + S3 + S4."""
+    return m["H1-S1"] + (1 - m["H1-S2"]) + m["H1-S3"] + m["H1-S4"]
