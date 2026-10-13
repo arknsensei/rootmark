@@ -70,7 +70,9 @@ GIT_PINNED = (
 )
 
 
-def git(*args: str, cwd: Path | None = None, input: str | None = None) -> str:
+def git(
+    *args: str, cwd: Path | None = None, input: str | None = None, ok_codes: tuple[int, ...] = (0,)
+) -> str:
     """Runs git; stdout decoded as UTF-8 without newline translation (file
     contents must reach the parser byte-for-byte)."""
     r = subprocess.run(
@@ -80,7 +82,7 @@ def git(*args: str, cwd: Path | None = None, input: str | None = None) -> str:
         input=None if input is None else input.encode("utf-8"),
         check=False,
     )
-    if r.returncode != 0:
+    if r.returncode not in ok_codes:
         raise RuntimeError(
             f"git {' '.join(args)} failed: {r.stderr.decode('utf-8', 'replace').strip()}"
         )

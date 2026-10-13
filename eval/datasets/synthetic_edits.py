@@ -255,7 +255,9 @@ def draw_op(rng: random.Random) -> str:
     return OPS[-1][0]
 
 
-def generate_doc(doc_path: str, text: str, pool: list[Blk], out_dir: Path) -> dict:
+def generate_doc(
+    doc_path: str, text: str, pool: list[Blk], out_dir: Path, n_steps: int = STEPS
+) -> dict:
     rng = random.Random(f"{SEED}:{doc_path}")
     blocks, fm = parse_blocks(text)
     base = check_render(blocks, fm)
@@ -270,7 +272,7 @@ def generate_doc(doc_path: str, text: str, pool: list[Blk], out_dir: Path) -> di
     steps = []
     scored = 0
     redraws: list[dict] = []
-    while scored < STEPS:
+    while scored < n_steps:
         op = draw_op(rng)
         for _attempt in range(MAX_TRIES):
             if op == "dup_delete":
