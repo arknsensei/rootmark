@@ -6,7 +6,7 @@ PY := uv run python
 PY2 := MDK_MATCHER=v2 uv run python
 MDK := ./target/release/mdk
 
-.PHONY: setup build test test-rust test-py lint d1 d2 d3 freeze-check \
+.PHONY: setup build test test-rust test-py lint d1 d2 d3 d1k4 d1h freeze-check \
         eval-h1s-tune eval-h1s eval-h1r eval-h2-tune eval-h2 eval-h3 eval-h4 report verify require-run
 
 setup:
@@ -45,6 +45,12 @@ d3:
 
 d1: d3
 	$(PY2) -m eval.datasets.synthetic_edits $(ARGS)
+
+d1k4: d3
+	$(PY) -m eval.datasets.synthetic_edits_v2 --set d1k4 $(ARGS)
+
+d1h: d3
+	$(PY) -m eval.datasets.synthetic_edits_v2 --set d1h $(ARGS)
 
 freeze-check:
 	$(PY2) -m eval.freeze_check
