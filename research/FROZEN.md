@@ -29,6 +29,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/compare_p1a.py` | `P1-A/A6:` | A-4 karşılaştırıcısı (dondurulmuş `compare_runs.compare` ile) |
 | `research/eval/run_p1a_checks.py` | `P1-A/A6:` | A-1 / A-5 / A-6 RUN kaydı |
 | `scripts/test_tamper.sh` | `P1-A/A6:` | kasıtlı bozma testleri |
+| `research/eval/report_p1a.py` | `P1-A/A7-pre:` | P1-A rapor üreteci (resmi RUN'dan önce dondurulur) |
 | `scripts/verify.sh` | `P1-A/A6:` | doğrulama zinciri (A6'da tamamlanır) |
 | `scripts/check_frozen.sh` | `P1-A/A6:` | dondurma denetleyicisi |
 <!-- /frozen-table -->

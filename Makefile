@@ -14,7 +14,7 @@ V3_REF_RUN := 20261013T182004Z-f82dabd
 PHASE ?= test
 TS_PKGS := $(wildcard clients/*/package.json)
 
-.PHONY: test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
+.PHONY: report test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh eval-holdout eval-split-grid p1a-checks test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps conformance regress verify
@@ -173,6 +173,12 @@ p1a-checks: require-run
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
 	$(PY) -m eval.run_p1a_checks --run $(RUN) --conformance ../reports/conformance.json \
 	  --deps-log reports/runs/$(RUN)/check_deps.log
+
+# P1-A round report from one RUN directory (TASKS A7): writes <RUN_DIR>/FINAL.md
+# and reports/rounds/P1-A/FINAL.md
+report:
+	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
+	$(PY) -m eval.report_p1a --run-dir "$(abspath $(RUN_DIR))"
 
 # Quality regression (TASKS A4, GOAL A-3): v2 phases + v3 D1-easy/hard, D2, H3,
 # H4, H4-V2 under RUN, then every quality field compared with the v3-final
