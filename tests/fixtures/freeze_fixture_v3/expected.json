@@ -1,0 +1,3574 @@
+{
+ "easy": {
+  "aggregate": {
+   "H1-S1": 1.0,
+   "H1-S2": 0.0,
+   "H1-S2_v2def": 0.6,
+   "H1-S3": 1.0,
+   "H1-S3_detail": {
+    "f1": 1.0,
+    "n_pred": 6,
+    "n_truth": 6,
+    "precision": 1.0,
+    "recall": 1.0,
+    "tp": 6
+   },
+   "H1-S4": 1.0,
+   "n_dup": 8,
+   "n_false_match": 4,
+   "n_false_match_v2def": 10,
+   "n_retention": 12,
+   "per_op": {
+    "delete": {
+     "steps": 1
+    },
+    "dup_delete": {
+     "retention": 1.0,
+     "steps": 4
+    },
+    "insert": {
+     "false_match": 0.0,
+     "steps": 1
+    },
+    "merge": {
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 3
+    },
+    "move": {
+     "retention": 1.0,
+     "steps": 3
+    },
+    "rephrase_heavy": {
+     "retention": 1.0,
+     "steps": 4
+    },
+    "rephrase_light": {
+     "retention": 1.0,
+     "steps": 5
+    },
+    "split": {
+     "event_recall": 1.0,
+     "false_match": 0.0,
+     "retention": 1.0,
+     "steps": 3
+    }
+   }
+  },
+  "runs": [
+   {
+    "doc_path": "roasting.md#0",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "3c7a6a727faed563828b6ccd8e1e9eb2",
+     "v00.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v01.md": "d7da1276f5d8907f407bc348c13c4c10",
+     "v02.md": "cfb7e8ed124ba2140d05275390c20a3b",
+     "v03.md": "3e10c954bc53207a2416998b48c8a094"
+    },
+    "ops": [
+     "rephrase_heavy",
+     "rephrase_light",
+     "rephrase_heavy"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "maintenance.md#1",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 1,
+      "version_id": "3051c2bc7b92cdb37b7f212345687a7b"
+     },
+     null
+    ],
+    "files": {
+     "truth.json": "d3cee1f519d24e9165b664c27564e1f8",
+     "v00.md": "53a870fa6977b3a864d745bcbd2d1344",
+     "v01.md": "fac3f51983b28ae048ed711d2956dd69",
+     "v02.md": "34be8420151b2ad7495faf22d05fa8b0",
+     "v03.md": "69144fc3526876cb709e30457be3210d",
+     "v04.md": "4bc7f829f9eda49768abf372ce87623e"
+    },
+    "ops": [
+     "dup_prepare",
+     "dup_delete",
+     "merge",
+     "move"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "958a99a3fef9ac1a48fb6c1a875b3b8f",
+         "a3c3d85f5e36e68b423a21ff2f14feaf"
+        ],
+        [
+         "a3c3d85f5e36e68b423a21ff2f14feaf"
+        ],
+        "a3c3d85f5e36e68b423a21ff2f14feaf"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "958a99a3fef9ac1a48fb6c1a875b3b8f",
+         "a3c3d85f5e36e68b423a21ff2f14feaf"
+        ],
+        [
+         "a3c3d85f5e36e68b423a21ff2f14feaf"
+        ],
+        "a3c3d85f5e36e68b423a21ff2f14feaf"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "espresso.md#2",
+    "dominant": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "4ba342171f8382bfa87194289357803e",
+     "v00.md": "e15584dcbceef840355cf92462b40e38",
+     "v01.md": "435096bcb835e7a1b4eac52555517369",
+     "v02.md": "97e7e8d348e2080a6a2d6b30ff3e1c02",
+     "v03.md": "9adf13ae1ab7c21ca6a0ffb72e592b70",
+     "v04.md": "24561cdda0ccaa16a0fd1d261cc3d257"
+    },
+    "ops": [
+     "dup_prepare",
+     "dup_delete",
+     "move",
+     "rephrase_light"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "cupping.md#3",
+    "dominant": [
+     {
+      "k": 0,
+      "version_id": "269b0daf9db4ae5392fe4aa3efa440aa"
+     },
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "6c212352f692b26ba085523475d2adb0",
+     "v00.md": "0e96a65ab95a0e376601990eb98e7508",
+     "v01.md": "56a5139aae1f03ccefed1f321ec4c448",
+     "v02.md": "119ee5aa5adc38250baf285ada6a3d2b",
+     "v03.md": "1ad90710de61a56064c61b10c41bb6be"
+    },
+    "ops": [
+     "split",
+     "rephrase_heavy",
+     "rephrase_light"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "81660efbb378f2b0adf63be7b4a2814d"
+        ],
+        [
+         "81660efbb378f2b0adf63be7b4a2814d",
+         "fbd5be2b8b45d3486fd12e95ec272fff"
+        ],
+        "81660efbb378f2b0adf63be7b4a2814d"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "81660efbb378f2b0adf63be7b4a2814d"
+        ],
+        [
+         "81660efbb378f2b0adf63be7b4a2814d",
+         "fbd5be2b8b45d3486fd12e95ec272fff"
+        ],
+        "81660efbb378f2b0adf63be7b4a2814d"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "safety.md#4",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "4521e8f325d4ce8b1ba3c8ec616db092"
+     }
+    ],
+    "files": {
+     "truth.json": "d838c0e1258549841de9cadadc007fea",
+     "v00.md": "3381e77826d94d19c5215b4a62bdd679",
+     "v01.md": "5b0b52a486685c39ce3006638b0054d3",
+     "v02.md": "8f8c86a77e560ebb9ccfc5bf1ef1136e",
+     "v03.md": "ef6ffe6203bbc1f61eac6c73ee7c2b73"
+    },
+    "ops": [
+     "rephrase_light",
+     "delete",
+     "split"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "delete",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false,
+       true
+      ],
+      "op": "split",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "ffa2ed48b79ea13dbde0779c4e091cbd"
+        ],
+        [
+         "07d222c5e5355ab117bf4ab662d050ff",
+         "ffa2ed48b79ea13dbde0779c4e091cbd"
+        ],
+        "ffa2ed48b79ea13dbde0779c4e091cbd"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "ffa2ed48b79ea13dbde0779c4e091cbd"
+        ],
+        [
+         "07d222c5e5355ab117bf4ab662d050ff",
+         "ffa2ed48b79ea13dbde0779c4e091cbd"
+        ],
+        "ffa2ed48b79ea13dbde0779c4e091cbd"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "roasting.md#5",
+    "dominant": [
+     {
+      "k": 0,
+      "version_id": "b3355fd16f0e56265d766ed772e6b212"
+     },
+     {
+      "k": 0,
+      "version_id": "b3355fd16f0e56265d766ed772e6b212"
+     },
+     null
+    ],
+    "files": {
+     "truth.json": "9427a0992023b8520d78d111c89b0e76",
+     "v00.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v01.md": "3467132016351320721e579c9b623418",
+     "v02.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v03.md": "31c87d70c65f8d9bd666f629cb821198"
+    },
+    "ops": [
+     "split",
+     "merge",
+     "rephrase_light"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "1818f707c28b3b7ecae98534cb2d1b18"
+        ],
+        [
+         "051e314e2e4745a348db9a20de399afa",
+         "1818f707c28b3b7ecae98534cb2d1b18"
+        ],
+        "1818f707c28b3b7ecae98534cb2d1b18"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "1818f707c28b3b7ecae98534cb2d1b18"
+        ],
+        [
+         "051e314e2e4745a348db9a20de399afa",
+         "1818f707c28b3b7ecae98534cb2d1b18"
+        ],
+        "1818f707c28b3b7ecae98534cb2d1b18"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "051e314e2e4745a348db9a20de399afa",
+         "1818f707c28b3b7ecae98534cb2d1b18"
+        ],
+        [
+         "1818f707c28b3b7ecae98534cb2d1b18"
+        ],
+        "1818f707c28b3b7ecae98534cb2d1b18"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "051e314e2e4745a348db9a20de399afa",
+         "1818f707c28b3b7ecae98534cb2d1b18"
+        ],
+        [
+         "1818f707c28b3b7ecae98534cb2d1b18"
+        ],
+        "1818f707c28b3b7ecae98534cb2d1b18"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "maintenance.md#6",
+    "dominant": [
+     null,
+     null,
+     null,
+     {
+      "k": 1,
+      "version_id": "3051c2bc7b92cdb37b7f212345687a7b"
+     }
+    ],
+    "files": {
+     "truth.json": "851ad32e0478712690d13be5928611c3",
+     "v00.md": "53a870fa6977b3a864d745bcbd2d1344",
+     "v01.md": "3062e8b4f82748d579a7ce14dcd583de",
+     "v02.md": "9b455f0c8812817a691f19f5135423cb",
+     "v03.md": "0979a04cc55a075c4824da9082d852ec",
+     "v04.md": "2698fe9afd83ae273e3cd0f5b780e683"
+    },
+    "ops": [
+     "move",
+     "dup_prepare",
+     "dup_delete",
+     "merge"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "3c62bd7a43d7de0531d4621cc79e3448",
+         "904b3193aa9d0af611cd7b401776f847"
+        ],
+        [
+         "904b3193aa9d0af611cd7b401776f847"
+        ],
+        "904b3193aa9d0af611cd7b401776f847"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "3c62bd7a43d7de0531d4621cc79e3448",
+         "904b3193aa9d0af611cd7b401776f847"
+        ],
+        [
+         "904b3193aa9d0af611cd7b401776f847"
+        ],
+        "904b3193aa9d0af611cd7b401776f847"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "espresso.md#7",
+    "dominant": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "9ed6fc3887f09aab3994e602f546e241",
+     "v00.md": "e15584dcbceef840355cf92462b40e38",
+     "v01.md": "43eda7b2dd3cf654b331ef8e2e441b75",
+     "v02.md": "71f55a11770ba930f8d6a36c7fb879a6",
+     "v03.md": "16121e27457106841d59b379c6640a40",
+     "v04.md": "e7ee2f7bdb66d04e35ddda8e915b7563"
+    },
+    "ops": [
+     "dup_prepare",
+     "dup_delete",
+     "rephrase_heavy",
+     "insert"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     }
+    ]
+   }
+  ]
+ },
+ "h1r": {
+  "aggregate": {
+   "H1-R1": 1.0,
+   "H1-R2": 0.9,
+   "blocks": 10,
+   "loss_categories": {
+    "dup_content": 0,
+    "hunk_adjacent": 0,
+    "other": 0,
+    "type_change": 0
+   },
+   "other_count": 0,
+   "other_examples": [],
+   "touched": 4,
+   "touched_retention": 0.75,
+   "untouched": 6,
+   "untouched_lost": 0
+  },
+  "record": {
+   "losses": [],
+   "touched": 4,
+   "touched_kept": 3,
+   "untouched": 6,
+   "untouched_kept": 6
+  }
+ },
+ "hard": {
+  "H1-G": 2,
+  "aggregate": {
+   "H1-H1": 1.0,
+   "H1-H2": 0.0,
+   "H1-H2_v2def": 0.425531914893617,
+   "H1-H3": 0.9743589743589743,
+   "H1-H3_detail": {
+    "f1": 0.9743589743589743,
+    "n_pred": 19,
+    "n_truth": 20,
+    "precision": 1.0,
+    "recall": 0.95,
+    "tp": 19
+   },
+   "H1-H4": 1.0,
+   "n_dup": 24,
+   "n_false_match": 27,
+   "n_false_match_v2def": 47,
+   "n_retention": 72,
+   "per_op": {
+    "dup_delete_adjacent": {
+     "retention": 1.0,
+     "steps": 12
+    },
+    "insert": {
+     "false_match": 0.0,
+     "steps": 14
+    },
+    "merge_edit": {
+     "event_recall": 0.875,
+     "retention": 1.0,
+     "steps": 8
+    },
+    "move_edit": {
+     "retention": 1.0,
+     "steps": 11
+    },
+    "rephrase_extreme": {
+     "retention": 1.0,
+     "steps": 10
+    },
+    "rephrase_heavy": {
+     "retention": 1.0,
+     "steps": 10
+    },
+    "rephrase_light": {
+     "retention": 1.0,
+     "steps": 22
+    },
+    "split_edit": {
+     "event_recall": 1.0,
+     "false_match": 0.0,
+     "retention": 1.0,
+     "steps": 11
+    },
+    "split_three": {
+     "event_recall": 1.0,
+     "false_match": 0.0,
+     "retention": 1.0,
+     "steps": 1
+    }
+   }
+  },
+  "grid": [
+   {
+    "objective": 3.9743589743589745,
+    "theta": 0.55,
+    "theta_split": 0.55
+   },
+   {
+    "objective": 3.9743589743589745,
+    "theta": 0.6,
+    "theta_split": 0.65
+   },
+   {
+    "objective": 3.8632478632478633,
+    "theta": 0.7,
+    "theta_split": 0.75
+   }
+  ],
+  "runs": [
+   {
+    "doc_path": "roasting.md#0",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "4e781a770d53e085d631c2e1874f4c62",
+     "v00.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v01.md": "39005bc5ff45a0c147763f08cd4e1e91",
+     "v02.md": "13fe81c20c3ea779e5c2fef6be088fdd",
+     "v03.md": "e3dcc6c4fba7198a8046e3b1749870ac"
+    },
+    "ops": [
+     "rephrase_light",
+     "rephrase_light",
+     "insert"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "maintenance.md#1",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "1c36c54d0e2c859ff6d0ce34ba52e086"
+     },
+     null
+    ],
+    "files": {
+     "truth.json": "0305df5d67ffcb43d73ae14fc9e347fa",
+     "v00.md": "53a870fa6977b3a864d745bcbd2d1344",
+     "v01.md": "7594a82130b2eadfb24d34158204e5db",
+     "v02.md": "2c4944f785f47c27d3cd1b287b3e1020",
+     "v03.md": "532db42149d23e767045738356049df8",
+     "v04.md": "80efd3033e3440b1e9ebae6987edd6b1"
+    },
+    "ops": [
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "merge_edit",
+     "move_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge_edit",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "287902c83ea2af082362273dc616758c",
+         "337241e45f0fffddc7e6376b4f764a7e"
+        ],
+        [
+         "337241e45f0fffddc7e6376b4f764a7e"
+        ],
+        "337241e45f0fffddc7e6376b4f764a7e"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "287902c83ea2af082362273dc616758c",
+         "337241e45f0fffddc7e6376b4f764a7e"
+        ],
+        [
+         "337241e45f0fffddc7e6376b4f764a7e"
+        ],
+        "337241e45f0fffddc7e6376b4f764a7e"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "espresso.md#2",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "79e32a75f2d472a77787e019e0083eff"
+     }
+    ],
+    "files": {
+     "truth.json": "837442fd0a0fe4f61ed2b73cb076c83b",
+     "v00.md": "e15584dcbceef840355cf92462b40e38",
+     "v01.md": "14d2d836641f4b7b0ce0c50c3283f306",
+     "v02.md": "aa82fa89082ef027386d1a6f3ac3a881",
+     "v03.md": "7858622d92ebbaa4b1604deeb8e88be0"
+    },
+    "ops": [
+     "move_edit",
+     "insert",
+     "split_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "adfb83c277debaf879332deeb96f3eb8"
+        ],
+        [
+         "1e26e09478821e1fccb53505a73150e7",
+         "adfb83c277debaf879332deeb96f3eb8"
+        ],
+        "adfb83c277debaf879332deeb96f3eb8"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "adfb83c277debaf879332deeb96f3eb8"
+        ],
+        [
+         "1e26e09478821e1fccb53505a73150e7",
+         "adfb83c277debaf879332deeb96f3eb8"
+        ],
+        "adfb83c277debaf879332deeb96f3eb8"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "cupping.md#3",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "aff4b08a5dee27c430da2722cb29b12f"
+     }
+    ],
+    "files": {
+     "truth.json": "468d95153dd219339a2d19f305716963",
+     "v00.md": "0e96a65ab95a0e376601990eb98e7508",
+     "v01.md": "0b8f2fc00388be024058c74d42ae1db3",
+     "v02.md": "3553553d34adda22d60e44957c98d8c0",
+     "v03.md": "e8e4cdc8a90f04d4364856f7e740ccf4"
+    },
+    "ops": [
+     "rephrase_light",
+     "insert",
+     "split_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "81660efbb378f2b0adf63be7b4a2814d"
+        ],
+        [
+         "81660efbb378f2b0adf63be7b4a2814d",
+         "fbd5be2b8b45d3486fd12e95ec272fff"
+        ],
+        "81660efbb378f2b0adf63be7b4a2814d"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "81660efbb378f2b0adf63be7b4a2814d"
+        ],
+        [
+         "81660efbb378f2b0adf63be7b4a2814d",
+         "fbd5be2b8b45d3486fd12e95ec272fff"
+        ],
+        "81660efbb378f2b0adf63be7b4a2814d"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "safety.md#4",
+    "dominant": [
+     {
+      "k": 0,
+      "version_id": "ab216dcbdbf1b763ad8487832ea62ae6"
+     },
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "86c0ccaef6938a063e84d7464db938fc",
+     "v00.md": "3381e77826d94d19c5215b4a62bdd679",
+     "v01.md": "7bcf44a220dd268f93a8a62cb540ecf7",
+     "v02.md": "16a9b07f5c614cebd41f598e91538864",
+     "v03.md": "46bb4ab075e48bd39811e37b628bcfd2"
+    },
+    "ops": [
+     "split_edit",
+     "rephrase_extreme",
+     "rephrase_extreme"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "ffa2ed48b79ea13dbde0779c4e091cbd"
+        ],
+        [
+         "a6ef5b423e032626def29ad00bf2958f",
+         "ffa2ed48b79ea13dbde0779c4e091cbd"
+        ],
+        "ffa2ed48b79ea13dbde0779c4e091cbd"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "ffa2ed48b79ea13dbde0779c4e091cbd"
+        ],
+        [
+         "a6ef5b423e032626def29ad00bf2958f",
+         "ffa2ed48b79ea13dbde0779c4e091cbd"
+        ],
+        "ffa2ed48b79ea13dbde0779c4e091cbd"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "roasting.md#5",
+    "dominant": [
+     {
+      "k": 0,
+      "version_id": "8a84bb43349df36159212cd95884907f"
+     },
+     {
+      "k": 0,
+      "version_id": "8a84bb43349df36159212cd95884907f"
+     },
+     null
+    ],
+    "files": {
+     "truth.json": "b43fd401b33aec65346693f6da02ff3e",
+     "v00.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v01.md": "74acc0b676c3b746e3158428081364b0",
+     "v02.md": "663a4a4c6736f60d7a9ab3b31544c5c5",
+     "v03.md": "08dc1563ff59c6f7217d1add3357551f"
+    },
+    "ops": [
+     "split_edit",
+     "merge_edit",
+     "rephrase_heavy"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false,
+       true
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "5b473c69c0cc306b112b6730a52b665e"
+        ],
+        [
+         "2458bb04c447d5df1680e9c8f0022519",
+         "5b473c69c0cc306b112b6730a52b665e"
+        ],
+        "5b473c69c0cc306b112b6730a52b665e"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "5b473c69c0cc306b112b6730a52b665e"
+        ],
+        [
+         "2458bb04c447d5df1680e9c8f0022519",
+         "5b473c69c0cc306b112b6730a52b665e"
+        ],
+        "5b473c69c0cc306b112b6730a52b665e"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge_edit",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "2458bb04c447d5df1680e9c8f0022519",
+         "5b473c69c0cc306b112b6730a52b665e"
+        ],
+        [
+         "5b473c69c0cc306b112b6730a52b665e"
+        ],
+        "5b473c69c0cc306b112b6730a52b665e"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "2458bb04c447d5df1680e9c8f0022519",
+         "5b473c69c0cc306b112b6730a52b665e"
+        ],
+        [
+         "5b473c69c0cc306b112b6730a52b665e"
+        ],
+        "5b473c69c0cc306b112b6730a52b665e"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "maintenance.md#6",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "a7af4b6e734bb8a2e73140d1e869abaf",
+     "v00.md": "53a870fa6977b3a864d745bcbd2d1344",
+     "v01.md": "4cb9c5815da7092acbb209209a5d7ac2",
+     "v02.md": "2b3adfae46773922a7be4329a1c598ac",
+     "v03.md": "4ed7865e0b8ccb0d15d8bb61f2817d4c"
+    },
+    "ops": [
+     "insert",
+     "rephrase_light",
+     "rephrase_heavy"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "espresso.md#7",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "442e4b5d3fc25de203677b5b796031a2",
+     "v00.md": "e15584dcbceef840355cf92462b40e38",
+     "v01.md": "f8534553602af43c80bc1aa4a8d2c5bf",
+     "v02.md": "bf776779447f340d8719c8c7000dc343",
+     "v03.md": "9384aed43a7d045f2bab3a344bc65305"
+    },
+    "ops": [
+     "move_edit",
+     "rephrase_extreme",
+     "rephrase_light"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "cupping.md#8",
+    "dominant": [
+     null,
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "269b0daf9db4ae5392fe4aa3efa440aa"
+     }
+    ],
+    "files": {
+     "truth.json": "385122e365c6e8cb96844131f2768479",
+     "v00.md": "0e96a65ab95a0e376601990eb98e7508",
+     "v01.md": "828bf7a6401da729327de2de55a9d96d",
+     "v02.md": "9fc34c6b28bac041d518ad7cf0d08f0c",
+     "v03.md": "bc46522f1f6816430f72a6d6d42509aa",
+     "v04.md": "f898ea0ae1dfa3419d5abc6279d77e82"
+    },
+    "ops": [
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "rephrase_extreme",
+     "split_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "ef52f1f9574ac3960be3e5701c2ad698"
+        ],
+        [
+         "3263608219673cf211f4b1849d9bbfa0",
+         "ef52f1f9574ac3960be3e5701c2ad698"
+        ],
+        "ef52f1f9574ac3960be3e5701c2ad698"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "ef52f1f9574ac3960be3e5701c2ad698"
+        ],
+        [
+         "3263608219673cf211f4b1849d9bbfa0",
+         "ef52f1f9574ac3960be3e5701c2ad698"
+        ],
+        "ef52f1f9574ac3960be3e5701c2ad698"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "safety.md#9",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "16e03a242ec18c25370b0c3e504fe43d",
+     "v00.md": "3381e77826d94d19c5215b4a62bdd679",
+     "v01.md": "ee6b864ce01228785342c587516d3a19",
+     "v02.md": "85e690024a5daaed4abea3fe8b58c2ae",
+     "v03.md": "f64052695e6822b4d862af90adf2e7a1"
+    },
+    "ops": [
+     "rephrase_light",
+     "rephrase_light",
+     "rephrase_light"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "roasting.md#10",
+    "dominant": [
+     null,
+     {
+      "k": 0,
+      "version_id": "b78eba27f5184a4d0f6072cacfc4e890"
+     },
+     {
+      "k": 0,
+      "version_id": "78423145751e0de4333aec6ecbc0c308"
+     }
+    ],
+    "files": {
+     "truth.json": "ba88c3571d68b89d0e9a2980b7dff9fc",
+     "v00.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v01.md": "cc9abbcefeece27de4465fd17250961c",
+     "v02.md": "7b268a92ce2bfca19330942d0f1653e6",
+     "v03.md": "2219114874be9db98de616dfd949a0f8"
+    },
+    "ops": [
+     "move_edit",
+     "split_edit",
+     "merge_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false,
+       true
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "3a2b2e36afc1abb18d2f266dd3cdad97"
+        ],
+        [
+         "3a2b2e36afc1abb18d2f266dd3cdad97",
+         "ba9fa6f44c678b11732856f71b6b2b94"
+        ],
+        "3a2b2e36afc1abb18d2f266dd3cdad97"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "3a2b2e36afc1abb18d2f266dd3cdad97"
+        ],
+        [
+         "3a2b2e36afc1abb18d2f266dd3cdad97",
+         "ba9fa6f44c678b11732856f71b6b2b94"
+        ],
+        "3a2b2e36afc1abb18d2f266dd3cdad97"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge_edit",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "3a2b2e36afc1abb18d2f266dd3cdad97",
+         "aaf8cfaf1d23aad587cbd770ec77dd70"
+        ],
+        [
+         "aaf8cfaf1d23aad587cbd770ec77dd70"
+        ],
+        "aaf8cfaf1d23aad587cbd770ec77dd70"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "3a2b2e36afc1abb18d2f266dd3cdad97",
+         "aaf8cfaf1d23aad587cbd770ec77dd70"
+        ],
+        [
+         "aaf8cfaf1d23aad587cbd770ec77dd70"
+        ],
+        "aaf8cfaf1d23aad587cbd770ec77dd70"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "maintenance.md#11",
+    "dominant": [
+     null,
+     null,
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "0c55c808e8d08e40291c42042d7e1861"
+     }
+    ],
+    "files": {
+     "truth.json": "019fc410c0a4ef0aae47667333911cd1",
+     "v00.md": "53a870fa6977b3a864d745bcbd2d1344",
+     "v01.md": "7cd43c337291cbd403eb7b3c95c7c379",
+     "v02.md": "f2a695e13169d6c8d49e51240c172bd1",
+     "v03.md": "071b837a84ed46a3c3bcf34474b8467a",
+     "v04.md": "1db88abdae4d7bdff9dc727e98794f87",
+     "v05.md": "6a50c0859e3869046b2a0c45476c9b92"
+    },
+    "ops": [
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "merge_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge_edit",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "7a1bbe0175ae7988e29e635a10937f5f",
+         "b40992a2680c956b47afa482c8b6ec96"
+        ],
+        [
+         "b40992a2680c956b47afa482c8b6ec96"
+        ],
+        "b40992a2680c956b47afa482c8b6ec96"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "7a1bbe0175ae7988e29e635a10937f5f",
+         "b40992a2680c956b47afa482c8b6ec96"
+        ],
+        [
+         "b40992a2680c956b47afa482c8b6ec96"
+        ],
+        "b40992a2680c956b47afa482c8b6ec96"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "espresso.md#12",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "b912787661b99d912449bf7f606dd26e",
+     "v00.md": "e15584dcbceef840355cf92462b40e38",
+     "v01.md": "114e41c4b924b9f67575f8afc319e7c8",
+     "v02.md": "bcb110c7bb33a31d05e057307dac2d83",
+     "v03.md": "1e5b0d70c29f187b0f6af47a77d40a0a"
+    },
+    "ops": [
+     "rephrase_extreme",
+     "rephrase_light",
+     "rephrase_light"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "cupping.md#13",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "bd29db4d0b93233d06be62661ef32283",
+     "v00.md": "0e96a65ab95a0e376601990eb98e7508",
+     "v01.md": "cb54e67a1cf5fb0845aa508eb39c40c7",
+     "v02.md": "4b14fba5772d94dc07898f7a9433a63a",
+     "v03.md": "54015063f4bc9e432ecdd7f5f03524dc"
+    },
+    "ops": [
+     "move_edit",
+     "rephrase_light",
+     "rephrase_heavy"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "safety.md#14",
+    "dominant": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "d364373f78e81c6094f95cbcbf0890dd",
+     "v00.md": "3381e77826d94d19c5215b4a62bdd679",
+     "v01.md": "1cecb374261ae80dc10ae7c4a3f21a48",
+     "v02.md": "4b1739f769779e9d6b4477eb19622c04",
+     "v03.md": "fff0d4cf93903ef7129e6bf16c223542",
+     "v04.md": "cf176bc2d5145c8ac0558ad1bc5abd0e"
+    },
+    "ops": [
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "move_edit",
+     "rephrase_heavy"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "roasting.md#15",
+    "dominant": [
+     null,
+     null,
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "316db6efd8a549eaeafcd70eb12c494f"
+     }
+    ],
+    "files": {
+     "truth.json": "50294e91a35cd0c588af738d17a251dd",
+     "v00.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v01.md": "cfe0f626fb46bfd2e044c5186684eb5a",
+     "v02.md": "5eb859c3e189619fb09a3a449da0719c",
+     "v03.md": "3732b60f132e376b084c19941dfc897c",
+     "v04.md": "3272c65d251e434107c4ca9d5ab1cbc7",
+     "v05.md": "558e1e1163ca8c2755b6ce21d05e6f92"
+    },
+    "ops": [
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "split_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false,
+       true
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "a9fe51b2a051ec657734acbb93e5c8ba"
+        ],
+        [
+         "752a14b470d672adb8ac97e64819f973",
+         "a9fe51b2a051ec657734acbb93e5c8ba"
+        ],
+        "a9fe51b2a051ec657734acbb93e5c8ba"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "a9fe51b2a051ec657734acbb93e5c8ba"
+        ],
+        [
+         "752a14b470d672adb8ac97e64819f973",
+         "a9fe51b2a051ec657734acbb93e5c8ba"
+        ],
+        "a9fe51b2a051ec657734acbb93e5c8ba"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "maintenance.md#16",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "61de29d21229c2826fd5f02a8cade678"
+     }
+    ],
+    "files": {
+     "truth.json": "3bd296731ff9d529f019d921a6144454",
+     "v00.md": "53a870fa6977b3a864d745bcbd2d1344",
+     "v01.md": "9d88f5181609bb75ff164f2c8607fced",
+     "v02.md": "1c4981fc245982d5e25037527ebd61bc",
+     "v03.md": "c9cb2164f62b29a7004d9478a852e1dc"
+    },
+    "ops": [
+     "insert",
+     "move_edit",
+     "merge_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge_edit",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "455b01e890ddd67e86a8c010b663dafd",
+         "5bbb370f86842e0b79cedc16906dacdb"
+        ],
+        [
+         "455b01e890ddd67e86a8c010b663dafd"
+        ],
+        "455b01e890ddd67e86a8c010b663dafd"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "455b01e890ddd67e86a8c010b663dafd",
+         "5bbb370f86842e0b79cedc16906dacdb"
+        ],
+        [
+         "455b01e890ddd67e86a8c010b663dafd"
+        ],
+        "455b01e890ddd67e86a8c010b663dafd"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "espresso.md#17",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "455d1cda623497cfbf3df59e66316d21",
+     "v00.md": "e15584dcbceef840355cf92462b40e38",
+     "v01.md": "6d63ceb3528e4b1179596a3a7f3f5459",
+     "v02.md": "41dffccef93373b62632afc810cb386e",
+     "v03.md": "f0b562805bdb9a243dc19055f41fb4e7"
+    },
+    "ops": [
+     "rephrase_heavy",
+     "rephrase_extreme",
+     "insert"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "cupping.md#18",
+    "dominant": [
+     {
+      "k": 0,
+      "version_id": "269b0daf9db4ae5392fe4aa3efa440aa"
+     },
+     {
+      "k": 0,
+      "version_id": "269b0daf9db4ae5392fe4aa3efa440aa"
+     },
+     null
+    ],
+    "files": {
+     "truth.json": "eaa6958a199b4347ebeb103254bf82c6",
+     "v00.md": "0e96a65ab95a0e376601990eb98e7508",
+     "v01.md": "d19e472b429a14c45e9a0ed7cc9f9cb8",
+     "v02.md": "1a617cb0de238c65a0558c0a24c54019",
+     "v03.md": "3346b9684933c37ca5180be0a71875ef"
+    },
+    "ops": [
+     "split_edit",
+     "merge_edit",
+     "rephrase_heavy"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "f9239e78ccd468265515d95e15669880"
+        ],
+        [
+         "5ed73cb07caf9593572c0683b491436f",
+         "f9239e78ccd468265515d95e15669880"
+        ],
+        "f9239e78ccd468265515d95e15669880"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "f9239e78ccd468265515d95e15669880"
+        ],
+        [
+         "5ed73cb07caf9593572c0683b491436f",
+         "f9239e78ccd468265515d95e15669880"
+        ],
+        "f9239e78ccd468265515d95e15669880"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge_edit",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "5ed73cb07caf9593572c0683b491436f",
+         "f9239e78ccd468265515d95e15669880"
+        ],
+        [
+         "f9239e78ccd468265515d95e15669880"
+        ],
+        "f9239e78ccd468265515d95e15669880"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "5ed73cb07caf9593572c0683b491436f",
+         "f9239e78ccd468265515d95e15669880"
+        ],
+        [
+         "f9239e78ccd468265515d95e15669880"
+        ],
+        "f9239e78ccd468265515d95e15669880"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "safety.md#19",
+    "dominant": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "b5c03a578db5a107cb4ca4d457ba4514",
+     "v00.md": "3381e77826d94d19c5215b4a62bdd679",
+     "v01.md": "3b0dbde5c52135498784ad719cc4e56a",
+     "v02.md": "b66d48baf67cc167e2cb153b9294cb17",
+     "v03.md": "269c720354d46a14a423913a8f20a4e4",
+     "v04.md": "e3b4c381e284277fad24b311b60d74bd"
+    },
+    "ops": [
+     "rephrase_extreme",
+     "rephrase_light",
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "roasting.md#20",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "402d1dc7f50f10ca2b2b7e59a884e9c4",
+     "v00.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v01.md": "eb0ce9ea69c6b755d6c73895fec5b515",
+     "v02.md": "def0790b3209b0efc6fdf154da234517",
+     "v03.md": "e4cdd42d87fa4aba80a4924a034d3326"
+    },
+    "ops": [
+     "insert",
+     "move_edit",
+     "rephrase_light"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "maintenance.md#21",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "28d3a049541d58668570fb4b8a716b71"
+     }
+    ],
+    "files": {
+     "truth.json": "fa0ce765c652caf9b2b8fd1e55eb2b6b",
+     "v00.md": "53a870fa6977b3a864d745bcbd2d1344",
+     "v01.md": "abbce4e875b348469b9088668740e12e",
+     "v02.md": "9b2f9b845cb7f362cec15e7580197aa1",
+     "v03.md": "a777e8c8e65fc64bc5cb08f82c841956"
+    },
+    "ops": [
+     "insert",
+     "rephrase_light",
+     "split_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "ab00283cd108c97d5d2adb0b6bdb6c05"
+        ],
+        [
+         "ab00283cd108c97d5d2adb0b6bdb6c05",
+         "f6a2f494cfada78a5a915f75e9e7ec7c"
+        ],
+        "ab00283cd108c97d5d2adb0b6bdb6c05"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "ab00283cd108c97d5d2adb0b6bdb6c05"
+        ],
+        [
+         "ab00283cd108c97d5d2adb0b6bdb6c05",
+         "f6a2f494cfada78a5a915f75e9e7ec7c"
+        ],
+        "ab00283cd108c97d5d2adb0b6bdb6c05"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "espresso.md#22",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "65df422fc4f4014fd3ec4844e03faa16",
+     "v00.md": "e15584dcbceef840355cf92462b40e38",
+     "v01.md": "1830f5ccbed55848aef09f7f5aca57af",
+     "v02.md": "23c0f947b5ed29bd8f515a7fa7631d24",
+     "v03.md": "a14b7e86e10f936661709cbc9d132aa1"
+    },
+    "ops": [
+     "rephrase_heavy",
+     "rephrase_light",
+     "insert"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "cupping.md#23",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "ca3bf0be706c59f9e25cc47e34f7b6b0",
+     "v00.md": "0e96a65ab95a0e376601990eb98e7508",
+     "v01.md": "6a2391e13edf075fa6f783e7d9140f45",
+     "v02.md": "196bd9b9c3732b1e0e271bc9b31ddbb7",
+     "v03.md": "d71745ee20e049e4b1d99d298a5e5f98"
+    },
+    "ops": [
+     "move_edit",
+     "rephrase_heavy",
+     "insert"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "safety.md#24",
+    "dominant": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "03c7722ad28e1ee9779ce7a01bafff36",
+     "v00.md": "3381e77826d94d19c5215b4a62bdd679",
+     "v01.md": "8c7be426196a42dffd76a4496aedea99",
+     "v02.md": "fa08947d928240be8ffb5831fcd9bfdb",
+     "v03.md": "c0d5201066a96ed28d9661ad55b38029",
+     "v04.md": "54ca36a39bec391e919d66382d451f2f"
+    },
+    "ops": [
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "rephrase_light",
+     "rephrase_light"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "roasting.md#25",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "86ef21d5dff850eba89f05568b441cef"
+     }
+    ],
+    "files": {
+     "truth.json": "f1beaf29543e51b7d0cf0d0d879245ab",
+     "v00.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v01.md": "02262b1a602f9fc135915dad8c431ebf",
+     "v02.md": "3c042edc220df1c91632ae79d5da9d75",
+     "v03.md": "d9f8932db7d3fc1dc957304361f6ff83"
+    },
+    "ops": [
+     "rephrase_light",
+     "rephrase_extreme",
+     "split_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "301c5558bc30311aa68ffa0546ef9990"
+        ],
+        [
+         "301c5558bc30311aa68ffa0546ef9990",
+         "320373e618c0d24ff7fd9923a881a86e"
+        ],
+        "301c5558bc30311aa68ffa0546ef9990"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "301c5558bc30311aa68ffa0546ef9990"
+        ],
+        [
+         "301c5558bc30311aa68ffa0546ef9990",
+         "320373e618c0d24ff7fd9923a881a86e"
+        ],
+        "301c5558bc30311aa68ffa0546ef9990"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "maintenance.md#26",
+    "dominant": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "8fb39fd4cbf2634de9c65887f8472420",
+     "v00.md": "53a870fa6977b3a864d745bcbd2d1344",
+     "v01.md": "f054840ae326e73114a50ac7e7afb047",
+     "v02.md": "62ccf831128123f5406b72f3b1942d5a",
+     "v03.md": "bf36b9747b898c5e8c2f456b8f112313",
+     "v04.md": "c84627548c69db9d24fef0fedd2e8ae5"
+    },
+    "ops": [
+     "insert",
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "move_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "espresso.md#27",
+    "dominant": [
+     null,
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "bcc9205af38d4a844d406c8815de9edb",
+     "v00.md": "e15584dcbceef840355cf92462b40e38",
+     "v01.md": "e5d21d27c9e923a1760e4dffc46587b1",
+     "v02.md": "3e79312e726f1d4c2f7e75258ade61ed",
+     "v03.md": "39f5a5a0d4809f606b5bf1ef87e082f5",
+     "v04.md": "faf35c869589deac365eaa8ed77c89ea"
+    },
+    "ops": [
+     "move_edit",
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "rephrase_light"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "move_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "cupping.md#28",
+    "dominant": [
+     null,
+     {
+      "k": 0,
+      "version_id": "7f156e3014c2c118181613f5acefaf4c"
+     },
+     null
+    ],
+    "files": {
+     "truth.json": "85414b14de3e24a20de8fb005b71ab24",
+     "v00.md": "0e96a65ab95a0e376601990eb98e7508",
+     "v01.md": "5a09463c028e4fa2949004304a00999f",
+     "v02.md": "f9f1c129c76b792b00fdafa386056f6f",
+     "v03.md": "6ac614ef8e8762ceedf18e49de7bccbe"
+    },
+    "ops": [
+     "rephrase_heavy",
+     "split_edit",
+     "rephrase_heavy"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false
+      ],
+      "op": "split_edit",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "94cdbab11b8519ba22e68254a9bc06cf"
+        ],
+        [
+         "94cdbab11b8519ba22e68254a9bc06cf",
+         "f249530583e14a80da18d24fdad2c25f"
+        ],
+        "94cdbab11b8519ba22e68254a9bc06cf"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "94cdbab11b8519ba22e68254a9bc06cf"
+        ],
+        [
+         "94cdbab11b8519ba22e68254a9bc06cf",
+         "f249530583e14a80da18d24fdad2c25f"
+        ],
+        "94cdbab11b8519ba22e68254a9bc06cf"
+       ]
+      ]
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_heavy",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "safety.md#29",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "03a165438cfdf3b2c1df4dc6b41bbd9d"
+     },
+     null
+    ],
+    "files": {
+     "truth.json": "6b5eabc6c87c763da053ab9fdfa669ca",
+     "v00.md": "3381e77826d94d19c5215b4a62bdd679",
+     "v01.md": "fd177ed20e1bb78fc2c649419e89626b",
+     "v02.md": "e958251c0f86b0bca09d4ad97acb571e",
+     "v03.md": "5c5e23cd12ced7b165b3ced0d83962f1",
+     "v04.md": "063dea1c6fcc3ad9e632790cab394d36"
+    },
+    "ops": [
+     "dup_prepare_adjacent",
+     "dup_delete_adjacent",
+     "merge_edit",
+     "insert"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "dup_delete_adjacent",
+      "pred_events": [],
+      "retained": [
+       true,
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge_edit",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "9fe5c0627009f7a7164afda756c86fb2",
+         "bc4e6b8d39f02100fd1ef77a2dc0887a"
+        ],
+        [
+         "bc4e6b8d39f02100fd1ef77a2dc0887a"
+        ],
+        "bc4e6b8d39f02100fd1ef77a2dc0887a"
+       ]
+      ]
+     },
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "roasting.md#30",
+    "dominant": [
+     null,
+     null,
+     null
+    ],
+    "files": {
+     "truth.json": "034e0f57867007bc9e1244a1f36168d8",
+     "v00.md": "3ac4a41a9c06fa91f52ef4cee041ae52",
+     "v01.md": "f222128083440e436868e75b43db199b",
+     "v02.md": "a24904cb6994ed1f19c69e335404d7b1",
+     "v03.md": "1d4d1dd3374dcb9b7463f479517e3e49"
+    },
+    "ops": [
+     "rephrase_light",
+     "rephrase_extreme",
+     "rephrase_extreme"
+    ],
+    "records": [
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_extreme",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     }
+    ]
+   },
+   {
+    "doc_path": "maintenance.md#31",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "0ba063d6b8ea30568e26ae1fa972037e"
+     }
+    ],
+    "files": {
+     "truth.json": "0f089a8a4314b017d163844d79341dfb",
+     "v00.md": "53a870fa6977b3a864d745bcbd2d1344",
+     "v01.md": "9d88f5181609bb75ff164f2c8607fced",
+     "v02.md": "fcdf2b251c3c95dcc37bb9ed9968c71d",
+     "v03.md": "c221b7f0e237cc6c5b96eb45923c6918"
+    },
+    "ops": [
+     "insert",
+     "rephrase_light",
+     "merge_edit"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [
+       true
+      ],
+      "op": "merge_edit",
+      "pred_events": [
+       [
+        "BlockMerged",
+        [
+         "801b87bc5b9fb985fce82a37cd1c07ba",
+         "b68edaf6d0d295439ca6cf663f98f178"
+        ],
+        [
+         "b68edaf6d0d295439ca6cf663f98f178"
+        ],
+        "b68edaf6d0d295439ca6cf663f98f178"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockMerged",
+        [
+         "801b87bc5b9fb985fce82a37cd1c07ba",
+         "b68edaf6d0d295439ca6cf663f98f178"
+        ],
+        [
+         "b68edaf6d0d295439ca6cf663f98f178"
+        ],
+        "b68edaf6d0d295439ca6cf663f98f178"
+       ]
+      ]
+     }
+    ]
+   },
+   {
+    "doc_path": "espresso.md#32",
+    "dominant": [
+     null,
+     null,
+     {
+      "k": 0,
+      "version_id": "47c4c37a3dc17571e6e3908bdc3b0f50"
+     }
+    ],
+    "files": {
+     "truth.json": "588a64f0f2b2affc1910fb991697aee9",
+     "v00.md": "e15584dcbceef840355cf92462b40e38",
+     "v01.md": "d37a5dbbfd21d3b4f5827514b924b353",
+     "v02.md": "e373c18ce687269fc218354b19a0f5fd",
+     "v03.md": "8d371f60a4e0be1e65494c47e80c7e75"
+    },
+    "ops": [
+     "insert",
+     "rephrase_light",
+     "split_three"
+    ],
+    "records": [
+     {
+      "new_linked": [
+       false
+      ],
+      "new_linked_v2def": [
+       false
+      ],
+      "op": "insert",
+      "pred_events": [],
+      "retained": [],
+      "truth_events": []
+     },
+     {
+      "new_linked": [],
+      "new_linked_v2def": [],
+      "op": "rephrase_light",
+      "pred_events": [],
+      "retained": [
+       true
+      ],
+      "truth_events": []
+     },
+     {
+      "new_linked": [
+       false,
+       false
+      ],
+      "new_linked_v2def": [
+       true,
+       false,
+       false
+      ],
+      "op": "split_three",
+      "pred_events": [
+       [
+        "BlockSplit",
+        [
+         "809d0eb5abcb3d62ef1f4d8680c8f736"
+        ],
+        [
+         "809d0eb5abcb3d62ef1f4d8680c8f736",
+         "a9fbedd986656b662f72344fd1bef41a",
+         "e9441b2552be5918a6371b172a5b7bb5"
+        ],
+        "809d0eb5abcb3d62ef1f4d8680c8f736"
+       ]
+      ],
+      "retained": [
+       true
+      ],
+      "truth_events": [
+       [
+        "BlockSplit",
+        [
+         "809d0eb5abcb3d62ef1f4d8680c8f736"
+        ],
+        [
+         "809d0eb5abcb3d62ef1f4d8680c8f736",
+         "a9fbedd986656b662f72344fd1bef41a",
+         "e9441b2552be5918a6371b172a5b7bb5"
+        ],
+        "809d0eb5abcb3d62ef1f4d8680c8f736"
+       ]
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "matcher": "v3",
+ "matcher_defaults": [
+  0.6,
+  0.65
+ ],
+ "pure": {
+  "H1-G": 3,
+  "easy": {
+   "H1-S1": 1.0,
+   "H1-S2": 0.5,
+   "H1-S2_v2def": 0.5,
+   "H1-S3": 0.4444444444444445,
+   "H1-S3_detail": {
+    "f1": 0.4444444444444445,
+    "n_pred": 5,
+    "n_truth": 4,
+    "precision": 0.4,
+    "recall": 0.5,
+    "tp": 2
+   },
+   "H1-S4": 0.5,
+   "n_dup": 2,
+   "n_false_match": 4,
+   "n_false_match_v2def": 8,
+   "n_retention": 2,
+   "per_op": {
+    "dup_delete_adjacent": {
+     "retention": 0.5,
+     "steps": 1
+    },
+    "insert": {
+     "false_match": 1.0,
+     "steps": 1
+    },
+    "merge": {
+     "event_recall": 0.0,
+     "retention": 0.0,
+     "steps": 1
+    },
+    "merge_edit": {
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 1
+    },
+    "move_edit": {
+     "retention": 1.0,
+     "steps": 1
+    },
+    "rephrase_extreme": {
+     "retention": 0.0,
+     "steps": 1
+    },
+    "rephrase_heavy": {
+     "retention": 1.0,
+     "steps": 1
+    },
+    "rephrase_light": {
+     "retention": 1.0,
+     "steps": 1
+    },
+    "split_edit": {
+     "event_recall": 1.0,
+     "false_match": 0.0,
+     "retention": 1.0,
+     "steps": 1
+    },
+    "split_three": {
+     "event_recall": 0.0,
+     "false_match": 0.5,
+     "retention": 0.0,
+     "steps": 1
+    }
+   }
+  },
+  "easy_objective": 2.4444444444444446,
+  "errors": {
+   "dominant_missing": {
+    "MetricError": "split: dominant missing"
+   },
+   "dominant_unexpected": {
+    "MetricError": "move: dominant unexpected"
+   },
+   "empty_grid": {
+    "MetricError": "H1-G: empty grid"
+   },
+   "unknown_op": {
+    "MetricError": "unknown op 'frobnicate'"
+   }
+  },
+  "hard": {
+   "H1-H1": 0.8333333333333334,
+   "H1-H2": 0.5,
+   "H1-H2_v2def": 0.5,
+   "H1-H3": 0.4444444444444445,
+   "H1-H3_detail": {
+    "f1": 0.4444444444444445,
+    "n_pred": 5,
+    "n_truth": 4,
+    "precision": 0.4,
+    "recall": 0.5,
+    "tp": 2
+   },
+   "H1-H4": 0.5,
+   "n_dup": 2,
+   "n_false_match": 4,
+   "n_false_match_v2def": 8,
+   "n_retention": 6,
+   "per_op": {
+    "dup_delete_adjacent": {
+     "retention": 0.5,
+     "steps": 1
+    },
+    "insert": {
+     "false_match": 1.0,
+     "steps": 1
+    },
+    "merge": {
+     "event_recall": 0.0,
+     "retention": 0.0,
+     "steps": 1
+    },
+    "merge_edit": {
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 1
+    },
+    "move_edit": {
+     "retention": 1.0,
+     "steps": 1
+    },
+    "rephrase_extreme": {
+     "retention": 0.0,
+     "steps": 1
+    },
+    "rephrase_heavy": {
+     "retention": 1.0,
+     "steps": 1
+    },
+    "rephrase_light": {
+     "retention": 1.0,
+     "steps": 1
+    },
+    "split_edit": {
+     "event_recall": 1.0,
+     "false_match": 0.0,
+     "retention": 1.0,
+     "steps": 1
+    },
+    "split_three": {
+     "event_recall": 0.0,
+     "false_match": 0.5,
+     "retention": 0.0,
+     "steps": 1
+    }
+   }
+  },
+  "hard_objective": 2.2777777777777777,
+  "records": [
+   {
+    "new_linked": [],
+    "new_linked_v2def": [],
+    "op": "rephrase_light",
+    "pred_events": [],
+    "retained": [
+     true
+    ],
+    "truth_events": []
+   },
+   {
+    "new_linked": [],
+    "new_linked_v2def": [],
+    "op": "rephrase_extreme",
+    "pred_events": [],
+    "retained": [
+     false
+    ],
+    "truth_events": []
+   },
+   {
+    "new_linked": [],
+    "new_linked_v2def": [],
+    "op": "move_edit",
+    "pred_events": [],
+    "retained": [
+     true
+    ],
+    "truth_events": []
+   },
+   {
+    "new_linked": [],
+    "new_linked_v2def": [],
+    "op": "dup_delete_adjacent",
+    "pred_events": [],
+    "retained": [
+     true,
+     false
+    ],
+    "truth_events": []
+   },
+   {
+    "new_linked": [
+     true
+    ],
+    "new_linked_v2def": [
+     true
+    ],
+    "op": "insert",
+    "pred_events": [],
+    "retained": [],
+    "truth_events": []
+   },
+   {
+    "new_linked": [
+     false
+    ],
+    "new_linked_v2def": [
+     false,
+     true
+    ],
+    "op": "split_edit",
+    "pred_events": [
+     [
+      "BlockSplit",
+      [
+       "S"
+      ],
+      [
+       "N1",
+       "S"
+      ],
+      "S"
+     ]
+    ],
+    "retained": [
+     true
+    ],
+    "truth_events": [
+     [
+      "BlockSplit",
+      [
+       "S"
+      ],
+      [
+       "N1",
+       "S"
+      ],
+      "S"
+     ]
+    ]
+   },
+   {
+    "new_linked": [
+     true,
+     false
+    ],
+    "new_linked_v2def": [
+     true,
+     false,
+     false
+    ],
+    "op": "split_three",
+    "pred_events": [
+     [
+      "BlockSplit",
+      [
+       "T"
+      ],
+      [
+       "N2",
+       "N3",
+       "T"
+      ],
+      "T"
+     ]
+    ],
+    "retained": [
+     false
+    ],
+    "truth_events": [
+     [
+      "BlockSplit",
+      [
+       "T"
+      ],
+      [
+       "N3",
+       "T"
+      ],
+      "T"
+     ]
+    ]
+   },
+   {
+    "new_linked": [],
+    "new_linked_v2def": [
+     true
+    ],
+    "op": "merge_edit",
+    "pred_events": [
+     [
+      "BlockMerged",
+      [
+       "P",
+       "Q"
+      ],
+      [
+       "Q"
+      ],
+      "Q"
+     ]
+    ],
+    "retained": [
+     true
+    ],
+    "truth_events": [
+     [
+      "BlockMerged",
+      [
+       "P",
+       "Q"
+      ],
+      [
+       "Q"
+      ],
+      "Q"
+     ]
+    ]
+   },
+   {
+    "new_linked": [],
+    "new_linked_v2def": [
+     false
+    ],
+    "op": "merge",
+    "pred_events": [
+     [
+      "BlockMerged",
+      [
+       "U",
+       "W"
+      ],
+      [
+       "M"
+      ],
+      null
+     ]
+    ],
+    "retained": [
+     false
+    ],
+    "truth_events": [
+     [
+      "BlockMerged",
+      [
+       "U",
+       "W"
+      ],
+      [
+       "U"
+      ],
+      "U"
+     ]
+    ]
+   },
+   {
+    "new_linked": [],
+    "new_linked_v2def": [],
+    "op": "rephrase_heavy",
+    "pred_events": [
+     [
+      "BlockSplit",
+      [
+       "R"
+      ],
+      [
+       "R",
+       "Z"
+      ],
+      "R"
+     ]
+    ],
+    "retained": [
+     true
+    ],
+    "truth_events": []
+   }
+  ]
+ }
+}

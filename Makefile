@@ -6,7 +6,7 @@ PY := uv run python
 PY2 := MDK_MATCHER=v2 uv run python
 MDK := ./target/release/mdk
 
-.PHONY: setup build test test-rust test-py lint d1 d2 d3 d1k4 d1h freeze-check \
+.PHONY: setup build test test-rust test-py lint d1 d2 d3 d1k4 d1h freeze-check freeze-check-v3 \
         eval-h1s-tune eval-h1s eval-h1r eval-h2-tune eval-h2 eval-h3 eval-h4 report verify require-run
 
 setup:
@@ -54,6 +54,9 @@ d1h: d3
 
 freeze-check:
 	$(PY2) -m eval.freeze_check
+
+freeze-check-v3:
+	$(PY) -m eval.freeze_check_v3
 
 eval-h1s-tune: require-run
 	$(PY2) -m eval.run_h1s --phase tune --run $(RUN)

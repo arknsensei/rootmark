@@ -19,3 +19,8 @@ Her satırın başındaki etiket, varsayımın etkileyebileceği hipotezi göste
 - [H1] `rephrase_extreme`: %30–45 kelime değişimi; paragraf ≥2 cümleyse 0.5 olasılıkla cümle sırası karıştırılır. `move_edit`: düzyazı blok `rephrase_light` + taşıma. Baskın parça: normalize metnin karakter sayısı (eşleyicinin ölçtüğü), eşitlikte ilk.
 - [H1] Yeniden çekilişler gerçekleşen oranları kaydırır (split/merge ~%13.5, split_three %3.45); tümü ±%3 içinde.
 - [H1] (Gözden geçirici notu) Tanım gereği her `split_edit` örneğinde bir parça, `split_three`'te iki parça eski metnin aynen alt dizisidir; `merge_edit` örneklerinin ~%53'ünde (142/269) eski bloklardan biri birleşik metinde aynen durur (`rephrase_light` tek yarıya düşmüş). Ayrıca `split_three` parçalarının 18/207'si ve `split_edit` parçalarının 11/538'i < 3 kelime. T24 sonuçları bu bilgiyle yorumlanmalı.
+
+## T23
+- [H1] H1-H1 op kümesi `00_GOAL.md` tablosundaki listeye birebir uyar (`rephrase_*`, `move_edit`, `split_edit`, `merge_edit` baskın parçalar); `split_three` H1-H1'e girmez ama baskın olmayan parçaları H1-H2 paydasına, olayları H1-H3'e girer.
+- [H1] Bölme olayının gerçeği K4 ile: sonuç soy kümesi `{eski soy} ∪ {baskın olmayan parçaların (tahmin edilen) soyları}`, dominant = eski soy. Böylece baskın parça yeni soy alırsa veya `meta.dominant` başka bir soyu gösterirse olay yanlış sayılır. v2 olayları (`dominant` yok) hiçbir zaman doğru sayılmaz.
+- [-] `T23: freeze eval v3` commit mesajı, v2'deki `T9: freeze eval` gibi ek satırsız yazıldı ("tam olarak").
