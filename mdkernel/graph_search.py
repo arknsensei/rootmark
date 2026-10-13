@@ -16,7 +16,7 @@ from mdkernel import embed as E
 from mdkernel.index import bm25_tokens
 from mdkernel.retrieval import CANDIDATES, Retriever, _ranked, rrf
 
-ALPHA_DEFAULT = 0.6  # set by `eval/run_h2.py --phase tune`; test phase checks equality
+ALPHA_DEFAULT = 0.9  # set by `eval/run_h2.py --phase tune`; test phase checks equality
 SEEDS = 5
 HOPS = 2
 MAX_NODES = 2000
