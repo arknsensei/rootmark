@@ -1,0 +1,22 @@
+{
+ "H1-R1": 0.9998433399913838,
+ "H1-R2": 0.9817254568635784,
+ "blocks": 56472,
+ "commits": 300,
+ "loss_categories": {
+  "dup_content": 8,
+  "hunk_adjacent": 0,
+  "other": 0,
+  "type_change": 0
+ },
+ "matcher": "v3",
+ "other_count": 0,
+ "other_examples": [],
+ "pairs": 836,
+ "repo": "https://github.com/rust-lang/book",
+ "rev": "1500248d8f230566e4ec9f27fcbb8fe9e2898ab1",
+ "touched": 5406,
+ "touched_retention": 0.8105808361080281,
+ "untouched": 51066,
+ "untouched_lost": 8
+}
