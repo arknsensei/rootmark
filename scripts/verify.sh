@@ -27,6 +27,9 @@ chain() {
     exit 1
   fi
   local t0=$SECONDS
+  if [ -n "$(git -C "$src" status --porcelain --untracked-files=no 2>/dev/null)" ]; then
+    log "warning: $src has uncommitted changes; only its committed HEAD is verified"
+  fi
   log "clone $src -> $work/repo"
   git clone --quiet "$src" "$work/repo"
   cd "$work/repo"
@@ -59,14 +62,25 @@ chain() {
 
 pair() {
   local src="$1" a="$2" b="$3"
-  local out_a out_b dir_a dir_b
-  out_a="$(chain "$src" "$a")"
-  out_b="$(chain "$src" "$b")"
-  dir_a="$(printf '%s\n' "$out_a" | sed -n 's/^RUN_DIR=//p')"
-  dir_b="$(printf '%s\n' "$out_b" | sed -n 's/^RUN_DIR=//p')"
+  local self res_a res_b dir_a dir_b
+  self="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
+  res_a="$(mktemp -t mdk-verify-a.XXXXXX)"
+  res_b="$(mktemp -t mdk-verify-b.XXXXXX)"
+  # each chain is its own process: a failing step fails the whole pair
+  # (errexit is not inherited inside $(...) on bash 3.2)
+  bash "$self" chain "$src" "$a" >"$res_a"
+  bash "$self" chain "$src" "$b" >"$res_b"
+  dir_a="$(sed -n 's/^RUN_DIR=//p' "$res_a")"
+  dir_b="$(sed -n 's/^RUN_DIR=//p' "$res_b")"
+  for d in "$dir_a" "$dir_b"; do
+    if [ -z "$d" ] || [ ! -f "$d/manifest.json" ]; then
+      echo "error: chain produced no run directory ($d)" >&2
+      exit 1
+    fi
+  done
   log "H4-2: compare $dir_a $dir_b"
   (cd "$(cd "$a" && pwd)/repo" && uv run --frozen python -m eval.compare_runs "$dir_a" "$dir_b" --out "$dir_a/h4_2.json")
-  printf '%s\n%s\n' "$out_a" "$out_b"
+  cat "$res_a" "$res_b"
 }
 
 case "${1:-}" in
