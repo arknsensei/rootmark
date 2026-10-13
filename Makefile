@@ -7,7 +7,7 @@ PY2 := MDK_MATCHER=v2 uv run python
 MDK := ./target/release/mdk
 
 .PHONY: setup build test test-rust test-py lint d1 d2 d3 d1k4 d1h freeze-check freeze-check-v3 \
-        eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3-tune eval-h1s-v3 eval-h1r-v3 eval-h3-v2 eval-h4-v2 eval-h4-v2repro eval-h2-tune eval-h2 eval-h3 eval-h4 report verify require-run
+        eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3-tune eval-h1s-v3 eval-h1r-v3 eval-h3-v2 eval-h4-v2 eval-h4-v2repro report-v3 eval-h2-tune eval-h2 eval-h3 eval-h4 report verify require-run
 
 setup:
 	uv sync --frozen
@@ -102,6 +102,9 @@ eval-h3-v2: require-run
 
 eval-h4-v2: require-run
 	$(PY2) -m eval.run_h4 --run $(RUN)
+
+report-v3: require-run
+	$(PY) -m eval.report_v3 --run $(RUN)
 
 report: require-run
 	$(PY2) -m eval.report --run $(RUN)

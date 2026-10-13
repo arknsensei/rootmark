@@ -4,7 +4,10 @@ Every JSON leaf of every result file is compared; the only exclusions are the
 wall-clock latency paths listed in `LATENCY_PATHS` (fixed here). A missing
 file, or a field present in one run but not the other, is an error.
 
-    python -m eval.compare_runs <runs_dir_A>/<RUN_A> <runs_dir_B>/<RUN_B> [--out path.json]
+    python -m eval.compare_runs <runs_dir_A>/<RUN_A> <runs_dir_B>/<RUN_B> [--set v2|v3] [--out path.json]
+
+Exit code: 0 when H4-2 holds (maximum relative difference 0), 3 when it does
+not (the comparison is still written), 1 on a missing file or field.
 """
 
 from __future__ import annotations
@@ -26,6 +29,21 @@ RESULT_FILES = [
     "h3.json",
     "h4.json",
 ]
+# v3 round (docs/v3/04_VERIFY_DELTA.md V1): the v2 phases still run (H2 does
+# not, docs/v3/CLAUDE_APPEND.md) plus every v3 phase
+RESULT_FILES_V3 = [
+    "h1s_tuning.json",
+    "h1s.json",
+    "h1r.json",
+    "h1s_v3_tuning.json",
+    "h1s_v3.json",
+    "h1r_v3.json",
+    "h3_v3.json",
+    "h4_v3.json",
+    "h4_v2repro.json",
+]
+RESULT_SETS = {"v2": RESULT_FILES, "v3": RESULT_FILES_V3}
+NOT_EQUAL_EXIT = 3
 
 # The only excluded fields: wall-clock latencies (docs/03_EVAL.md §H4). A path
 # matches if its leading parts equal a pattern ("*" matches one part, a
@@ -40,6 +58,7 @@ LATENCY_PATHS = {
         ("latency", "rows", "*", "ms"),
     ],
 }
+LATENCY_PATHS["h3_v3.json"] = LATENCY_PATHS["h3.json"]
 
 
 def _excluded(name: str, path: tuple) -> bool:
@@ -79,12 +98,12 @@ def _load(run_dir: Path, name: str) -> dict:
     return json.loads(p.read_text())
 
 
-def compare(a_dir: Path, b_dir: Path) -> dict:
+def compare(a_dir: Path, b_dir: Path, files: list[str] = RESULT_FILES) -> dict:
     per_file = {}
     worst = 0.0
     differing: dict = {}
     n = 0
-    for name in RESULT_FILES:
+    for name in files:
         la, lb = leaves(_load(a_dir, name)), leaves(_load(b_dir, name))
         la = {p: v for p, v in la.items() if not _excluded(name, p)}
         lb = {p: v for p, v in lb.items() if not _excluded(name, p)}
@@ -105,6 +124,7 @@ def compare(a_dir: Path, b_dir: Path) -> dict:
         "max_relative_difference": worst,
         "per_file": per_file,
         "differing_fields": differing,
+        "files": list(files),
         "H4-2_equal": worst == 0.0,
         "excluded_latency_paths": {k: ["/".join(p) for p in v] for k, v in LATENCY_PATHS.items()},
     }
@@ -122,10 +142,11 @@ def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("run_a", type=Path)
     ap.add_argument("run_b", type=Path)
+    ap.add_argument("--set", choices=sorted(RESULT_SETS), default="v2")
     ap.add_argument("--out", type=Path)
     a = ap.parse_args(argv)
     try:
-        res = compare(a.run_a, a.run_b)
+        res = compare(a.run_a, a.run_b, RESULT_SETS[a.set])
     except (FileNotFoundError, M.MetricError) as e:
         print(f"error: {e}", file=sys.stderr)
         sys.exit(1)
@@ -133,6 +154,12 @@ def main(argv: list[str] | None = None) -> None:
     if a.out:
         a.out.write_text(text)
     print(text, end="")
+    if not res["H4-2_equal"]:
+        print(
+            f"H4-2 FAILED: max relative difference {res['max_relative_difference']}",
+            file=sys.stderr,
+        )
+        sys.exit(NOT_EQUAL_EXIT)
 
 
 if __name__ == "__main__":

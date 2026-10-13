@@ -1,0 +1,119 @@
+"""scripts/verify.sh v3: `compare` mode exits non-zero when H4-2 ≠ 0
+(docs/v3/04_VERIFY_DELTA.md V1); the chain runs every v3 phase."""
+
+import json
+import subprocess
+from pathlib import Path
+
+from eval import compare_runs as C
+
+ROOT = Path(__file__).resolve().parents[1]
+SCRIPT = ROOT / "scripts" / "verify.sh"
+
+
+def _runs(tmp_path):
+    a, b = tmp_path / "A", tmp_path / "B"
+    for d in (a, b):
+        d.mkdir()
+        for i, name in enumerate(C.RESULT_FILES_V3):
+            (d / name).write_text(json.dumps({"value": 0.5 + i, "nested": {"n": [1, 2]}}))
+        (d / "h3_v3.json").write_text(json.dumps({"H3-1": {"p95_ms": 10.0}, "x": 1}))
+    return a, b
+
+
+def _compare(a, b, out=None):
+    args = ["bash", str(SCRIPT), "compare", str(ROOT), str(a), str(b)]
+    if out:
+        args.append(str(out))
+    return subprocess.run(args, capture_output=True, text=True, check=False)
+
+
+def test_compare_mode_zero_when_equal(tmp_path):
+    a, b = _runs(tmp_path)
+    # wall-clock latency differs: excluded, H4-2 still 0
+    (b / "h3_v3.json").write_text(json.dumps({"H3-1": {"p95_ms": 99.0}, "x": 1}))
+    r = _compare(a, b, tmp_path / "h4_2.json")
+    assert r.returncode == 0, r.stderr
+    assert json.loads((tmp_path / "h4_2.json").read_text())["H4-2_equal"] is True
+
+
+def test_compare_mode_nonzero_when_a_quality_number_differs(tmp_path):
+    a, b = _runs(tmp_path)
+    d = json.loads((a / "h1s_v3.json").read_text())
+    d["value"] += 1e-9
+    (a / "h1s_v3.json").write_text(json.dumps(d))
+    r = _compare(a, b, tmp_path / "h4_2.json")
+    assert r.returncode != 0
+    assert "H4-2" in r.stderr
+    out = json.loads((tmp_path / "h4_2.json").read_text())
+    assert out["H4-2_equal"] is False and out["max_relative_difference"] > 0
+
+
+def test_compare_mode_nonzero_on_missing_file(tmp_path):
+    a, b = _runs(tmp_path)
+    (b / "h4_v2repro.json").unlink()
+    assert _compare(a, b).returncode != 0
+
+
+def test_compare_runs_cli_exit_code(tmp_path):
+    a, b = _runs(tmp_path)
+    ok = subprocess.run(
+        [
+            "uv",
+            "run",
+            "--frozen",
+            "python",
+            "-m",
+            "eval.compare_runs",
+            str(a),
+            str(b),
+            "--set",
+            "v3",
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert ok.returncode == 0, ok.stderr
+    (b / "h1r_v3.json").write_text(json.dumps({"value": 0.0, "nested": {"n": [1, 2]}}))
+    bad = subprocess.run(
+        [
+            "uv",
+            "run",
+            "--frozen",
+            "python",
+            "-m",
+            "eval.compare_runs",
+            str(a),
+            str(b),
+            "--set",
+            "v3",
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert bad.returncode == C.NOT_EQUAL_EXIT
+
+
+def test_chain_runs_v2_and_v3_phases():
+    text = SCRIPT.read_text()
+    for step in (
+        "make d2 d3 d1 d1k4 d1h",
+        "make freeze-check\n",
+        "make freeze-check-v3",
+        "make eval-h1s-tune",
+        "make eval-h1s RUN",
+        "make eval-h1r RUN",
+        'make eval-h1s-v3 RUN="$run" PHASE=tune',
+        'make eval-h1s-v3 RUN="$run" PHASE=test',
+        "make eval-h1r-v3",
+        "make eval-h3",
+        "make eval-h4 RUN",
+        "make eval-h4-v2repro",
+        "make report-v3",
+    ):
+        assert step in text, step
+    assert "eval-h2" not in text.split("chain() {")[1].split("pair() {")[0]

@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
-# Independent end-to-end reproduction (docs/04_VERIFY.md).
+# Independent end-to-end reproduction (docs/04_VERIFY.md + docs/v3/04_VERIFY_DELTA.md).
 #
 #   scripts/verify.sh chain <source-repo> <workdir>
 #       clone <source-repo> into <workdir>/repo, set it up, rebuild and verify
-#       every dataset against its committed manifest, run freeze-check, every
-#       eval phase and the report; prints "RUN=<id>" and "RUN_DIR=<path>".
+#       every dataset (D2, D3 v2+v3 hashes, D1, D1-easy(K4), D1-hard) against
+#       its committed manifest, run freeze-check (v2) and freeze-check-v3, the
+#       v2 phases (H1-S, H1-R under matcher v2; H2 is not run in the v3 round)
+#       and every v3 phase (H1-S v3 tune/test, H1-R v3, H3, H4, H4-V2) and the
+#       v3 report; prints "RUN=<id>" and "RUN_DIR=<path>".
 #   scripts/verify.sh pair <source-repo> <workdir-A> <workdir-B>
-#       two independent chains, then eval/compare_runs.py A B → H4-2.
+#       two independent chains, then `compare` → H4-2.
+#   scripts/verify.sh compare <repo> <run-dir-A> <run-dir-B> [<out.json>]
+#       eval/compare_runs.py --set v3 run in <repo>; exits non-zero when H4-2 ≠ 0.
 #   scripts/verify.sh            (what `make verify` runs)
 #       pair mode with <source-repo> = this repository and two fresh temp dirs.
 #
@@ -36,25 +41,26 @@ chain() {
   log "commit $(git rev-parse HEAD)"
   log "setup"
   make setup >"$work/setup.log" 2>&1
-  log "datasets (d2 d3 d1, manifests verified)"
-  make d2 d3 d1
-  log "freeze-check"
+  log "datasets (d2 d3 d1 d1k4 d1h, manifests verified)"
+  make d2 d3 d1 d1k4 d1h
+  log "freeze-check (v2) and freeze-check-v3"
   make freeze-check
+  make freeze-check-v3
   local run
   run="$(uv run --frozen python -m eval.runinfo)"
   log "RUN=$run"
+  log "v2 phases (matcher v2)"
   make eval-h1s-tune RUN="$run"
   make eval-h1s RUN="$run"
   make eval-h1r RUN="$run"
-  if [ -f data/d4/single.jsonl ] && [ -f data/splits/d4.json ]; then
-    make eval-h2-tune RUN="$run"
-    make eval-h2 RUN="$run"
-  else
-    log "H2 SKIPPED: data/d4 missing (T12 parked); the report will fail on the missing h2.json"
-  fi
+  log "v3 phases (matcher v3)"
+  make eval-h1s-v3 RUN="$run" PHASE=tune
+  make eval-h1s-v3 RUN="$run" PHASE=test
+  make eval-h1r-v3 RUN="$run"
   make eval-h3 RUN="$run"
   make eval-h4 RUN="$run"
-  make report RUN="$run"
+  make eval-h4-v2repro RUN="$run"
+  make report-v3 RUN="$run"
   log "chain finished in $((SECONDS - t0)) s"
   echo "RUN=$run" >&3
   echo "RUN_DIR=$work/repo/reports/runs/$run" >&3
@@ -78,14 +84,27 @@ pair() {
       exit 1
     fi
   done
-  log "H4-2: compare $dir_a $dir_b"
-  (cd "$(cd "$a" && pwd)/repo" && uv run --frozen python -m eval.compare_runs "$dir_a" "$dir_b" --out "$dir_a/h4_2.json")
   cat "$res_a" "$res_b"
+  compare "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/h4_2.json"
+}
+
+compare() {
+  local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
+  log "H4-2: compare $dir_a $dir_b"
+  local rc=0
+  (cd "$repo" && uv run --frozen python -m eval.compare_runs "$dir_a" "$dir_b" --set v3 \
+    ${out:+--out "$out"}) >&2 || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "error: H4-2 comparison failed (compare_runs exit $rc)" >&2
+    exit "$rc"
+  fi
+  log "H4-2 = 0"
 }
 
 case "${1:-}" in
   chain) chain "${2:?source repo}" "${3:?workdir}" ;;
   pair) pair "${2:?source repo}" "${3:?workdir A}" "${4:?workdir B}" ;;
+  compare) compare "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t mdk-verify.XXXXXX)"
@@ -93,7 +112,7 @@ case "${1:-}" in
     pair "$src" "$base/A" "$base/B"
     ;;
   *)
-    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB>]" >&2
+    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac

@@ -1,0 +1,11 @@
+Bu turun amacı soy eşleyicisindeki tek açık kalemi kapatmaktı: önceki turda yanlış eşleme ölçütü birleştirme işlemlerinde eşiği aşıyordu. mimari belgedeki baskın parça kararıyla (bölme ve birleştirmede baskın parça soyu korur) birlikte eşleyici bölmede en uzun yeni parçaya, birleştirmede en uzun eski bloğa soyu devrediyor; asgari parça oranı kaldırıldı ve birleştirme yönünde artık kontrolü eklendi.
+
+Dikkat edilmesi gereken nokta, yanlış eşleme ölçütünün tanımının bu kararla değişmiş olmasıdır. Birleştirme sonucu artık paydada değildir; bu nedenle önceki turla doğrudan karşılaştırma yalnız bilgi amaçlıdır. Eski tanımla hesaplanan değer raporda ayrıca verilmiştir ve beklendiği gibi yüksektir, çünkü yeni semantikte baskın parçanın var olan bir soya bağlanması doğru davranıştır.
+
+Zor sentetik set, ayar ızgarasının bilgi taşıması için tasarlandı. Izgara bu kez düz değil, ancak farklılık yalnız benzerlik eşiğinden geliyor; bölme eşiği denenen aralığın tamamında sonucu değiştirmedi, dolayısıyla seçilen bölme eşiği veriden değil eşitlik kırma kuralından geliyor. Zor sette en zayıf işlem, kelimelerin büyük kısmının değiştiği ve cümle sırasının karıştırıldığı aşırı yeniden yazımdır; bu, benzerlik tabanlı kimlik çıkarımının doğal sınırına işaret ediyor.
+
+Zor set için uygun doküman havuzu dar kaldı: önceki turun uygunluk kuralıyla kolay sete ayrılan dokümanların dışında yeterli aday yoktu, bu yüzden daha gevşek bir kural kullanıldı ve havuzun neredeyse tamamı seçildi. Üç parçaya bölme işlemi de cümle sınırlarına ek olarak yan cümle sınırlarından bölünebiliyor. Bu varsayımlar kayıtlıdır ve sonuçlar bu çerçevede okunmalıdır.
+
+Önceki turun davranışı bayrakla korunuyor: eski eşleyici yolu, değerlendirme vault'unun olay günlüğünü ve önceki turun sentetik test sonuçlarını alan alan birebir yeniden üretiyor. Ayar fazından sonra dondurma denetleyicisinin derlenmiş sabitlere bağlı olduğu ortaya çıktı; denetleyici dondurma anındaki parametrelere sabitlendi ve bu, istisna kaydında gözden geçirici onayıyla belgelendi. Dondurulmuş metrik kodu, üreteçler ve beklenen çıktı değişmedi.
+
+İki temiz koşturma arasındaki determinizm ölçümü bağımsız doğrulamaya bırakılmıştır; karar kuralının dondurma çıkarımı ona koşulludur.
