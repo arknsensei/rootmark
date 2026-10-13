@@ -142,7 +142,7 @@ fn same_text_same_version_id() {
 
 #[test]
 fn mini_vault_parses() {
-    let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../tests/fixtures/mini_vault");
+    let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../spec/fixtures/mini_vault");
     let mut names: Vec<_> = std::fs::read_dir(&dir)
         .unwrap()
         .map(|e| e.unwrap().file_name().into_string().unwrap())

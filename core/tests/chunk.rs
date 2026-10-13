@@ -11,7 +11,7 @@ fn tmp(name: &str) -> PathBuf {
 }
 
 fn mini_vault() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../tests/fixtures/mini_vault")
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../spec/fixtures/mini_vault")
 }
 
 fn chunks_of(text: &str, strategy: Strategy, name: &str) -> (Vault, Vec<mdkcore::Chunk>) {

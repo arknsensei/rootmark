@@ -386,7 +386,7 @@ fn default_matcher_is_v3_and_params_follow_version() {
 // ---------- V2 byte-equality with v2-final (mini_vault)
 
 fn mini_vault() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("../tests/fixtures/mini_vault")
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("../spec/fixtures/mini_vault")
 }
 
 fn mini_hash(name: &str, m: MatcherVersion) -> String {

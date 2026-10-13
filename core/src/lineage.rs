@@ -4,7 +4,7 @@
 //! merge-direction residual check.
 
 use crate::events::{Event, EventKind};
-use crate::model::{hash32, Block, BlockDraft, BlockType, Provenance};
+use crate::model::{hash32, Block, BlockDraft, BlockType, Layer, Provenance};
 use anyhow::{bail, Result};
 use pathfinding::kuhn_munkres::kuhn_munkres;
 use pathfinding::matrix::Matrix;
@@ -692,6 +692,7 @@ pub fn match_blocks(
             heading_path: d.heading_path.clone(),
             heading_level: d.heading_level,
             parents,
+            layer: Layer::default_for(prov.author_kind),
             provenance: prov,
         });
         let v = d.version_id.clone();

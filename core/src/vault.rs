@@ -2,7 +2,7 @@
 
 use crate::events::{append_events, read_events, Event, EventKind};
 use crate::lineage::{match_blocks, MatchParams, MatcherVersion, PrevBlock};
-use crate::model::{hash32, Block, Provenance};
+use crate::model::{hash32, Block, Layer, Provenance};
 use crate::parse::heading_paths;
 use crate::parse::parse_document;
 use crate::store::{self, BlockObject, SnapshotObject};
@@ -342,6 +342,7 @@ impl Vault {
             heading_level: o.heading_level,
             parents: Vec::new(),
             provenance: Provenance::default(),
+            layer: Layer::default_for(Provenance::default().author_kind),
         })
     }
 
@@ -362,20 +363,24 @@ impl Vault {
             .iter()
             .zip(objs)
             .zip(paths)
-            .map(|(((l, _), o), hp)| Block {
-                version_id: o.version_id,
-                lineage_id: l.clone(),
-                block_type: o.block_type,
-                text: o.normalized_text.clone(),
-                normalized_text: o.normalized_text,
-                heading_path: hp,
-                heading_level: o.heading_level,
-                parents: st
-                    .and_then(|s| s.parents.get(l).cloned())
-                    .unwrap_or_default(),
-                provenance: st
+            .map(|(((l, _), o), hp)| {
+                let provenance: Provenance = st
                     .and_then(|s| s.provenance.get(l).cloned())
-                    .unwrap_or_default(),
+                    .unwrap_or_default();
+                Block {
+                    version_id: o.version_id,
+                    lineage_id: l.clone(),
+                    block_type: o.block_type,
+                    text: o.normalized_text.clone(),
+                    normalized_text: o.normalized_text,
+                    heading_path: hp,
+                    heading_level: o.heading_level,
+                    parents: st
+                        .and_then(|s| s.parents.get(l).cloned())
+                        .unwrap_or_default(),
+                    layer: Layer::default_for(provenance.author_kind),
+                    provenance,
+                }
             })
             .collect())
     }
