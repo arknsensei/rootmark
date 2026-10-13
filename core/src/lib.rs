@@ -1,6 +1,8 @@
 //! mdkernel-core: markdown-native versioned block kernel (v2).
 
+pub mod chunk;
 pub mod events;
+pub mod files;
 pub mod lineage;
 pub mod model;
 pub mod normalize;
@@ -9,6 +11,7 @@ pub mod store;
 pub mod vault;
 pub mod wikilink;
 
+pub use chunk::{chunk, Chunk, Strategy};
 pub use events::{Event, EventKind};
 pub use lineage::MatchParams;
 pub use model::{

@@ -215,6 +215,26 @@ pub struct IngestResult {
     pub changed_lineages: Vec<String>,
 }
 
+/// Compact per-document ingest report (CLI / `ingest_dir`).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct IngestSummary {
+    pub doc_path: String,
+    pub snapshot_id: String,
+    pub blocks: usize,
+    pub events: usize,
+}
+
+impl IngestSummary {
+    pub fn new(doc_path: &str, r: &IngestResult) -> Self {
+        IngestSummary {
+            doc_path: doc_path.to_string(),
+            snapshot_id: r.snapshot.snapshot_id.clone(),
+            blocks: r.snapshot.blocks.len(),
+            events: r.events.len(),
+        }
+    }
+}
+
 pub struct Vault {
     root: PathBuf,
     meta_dir: PathBuf,
@@ -494,5 +514,17 @@ impl Vault {
             .with_context(|| {
                 format!("resolve_truth: {doc_path} has no occurrence {k} of {version_id}")
             })
+    }
+
+    /// Ingests every `*.md` under `dir` in byte-wise `doc_path` order
+    /// (deterministic); `doc_path` is relative to `dir`.
+    pub fn ingest_dir(&mut self, dir: &Path) -> Result<Vec<IngestSummary>> {
+        let mut out = Vec::new();
+        for (doc, p) in crate::files::markdown_files(dir)? {
+            let text = fs::read_to_string(&p).with_context(|| format!("read {}", p.display()))?;
+            let r = self.ingest(&doc, &text, Provenance::default())?;
+            out.push(IngestSummary::new(&doc, &r));
+        }
+        Ok(out)
     }
 }
