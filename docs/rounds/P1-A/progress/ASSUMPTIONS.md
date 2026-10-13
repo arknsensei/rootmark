@@ -11,3 +11,8 @@ Etiketler: `[spec]` spesifikasyon yorumu, `[arch]` mimari/paket yapısı, `[-]` 
 - [spec] `synthetic` → `canonical` (spec §7 "as declared"; P1-B öncesi beyan mekanizması yok, sentetik değerlendirme verisi insan düzenlemesinin yerine geçer).
 - [spec] spec §5 "MUST record `matcher_version` and parameters in `meta` of every event" — v3-final yalnız `matcher_version` yazar; THETA/THETA_SPLIT yazılmaz. Davranış değiştirilmedi (kırmızı çizgi: V2/V3 çıktıları v3-final ile bayt bayt aynı). Varsayılan parametrelerde `matcher_version` parametreleri belirler (v2 → 0.60/0.70, v3 → 0.50/0.65); varsayılan dışı parametre yalnız ölçüm ızgaralarında kullanılır. Karar talebi: `docs/DECISIONS.md` K14-T.
 - [-] `mini_vault` fixture'ı `spec/fixtures/mini_vault/` altına taşındı (çekirdek testleri ve C1-17 ortak); `core/tests/*.rs` içindeki yol `../tests/fixtures/mini_vault` → `../spec/fixtures/mini_vault` (yalnız yol; test mantığı değişmedi).
+
+## A3
+- [spec] C1 fixture'larının beklenen değerleri v3-final çekirdeğinin çıktısıdır (TASKS A3); tür adları v3-final yazımıyla (`Heading`, `Human`) kayıtlıdır (K15-T).
+- [spec] C1-06 hata mesajları (geçici yol içerir) fixture'a girmez; yalnız `ok`/`error` sonucu ve dosya baytlarının değişmediği. C1-15 mesajı (yol içermez) aynen kayıtlıdır.
+- [-] Gözlem: `[X, A, Y] → [X, A', Y']` (A ve komşusu Y birlikte hafif düzenlenmiş) v3'te `BlockSplit(A → A', Y') + BlockDeleted(Y)` üretiyor; Y'nin soyu kopuyor. v3-final davranışı; P1-A'da değiştirilmez. Holdout/split_hard sonuçları yorumlanırken dikkate alınmalı (A5).

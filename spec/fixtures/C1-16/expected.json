@@ -1,0 +1,1624 @@
+{
+  "id": "C1-16",
+  "output": {
+    "chunks": {
+      "0:structural": {
+        "blends.md": [
+          {
+            "chunk_id": "88e495b8ab86f8778ea62e0ea0da47ad",
+            "heading_path": [
+              "Blends"
+            ],
+            "lineage_ids": [
+              "11aa27c7221f1107bed32302c3d12492",
+              "da272f8d0e7b15f0c54de8c583d828d5"
+            ],
+            "text_blake3": "aba6a9c761bdfe21a9a713957f63236b",
+            "token_count": 43,
+            "version_ids": [
+              "05597c314da02e6d03f61b69efa72c94",
+              "c0579df61ff816b891ce86bd4ca7fee0"
+            ]
+          },
+          {
+            "chunk_id": "17927d5509eda6a71ee9b0345472608d",
+            "heading_path": [
+              "Blends",
+              "Seasonal blend"
+            ],
+            "lineage_ids": [
+              "cb869c916832cfbc9f09cc53ed0559c1",
+              "9766f5150eeef83348798cee15876ea0"
+            ],
+            "text_blake3": "9bf15937238750d9882bad488bd3ff29",
+            "token_count": 38,
+            "version_ids": [
+              "5ba7acf502e0feffe0712fd9638ec814",
+              "26c5052680be3f35041c205e711f1dfa"
+            ]
+          },
+          {
+            "chunk_id": "970dcdaa33a4e6cbf6f9b975624fd664",
+            "heading_path": [
+              "Blends",
+              "Rest"
+            ],
+            "lineage_ids": [
+              "c5033708f8a62d3b6def3fec1f656996",
+              "f78c2c81c95df2cc1dbec0a2e01985b8"
+            ],
+            "text_blake3": "49a3164b27fa124dd5ead3e896215785",
+            "token_count": 22,
+            "version_ids": [
+              "73a2be55d19253b26dfaf7493ceafff6",
+              "995b50f9f1aa4ab03b98132405f12dd2"
+            ]
+          }
+        ],
+        "cupping.md": [
+          {
+            "chunk_id": "57d21cd2875a6d55446c9bb8be4deb47",
+            "heading_path": [
+              "Cupping"
+            ],
+            "lineage_ids": [
+              "3f195e3640df6315a98c1f8a84349623",
+              "60b39edc75707140ed28eb25201f4197"
+            ],
+            "text_blake3": "8ed61d77c356640f3d21004786568efc",
+            "token_count": 21,
+            "version_ids": [
+              "ae938eb142902efad6f3482a9c8e39fd",
+              "2ea4221c1a4aba369117ca34ad2b598c"
+            ]
+          },
+          {
+            "chunk_id": "9f71b7d8de8e520d3ac5c5fda997e783",
+            "heading_path": [
+              "Cupping",
+              "Protocol"
+            ],
+            "lineage_ids": [
+              "6dd797296310723f61ae9ac462b571cf",
+              "2b2be297fc4b4a418387646075b3763b",
+              "ef5fcd506910f7b023257537d7443f88",
+              "2264127b1ff97bc973f131b8038ad007",
+              "f0dca8eee1b5445ef827398f6a25f52d",
+              "3a4c7c83774056859951c2170913df86"
+            ],
+            "text_blake3": "ba3325cb4eef001bcf3243bce12c1ab9",
+            "token_count": 68,
+            "version_ids": [
+              "ba160268d37ecc59aab1ad1d6dbe0a51",
+              "b2bd358d4360f32783bb62d7a092e891",
+              "9ee79ac5cff7d6ecc8eaf9f28db9ac69",
+              "5d1f9761c1045821aaf58f858ff1e136",
+              "b3dd9e7bca42ab07c9fc1e761da36107",
+              "4dca08987c010603cf1aeacbb5905cca"
+            ]
+          },
+          {
+            "chunk_id": "17c51c275f2400c8a123451b7768dc08",
+            "heading_path": [
+              "Cupping",
+              "Scoring"
+            ],
+            "lineage_ids": [
+              "2d4a279848f91eb4e50234729aca3de2",
+              "fc4148a411eb823f1d1db4d09fa06652"
+            ],
+            "text_blake3": "bbe344c2b0c585135a94fbaf3cf2ac47",
+            "token_count": 46,
+            "version_ids": [
+              "85ce26171d4a4401a1e1b6380ad04424",
+              "c3c312b130138478cdc340995455ee1a"
+            ]
+          }
+        ],
+        "espresso.md": [
+          {
+            "chunk_id": "1267cec336ac47bb936b22edc988ae67",
+            "heading_path": [
+              "Espresso"
+            ],
+            "lineage_ids": [
+              "74ecb4d582f0ffede4479a044f078542",
+              "c4bf6f31f6d9b9b83904d4d2d4cb8c22"
+            ],
+            "text_blake3": "2d28bd0a11eb09879c9c9e2fe5e3eb5f",
+            "token_count": 21,
+            "version_ids": [
+              "89d0a18e79e31ff49018e502401250e4",
+              "fa889c08d606d0a20dc7680c00784642"
+            ]
+          },
+          {
+            "chunk_id": "2049c05833d7f1af7b92a08d1783e92b",
+            "heading_path": [
+              "Espresso",
+              "Recipe"
+            ],
+            "lineage_ids": [
+              "b8207c223754799bd8d227b68dcb3518",
+              "ddde6b3b5dd3e2fb53dd11c9177b915b",
+              "bde4a62ef108123db6225d3cc7469dba",
+              "ccb4b5d556126285ce5c51379cb3f2d4"
+            ],
+            "text_blake3": "2d5911cbcb28f7032db7138baabd582b",
+            "token_count": 48,
+            "version_ids": [
+              "785a55dccf78d48d6ca2327c3e8fbf32",
+              "2e1daa661fb1aa5d53bc525a2165901d",
+              "8ad3efef173ae2b9a8684a7fc01ccd20",
+              "f9cf861b32d6aacc54907b038ab7342b"
+            ]
+          },
+          {
+            "chunk_id": "e1ab6ef6e655bf02b4c0b39c2f3da810",
+            "heading_path": [
+              "Espresso",
+              "Equipment"
+            ],
+            "lineage_ids": [
+              "b950226d51df600280c2d5d172cf1c01",
+              "0ac7567834b23705676531bd025b23c8",
+              "28273578dc4c268579aa8945a7b08dcf",
+              "9167da9b3609a6a9c574eae9cff723e4"
+            ],
+            "text_blake3": "6e99d65ba31f5ded68d1d3e9b7a146cd",
+            "token_count": 67,
+            "version_ids": [
+              "35a3c10f6941ba9f66cfbf97642a5718",
+              "9b758e879f21aca0808ef32ae53fa764",
+              "f4173aeaa5a70b50ca09732821ed142f",
+              "b4627a9650bbadeafc64fca956629e55"
+            ]
+          }
+        ],
+        "filter.md": [
+          {
+            "chunk_id": "b54aedf70c6a2863447e95a5a762f994",
+            "heading_path": [
+              "Filter Coffee"
+            ],
+            "lineage_ids": [
+              "c88e8e42b9befe250dcb92750d0eed1c",
+              "150bbe08e21736c4cc0d4364036f2f2f"
+            ],
+            "text_blake3": "e90d980279f431b61ba2a0cb57e5fd36",
+            "token_count": 21,
+            "version_ids": [
+              "ad289e24ca936f772b26d0f0deec3153",
+              "817fe428c140b21107643dabc69af10b"
+            ]
+          },
+          {
+            "chunk_id": "28cced32e3ed618241f345149b1f1fa3",
+            "heading_path": [
+              "Filter Coffee",
+              "Pour over"
+            ],
+            "lineage_ids": [
+              "7f9ffbc107637b9713a9e09bb4533327",
+              "b3492b2dc27f1dec2ab9d6294adf0028",
+              "086ed5e4a486fcfffcba05e5bc6c338e",
+              "812db2269fdb246899d9589d0fc9b94e",
+              "525be26945839638ba7dd6468a473af3"
+            ],
+            "text_blake3": "1c3ba40265dd1618548c1301d2ab6c1f",
+            "token_count": 70,
+            "version_ids": [
+              "45b9611349ef88482fd634a33408069d",
+              "ce92b405de85da9bcf82f95b2bdf9846",
+              "1e8a06f232fc955fe84257abcfe2a8fc",
+              "2c071c41b48a5e2ffedeaad24bdd4394",
+              "0a9065af81877037dab4d62a7105e9a9"
+            ]
+          }
+        ],
+        "glossary.md": [
+          {
+            "chunk_id": "8f7cb256bdb20a28c16547ca1a194ad1",
+            "heading_path": [
+              "Glossary"
+            ],
+            "lineage_ids": [
+              "0efa64472202c2d77142203787309089",
+              "a4b54ef54214708543ba32461c7245e2",
+              "89243155c63473406c366c44443f086f",
+              "3d768a5c89201ff82d09784ead3dc969",
+              "6f4596082c7f4a96560a99c85c76f60e",
+              "8f9472fd786e623025b60662175d5d01",
+              "3fd1de74d25beba7fbcde785ac892015",
+              "082c4f7b097b987b31fca352286b6e5f"
+            ],
+            "text_blake3": "15f110c83b1f05f6c4fd69cefa156402",
+            "token_count": 104,
+            "version_ids": [
+              "31c451103b4da26383a3c081c542f479",
+              "2d65bf3b0bb9c6cd7a1aafc730b4345a",
+              "3cb70935467386c3af79d93baba74a30",
+              "da55c0f032e75c09999e8d627384dac4",
+              "8e40d924b23ed024a9ec70b1abd37783",
+              "98380860c91d8b563f429f7f21f6df56",
+              "3051c2bc7b92cdb37b7f212345687a7b",
+              "da55c0f032e75c09999e8d627384dac4"
+            ]
+          }
+        ],
+        "grinders.md": [
+          {
+            "chunk_id": "cde621bcb59f58d8e6460823c1b0a7fa",
+            "heading_path": [
+              "Grinders"
+            ],
+            "lineage_ids": [
+              "7bd601d2ce14e64380e25e30415a29be",
+              "4e4087198ffb697d7be3d75936a104ae"
+            ],
+            "text_blake3": "d509964a2370ce30e8501c3e69172600",
+            "token_count": 35,
+            "version_ids": [
+              "3dfa2c9c3836bfaf252504f8de509a47",
+              "70e25a91cbb70a30d236400a1d239da4"
+            ]
+          },
+          {
+            "chunk_id": "2a3336f4ad7a9a23ebfc51966ff27527",
+            "heading_path": [
+              "Grinders",
+              "Calibration"
+            ],
+            "lineage_ids": [
+              "18ebdbdcc8370425145618bd1d06b8a0",
+              "92e516c0d8f629d3ab1496c21a76ec08"
+            ],
+            "text_blake3": "5c0129f58297fcd26a52a790a0c5dcb9",
+            "token_count": 30,
+            "version_ids": [
+              "2c516bd1045190c960cf8e33274aa3d1",
+              "bfd67b4f6e5ce827b594c579c152e4a0"
+            ]
+          },
+          {
+            "chunk_id": "65d4e0b68b539be8256b1e9441a3dc60",
+            "heading_path": [
+              "Grinders",
+              "Cleaning"
+            ],
+            "lineage_ids": [
+              "37992f0d422682328b5bb7885a288391",
+              "f250715b14001b490eda7073159de3aa"
+            ],
+            "text_blake3": "3e6dd1813a85b632b06e6320a7002870",
+            "token_count": 19,
+            "version_ids": [
+              "d7a0e9ce7abffecfb11dffd9161b752c",
+              "25b2c4b6b9dd9c5d1b829699ed75fd60"
+            ]
+          }
+        ],
+        "maintenance.md": [
+          {
+            "chunk_id": "a1ff7d0856cd42218465a9323ecaba8a",
+            "heading_path": [
+              "Maintenance"
+            ],
+            "lineage_ids": [
+              "ab06b7f582b48ad296694a15d91c744e",
+              "401cf2b00cadd06809512a205ce60e3c"
+            ],
+            "text_blake3": "07b10f8092c896f354db2e20ba9bfec2",
+            "token_count": 12,
+            "version_ids": [
+              "c068cab61cfff4469c352b377c72647a",
+              "9688173983b23a1d8ef773610a4c5aff"
+            ]
+          },
+          {
+            "chunk_id": "5f8b580cb276953d269434eec9a68dc4",
+            "heading_path": [
+              "Maintenance",
+              "Daily"
+            ],
+            "lineage_ids": [
+              "79c0341c912967236466addcbf32ac7b",
+              "511781a653cef44c1082cb8ae479f18c",
+              "3fec4cab321c0827ad0102bc608426b3"
+            ],
+            "text_blake3": "21ac089fe7e0494b9a429ddf45b0c950",
+            "token_count": 29,
+            "version_ids": [
+              "49a442ecd9135fa87e5e0a7c59c9e630",
+              "aec6af0df4de362bc215beafda6190c6",
+              "e8dbf7693e88179ff3cff3a602628cb8"
+            ]
+          },
+          {
+            "chunk_id": "af07e4e6ed2aaf03dd1a7d666314c9cf",
+            "heading_path": [
+              "Maintenance",
+              "Monthly"
+            ],
+            "lineage_ids": [
+              "3d9dc31aacdb63ad0b1979945859fdb4",
+              "93a23b7f02b1582d36b72e9d5e1b2113",
+              "c39253d12745a779808f1cb8c466d11b",
+              "24c60acf8d181e5579a455e328ecea8c"
+            ],
+            "text_blake3": "274de5e7f7f8b8541918f5c0e3055d4c",
+            "token_count": 36,
+            "version_ids": [
+              "c411a7216cf76a5089b0f57e7aaa9f8a",
+              "61a9d8723629da3a36cefff3fe691736",
+              "cefe8a10cfadf14cd45cced00d1f102e",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          },
+          {
+            "chunk_id": "2a453ed2e065e0efcbb78add9ed8c8c4",
+            "heading_path": [
+              "Maintenance",
+              "Checklist"
+            ],
+            "lineage_ids": [
+              "b549b3e6438da8de994ba2affeea9030",
+              "df33c17d6cd41afcb018b203074a9ba3",
+              "9525c2bb8ea5cad09d325be1efb949dc"
+            ],
+            "text_blake3": "a708e027fbdbade7bf7e8b46cdf2444c",
+            "token_count": 56,
+            "version_ids": [
+              "158bc851b1d88b10483ff5729a38d18b",
+              "7b8483c438e26e05a0a9a3c1fdfad02a",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          }
+        ],
+        "origins.md": [
+          {
+            "chunk_id": "5f84a8b7ef6cdd18920612a5192dd1a7",
+            "heading_path": [
+              "Origins"
+            ],
+            "lineage_ids": [
+              "0f9106274ab1c605acf051494693c13b",
+              "1638a2f3b9e857e3a307fa90f9c8ad3c"
+            ],
+            "text_blake3": "697a8c8cafacf726817a6438e2b9a0a6",
+            "token_count": 26,
+            "version_ids": [
+              "51a3ae9ea78e6eabb4d9aae16b5d03f7",
+              "1a1684eaeb930556cd7f3970697c5d41"
+            ]
+          },
+          {
+            "chunk_id": "8741f16ecb0d09f44cd21bc162f9f811",
+            "heading_path": [
+              "Origins",
+              "Ethiopia"
+            ],
+            "lineage_ids": [
+              "d74937e7345481424c8dd1094ff7c0ea",
+              "4f27983352c768648a1b70ead03e8b21"
+            ],
+            "text_blake3": "bfb72ae00764e3fc42ebfd107cad9eed",
+            "token_count": 37,
+            "version_ids": [
+              "9346b6c75afb5b3c735445c5c9a052da",
+              "6dc6ed499cfcab64abf37b55c4c8da08"
+            ]
+          },
+          {
+            "chunk_id": "653b224c7298b541436b927ba02671bf",
+            "heading_path": [
+              "Origins",
+              "Colombia"
+            ],
+            "lineage_ids": [
+              "d063e253dde5e5110a0664ac0b122676",
+              "be976b06bb66514f14537a10e67598fa"
+            ],
+            "text_blake3": "6979d0951ce66f9a2ea409c701abcc59",
+            "token_count": 32,
+            "version_ids": [
+              "d0f7f9e5371a89a60b7260a9d03191cc",
+              "7be671793a5cfbe8d8b3e31a3c956edf"
+            ]
+          },
+          {
+            "chunk_id": "5838f63499556e694a7bd934d735b0ed",
+            "heading_path": [
+              "Origins",
+              "Brazil"
+            ],
+            "lineage_ids": [
+              "3b69a8eea38ce998ba32bac2303794bd",
+              "88514aa2ac67834c409b6e9c6e49fec7"
+            ],
+            "text_blake3": "4d503370bc3a97ff148ec8d517f86b13",
+            "token_count": 35,
+            "version_ids": [
+              "e10a7848a943cb2c6169b29dab491e60",
+              "e1c9632be171e46dc3baa798003f7bab"
+            ]
+          }
+        ],
+        "roast-log.md": [
+          {
+            "chunk_id": "a38f7786c420c06fd068a3942852b261",
+            "heading_path": [
+              "Roast Log"
+            ],
+            "lineage_ids": [
+              "a7003050663632c970e6bb8f5628ef22",
+              "772aafd2ee6229225a248753ccad3b92",
+              "769770a8d7428b1e12ae9614516b1027",
+              "49414535cf37edd0490f096c4b8244ec",
+              "b6d7f20845db7cac4ec61469eea0a9a9"
+            ],
+            "text_blake3": "06f5d9c822fed16bd91efa14d24dd45c",
+            "token_count": 145,
+            "version_ids": [
+              "61db1351561b2df061f0cd672e35fede",
+              "c98a256035174ea9de4ecc2a58f55ea5",
+              "170410bd6d3a656a296f08d5361eb06e",
+              "75ba9fc1f7a5b5c19c61760b966dfc4c",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          }
+        ],
+        "roasting.md": [
+          {
+            "chunk_id": "326e58dcb8319def7ccc49476d4aa3ea",
+            "heading_path": [
+              "Roasting"
+            ],
+            "lineage_ids": [
+              "530e157c296aa53a7cac557cd6f50e6b",
+              "e867631adaf5c9405da4462355c603ba"
+            ],
+            "text_blake3": "756eb6f46f5683010d54303cbdaea8d5",
+            "token_count": 40,
+            "version_ids": [
+              "8aae694f79bc1c928b5feae285565a57",
+              "4c54b41f0faf1006d4f3ebdebc54c904"
+            ]
+          },
+          {
+            "chunk_id": "e2c5d012b6b8e18c006f6dd187ae1dc2",
+            "heading_path": [
+              "Roasting",
+              "Stages"
+            ],
+            "lineage_ids": [
+              "8a5c4ac57dfa6428155dc63fe99f722f",
+              "057d8979d988330cce399b635bb14842",
+              "e9167efac8ed691a4309006162504524",
+              "49e9d55dff4edbd5bd37aa54ab045f63"
+            ],
+            "text_blake3": "3905d71f94c808990218ce4e45033ae3",
+            "token_count": 70,
+            "version_ids": [
+              "be98f109cfa0443702ec59fd68a88f79",
+              "74d36b715ac99a7d430da3e23330961c",
+              "07921ccf0eb318a9fccbb4c6347e9c1f",
+              "3d63061a1a59e9a01975b11b36292cbd"
+            ]
+          },
+          {
+            "chunk_id": "1085aebb5a903c8508c6c4e11114510a",
+            "heading_path": [
+              "Roasting",
+              "Profiles"
+            ],
+            "lineage_ids": [
+              "6703152c8524d55191e43523bcd76437",
+              "adfee4046d6d7040924b11ab5e6b6be9",
+              "bba694bad31c041bfdf6401205d94abe",
+              "cfdf3be561a7398df0d4f6fd1c898c9c"
+            ],
+            "text_blake3": "ef3509133c918437c6ca5fbcb886de9f",
+            "token_count": 65,
+            "version_ids": [
+              "389a10a27e7a0fdf851b1fa87468158d",
+              "78423145751e0de4333aec6ecbc0c308",
+              "a3d537fbfe4e46a59c3014bc187451b4",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          }
+        ],
+        "safety.md": [
+          {
+            "chunk_id": "20efc4882e0c87c2312b5dbdcf379457",
+            "heading_path": [
+              "Safety"
+            ],
+            "lineage_ids": [
+              "292188541d3a44d4fbef7e14e0636198",
+              "2e95f78c2aaf2c01a09f0083f8a0f295"
+            ],
+            "text_blake3": "8db327bfd96be15104fa5debc9316a30",
+            "token_count": 24,
+            "version_ids": [
+              "a8a8bdbdf5c157a7e005ecc5ade19629",
+              "c326d856b270d64d20a875a633d46041"
+            ]
+          },
+          {
+            "chunk_id": "c6679604ed7acea1382e8fb48fad73bd",
+            "heading_path": [
+              "Safety",
+              "Fire"
+            ],
+            "lineage_ids": [
+              "b36be22e34fea8a53d5256e105afd133",
+              "8a609fd9231756d186c7bcaf78497f20"
+            ],
+            "text_blake3": "cf7aeae07bfcc7ea90bf44902e97e10a",
+            "token_count": 31,
+            "version_ids": [
+              "c6a462bd0692b1d3f192c5ecb6b1cb38",
+              "436944ba908df893fc27ea9f4303e186"
+            ]
+          },
+          {
+            "chunk_id": "21e976f4b4f5e5d4896bec0ac3b1069e",
+            "heading_path": [
+              "Safety",
+              "Burns"
+            ],
+            "lineage_ids": [
+              "ae76c1e2e41be6a714f759e271a71d15",
+              "d947bb460004de04a8e0fe56e4be28c7",
+              "4dd0b3ced2e3466f03963048ddf5fb8f",
+              "1fb0c3f0a52234cfacd543e5fe3537ef",
+              "25b61420a5d58c3edb4d742a09043b27"
+            ],
+            "text_blake3": "f518988de418e586966cc7c0ec7a9c26",
+            "token_count": 45,
+            "version_ids": [
+              "4adc0205cce21f530155e533b6ce8067",
+              "03a165438cfdf3b2c1df4dc6b41bbd9d",
+              "81ada11194c5b8efc74c4d8e90b0c3fc",
+              "7562548fac1032b1331fea01142958e2",
+              "2df4fe14d041a11c8cf5b0249625d1a6"
+            ]
+          }
+        ],
+        "staff.md": [
+          {
+            "chunk_id": "e6fe797e845065007784a39af423bdc1",
+            "heading_path": [
+              "Staff"
+            ],
+            "lineage_ids": [
+              "37bba9069bab1086bcf1a5d6b2bc6f79",
+              "7dc9de0d3bc7da51ce1558c1dcc4cfa3"
+            ],
+            "text_blake3": "cce6493445b1398fe0bfd6bd153407bc",
+            "token_count": 20,
+            "version_ids": [
+              "b9fe02e3a0803473551a15f099edd947",
+              "e4b60834fd3ebae1125ad460d83b301a"
+            ]
+          },
+          {
+            "chunk_id": "22f6acd71ac5c2f8dfe202ac5bb20a9b",
+            "heading_path": [
+              "Staff",
+              "Training"
+            ],
+            "lineage_ids": [
+              "21cb65ffb7b1887158f1e00eb687a130",
+              "a965a1162c262f61851009cf7102be04"
+            ],
+            "text_blake3": "409627a1c4e7a44386bbb2038d659f3e",
+            "token_count": 38,
+            "version_ids": [
+              "7a3f46eb788c1e540e215dad9c4fc507",
+              "53c4f96b57d4da679c5ce561455005f6"
+            ]
+          },
+          {
+            "chunk_id": "4e74bcbc1dfa0b04dbdf788bf83a62d9",
+            "heading_path": [
+              "Staff",
+              "Shifts"
+            ],
+            "lineage_ids": [
+              "734eda49b32fb6c82b4cf96b4a24165f",
+              "cbd035fe38d39331bd6e72d84b2b3125"
+            ],
+            "text_blake3": "55e1ea567a0c3a8a0882bdfe6b1f90ec",
+            "token_count": 25,
+            "version_ids": [
+              "4ae1de09b6f4fe771ffdf563ee3f5111",
+              "844cd9066596ff41f983908197008e4e"
+            ]
+          }
+        ]
+      },
+      "1:fixed": {
+        "blends.md": [
+          {
+            "chunk_id": "070758c57df97061ab8b2c31d7258693",
+            "heading_path": [],
+            "lineage_ids": [
+              "11aa27c7221f1107bed32302c3d12492",
+              "da272f8d0e7b15f0c54de8c583d828d5",
+              "cb869c916832cfbc9f09cc53ed0559c1",
+              "9766f5150eeef83348798cee15876ea0",
+              "c5033708f8a62d3b6def3fec1f656996",
+              "f78c2c81c95df2cc1dbec0a2e01985b8"
+            ],
+            "text_blake3": "c7fdd7d420d55d8d73243d581cd29bf2",
+            "token_count": 89,
+            "version_ids": [
+              "05597c314da02e6d03f61b69efa72c94",
+              "c0579df61ff816b891ce86bd4ca7fee0",
+              "5ba7acf502e0feffe0712fd9638ec814",
+              "26c5052680be3f35041c205e711f1dfa",
+              "73a2be55d19253b26dfaf7493ceafff6",
+              "995b50f9f1aa4ab03b98132405f12dd2"
+            ]
+          }
+        ],
+        "cupping.md": [
+          {
+            "chunk_id": "43d2b7d07aca1313681c890bcdbbff73",
+            "heading_path": [],
+            "lineage_ids": [
+              "3f195e3640df6315a98c1f8a84349623",
+              "60b39edc75707140ed28eb25201f4197",
+              "6dd797296310723f61ae9ac462b571cf",
+              "2b2be297fc4b4a418387646075b3763b",
+              "ef5fcd506910f7b023257537d7443f88",
+              "2264127b1ff97bc973f131b8038ad007",
+              "f0dca8eee1b5445ef827398f6a25f52d",
+              "3a4c7c83774056859951c2170913df86",
+              "2d4a279848f91eb4e50234729aca3de2",
+              "fc4148a411eb823f1d1db4d09fa06652"
+            ],
+            "text_blake3": "92c03f7a4f1fba4ba0a6cbf5f8350a7e",
+            "token_count": 118,
+            "version_ids": [
+              "ae938eb142902efad6f3482a9c8e39fd",
+              "2ea4221c1a4aba369117ca34ad2b598c",
+              "ba160268d37ecc59aab1ad1d6dbe0a51",
+              "b2bd358d4360f32783bb62d7a092e891",
+              "9ee79ac5cff7d6ecc8eaf9f28db9ac69",
+              "5d1f9761c1045821aaf58f858ff1e136",
+              "b3dd9e7bca42ab07c9fc1e761da36107",
+              "4dca08987c010603cf1aeacbb5905cca",
+              "85ce26171d4a4401a1e1b6380ad04424",
+              "c3c312b130138478cdc340995455ee1a"
+            ]
+          }
+        ],
+        "espresso.md": [
+          {
+            "chunk_id": "d05efb1942bc6c979609181e2908541d",
+            "heading_path": [],
+            "lineage_ids": [
+              "74ecb4d582f0ffede4479a044f078542",
+              "c4bf6f31f6d9b9b83904d4d2d4cb8c22",
+              "b8207c223754799bd8d227b68dcb3518",
+              "ddde6b3b5dd3e2fb53dd11c9177b915b",
+              "bde4a62ef108123db6225d3cc7469dba",
+              "ccb4b5d556126285ce5c51379cb3f2d4",
+              "b950226d51df600280c2d5d172cf1c01",
+              "0ac7567834b23705676531bd025b23c8",
+              "28273578dc4c268579aa8945a7b08dcf",
+              "9167da9b3609a6a9c574eae9cff723e4"
+            ],
+            "text_blake3": "16e0d42754bf9240e5abdf4b6b2e5814",
+            "token_count": 123,
+            "version_ids": [
+              "89d0a18e79e31ff49018e502401250e4",
+              "fa889c08d606d0a20dc7680c00784642",
+              "785a55dccf78d48d6ca2327c3e8fbf32",
+              "2e1daa661fb1aa5d53bc525a2165901d",
+              "8ad3efef173ae2b9a8684a7fc01ccd20",
+              "f9cf861b32d6aacc54907b038ab7342b",
+              "35a3c10f6941ba9f66cfbf97642a5718",
+              "9b758e879f21aca0808ef32ae53fa764",
+              "f4173aeaa5a70b50ca09732821ed142f",
+              "b4627a9650bbadeafc64fca956629e55"
+            ]
+          }
+        ],
+        "filter.md": [
+          {
+            "chunk_id": "97e904ebaaeec6e92a81b60345f8604c",
+            "heading_path": [],
+            "lineage_ids": [
+              "c88e8e42b9befe250dcb92750d0eed1c",
+              "150bbe08e21736c4cc0d4364036f2f2f",
+              "7f9ffbc107637b9713a9e09bb4533327",
+              "b3492b2dc27f1dec2ab9d6294adf0028",
+              "086ed5e4a486fcfffcba05e5bc6c338e",
+              "812db2269fdb246899d9589d0fc9b94e",
+              "525be26945839638ba7dd6468a473af3"
+            ],
+            "text_blake3": "4b53c9e21e7f7af2cafc813cf11a9630",
+            "token_count": 82,
+            "version_ids": [
+              "ad289e24ca936f772b26d0f0deec3153",
+              "817fe428c140b21107643dabc69af10b",
+              "45b9611349ef88482fd634a33408069d",
+              "ce92b405de85da9bcf82f95b2bdf9846",
+              "1e8a06f232fc955fe84257abcfe2a8fc",
+              "2c071c41b48a5e2ffedeaad24bdd4394",
+              "0a9065af81877037dab4d62a7105e9a9"
+            ]
+          }
+        ],
+        "glossary.md": [
+          {
+            "chunk_id": "8f7cb256bdb20a28c16547ca1a194ad1",
+            "heading_path": [],
+            "lineage_ids": [
+              "0efa64472202c2d77142203787309089",
+              "a4b54ef54214708543ba32461c7245e2",
+              "89243155c63473406c366c44443f086f",
+              "3d768a5c89201ff82d09784ead3dc969",
+              "6f4596082c7f4a96560a99c85c76f60e",
+              "8f9472fd786e623025b60662175d5d01",
+              "3fd1de74d25beba7fbcde785ac892015",
+              "082c4f7b097b987b31fca352286b6e5f"
+            ],
+            "text_blake3": "f919ea546cf06e5736a5f10745aa7eb8",
+            "token_count": 100,
+            "version_ids": [
+              "31c451103b4da26383a3c081c542f479",
+              "2d65bf3b0bb9c6cd7a1aafc730b4345a",
+              "3cb70935467386c3af79d93baba74a30",
+              "da55c0f032e75c09999e8d627384dac4",
+              "8e40d924b23ed024a9ec70b1abd37783",
+              "98380860c91d8b563f429f7f21f6df56",
+              "3051c2bc7b92cdb37b7f212345687a7b",
+              "da55c0f032e75c09999e8d627384dac4"
+            ]
+          }
+        ],
+        "grinders.md": [
+          {
+            "chunk_id": "cf7fe2aecef65b0524f2603ddaf5d3a1",
+            "heading_path": [],
+            "lineage_ids": [
+              "7bd601d2ce14e64380e25e30415a29be",
+              "4e4087198ffb697d7be3d75936a104ae",
+              "18ebdbdcc8370425145618bd1d06b8a0",
+              "92e516c0d8f629d3ab1496c21a76ec08",
+              "37992f0d422682328b5bb7885a288391",
+              "f250715b14001b490eda7073159de3aa"
+            ],
+            "text_blake3": "531819b355050f281a23351617aa9857",
+            "token_count": 71,
+            "version_ids": [
+              "3dfa2c9c3836bfaf252504f8de509a47",
+              "70e25a91cbb70a30d236400a1d239da4",
+              "2c516bd1045190c960cf8e33274aa3d1",
+              "bfd67b4f6e5ce827b594c579c152e4a0",
+              "d7a0e9ce7abffecfb11dffd9161b752c",
+              "25b2c4b6b9dd9c5d1b829699ed75fd60"
+            ]
+          }
+        ],
+        "maintenance.md": [
+          {
+            "chunk_id": "6e0b796c4f33b6bb8cec858970b01563",
+            "heading_path": [],
+            "lineage_ids": [
+              "ab06b7f582b48ad296694a15d91c744e",
+              "401cf2b00cadd06809512a205ce60e3c",
+              "79c0341c912967236466addcbf32ac7b",
+              "511781a653cef44c1082cb8ae479f18c",
+              "3fec4cab321c0827ad0102bc608426b3",
+              "3d9dc31aacdb63ad0b1979945859fdb4",
+              "93a23b7f02b1582d36b72e9d5e1b2113",
+              "c39253d12745a779808f1cb8c466d11b",
+              "24c60acf8d181e5579a455e328ecea8c",
+              "b549b3e6438da8de994ba2affeea9030",
+              "df33c17d6cd41afcb018b203074a9ba3",
+              "9525c2bb8ea5cad09d325be1efb949dc"
+            ],
+            "text_blake3": "5d991ec948c30090098b84687e350d37",
+            "token_count": 119,
+            "version_ids": [
+              "c068cab61cfff4469c352b377c72647a",
+              "9688173983b23a1d8ef773610a4c5aff",
+              "49a442ecd9135fa87e5e0a7c59c9e630",
+              "aec6af0df4de362bc215beafda6190c6",
+              "e8dbf7693e88179ff3cff3a602628cb8",
+              "c411a7216cf76a5089b0f57e7aaa9f8a",
+              "61a9d8723629da3a36cefff3fe691736",
+              "cefe8a10cfadf14cd45cced00d1f102e",
+              "3051c2bc7b92cdb37b7f212345687a7b",
+              "158bc851b1d88b10483ff5729a38d18b",
+              "7b8483c438e26e05a0a9a3c1fdfad02a",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          }
+        ],
+        "origins.md": [
+          {
+            "chunk_id": "90b24c87a585b4103ea34ba15b855e51",
+            "heading_path": [],
+            "lineage_ids": [
+              "0f9106274ab1c605acf051494693c13b",
+              "1638a2f3b9e857e3a307fa90f9c8ad3c",
+              "d74937e7345481424c8dd1094ff7c0ea",
+              "4f27983352c768648a1b70ead03e8b21",
+              "d063e253dde5e5110a0664ac0b122676",
+              "be976b06bb66514f14537a10e67598fa",
+              "3b69a8eea38ce998ba32bac2303794bd",
+              "88514aa2ac67834c409b6e9c6e49fec7"
+            ],
+            "text_blake3": "276c5774fea3e1869180191b24f0293e",
+            "token_count": 115,
+            "version_ids": [
+              "51a3ae9ea78e6eabb4d9aae16b5d03f7",
+              "1a1684eaeb930556cd7f3970697c5d41",
+              "9346b6c75afb5b3c735445c5c9a052da",
+              "6dc6ed499cfcab64abf37b55c4c8da08",
+              "d0f7f9e5371a89a60b7260a9d03191cc",
+              "7be671793a5cfbe8d8b3e31a3c956edf",
+              "e10a7848a943cb2c6169b29dab491e60",
+              "e1c9632be171e46dc3baa798003f7bab"
+            ]
+          }
+        ],
+        "roast-log.md": [
+          {
+            "chunk_id": "a38f7786c420c06fd068a3942852b261",
+            "heading_path": [],
+            "lineage_ids": [
+              "a7003050663632c970e6bb8f5628ef22",
+              "772aafd2ee6229225a248753ccad3b92",
+              "769770a8d7428b1e12ae9614516b1027",
+              "49414535cf37edd0490f096c4b8244ec",
+              "b6d7f20845db7cac4ec61469eea0a9a9"
+            ],
+            "text_blake3": "bde6b41d02d1fb0dbf42f86d97513a5d",
+            "token_count": 141,
+            "version_ids": [
+              "61db1351561b2df061f0cd672e35fede",
+              "c98a256035174ea9de4ecc2a58f55ea5",
+              "170410bd6d3a656a296f08d5361eb06e",
+              "75ba9fc1f7a5b5c19c61760b966dfc4c",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          }
+        ],
+        "roasting.md": [
+          {
+            "chunk_id": "a645c2900306b779908d20294402925c",
+            "heading_path": [],
+            "lineage_ids": [
+              "530e157c296aa53a7cac557cd6f50e6b",
+              "e867631adaf5c9405da4462355c603ba",
+              "8a5c4ac57dfa6428155dc63fe99f722f",
+              "057d8979d988330cce399b635bb14842",
+              "e9167efac8ed691a4309006162504524",
+              "49e9d55dff4edbd5bd37aa54ab045f63",
+              "6703152c8524d55191e43523bcd76437",
+              "adfee4046d6d7040924b11ab5e6b6be9",
+              "bba694bad31c041bfdf6401205d94abe",
+              "cfdf3be561a7398df0d4f6fd1c898c9c"
+            ],
+            "text_blake3": "b480417a2ec75dc46ce57e5d36a1c87a",
+            "token_count": 162,
+            "version_ids": [
+              "8aae694f79bc1c928b5feae285565a57",
+              "4c54b41f0faf1006d4f3ebdebc54c904",
+              "be98f109cfa0443702ec59fd68a88f79",
+              "74d36b715ac99a7d430da3e23330961c",
+              "07921ccf0eb318a9fccbb4c6347e9c1f",
+              "3d63061a1a59e9a01975b11b36292cbd",
+              "389a10a27e7a0fdf851b1fa87468158d",
+              "78423145751e0de4333aec6ecbc0c308",
+              "a3d537fbfe4e46a59c3014bc187451b4",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          }
+        ],
+        "safety.md": [
+          {
+            "chunk_id": "4db2edec358bed35b724a585ddf9c262",
+            "heading_path": [],
+            "lineage_ids": [
+              "292188541d3a44d4fbef7e14e0636198",
+              "2e95f78c2aaf2c01a09f0083f8a0f295",
+              "b36be22e34fea8a53d5256e105afd133",
+              "8a609fd9231756d186c7bcaf78497f20",
+              "ae76c1e2e41be6a714f759e271a71d15",
+              "d947bb460004de04a8e0fe56e4be28c7",
+              "4dd0b3ced2e3466f03963048ddf5fb8f",
+              "1fb0c3f0a52234cfacd543e5fe3537ef",
+              "25b61420a5d58c3edb4d742a09043b27"
+            ],
+            "text_blake3": "c5a70bc3565ae7ebb0b9886fa9219e12",
+            "token_count": 91,
+            "version_ids": [
+              "a8a8bdbdf5c157a7e005ecc5ade19629",
+              "c326d856b270d64d20a875a633d46041",
+              "c6a462bd0692b1d3f192c5ecb6b1cb38",
+              "436944ba908df893fc27ea9f4303e186",
+              "4adc0205cce21f530155e533b6ce8067",
+              "03a165438cfdf3b2c1df4dc6b41bbd9d",
+              "81ada11194c5b8efc74c4d8e90b0c3fc",
+              "7562548fac1032b1331fea01142958e2",
+              "2df4fe14d041a11c8cf5b0249625d1a6"
+            ]
+          }
+        ],
+        "staff.md": [
+          {
+            "chunk_id": "6bc9a267128d290e30a3e032e2471c91",
+            "heading_path": [],
+            "lineage_ids": [
+              "37bba9069bab1086bcf1a5d6b2bc6f79",
+              "7dc9de0d3bc7da51ce1558c1dcc4cfa3",
+              "21cb65ffb7b1887158f1e00eb687a130",
+              "a965a1162c262f61851009cf7102be04",
+              "734eda49b32fb6c82b4cf96b4a24165f",
+              "cbd035fe38d39331bd6e72d84b2b3125"
+            ],
+            "text_blake3": "ebb601f0e79a3d43ad30523638193d71",
+            "token_count": 72,
+            "version_ids": [
+              "b9fe02e3a0803473551a15f099edd947",
+              "e4b60834fd3ebae1125ad460d83b301a",
+              "7a3f46eb788c1e540e215dad9c4fc507",
+              "53c4f96b57d4da679c5ce561455005f6",
+              "4ae1de09b6f4fe771ffdf563ee3f5111",
+              "844cd9066596ff41f983908197008e4e"
+            ]
+          }
+        ]
+      },
+      "2:structural": {
+        "blends.md": [
+          {
+            "chunk_id": "88e495b8ab86f8778ea62e0ea0da47ad",
+            "heading_path": [
+              "Blends"
+            ],
+            "lineage_ids": [
+              "11aa27c7221f1107bed32302c3d12492",
+              "da272f8d0e7b15f0c54de8c583d828d5"
+            ],
+            "text_blake3": "aba6a9c761bdfe21a9a713957f63236b",
+            "token_count": 43,
+            "version_ids": [
+              "05597c314da02e6d03f61b69efa72c94",
+              "c0579df61ff816b891ce86bd4ca7fee0"
+            ]
+          },
+          {
+            "chunk_id": "17927d5509eda6a71ee9b0345472608d",
+            "heading_path": [
+              "Blends",
+              "Seasonal blend"
+            ],
+            "lineage_ids": [
+              "cb869c916832cfbc9f09cc53ed0559c1",
+              "9766f5150eeef83348798cee15876ea0"
+            ],
+            "text_blake3": "9bf15937238750d9882bad488bd3ff29",
+            "token_count": 38,
+            "version_ids": [
+              "5ba7acf502e0feffe0712fd9638ec814",
+              "26c5052680be3f35041c205e711f1dfa"
+            ]
+          },
+          {
+            "chunk_id": "970dcdaa33a4e6cbf6f9b975624fd664",
+            "heading_path": [
+              "Blends",
+              "Rest"
+            ],
+            "lineage_ids": [
+              "c5033708f8a62d3b6def3fec1f656996",
+              "f78c2c81c95df2cc1dbec0a2e01985b8"
+            ],
+            "text_blake3": "49a3164b27fa124dd5ead3e896215785",
+            "token_count": 22,
+            "version_ids": [
+              "73a2be55d19253b26dfaf7493ceafff6",
+              "995b50f9f1aa4ab03b98132405f12dd2"
+            ]
+          }
+        ],
+        "cupping.md": [
+          {
+            "chunk_id": "57d21cd2875a6d55446c9bb8be4deb47",
+            "heading_path": [
+              "Cupping"
+            ],
+            "lineage_ids": [
+              "3f195e3640df6315a98c1f8a84349623",
+              "60b39edc75707140ed28eb25201f4197"
+            ],
+            "text_blake3": "8ed61d77c356640f3d21004786568efc",
+            "token_count": 21,
+            "version_ids": [
+              "ae938eb142902efad6f3482a9c8e39fd",
+              "2ea4221c1a4aba369117ca34ad2b598c"
+            ]
+          },
+          {
+            "chunk_id": "9f71b7d8de8e520d3ac5c5fda997e783",
+            "heading_path": [
+              "Cupping",
+              "Protocol"
+            ],
+            "lineage_ids": [
+              "6dd797296310723f61ae9ac462b571cf",
+              "2b2be297fc4b4a418387646075b3763b",
+              "ef5fcd506910f7b023257537d7443f88",
+              "2264127b1ff97bc973f131b8038ad007",
+              "f0dca8eee1b5445ef827398f6a25f52d",
+              "3a4c7c83774056859951c2170913df86"
+            ],
+            "text_blake3": "ba3325cb4eef001bcf3243bce12c1ab9",
+            "token_count": 68,
+            "version_ids": [
+              "ba160268d37ecc59aab1ad1d6dbe0a51",
+              "b2bd358d4360f32783bb62d7a092e891",
+              "9ee79ac5cff7d6ecc8eaf9f28db9ac69",
+              "5d1f9761c1045821aaf58f858ff1e136",
+              "b3dd9e7bca42ab07c9fc1e761da36107",
+              "4dca08987c010603cf1aeacbb5905cca"
+            ]
+          },
+          {
+            "chunk_id": "17c51c275f2400c8a123451b7768dc08",
+            "heading_path": [
+              "Cupping",
+              "Scoring"
+            ],
+            "lineage_ids": [
+              "2d4a279848f91eb4e50234729aca3de2",
+              "fc4148a411eb823f1d1db4d09fa06652"
+            ],
+            "text_blake3": "bbe344c2b0c585135a94fbaf3cf2ac47",
+            "token_count": 46,
+            "version_ids": [
+              "85ce26171d4a4401a1e1b6380ad04424",
+              "c3c312b130138478cdc340995455ee1a"
+            ]
+          }
+        ],
+        "espresso.md": [
+          {
+            "chunk_id": "1267cec336ac47bb936b22edc988ae67",
+            "heading_path": [
+              "Espresso"
+            ],
+            "lineage_ids": [
+              "74ecb4d582f0ffede4479a044f078542",
+              "c4bf6f31f6d9b9b83904d4d2d4cb8c22"
+            ],
+            "text_blake3": "2d28bd0a11eb09879c9c9e2fe5e3eb5f",
+            "token_count": 21,
+            "version_ids": [
+              "89d0a18e79e31ff49018e502401250e4",
+              "fa889c08d606d0a20dc7680c00784642"
+            ]
+          },
+          {
+            "chunk_id": "2049c05833d7f1af7b92a08d1783e92b",
+            "heading_path": [
+              "Espresso",
+              "Recipe"
+            ],
+            "lineage_ids": [
+              "b8207c223754799bd8d227b68dcb3518",
+              "ddde6b3b5dd3e2fb53dd11c9177b915b",
+              "bde4a62ef108123db6225d3cc7469dba",
+              "ccb4b5d556126285ce5c51379cb3f2d4"
+            ],
+            "text_blake3": "2d5911cbcb28f7032db7138baabd582b",
+            "token_count": 48,
+            "version_ids": [
+              "785a55dccf78d48d6ca2327c3e8fbf32",
+              "2e1daa661fb1aa5d53bc525a2165901d",
+              "8ad3efef173ae2b9a8684a7fc01ccd20",
+              "f9cf861b32d6aacc54907b038ab7342b"
+            ]
+          },
+          {
+            "chunk_id": "e1ab6ef6e655bf02b4c0b39c2f3da810",
+            "heading_path": [
+              "Espresso",
+              "Equipment"
+            ],
+            "lineage_ids": [
+              "b950226d51df600280c2d5d172cf1c01",
+              "0ac7567834b23705676531bd025b23c8",
+              "28273578dc4c268579aa8945a7b08dcf",
+              "9167da9b3609a6a9c574eae9cff723e4"
+            ],
+            "text_blake3": "6e99d65ba31f5ded68d1d3e9b7a146cd",
+            "token_count": 67,
+            "version_ids": [
+              "35a3c10f6941ba9f66cfbf97642a5718",
+              "9b758e879f21aca0808ef32ae53fa764",
+              "f4173aeaa5a70b50ca09732821ed142f",
+              "b4627a9650bbadeafc64fca956629e55"
+            ]
+          }
+        ],
+        "filter.md": [
+          {
+            "chunk_id": "b54aedf70c6a2863447e95a5a762f994",
+            "heading_path": [
+              "Filter Coffee"
+            ],
+            "lineage_ids": [
+              "c88e8e42b9befe250dcb92750d0eed1c",
+              "150bbe08e21736c4cc0d4364036f2f2f"
+            ],
+            "text_blake3": "e90d980279f431b61ba2a0cb57e5fd36",
+            "token_count": 21,
+            "version_ids": [
+              "ad289e24ca936f772b26d0f0deec3153",
+              "817fe428c140b21107643dabc69af10b"
+            ]
+          },
+          {
+            "chunk_id": "28cced32e3ed618241f345149b1f1fa3",
+            "heading_path": [
+              "Filter Coffee",
+              "Pour over"
+            ],
+            "lineage_ids": [
+              "7f9ffbc107637b9713a9e09bb4533327",
+              "b3492b2dc27f1dec2ab9d6294adf0028",
+              "086ed5e4a486fcfffcba05e5bc6c338e",
+              "812db2269fdb246899d9589d0fc9b94e",
+              "525be26945839638ba7dd6468a473af3"
+            ],
+            "text_blake3": "1c3ba40265dd1618548c1301d2ab6c1f",
+            "token_count": 70,
+            "version_ids": [
+              "45b9611349ef88482fd634a33408069d",
+              "ce92b405de85da9bcf82f95b2bdf9846",
+              "1e8a06f232fc955fe84257abcfe2a8fc",
+              "2c071c41b48a5e2ffedeaad24bdd4394",
+              "0a9065af81877037dab4d62a7105e9a9"
+            ]
+          }
+        ],
+        "glossary.md": [
+          {
+            "chunk_id": "8f7cb256bdb20a28c16547ca1a194ad1",
+            "heading_path": [
+              "Glossary"
+            ],
+            "lineage_ids": [
+              "0efa64472202c2d77142203787309089",
+              "a4b54ef54214708543ba32461c7245e2",
+              "89243155c63473406c366c44443f086f",
+              "3d768a5c89201ff82d09784ead3dc969",
+              "6f4596082c7f4a96560a99c85c76f60e",
+              "8f9472fd786e623025b60662175d5d01",
+              "3fd1de74d25beba7fbcde785ac892015",
+              "082c4f7b097b987b31fca352286b6e5f"
+            ],
+            "text_blake3": "15f110c83b1f05f6c4fd69cefa156402",
+            "token_count": 104,
+            "version_ids": [
+              "31c451103b4da26383a3c081c542f479",
+              "2d65bf3b0bb9c6cd7a1aafc730b4345a",
+              "3cb70935467386c3af79d93baba74a30",
+              "da55c0f032e75c09999e8d627384dac4",
+              "8e40d924b23ed024a9ec70b1abd37783",
+              "98380860c91d8b563f429f7f21f6df56",
+              "3051c2bc7b92cdb37b7f212345687a7b",
+              "da55c0f032e75c09999e8d627384dac4"
+            ]
+          }
+        ],
+        "grinders.md": [
+          {
+            "chunk_id": "cde621bcb59f58d8e6460823c1b0a7fa",
+            "heading_path": [
+              "Grinders"
+            ],
+            "lineage_ids": [
+              "7bd601d2ce14e64380e25e30415a29be",
+              "4e4087198ffb697d7be3d75936a104ae"
+            ],
+            "text_blake3": "d509964a2370ce30e8501c3e69172600",
+            "token_count": 35,
+            "version_ids": [
+              "3dfa2c9c3836bfaf252504f8de509a47",
+              "70e25a91cbb70a30d236400a1d239da4"
+            ]
+          },
+          {
+            "chunk_id": "2a3336f4ad7a9a23ebfc51966ff27527",
+            "heading_path": [
+              "Grinders",
+              "Calibration"
+            ],
+            "lineage_ids": [
+              "18ebdbdcc8370425145618bd1d06b8a0",
+              "92e516c0d8f629d3ab1496c21a76ec08"
+            ],
+            "text_blake3": "5c0129f58297fcd26a52a790a0c5dcb9",
+            "token_count": 30,
+            "version_ids": [
+              "2c516bd1045190c960cf8e33274aa3d1",
+              "bfd67b4f6e5ce827b594c579c152e4a0"
+            ]
+          },
+          {
+            "chunk_id": "65d4e0b68b539be8256b1e9441a3dc60",
+            "heading_path": [
+              "Grinders",
+              "Cleaning"
+            ],
+            "lineage_ids": [
+              "37992f0d422682328b5bb7885a288391",
+              "f250715b14001b490eda7073159de3aa"
+            ],
+            "text_blake3": "3e6dd1813a85b632b06e6320a7002870",
+            "token_count": 19,
+            "version_ids": [
+              "d7a0e9ce7abffecfb11dffd9161b752c",
+              "25b2c4b6b9dd9c5d1b829699ed75fd60"
+            ]
+          }
+        ],
+        "maintenance.md": [
+          {
+            "chunk_id": "a1ff7d0856cd42218465a9323ecaba8a",
+            "heading_path": [
+              "Maintenance"
+            ],
+            "lineage_ids": [
+              "ab06b7f582b48ad296694a15d91c744e",
+              "401cf2b00cadd06809512a205ce60e3c"
+            ],
+            "text_blake3": "07b10f8092c896f354db2e20ba9bfec2",
+            "token_count": 12,
+            "version_ids": [
+              "c068cab61cfff4469c352b377c72647a",
+              "9688173983b23a1d8ef773610a4c5aff"
+            ]
+          },
+          {
+            "chunk_id": "5f8b580cb276953d269434eec9a68dc4",
+            "heading_path": [
+              "Maintenance",
+              "Daily"
+            ],
+            "lineage_ids": [
+              "79c0341c912967236466addcbf32ac7b",
+              "511781a653cef44c1082cb8ae479f18c",
+              "3fec4cab321c0827ad0102bc608426b3"
+            ],
+            "text_blake3": "21ac089fe7e0494b9a429ddf45b0c950",
+            "token_count": 29,
+            "version_ids": [
+              "49a442ecd9135fa87e5e0a7c59c9e630",
+              "aec6af0df4de362bc215beafda6190c6",
+              "e8dbf7693e88179ff3cff3a602628cb8"
+            ]
+          },
+          {
+            "chunk_id": "af07e4e6ed2aaf03dd1a7d666314c9cf",
+            "heading_path": [
+              "Maintenance",
+              "Monthly"
+            ],
+            "lineage_ids": [
+              "3d9dc31aacdb63ad0b1979945859fdb4",
+              "93a23b7f02b1582d36b72e9d5e1b2113",
+              "c39253d12745a779808f1cb8c466d11b",
+              "24c60acf8d181e5579a455e328ecea8c"
+            ],
+            "text_blake3": "274de5e7f7f8b8541918f5c0e3055d4c",
+            "token_count": 36,
+            "version_ids": [
+              "c411a7216cf76a5089b0f57e7aaa9f8a",
+              "61a9d8723629da3a36cefff3fe691736",
+              "cefe8a10cfadf14cd45cced00d1f102e",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          },
+          {
+            "chunk_id": "2a453ed2e065e0efcbb78add9ed8c8c4",
+            "heading_path": [
+              "Maintenance",
+              "Checklist"
+            ],
+            "lineage_ids": [
+              "b549b3e6438da8de994ba2affeea9030",
+              "df33c17d6cd41afcb018b203074a9ba3",
+              "9525c2bb8ea5cad09d325be1efb949dc"
+            ],
+            "text_blake3": "a708e027fbdbade7bf7e8b46cdf2444c",
+            "token_count": 56,
+            "version_ids": [
+              "158bc851b1d88b10483ff5729a38d18b",
+              "7b8483c438e26e05a0a9a3c1fdfad02a",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          }
+        ],
+        "origins.md": [
+          {
+            "chunk_id": "5f84a8b7ef6cdd18920612a5192dd1a7",
+            "heading_path": [
+              "Origins"
+            ],
+            "lineage_ids": [
+              "0f9106274ab1c605acf051494693c13b",
+              "1638a2f3b9e857e3a307fa90f9c8ad3c"
+            ],
+            "text_blake3": "697a8c8cafacf726817a6438e2b9a0a6",
+            "token_count": 26,
+            "version_ids": [
+              "51a3ae9ea78e6eabb4d9aae16b5d03f7",
+              "1a1684eaeb930556cd7f3970697c5d41"
+            ]
+          },
+          {
+            "chunk_id": "8741f16ecb0d09f44cd21bc162f9f811",
+            "heading_path": [
+              "Origins",
+              "Ethiopia"
+            ],
+            "lineage_ids": [
+              "d74937e7345481424c8dd1094ff7c0ea",
+              "4f27983352c768648a1b70ead03e8b21"
+            ],
+            "text_blake3": "bfb72ae00764e3fc42ebfd107cad9eed",
+            "token_count": 37,
+            "version_ids": [
+              "9346b6c75afb5b3c735445c5c9a052da",
+              "6dc6ed499cfcab64abf37b55c4c8da08"
+            ]
+          },
+          {
+            "chunk_id": "653b224c7298b541436b927ba02671bf",
+            "heading_path": [
+              "Origins",
+              "Colombia"
+            ],
+            "lineage_ids": [
+              "d063e253dde5e5110a0664ac0b122676",
+              "be976b06bb66514f14537a10e67598fa"
+            ],
+            "text_blake3": "6979d0951ce66f9a2ea409c701abcc59",
+            "token_count": 32,
+            "version_ids": [
+              "d0f7f9e5371a89a60b7260a9d03191cc",
+              "7be671793a5cfbe8d8b3e31a3c956edf"
+            ]
+          },
+          {
+            "chunk_id": "5838f63499556e694a7bd934d735b0ed",
+            "heading_path": [
+              "Origins",
+              "Brazil"
+            ],
+            "lineage_ids": [
+              "3b69a8eea38ce998ba32bac2303794bd",
+              "88514aa2ac67834c409b6e9c6e49fec7"
+            ],
+            "text_blake3": "4d503370bc3a97ff148ec8d517f86b13",
+            "token_count": 35,
+            "version_ids": [
+              "e10a7848a943cb2c6169b29dab491e60",
+              "e1c9632be171e46dc3baa798003f7bab"
+            ]
+          }
+        ],
+        "roast-log.md": [
+          {
+            "chunk_id": "a38f7786c420c06fd068a3942852b261",
+            "heading_path": [
+              "Roast Log"
+            ],
+            "lineage_ids": [
+              "a7003050663632c970e6bb8f5628ef22",
+              "772aafd2ee6229225a248753ccad3b92",
+              "769770a8d7428b1e12ae9614516b1027",
+              "49414535cf37edd0490f096c4b8244ec",
+              "b6d7f20845db7cac4ec61469eea0a9a9"
+            ],
+            "text_blake3": "06f5d9c822fed16bd91efa14d24dd45c",
+            "token_count": 145,
+            "version_ids": [
+              "61db1351561b2df061f0cd672e35fede",
+              "c98a256035174ea9de4ecc2a58f55ea5",
+              "170410bd6d3a656a296f08d5361eb06e",
+              "75ba9fc1f7a5b5c19c61760b966dfc4c",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          }
+        ],
+        "roasting.md": [
+          {
+            "chunk_id": "326e58dcb8319def7ccc49476d4aa3ea",
+            "heading_path": [
+              "Roasting"
+            ],
+            "lineage_ids": [
+              "530e157c296aa53a7cac557cd6f50e6b",
+              "e867631adaf5c9405da4462355c603ba"
+            ],
+            "text_blake3": "756eb6f46f5683010d54303cbdaea8d5",
+            "token_count": 40,
+            "version_ids": [
+              "8aae694f79bc1c928b5feae285565a57",
+              "4c54b41f0faf1006d4f3ebdebc54c904"
+            ]
+          },
+          {
+            "chunk_id": "e2c5d012b6b8e18c006f6dd187ae1dc2",
+            "heading_path": [
+              "Roasting",
+              "Stages"
+            ],
+            "lineage_ids": [
+              "8a5c4ac57dfa6428155dc63fe99f722f",
+              "057d8979d988330cce399b635bb14842",
+              "e9167efac8ed691a4309006162504524",
+              "49e9d55dff4edbd5bd37aa54ab045f63"
+            ],
+            "text_blake3": "3905d71f94c808990218ce4e45033ae3",
+            "token_count": 70,
+            "version_ids": [
+              "be98f109cfa0443702ec59fd68a88f79",
+              "74d36b715ac99a7d430da3e23330961c",
+              "07921ccf0eb318a9fccbb4c6347e9c1f",
+              "3d63061a1a59e9a01975b11b36292cbd"
+            ]
+          },
+          {
+            "chunk_id": "1085aebb5a903c8508c6c4e11114510a",
+            "heading_path": [
+              "Roasting",
+              "Profiles"
+            ],
+            "lineage_ids": [
+              "6703152c8524d55191e43523bcd76437",
+              "adfee4046d6d7040924b11ab5e6b6be9",
+              "bba694bad31c041bfdf6401205d94abe",
+              "cfdf3be561a7398df0d4f6fd1c898c9c"
+            ],
+            "text_blake3": "ef3509133c918437c6ca5fbcb886de9f",
+            "token_count": 65,
+            "version_ids": [
+              "389a10a27e7a0fdf851b1fa87468158d",
+              "78423145751e0de4333aec6ecbc0c308",
+              "a3d537fbfe4e46a59c3014bc187451b4",
+              "3051c2bc7b92cdb37b7f212345687a7b"
+            ]
+          }
+        ],
+        "safety.md": [
+          {
+            "chunk_id": "20efc4882e0c87c2312b5dbdcf379457",
+            "heading_path": [
+              "Safety"
+            ],
+            "lineage_ids": [
+              "292188541d3a44d4fbef7e14e0636198",
+              "2e95f78c2aaf2c01a09f0083f8a0f295"
+            ],
+            "text_blake3": "8db327bfd96be15104fa5debc9316a30",
+            "token_count": 24,
+            "version_ids": [
+              "a8a8bdbdf5c157a7e005ecc5ade19629",
+              "c326d856b270d64d20a875a633d46041"
+            ]
+          },
+          {
+            "chunk_id": "c6679604ed7acea1382e8fb48fad73bd",
+            "heading_path": [
+              "Safety",
+              "Fire"
+            ],
+            "lineage_ids": [
+              "b36be22e34fea8a53d5256e105afd133",
+              "8a609fd9231756d186c7bcaf78497f20"
+            ],
+            "text_blake3": "cf7aeae07bfcc7ea90bf44902e97e10a",
+            "token_count": 31,
+            "version_ids": [
+              "c6a462bd0692b1d3f192c5ecb6b1cb38",
+              "436944ba908df893fc27ea9f4303e186"
+            ]
+          },
+          {
+            "chunk_id": "21e976f4b4f5e5d4896bec0ac3b1069e",
+            "heading_path": [
+              "Safety",
+              "Burns"
+            ],
+            "lineage_ids": [
+              "ae76c1e2e41be6a714f759e271a71d15",
+              "d947bb460004de04a8e0fe56e4be28c7",
+              "4dd0b3ced2e3466f03963048ddf5fb8f",
+              "1fb0c3f0a52234cfacd543e5fe3537ef",
+              "25b61420a5d58c3edb4d742a09043b27"
+            ],
+            "text_blake3": "f518988de418e586966cc7c0ec7a9c26",
+            "token_count": 45,
+            "version_ids": [
+              "4adc0205cce21f530155e533b6ce8067",
+              "03a165438cfdf3b2c1df4dc6b41bbd9d",
+              "81ada11194c5b8efc74c4d8e90b0c3fc",
+              "7562548fac1032b1331fea01142958e2",
+              "2df4fe14d041a11c8cf5b0249625d1a6"
+            ]
+          }
+        ],
+        "staff.md": [
+          {
+            "chunk_id": "e6fe797e845065007784a39af423bdc1",
+            "heading_path": [
+              "Staff"
+            ],
+            "lineage_ids": [
+              "37bba9069bab1086bcf1a5d6b2bc6f79",
+              "7dc9de0d3bc7da51ce1558c1dcc4cfa3"
+            ],
+            "text_blake3": "cce6493445b1398fe0bfd6bd153407bc",
+            "token_count": 20,
+            "version_ids": [
+              "b9fe02e3a0803473551a15f099edd947",
+              "e4b60834fd3ebae1125ad460d83b301a"
+            ]
+          },
+          {
+            "chunk_id": "22f6acd71ac5c2f8dfe202ac5bb20a9b",
+            "heading_path": [
+              "Staff",
+              "Training"
+            ],
+            "lineage_ids": [
+              "21cb65ffb7b1887158f1e00eb687a130",
+              "a965a1162c262f61851009cf7102be04"
+            ],
+            "text_blake3": "409627a1c4e7a44386bbb2038d659f3e",
+            "token_count": 38,
+            "version_ids": [
+              "7a3f46eb788c1e540e215dad9c4fc507",
+              "53c4f96b57d4da679c5ce561455005f6"
+            ]
+          },
+          {
+            "chunk_id": "4e74bcbc1dfa0b04dbdf788bf83a62d9",
+            "heading_path": [
+              "Staff",
+              "Shifts"
+            ],
+            "lineage_ids": [
+              "734eda49b32fb6c82b4cf96b4a24165f",
+              "cbd035fe38d39331bd6e72d84b2b3125"
+            ],
+            "text_blake3": "55e1ea567a0c3a8a0882bdfe6b1f90ec",
+            "token_count": 25,
+            "version_ids": [
+              "4ae1de09b6f4fe771ffdf563ee3f5111",
+              "844cd9066596ff41f983908197008e4e"
+            ]
+          }
+        ]
+      }
+    },
+    "events_hash": "808a41f21a43e121d7d688fee9f5bc24",
+    "events_unchanged": true,
+    "lineages_unchanged": true
+  }
+}

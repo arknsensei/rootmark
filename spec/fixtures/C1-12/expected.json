@@ -1,0 +1,214 @@
+{
+  "id": "C1-12",
+  "output": {
+    "events_hash": "ad14f3868b8aa654df7857b9584cb80a",
+    "replay": {
+      "d.md": {
+        "head": "14b7658de429b854e970b947e518dec1",
+        "replayed": "14b7658de429b854e970b947e518dec1"
+      }
+    },
+    "steps": [
+      {
+        "doc_path": "d.md",
+        "event_kinds": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "events": [
+          {
+            "doc_path": "d.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "6dc3e9afa95c6542a809e403a618a375"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "fc6fc051de248ba26cb7a17e6020e1b9"
+            ],
+            "old_version_ids": [],
+            "seq": 0,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "d.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "c35461c7d1ee111e1951029f33d44f57"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "f646d6c5c6158c7d9be4b82c8483ca40"
+            ],
+            "old_version_ids": [],
+            "seq": 1,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "d.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "785560e7c1d8149fa5fe58ab545392a5"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "ff359fc9f177f7d7bc867ba0c25022ff"
+            ],
+            "old_version_ids": [],
+            "seq": 2,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "d.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "60834fe189fa021e6d183a6abc1a38c0"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "6733025969a56e4ceeec634c3d35212f"
+            ],
+            "old_version_ids": [],
+            "seq": 3,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "d.md",
+            "kind": "SnapshotCommitted",
+            "lineage_ids": [
+              "6dc3e9afa95c6542a809e403a618a375",
+              "c35461c7d1ee111e1951029f33d44f57",
+              "785560e7c1d8149fa5fe58ab545392a5",
+              "60834fe189fa021e6d183a6abc1a38c0"
+            ],
+            "meta": {
+              "frontmatter": null,
+              "matcher_version": "v3",
+              "parent_snapshot": null
+            },
+            "new_version_ids": [
+              "fc6fc051de248ba26cb7a17e6020e1b9",
+              "f646d6c5c6158c7d9be4b82c8483ca40",
+              "ff359fc9f177f7d7bc867ba0c25022ff",
+              "6733025969a56e4ceeec634c3d35212f"
+            ],
+            "old_version_ids": [],
+            "seq": 4,
+            "snapshot_id": "58e1a8bc52f8a861e28ed02b4efd7656"
+          }
+        ],
+        "lineage_ids": [
+          "6dc3e9afa95c6542a809e403a618a375",
+          "c35461c7d1ee111e1951029f33d44f57",
+          "785560e7c1d8149fa5fe58ab545392a5",
+          "60834fe189fa021e6d183a6abc1a38c0"
+        ],
+        "snapshot_id": "58e1a8bc52f8a861e28ed02b4efd7656",
+        "step": 0,
+        "version_ids": [
+          "fc6fc051de248ba26cb7a17e6020e1b9",
+          "f646d6c5c6158c7d9be4b82c8483ca40",
+          "ff359fc9f177f7d7bc867ba0c25022ff",
+          "6733025969a56e4ceeec634c3d35212f"
+        ]
+      },
+      {
+        "doc_path": "d.md",
+        "event_kinds": [
+          "BlockUpdated",
+          "SnapshotCommitted"
+        ],
+        "events": [
+          {
+            "doc_path": "d.md",
+            "kind": "BlockUpdated",
+            "lineage_ids": [
+              "785560e7c1d8149fa5fe58ab545392a5"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              },
+              "score": 0.976404
+            },
+            "new_version_ids": [
+              "89795659b20742b1927362723259bd60"
+            ],
+            "old_version_ids": [
+              "ff359fc9f177f7d7bc867ba0c25022ff"
+            ],
+            "seq": 5,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "d.md",
+            "kind": "SnapshotCommitted",
+            "lineage_ids": [
+              "6dc3e9afa95c6542a809e403a618a375",
+              "c35461c7d1ee111e1951029f33d44f57",
+              "785560e7c1d8149fa5fe58ab545392a5",
+              "60834fe189fa021e6d183a6abc1a38c0"
+            ],
+            "meta": {
+              "frontmatter": null,
+              "matcher_version": "v3",
+              "parent_snapshot": "58e1a8bc52f8a861e28ed02b4efd7656"
+            },
+            "new_version_ids": [
+              "fc6fc051de248ba26cb7a17e6020e1b9",
+              "f646d6c5c6158c7d9be4b82c8483ca40",
+              "89795659b20742b1927362723259bd60",
+              "6733025969a56e4ceeec634c3d35212f"
+            ],
+            "old_version_ids": [],
+            "seq": 6,
+            "snapshot_id": "14b7658de429b854e970b947e518dec1"
+          }
+        ],
+        "lineage_ids": [
+          "6dc3e9afa95c6542a809e403a618a375",
+          "c35461c7d1ee111e1951029f33d44f57",
+          "785560e7c1d8149fa5fe58ab545392a5",
+          "60834fe189fa021e6d183a6abc1a38c0"
+        ],
+        "snapshot_id": "14b7658de429b854e970b947e518dec1",
+        "step": 1,
+        "version_ids": [
+          "fc6fc051de248ba26cb7a17e6020e1b9",
+          "f646d6c5c6158c7d9be4b82c8483ca40",
+          "89795659b20742b1927362723259bd60",
+          "6733025969a56e4ceeec634c3d35212f"
+        ]
+      }
+    ]
+  }
+}

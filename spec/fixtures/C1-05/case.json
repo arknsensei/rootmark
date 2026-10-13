@@ -1,0 +1,12 @@
+{
+  "id": "C1-05",
+  "title": "lineage_id formula incl. duplicate ordinal k",
+  "kind": "lineage_formula",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "doc_path": "notes/dups.md",
+  "file": "dups.md"
+}

@@ -56,8 +56,17 @@ check-deps:
 test-check-deps:
 	bash scripts/test_check_deps.sh
 
+# Level 1 (spec/CONFORMANCE.md): spec/fixtures/C1-* against the current core;
+# writes reports/conformance.json and fails unless 17/17 pass and the frozen
+# fixture manifest matches.
 conformance:
-	@echo "error: make conformance is implemented in P1-A/A3" >&2; exit 1
+	rm -f reports/conformance.json
+	MDK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
+	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+	@test -f reports/conformance.json || { echo "error: reports/conformance.json not written" >&2; exit 1; }
+	@jq -e '.level_claimed == 1 and .passed == .total and .total == 17' reports/conformance.json >/dev/null \
+	  || { echo "error: conformance level 1 not reached (reports/conformance.json)" >&2; exit 1; }
+	@echo "conformance: level 1, $$(jq -r '"\(.passed)/\(.total)"' reports/conformance.json) (reports/conformance.json)"
 
 regress:
 	@echo "error: make regress is implemented in P1-A/A4" >&2; exit 1

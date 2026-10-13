@@ -1,0 +1,12 @@
+{
+  "id": "C1-15",
+  "title": "Mixed matcher versions in one vault rejected",
+  "kind": "mixed_versions",
+  "matcher": {
+    "version": "v2",
+    "theta": 0.6,
+    "theta_split": 0.7
+  },
+  "second_version": "v3",
+  "file": "doc.md"
+}

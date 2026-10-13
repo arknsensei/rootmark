@@ -1,0 +1,45 @@
+{
+  "id": "C1-01",
+  "output": [
+    {
+      "is_code": false,
+      "normalized_text": "Café au lait",
+      "text": "Café au lait"
+    },
+    {
+      "is_code": false,
+      "normalized_text": "leading and trailing whitespace",
+      "text": "  leading and trailing whitespace\t\t\n"
+    },
+    {
+      "is_code": false,
+      "normalized_text": "line one line two line three line four",
+      "text": "line one\r\nline two\rline three\nline four"
+    },
+    {
+      "is_code": false,
+      "normalized_text": "runs of whitespace and NBSP",
+      "text": "runs   of \t whitespace  and NBSP"
+    },
+    {
+      "is_code": false,
+      "normalized_text": "*emphasis*, **strong**, _under_ and `code` stay",
+      "text": "*emphasis*, **strong**, _under_ and `code` stay"
+    },
+    {
+      "is_code": false,
+      "normalized_text": "fullＡwidth stays (NFC, not NFKC)",
+      "text": "fullＡwidth stays (NFC, not NFKC)"
+    },
+    {
+      "is_code": true,
+      "normalized_text": "def ratio(dose, yield_):\n    return  yield_ / dose  \n\tpass\n",
+      "text": "def ratio(dose, yield_):\r\n    return  yield_ / dose  \r\n\tpass\r\n"
+    },
+    {
+      "is_code": true,
+      "normalized_text": "  indentedé code  ",
+      "text": "  indentedé code  "
+    }
+  ]
+}

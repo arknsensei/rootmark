@@ -1,0 +1,34 @@
+{
+  "id": "C1-07",
+  "title": "Event log replay reproduces latest snapshot ids",
+  "kind": "sequence",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "steps": [
+    {
+      "doc_path": "a.md",
+      "file": "a0.md"
+    },
+    {
+      "doc_path": "b.md",
+      "file": "b0.md"
+    },
+    {
+      "doc_path": "a.md",
+      "file": "a1.md"
+    },
+    {
+      "doc_path": "b.md",
+      "file": "b1.md",
+      "author_kind": "agent",
+      "source": "claude-code"
+    },
+    {
+      "doc_path": "a.md",
+      "file": "a2.md"
+    }
+  ]
+}

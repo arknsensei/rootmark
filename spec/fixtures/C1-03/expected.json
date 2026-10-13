@@ -1,0 +1,75 @@
+{
+  "id": "C1-03",
+  "output": [
+    {
+      "links": [
+        {
+          "heading": null,
+          "target": "espresso"
+        }
+      ],
+      "text": "See [[espresso]] first."
+    },
+    {
+      "links": [
+        {
+          "heading": null,
+          "target": "espresso"
+        }
+      ],
+      "text": "See [[espresso|the espresso page]]."
+    },
+    {
+      "links": [
+        {
+          "heading": "Recipe",
+          "target": "espresso"
+        }
+      ],
+      "text": "See [[espresso#Recipe]]."
+    },
+    {
+      "links": [
+        {
+          "heading": "Recipe",
+          "target": "espresso"
+        }
+      ],
+      "text": "See [[espresso#Recipe|the recipe]]."
+    },
+    {
+      "links": [
+        {
+          "heading": null,
+          "target": "espresso"
+        },
+        {
+          "heading": null,
+          "target": "spaced target"
+        }
+      ],
+      "text": "Paths are ignored: [[notes/coffee/espresso.md]] and [[ spaced target ]]."
+    },
+    {
+      "links": [
+        {
+          "heading": null,
+          "target": "a"
+        },
+        {
+          "heading": null,
+          "target": "b"
+        },
+        {
+          "heading": "H",
+          "target": "c"
+        },
+        {
+          "heading": "H",
+          "target": "d"
+        }
+      ],
+      "text": "Several: [[a]], [[b|B]], [[c#H]], [[d#H|D]]."
+    }
+  ]
+}

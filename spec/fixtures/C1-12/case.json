@@ -1,0 +1,23 @@
+{
+  "id": "C1-12",
+  "title": "Matcher: similarity update",
+  "kind": "sequence",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "steps": [
+    {
+      "doc_path": "d.md",
+      "file": "v0.md"
+    },
+    {
+      "doc_path": "d.md",
+      "file": "v1.md",
+      "must_contain": [
+        "BlockUpdated"
+      ]
+    }
+  ]
+}

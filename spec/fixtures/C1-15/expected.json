@@ -1,0 +1,10 @@
+{
+  "id": "C1-15",
+  "output": {
+    "error_after_reopen": "vault is locked to matcher v2; ingest with v3 refused",
+    "error_same_handle": "vault is locked to matcher v2; ingest with v3 refused",
+    "first_version": "v2",
+    "log_unchanged": true,
+    "second_version": "v3"
+  }
+}

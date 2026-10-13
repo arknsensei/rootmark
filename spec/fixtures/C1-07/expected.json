@@ -1,0 +1,560 @@
+{
+  "id": "C1-07",
+  "output": {
+    "events_hash": "86b7c84c28d474557b93a8646844d524",
+    "replay": {
+      "a.md": {
+        "head": "e6693697e6c9ff2362f8243c601c2a02",
+        "replayed": "e6693697e6c9ff2362f8243c601c2a02"
+      },
+      "b.md": {
+        "head": "125dc702359f957b0bff3712e042e627",
+        "replayed": "125dc702359f957b0bff3712e042e627"
+      }
+    },
+    "steps": [
+      {
+        "doc_path": "a.md",
+        "event_kinds": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "events": [
+          {
+            "doc_path": "a.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "bc69405b129b325c28378b81cae9c61a"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "fc6fc051de248ba26cb7a17e6020e1b9"
+            ],
+            "old_version_ids": [],
+            "seq": 0,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "a.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "028c1c6e53dc6ea513bace14762740f1"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "f646d6c5c6158c7d9be4b82c8483ca40"
+            ],
+            "old_version_ids": [],
+            "seq": 1,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "a.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "762e6438a509f347ccb211d6da0a633a"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "ff359fc9f177f7d7bc867ba0c25022ff"
+            ],
+            "old_version_ids": [],
+            "seq": 2,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "a.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "97ee85d11f27c41b41ef60ca86d363fd"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "0907c1d93bc41f5007a22416f554fd13"
+            ],
+            "old_version_ids": [],
+            "seq": 3,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "a.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "88dc6e9bee4d6a2d7e6dfc07f02ae55e"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "6733025969a56e4ceeec634c3d35212f"
+            ],
+            "old_version_ids": [],
+            "seq": 4,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "a.md",
+            "kind": "SnapshotCommitted",
+            "lineage_ids": [
+              "bc69405b129b325c28378b81cae9c61a",
+              "028c1c6e53dc6ea513bace14762740f1",
+              "762e6438a509f347ccb211d6da0a633a",
+              "97ee85d11f27c41b41ef60ca86d363fd",
+              "88dc6e9bee4d6a2d7e6dfc07f02ae55e"
+            ],
+            "meta": {
+              "frontmatter": null,
+              "matcher_version": "v3",
+              "parent_snapshot": null
+            },
+            "new_version_ids": [
+              "fc6fc051de248ba26cb7a17e6020e1b9",
+              "f646d6c5c6158c7d9be4b82c8483ca40",
+              "ff359fc9f177f7d7bc867ba0c25022ff",
+              "0907c1d93bc41f5007a22416f554fd13",
+              "6733025969a56e4ceeec634c3d35212f"
+            ],
+            "old_version_ids": [],
+            "seq": 5,
+            "snapshot_id": "6e9aa41f6cfce73fb8a312062407f93c"
+          }
+        ],
+        "lineage_ids": [
+          "bc69405b129b325c28378b81cae9c61a",
+          "028c1c6e53dc6ea513bace14762740f1",
+          "762e6438a509f347ccb211d6da0a633a",
+          "97ee85d11f27c41b41ef60ca86d363fd",
+          "88dc6e9bee4d6a2d7e6dfc07f02ae55e"
+        ],
+        "snapshot_id": "6e9aa41f6cfce73fb8a312062407f93c",
+        "step": 0,
+        "version_ids": [
+          "fc6fc051de248ba26cb7a17e6020e1b9",
+          "f646d6c5c6158c7d9be4b82c8483ca40",
+          "ff359fc9f177f7d7bc867ba0c25022ff",
+          "0907c1d93bc41f5007a22416f554fd13",
+          "6733025969a56e4ceeec634c3d35212f"
+        ]
+      },
+      {
+        "doc_path": "b.md",
+        "event_kinds": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "events": [
+          {
+            "doc_path": "b.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "1e62a9df046c3d84a683d8eb7eda4a87"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "6547923dd98a25540cf7da739d3ad1c5"
+            ],
+            "old_version_ids": [],
+            "seq": 6,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "b.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "ca5b629a2b857a3eb764825a503b5d18"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "3389f1d1e88a64d9c67cae3e987d4363"
+            ],
+            "old_version_ids": [],
+            "seq": 7,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "b.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "f90fdd1f4351a98ac60ed231bb04f9cc"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "1c34cd5c5b2484d3bd23d4cb831aa30a"
+            ],
+            "old_version_ids": [],
+            "seq": 8,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "b.md",
+            "kind": "SnapshotCommitted",
+            "lineage_ids": [
+              "1e62a9df046c3d84a683d8eb7eda4a87",
+              "ca5b629a2b857a3eb764825a503b5d18",
+              "f90fdd1f4351a98ac60ed231bb04f9cc"
+            ],
+            "meta": {
+              "frontmatter": null,
+              "matcher_version": "v3",
+              "parent_snapshot": null
+            },
+            "new_version_ids": [
+              "6547923dd98a25540cf7da739d3ad1c5",
+              "3389f1d1e88a64d9c67cae3e987d4363",
+              "1c34cd5c5b2484d3bd23d4cb831aa30a"
+            ],
+            "old_version_ids": [],
+            "seq": 9,
+            "snapshot_id": "90186b2862a71d0a3c86b64ad5bcf8a5"
+          }
+        ],
+        "lineage_ids": [
+          "1e62a9df046c3d84a683d8eb7eda4a87",
+          "ca5b629a2b857a3eb764825a503b5d18",
+          "f90fdd1f4351a98ac60ed231bb04f9cc"
+        ],
+        "snapshot_id": "90186b2862a71d0a3c86b64ad5bcf8a5",
+        "step": 1,
+        "version_ids": [
+          "6547923dd98a25540cf7da739d3ad1c5",
+          "3389f1d1e88a64d9c67cae3e987d4363",
+          "1c34cd5c5b2484d3bd23d4cb831aa30a"
+        ]
+      },
+      {
+        "doc_path": "a.md",
+        "event_kinds": [
+          "BlockUpdated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "events": [
+          {
+            "doc_path": "a.md",
+            "kind": "BlockUpdated",
+            "lineage_ids": [
+              "762e6438a509f347ccb211d6da0a633a"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              },
+              "score": 0.976404
+            },
+            "new_version_ids": [
+              "89795659b20742b1927362723259bd60"
+            ],
+            "old_version_ids": [
+              "ff359fc9f177f7d7bc867ba0c25022ff"
+            ],
+            "seq": 10,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "a.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "1a70c5ea1b9eb4e9cd880b1ac4477c41"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              }
+            },
+            "new_version_ids": [
+              "080c0eb87d236a2d4317a72077e48cbc"
+            ],
+            "old_version_ids": [],
+            "seq": 11,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "a.md",
+            "kind": "SnapshotCommitted",
+            "lineage_ids": [
+              "bc69405b129b325c28378b81cae9c61a",
+              "028c1c6e53dc6ea513bace14762740f1",
+              "762e6438a509f347ccb211d6da0a633a",
+              "97ee85d11f27c41b41ef60ca86d363fd",
+              "1a70c5ea1b9eb4e9cd880b1ac4477c41",
+              "88dc6e9bee4d6a2d7e6dfc07f02ae55e"
+            ],
+            "meta": {
+              "frontmatter": null,
+              "matcher_version": "v3",
+              "parent_snapshot": "6e9aa41f6cfce73fb8a312062407f93c"
+            },
+            "new_version_ids": [
+              "fc6fc051de248ba26cb7a17e6020e1b9",
+              "f646d6c5c6158c7d9be4b82c8483ca40",
+              "89795659b20742b1927362723259bd60",
+              "0907c1d93bc41f5007a22416f554fd13",
+              "080c0eb87d236a2d4317a72077e48cbc",
+              "6733025969a56e4ceeec634c3d35212f"
+            ],
+            "old_version_ids": [],
+            "seq": 12,
+            "snapshot_id": "c74ce0a35f9b6408faa6221ad42063ad"
+          }
+        ],
+        "lineage_ids": [
+          "bc69405b129b325c28378b81cae9c61a",
+          "028c1c6e53dc6ea513bace14762740f1",
+          "762e6438a509f347ccb211d6da0a633a",
+          "97ee85d11f27c41b41ef60ca86d363fd",
+          "1a70c5ea1b9eb4e9cd880b1ac4477c41",
+          "88dc6e9bee4d6a2d7e6dfc07f02ae55e"
+        ],
+        "snapshot_id": "c74ce0a35f9b6408faa6221ad42063ad",
+        "step": 2,
+        "version_ids": [
+          "fc6fc051de248ba26cb7a17e6020e1b9",
+          "f646d6c5c6158c7d9be4b82c8483ca40",
+          "89795659b20742b1927362723259bd60",
+          "0907c1d93bc41f5007a22416f554fd13",
+          "080c0eb87d236a2d4317a72077e48cbc",
+          "6733025969a56e4ceeec634c3d35212f"
+        ]
+      },
+      {
+        "doc_path": "b.md",
+        "event_kinds": [
+          "BlockMoved",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "events": [
+          {
+            "doc_path": "b.md",
+            "kind": "BlockMoved",
+            "lineage_ids": [
+              "f90fdd1f4351a98ac60ed231bb04f9cc"
+            ],
+            "meta": {
+              "anchor_kind": "exact",
+              "from_pos": 2,
+              "matcher_version": "v3",
+              "to_pos": 1
+            },
+            "new_version_ids": [
+              "1c34cd5c5b2484d3bd23d4cb831aa30a"
+            ],
+            "old_version_ids": [
+              "1c34cd5c5b2484d3bd23d4cb831aa30a"
+            ],
+            "seq": 13,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "b.md",
+            "kind": "BlockCreated",
+            "lineage_ids": [
+              "7825a0b7e4212802a6e14c7cfc593855"
+            ],
+            "meta": {
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Agent",
+                "source": "claude-code"
+              }
+            },
+            "new_version_ids": [
+              "a179fda178cd65bc9265874fa0c47ad8"
+            ],
+            "old_version_ids": [],
+            "seq": 14,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "b.md",
+            "kind": "SnapshotCommitted",
+            "lineage_ids": [
+              "1e62a9df046c3d84a683d8eb7eda4a87",
+              "f90fdd1f4351a98ac60ed231bb04f9cc",
+              "ca5b629a2b857a3eb764825a503b5d18",
+              "7825a0b7e4212802a6e14c7cfc593855"
+            ],
+            "meta": {
+              "frontmatter": null,
+              "matcher_version": "v3",
+              "parent_snapshot": "90186b2862a71d0a3c86b64ad5bcf8a5"
+            },
+            "new_version_ids": [
+              "6547923dd98a25540cf7da739d3ad1c5",
+              "1c34cd5c5b2484d3bd23d4cb831aa30a",
+              "3389f1d1e88a64d9c67cae3e987d4363",
+              "a179fda178cd65bc9265874fa0c47ad8"
+            ],
+            "old_version_ids": [],
+            "seq": 15,
+            "snapshot_id": "125dc702359f957b0bff3712e042e627"
+          }
+        ],
+        "lineage_ids": [
+          "1e62a9df046c3d84a683d8eb7eda4a87",
+          "f90fdd1f4351a98ac60ed231bb04f9cc",
+          "ca5b629a2b857a3eb764825a503b5d18",
+          "7825a0b7e4212802a6e14c7cfc593855"
+        ],
+        "snapshot_id": "125dc702359f957b0bff3712e042e627",
+        "step": 3,
+        "version_ids": [
+          "6547923dd98a25540cf7da739d3ad1c5",
+          "1c34cd5c5b2484d3bd23d4cb831aa30a",
+          "3389f1d1e88a64d9c67cae3e987d4363",
+          "a179fda178cd65bc9265874fa0c47ad8"
+        ]
+      },
+      {
+        "doc_path": "a.md",
+        "event_kinds": [
+          "BlockMerged",
+          "BlockDeleted",
+          "SnapshotCommitted"
+        ],
+        "events": [
+          {
+            "doc_path": "a.md",
+            "kind": "BlockMerged",
+            "lineage_ids": [
+              "762e6438a509f347ccb211d6da0a633a"
+            ],
+            "meta": {
+              "dominant": "762e6438a509f347ccb211d6da0a633a",
+              "from_lineages": [
+                "762e6438a509f347ccb211d6da0a633a",
+                "97ee85d11f27c41b41ef60ca86d363fd"
+              ],
+              "matcher_version": "v3",
+              "provenance": {
+                "author_kind": "Human",
+                "source": ""
+              },
+              "residual": false,
+              "score": 1.0
+            },
+            "new_version_ids": [
+              "504bc24114743c1c4072528fb595c81c"
+            ],
+            "old_version_ids": [
+              "89795659b20742b1927362723259bd60",
+              "0907c1d93bc41f5007a22416f554fd13"
+            ],
+            "seq": 16,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "a.md",
+            "kind": "BlockDeleted",
+            "lineage_ids": [
+              "88dc6e9bee4d6a2d7e6dfc07f02ae55e"
+            ],
+            "meta": {
+              "matcher_version": "v3"
+            },
+            "new_version_ids": [],
+            "old_version_ids": [
+              "6733025969a56e4ceeec634c3d35212f"
+            ],
+            "seq": 17,
+            "snapshot_id": null
+          },
+          {
+            "doc_path": "a.md",
+            "kind": "SnapshotCommitted",
+            "lineage_ids": [
+              "bc69405b129b325c28378b81cae9c61a",
+              "028c1c6e53dc6ea513bace14762740f1",
+              "762e6438a509f347ccb211d6da0a633a",
+              "1a70c5ea1b9eb4e9cd880b1ac4477c41"
+            ],
+            "meta": {
+              "frontmatter": "status: draft\n",
+              "matcher_version": "v3",
+              "parent_snapshot": "c74ce0a35f9b6408faa6221ad42063ad"
+            },
+            "new_version_ids": [
+              "fc6fc051de248ba26cb7a17e6020e1b9",
+              "f646d6c5c6158c7d9be4b82c8483ca40",
+              "504bc24114743c1c4072528fb595c81c",
+              "080c0eb87d236a2d4317a72077e48cbc"
+            ],
+            "old_version_ids": [],
+            "seq": 18,
+            "snapshot_id": "e6693697e6c9ff2362f8243c601c2a02"
+          }
+        ],
+        "lineage_ids": [
+          "bc69405b129b325c28378b81cae9c61a",
+          "028c1c6e53dc6ea513bace14762740f1",
+          "762e6438a509f347ccb211d6da0a633a",
+          "1a70c5ea1b9eb4e9cd880b1ac4477c41"
+        ],
+        "snapshot_id": "e6693697e6c9ff2362f8243c601c2a02",
+        "step": 4,
+        "version_ids": [
+          "fc6fc051de248ba26cb7a17e6020e1b9",
+          "f646d6c5c6158c7d9be4b82c8483ca40",
+          "504bc24114743c1c4072528fb595c81c",
+          "080c0eb87d236a2d4317a72077e48cbc"
+        ]
+      }
+    ]
+  }
+}

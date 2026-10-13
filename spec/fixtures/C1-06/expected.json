@@ -1,0 +1,13 @@
+{
+  "id": "C1-06",
+  "output": {
+    "conflicting_write": "error",
+    "first_write": "ok",
+    "id_not_matching_content": "error",
+    "identical_write": "ok",
+    "object_bytes_blake3": "dd4122333e1db810cf12355f490e2f5f",
+    "unchanged_after_conflict": true,
+    "unchanged_after_identical": true,
+    "version_id": "fe68bcfa956652fcfc794d4f7e2cd7bb"
+  }
+}

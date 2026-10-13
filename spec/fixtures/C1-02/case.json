@@ -1,0 +1,9 @@
+{
+  "id": "C1-02",
+  "title": "Block boundaries for every block type, front matter, nested list, empty paragraph",
+  "kind": "parse",
+  "documents": [
+    "all_types.md",
+    "empty_paragraphs.md"
+  ]
+}

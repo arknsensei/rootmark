@@ -1,0 +1,35 @@
+{
+  "id": "C1-13",
+  "title": "Matcher: residual checks (split and merge direction)",
+  "kind": "sequence",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 1.01
+  },
+  "note": "theta_split 1.01 disables steps 2-3 so that only the residual checks (steps 5-6) can produce split/merge events; the fixture carries its own parameters",
+  "steps": [
+    {
+      "doc_path": "split.md",
+      "file": "s0.md"
+    },
+    {
+      "doc_path": "split.md",
+      "file": "s1.md",
+      "must_contain": [
+        "BlockSplit"
+      ]
+    },
+    {
+      "doc_path": "merge.md",
+      "file": "m0.md"
+    },
+    {
+      "doc_path": "merge.md",
+      "file": "m1.md",
+      "must_contain": [
+        "BlockMerged"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "C1-08",
+  "title": "Matcher: exact + move (LIS)",
+  "kind": "sequence",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "steps": [
+    {
+      "doc_path": "d.md",
+      "file": "v0.md"
+    },
+    {
+      "doc_path": "d.md",
+      "file": "v1.md",
+      "must_contain": [
+        "BlockMoved"
+      ]
+    },
+    {
+      "doc_path": "d.md",
+      "file": "v2.md",
+      "must_contain": [
+        "BlockMoved"
+      ],
+      "note": "swap of two blocks: blocks outside the longest increasing subsequence of the old order are reported as BlockMoved"
+    }
+  ]
+}

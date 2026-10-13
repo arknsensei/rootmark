@@ -1,0 +1,34 @@
+{
+  "id": "C1-10",
+  "title": "Matcher: split 2/3 pieces, dominant-piece rule",
+  "kind": "sequence",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "steps": [
+    {
+      "doc_path": "two.md",
+      "file": "t0.md"
+    },
+    {
+      "doc_path": "two.md",
+      "file": "t1.md",
+      "must_contain": [
+        "BlockSplit"
+      ]
+    },
+    {
+      "doc_path": "three.md",
+      "file": "h0.md"
+    },
+    {
+      "doc_path": "three.md",
+      "file": "h1.md",
+      "must_contain": [
+        "BlockSplit"
+      ]
+    }
+  ]
+}

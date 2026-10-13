@@ -1,0 +1,14 @@
+{
+  "id": "C1-17",
+  "title": "Whole-vault determinism: fixture vault ingested twice -> identical events.jsonl bytes",
+  "kind": "vault_determinism",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ingest_dirs": [
+    "../mini_vault",
+    "edit"
+  ]
+}

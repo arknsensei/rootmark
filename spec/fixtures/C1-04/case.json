@@ -1,0 +1,39 @@
+{
+  "id": "C1-04",
+  "title": "version_id stable across runs and machines",
+  "kind": "version_id",
+  "inputs": [
+    {
+      "block_type": "Heading",
+      "normalized_text": "# Espresso"
+    },
+    {
+      "block_type": "Paragraph",
+      "normalized_text": "Espresso is brewed with nine bars of pressure."
+    },
+    {
+      "block_type": "ListItem",
+      "normalized_text": "- Dose: 18 g"
+    },
+    {
+      "block_type": "Code",
+      "normalized_text": "```python\ndef f():\n    return 1\n```"
+    },
+    {
+      "block_type": "Table",
+      "normalized_text": "| a | b | | - | - | | 1 | 2 |"
+    },
+    {
+      "block_type": "Blockquote",
+      "normalized_text": "> quoted"
+    },
+    {
+      "block_type": "Other",
+      "normalized_text": "---"
+    },
+    {
+      "block_type": "Paragraph",
+      "normalized_text": "Café"
+    }
+  ]
+}

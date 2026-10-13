@@ -1,0 +1,5 @@
+{
+  "id": "C1-06",
+  "title": "Object store: identical write is no-op; conflicting write fails",
+  "kind": "object_store"
+}

@@ -1,0 +1,44 @@
+{
+  "id": "C1-05",
+  "output": {
+    "blocks": [
+      {
+        "k": 0,
+        "lineage_id": "cbed33c37bebeb99b137f81d2c14dfee",
+        "version_id": "9774eeefd5fef518433bbe57bdc498e5"
+      },
+      {
+        "k": 0,
+        "lineage_id": "c516991f3ce718e8912d7b199048285a",
+        "version_id": "a7e210a7974e5993b81c70a713bb6a5b"
+      },
+      {
+        "k": 0,
+        "lineage_id": "6560c14f9cb18aa1b3a2f707bf0d835f",
+        "version_id": "88c2a32ad9540408a88f42ac5e2b2041"
+      },
+      {
+        "k": 1,
+        "lineage_id": "43f72f2a2cb67ba01dfe61b508163a51",
+        "version_id": "a7e210a7974e5993b81c70a713bb6a5b"
+      },
+      {
+        "k": 0,
+        "lineage_id": "61124c6b949e906ef5c11c511efd0edc",
+        "version_id": "c89ef1630e118b9d4339125d7949479f"
+      },
+      {
+        "k": 1,
+        "lineage_id": "060e0fb7644669f838e5f2f9c815a622",
+        "version_id": "c89ef1630e118b9d4339125d7949479f"
+      },
+      {
+        "k": 2,
+        "lineage_id": "94c15be4eeeb5966d3ddb496d8e2fecc",
+        "version_id": "a7e210a7974e5993b81c70a713bb6a5b"
+      }
+    ],
+    "doc_path": "notes/dups.md",
+    "snapshot_id": "c26a2d0bb2e898a69f2982211bbff8e8"
+  }
+}

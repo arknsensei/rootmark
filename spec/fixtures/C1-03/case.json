@@ -1,0 +1,13 @@
+{
+  "id": "C1-03",
+  "title": "Wikilink forms (4)",
+  "kind": "wikilinks",
+  "inputs": [
+    "See [[espresso]] first.",
+    "See [[espresso|the espresso page]].",
+    "See [[espresso#Recipe]].",
+    "See [[espresso#Recipe|the recipe]].",
+    "Paths are ignored: [[notes/coffee/espresso.md]] and [[ spaced target ]].",
+    "Several: [[a]], [[b|B]], [[c#H]], [[d#H|D]]."
+  ]
+}

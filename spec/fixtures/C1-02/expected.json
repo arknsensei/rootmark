@@ -1,0 +1,246 @@
+{
+  "id": "C1-02",
+  "output": [
+    {
+      "blocks": [
+        {
+          "block_type": "Heading",
+          "heading_level": 1,
+          "heading_path": [],
+          "line_end": 6,
+          "line_start": 6,
+          "normalized_text": "# Top heading",
+          "version_id": "cf747e73307cba34f47b8db52527e5f4"
+        },
+        {
+          "block_type": "Paragraph",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading"
+          ],
+          "line_end": 8,
+          "line_start": 8,
+          "normalized_text": "Intro paragraph with *emphasis* and a [[link]].",
+          "version_id": "d10d7b5009f211241ee0e6bd75d7489f"
+        },
+        {
+          "block_type": "Heading",
+          "heading_level": 2,
+          "heading_path": [
+            "Top heading"
+          ],
+          "line_end": 10,
+          "line_start": 10,
+          "normalized_text": "## Lists",
+          "version_id": "6d1d082fa04450fd6c986ceedd134d10"
+        },
+        {
+          "block_type": "ListItem",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Lists"
+          ],
+          "line_end": 12,
+          "line_start": 12,
+          "normalized_text": "- first item",
+          "version_id": "4ce9a9a6cfca551c8e2e07ee05de3b51"
+        },
+        {
+          "block_type": "ListItem",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Lists"
+          ],
+          "line_end": 15,
+          "line_start": 13,
+          "normalized_text": "- second item - nested child stays in the parent - another nested child",
+          "version_id": "73058f63a9f66cf2d62e341123bf50da"
+        },
+        {
+          "block_type": "ListItem",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Lists"
+          ],
+          "line_end": 16,
+          "line_start": 16,
+          "normalized_text": "- third item",
+          "version_id": "9c3fdbd6d55a3c8cfec89a058de94feb"
+        },
+        {
+          "block_type": "ListItem",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Lists"
+          ],
+          "line_end": 18,
+          "line_start": 18,
+          "normalized_text": "1. ordered one",
+          "version_id": "9da1b0ef58abdd7d5d68e8dcb7ddb65e"
+        },
+        {
+          "block_type": "ListItem",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Lists"
+          ],
+          "line_end": 19,
+          "line_start": 19,
+          "normalized_text": "2. ordered two",
+          "version_id": "f38c656f8aaebd276f2d9f43651c060e"
+        },
+        {
+          "block_type": "Heading",
+          "heading_level": 3,
+          "heading_path": [
+            "Top heading",
+            "Lists"
+          ],
+          "line_end": 21,
+          "line_start": 21,
+          "normalized_text": "### Code",
+          "version_id": "a051034a7bb6d5e55bf8a4bf50acda6b"
+        },
+        {
+          "block_type": "Code",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Lists",
+            "Code"
+          ],
+          "line_end": 27,
+          "line_start": 23,
+          "normalized_text": "```rust\nfn main() {\n    println!(\"hi\");\n}\n```",
+          "version_id": "305e91ff2ce579c8307ab895d02c0c00"
+        },
+        {
+          "block_type": "Code",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Lists",
+            "Code"
+          ],
+          "line_end": 30,
+          "line_start": 29,
+          "normalized_text": "indented code block\n    second line",
+          "version_id": "991a1e22063af5fb1e07f2bfac55ab5f"
+        },
+        {
+          "block_type": "Heading",
+          "heading_level": 2,
+          "heading_path": [
+            "Top heading"
+          ],
+          "line_end": 32,
+          "line_start": 32,
+          "normalized_text": "## Table and quote",
+          "version_id": "6089824303576c5b08a2c2604193313d"
+        },
+        {
+          "block_type": "Table",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Table and quote"
+          ],
+          "line_end": 36,
+          "line_start": 34,
+          "normalized_text": "| col a | col b | |-------|-------| | 1 | 2 |",
+          "version_id": "6a1ee30882b51f23badbe17d97e9e535"
+        },
+        {
+          "block_type": "Blockquote",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Table and quote"
+          ],
+          "line_end": 40,
+          "line_start": 38,
+          "normalized_text": "> A quote with **bold**. > > - a list inside the quote is not parsed",
+          "version_id": "eb8eb68005932ee50c07a5e6e01d1e53"
+        },
+        {
+          "block_type": "Other",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Table and quote"
+          ],
+          "line_end": 42,
+          "line_start": 42,
+          "normalized_text": "<div>raw html</div>",
+          "version_id": "09a2b29b03bd435aa3df48cdbf656cfb"
+        },
+        {
+          "block_type": "Other",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Table and quote"
+          ],
+          "line_end": 44,
+          "line_start": 44,
+          "normalized_text": "---",
+          "version_id": "7562548fac1032b1331fea01142958e2"
+        },
+        {
+          "block_type": "Heading",
+          "heading_level": 2,
+          "heading_path": [
+            "Top heading"
+          ],
+          "line_end": 47,
+          "line_start": 46,
+          "normalized_text": "Setext heading --------------",
+          "version_id": "0aa9b04a85830c646f75792821f27d2b"
+        },
+        {
+          "block_type": "Paragraph",
+          "heading_level": null,
+          "heading_path": [
+            "Top heading",
+            "Setext heading"
+          ],
+          "line_end": 49,
+          "line_start": 49,
+          "normalized_text": "Closing paragraph.",
+          "version_id": "e82bf7b3b457cf4cba0776e2c01a7bfb"
+        }
+      ],
+      "document": "all_types.md",
+      "frontmatter": "title: All block types\ntags: [fixture]\n"
+    },
+    {
+      "blocks": [
+        {
+          "block_type": "Paragraph",
+          "heading_level": null,
+          "heading_path": [],
+          "line_end": 7,
+          "line_start": 7,
+          "normalized_text": "real paragraph",
+          "version_id": "072759461961a3f31584c2e34c2c617a"
+        },
+        {
+          "block_type": "Paragraph",
+          "heading_level": null,
+          "heading_path": [],
+          "line_end": 11,
+          "line_start": 11,
+          "normalized_text": "another real one",
+          "version_id": "2621f614f3a407cf078cec0c15345b2a"
+        }
+      ],
+      "document": "empty_paragraphs.md",
+      "frontmatter": null
+    }
+  ]
+}

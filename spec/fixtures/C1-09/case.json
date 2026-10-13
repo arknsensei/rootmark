@@ -1,0 +1,51 @@
+{
+  "id": "C1-09",
+  "title": "Matcher: duplicate blocks, context anchor then ordinal",
+  "kind": "sequence",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "steps": [
+    {
+      "doc_path": "spread.md",
+      "file": "s0.md"
+    },
+    {
+      "doc_path": "spread.md",
+      "file": "s1.md",
+      "must_contain": [
+        "BlockDeleted"
+      ]
+    },
+    {
+      "doc_path": "adjacent.md",
+      "file": "j0.md"
+    },
+    {
+      "doc_path": "adjacent.md",
+      "file": "j1.md",
+      "must_contain": [
+        "BlockDeleted"
+      ]
+    },
+    {
+      "doc_path": "ordinal.md",
+      "file": "o0.md"
+    },
+    {
+      "doc_path": "ordinal.md",
+      "file": "o1.md",
+      "must_contain": [
+        "BlockCreated"
+      ],
+      "must_not_contain": [
+        "BlockDeleted",
+        "BlockUpdated",
+        "BlockMoved"
+      ],
+      "note": "the first new copy's context (NEW, D, D) matches no old context: the ordinal fallback must keep both lineages"
+    }
+  ]
+}

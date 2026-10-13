@@ -1,0 +1,38 @@
+{
+  "id": "C1-14",
+  "title": "Matcher: create/delete remainder",
+  "kind": "sequence",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "steps": [
+    {
+      "doc_path": "d.md",
+      "file": "v0.md"
+    },
+    {
+      "doc_path": "d.md",
+      "file": "v1.md",
+      "must_contain": [
+        "BlockCreated",
+        "BlockDeleted"
+      ]
+    },
+    {
+      "doc_path": "d.md",
+      "file": "v2.md",
+      "must_contain": [
+        "BlockCreated"
+      ]
+    },
+    {
+      "doc_path": "d.md",
+      "file": "v3.md",
+      "must_contain": [
+        "BlockDeleted"
+      ]
+    }
+  ]
+}

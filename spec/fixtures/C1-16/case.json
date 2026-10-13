@@ -1,0 +1,13 @@
+{
+  "id": "C1-16",
+  "title": "Chunk rebuild changes no lineage and emits no events",
+  "kind": "chunk_rebuild",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ingest_dirs": [
+    "../mini_vault"
+  ]
+}

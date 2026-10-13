@@ -1,0 +1,33 @@
+{
+  "id": "C1-01",
+  "title": "Normalization: NFC, line endings, whitespace, code block preservation",
+  "kind": "normalize",
+  "inputs": [
+    {
+      "text": "Café au lait"
+    },
+    {
+      "text": "  leading and trailing whitespace\t\t\n"
+    },
+    {
+      "text": "line one\r\nline two\rline three\nline four"
+    },
+    {
+      "text": "runs   of \t whitespace  and NBSP"
+    },
+    {
+      "text": "*emphasis*, **strong**, _under_ and `code` stay"
+    },
+    {
+      "text": "fullＡwidth stays (NFC, not NFKC)"
+    },
+    {
+      "text": "def ratio(dose, yield_):\r\n    return  yield_ / dose  \r\n\tpass\r\n",
+      "is_code": true
+    },
+    {
+      "text": "  indentedé code  ",
+      "is_code": true
+    }
+  ]
+}

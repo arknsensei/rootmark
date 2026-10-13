@@ -1,0 +1,13 @@
+# Copied into a scratch workspace next to `git archive v3-final core` by
+# scripts/gen_fixtures.sh; never built inside this repository's workspace.
+[package]
+name = "mdk-fixture-gen"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+anyhow = "1.0.104"
+blake3 = { version = "1.8.7", features = ["pure"] }
+mdkernel-core = { path = "../core" }
+serde_json = "1.0.154"
