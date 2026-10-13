@@ -55,11 +55,26 @@ def verify_or_write_manifest(path: Path, manifest: dict, write: bool) -> None:
     print(f"{path.relative_to(ROOT)} verified")
 
 
+# user-level git settings must not change what the builders see
+GIT_PINNED = (
+    "-c",
+    "diff.algorithm=myers",
+    "-c",
+    "color.ui=never",
+    "-c",
+    "core.quotepath=off",
+    "-c",
+    "core.autocrlf=false",
+    "-c",
+    "log.showSignature=false",
+)
+
+
 def git(*args: str, cwd: Path | None = None, input: str | None = None) -> str:
     """Runs git; stdout decoded as UTF-8 without newline translation (file
     contents must reach the parser byte-for-byte)."""
     r = subprocess.run(
-        ["git", *args],
+        ["git", *GIT_PINNED, *args],
         cwd=cwd,
         capture_output=True,
         input=None if input is None else input.encode("utf-8"),

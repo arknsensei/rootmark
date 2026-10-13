@@ -60,3 +60,12 @@ def test_empty_denominator_is_error():
     r = M.h1r_pair_record([], [], [], [])
     with pytest.raises(M.MetricError):
         M.h1r_aggregate([r], [{"commit": "c", "path": "p"}])
+
+
+def test_other_examples_truncated_to_five():
+    old = [blk(f"L{i}", f"v{i}", 10 * i + 1, 10 * i + 1) for i in range(7)] + [
+        blk("T", "vt", 100, 100)
+    ]
+    r = M.h1r_pair_record(old, [{"old": [100, 1], "new": [100, 1]}], [], [])
+    agg = M.h1r_aggregate([r], [{"commit": "c", "path": "p.md"}])
+    assert agg["other_count"] == 7 and len(agg["other_examples"]) == 5

@@ -181,3 +181,11 @@ fn line_spans_count_from_document_start() {
     let spans: Vec<_> = b.iter().map(|x| (x.line_start, x.line_end)).collect();
     assert_eq!(spans, vec![(5, 5), (7, 8), (10, 11), (13, 15)]);
 }
+
+#[test]
+fn line_spans_with_crlf() {
+    let md = "# H\r\n\r\npara\r\nmore\r\n\r\n- x\r\n";
+    let (b, _) = parse_document(md, "t.md").unwrap();
+    let spans: Vec<_> = b.iter().map(|x| (x.line_start, x.line_end)).collect();
+    assert_eq!(spans, vec![(1, 1), (3, 4), (6, 6)]);
+}
