@@ -68,4 +68,6 @@ def test_other_examples_truncated_to_five():
     ]
     r = M.h1r_pair_record(old, [{"old": [100, 1], "new": [100, 1]}], [], [])
     agg = M.h1r_aggregate([r], [{"commit": "c", "path": "p.md"}])
-    assert agg["other_count"] == 7 and len(agg["other_examples"]) == 5
+    # the last untouched block neighbours the touched one → hunk_adjacent, not other
+    assert agg["loss_categories"]["hunk_adjacent"] == 1
+    assert agg["other_count"] == 6 and len(agg["other_examples"]) == 5
