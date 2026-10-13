@@ -17,7 +17,7 @@ pub const THETA: f64 = 0.60;
 /// V2 split/merge threshold (SPEC §5.3 steps 2–3). Set by T6 tuning; frozen.
 pub const THETA_SPLIT: f64 = 0.70;
 /// V3 similarity-assignment threshold. Written only by the T24 tuning phase.
-pub const THETA_V3: f64 = 0.60;
+pub const THETA_V3: f64 = 0.50;
 /// V3 split/merge threshold. Written only by the T24 tuning phase.
 pub const THETA_SPLIT_V3: f64 = 0.65;
 /// V2 only: minimum part length relative to the whole for split/merge candidates.
