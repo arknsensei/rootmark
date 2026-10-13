@@ -17,5 +17,5 @@ pub use model::{
 pub use normalize::normalize;
 pub use parse::parse_document;
 pub use store::BlockObject;
-pub use vault::{snapshot_id, Snapshot, Vault};
+pub use vault::{snapshot_id, IngestResult, Snapshot, Vault};
 pub use wikilink::extract_wikilinks;

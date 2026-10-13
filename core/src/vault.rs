@@ -1,8 +1,10 @@
 //! Vault: object store + event log + per-document heads (SPEC §2–4, §7).
 
 use crate::events::{append_events, read_events, Event, EventKind};
+use crate::lineage::{match_blocks, PrevBlock, MATCHER_VERSION};
 use crate::model::{hash32, Block, Provenance};
 use crate::parse::heading_paths;
+use crate::parse::parse_document;
 use crate::store::{self, BlockObject, SnapshotObject};
 use anyhow::{bail, Context, Result};
 use serde::{Deserialize, Serialize};
@@ -204,6 +206,15 @@ pub fn replay_all(events: &[Event]) -> Result<BTreeMap<String, DocState>> {
     Ok(docs)
 }
 
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct IngestResult {
+    pub snapshot: Snapshot,
+    pub events: Vec<Event>,
+    /// lineages touched by block events (created, updated, moved, split,
+    /// merged, deleted, including split/merge sources), in event order
+    pub changed_lineages: Vec<String>,
+}
+
 pub struct Vault {
     root: PathBuf,
     meta_dir: PathBuf,
@@ -389,5 +400,99 @@ impl Vault {
         self.next_seq += events.len() as u64;
         self.docs.extend(staged);
         Ok(events)
+    }
+
+    /// parse → match → store → log (SPEC §7). Re-ingesting identical block
+    /// content and frontmatter produces no events.
+    pub fn ingest(&mut self, doc_path: &str, text: &str, prov: Provenance) -> Result<IngestResult> {
+        let (drafts, frontmatter) = parse_document(text, doc_path)?;
+        let st = self.docs.get(doc_path);
+        let head = st.and_then(|s| s.head.clone());
+        let prev: Vec<PrevBlock> = match &head {
+            Some(h) => self
+                .snapshot_blocks(h)?
+                .iter()
+                .map(PrevBlock::from)
+                .collect(),
+            None => Vec::new(),
+        };
+        let used = st.map(|s| s.used.clone()).unwrap_or_default();
+        let r = match_blocks(doc_path, &prev, &drafts, &used, self.params, &prov);
+        let fm_changed = head.as_ref().is_none_or(|h| h.frontmatter != frontmatter);
+        if r.events.is_empty() && !fm_changed {
+            let snapshot = head.expect("head exists when frontmatter is unchanged");
+            return Ok(IngestResult {
+                snapshot,
+                events: Vec::new(),
+                changed_lineages: Vec::new(),
+            });
+        }
+        let mut changed: Vec<String> = Vec::new();
+        let mut seen: HashSet<String> = HashSet::new();
+        for ev in &r.events {
+            let from = ev
+                .meta
+                .get("from_lineages")
+                .and_then(|v| v.as_array())
+                .cloned()
+                .unwrap_or_default();
+            let from = from.iter().filter_map(|x| x.as_str().map(str::to_string));
+            for l in from.chain(ev.lineage_ids.iter().cloned()) {
+                if seen.insert(l.clone()) {
+                    changed.push(l);
+                }
+            }
+        }
+        let parent = head.as_ref().map(|h| h.snapshot_id.clone());
+        let sid = snapshot_id(r.blocks.iter().map(|b| b.version_id.as_str()));
+        let mut events = r.events;
+        events.push(Event {
+            seq: 0,
+            doc_path: doc_path.to_string(),
+            kind: EventKind::SnapshotCommitted,
+            lineage_ids: r.blocks.iter().map(|b| b.lineage_id.clone()).collect(),
+            old_version_ids: Vec::new(),
+            new_version_ids: r.blocks.iter().map(|b| b.version_id.clone()).collect(),
+            snapshot_id: Some(sid),
+            meta: serde_json::json!({
+                "matcher_version": MATCHER_VERSION,
+                "frontmatter": frontmatter,
+                "parent_snapshot": parent,
+            }),
+        });
+        let objects: Vec<BlockObject> = r
+            .blocks
+            .iter()
+            .map(|b| BlockObject {
+                version_id: b.version_id.clone(),
+                block_type: b.block_type,
+                normalized_text: b.normalized_text.clone(),
+                heading_level: b.heading_level,
+            })
+            .collect();
+        let events = self.commit(&objects, events)?;
+        let snapshot = self.snapshot(doc_path)?.context("snapshot after commit")?;
+        Ok(IngestResult {
+            snapshot,
+            events,
+            changed_lineages: changed,
+        })
+    }
+
+    /// Content-referenced truth → lineage: the `k`-th block (document order)
+    /// with `version_id` in the head snapshot of `doc_path`. Never empty: an
+    /// unresolvable reference is an error.
+    pub fn resolve_truth(&self, doc_path: &str, version_id: &str, k: usize) -> Result<String> {
+        let snap = self
+            .snapshot(doc_path)?
+            .with_context(|| format!("resolve_truth: no snapshot for {doc_path}"))?;
+        snap.blocks
+            .iter()
+            .filter(|(_, v)| v == version_id)
+            .nth(k)
+            .map(|(l, _)| l.clone())
+            .with_context(|| {
+                format!("resolve_truth: {doc_path} has no occurrence {k} of {version_id}")
+            })
     }
 }
