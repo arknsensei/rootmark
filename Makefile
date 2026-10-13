@@ -177,7 +177,9 @@ p1a-checks: require-run
 # Quality regression (TASKS A4, GOAL A-3): v2 phases + v3 D1-easy/hard, D2, H3,
 # H4, H4-V2 under RUN, then every quality field compared with the v3-final
 # reference run (compare_runs --set v3; latency fields excluded, non-zero exit
-# on any difference). Results are copied to reports/rounds/P1-A/runs/<RUN>/.
+# on any difference). Results stay in the RUN directory (git-ignored): nothing
+# is written into the source tree, so later phases still record a clean tree;
+# the round's official RUN is committed under reports/rounds/P1-A/ by A7.
 regress: require-run
 	$(MAKE) eval-h1s-tune eval-h1s eval-h1r RUN=$(RUN)
 	$(MAKE) eval-h1s-v3 RUN=$(RUN) PHASE=tune
@@ -185,9 +187,7 @@ regress: require-run
 	$(MAKE) eval-h1r-v3 eval-h3 eval-h4 eval-h4-v2repro RUN=$(RUN)
 	$(PY) -m eval.compare_runs reports/runs/$(V3_REF_RUN) reports/runs/$(RUN) --set v3 \
 	  --out reports/runs/$(RUN)/regress_vs_v3final.json
-	mkdir -p reports/rounds/P1-A/runs/$(RUN)
-	cp research/reports/runs/$(RUN)/*.json reports/rounds/P1-A/runs/$(RUN)/
-	@echo "regress: RUN=$(RUN) equal to v3-final $(V3_REF_RUN) (reports/rounds/P1-A/runs/$(RUN)/regress_vs_v3final.json)"
+	@echo "regress: RUN=$(RUN) equal to v3-final $(V3_REF_RUN) (research/reports/runs/$(RUN)/regress_vs_v3final.json)"
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:

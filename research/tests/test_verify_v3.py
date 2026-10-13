@@ -134,6 +134,7 @@ def test_chain_runs_v2_and_v3_phases():
     ):
         assert step in chain, step
     assert "eval-h2" not in chain
+    assert "worktree_clean != true" in chain  # dirty phases fail the chain
     makefile = (ROOT.parent / "Makefile").read_text()
     regress = makefile.split("\nregress:")[1].split("\n\n")[0]
     for step in (

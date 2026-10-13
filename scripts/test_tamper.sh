@@ -53,7 +53,7 @@ PY
 }
 flip_vid "$conf/spec/fixtures/C1-04/expected.json"
 expect_fail "fixture expected value changed -> make conformance" "spec/fixtures changed|conformance failures" \
-  bash -c "cd '$conf' && cargo test -q -p mdkernel-core --release --test conformance"
+  make -C "$conf" conformance
 # same corruption with MANIFEST.json updated: the case comparison still fails
 "$py" - "$conf/spec/fixtures" <<'PY'
 import json, sys
@@ -65,7 +65,7 @@ m["files"]["C1-04/expected.json"] = blake3.blake3((root / "C1-04/expected.json")
 (root / "MANIFEST.json").write_text(json.dumps(m, indent=2) + "\n")
 PY
 expect_fail "fixture expected value + manifest changed -> case mismatch" "C1-04: actual output differs" \
-  bash -c "cd '$conf' && cargo test -q -p mdkernel-core --release --test conformance"
+  make -C "$conf" conformance
 
 # --- 2. holdout data (research/data/d1ho, MANIFEST.d1ho.json)
 res="$scratch/res/research"

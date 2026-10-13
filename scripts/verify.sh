@@ -62,6 +62,15 @@ chain() {
   make eval-split-grid RUN="$run"
   log "A-1 / A-5 / A-6 into the RUN"
   make p1a-checks RUN="$run"
+  # every phase must have run on the clean committed tree (nothing written into it)
+  local dirty
+  dirty="$(jq -r '.phases | to_entries[] | select(.value.worktree_clean != true) | .key' \
+    "research/reports/runs/$run/manifest.json")"
+  if [ -n "$dirty" ]; then
+    echo "error: phases ran on a dirty work tree: $(echo $dirty)" >&2
+    git status --porcelain --untracked-files=all >&2
+    exit 1
+  fi
   log "chain finished in $((SECONDS - t0)) s"
   echo "RUN=$run" >&3
   echo "RUN_DIR=$work/repo/research/reports/runs/$run" >&3
@@ -96,7 +105,7 @@ compare() {
   (cd "$repo/research" && uv run --frozen python -m eval.compare_p1a "$dir_a" "$dir_b" \
     ${out:+--out "$out"}) >&2 || rc=$?
   if [ "$rc" -ne 0 ]; then
-    echo "error: run comparison failed (compare_runs exit $rc)" >&2
+    echo "error: run comparison failed (compare_p1a exit $rc)" >&2
     exit "$rc"
   fi
   log "max relative difference of quality fields = 0"
