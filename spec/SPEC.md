@@ -110,7 +110,7 @@ For the same vault contents ingested in the same order with the same matcher ver
 
 ## 11. Raw journal and version triggers (Draft)
 
-Implementations SHOULD keep a prunable raw journal of every save (keystroke-level data is never lost) separate from versions. A **version** is created only by a trigger policy (idle time, semantic distance to the previous version, block boundary exit). The kernel defines bounds (a version never carries less than the journal; unversioned content is never indexed; minimum journal retention); policies supply parameters within those bounds, and a parameter outside them is rejected, not clamped. (Informative: the reference implementation's minimum journal retention is 24 hours.)
+Implementations SHOULD keep a prunable raw journal of every save (keystroke-level data is never lost) separate from versions. A **version** is created only by a trigger policy (idle time, semantic distance to the previous version, block boundary exit). The kernel defines bounds (a version never carries less than the journal; unversioned content is never indexed; minimum journal retention); policies supply parameters within those bounds. (Informative: the reference implementation's minimum journal retention is 24 hours.)
 
 ## 12. Conformance
 
