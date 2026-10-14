@@ -217,3 +217,82 @@ pub fn lexical(
     let ranked = bm25(store, &view.eligible(include_proposal), query)?;
     Ok(finalize(store, ranked, k))
 }
+
+/// Reciprocal rank fusion constant and the candidates taken from each side
+/// (GOAL: `1/(60 + rank)`, top 50; prototype `RRF_K`, `CANDIDATES`).
+pub const RRF_K: f64 = 60.0;
+pub const CANDIDATES: usize = 50;
+
+/// Exact cosine against every eligible record, best first.
+pub fn cosine_ranking(store: &Store, eligible: &[(usize, Layer)], q: &[f32]) -> Vec<Scored> {
+    let mut out: Vec<Scored> = eligible
+        .iter()
+        .map(|&(i, l)| (i, l, crate::vectors::cosine(q, &store.vectors[i])))
+        .collect();
+    sort_scored(store, &mut out);
+    out
+}
+
+/// `Σ 1/(RRF_K + rank)` over the lists (rank from 1), best first.
+pub fn rrf(store: &Store, lists: &[&[Scored]]) -> Vec<Scored> {
+    let mut fused: BTreeMap<usize, (Layer, f64)> = BTreeMap::new();
+    for list in lists {
+        for (r, &(i, l, _)) in list.iter().enumerate() {
+            fused.entry(i).or_insert((l, 0.0)).1 += 1.0 / (RRF_K + (r + 1) as f64);
+        }
+    }
+    let mut out: Vec<Scored> = fused.into_iter().map(|(i, (l, s))| (i, l, s)).collect();
+    sort_scored(store, &mut out);
+    out
+}
+
+fn query_vector(
+    embedder: &dyn crate::embed::Embedder,
+    store: &Store,
+    query: &str,
+) -> Result<Vec<f32>> {
+    if embedder.id() != store.manifest.embedder_id {
+        bail!(
+            "query embedder {} != index embedder {}",
+            embedder.id(),
+            store.manifest.embedder_id
+        );
+    }
+    embedder
+        .embed(&[query])?
+        .pop()
+        .context("embedder returned no vector")
+}
+
+/// Vector retrieval (exact cosine) as of `view`'s checkpoint.
+pub fn flat(
+    store: &Store,
+    embedder: &dyn crate::embed::Embedder,
+    view: &View,
+    query: &str,
+    k: usize,
+    include_proposal: bool,
+) -> Result<Vec<Hit>> {
+    let q = query_vector(embedder, store, query)?;
+    let ranked = cosine_ranking(store, &view.eligible(include_proposal), &q);
+    Ok(finalize(store, ranked, k))
+}
+
+/// Hybrid retrieval: RRF of the top `CANDIDATES` of the cosine and BM25
+/// rankings (BM25 lists only records with a query term).
+pub fn hybrid(
+    store: &Store,
+    embedder: &dyn crate::embed::Embedder,
+    view: &View,
+    query: &str,
+    k: usize,
+    include_proposal: bool,
+) -> Result<Vec<Hit>> {
+    let eligible = view.eligible(include_proposal);
+    let q = query_vector(embedder, store, query)?;
+    let mut dense = cosine_ranking(store, &eligible, &q);
+    dense.truncate(CANDIDATES);
+    let mut sparse = bm25(store, &eligible, query)?;
+    sparse.truncate(CANDIDATES);
+    Ok(finalize(store, rrf(store, &[&dense, &sparse]), k))
+}

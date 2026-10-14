@@ -8,14 +8,21 @@
 //!   order; a query at a checkpoint reads exactly the snapshots it names
 //! - `lexical/` — tantivy (`crate::lexical`), fast field `ord` = line of
 //!   `records.jsonl`
+//! - `vectors/` — one vector per record and its `embedder_id`
+//!   (`crate::vectors`); one embedder per index
 //!
 //! A build covers every document head and every snapshot named by a
 //! checkpoint (`record::build_snapshots`), writes into
 //! `.mdkernel/index.build/` and replaces the index by renaming it. Every
-//! file is a function of the vault: no time, no path, no randomness.
+//! file is a function of the vault and the embedder: no time, no path, no
+//! randomness. A rebuild reuses the vector of a record the previous index
+//! already holds under the same `embedder_id` (embedding is deterministic,
+//! C1), so only new records are embedded.
 
+use crate::embed::Embedder;
 use crate::lexical::{self, Lexical};
 use crate::record::{build_snapshots, snapshot_records, ChunkRecord, SnapshotChunks};
+use crate::vectors::{self, VectorMeta};
 use anyhow::{bail, Context, Result};
 use mdkcore::Vault;
 use serde::{Deserialize, Serialize};
@@ -36,10 +43,13 @@ pub struct Manifest {
     pub tokenizer: String,
     pub bm25_k1: f64,
     pub bm25_b: f64,
+    pub embedder_id: String,
+    pub dim: usize,
     pub records: usize,
     pub snapshots: usize,
     pub records_blake3: String,
     pub snapshots_blake3: String,
+    pub vectors_blake3: String,
 }
 
 pub fn index_dir(vault: &Vault) -> PathBuf {
@@ -81,6 +91,9 @@ fn write_pretty(p: &Path, v: &impl Serialize) -> Result<()> {
 pub struct BuildReport {
     pub records: usize,
     pub snapshots: usize,
+    pub embedder_id: String,
+    /// records embedded by this build (the others reused their vector)
+    pub embedded: usize,
 }
 
 /// Chunk records of every snapshot an index build covers, deduplicated and
@@ -110,10 +123,53 @@ pub fn collect(vault: &Vault) -> Result<(Vec<ChunkRecord>, Vec<SnapshotChunks>)>
     Ok((records, snaps))
 }
 
+/// Vectors of the current index by `record_id`, if it was built with
+/// `embedder_id` (any problem: nothing is reused, everything is embedded).
+fn reusable(dir: &Path, embedder_id: &str, dim: usize) -> HashMap<String, Vec<f32>> {
+    let read = || -> Result<HashMap<String, Vec<f32>>> {
+        let m: Manifest = serde_json::from_str(&fs::read_to_string(dir.join("manifest.json"))?)?;
+        if m.embedder_id != embedder_id || m.dim != dim {
+            return Ok(HashMap::new());
+        }
+        let (vecs, metas) = vectors::read(&dir.join("vectors"), dim)?;
+        let bytes = fs::read(dir.join("vectors/vectors.f32"))?;
+        if blake3::hash(&bytes).to_hex().as_str() != m.vectors_blake3 {
+            return Ok(HashMap::new());
+        }
+        Ok(metas
+            .into_iter()
+            .zip(vecs)
+            .filter(|(meta, _)| meta.embedder_id == embedder_id)
+            .map(|(meta, v)| (meta.record_id, v))
+            .collect())
+    };
+    read().unwrap_or_default()
+}
+
 /// Rebuilds `<vault>/.mdkernel/index/` from the vault.
-pub fn build(vault: &Vault) -> Result<BuildReport> {
+pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
     let (records, snaps) = collect(vault)?;
     let dir = index_dir(vault);
+    let mut have = reusable(&dir, embedder.id(), embedder.dim());
+    let missing: Vec<&ChunkRecord> = records
+        .iter()
+        .filter(|r| !have.contains_key(&r.record_id))
+        .collect();
+    let texts: Vec<&str> = missing.iter().map(|r| r.text.as_str()).collect();
+    for (r, v) in missing.iter().zip(embedder.embed(&texts)?) {
+        have.insert(r.record_id.clone(), v);
+    }
+    let vecs: Vec<Vec<f32>> = records
+        .iter()
+        .map(|r| have.remove(&r.record_id).context("vector"))
+        .collect::<Result<_>>()?;
+    let metas: Vec<VectorMeta> = records
+        .iter()
+        .map(|r| VectorMeta {
+            record_id: r.record_id.clone(),
+            embedder_id: embedder.id().to_string(),
+        })
+        .collect();
     let tmp = vault.store_dir().join("index.build");
     if tmp.exists() {
         fs::remove_dir_all(&tmp)?;
@@ -124,16 +180,23 @@ pub fn build(vault: &Vault) -> Result<BuildReport> {
     fs::write(tmp.join("records.jsonl"), &rec_bytes)?;
     fs::write(tmp.join("snapshots.jsonl"), &snap_bytes)?;
     lexical::write(&tmp.join("lexical"), &records)?;
+    let vec_bytes = vectors::encode(&vecs, embedder.dim())?;
+    fs::create_dir_all(tmp.join("vectors"))?;
+    fs::write(tmp.join("vectors/vectors.f32"), &vec_bytes)?;
+    fs::write(tmp.join("vectors/embedders.jsonl"), jsonl(&metas)?)?;
     let manifest = Manifest {
         format: FORMAT.into(),
         chunking: "structural".into(),
         tokenizer: TOKENIZER.into(),
         bm25_k1: BM25_K1,
         bm25_b: BM25_B,
+        embedder_id: embedder.id().to_string(),
+        dim: embedder.dim(),
         records: records.len(),
         snapshots: snaps.len(),
         records_blake3: blake3::hash(&rec_bytes).to_hex().to_string(),
         snapshots_blake3: blake3::hash(&snap_bytes).to_hex().to_string(),
+        vectors_blake3: blake3::hash(&vec_bytes).to_hex().to_string(),
     };
     write_pretty(&tmp.join("manifest.json"), &manifest)?;
     if dir.exists() {
@@ -143,10 +206,12 @@ pub fn build(vault: &Vault) -> Result<BuildReport> {
     Ok(BuildReport {
         records: records.len(),
         snapshots: snaps.len(),
+        embedder_id: embedder.id().to_string(),
+        embedded: missing.len(),
     })
 }
 
-/// An opened index: records, snapshot map, lexical postings.
+/// An opened index: records, snapshot map, lexical postings, vectors.
 pub struct Store {
     pub dir: PathBuf,
     pub manifest: Manifest,
@@ -154,10 +219,14 @@ pub struct Store {
     by_id: HashMap<String, usize>,
     snapshots: HashMap<(String, String), Vec<usize>>,
     pub lexical: Lexical,
+    /// one vector per record (storage order)
+    pub vectors: Vec<Vec<f32>>,
 }
 
 impl Store {
-    pub fn open(vault: &Vault) -> Result<Store> {
+    /// Opens the index of `vault` for queries embedded by `embedder`: the
+    /// index must hold exactly that `embedder_id`.
+    pub fn open(vault: &Vault, embedder: &dyn Embedder) -> Result<Store> {
         let dir = index_dir(vault);
         if !dir.join("manifest.json").is_file() {
             bail!("no index at {} (run `mdk index build`)", dir.display());
@@ -212,6 +281,35 @@ impl Store {
                 bail!("snapshots.jsonl: {}@{} twice", s.doc_path, s.snapshot_id);
             }
         }
+        let (vecs, metas) = vectors::read(&dir.join("vectors"), manifest.dim)?;
+        let vb = fs::read(dir.join("vectors/vectors.f32"))?;
+        if blake3::hash(&vb).to_hex().as_str() != manifest.vectors_blake3 {
+            bail!("vectors.f32 does not match manifest.json (blake3)");
+        }
+        if vecs.len() != records.len()
+            || metas
+                .iter()
+                .zip(&records)
+                .any(|(m, r)| m.record_id != r.record_id)
+        {
+            bail!("vectors do not line up with records.jsonl");
+        }
+        let id = vectors::single_embedder(&metas)?;
+        if !records.is_empty() && id.as_deref() != Some(manifest.embedder_id.as_str()) {
+            bail!(
+                "vectors carry embedder_id {id:?}, manifest {:?}",
+                manifest.embedder_id
+            );
+        }
+        if manifest.embedder_id != embedder.id() || manifest.dim != embedder.dim() {
+            bail!(
+                "index embedder_id {} (dim {}) != query embedder {} (dim {}): rebuild the index",
+                manifest.embedder_id,
+                manifest.dim,
+                embedder.id(),
+                embedder.dim()
+            );
+        }
         let lexical = Lexical::open(&dir.join("lexical"))?;
         if lexical.num_docs() != records.len() as u64 {
             bail!(
@@ -227,6 +325,7 @@ impl Store {
             by_id,
             snapshots,
             lexical,
+            vectors: vecs,
         })
     }
 

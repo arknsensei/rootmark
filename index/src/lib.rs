@@ -12,5 +12,6 @@ pub mod record;
 pub mod search;
 pub mod store;
 pub mod tokenize;
+pub mod vectors;
 
 pub use embed::{Embedder, OnnxMiniLm};

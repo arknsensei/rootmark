@@ -4,12 +4,19 @@
 //! the checkpoint restriction.
 
 use mdkcore::{MatcherVersion, Provenance, Vault};
+use mdkindex::embed::OnnxMiniLm;
 use mdkindex::search::{self, View};
 use mdkindex::store::{self, Store};
 use mdkindex::tokenize::{tokens, MdkTokenizer};
 use serde_json::Value;
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
+
+fn embedder() -> &'static OnnxMiniLm {
+    static E: OnceLock<OnnxMiniLm> = OnceLock::new();
+    E.get_or_init(|| OnnxMiniLm::load_default().expect("model (run `make models`)"))
+}
 use tantivy::tokenizer::{TextAnalyzer, TokenStream};
 
 fn here(rel: &str) -> PathBuf {
@@ -90,8 +97,8 @@ fn index_directory_is_byte_identical_across_builds_and_places() {
     let b = mini_vault("b");
     let va = Vault::open(&a).unwrap();
     let vb = Vault::open(&b).unwrap();
-    let ra = store::build(&va).unwrap();
-    store::build(&vb).unwrap();
+    let ra = store::build(&va, embedder()).unwrap();
+    store::build(&vb, embedder()).unwrap();
     assert!(ra.records > 0);
     let ta = tree(&store::index_dir(&va));
     assert_eq!(ta, tree(&store::index_dir(&vb)));
@@ -110,8 +117,8 @@ fn index_directory_is_byte_identical_across_builds_and_places() {
         .collect();
     assert_eq!(seg.len(), 1, "{lex:?}");
     // a rebuild in place gives the same bytes; so does opening and querying
-    store::build(&va).unwrap();
-    let s = Store::open(&va).unwrap();
+    store::build(&va, embedder()).unwrap();
+    let s = Store::open(&va, embedder()).unwrap();
     let view = View::new(&va, &s, "t0").unwrap();
     search::lexical(&s, &view, "espresso grind", 10, false).unwrap();
     let after: Vec<(String, Vec<u8>)> = tree(&store::index_dir(&va))
@@ -127,8 +134,8 @@ fn index_directory_is_byte_identical_across_builds_and_places() {
 fn ranking_is_identical_over_100_repeats() {
     let root = mini_vault("repeat");
     let v = Vault::open(&root).unwrap();
-    store::build(&v).unwrap();
-    let s = Store::open(&v).unwrap();
+    store::build(&v, embedder()).unwrap();
+    let s = Store::open(&v, embedder()).unwrap();
     let view = View::new(&v, &s, "t0").unwrap();
     for q in [
         "espresso grind size",
@@ -142,7 +149,7 @@ fn ranking_is_identical_over_100_repeats() {
             assert_eq!(search::lexical(&s, &view, q, 10, false).unwrap(), first);
         }
         // a fresh store and view give the same
-        let s2 = Store::open(&v).unwrap();
+        let s2 = Store::open(&v, embedder()).unwrap();
         let view2 = View::new(&v, &s2, "t0").unwrap();
         assert_eq!(search::lexical(&s2, &view2, q, 10, false).unwrap(), first);
     }
@@ -164,8 +171,8 @@ fn bm25_by_hand_and_ties_by_key() {
     v.ingest("d.md", "alpha gamma\n", h(), MatcherVersion::V3)
         .unwrap();
     v.checkpoint(Some("t0")).unwrap();
-    store::build(&v).unwrap();
-    let s = Store::open(&v).unwrap();
+    store::build(&v, embedder()).unwrap();
+    let s = Store::open(&v, embedder()).unwrap();
     let view = View::new(&v, &s, "t0").unwrap();
     let hits = search::lexical(&s, &view, "alpha beta", 10, false).unwrap();
     // N 4, lengths 3 2 4 2 → avgdl 2.75; df(alpha) 3, df(beta) 1
@@ -221,8 +228,8 @@ fn query_sees_only_the_checkpoint_and_unindexed_snapshots_fail() {
     v.ingest("b.md", "espresso again\n", h(), MatcherVersion::V3)
         .unwrap();
     v.checkpoint(Some("t1")).unwrap();
-    store::build(&v).unwrap();
-    let s = Store::open(&v).unwrap();
+    store::build(&v, embedder()).unwrap();
+    let s = Store::open(&v, embedder()).unwrap();
     let t0 = View::new(&v, &s, "t0").unwrap();
     let t1 = View::new(&v, &s, "t1").unwrap();
     let docs = |hits: Vec<search::Hit>| hits.into_iter().map(|h| h.doc_path).collect::<Vec<_>>();
@@ -250,15 +257,15 @@ fn query_sees_only_the_checkpoint_and_unindexed_snapshots_fail() {
 fn tampered_index_files_are_errors() {
     let root = mini_vault("tamper");
     let v = Vault::open(&root).unwrap();
-    store::build(&v).unwrap();
+    store::build(&v, embedder()).unwrap();
     let p = store::index_dir(&v).join("records.jsonl");
     let mut bytes = fs::read(&p).unwrap();
     let i = bytes.iter().position(|&c| c == b'a').unwrap();
     bytes[i] = b'b';
     fs::write(&p, bytes).unwrap();
-    assert!(Store::open(&v).is_err());
+    assert!(Store::open(&v, embedder()).is_err());
     fs::remove_dir_all(store::index_dir(&v)).unwrap();
-    assert!(format!("{:#}", Store::open(&v).err().unwrap()).contains("no index"));
+    assert!(format!("{:#}", Store::open(&v, embedder()).err().unwrap()).contains("no index"));
     fs::remove_dir_all(root).unwrap();
 }
 

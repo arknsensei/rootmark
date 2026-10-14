@@ -69,7 +69,8 @@ fn run(cli: &Cli) -> Result<serde_json::Value> {
             cmd: IndexCmd::Build { vault },
         } => {
             let v = mdkcore::Vault::open(vault)?;
-            Ok(serde_json::to_value(mdkindex::store::build(&v)?)?)
+            let e = mdkindex::OnnxMiniLm::load_default()?;
+            Ok(serde_json::to_value(mdkindex::store::build(&v, &e)?)?)
         }
         Cmd::Models {
             cmd: ModelsCmd::Verify,
