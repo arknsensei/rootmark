@@ -72,8 +72,9 @@ pub fn read_events(path: &Path) -> Result<Vec<Event>> {
     Ok(out)
 }
 
-/// Appends events as JSON lines; never rewrites existing bytes.
-pub fn append_events(path: &Path, events: &[Event]) -> Result<()> {
+/// Appends events as JSON lines; never rewrites existing bytes. Crate-private:
+/// events reach the log only through `Vault` (B2 review).
+pub(crate) fn append_events(path: &Path, events: &[Event]) -> Result<()> {
     if events.is_empty() {
         return Ok(());
     }
