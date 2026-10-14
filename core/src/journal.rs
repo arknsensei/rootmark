@@ -116,6 +116,9 @@ impl JournalRetention {
         if hours < MIN_RETENTION_HOURS as i64 {
             bail!("journal.retention_hours = {hours}: the kernel minimum is {MIN_RETENTION_HOURS}");
         }
+        if (hours as u64).checked_mul(3_600_000).is_none() {
+            bail!("journal.retention_hours = {hours}: too large to express in milliseconds");
+        }
         Ok(JournalRetention {
             hours: hours as u64,
         })
