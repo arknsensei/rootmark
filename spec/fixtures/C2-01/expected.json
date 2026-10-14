@@ -1,0 +1,164 @@
+{
+  "id": "C2-01",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "agent.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "11de9b88e492dd995264a174ce9dcb1a"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "f0430c0e8ce3cb638ba5676a5eaf8a34"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "14a678483fbbed018d9b0dcd7e4d3b97"
+            }
+          ],
+          "derived.md": [
+            {
+              "inactive": false,
+              "layer": "derived",
+              "lineage_id": "9b3f25c2cf1edb81011fbfcdf218ead4"
+            },
+            {
+              "inactive": false,
+              "layer": "derived",
+              "lineage_id": "8a05c4cf602a4082c489b67959e0e197"
+            },
+            {
+              "inactive": false,
+              "layer": "derived",
+              "lineage_id": "a786949d01ef7488e3242bce6388d69e"
+            }
+          ],
+          "human.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "b4e7e5962c2a297b891ae4b199fb4248"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "9ee11220804d51dacf2845de3c1538af"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "0c5f17eba78d8ae8e51e76285ee6de2d"
+            }
+          ],
+          "synthetic.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "3c877d95b383a64ce9df4bd3c0938139"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ca78c4781c672af174b37d5dfdba4fa5"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "3fd4c559e176dc97f654eab20e5f020c"
+            }
+          ],
+          "transcript.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "12c81e279c9a77563d4218b2dee574c2"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "3bb0a2e4d6ed3b6b8f7fce84d83a4dc6"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "084e70cb0ac68f4f3d8f01e60daab41c"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    }
+  ]
+}

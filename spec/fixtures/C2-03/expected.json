@@ -1,0 +1,75 @@
+{
+  "id": "C2-03",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "e538ef1b9f9cd66f62bcc893ebc49a44"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "50f4076a4e2d1ca660bdbf927070710c"
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "events",
+      "result": [
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted"
+      ]
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "a.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "0353880b4bf80c02001e811c7b8a990d"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "50f4076a4e2d1ca660bdbf927070710c"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "183671b26049afa82bbbd7645f9c091d"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    }
+  ]
+}

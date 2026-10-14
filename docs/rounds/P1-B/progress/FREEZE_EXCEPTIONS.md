@@ -27,3 +27,15 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Diff:** `git diff 3f2be39 -- scripts/check_frozen.sh` — işaretçi sayımı bloğu ve `grep -E` kalıbına `^\+.*<!-- /?frozen-table -->` eklendi; başka değişiklik yok.
 - **Önce/sonra bit eşitliği:** temiz ağaçta önce/sonra aynı satır raporları ve `check_frozen: OK`; `test_tamper.sh` 12/12 + yeni vaka (ikinci bitiş işaretçisi) yakalanıyor. Kayıt: B0.md.
 - **Gözden geçirici onayı:** B0.review.md (ek).
+
+## F5 · B7 · `core/tests/conformance.rs` — Seviye 2
+- **Ne:** C2-01..C2-08 değerlendirmesi (`conformance/eval_c2.rs`, `case.c2.json`); her girdiye `level`; `level_claimed` = testleri ve alt seviyeleri geçen en yüksek seviye (manifest bozuksa 0); `total` 25. Fixture kökü (Ö2) aynı.
+- **Neden:** TASKS B7 ("`core/tests/conformance/` C2 değerlendiricisi, `make conformance` → `level_claimed 2`"), GOAL B-1.
+- **Önce/sonra bit eşitliği:** C1 girdilerinin `{id,result,actual_hash,expected_hash}` JSON'u B0 öncesi kayıtla bayt eşit (blake3 `01e68807a1441ee793d412bbd3803802`; `cmp` eşit). C1 sonucu 17/17 aynı.
+- **Gözden geçirici onayı:** B7.review.md.
+
+## F6 · B7 · `spec/fixtures/**` — C2 fixture'ları
+- **Ne:** `spec/fixtures/C2-01..08/` eklendi (`case.c2.json`, girdi md'leri, `expected.json` mevcut çekirdekten `scripts/gen_fixtures_c2.sh`); `MANIFEST.json` dondurulmuş v3-final üreteciyle (`scripts/gen_fixtures.sh`) yeniden yazıldı.
+- **Neden:** TASKS B7 ("beklenen değerler mevcut çekirdekten üretilir ve `MANIFEST.json`'a eklenir (C1 fixture'ları değişmez)").
+- **Önce/sonra bit eşitliği:** `git diff P1-B/B6 -- spec/fixtures` yalnız `MANIFEST.json`'da 31 eklenen satır (C2 dosyaları), silinen satır yok; `git diff --stat` C1 dizinlerinde değişiklik yok; v3-final üreteci C1 `expected.json`'larını bayt eşit yeniden üretti.
+- **Gözden geçirici onayı:** B7.review.md.

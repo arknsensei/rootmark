@@ -1,0 +1,72 @@
+{
+  "id": "C2-07",
+  "title": "Consumption trace written for every retrieval; id formula",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest",
+      "doc": "notes.md",
+      "file": "doc.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "ingest",
+      "doc": "draft.md",
+      "file": "agent.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "label",
+      "name": "H",
+      "doc": "notes.md",
+      "block": 2
+    },
+    {
+      "op": "label",
+      "name": "P",
+      "doc": "draft.md",
+      "block": 1
+    },
+    {
+      "op": "checkpoint",
+      "name": "t0"
+    },
+    {
+      "op": "read",
+      "at": "t0",
+      "consumer": "claude-code",
+      "lineages": [
+        "H",
+        "P"
+      ]
+    },
+    {
+      "op": "read",
+      "at": "t0",
+      "consumer": "claude-code",
+      "lineages": [
+        "H",
+        "P"
+      ]
+    },
+    {
+      "op": "read",
+      "at": "missing",
+      "consumer": "claude-code",
+      "lineages": [
+        "H"
+      ],
+      "expect_err": "no checkpoint"
+    },
+    {
+      "op": "traces"
+    }
+  ]
+}

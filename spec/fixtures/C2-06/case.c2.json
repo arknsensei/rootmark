@@ -1,0 +1,87 @@
+{
+  "id": "C2-06",
+  "title": "Query as of checkpoint ignores later events",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest",
+      "doc": "b.md",
+      "file": "doc.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "ingest",
+      "doc": "a.md",
+      "file": "agent.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "label",
+      "name": "P",
+      "doc": "a.md",
+      "block": 1
+    },
+    {
+      "op": "label",
+      "name": "H",
+      "doc": "b.md",
+      "block": 2
+    },
+    {
+      "op": "checkpoint",
+      "name": "before"
+    },
+    {
+      "op": "ingest",
+      "doc": "b.md",
+      "file": "doc2.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "ingest",
+      "doc": "c.md",
+      "file": "doc.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "promote",
+      "lineage": "P",
+      "actor": "human:alice",
+      "reason": "ok",
+      "policy": "human_only"
+    },
+    {
+      "op": "snapshot_at",
+      "doc": "b.md",
+      "at": "before"
+    },
+    {
+      "op": "snapshot_at",
+      "doc": "c.md",
+      "at": "before"
+    },
+    {
+      "op": "block_at",
+      "lineage": "P",
+      "at": "before"
+    },
+    {
+      "op": "block_at",
+      "lineage": "H",
+      "at": "before"
+    },
+    {
+      "op": "head",
+      "doc": "b.md"
+    }
+  ]
+}

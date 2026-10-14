@@ -86,7 +86,7 @@ Chunks reference blocks; blocks never reference chunks. Rebuilding chunks with a
 
 ## 7. Layers and promotion (Draft)
 
-Every version has `layer ∈ {canonical, proposal, derived}`. Default on ingest: `human` → `canonical`; `agent`, `transcript` → `proposal`; `synthetic` → as declared.
+Every version has `layer ∈ {canonical, proposal, derived}` (serialized in lowercase, as written here). Default on ingest: `human` → `canonical`; `agent`, `transcript` → `proposal`; `synthetic` → as declared.
 
 - `Promoted` event: `proposal → canonical`; carries `actor` (human id or policy name), `reason`, and `policy_version`. The kernel MUST NOT decide promotion; it exposes a hook. A `proposal` MAY be `Demoted` or pruned by policy; pruning never deletes objects, only marks the lineage inactive.
 - Retrieval defaults: `canonical` full weight; `proposal` MUST be excluded or clearly down-weighted and labelled; `derived` is never returned as content.
@@ -95,7 +95,7 @@ Every version has `layer ∈ {canonical, proposal, derived}`. Default on ingest:
 ## 8. Checkpoints and consumption traces (Draft)
 
 - **Checkpoint**: `{checkpoint_id, name?, event_seq, docs: {doc_path: snapshot_id}}`. Immutable. Any query MAY be evaluated "as of" a checkpoint; the result MUST be identical for the same checkpoint and query (§10).
-- **Consumption trace**: `.mdkernel/traces.jsonl`, append-only: `{trace_id, checkpoint_id, consumer, query_hash, returned: [(doc_path, lineage_id, version_id)], at_seq}`. `trace_id = H(checkpoint_id + consumer + query_hash + at_seq)`. Traces answer "which block versions did this answer depend on".
+- **Consumption trace**: `.mdkernel/traces.jsonl`, append-only: `{trace_id, checkpoint_id, consumer, query_hash, returned: [(doc_path, lineage_id, version_id)], at_seq}`; each `returned` entry is serialized as an object with the keys `doc_path`, `lineage_id`, `version_id`. `trace_id = H(checkpoint_id + consumer + query_hash + at_seq)`, where `+` is plain string concatenation and `at_seq` is written in decimal. Traces answer "which block versions did this answer depend on".
 
 ## 9. Indexes and retrieval (Draft)
 
@@ -110,7 +110,7 @@ For the same vault contents ingested in the same order with the same matcher ver
 
 ## 11. Raw journal and version triggers (Draft)
 
-Implementations SHOULD keep a prunable raw journal of every save (keystroke-level data is never lost) separate from versions. A **version** is created only by a trigger policy (idle time, semantic distance to the previous version, block boundary exit). The kernel defines bounds (a version never carries less than the journal; unversioned content is never indexed; minimum journal retention); policies supply parameters within those bounds.
+Implementations SHOULD keep a prunable raw journal of every save (keystroke-level data is never lost) separate from versions. A **version** is created only by a trigger policy (idle time, semantic distance to the previous version, block boundary exit). The kernel defines bounds (a version never carries less than the journal; unversioned content is never indexed; minimum journal retention); policies supply parameters within those bounds, and a parameter outside them is rejected, not clamped. (Informative: the reference implementation's minimum journal retention is 24 hours.)
 
 ## 12. Conformance
 

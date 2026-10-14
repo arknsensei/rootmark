@@ -1,0 +1,60 @@
+{
+  "id": "C2-01",
+  "title": "Default layer by author_kind",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest",
+      "doc": "human.md",
+      "file": "doc.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "ingest",
+      "doc": "agent.md",
+      "file": "doc.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "ingest",
+      "doc": "transcript.md",
+      "file": "doc.md",
+      "author": "transcript",
+      "source": "meeting"
+    },
+    {
+      "op": "ingest",
+      "doc": "synthetic.md",
+      "file": "doc.md",
+      "author": "synthetic",
+      "source": "generator"
+    },
+    {
+      "op": "ingest",
+      "doc": "derived.md",
+      "file": "doc.md",
+      "author": "synthetic",
+      "source": "summarizer",
+      "declared": "derived"
+    },
+    {
+      "op": "ingest",
+      "doc": "bad.md",
+      "file": "doc.md",
+      "author": "agent",
+      "source": "x",
+      "declared": "canonical",
+      "expect_err": "synthetic content only"
+    },
+    {
+      "op": "layers"
+    }
+  ]
+}

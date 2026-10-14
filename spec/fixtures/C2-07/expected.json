@@ -1,0 +1,199 @@
+{
+  "id": "C2-07",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "e538ef1b9f9cd66f62bcc893ebc49a44"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "5118e1e4cd00ea75199b527f886fb179"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "dd24e194ff72dc139c3f84f932bae88d"
+      }
+    },
+    {
+      "op": "checkpoint",
+      "result": {
+        "checkpoint_id": "136c74aa1d702d88d65a17a7ed34b43b",
+        "docs": {
+          "draft.md": "e538ef1b9f9cd66f62bcc893ebc49a44",
+          "notes.md": "2eccd84e66d6685bbe3687405e1538b3"
+        },
+        "event_seq": 8,
+        "name": "t0"
+      }
+    },
+    {
+      "op": "read",
+      "result": {
+        "blocks": [
+          {
+            "block": {
+              "block_type": "Paragraph",
+              "heading_level": null,
+              "heading_path": [
+                "Notes"
+              ],
+              "layer": "canonical",
+              "lineage_id": "5118e1e4cd00ea75199b527f886fb179",
+              "normalized_text": "Descale the machine every month.",
+              "parents": [],
+              "provenance": {
+                "author_kind": "Human",
+                "source": "editor"
+              },
+              "text": "Descale the machine every month.",
+              "version_id": "e77f653e443f2c6b95d7b7a9302a184e"
+            },
+            "doc_path": "notes.md",
+            "inactive": false
+          },
+          {
+            "block": {
+              "block_type": "Paragraph",
+              "heading_level": null,
+              "heading_path": [
+                "Draft"
+              ],
+              "layer": "proposal",
+              "lineage_id": "dd24e194ff72dc139c3f84f932bae88d",
+              "normalized_text": "The agent suggests weighing every dose.",
+              "parents": [],
+              "provenance": {
+                "author_kind": "Agent",
+                "source": "claude-code"
+              },
+              "text": "The agent suggests weighing every dose.",
+              "version_id": "faef9deba678891bd9d566b9e3478a52"
+            },
+            "doc_path": "draft.md",
+            "inactive": false
+          }
+        ],
+        "trace": {
+          "at_seq": 0,
+          "checkpoint_id": "136c74aa1d702d88d65a17a7ed34b43b",
+          "consumer": "claude-code",
+          "query_hash": "97ee37d2bfaebde913b7c859261d4b7e",
+          "returned": [
+            {
+              "doc_path": "notes.md",
+              "lineage_id": "5118e1e4cd00ea75199b527f886fb179",
+              "version_id": "e77f653e443f2c6b95d7b7a9302a184e"
+            },
+            {
+              "doc_path": "draft.md",
+              "lineage_id": "dd24e194ff72dc139c3f84f932bae88d",
+              "version_id": "faef9deba678891bd9d566b9e3478a52"
+            }
+          ],
+          "trace_id": "052ae79acfb79b10b8e8a99e32b0b733"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "result": {
+        "blocks": [
+          {
+            "block": {
+              "block_type": "Paragraph",
+              "heading_level": null,
+              "heading_path": [
+                "Notes"
+              ],
+              "layer": "canonical",
+              "lineage_id": "5118e1e4cd00ea75199b527f886fb179",
+              "normalized_text": "Descale the machine every month.",
+              "parents": [],
+              "provenance": {
+                "author_kind": "Human",
+                "source": "editor"
+              },
+              "text": "Descale the machine every month.",
+              "version_id": "e77f653e443f2c6b95d7b7a9302a184e"
+            },
+            "doc_path": "notes.md",
+            "inactive": false
+          },
+          {
+            "block": {
+              "block_type": "Paragraph",
+              "heading_level": null,
+              "heading_path": [
+                "Draft"
+              ],
+              "layer": "proposal",
+              "lineage_id": "dd24e194ff72dc139c3f84f932bae88d",
+              "normalized_text": "The agent suggests weighing every dose.",
+              "parents": [],
+              "provenance": {
+                "author_kind": "Agent",
+                "source": "claude-code"
+              },
+              "text": "The agent suggests weighing every dose.",
+              "version_id": "faef9deba678891bd9d566b9e3478a52"
+            },
+            "doc_path": "draft.md",
+            "inactive": false
+          }
+        ],
+        "trace": {
+          "at_seq": 1,
+          "checkpoint_id": "136c74aa1d702d88d65a17a7ed34b43b",
+          "consumer": "claude-code",
+          "query_hash": "97ee37d2bfaebde913b7c859261d4b7e",
+          "returned": [
+            {
+              "doc_path": "notes.md",
+              "lineage_id": "5118e1e4cd00ea75199b527f886fb179",
+              "version_id": "e77f653e443f2c6b95d7b7a9302a184e"
+            },
+            {
+              "doc_path": "draft.md",
+              "lineage_id": "dd24e194ff72dc139c3f84f932bae88d",
+              "version_id": "faef9deba678891bd9d566b9e3478a52"
+            }
+          ],
+          "trace_id": "8e2df27f62c54418ec49ef11a19b2eed"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "traces",
+      "result": "{\"trace_id\":\"052ae79acfb79b10b8e8a99e32b0b733\",\"checkpoint_id\":\"136c74aa1d702d88d65a17a7ed34b43b\",\"consumer\":\"claude-code\",\"query_hash\":\"97ee37d2bfaebde913b7c859261d4b7e\",\"returned\":[{\"doc_path\":\"notes.md\",\"lineage_id\":\"5118e1e4cd00ea75199b527f886fb179\",\"version_id\":\"e77f653e443f2c6b95d7b7a9302a184e\"},{\"doc_path\":\"draft.md\",\"lineage_id\":\"dd24e194ff72dc139c3f84f932bae88d\",\"version_id\":\"faef9deba678891bd9d566b9e3478a52\"}],\"at_seq\":0}\n{\"trace_id\":\"8e2df27f62c54418ec49ef11a19b2eed\",\"checkpoint_id\":\"136c74aa1d702d88d65a17a7ed34b43b\",\"consumer\":\"claude-code\",\"query_hash\":\"97ee37d2bfaebde913b7c859261d4b7e\",\"returned\":[{\"doc_path\":\"notes.md\",\"lineage_id\":\"5118e1e4cd00ea75199b527f886fb179\",\"version_id\":\"e77f653e443f2c6b95d7b7a9302a184e\"},{\"doc_path\":\"draft.md\",\"lineage_id\":\"dd24e194ff72dc139c3f84f932bae88d\",\"version_id\":\"faef9deba678891bd9d566b9e3478a52\"}],\"at_seq\":1}\n"
+    }
+  ]
+}

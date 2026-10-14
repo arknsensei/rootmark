@@ -1,0 +1,107 @@
+{
+  "id": "C2-02",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "e538ef1b9f9cd66f62bcc893ebc49a44"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "50f4076a4e2d1ca660bdbf927070710c"
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "doc_path": "a.md",
+        "kind": "Promoted",
+        "lineage_ids": [
+          "50f4076a4e2d1ca660bdbf927070710c"
+        ],
+        "meta": {
+          "actor": {
+            "id": "alice",
+            "kind": "human"
+          },
+          "from": "proposal",
+          "policy": "human_only",
+          "policy_version": "1",
+          "reason": "checked",
+          "to": "canonical"
+        },
+        "new_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "old_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "seq": 4,
+        "snapshot_id": null
+      }
+    },
+    {
+      "op": "tamper",
+      "result": {
+        "open_err": "requires meta.actor"
+      }
+    },
+    {
+      "op": "tamper",
+      "result": {
+        "open_err": "requires meta.reason"
+      }
+    },
+    {
+      "op": "tamper",
+      "result": {
+        "open_err": "requires meta.policy_version"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "a.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "0353880b4bf80c02001e811c7b8a990d"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "50f4076a4e2d1ca660bdbf927070710c"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "183671b26049afa82bbbd7645f9c091d"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    }
+  ]
+}

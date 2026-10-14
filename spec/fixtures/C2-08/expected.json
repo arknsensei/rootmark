@@ -1,0 +1,189 @@
+{
+  "id": "C2-08",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "641322e20df28ddb4f8364a039e74fcc"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockSplit",
+          "LayerChanged",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "381a9d49dd58c0d1dd3f494bbd442684"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockUpdated",
+          "LayerChanged",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "59a5e283e16e53da60539029f29e0a1d"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "e538ef1b9f9cd66f62bcc893ebc49a44"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "d77397c3c3eed91f40aa884f6ff68719"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "50f4076a4e2d1ca660bdbf927070710c"
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "doc_path": "p.md",
+        "kind": "Promoted",
+        "lineage_ids": [
+          "d77397c3c3eed91f40aa884f6ff68719"
+        ],
+        "meta": {
+          "actor": {
+            "id": "alice",
+            "kind": "human"
+          },
+          "from": "proposal",
+          "policy": "human_only",
+          "policy_version": "1",
+          "reason": "ok",
+          "to": "canonical"
+        },
+        "new_version_ids": [
+          "1d91a2fd756422a534ddcc903baa5cac"
+        ],
+        "old_version_ids": [
+          "1d91a2fd756422a534ddcc903baa5cac"
+        ],
+        "seq": 14,
+        "snapshot_id": null
+      }
+    },
+    {
+      "op": "demote",
+      "result": {
+        "doc_path": "a.md",
+        "kind": "Demoted",
+        "lineage_ids": [
+          "50f4076a4e2d1ca660bdbf927070710c"
+        ],
+        "meta": {
+          "actor": {
+            "id": "alice",
+            "kind": "human"
+          },
+          "from": "proposal",
+          "policy": "human_only",
+          "policy_version": "1",
+          "reason": "noise",
+          "to": "derived"
+        },
+        "new_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "old_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "seq": 15,
+        "snapshot_id": null
+      }
+    },
+    {
+      "op": "events",
+      "result": [
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockSplit",
+        "LayerChanged",
+        "SnapshotCommitted",
+        "BlockUpdated",
+        "LayerChanged",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "Promoted",
+        "Demoted"
+      ]
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "a.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "0353880b4bf80c02001e811c7b8a990d"
+            },
+            {
+              "inactive": false,
+              "layer": "derived",
+              "lineage_id": "50f4076a4e2d1ca660bdbf927070710c"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "183671b26049afa82bbbd7645f9c091d"
+            }
+          ],
+          "p.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "353cf02be68ac63f0a7c392e9edaa283"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "e46edf2a732a0c395deb3424efb079bb"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "d77397c3c3eed91f40aa884f6ff68719"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "40966c046200b8445edb1f485a15d0d9"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    }
+  ]
+}

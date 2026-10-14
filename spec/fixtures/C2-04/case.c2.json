@@ -1,0 +1,78 @@
+{
+  "id": "C2-04",
+  "title": "Demote/prune marks inactive, deletes nothing",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest",
+      "doc": "a.md",
+      "file": "agent.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "label",
+      "name": "P1",
+      "doc": "a.md",
+      "block": 1
+    },
+    {
+      "op": "label",
+      "name": "P2",
+      "doc": "a.md",
+      "block": 2
+    },
+    {
+      "op": "objects"
+    },
+    {
+      "op": "head",
+      "doc": "a.md"
+    },
+    {
+      "op": "promote",
+      "lineage": "P1",
+      "actor": "human:alice",
+      "reason": "ok",
+      "policy": "human_only"
+    },
+    {
+      "op": "demote",
+      "lineage": "P1",
+      "actor": "human:alice",
+      "reason": "undo",
+      "policy": "human_only",
+      "to": "proposal"
+    },
+    {
+      "op": "prune",
+      "lineage": "P2",
+      "actor": "human:alice",
+      "reason": "stale",
+      "policy": "human_only"
+    },
+    {
+      "op": "promote",
+      "lineage": "P2",
+      "actor": "human:alice",
+      "reason": "x",
+      "policy": "human_only",
+      "expect_err": "inactive"
+    },
+    {
+      "op": "objects"
+    },
+    {
+      "op": "head",
+      "doc": "a.md"
+    },
+    {
+      "op": "layers"
+    }
+  ]
+}

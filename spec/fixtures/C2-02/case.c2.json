@@ -1,0 +1,69 @@
+{
+  "id": "C2-02",
+  "title": "Promoted event requires actor, reason, policy_version",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest",
+      "doc": "a.md",
+      "file": "agent.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "label",
+      "name": "P",
+      "doc": "a.md",
+      "block": 1
+    },
+    {
+      "op": "promote",
+      "lineage": "P",
+      "actor": "human:alice",
+      "reason": "",
+      "policy": "human_only",
+      "expect_err": "requires a reason"
+    },
+    {
+      "op": "promote",
+      "lineage": "P",
+      "actor": "human:",
+      "reason": "ok",
+      "policy": "human_only",
+      "expect_err": "actor id is empty"
+    },
+    {
+      "op": "promote",
+      "lineage": "P",
+      "actor": "human:alice",
+      "reason": "checked",
+      "policy": "human_only"
+    },
+    {
+      "op": "tamper",
+      "kind": "Promoted",
+      "remove_meta": "actor",
+      "expect_open_err": "requires meta.actor"
+    },
+    {
+      "op": "tamper",
+      "kind": "Promoted",
+      "remove_meta": "reason",
+      "expect_open_err": "requires meta.reason"
+    },
+    {
+      "op": "tamper",
+      "kind": "Promoted",
+      "remove_meta": "policy_version",
+      "expect_open_err": "requires meta.policy_version"
+    },
+    {
+      "op": "layers"
+    }
+  ]
+}

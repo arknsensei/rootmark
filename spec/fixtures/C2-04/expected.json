@@ -1,0 +1,208 @@
+{
+  "id": "C2-04",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "e538ef1b9f9cd66f62bcc893ebc49a44"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "50f4076a4e2d1ca660bdbf927070710c"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "183671b26049afa82bbbd7645f9c091d"
+      }
+    },
+    {
+      "op": "objects",
+      "result": {
+        "objects": 3,
+        "snapshots": 1
+      }
+    },
+    {
+      "op": "head",
+      "result": {
+        "blocks": [
+          [
+            "0353880b4bf80c02001e811c7b8a990d",
+            "45e5de6b4b8fbfca7592daca951c1ae8"
+          ],
+          [
+            "50f4076a4e2d1ca660bdbf927070710c",
+            "faef9deba678891bd9d566b9e3478a52"
+          ],
+          [
+            "183671b26049afa82bbbd7645f9c091d",
+            "5c867b1e5f8b5c890e92e13e5e5eef6d"
+          ]
+        ],
+        "doc_path": "a.md",
+        "frontmatter": null,
+        "parent_snapshot": null,
+        "snapshot_id": "e538ef1b9f9cd66f62bcc893ebc49a44"
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "doc_path": "a.md",
+        "kind": "Promoted",
+        "lineage_ids": [
+          "50f4076a4e2d1ca660bdbf927070710c"
+        ],
+        "meta": {
+          "actor": {
+            "id": "alice",
+            "kind": "human"
+          },
+          "from": "proposal",
+          "policy": "human_only",
+          "policy_version": "1",
+          "reason": "ok",
+          "to": "canonical"
+        },
+        "new_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "old_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "seq": 4,
+        "snapshot_id": null
+      }
+    },
+    {
+      "op": "demote",
+      "result": {
+        "doc_path": "a.md",
+        "kind": "Demoted",
+        "lineage_ids": [
+          "50f4076a4e2d1ca660bdbf927070710c"
+        ],
+        "meta": {
+          "actor": {
+            "id": "alice",
+            "kind": "human"
+          },
+          "from": "canonical",
+          "policy": "human_only",
+          "policy_version": "1",
+          "reason": "undo",
+          "to": "proposal"
+        },
+        "new_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "old_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "seq": 5,
+        "snapshot_id": null
+      }
+    },
+    {
+      "op": "prune",
+      "result": {
+        "doc_path": "a.md",
+        "kind": "Demoted",
+        "lineage_ids": [
+          "183671b26049afa82bbbd7645f9c091d"
+        ],
+        "meta": {
+          "actor": {
+            "id": "alice",
+            "kind": "human"
+          },
+          "from": "proposal",
+          "policy": "human_only",
+          "policy_version": "1",
+          "prune": true,
+          "reason": "stale",
+          "to": "proposal"
+        },
+        "new_version_ids": [
+          "5c867b1e5f8b5c890e92e13e5e5eef6d"
+        ],
+        "old_version_ids": [
+          "5c867b1e5f8b5c890e92e13e5e5eef6d"
+        ],
+        "seq": 6,
+        "snapshot_id": null
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "objects",
+      "result": {
+        "objects": 3,
+        "snapshots": 1
+      }
+    },
+    {
+      "op": "head",
+      "result": {
+        "blocks": [
+          [
+            "0353880b4bf80c02001e811c7b8a990d",
+            "45e5de6b4b8fbfca7592daca951c1ae8"
+          ],
+          [
+            "50f4076a4e2d1ca660bdbf927070710c",
+            "faef9deba678891bd9d566b9e3478a52"
+          ],
+          [
+            "183671b26049afa82bbbd7645f9c091d",
+            "5c867b1e5f8b5c890e92e13e5e5eef6d"
+          ]
+        ],
+        "doc_path": "a.md",
+        "frontmatter": null,
+        "parent_snapshot": null,
+        "snapshot_id": "e538ef1b9f9cd66f62bcc893ebc49a44"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "a.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "0353880b4bf80c02001e811c7b8a990d"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "50f4076a4e2d1ca660bdbf927070710c"
+            },
+            {
+              "inactive": true,
+              "layer": "proposal",
+              "lineage_id": "183671b26049afa82bbbd7645f9c091d"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    }
+  ]
+}

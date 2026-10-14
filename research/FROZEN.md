@@ -37,6 +37,11 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `core/tests/conformance.rs` | `P1-B/B0:` | yeniden dondurma P1-B/F2: Ö2 (fixture kökü çalışma anında, `fixtures_root`, `fixtures_manifest_hash`) |
 | `scripts/test_tamper.sh` | `P1-B/B0:` | yeniden dondurma P1-B/F3: B-7 ve B-8 kasıtlı vakaları |
 | `scripts/check_frozen.sh` | `P1-B/B0-fix:` | yeniden dondurma P1-B/F4: tablo işaretçisi ekleme/çoğaltma açığı (B0 gözden geçirmesi) |
+| `core/tests/conformance.rs` | `P1-B/B7:` | yeniden dondurma P1-B/F5: Seviye 2 (C2-01..08), `level_claimed` 2 |
+| `spec/fixtures/**` | `P1-B/B7:` | yeniden dondurma P1-B/F6: C2 fixture'ları eklendi, `MANIFEST.json` yalnız C2 satırları kazandı (C1 dosyaları bayt eşit) |
+| `core/tests/conformance/eval_c2.rs` | `P1-B/B7:` | C2 değerlendiricisi (üreteçle ortak) |
+| `core/tests/conformance_c2_gen.rs` | `P1-B/B7:` | C2 fixture üreteci (mevcut çekirdekten) |
+| `scripts/gen_fixtures_c2.sh` | `P1-B/B7:` | C2 fixture üreteci betiği |
 <!-- /frozen-table -->
 
 ## Notlar

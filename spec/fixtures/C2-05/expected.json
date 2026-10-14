@@ -1,0 +1,79 @@
+{
+  "id": "C2-05",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "e538ef1b9f9cd66f62bcc893ebc49a44"
+      }
+    },
+    {
+      "op": "checkpoint",
+      "result": {
+        "checkpoint_id": "29a23b9314d939c43b503bc83e896886",
+        "docs": {
+          "a.md": "e538ef1b9f9cd66f62bcc893ebc49a44",
+          "b.md": "2eccd84e66d6685bbe3687405e1538b3"
+        },
+        "event_seq": 8,
+        "name": "day-1"
+      }
+    },
+    {
+      "op": "checkpoint",
+      "result": {
+        "checkpoint_id": "29a23b9314d939c43b503bc83e896886",
+        "docs": {
+          "a.md": "e538ef1b9f9cd66f62bcc893ebc49a44",
+          "b.md": "2eccd84e66d6685bbe3687405e1538b3"
+        },
+        "event_seq": 8,
+        "name": "day-1"
+      }
+    },
+    {
+      "op": "checkpoint",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "checkpoint_file_overwrite",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "events",
+      "result": [
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "CheckpointCreated"
+      ]
+    }
+  ]
+}

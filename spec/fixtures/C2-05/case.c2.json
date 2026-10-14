@@ -1,0 +1,47 @@
+{
+  "id": "C2-05",
+  "title": "Checkpoint id formula, immutability",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest",
+      "doc": "b.md",
+      "file": "doc.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "ingest",
+      "doc": "a.md",
+      "file": "agent.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "checkpoint",
+      "name": "day-1"
+    },
+    {
+      "op": "checkpoint",
+      "name": "day-1"
+    },
+    {
+      "op": "checkpoint",
+      "name": "other",
+      "expect_err": "already exists with name"
+    },
+    {
+      "op": "checkpoint_file_overwrite",
+      "at": "day-1",
+      "expect_err": "object conflict"
+    },
+    {
+      "op": "events"
+    }
+  ]
+}

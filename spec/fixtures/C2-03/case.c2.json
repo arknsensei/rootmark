@@ -1,0 +1,55 @@
+{
+  "id": "C2-03",
+  "title": "Kernel refuses to promote without a hook decision",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest",
+      "doc": "a.md",
+      "file": "agent.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "label",
+      "name": "P",
+      "doc": "a.md",
+      "block": 1
+    },
+    {
+      "op": "promote",
+      "lineage": "P",
+      "actor": "human:alice",
+      "reason": "ok",
+      "policy": "deny",
+      "expect_err": "denied by policy deny"
+    },
+    {
+      "op": "promote",
+      "lineage": "P",
+      "actor": "agent:claude",
+      "reason": "ok",
+      "policy": "human_only",
+      "expect_err": "is not human"
+    },
+    {
+      "op": "promote",
+      "lineage": "P",
+      "actor": "policy:auto",
+      "reason": "ok",
+      "policy": "human_only",
+      "expect_err": "is not human"
+    },
+    {
+      "op": "events"
+    },
+    {
+      "op": "layers"
+    }
+  ]
+}

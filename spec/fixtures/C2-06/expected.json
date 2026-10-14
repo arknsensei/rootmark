@@ -1,0 +1,172 @@
+{
+  "id": "C2-06",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "e538ef1b9f9cd66f62bcc893ebc49a44"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "50f4076a4e2d1ca660bdbf927070710c"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "8bb37eb190392f99e1f09c2b915768a2"
+      }
+    },
+    {
+      "op": "checkpoint",
+      "result": {
+        "checkpoint_id": "29a23b9314d939c43b503bc83e896886",
+        "docs": {
+          "a.md": "e538ef1b9f9cd66f62bcc893ebc49a44",
+          "b.md": "2eccd84e66d6685bbe3687405e1538b3"
+        },
+        "event_seq": 8,
+        "name": "before"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockUpdated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "9a1cfb9cde894fac69338aac387c89c3"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "doc_path": "a.md",
+        "kind": "Promoted",
+        "lineage_ids": [
+          "50f4076a4e2d1ca660bdbf927070710c"
+        ],
+        "meta": {
+          "actor": {
+            "id": "alice",
+            "kind": "human"
+          },
+          "from": "proposal",
+          "policy": "human_only",
+          "policy_version": "1",
+          "reason": "ok",
+          "to": "canonical"
+        },
+        "new_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "old_version_ids": [
+          "faef9deba678891bd9d566b9e3478a52"
+        ],
+        "seq": 15,
+        "snapshot_id": null
+      }
+    },
+    {
+      "op": "snapshot_at",
+      "result": {
+        "blocks": [
+          [
+            "e8fd37e3969dc70c6218f42c430a6f10",
+            "7a0ef2a885b84052d5bc0cceca0f9545"
+          ],
+          [
+            "344fbe64b9b3f9f99410ad18b835c90b",
+            "8b10f1281d4699e5796beb570c97446f"
+          ],
+          [
+            "8bb37eb190392f99e1f09c2b915768a2",
+            "e77f653e443f2c6b95d7b7a9302a184e"
+          ]
+        ],
+        "doc_path": "b.md",
+        "frontmatter": null,
+        "parent_snapshot": null,
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "snapshot_at",
+      "result": null
+    },
+    {
+      "op": "block_at",
+      "result": {
+        "layer": "proposal",
+        "lineage_id": "50f4076a4e2d1ca660bdbf927070710c",
+        "text": "The agent suggests weighing every dose.",
+        "version_id": "faef9deba678891bd9d566b9e3478a52"
+      }
+    },
+    {
+      "op": "block_at",
+      "result": {
+        "layer": "canonical",
+        "lineage_id": "8bb37eb190392f99e1f09c2b915768a2",
+        "text": "Descale the machine every month.",
+        "version_id": "e77f653e443f2c6b95d7b7a9302a184e"
+      }
+    },
+    {
+      "op": "head",
+      "result": {
+        "blocks": [
+          [
+            "e8fd37e3969dc70c6218f42c430a6f10",
+            "7a0ef2a885b84052d5bc0cceca0f9545"
+          ],
+          [
+            "344fbe64b9b3f9f99410ad18b835c90b",
+            "8b10f1281d4699e5796beb570c97446f"
+          ],
+          [
+            "8bb37eb190392f99e1f09c2b915768a2",
+            "b20f84efa0bbd5d249ba40b724b35d7d"
+          ]
+        ],
+        "doc_path": "b.md",
+        "frontmatter": null,
+        "parent_snapshot": "2eccd84e66d6685bbe3687405e1538b3",
+        "snapshot_id": "9a1cfb9cde894fac69338aac387c89c3"
+      }
+    }
+  ]
+}
