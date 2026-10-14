@@ -1,0 +1,23 @@
+{
+  "events": 8,
+  "events_hash": "4db6c0aecf8eece44081ef8fb997a7b3",
+  "matcher": "v3",
+  "replay_snapshot_ids": {
+    "notes.md": "d35831da4472bfc83b6d90c8fb8f7d18"
+  },
+  "scenario": "human_synthetic",
+  "steps": [
+    {
+      "author": "Human",
+      "doc": "notes.md",
+      "events": 5
+    },
+    {
+      "author": "Synthetic",
+      "doc": "notes.md",
+      "events": 3
+    }
+  ],
+  "title": "Human → Synthetic",
+  "v3_final_sha": "71c244e551258601bfd5550b61d1aa7335a938fa"
+}

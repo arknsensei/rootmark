@@ -27,7 +27,8 @@ pub use journal::{
 };
 pub use lineage::{MatchParams, MatcherVersion};
 pub use model::{
-    hash32, version_id, AuthorKind, Block, BlockDraft, BlockType, Layer, Provenance, WikiLink,
+    hash32, version_id, AuthorKind, Block, BlockDraft, BlockType, Layer, LayerSource, Provenance,
+    WikiLink,
 };
 pub use normalize::normalize;
 pub use parse::parse_document;

@@ -3,7 +3,7 @@
 use crate::events::{append_events, read_events, Event, EventKind};
 use crate::governance::{checkpoint_id, Actor, ActorKind, Checkpoint};
 use crate::lineage::{match_blocks, MatchParams, MatcherVersion, PrevBlock};
-use crate::model::{hash32, AuthorKind, Block, Layer, Provenance};
+use crate::model::{hash32, AuthorKind, Block, Layer, LayerSource, Provenance};
 use crate::parse::heading_paths;
 use crate::parse::parse_document;
 use crate::store::{self, BlockObject, SnapshotObject};
@@ -50,6 +50,12 @@ pub struct DocState {
     /// inherited lineages whose layer an ingest lowered: the `LayerChanged`
     /// events that must follow before the next `SnapshotCommitted`, in order
     pub pending: Vec<(String, Layer)>,
+    /// live lineages whose layer replay derived without an event (K-B1.1)
+    pub derived: HashSet<String>,
+    /// the log carries layer information at this point (`carries_layer`):
+    /// a drop the layer rule implies must then be a `LayerChanged` event;
+    /// before it (a v3-final-format prefix) replay derives the drop (K-B1.1)
+    pub layered: bool,
 }
 
 impl DocState {
@@ -60,6 +66,16 @@ impl DocState {
         self.inactive.remove(l);
         self.created_seq.remove(l);
         self.last_seq.remove(l);
+        self.derived.remove(l);
+    }
+
+    /// Where the layer of live lineage `l` comes from (`blame`).
+    pub fn layer_source(&self, l: &str) -> LayerSource {
+        if self.derived.contains(l) {
+            LayerSource::Derived
+        } else {
+            LayerSource::Event
+        }
     }
 
     fn layer_of(&self, l: &str, ev: &Event) -> Result<Layer> {
@@ -100,6 +116,21 @@ fn meta_layer(ev: &Event, key: &str) -> Result<Layer> {
     let s = meta_str(ev, key)
         .with_context(|| format!("event seq {}: {:?} without meta.{key}", ev.seq, ev.kind))?;
     Layer::parse(&s).with_context(|| format!("event seq {}: meta.{key}", ev.seq))
+}
+
+/// Whether an event carries layer information (K-B1.1): a kind the v3-final
+/// core never writes (`LayerChanged`, `Promoted`, `Demoted`,
+/// `CheckpointCreated`) or a block event with a declared `meta.layer`. A log
+/// is in v3-final format up to its first such event; from it on (vault-wide)
+/// every layer drop must be logged.
+pub fn carries_layer(ev: &Event) -> bool {
+    matches!(
+        ev.kind,
+        EventKind::LayerChanged
+            | EventKind::Promoted
+            | EventKind::Demoted
+            | EventKind::CheckpointCreated
+    ) || ev.meta.get("layer").is_some()
 }
 
 /// Layer a block event's author gives its content: `meta.layer` when the
@@ -197,6 +228,9 @@ pub fn transition_meta(ev: &Event) -> Result<TransitionMeta> {
 /// merge target) keeps its layer, and when the same rule gives a lower one
 /// the ingest must record it with a `LayerChanged` event before its
 /// `SnapshotCommitted`. Ingest never raises a layer; only `Promoted` does.
+/// In a v3-final-format prefix of the log (`!st.layered`, K-B1.1) no such
+/// event exists: `SnapshotCommitted` applies the pending drops itself and
+/// marks those lineages `LayerSource::Derived`.
 pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
     // provenance of the version a block event creates (spec §4.3). Absent:
     // the v3-final reading (`Provenance::default()`, human) — logs built
@@ -267,7 +301,7 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             let p = prov()?;
             // lowest layer among the sources and the author
             let mut target = author_layer(ev, &p)?;
-            let mut kept: HashMap<String, (Layer, bool, u64)> = HashMap::new();
+            let mut kept: HashMap<String, (Layer, bool, u64, bool)> = HashMap::new();
             for (l, old) in from.iter().zip(&ev.old_version_ids) {
                 if st.live.remove(l).as_deref() != Some(old.as_str()) {
                     bail!("event seq {}: source lineage {l} not live at {old}", ev.seq);
@@ -275,7 +309,15 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                 let layer = st.layer_of(l, ev)?;
                 target = target.min(layer);
                 let created = st.created_seq.get(l).copied().unwrap_or(ev.seq);
-                kept.insert(l.clone(), (layer, st.inactive.contains(l), created));
+                kept.insert(
+                    l.clone(),
+                    (
+                        layer,
+                        st.inactive.contains(l),
+                        created,
+                        st.derived.contains(l),
+                    ),
+                );
                 st.pending.retain(|(q, _)| q != l);
                 st.forget(l);
             }
@@ -290,10 +332,13 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                 st.last_seq.insert(l.clone(), ev.seq);
                 match kept.get(l) {
                     // inherited lineage (dominant piece / merge target)
-                    Some(&(layer, inactive, created)) => {
+                    Some(&(layer, inactive, created, derived)) => {
                         st.layer.insert(l.clone(), layer);
                         if inactive {
                             st.inactive.insert(l.clone());
+                        }
+                        if derived {
+                            st.derived.insert(l.clone());
                         }
                         st.created_seq.insert(l.clone(), created);
                         lower(st, l, target)?;
@@ -335,6 +380,7 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                 ),
             }
             st.layer.insert(l.into(), to);
+            st.derived.remove(l);
             st.last_seq.insert(l.into(), ev.seq);
         }
         EventKind::Promoted | EventKind::Demoted => {
@@ -363,6 +409,7 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             check_transition(ev.kind, &m, cur, st.inactive.contains(l))
                 .with_context(|| format!("event seq {}: {l}", ev.seq))?;
             st.layer.insert(l.into(), m.to);
+            st.derived.remove(l);
             if m.prune {
                 st.inactive.insert(l.into());
             }
@@ -379,6 +426,13 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                 .snapshot_id
                 .clone()
                 .context("SnapshotCommitted without snapshot_id")?;
+            if !st.pending.is_empty() && !st.layered {
+                // v3-final-format log: the drops are derived, not logged
+                for (l, to) in std::mem::take(&mut st.pending) {
+                    st.layer.insert(l.clone(), to);
+                    st.derived.insert(l);
+                }
+            }
             if !st.pending.is_empty() {
                 bail!(
                     "event seq {}: snapshot committed before LayerChanged of {}",
@@ -503,6 +557,8 @@ pub struct Replayed {
     /// 1 + seq of the last non-checkpoint event (0 for none): the offset a
     /// new checkpoint records as `event_seq`
     pub content_offset: u64,
+    /// an event carrying layer information has been applied (K-B1.1)
+    pub layered: bool,
 }
 
 impl Replayed {
@@ -514,11 +570,14 @@ impl Replayed {
     }
 
     pub fn apply(&mut self, ev: &Event) -> Result<()> {
+        self.layered |= carries_layer(ev);
         if ev.kind != EventKind::CheckpointCreated {
             if ev.doc_path.is_empty() {
                 bail!("event seq {}: {:?} without doc_path", ev.seq, ev.kind);
             }
-            apply_event(self.docs.entry(ev.doc_path.clone()).or_default(), ev)?;
+            let st = self.docs.entry(ev.doc_path.clone()).or_default();
+            st.layered = self.layered;
+            apply_event(st, ev)?;
             self.content_offset = ev.seq + 1;
             return Ok(());
         }
@@ -796,8 +855,12 @@ impl Vault {
     pub fn replay(&self, doc_path: &str) -> Result<Option<Snapshot>> {
         let events = read_events(&self.events_path())?;
         let mut st = DocState::default();
-        for ev in events.iter().filter(|e| e.doc_path == doc_path) {
-            apply_event(&mut st, ev)?;
+        for ev in &events {
+            // the log's format is vault-wide (K-B1.1)
+            st.layered |= carries_layer(ev);
+            if ev.doc_path == doc_path {
+                apply_event(&mut st, ev)?;
+            }
         }
         if let Some(s) = &st.head {
             let obj = store::get_snapshot(&self.meta_dir, &s.snapshot_id)?;
@@ -847,6 +910,7 @@ impl Vault {
     ) -> Result<Vec<Event>> {
         // verify on a copy before anything is written
         let mut staged: BTreeMap<String, DocState> = BTreeMap::new();
+        let mut layered = self.state.layered;
         for (i, ev) in events.iter_mut().enumerate() {
             ev.seq = self.next_seq + i as u64;
             if ev.kind == EventKind::CheckpointCreated || ev.doc_path.is_empty() {
@@ -859,6 +923,8 @@ impl Vault {
                     .cloned()
                     .unwrap_or_default()
             });
+            layered |= carries_layer(ev);
+            st.layered = layered;
             apply_event(st, ev)?;
         }
         for o in objects {
@@ -882,6 +948,7 @@ impl Vault {
         append_events(&self.events_path(), &events)?;
         self.next_seq += events.len() as u64;
         self.state.docs.extend(staged);
+        self.state.layered = layered;
         if !events.is_empty() {
             self.state.content_offset = self.next_seq;
         }
@@ -1598,6 +1665,7 @@ impl Vault {
                     lineage_id: l.clone(),
                     version_id: b.version_id.clone(),
                     layer: b.layer,
+                    layer_source: ds.layer_source(l),
                     inactive: ds.inactive.contains(l),
                     author_kind: b.provenance.author_kind,
                     source: b.provenance.source.clone(),
@@ -1618,6 +1686,9 @@ pub struct BlameLine {
     pub lineage_id: String,
     pub version_id: String,
     pub layer: Layer,
+    /// `event` or `derived` (K-B1.1: a drop replay derived for a log without
+    /// layer information)
+    pub layer_source: LayerSource,
     pub inactive: bool,
     pub author_kind: AuthorKind,
     pub source: String,

@@ -1,0 +1,23 @@
+{
+  "events": 8,
+  "events_hash": "14221c1e416930ea068821407907b2df",
+  "matcher": "v3",
+  "replay_snapshot_ids": {
+    "notes.md": "d35831da4472bfc83b6d90c8fb8f7d18"
+  },
+  "scenario": "agent_only",
+  "steps": [
+    {
+      "author": "Agent",
+      "doc": "notes.md",
+      "events": 5
+    },
+    {
+      "author": "Agent",
+      "doc": "notes.md",
+      "events": 3
+    }
+  ],
+  "title": "yalnız Agent",
+  "v3_final_sha": "71c244e551258601bfd5550b61d1aa7335a938fa"
+}

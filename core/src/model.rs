@@ -75,10 +75,8 @@ pub enum Layer {
 
 impl Layer {
     /// Default layer on ingest (spec §7): `human` → canonical; `agent`,
-    /// `transcript` → proposal; `synthetic` → "as declared" — there is no
-    /// declaration mechanism before P1-B, so synthetic content (evaluation
-    /// data standing in for human edits) is canonical
-    /// (docs/rounds/P1-A/progress/ASSUMPTIONS.md, A2).
+    /// `transcript` → proposal; `synthetic` → as declared, canonical when
+    /// undeclared (spec 1.0.1, K-B1.4; a declaration is `meta.layer`).
     pub fn default_for(kind: AuthorKind) -> Layer {
         match kind {
             AuthorKind::Human | AuthorKind::Synthetic => Layer::Canonical,
@@ -102,6 +100,17 @@ impl Layer {
             Layer::Derived => "derived",
         }
     }
+}
+
+/// Where a lineage's current layer comes from (`blame`; K-B1.1): `event` —
+/// an event in the log set it (the block event's author, `LayerChanged`,
+/// `Promoted`, `Demoted`); `derived` — replay applied a drop the layer rule
+/// implies but a v3-final-format log (no layer information) does not record.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum LayerSource {
+    Event,
+    Derived,
 }
 
 /// Parser output: a block before lineage assignment.

@@ -1,0 +1,203 @@
+{
+  "matcher": "v3",
+  "scenarios": [
+    {
+      "name": "agent_only",
+      "title": "yalnız Agent",
+      "steps": [
+        {
+          "doc": "notes.md",
+          "author": "Agent",
+          "source": "agent-1",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and about twenty five seconds of extraction time.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n"
+        },
+        {
+          "doc": "notes.md",
+          "author": "Agent",
+          "source": "agent-2",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
+        }
+      ]
+    },
+    {
+      "name": "transcript_only",
+      "title": "yalnız Transcript",
+      "steps": [
+        {
+          "doc": "notes.md",
+          "author": "Transcript",
+          "source": "transcript-1",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and about twenty five seconds of extraction time.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n"
+        },
+        {
+          "doc": "notes.md",
+          "author": "Transcript",
+          "source": "transcript-2",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
+        }
+      ]
+    },
+    {
+      "name": "synthetic_only",
+      "title": "yalnız Synthetic",
+      "steps": [
+        {
+          "doc": "notes.md",
+          "author": "Synthetic",
+          "source": "synthetic-1",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and about twenty five seconds of extraction time.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n"
+        },
+        {
+          "doc": "notes.md",
+          "author": "Synthetic",
+          "source": "synthetic-2",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
+        }
+      ]
+    },
+    {
+      "name": "human_synthetic",
+      "title": "Human → Synthetic",
+      "steps": [
+        {
+          "doc": "notes.md",
+          "author": "Human",
+          "source": "human-1",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and about twenty five seconds of extraction time.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n"
+        },
+        {
+          "doc": "notes.md",
+          "author": "Synthetic",
+          "source": "synthetic-2",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
+        }
+      ]
+    },
+    {
+      "name": "agent_human",
+      "title": "Agent → Human",
+      "steps": [
+        {
+          "doc": "notes.md",
+          "author": "Agent",
+          "source": "agent-1",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and about twenty five seconds of extraction time.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n"
+        },
+        {
+          "doc": "notes.md",
+          "author": "Human",
+          "source": "human-2",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
+        }
+      ]
+    },
+    {
+      "name": "human_agent",
+      "title": "Human → Agent",
+      "steps": [
+        {
+          "doc": "notes.md",
+          "author": "Human",
+          "source": "human-1",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and about twenty five seconds of extraction time.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n"
+        },
+        {
+          "doc": "notes.md",
+          "author": "Agent",
+          "source": "agent-2",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
+        }
+      ]
+    },
+    {
+      "name": "human_transcript",
+      "title": "Human → Transcript",
+      "steps": [
+        {
+          "doc": "notes.md",
+          "author": "Human",
+          "source": "human-1",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and about twenty five seconds of extraction time.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n"
+        },
+        {
+          "doc": "notes.md",
+          "author": "Transcript",
+          "source": "transcript-2",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
+        }
+      ]
+    },
+    {
+      "name": "synthetic_agent",
+      "title": "Synthetic → Agent",
+      "steps": [
+        {
+          "doc": "notes.md",
+          "author": "Synthetic",
+          "source": "synthetic-1",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and about twenty five seconds of extraction time.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n"
+        },
+        {
+          "doc": "notes.md",
+          "author": "Agent",
+          "source": "agent-2",
+          "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
+        }
+      ]
+    },
+    {
+      "name": "mixed_vault",
+      "title": "karışık 4 dokümanlı vault (son adım: Agent bir Human dokümanını düzenler)",
+      "steps": [
+        {
+          "doc": "garden.md",
+          "author": "Human",
+          "source": "editor",
+          "text": "# Garden plan\n\nTomatoes go along the south fence where they get full sun all afternoon. The basil is planted between them to keep pests away and to save space.\n\nWater the beds early in the morning, twice a week in dry weather.\n"
+        },
+        {
+          "doc": "release.md",
+          "author": "Agent",
+          "source": "claude-code",
+          "text": "# Agent draft\n\nThe release checklist covers tagging, changelog and the signed build artifacts.\n\nEvery release candidate is tested on the staging cluster for one full day.\n"
+        },
+        {
+          "doc": "summary.md",
+          "author": "Synthetic",
+          "source": "generator",
+          "text": "# Generated summary\n\nThe corpus holds four hundred documents split evenly across two domains.\n\nEach document has between three and twenty top-level blocks.\n"
+        },
+        {
+          "doc": "meeting.md",
+          "author": "Transcript",
+          "source": "recorder",
+          "text": "# Meeting transcript\n\nAlice: we ship the importer on Friday if the tests are green.\n\nBob: the exporter still needs a review of the error messages.\n"
+        },
+        {
+          "doc": "release.md",
+          "author": "Human",
+          "source": "editor",
+          "text": "# Agent draft\n\nThe release checklist covers tagging, the changelog and the signed build artifacts.\n\nEvery release candidate is tested on the staging cluster for one full day.\n\nHuman note: the release manager signs off in the tracker.\n"
+        },
+        {
+          "doc": "summary.md",
+          "author": "Agent",
+          "source": "claude-code",
+          "text": "# Generated summary\n\nThe corpus holds four hundred and twelve documents split evenly across two domains.\n\nEach document has between three and twenty top-level blocks.\n"
+        },
+        {
+          "doc": "meeting.md",
+          "author": "Transcript",
+          "source": "recorder",
+          "text": "# Meeting transcript\n\nAlice: we ship the importer on Friday if all the tests are green.\n\nBob: the exporter still needs a review of the error messages.\n\nCarol: I will review the exporter tomorrow morning.\n"
+        },
+        {
+          "doc": "garden.md",
+          "author": "Agent",
+          "source": "claude-code",
+          "text": "# Garden plan\n\nTomatoes go along the south fence where they get full sun all afternoon.\n\nThe basil is planted between them to keep pests away and to save space.\n\nWater the beds early in the morning, three times a week in dry weather.\n"
+        }
+      ]
+    }
+  ]
+}
