@@ -102,7 +102,7 @@ for ((i = 0; i < rows; i++)); do
     if ! git merge-base --is-ancestor "$commit" "$later"; then
       violation "$pat: re-freeze ${prefixes[$j]} does not descend from $prefix"
     fi
-    ref="$(echo "${notes[$j]}" | grep -Eo '[A-Z0-9]+-[A-Z0-9]+/F[0-9]+' | head -1 || true)"
+    ref="$(echo "${notes[$j]}" | grep -Eo '[A-Z0-9]+-[A-Z0-9]+(\.[0-9]+)?/F[0-9]+' | head -1 || true)"
     exc="docs/rounds/${ref%%/*}/progress/FREEZE_EXCEPTIONS.md"
     if [ -z "$ref" ] || ! grep -Eq "^## ${ref##*/} " "$exc" 2>/dev/null; then
       violation "$pat: re-freeze ${prefixes[$j]} cites no freeze exception (<round>/F<n> in $exc)"
