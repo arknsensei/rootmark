@@ -42,6 +42,9 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `core/tests/conformance/eval_c2.rs` | `P1-B/B7:` | C2 değerlendiricisi (üreteçle ortak) |
 | `core/tests/conformance_c2_gen.rs` | `P1-B/B7:` | C2 fixture üreteci (mevcut çekirdekten) |
 | `scripts/gen_fixtures_c2.sh` | `P1-B/B7:` | C2 fixture üreteci betiği |
+| `research/eval/datasets/synthetic_edits_v4.py` | `P1-B/B8-pre:` | d1hs üreteci (Ö3), H1 sonucu görülmeden |
+| `research/data/MANIFEST.d1hs.json` | `P1-B/B8-pre:` | d1hs manifest'i |
+| `research/eval/run_holdout_split.py` | `P1-B/B8-pre:` | B-9 koşturucusu (eşikler kodda) |
 <!-- /frozen-table -->
 
 ## Notlar

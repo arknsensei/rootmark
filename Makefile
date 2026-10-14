@@ -18,7 +18,7 @@ FUZZ_SEEDS := 20261014 7
 PHASE ?= test
 TS_PKGS := $(wildcard clients/*/package.json)
 
-.PHONY: report test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
+.PHONY: report report-p1b test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps conformance regress verify
@@ -210,6 +210,12 @@ p1b-checks: require-run
 report:
 	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
 	$(PY) -m eval.report_p1a --run-dir "$(abspath $(RUN_DIR))"
+
+# P1-B round report from one RUN directory (TASKS B9): <RUN_DIR>/FINAL.md and
+# reports/rounds/P1-B/FINAL.md; the RUN must hold pair_compare.json (verify pair)
+report-p1b:
+	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
+	$(PY) -m eval.report_p1b --run-dir "$(abspath $(RUN_DIR))"
 
 # Quality regression (TASKS A4, GOAL A-3): v2 phases + v3 D1-easy/hard, D2, H3,
 # H4, H4-V2 under RUN, then every quality field compared with the v3-final
