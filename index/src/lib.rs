@@ -7,6 +7,8 @@
 
 use anyhow::Result;
 
+pub mod models;
+
 /// One retrieval unit handed to an index: a chunk (spec §6) identified by its
 /// `chunk_id`, with the text the index sees.
 #[derive(Debug, Clone, PartialEq, Eq)]

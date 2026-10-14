@@ -444,3 +444,106 @@ fn first_of_two_layer_changed_removed_reads_as_derived_prefix() {
     );
     done(root);
 }
+
+// ---- K-C0.1 (P1-C/C0; P1-B.1 verification Ş1, recommendation 1): a
+// renumbered deletion of a `LayerChanged` opens as a "derived prefix" only
+// when no other layer-carrying event remains up to the same snapshot;
+// otherwise it is an error (ASSUMPTIONS P1-B.1 B11-2, dated addendum).
+
+/// One document by `first`, then one agent ingest that edits two of its
+/// blocks: two `LayerChanged` before the same `SnapshotCommitted`.
+fn two_drops_in_one_snapshot(name: &str, first: AuthorKind) -> PathBuf {
+    let root = tmp(name);
+    let mut v = Vault::open(&root).unwrap();
+    let by = |author_kind, source: &str| Provenance {
+        author_kind,
+        source: source.into(),
+    };
+    v.ingest(
+        "d.md",
+        "# D\n\nFirst paragraph of the document.\n\nSecond paragraph of the document.\n",
+        by(first, "writer-1"),
+        MatcherVersion::V3,
+    )
+    .unwrap();
+    v.ingest(
+        "d.md",
+        "# D\n\nFirst paragraph of the document, edited.\n\nSecond paragraph of the document, edited.\n",
+        by(A, "claude-code"),
+        MatcherVersion::V3,
+    )
+    .unwrap();
+    drop(v);
+    let evs = read_log(&root);
+    let lc: Vec<usize> = (0..evs.len())
+        .filter(|&i| evs[i].kind == mdkcore::EventKind::LayerChanged)
+        .collect();
+    assert_eq!(lc.len(), 2, "{name}: two drops");
+    let snap = (lc[1]..evs.len())
+        .find(|&i| evs[i].kind == mdkcore::EventKind::SnapshotCommitted)
+        .unwrap();
+    assert!(
+        (lc[0]..snap).all(|i| evs[i].kind != mdkcore::EventKind::SnapshotCommitted),
+        "{name}: both drops belong to the same snapshot"
+    );
+    root
+}
+
+fn first_layer_changed(root: &Path) -> usize {
+    let evs = read_log(root);
+    (0..evs.len())
+        .find(|&i| evs[i].kind == mdkcore::EventKind::LayerChanged)
+        .unwrap()
+}
+
+#[test]
+fn kc01_first_of_two_drops_in_one_snapshot_removed_is_an_error_human() {
+    let root = two_drops_in_one_snapshot("kc01-human", H);
+    drop_event(&root, first_layer_changed(&root));
+    // the remaining drop no longer matches the replayed layer rule
+    let e = Vault::open(&root).err().expect("open must fail");
+    assert!(
+        format!("{e:#}").contains("does not match the replayed layer rule"),
+        "{e:#}"
+    );
+    done(root);
+}
+
+#[test]
+fn kc01_first_of_two_drops_in_one_snapshot_removed_is_an_error_synthetic() {
+    let root = two_drops_in_one_snapshot("kc01-synthetic", S);
+    drop_event(&root, first_layer_changed(&root));
+    // the remaining drop no longer matches the replayed layer rule
+    let e = Vault::open(&root).err().expect("open must fail");
+    assert!(
+        format!("{e:#}").contains("does not match the replayed layer rule"),
+        "{e:#}"
+    );
+    done(root);
+}
+
+#[test]
+fn kc01_single_drop_removed_opens_as_derived_prefix() {
+    // the accepted limit of K-C0.1: nothing else carries layer information
+    // up to that snapshot, so the file equals a v3-final log; the layer is
+    // the same, the source reads `derived`
+    let root = human_doc_edited_by_agent("kc01-prefix", false);
+    let before = Vault::open(&root)
+        .unwrap()
+        .blame("d.md", None)
+        .unwrap()
+        .into_iter()
+        .map(|b| b.layer)
+        .collect::<Vec<_>>();
+    drop_event(&root, first_layer_changed(&root));
+    let v = Vault::open(&root).unwrap();
+    let b = v.blame("d.md", None).unwrap();
+    assert_eq!(b.iter().map(|b| b.layer).collect::<Vec<_>>(), before);
+    assert_eq!(
+        b.iter()
+            .map(|b| (b.layer, b.layer_source))
+            .collect::<Vec<_>>(),
+        vec![(C, E), (P, D), (C, E)]
+    );
+    done(root);
+}

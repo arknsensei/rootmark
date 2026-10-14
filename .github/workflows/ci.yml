@@ -30,6 +30,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
+      # embedder model (models/MANIFEST.json) and the ONNX Runtime download of `ort`
+      - uses: actions/cache@v4
+        with:
+          path: |
+            models/minilm-l6-v2
+            ~/.cache/ort.pyke.io
+            ~/Library/Caches/ort.pyke.io
+          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST.json', 'Cargo.lock') }}
+      - run: make models
       - run: make test
       - run: make lint
       - run: make conformance

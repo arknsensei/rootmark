@@ -1,0 +1,32 @@
+{
+  "name": "minilm-l6-v2",
+  "source": "sentence-transformers/all-MiniLM-L6-v2",
+  "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "embedder_id_rule": "\"minilm-l6-v2/\" + blake3(model.onnx)[:8]",
+  "files": {
+    "model.onnx": {
+      "remote_path": "onnx/model.onnx",
+      "size": 90405214,
+      "sha256": "6fd5d72fe4589f189f8ebc006442dbb529bb7ce38f8082112682524616046452",
+      "blake3": "e73168f9e1f4e7aa7f770f7d827dbe007579a03119b198e3cd8de30b61f55014"
+    },
+    "tokenizer.json": {
+      "remote_path": "tokenizer.json",
+      "size": 466247,
+      "sha256": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037",
+      "blake3": "82483bb4f0bdb81779f295ecc5a93285d2156834e994a2169f9800e4c8f250c1"
+    },
+    "sentence_bert_config.json": {
+      "remote_path": "sentence_bert_config.json",
+      "size": 53,
+      "sha256": "fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7",
+      "blake3": "19f44906a2ce99ebb8909c5adc902b8373deafb04a6b5b8a57173a9f6292b6b3"
+    },
+    "1_Pooling/config.json": {
+      "remote_path": "1_Pooling/config.json",
+      "size": 190,
+      "sha256": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+      "blake3": "0d9e82f4655c407da9ffaef0fe5b236ae493ff8fbdc2b25a024df4aae86a7fe6"
+    }
+  }
+}

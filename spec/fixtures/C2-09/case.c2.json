@@ -1,0 +1,70 @@
+{
+  "id": "C2-09",
+  "title": "Invalid trace input (query_hash not 32 lowercase hex: 31, 33, non-hex, uppercase; consumer with a newline) rejected on open",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest",
+      "doc": "notes.md",
+      "file": "doc.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "label",
+      "name": "H",
+      "doc": "notes.md",
+      "block": 2
+    },
+    {
+      "op": "checkpoint",
+      "name": "t0"
+    },
+    {
+      "op": "read",
+      "at": "t0",
+      "consumer": "claude-code",
+      "lineages": [
+        "H"
+      ]
+    },
+    {
+      "op": "trace_tamper",
+      "field": "query_hash",
+      "value": "0123456789abcdef0123456789abcde",
+      "expect_open_err": "is not 32 lowercase hex characters"
+    },
+    {
+      "op": "trace_tamper",
+      "field": "query_hash",
+      "value": "0123456789abcdef0123456789abcdef0",
+      "expect_open_err": "is not 32 lowercase hex characters"
+    },
+    {
+      "op": "trace_tamper",
+      "field": "query_hash",
+      "value": "0123456789abcdef0123456789abcdeg",
+      "expect_open_err": "is not 32 lowercase hex characters"
+    },
+    {
+      "op": "trace_tamper",
+      "field": "query_hash",
+      "value": "0123456789ABCDEF0123456789ABCDEF",
+      "expect_open_err": "is not 32 lowercase hex characters"
+    },
+    {
+      "op": "trace_tamper",
+      "field": "consumer",
+      "value": "claude\ncode",
+      "expect_open_err": "contains a newline"
+    },
+    {
+      "op": "traces"
+    }
+  ]
+}

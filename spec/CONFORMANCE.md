@@ -36,6 +36,7 @@ Each test has a fixture under `spec/fixtures/` (added in Phase 1 round A) and an
 | C2-06 | Query as of checkpoint ignores later events | result equals fixture |
 | C2-07 | Consumption trace written for every retrieval; id formula | trace line equals fixture |
 | C2-08 | Layer transitions replayable from events | equality |
+| C2-09 | Invalid trace input in `traces.jsonl` (`query_hash` of 31 or 33 characters, non-hex, uppercase; `consumer` containing `"\n"`) rejected when the vault is opened (§8, 1.0.1) | error |
 
 ## Level 3 — Retrieval
 

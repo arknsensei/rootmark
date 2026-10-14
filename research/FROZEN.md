@@ -63,6 +63,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/compare_p1b1.py` | `P1-B.1/B1.4-pre:` | B1-6 karşılaştırıcısı (P1-B resmi RUN'ı; yalnız C2-07 ve `traces.jsonl` hariç) |
 | `research/eval/run_p1b1_checks.py` | `P1-B.1/B1.4-pre:` | B1-1..B1-6 RUN kaydı |
 | `research/eval/report_p1b1.py` | `P1-B.1/B1.4-pre:` | P1-B.1 rapor üreteci (resmi RUN'dan önce) |
+| `spec/fixtures/**` | `P1-C/C0:` | yeniden dondurma P1-C/F1: C2-09 negatif iz girdisi (K-C0.2); `MANIFEST.json` yalnız C2-09 satırları |
+| `core/tests/conformance.rs` | `P1-C/C0:` | yeniden dondurma P1-C/F2: Seviye 2 = C2-01..C2-09 |
+| `core/tests/conformance/eval_c2.rs` | `P1-C/C0:` | yeniden dondurma P1-C/F3: `trace_tamper` işlemi |
+| `core/tests/conformance_c2_gen.rs` | `P1-C/C0:` | yeniden dondurma P1-C/F4: 9 C2 dizini |
 <!-- /frozen-table -->
 
 ## Notlar

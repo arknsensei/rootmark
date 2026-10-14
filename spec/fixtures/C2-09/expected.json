@@ -1,0 +1,110 @@
+{
+  "id": "C2-09",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2eccd84e66d6685bbe3687405e1538b3"
+      }
+    },
+    {
+      "op": "label",
+      "result": {
+        "lineage_id": "5118e1e4cd00ea75199b527f886fb179"
+      }
+    },
+    {
+      "op": "checkpoint",
+      "result": {
+        "checkpoint_id": "26d1c6940ff67b79c8d24603548933ec",
+        "docs": {
+          "notes.md": "2eccd84e66d6685bbe3687405e1538b3"
+        },
+        "event_seq": 4,
+        "name": "t0"
+      }
+    },
+    {
+      "op": "read",
+      "result": {
+        "blocks": [
+          {
+            "block": {
+              "block_type": "Paragraph",
+              "heading_level": null,
+              "heading_path": [
+                "Notes"
+              ],
+              "layer": "canonical",
+              "lineage_id": "5118e1e4cd00ea75199b527f886fb179",
+              "normalized_text": "Descale the machine every month.",
+              "parents": [],
+              "provenance": {
+                "author_kind": "Human",
+                "source": "editor"
+              },
+              "text": "Descale the machine every month.",
+              "version_id": "e77f653e443f2c6b95d7b7a9302a184e"
+            },
+            "doc_path": "notes.md",
+            "inactive": false
+          }
+        ],
+        "trace": {
+          "at_seq": 0,
+          "checkpoint_id": "26d1c6940ff67b79c8d24603548933ec",
+          "consumer": "claude-code",
+          "query_hash": "e9a69b44c41003367fb16904f60b8983",
+          "returned": [
+            {
+              "doc_path": "notes.md",
+              "lineage_id": "5118e1e4cd00ea75199b527f886fb179",
+              "version_id": "e77f653e443f2c6b95d7b7a9302a184e"
+            }
+          ],
+          "trace_id": "790d7ed0df132b68c61243f40b0e249d"
+        }
+      }
+    },
+    {
+      "op": "trace_tamper",
+      "result": {
+        "open_err": "is not 32 lowercase hex characters"
+      }
+    },
+    {
+      "op": "trace_tamper",
+      "result": {
+        "open_err": "is not 32 lowercase hex characters"
+      }
+    },
+    {
+      "op": "trace_tamper",
+      "result": {
+        "open_err": "is not 32 lowercase hex characters"
+      }
+    },
+    {
+      "op": "trace_tamper",
+      "result": {
+        "open_err": "is not 32 lowercase hex characters"
+      }
+    },
+    {
+      "op": "trace_tamper",
+      "result": {
+        "open_err": "contains a newline"
+      }
+    },
+    {
+      "op": "traces",
+      "result": "{\"trace_id\":\"790d7ed0df132b68c61243f40b0e249d\",\"checkpoint_id\":\"26d1c6940ff67b79c8d24603548933ec\",\"consumer\":\"claude-code\",\"query_hash\":\"e9a69b44c41003367fb16904f60b8983\",\"returned\":[{\"doc_path\":\"notes.md\",\"lineage_id\":\"5118e1e4cd00ea75199b527f886fb179\",\"version_id\":\"e77f653e443f2c6b95d7b7a9302a184e\"}],\"at_seq\":0}\n"
+    }
+  ]
+}

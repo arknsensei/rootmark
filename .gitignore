@@ -32,3 +32,7 @@ node_modules/
 
 # macOS
 .DS_Store
+
+# embedder model files (scripts/fetch_model.sh; pinned by models/MANIFEST.json)
+/models/*
+!/models/MANIFEST.json

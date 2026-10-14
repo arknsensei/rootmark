@@ -1,4 +1,4 @@
-//! Conformance Level 2 evaluator (spec/CONFORMANCE.md C2-01..C2-08).
+//! Conformance Level 2 evaluator (spec/CONFORMANCE.md C2-01..C2-09).
 //!
 //! A C2 case (`spec/fixtures/C2-xx/case.c2.json` — not `case.json`, which the
 //! frozen v3-final C1 generator walks) is a script of governance operations
@@ -18,6 +18,10 @@
 //! - `events` — kinds of the whole log
 //! - `tamper {kind, remove_meta}` — reopen with one meta key removed from the
 //!   last event of `kind`, then restore
+//! - `trace_tamper {field, value, expect_open_err}` (C2-09, K-C0.2) — reopen
+//!   with `field` (`query_hash` or `consumer`) of the last `traces.jsonl` line
+//!   set to `value` and its `trace_id` recomputed with the §8 formula (so
+//!   only the input rule can reject it), then restore
 //!
 //! `expect_err` (substring) marks an operation that must fail; an error is
 //! recorded as `{"err": true}` only (messages may hold temp paths).
@@ -322,6 +326,42 @@ impl Run<'_> {
                         let want = s(op, "expect_open_err")?;
                         if !msg.contains(want) {
                             bail!("tamper: {msg:?} lacks {want:?}");
+                        }
+                        json!({"open_err": want})
+                    }
+                }
+            }
+            "trace_tamper" => {
+                let field = s(op, "field")?;
+                if field != "query_hash" && field != "consumer" {
+                    bail!("trace_tamper: field {field:?} (query_hash|consumer)");
+                }
+                let value = s(op, "value")?;
+                self.v = None;
+                let p = self.root.join(".mdkernel/traces.jsonl");
+                let log = fs::read_to_string(&p).context("traces.jsonl")?;
+                let mut lines: Vec<String> = log.lines().map(str::to_string).collect();
+                let last = lines.last_mut().context("traces.jsonl is empty")?;
+                let mut t: Value = serde_json::from_str(last)?;
+                t[field] = json!(value);
+                let at_seq = t["at_seq"].as_u64().context("at_seq")?;
+                t["trace_id"] = json!(mdkcore::trace_id(
+                    s(&t, "checkpoint_id")?,
+                    s(&t, "consumer")?,
+                    s(&t, "query_hash")?,
+                    at_seq
+                ));
+                *last = serde_json::to_string(&t)?;
+                fs::write(&p, lines.join("\n") + "\n")?;
+                let res = Vault::open_with(&self.root, self.params);
+                fs::write(&p, &log)?;
+                match res {
+                    Ok(_) => bail!("tampered traces.jsonl opened"),
+                    Err(e) => {
+                        let msg = format!("{e:#}");
+                        let want = s(op, "expect_open_err")?;
+                        if !msg.contains(want) {
+                            bail!("trace_tamper: {msg:?} lacks {want:?}");
                         }
                         json!({"open_err": want})
                     }

@@ -21,7 +21,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
 .PHONY: report report-p1b test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
-        check-deps test-check-deps conformance regress verify
+        check-deps test-check-deps conformance regress verify models
 
 setup: setup-py build
 
@@ -87,15 +87,15 @@ test-check-deps:
 	bash scripts/test_check_deps.sh
 
 # Levels 1 and 2 (spec/CONFORMANCE.md): spec/fixtures/C1-* and C2-* against
-# the current core; writes reports/conformance.json and fails unless 25/25
-# pass (level_claimed 2) and the frozen fixture manifest matches. The fixture root is this tree's, resolved at run
+# the current core; writes reports/conformance.json and fails unless 26/26
+# pass (level_claimed 2; C2-09 since P1-C/C0, K-C0.2) and the frozen fixture manifest matches. The fixture root is this tree's, resolved at run
 # time (MDK_FIXTURES; P1-A verifier recommendation Ö2).
 conformance:
 	rm -f reports/conformance.json
 	MDK_FIXTURES="$(CURDIR)/spec/fixtures" MDK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
 	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
 	@test -f reports/conformance.json || { echo "error: reports/conformance.json not written" >&2; exit 1; }
-	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 2 and .passed == .total and .total == 25 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string"' reports/conformance.json >/dev/null \
+	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 2 and .passed == .total and .total == 26 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string"' reports/conformance.json >/dev/null \
 	  || { echo "error: conformance level 2 not reached (reports/conformance.json)" >&2; exit 1; }
 	@echo "conformance: level $$(jq -r .level_claimed reports/conformance.json), $$(jq -r '"\(.passed)/\(.total)"' reports/conformance.json) (reports/conformance.json)"
 
@@ -274,6 +274,13 @@ regress: require-run
 	$(PY) -m eval.compare_p1a $(P1A_REF_RUN) reports/runs/$(RUN) \
 	  --out reports/runs/$(RUN)/regress_vs_p1a.json >/dev/null
 	@echo "regress: RUN=$(RUN) P1-A set equal to the P1-A official RUN (research/reports/runs/$(RUN)/regress_vs_p1a.json)"
+
+# Embedder model files (P1-C/C0): fetched from HuggingFace at the pinned
+# revision (scripts/fetch_model.sh) and checked against models/MANIFEST.json
+# (size, blake3) by the Rust verifier; any mismatch fails.
+models:
+	bash scripts/fetch_model.sh
+	cargo run -q --release -p mdkernel-index --bin mdk-index -- models verify
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:
