@@ -50,6 +50,7 @@ pub struct Manifest {
     pub records_blake3: String,
     pub snapshots_blake3: String,
     pub vectors_blake3: String,
+    pub embedders_blake3: String,
 }
 
 pub fn index_dir(vault: &Vault) -> PathBuf {
@@ -94,6 +95,8 @@ pub struct BuildReport {
     pub embedder_id: String,
     /// records embedded by this build (the others reused their vector)
     pub embedded: usize,
+    /// where reused vectors came from, or why none were reused
+    pub reuse: String,
 }
 
 /// Chunk records of every snapshot an index build covers, deduplicated and
@@ -123,34 +126,111 @@ pub fn collect(vault: &Vault) -> Result<(Vec<ChunkRecord>, Vec<SnapshotChunks>)>
     Ok((records, snaps))
 }
 
-/// Vectors of the current index by `record_id`, if it was built with
-/// `embedder_id` (any problem: nothing is reused, everything is embedded).
-fn reusable(dir: &Path, embedder_id: &str, dim: usize) -> HashMap<String, Vec<f32>> {
-    let read = || -> Result<HashMap<String, Vec<f32>>> {
-        let m: Manifest = serde_json::from_str(&fs::read_to_string(dir.join("manifest.json"))?)?;
-        if m.embedder_id != embedder_id || m.dim != dim {
-            return Ok(HashMap::new());
-        }
-        let (vecs, metas) = vectors::read(&dir.join("vectors"), dim)?;
-        let bytes = fs::read(dir.join("vectors/vectors.f32"))?;
-        if blake3::hash(&bytes).to_hex().as_str() != m.vectors_blake3 {
-            return Ok(HashMap::new());
-        }
-        Ok(metas
-            .into_iter()
-            .zip(vecs)
-            .filter(|(meta, _)| meta.embedder_id == embedder_id)
-            .map(|(meta, v)| (meta.record_id, v))
-            .collect())
-    };
-    read().unwrap_or_default()
+/// A whole index directory read and checked: manifest, every file against
+/// its manifest hash and count, storage order, vectors aligned with records
+/// under one `embedder_id`. The only reader of an index directory (`Store`
+/// and vector reuse), so nothing is used from an index that fails a check.
+struct Loaded {
+    manifest: Manifest,
+    records: Vec<ChunkRecord>,
+    snaps: Vec<SnapshotChunks>,
+    vecs: Vec<Vec<f32>>,
+}
+
+fn load(dir: &Path) -> Result<Loaded> {
+    if !dir.join("manifest.json").is_file() {
+        bail!("no index at {} (run `mdk index build`)", dir.display());
+    }
+    let manifest: Manifest = serde_json::from_str(&fs::read_to_string(dir.join("manifest.json"))?)
+        .context("index manifest.json")?;
+    if manifest.format != FORMAT {
+        bail!("index format {:?} != {FORMAT:?}", manifest.format);
+    }
+    if manifest.bm25_k1 != BM25_K1 || manifest.bm25_b != BM25_B || manifest.tokenizer != TOKENIZER {
+        bail!("index was built with other lexical parameters; rebuild it");
+    }
+    let (records, rh): (Vec<ChunkRecord>, String) = read_jsonl(&dir.join("records.jsonl"))?;
+    let (snaps, sh): (Vec<SnapshotChunks>, String) = read_jsonl(&dir.join("snapshots.jsonl"))?;
+    let (metas, eh): (Vec<VectorMeta>, String) = read_jsonl(&dir.join("vectors/embedders.jsonl"))?;
+    let vb = fs::read(dir.join("vectors/vectors.f32")).context("vectors.f32")?;
+    if rh != manifest.records_blake3
+        || sh != manifest.snapshots_blake3
+        || eh != manifest.embedders_blake3
+        || blake3::hash(&vb).to_hex().as_str() != manifest.vectors_blake3
+    {
+        bail!("index files do not match manifest.json (blake3)");
+    }
+    if records.len() != manifest.records || snaps.len() != manifest.snapshots {
+        bail!("index files do not match manifest.json (counts)");
+    }
+    if records
+        .windows(2)
+        .any(|w| w[0].sort_key() >= w[1].sort_key())
+    {
+        bail!("records.jsonl is not in storage order");
+    }
+    let vecs = vectors::decode(&vb, manifest.dim)?;
+    if vecs.len() != records.len()
+        || metas.len() != records.len()
+        || metas
+            .iter()
+            .zip(&records)
+            .any(|(m, r)| m.record_id != r.record_id)
+    {
+        bail!("vectors do not line up with records.jsonl");
+    }
+    let id = vectors::single_embedder(&metas)?;
+    if !records.is_empty() && id.as_deref() != Some(manifest.embedder_id.as_str()) {
+        bail!(
+            "vectors carry embedder_id {id:?}, manifest {:?}",
+            manifest.embedder_id
+        );
+    }
+    Ok(Loaded {
+        manifest,
+        records,
+        snaps,
+        vecs,
+    })
+}
+
+/// Vectors of the current index by `record_id` and why they are (not)
+/// reused. Only an index that passes every `load` check and was built with
+/// the same `embedder_id` and dimension lends vectors; otherwise everything
+/// is embedded again (the result bytes are the same, embedding is
+/// deterministic) and the reason is reported.
+fn reusable(dir: &Path, embedder_id: &str, dim: usize) -> (HashMap<String, Vec<f32>>, String) {
+    if !dir.exists() {
+        return (HashMap::new(), "none: no previous index".into());
+    }
+    match load(dir) {
+        Err(e) => (
+            HashMap::new(),
+            format!("none: previous index invalid: {e:#}"),
+        ),
+        Ok(l) if l.manifest.embedder_id != embedder_id || l.manifest.dim != dim => (
+            HashMap::new(),
+            format!(
+                "none: previous index embedder {} (dim {})",
+                l.manifest.embedder_id, l.manifest.dim
+            ),
+        ),
+        Ok(l) => (
+            l.records
+                .into_iter()
+                .zip(l.vecs)
+                .map(|(r, v)| (r.record_id, v))
+                .collect(),
+            "previous index".into(),
+        ),
+    }
 }
 
 /// Rebuilds `<vault>/.mdkernel/index/` from the vault.
 pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
     let (records, snaps) = collect(vault)?;
     let dir = index_dir(vault);
-    let mut have = reusable(&dir, embedder.id(), embedder.dim());
+    let (mut have, reuse) = reusable(&dir, embedder.id(), embedder.dim());
     let missing: Vec<&ChunkRecord> = records
         .iter()
         .filter(|r| !have.contains_key(&r.record_id))
@@ -183,7 +263,8 @@ pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
     let vec_bytes = vectors::encode(&vecs, embedder.dim())?;
     fs::create_dir_all(tmp.join("vectors"))?;
     fs::write(tmp.join("vectors/vectors.f32"), &vec_bytes)?;
-    fs::write(tmp.join("vectors/embedders.jsonl"), jsonl(&metas)?)?;
+    let emb_bytes = jsonl(&metas)?;
+    fs::write(tmp.join("vectors/embedders.jsonl"), &emb_bytes)?;
     let manifest = Manifest {
         format: FORMAT.into(),
         chunking: "structural".into(),
@@ -197,6 +278,7 @@ pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
         records_blake3: blake3::hash(&rec_bytes).to_hex().to_string(),
         snapshots_blake3: blake3::hash(&snap_bytes).to_hex().to_string(),
         vectors_blake3: blake3::hash(&vec_bytes).to_hex().to_string(),
+        embedders_blake3: blake3::hash(&emb_bytes).to_hex().to_string(),
     };
     write_pretty(&tmp.join("manifest.json"), &manifest)?;
     if dir.exists() {
@@ -208,6 +290,7 @@ pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
         snapshots: snaps.len(),
         embedder_id: embedder.id().to_string(),
         embedded: missing.len(),
+        reuse,
     })
 }
 
@@ -228,35 +311,12 @@ impl Store {
     /// index must hold exactly that `embedder_id`.
     pub fn open(vault: &Vault, embedder: &dyn Embedder) -> Result<Store> {
         let dir = index_dir(vault);
-        if !dir.join("manifest.json").is_file() {
-            bail!("no index at {} (run `mdk index build`)", dir.display());
-        }
-        let manifest: Manifest =
-            serde_json::from_str(&fs::read_to_string(dir.join("manifest.json"))?)
-                .context("index manifest.json")?;
-        if manifest.format != FORMAT {
-            bail!("index format {:?} != {FORMAT:?}", manifest.format);
-        }
-        if manifest.bm25_k1 != BM25_K1
-            || manifest.bm25_b != BM25_B
-            || manifest.tokenizer != TOKENIZER
-        {
-            bail!("index was built with other lexical parameters; rebuild it");
-        }
-        let (records, rh): (Vec<ChunkRecord>, String) = read_jsonl(&dir.join("records.jsonl"))?;
-        let (snaps, sh): (Vec<SnapshotChunks>, String) = read_jsonl(&dir.join("snapshots.jsonl"))?;
-        if rh != manifest.records_blake3 || sh != manifest.snapshots_blake3 {
-            bail!("index files do not match manifest.json (blake3)");
-        }
-        if records.len() != manifest.records || snaps.len() != manifest.snapshots {
-            bail!("index files do not match manifest.json (counts)");
-        }
-        if records
-            .windows(2)
-            .any(|w| w[0].sort_key() >= w[1].sort_key())
-        {
-            bail!("records.jsonl is not in storage order");
-        }
+        let Loaded {
+            manifest,
+            records,
+            snaps,
+            vecs,
+        } = load(&dir)?;
         let by_id: HashMap<String, usize> = records
             .iter()
             .enumerate()
@@ -280,26 +340,6 @@ impl Store {
             {
                 bail!("snapshots.jsonl: {}@{} twice", s.doc_path, s.snapshot_id);
             }
-        }
-        let (vecs, metas) = vectors::read(&dir.join("vectors"), manifest.dim)?;
-        let vb = fs::read(dir.join("vectors/vectors.f32"))?;
-        if blake3::hash(&vb).to_hex().as_str() != manifest.vectors_blake3 {
-            bail!("vectors.f32 does not match manifest.json (blake3)");
-        }
-        if vecs.len() != records.len()
-            || metas
-                .iter()
-                .zip(&records)
-                .any(|(m, r)| m.record_id != r.record_id)
-        {
-            bail!("vectors do not line up with records.jsonl");
-        }
-        let id = vectors::single_embedder(&metas)?;
-        if !records.is_empty() && id.as_deref() != Some(manifest.embedder_id.as_str()) {
-            bail!(
-                "vectors carry embedder_id {id:?}, manifest {:?}",
-                manifest.embedder_id
-            );
         }
         if manifest.embedder_id != embedder.id() || manifest.dim != embedder.dim() {
             bail!(

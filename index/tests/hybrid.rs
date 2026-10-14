@@ -188,6 +188,71 @@ impl Embedder for Other<'_> {
     }
 }
 
+fn set_embedders_hash(v: &Vault, bytes: &[u8]) {
+    let mp = store::index_dir(v).join("manifest.json");
+    let mut m: serde_json::Value = serde_json::from_str(&fs::read_to_string(&mp).unwrap()).unwrap();
+    m["embedders_blake3"] = blake3::hash(bytes).to_hex().to_string().into();
+    fs::write(&mp, serde_json::to_string_pretty(&m).unwrap() + "\n").unwrap();
+}
+
+fn tree(dir: &Path) -> Vec<(String, Vec<u8>)> {
+    let mut out = Vec::new();
+    fn walk(base: &Path, d: &Path, out: &mut Vec<(String, Vec<u8>)>) {
+        for e in fs::read_dir(d).unwrap() {
+            let p = e.unwrap().path();
+            if p.is_dir() {
+                walk(base, &p, out);
+            } else {
+                let rel = p.strip_prefix(base).unwrap().to_string_lossy().to_string();
+                if !rel.ends_with(".tantivy-meta.lock") {
+                    out.push((rel, fs::read(&p).unwrap()));
+                }
+            }
+        }
+    }
+    walk(dir, dir, &mut out);
+    out.sort();
+    out
+}
+
+/// C3 review fix: a damaged previous index lends no vector; the rebuild is
+/// byte-identical to a clean build and reports why nothing was reused.
+#[test]
+fn damaged_previous_index_lends_no_vectors() {
+    let root = mini_vault("reuse");
+    let v = Vault::open(&root).unwrap();
+    let clean = tree(&store::index_dir(&v));
+    let p = store::index_dir(&v).join("vectors/embedders.jsonl");
+    let text = fs::read_to_string(&p).unwrap();
+    let mut lines: Vec<&str> = text.lines().collect();
+    lines.swap(0, 1);
+    let swapped = lines.join("\n") + "\n";
+    // (a) swapped rows, manifest untouched: hash mismatch
+    fs::write(&p, &swapped).unwrap();
+    assert!(Store::open(&v, embedder()).is_err());
+    let r = store::build(&v, embedder()).unwrap();
+    assert_eq!(r.embedded, r.records);
+    assert!(
+        r.reuse.contains("previous index invalid") && r.reuse.contains("blake3"),
+        "{}",
+        r.reuse
+    );
+    assert_eq!(tree(&store::index_dir(&v)), clean);
+    // (b) swapped rows with a matching manifest hash: rows no longer line up
+    fs::write(&p, &swapped).unwrap();
+    set_embedders_hash(&v, swapped.as_bytes());
+    assert!(Store::open(&v, embedder()).is_err());
+    let r = store::build(&v, embedder()).unwrap();
+    assert_eq!(r.embedded, r.records);
+    assert!(r.reuse.contains("line up"), "{}", r.reuse);
+    assert_eq!(tree(&store::index_dir(&v)), clean);
+    // (c) intact: everything reused
+    let r = store::build(&v, embedder()).unwrap();
+    assert_eq!((r.embedded, r.reuse.as_str()), (0, "previous index"));
+    assert_eq!(tree(&store::index_dir(&v)), clean);
+    fs::remove_dir_all(root).unwrap();
+}
+
 #[test]
 fn embedder_id_mixing_is_an_error() {
     let root = mini_vault("mix");
@@ -206,7 +271,9 @@ fn embedder_id_mixing_is_an_error() {
     let text = fs::read_to_string(&p).unwrap();
     let first = text.lines().next().unwrap().to_string();
     let mixed = text.replacen(&first, &first.replace(embedder().id(), "other/00000000"), 1);
-    fs::write(&p, mixed).unwrap();
+    fs::write(&p, &mixed).unwrap();
+    // keep the manifest hash consistent so that the mixing check itself fires
+    set_embedders_hash(&v, mixed.as_bytes());
     let e = Store::open(&v, embedder()).err().expect("mixed rows");
     assert!(format!("{e:#}").contains("mixes embedder ids"), "{e:#}");
     // a rebuild with another embedder embeds everything again (no reuse)
