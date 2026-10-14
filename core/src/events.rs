@@ -15,6 +15,15 @@ pub enum EventKind {
     BlockMerged,
     BlockDeleted,
     SnapshotCommitted,
+    /// spec §7: an ingest lowered an inherited lineage's layer
+    /// (`meta.from`, `meta.to`, `meta.cause`)
+    LayerChanged,
+    /// spec §7: proposal → canonical through a policy hook
+    Promoted,
+    /// spec §7: a lower layer, or (with `meta.prune`) inactive
+    Demoted,
+    /// spec §8: vault-wide (`doc_path` ""), `meta.{checkpoint_id, name, event_seq}`
+    CheckpointCreated,
 }
 
 /// One log line. Field semantics per kind:
@@ -28,6 +37,10 @@ pub enum EventKind {
 /// - `BlockDeleted`: `lineage_ids=[l]`, `old_version_ids=[v]`.
 /// - `SnapshotCommitted`: `lineage_ids`/`new_version_ids` = the full ordered snapshot,
 ///   `snapshot_id` set; `meta.frontmatter`, `meta.parent_snapshot`.
+/// - `LayerChanged`: `lineage_ids=[l]`, old = new = `[v]`; `meta.{from, to, cause}`.
+/// - `Promoted` / `Demoted`: `lineage_ids=[l]`, old = new = `[v]` (the live version);
+///   `meta.{actor, reason, policy, policy_version, from, to}` (+ `prune: true`).
+/// - `CheckpointCreated`: `doc_path` "", no ids; `meta.{checkpoint_id, name, event_seq}`.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Event {
     pub seq: u64,

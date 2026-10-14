@@ -1,8 +1,9 @@
 //! Vault: object store + event log + per-document heads (SPEC §2–4, §7).
 
 use crate::events::{append_events, read_events, Event, EventKind};
+use crate::governance::{checkpoint_id, Actor, Checkpoint};
 use crate::lineage::{match_blocks, MatchParams, MatcherVersion, PrevBlock};
-use crate::model::{hash32, Block, Layer, Provenance};
+use crate::model::{hash32, AuthorKind, Block, Layer, Provenance};
 use crate::parse::heading_paths;
 use crate::parse::parse_document;
 use crate::store::{self, BlockObject, SnapshotObject};
@@ -38,6 +39,35 @@ pub struct DocState {
     /// every lineage id ever assigned in this document
     pub used: HashSet<String>,
     pub head: Option<Snapshot>,
+    /// live lineage → layer (spec §7)
+    pub layer: HashMap<String, Layer>,
+    /// live lineages pruned by policy (spec §7: marked inactive, never deleted)
+    pub inactive: HashSet<String>,
+    /// live lineage → seq of the event that created it
+    pub created_seq: HashMap<String, u64>,
+    /// live lineage → seq of the last event that named it
+    pub last_seq: HashMap<String, u64>,
+    /// inherited lineages whose layer an ingest lowered: the `LayerChanged`
+    /// events that must follow before the next `SnapshotCommitted`, in order
+    pub pending: Vec<(String, Layer)>,
+}
+
+impl DocState {
+    fn forget(&mut self, l: &str) {
+        self.parents.remove(l);
+        self.provenance.remove(l);
+        self.layer.remove(l);
+        self.inactive.remove(l);
+        self.created_seq.remove(l);
+        self.last_seq.remove(l);
+    }
+
+    fn layer_of(&self, l: &str, ev: &Event) -> Result<Layer> {
+        self.layer
+            .get(l)
+            .copied()
+            .with_context(|| format!("event seq {}: lineage {l} has no layer", ev.seq))
+    }
 }
 
 fn meta_str(ev: &Event, key: &str) -> Option<String> {
@@ -66,14 +96,103 @@ fn one<'a>(v: &'a [String], what: &str, ev: &Event) -> Result<&'a str> {
     Ok(&v[0])
 }
 
+fn meta_layer(ev: &Event, key: &str) -> Result<Layer> {
+    let s = meta_str(ev, key)
+        .with_context(|| format!("event seq {}: {:?} without meta.{key}", ev.seq, ev.kind))?;
+    Layer::parse(&s).with_context(|| format!("event seq {}: meta.{key}", ev.seq))
+}
+
+/// Layer a block event's author gives its content: `meta.layer` when the
+/// ingest declared one (synthetic content only, spec §7 "as declared"),
+/// else `Layer::default_for(author_kind)`.
+fn author_layer(ev: &Event, prov: &Provenance) -> Result<Layer> {
+    match ev.meta.get("layer") {
+        None => Ok(Layer::default_for(prov.author_kind)),
+        Some(_) => {
+            if prov.author_kind != AuthorKind::Synthetic {
+                bail!(
+                    "event seq {}: meta.layer declared for {:?} content (synthetic only)",
+                    ev.seq,
+                    prov.author_kind
+                );
+            }
+            meta_layer(ev, "layer")
+        }
+    }
+}
+
+/// The governance fields every `Promoted` / `Demoted` event must carry
+/// (spec §7, C2-02): `actor`, `reason`, `policy`, `policy_version`, `from`, `to`.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct TransitionMeta {
+    pub actor: Actor,
+    pub reason: String,
+    pub policy: String,
+    pub policy_version: String,
+    pub from: Layer,
+    pub to: Layer,
+    pub prune: bool,
+}
+
+pub fn transition_meta(ev: &Event) -> Result<TransitionMeta> {
+    let req = |k: &str| -> Result<String> {
+        let s = meta_str(ev, k)
+            .with_context(|| format!("event seq {}: {:?} requires meta.{k}", ev.seq, ev.kind))?;
+        if s.trim().is_empty() {
+            bail!("event seq {}: {:?} meta.{k} is empty", ev.seq, ev.kind);
+        }
+        Ok(s)
+    };
+    let actor: Actor = ev
+        .meta
+        .get("actor")
+        .with_context(|| format!("event seq {}: {:?} requires meta.actor", ev.seq, ev.kind))
+        .and_then(|a| {
+            serde_json::from_value(a.clone())
+                .with_context(|| format!("event seq {}: malformed meta.actor", ev.seq))
+        })?;
+    if actor.id.trim().is_empty() {
+        bail!("event seq {}: {:?} meta.actor.id is empty", ev.seq, ev.kind);
+    }
+    let prune = match ev.meta.get("prune") {
+        None => false,
+        Some(v) => v
+            .as_bool()
+            .with_context(|| format!("event seq {}: meta.prune is not a boolean", ev.seq))?,
+    };
+    Ok(TransitionMeta {
+        actor,
+        reason: req("reason")?,
+        policy: req("policy")?,
+        policy_version: req("policy_version")?,
+        from: meta_layer(ev, "from")?,
+        to: meta_layer(ev, "to")?,
+        prune,
+    })
+}
+
 /// Applies one event to a document state. `SnapshotCommitted` is verified
 /// against the state built from the preceding block events.
+///
+/// Layers (spec §7): a new lineage gets the lowest of its author's layer and
+/// its parents' layers; an inherited lineage (update, dominant split piece,
+/// merge target) keeps its layer, and when the same rule gives a lower one
+/// the ingest must record it with a `LayerChanged` event before its
+/// `SnapshotCommitted`. Ingest never raises a layer; only `Promoted` does.
 pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
     let prov = || -> Provenance {
         ev.meta
             .get("provenance")
             .and_then(|p| serde_json::from_value(p.clone()).ok())
             .unwrap_or_default()
+    };
+    let lower = |st: &mut DocState, l: &str, target: Layer| -> Result<()> {
+        let cur = st.layer_of(l, ev)?;
+        if target < cur {
+            st.pending.retain(|(p, _)| p != l);
+            st.pending.push((l.to_string(), target));
+        }
+        Ok(())
     };
     match ev.kind {
         EventKind::BlockCreated => {
@@ -82,10 +201,14 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             if st.live.contains_key(l) {
                 bail!("event seq {}: lineage {l} already live", ev.seq);
             }
+            let p = prov();
+            st.layer.insert(l.into(), author_layer(ev, &p)?);
             st.live.insert(l.into(), v.into());
             st.parents.insert(l.into(), Vec::new());
-            st.provenance.insert(l.into(), prov());
+            st.provenance.insert(l.into(), p);
             st.used.insert(l.into());
+            st.created_seq.insert(l.into(), ev.seq);
+            st.last_seq.insert(l.into(), ev.seq);
         }
         EventKind::BlockUpdated => {
             let l = one(&ev.lineage_ids, "lineage", ev)?;
@@ -97,15 +220,19 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                     ev.seq
                 );
             }
+            let p = prov();
+            lower(st, l, author_layer(ev, &p)?)?;
             st.live.insert(l.into(), v.into());
             st.parents.insert(l.into(), vec![old.into()]);
-            st.provenance.insert(l.into(), prov());
+            st.provenance.insert(l.into(), p);
+            st.last_seq.insert(l.into(), ev.seq);
         }
         EventKind::BlockMoved => {
             let l = one(&ev.lineage_ids, "lineage", ev)?;
             if !st.live.contains_key(l) {
                 bail!("event seq {}: move of unknown lineage {l}", ev.seq);
             }
+            st.last_seq.insert(l.into(), ev.seq);
         }
         EventKind::BlockSplit | EventKind::BlockMerged => {
             let from = meta_list(ev, "from_lineages");
@@ -114,12 +241,20 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             {
                 bail!("event seq {}: malformed {:?}", ev.seq, ev.kind);
             }
+            let p = prov();
+            // lowest layer among the sources and the author
+            let mut target = author_layer(ev, &p)?;
+            let mut kept: HashMap<String, (Layer, bool, u64)> = HashMap::new();
             for (l, old) in from.iter().zip(&ev.old_version_ids) {
                 if st.live.remove(l).as_deref() != Some(old.as_str()) {
                     bail!("event seq {}: source lineage {l} not live at {old}", ev.seq);
                 }
-                st.parents.remove(l);
-                st.provenance.remove(l);
+                let layer = st.layer_of(l, ev)?;
+                target = target.min(layer);
+                let created = st.created_seq.get(l).copied().unwrap_or(ev.seq);
+                kept.insert(l.clone(), (layer, st.inactive.contains(l), created));
+                st.pending.retain(|(q, _)| q != l);
+                st.forget(l);
             }
             for (l, v) in ev.lineage_ids.iter().zip(&ev.new_version_ids) {
                 if st.live.contains_key(l) {
@@ -127,8 +262,24 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                 }
                 st.live.insert(l.clone(), v.clone());
                 st.parents.insert(l.clone(), ev.old_version_ids.clone());
-                st.provenance.insert(l.clone(), prov());
+                st.provenance.insert(l.clone(), p.clone());
                 st.used.insert(l.clone());
+                st.last_seq.insert(l.clone(), ev.seq);
+                match kept.get(l) {
+                    // inherited lineage (dominant piece / merge target)
+                    Some(&(layer, inactive, created)) => {
+                        st.layer.insert(l.clone(), layer);
+                        if inactive {
+                            st.inactive.insert(l.clone());
+                        }
+                        st.created_seq.insert(l.clone(), created);
+                        lower(st, l, target)?;
+                    }
+                    None => {
+                        st.layer.insert(l.clone(), target);
+                        st.created_seq.insert(l.clone(), ev.seq);
+                    }
+                }
             }
         }
         EventKind::BlockDeleted => {
@@ -140,14 +291,80 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                     ev.seq
                 );
             }
-            st.parents.remove(l);
-            st.provenance.remove(l);
+            st.pending.retain(|(q, _)| q != l);
+            st.forget(l);
+        }
+        EventKind::LayerChanged => {
+            let l = one(&ev.lineage_ids, "lineage", ev)?;
+            let (from, to) = (meta_layer(ev, "from")?, meta_layer(ev, "to")?);
+            let cur = st.layer_of(l, ev)?;
+            let due = st.pending.iter().position(|(q, _)| q == l);
+            match due {
+                Some(i) if cur == from && st.pending[i].1 == to => {
+                    st.pending.remove(i);
+                }
+                _ => bail!(
+                    "event seq {}: LayerChanged {l} {}→{} does not match the replayed layer rule",
+                    ev.seq,
+                    from.as_str(),
+                    to.as_str()
+                ),
+            }
+            st.layer.insert(l.into(), to);
+            st.last_seq.insert(l.into(), ev.seq);
+        }
+        EventKind::Promoted | EventKind::Demoted => {
+            let l = one(&ev.lineage_ids, "lineage", ev)?;
+            let v = one(&ev.new_version_ids, "version", ev)?;
+            if ev.old_version_ids != ev.new_version_ids {
+                bail!("event seq {}: {:?} changes no version", ev.seq, ev.kind);
+            }
+            if st.live.get(l).map(String::as_str) != Some(v) {
+                bail!(
+                    "event seq {}: {:?} of {l} at a version that is not live",
+                    ev.seq,
+                    ev.kind
+                );
+            }
+            if !st.pending.is_empty() {
+                bail!(
+                    "event seq {}: {:?} inside an unfinished ingest",
+                    ev.seq,
+                    ev.kind
+                );
+            }
+            let m = transition_meta(ev)?;
+            let cur = st.layer_of(l, ev)?;
+            check_transition(ev.kind, &m, cur, st.inactive.contains(l))
+                .with_context(|| format!("event seq {}: {l}", ev.seq))?;
+            st.layer.insert(l.into(), m.to);
+            if m.prune {
+                st.inactive.insert(l.into());
+            }
+            st.last_seq.insert(l.into(), ev.seq);
+        }
+        EventKind::CheckpointCreated => {
+            bail!(
+                "event seq {}: CheckpointCreated is not a document event",
+                ev.seq
+            );
         }
         EventKind::SnapshotCommitted => {
             let sid = ev
                 .snapshot_id
                 .clone()
                 .context("SnapshotCommitted without snapshot_id")?;
+            if !st.pending.is_empty() {
+                bail!(
+                    "event seq {}: snapshot committed before LayerChanged of {}",
+                    ev.seq,
+                    st.pending
+                        .iter()
+                        .map(|(l, _)| l.as_str())
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                );
+            }
             if ev.lineage_ids.len() != ev.new_version_ids.len() {
                 bail!(
                     "event seq {}: snapshot lineage/version length mismatch",
@@ -189,6 +406,54 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
     Ok(())
 }
 
+/// The transitions a policy may allow (spec §7): `Promoted` proposal →
+/// canonical; `Demoted` to a lower layer; prune (a `Demoted` with
+/// `meta.prune`) keeps a proposal's or derived lineage's layer and marks it
+/// inactive. Inactive lineages take no further transition.
+fn check_transition(kind: EventKind, m: &TransitionMeta, cur: Layer, inactive: bool) -> Result<()> {
+    if m.from != cur {
+        bail!(
+            "requested from {} but the lineage is {}",
+            m.from.as_str(),
+            cur.as_str()
+        );
+    }
+    if inactive {
+        bail!("lineage is inactive (pruned)");
+    }
+    match (kind, m.prune) {
+        (EventKind::Promoted, false) => {
+            if (m.from, m.to) != (Layer::Proposal, Layer::Canonical) {
+                bail!(
+                    "promotion is proposal → canonical only, not {} → {}",
+                    m.from.as_str(),
+                    m.to.as_str()
+                );
+            }
+        }
+        (EventKind::Demoted, false) => {
+            if m.to >= m.from {
+                bail!(
+                    "demotion must lower the layer, not {} → {}",
+                    m.from.as_str(),
+                    m.to.as_str()
+                );
+            }
+        }
+        (EventKind::Demoted, true) => {
+            if m.to != m.from || m.from == Layer::Canonical {
+                bail!(
+                    "prune keeps a proposal or derived layer, not {} → {}",
+                    m.from.as_str(),
+                    m.to.as_str()
+                );
+            }
+        }
+        _ => bail!("{kind:?} cannot prune"),
+    }
+    Ok(())
+}
+
 fn committed_pairs(ev: &Event) -> Vec<(String, String)> {
     ev.lineage_ids
         .iter()
@@ -197,13 +462,92 @@ fn committed_pairs(ev: &Event) -> Vec<(String, String)> {
         .collect()
 }
 
-/// Applies a sequence of events grouped by document.
-pub fn replay_all(events: &[Event]) -> Result<BTreeMap<String, DocState>> {
-    let mut docs: BTreeMap<String, DocState> = BTreeMap::new();
-    for ev in events {
-        apply_event(docs.entry(ev.doc_path.clone()).or_default(), ev)?;
+/// A `CheckpointCreated` event replayed: the checkpoint it must match.
+#[derive(Debug, Clone)]
+pub struct ReplayedCheckpoint {
+    pub seq: u64,
+    pub checkpoint: Checkpoint,
+}
+
+/// Whole-log replay: document states plus every checkpoint, each verified
+/// against the document heads at its offset.
+#[derive(Debug, Clone, Default)]
+pub struct Replayed {
+    pub docs: BTreeMap<String, DocState>,
+    pub checkpoints: Vec<ReplayedCheckpoint>,
+    /// 1 + seq of the last non-checkpoint event (0 for none): the offset a
+    /// new checkpoint records as `event_seq`
+    pub content_offset: u64,
+}
+
+impl Replayed {
+    pub fn heads(&self) -> BTreeMap<String, String> {
+        self.docs
+            .iter()
+            .filter_map(|(d, s)| s.head.as_ref().map(|h| (d.clone(), h.snapshot_id.clone())))
+            .collect()
     }
-    Ok(docs)
+
+    pub fn apply(&mut self, ev: &Event) -> Result<()> {
+        if ev.kind != EventKind::CheckpointCreated {
+            if ev.doc_path.is_empty() {
+                bail!("event seq {}: {:?} without doc_path", ev.seq, ev.kind);
+            }
+            apply_event(self.docs.entry(ev.doc_path.clone()).or_default(), ev)?;
+            self.content_offset = ev.seq + 1;
+            return Ok(());
+        }
+        if !ev.doc_path.is_empty() || !ev.lineage_ids.is_empty() {
+            bail!("event seq {}: CheckpointCreated is vault-wide", ev.seq);
+        }
+        if let Some((d, _)) = self.docs.iter().find(|(_, s)| !s.pending.is_empty()) {
+            bail!(
+                "event seq {}: checkpoint inside an unfinished ingest of {d}",
+                ev.seq
+            );
+        }
+        let cid = meta_str(ev, "checkpoint_id")
+            .with_context(|| format!("event seq {}: no meta.checkpoint_id", ev.seq))?;
+        let event_seq = ev
+            .meta
+            .get("event_seq")
+            .and_then(|v| v.as_u64())
+            .with_context(|| format!("event seq {}: no meta.event_seq", ev.seq))?;
+        if event_seq != self.content_offset {
+            bail!(
+                "event seq {}: checkpoint event_seq {event_seq} != log offset {}",
+                ev.seq,
+                self.content_offset
+            );
+        }
+        let docs = self.heads();
+        let computed = checkpoint_id(&docs, event_seq);
+        if computed != cid {
+            bail!(
+                "event seq {}: checkpoint_id {cid} != computed {computed}",
+                ev.seq
+            );
+        }
+        self.checkpoints.push(ReplayedCheckpoint {
+            seq: ev.seq,
+            checkpoint: Checkpoint {
+                checkpoint_id: cid,
+                name: meta_str(ev, "name"),
+                event_seq,
+                docs,
+            },
+        });
+        Ok(())
+    }
+}
+
+/// Applies a sequence of events grouped by document.
+pub fn replay_all(events: &[Event]) -> Result<Replayed> {
+    let mut r = Replayed::default();
+    for ev in events {
+        r.apply(ev)?;
+    }
+    Ok(r)
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -239,7 +583,10 @@ pub struct Vault {
     root: PathBuf,
     meta_dir: PathBuf,
     next_seq: u64,
-    docs: BTreeMap<String, DocState>,
+    /// replayed log: document states, checkpoints, content offset
+    state: Replayed,
+    /// number of lines in `traces.jsonl` (the next `at_seq`)
+    next_trace: u64,
     /// THETA / THETA_SPLIT override; `None` → the compiled defaults of the
     /// matcher version passed to `ingest`.
     pub params: Option<MatchParams>,
@@ -265,8 +612,9 @@ impl Vault {
         fs::create_dir_all(meta_dir.join("objects"))?;
         fs::create_dir_all(meta_dir.join("snapshots"))?;
         let events = read_events(&meta_dir.join("events.jsonl"))?;
-        let docs = replay_all(&events)?;
-        let lock = match events.first() {
+        let state = replay_all(&events)?;
+        // the first block event fixes the matcher (governance events carry none)
+        let lock = match events.iter().find(|e| is_block_event(e.kind)) {
             None => None,
             Some(ev) => {
                 let v = meta_str(ev, "matcher_version")
@@ -274,14 +622,31 @@ impl Vault {
                 Some(MatcherVersion::parse(&v)?)
             }
         };
-        Ok(Vault {
+        // every logged checkpoint has its write-once file, byte for byte
+        for c in &state.checkpoints {
+            let p = checkpoint_path(&meta_dir, &c.checkpoint.checkpoint_id);
+            let want = checkpoint_bytes(&c.checkpoint)?;
+            let got = fs::read(&p).with_context(|| {
+                format!(
+                    "checkpoint {} (event seq {}) has no file",
+                    c.checkpoint.checkpoint_id, c.seq
+                )
+            })?;
+            if got != want {
+                bail!("{} does not match its CheckpointCreated event", p.display());
+            }
+        }
+        let mut v = Vault {
             root,
             meta_dir,
             next_seq: events.len() as u64,
-            docs,
+            state,
+            next_trace: 0,
             params,
             lock,
-        })
+        };
+        v.next_trace = v.traces(0)?.len() as u64;
+        Ok(v)
     }
 
     /// Matcher version this vault is locked to (`None` while the log is empty).
@@ -307,7 +672,8 @@ impl Vault {
     }
 
     pub fn doc_paths(&self) -> Vec<String> {
-        self.docs
+        self.state
+            .docs
             .iter()
             .filter(|(_, s)| s.head.is_some())
             .map(|(d, _)| d.clone())
@@ -315,12 +681,12 @@ impl Vault {
     }
 
     pub fn doc_state(&self, doc_path: &str) -> Option<&DocState> {
-        self.docs.get(doc_path)
+        self.state.docs.get(doc_path)
     }
 
     /// Head snapshot of a document (in-memory state built from the log).
     pub fn snapshot(&self, doc_path: &str) -> Result<Option<Snapshot>> {
-        Ok(self.docs.get(doc_path).and_then(|s| s.head.clone()))
+        Ok(self.state.docs.get(doc_path).and_then(|s| s.head.clone()))
     }
 
     pub fn object(&self, version_id: &str) -> Result<BlockObject> {
@@ -348,7 +714,12 @@ impl Vault {
 
     /// Full block occurrences of a snapshot, in document order.
     pub fn snapshot_blocks(&self, snap: &Snapshot) -> Result<Vec<Block>> {
-        let st = self.docs.get(&snap.doc_path);
+        self.blocks_of(self.state.docs.get(&snap.doc_path), snap)
+    }
+
+    /// Block occurrences of `snap` with the occurrence data (provenance,
+    /// parents, layer) of the document state `st`.
+    pub(crate) fn blocks_of(&self, st: Option<&DocState>, snap: &Snapshot) -> Result<Vec<Block>> {
         let objs = snap
             .blocks
             .iter()
@@ -378,7 +749,9 @@ impl Vault {
                     parents: st
                         .and_then(|s| s.parents.get(l).cloned())
                         .unwrap_or_default(),
-                    layer: Layer::default_for(provenance.author_kind),
+                    layer: st
+                        .and_then(|s| s.layer.get(l).copied())
+                        .unwrap_or_else(|| Layer::default_for(provenance.author_kind)),
                     provenance,
                 }
             })
@@ -427,9 +800,16 @@ impl Vault {
         let mut staged: BTreeMap<String, DocState> = BTreeMap::new();
         for (i, ev) in events.iter_mut().enumerate() {
             ev.seq = self.next_seq + i as u64;
-            let st = staged
-                .entry(ev.doc_path.clone())
-                .or_insert_with(|| self.docs.get(&ev.doc_path).cloned().unwrap_or_default());
+            if ev.kind == EventKind::CheckpointCreated || ev.doc_path.is_empty() {
+                bail!("commit takes document events only ({:?})", ev.kind);
+            }
+            let st = staged.entry(ev.doc_path.clone()).or_insert_with(|| {
+                self.state
+                    .docs
+                    .get(&ev.doc_path)
+                    .cloned()
+                    .unwrap_or_default()
+            });
             apply_event(st, ev)?;
         }
         for o in objects {
@@ -452,7 +832,10 @@ impl Vault {
         }
         append_events(&self.events_path(), &events)?;
         self.next_seq += events.len() as u64;
-        self.docs.extend(staged);
+        self.state.docs.extend(staged);
+        if !events.is_empty() {
+            self.state.content_offset = self.next_seq;
+        }
         Ok(events)
     }
 
@@ -467,6 +850,33 @@ impl Vault {
         prov: Provenance,
         matcher: MatcherVersion,
     ) -> Result<IngestResult> {
+        self.ingest_declared(doc_path, text, prov, matcher, None)
+    }
+
+    /// `ingest` with a declared layer for synthetic content (spec §7:
+    /// "`synthetic` → as declared"; recorded as `meta.layer` of its block
+    /// events). Declaring a layer for any other author is an error.
+    /// Layers (spec §7): new lineages get the author's layer (lowered to the
+    /// lowest parent layer for split/merge pieces); when an edit implies a
+    /// lower layer for an inherited lineage a `LayerChanged` event follows the
+    /// block events. Ingest never raises a layer.
+    pub fn ingest_declared(
+        &mut self,
+        doc_path: &str,
+        text: &str,
+        prov: Provenance,
+        matcher: MatcherVersion,
+        declared: Option<Layer>,
+    ) -> Result<IngestResult> {
+        if declared.is_some() && prov.author_kind != AuthorKind::Synthetic {
+            bail!(
+                "a layer can be declared for synthetic content only, not {:?}",
+                prov.author_kind
+            );
+        }
+        if doc_path.is_empty() {
+            bail!("empty doc_path");
+        }
         if let Some(lock) = self.lock {
             if lock != matcher {
                 bail!(
@@ -477,7 +887,7 @@ impl Vault {
             }
         }
         let (drafts, frontmatter) = parse_document(text, doc_path)?;
-        let st = self.docs.get(doc_path);
+        let st = self.state.docs.get(doc_path);
         let head = st.and_then(|s| s.head.clone());
         let prev: Vec<PrevBlock> = match &head {
             Some(h) => self
@@ -518,6 +928,43 @@ impl Vault {
         let parent = head.as_ref().map(|h| h.snapshot_id.clone());
         let sid = snapshot_id(r.blocks.iter().map(|b| b.version_id.as_str()));
         let mut events = r.events;
+        if let Some(layer) = declared {
+            for ev in events.iter_mut().filter(|e| {
+                matches!(
+                    e.kind,
+                    EventKind::BlockCreated
+                        | EventKind::BlockUpdated
+                        | EventKind::BlockSplit
+                        | EventKind::BlockMerged
+                )
+            }) {
+                ev.meta["layer"] = serde_json::json!(layer.as_str());
+            }
+        }
+        // layer transitions the edit implies, recorded before the snapshot
+        let mut probe = self.state.docs.get(doc_path).cloned().unwrap_or_default();
+        for ev in &events {
+            apply_event(&mut probe, ev)?;
+        }
+        for (l, to) in &probe.pending {
+            let from = probe.layer[l];
+            let v = probe.live[l].clone();
+            events.push(Event {
+                seq: 0,
+                doc_path: doc_path.to_string(),
+                kind: EventKind::LayerChanged,
+                lineage_ids: vec![l.clone()],
+                old_version_ids: vec![v.clone()],
+                new_version_ids: vec![v],
+                snapshot_id: None,
+                meta: serde_json::json!({
+                    "from": from.as_str(),
+                    "to": to.as_str(),
+                    "cause": "ingest",
+                    "author_kind": prov.author_kind,
+                }),
+            });
+        }
         events.push(Event {
             seq: 0,
             doc_path: doc_path.to_string(),
@@ -584,4 +1031,525 @@ impl Vault {
         }
         Ok(out)
     }
+}
+
+fn is_block_event(k: EventKind) -> bool {
+    matches!(
+        k,
+        EventKind::BlockCreated
+            | EventKind::BlockUpdated
+            | EventKind::BlockMoved
+            | EventKind::BlockSplit
+            | EventKind::BlockMerged
+            | EventKind::BlockDeleted
+            | EventKind::SnapshotCommitted
+    )
+}
+
+pub fn checkpoint_path(meta_dir: &Path, cid: &str) -> PathBuf {
+    meta_dir.join("checkpoints").join(format!("{cid}.json"))
+}
+
+/// The write-once bytes of a checkpoint file (compact JSON, `docs` sorted).
+pub fn checkpoint_bytes(c: &Checkpoint) -> Result<Vec<u8>> {
+    Ok(serde_json::to_vec(c)?)
+}
+
+/// A block a consumer read (`Vault::read_blocks`).
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ReadBlock {
+    pub doc_path: String,
+    pub block: Block,
+    /// pruned by policy (spec §7)
+    pub inactive: bool,
+}
+
+/// Governance (spec §7, §8): layers, transitions through a policy hook,
+/// checkpoints, consumption traces.
+impl Vault {
+    /// `(doc_path, live version)` of a lineage at the head.
+    fn locate(&self, lineage: &str) -> Result<(String, String)> {
+        self.state
+            .docs
+            .iter()
+            .find_map(|(d, s)| s.live.get(lineage).map(|v| (d.clone(), v.clone())))
+            .with_context(|| format!("lineage {lineage} is not live in this vault"))
+    }
+
+    /// Current layer of a live lineage (spec §7).
+    pub fn layer_of(&self, lineage: &str) -> Result<Layer> {
+        let (doc, _) = self.locate(lineage)?;
+        Ok(self.state.docs[&doc].layer[lineage])
+    }
+
+    /// Whether a live lineage was pruned (marked inactive).
+    pub fn is_inactive(&self, lineage: &str) -> Result<bool> {
+        let (doc, _) = self.locate(lineage)?;
+        Ok(self.state.docs[&doc].inactive.contains(lineage))
+    }
+
+    /// A request for `lineage` from its current layer.
+    pub fn request(
+        &self,
+        kind: crate::governance::TransitionKind,
+        lineage: &str,
+        to: Layer,
+        actor: Actor,
+        reason: &str,
+    ) -> Result<crate::governance::PromotionRequest> {
+        Ok(crate::governance::PromotionRequest {
+            kind,
+            lineage: lineage.to_string(),
+            from: self.layer_of(lineage)?,
+            to,
+            actor,
+            reason: reason.to_string(),
+        })
+    }
+
+    /// `Promoted` (proposal → canonical) if `policy` allows `req`.
+    pub fn promote(
+        &mut self,
+        req: &crate::governance::PromotionRequest,
+        policy: &dyn crate::governance::PromotionPolicy,
+    ) -> Result<Event> {
+        if req.kind != crate::governance::TransitionKind::Promote {
+            bail!("promote takes a promote request, not {:?}", req.kind);
+        }
+        self.transition(EventKind::Promoted, req, policy)
+    }
+
+    /// `Demoted` to a lower layer if `policy` allows `req`.
+    pub fn demote(
+        &mut self,
+        req: &crate::governance::PromotionRequest,
+        policy: &dyn crate::governance::PromotionPolicy,
+    ) -> Result<Event> {
+        if req.kind != crate::governance::TransitionKind::Demote {
+            bail!("demote takes a demote request, not {:?}", req.kind);
+        }
+        self.transition(EventKind::Demoted, req, policy)
+    }
+
+    /// Marks a proposal (or derived) lineage inactive if `policy` allows it: a
+    /// `Demoted` event with `meta.prune`, layer unchanged. Nothing is deleted
+    /// (spec §7, C2-04).
+    pub fn prune_inactive(
+        &mut self,
+        lineage: &str,
+        actor: Actor,
+        reason: &str,
+        policy: &dyn crate::governance::PromotionPolicy,
+    ) -> Result<Event> {
+        let cur = self.layer_of(lineage)?;
+        let req = self.request(
+            crate::governance::TransitionKind::Prune,
+            lineage,
+            cur,
+            actor,
+            reason,
+        )?;
+        self.transition(EventKind::Demoted, &req, policy)
+    }
+
+    fn transition(
+        &mut self,
+        kind: EventKind,
+        req: &crate::governance::PromotionRequest,
+        policy: &dyn crate::governance::PromotionPolicy,
+    ) -> Result<Event> {
+        use crate::governance::{Decision, TransitionKind};
+        if req.reason.trim().is_empty() {
+            bail!("a layer transition requires a reason");
+        }
+        if req.actor.id.trim().is_empty() {
+            bail!("a layer transition requires an actor");
+        }
+        if policy.name().trim().is_empty() || policy.version().trim().is_empty() {
+            bail!("policy without name or version");
+        }
+        let (doc, v) = self.locate(&req.lineage)?;
+        let prune = req.kind == TransitionKind::Prune;
+        let mut meta = serde_json::json!({
+            "actor": req.actor,
+            "reason": req.reason,
+            "policy": policy.name(),
+            "policy_version": policy.version(),
+            "from": req.from.as_str(),
+            "to": req.to.as_str(),
+        });
+        if prune {
+            meta["prune"] = serde_json::json!(true);
+        }
+        let ev = Event {
+            seq: 0,
+            doc_path: doc.clone(),
+            kind,
+            lineage_ids: vec![req.lineage.clone()],
+            old_version_ids: vec![v.clone()],
+            new_version_ids: vec![v],
+            snapshot_id: None,
+            meta,
+        };
+        // shape and state first (spec §7 rules), then the hook decides
+        {
+            let st = &self.state.docs[&doc];
+            let m = transition_meta(&ev)?;
+            check_transition(
+                kind,
+                &m,
+                st.layer[&req.lineage],
+                st.inactive.contains(&req.lineage),
+            )
+            .with_context(|| format!("{:?} of {}", req.kind, req.lineage))?;
+        }
+        match policy.decide(req) {
+            Decision::Allow => {}
+            Decision::Deny(why) => bail!(
+                "{:?} of {} denied by policy {} v{}: {why}",
+                req.kind,
+                req.lineage,
+                policy.name(),
+                policy.version()
+            ),
+        }
+        let mut out = self.commit(&[], vec![ev])?;
+        Ok(out.remove(0))
+    }
+
+    /// Every checkpoint, in log order.
+    pub fn checkpoints(&self) -> Vec<Checkpoint> {
+        self.state
+            .checkpoints
+            .iter()
+            .map(|c| c.checkpoint.clone())
+            .collect()
+    }
+
+    /// A checkpoint by its full id or its name.
+    pub fn find_checkpoint(&self, id_or_name: &str) -> Result<Checkpoint> {
+        self.state
+            .checkpoints
+            .iter()
+            .map(|c| &c.checkpoint)
+            .find(|c| c.checkpoint_id == id_or_name || c.name.as_deref() == Some(id_or_name))
+            .cloned()
+            .with_context(|| format!("no checkpoint {id_or_name:?}"))
+    }
+
+    /// Creates (or returns) the checkpoint of the current vault state
+    /// (spec §8). `event_seq` is the log offset after the last
+    /// non-checkpoint event, so calling this twice on the same state yields
+    /// the same `checkpoint_id` and writes nothing the second time. The
+    /// file `.mdkernel/checkpoints/<cid>.json` is write-once.
+    pub fn checkpoint(&mut self, name: Option<&str>) -> Result<Checkpoint> {
+        if let Some(n) = name {
+            if n.trim().is_empty() || n != n.trim() {
+                bail!("checkpoint name {n:?}: empty or padded with whitespace");
+            }
+        }
+        let event_seq = self.state.content_offset;
+        let docs = self.state.heads();
+        let cid = checkpoint_id(&docs, event_seq);
+        if let Some(c) = self
+            .checkpoints()
+            .into_iter()
+            .find(|c| c.checkpoint_id == cid)
+        {
+            if c.name.as_deref() != name {
+                bail!(
+                    "checkpoint {cid} of this state already exists with name {:?}",
+                    c.name
+                );
+            }
+            return Ok(c);
+        }
+        if let Some(n) = name {
+            if let Some(c) = self
+                .checkpoints()
+                .iter()
+                .find(|c| c.name.as_deref() == Some(n))
+            {
+                bail!("checkpoint name {n:?} is taken by {}", c.checkpoint_id);
+            }
+        }
+        let cp = Checkpoint {
+            checkpoint_id: cid.clone(),
+            name: name.map(str::to_string),
+            event_seq,
+            docs,
+        };
+        store::write_immutable(
+            &checkpoint_path(&self.meta_dir, &cid),
+            &checkpoint_bytes(&cp)?,
+        )?;
+        let ev = Event {
+            seq: self.next_seq,
+            doc_path: String::new(),
+            kind: EventKind::CheckpointCreated,
+            lineage_ids: Vec::new(),
+            old_version_ids: Vec::new(),
+            new_version_ids: Vec::new(),
+            snapshot_id: None,
+            meta: serde_json::json!({
+                "checkpoint_id": cid,
+                "name": name,
+                "event_seq": event_seq,
+            }),
+        };
+        let mut probe = self.state.clone();
+        probe.apply(&ev)?;
+        append_events(&self.events_path(), std::slice::from_ref(&ev))?;
+        self.next_seq += 1;
+        self.state = probe;
+        Ok(cp)
+    }
+
+    /// The vault as of a checkpoint: the log replayed up to its offset.
+    pub fn state_at(&self, checkpoint: &str) -> Result<(Checkpoint, Replayed)> {
+        let cp = self.find_checkpoint(checkpoint)?;
+        let events = read_events(&self.events_path())?;
+        let upto = usize::try_from(cp.event_seq)?;
+        if upto > events.len() {
+            bail!("checkpoint {} lies beyond the log", cp.checkpoint_id);
+        }
+        let st = replay_all(&events[..upto])?;
+        if st.heads() != cp.docs {
+            bail!(
+                "checkpoint {} does not match the replayed log",
+                cp.checkpoint_id
+            );
+        }
+        Ok((cp, st))
+    }
+
+    /// Snapshot of `doc_path` as of a checkpoint (`None`: not yet ingested).
+    pub fn snapshot_at(&self, doc_path: &str, checkpoint: &str) -> Result<Option<Snapshot>> {
+        let (_, st) = self.state_at(checkpoint)?;
+        Ok(st.docs.get(doc_path).and_then(|s| s.head.clone()))
+    }
+
+    /// Blocks of `doc_path` as of a checkpoint, with their layers then.
+    pub fn blocks_at(&self, doc_path: &str, checkpoint: &str) -> Result<Vec<Block>> {
+        let (_, st) = self.state_at(checkpoint)?;
+        let ds = st
+            .docs
+            .get(doc_path)
+            .with_context(|| format!("{doc_path} has no snapshot at checkpoint {checkpoint}"))?;
+        let snap = ds.head.clone().context("no head")?;
+        self.blocks_of(Some(ds), &snap)
+    }
+
+    /// The block of `lineage` as of a checkpoint (layer as of then).
+    pub fn block_at(&self, lineage: &str, checkpoint: &str) -> Result<Block> {
+        let (_, st) = self.state_at(checkpoint)?;
+        self.find_block(&st, lineage).map(|(_, b, _)| b)
+    }
+
+    fn find_block(&self, st: &Replayed, lineage: &str) -> Result<(String, Block, bool)> {
+        for (d, ds) in &st.docs {
+            if ds.live.contains_key(lineage) {
+                let snap = ds.head.clone().context("live lineage without head")?;
+                let b = self
+                    .blocks_of(Some(ds), &snap)?
+                    .into_iter()
+                    .find(|b| b.lineage_id == lineage)
+                    .context("live lineage missing from its head snapshot")?;
+                return Ok((d.clone(), b, ds.inactive.contains(lineage)));
+            }
+        }
+        bail!("lineage {lineage} is not live at this checkpoint")
+    }
+
+    pub fn traces_path(&self) -> PathBuf {
+        self.meta_dir.join("traces.jsonl")
+    }
+
+    /// Appends a consumption trace (spec §8) for a checkpoint of this vault.
+    pub fn record_trace(
+        &mut self,
+        checkpoint_id: &str,
+        consumer: &str,
+        query_hash: &str,
+        returned: Vec<crate::governance::TraceEntry>,
+    ) -> Result<crate::governance::Trace> {
+        if consumer.trim().is_empty() || query_hash.trim().is_empty() {
+            bail!("a trace requires a consumer and a query hash");
+        }
+        let cp = self.find_checkpoint(checkpoint_id)?;
+        if cp.checkpoint_id != checkpoint_id {
+            bail!("record_trace takes a checkpoint id, not the name {checkpoint_id:?}");
+        }
+        let at_seq = self.next_trace;
+        let t = crate::governance::Trace {
+            trace_id: crate::governance::trace_id(checkpoint_id, consumer, query_hash, at_seq),
+            checkpoint_id: checkpoint_id.to_string(),
+            consumer: consumer.to_string(),
+            query_hash: query_hash.to_string(),
+            returned,
+            at_seq,
+        };
+        let mut line = serde_json::to_vec(&t)?;
+        line.push(b'\n');
+        let mut f = fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(self.traces_path())?;
+        std::io::Write::write_all(&mut f, &line)?;
+        f.sync_data()?;
+        self.next_trace += 1;
+        Ok(t)
+    }
+
+    /// Reads blocks by lineage as of a checkpoint and records one trace
+    /// (spec §8, C2-07). `derived` content is never returned (spec §7):
+    /// asking for it is an error; proposals are returned labelled.
+    pub fn read_blocks(
+        &mut self,
+        refs: &[String],
+        consumer: &str,
+        checkpoint: &str,
+    ) -> Result<(Vec<ReadBlock>, crate::governance::Trace)> {
+        if refs.is_empty() {
+            bail!("read_blocks: no lineage requested");
+        }
+        let (cp, st) = self.state_at(checkpoint)?;
+        let mut out = Vec::new();
+        for l in refs {
+            let (doc, block, inactive) = self.find_block(&st, l)?;
+            if block.layer == Layer::Derived {
+                bail!("lineage {l} is derived: never returned as content (spec §7)");
+            }
+            out.push(ReadBlock {
+                doc_path: doc,
+                block,
+                inactive,
+            });
+        }
+        let query_hash = hash32(&format!("read_blocks\n{}", refs.join("\n")));
+        let returned = out
+            .iter()
+            .map(|r| crate::governance::TraceEntry {
+                doc_path: r.doc_path.clone(),
+                lineage_id: r.block.lineage_id.clone(),
+                version_id: r.block.version_id.clone(),
+            })
+            .collect();
+        let t = self.record_trace(&cp.checkpoint_id, consumer, &query_hash, returned)?;
+        Ok((out, t))
+    }
+
+    /// Traces with `at_seq >= since`; every line is verified (contiguous
+    /// `at_seq`, `trace_id` formula, known checkpoint).
+    pub fn traces(&self, since: u64) -> Result<Vec<crate::governance::Trace>> {
+        let p = self.traces_path();
+        if !p.exists() {
+            return Ok(Vec::new());
+        }
+        let text = fs::read_to_string(&p).with_context(|| format!("read {}", p.display()))?;
+        let mut out = Vec::new();
+        for (i, line) in text.lines().enumerate() {
+            let t: crate::governance::Trace = serde_json::from_str(line)
+                .with_context(|| format!("traces.jsonl line {}", i + 1))?;
+            if t.at_seq != i as u64 {
+                bail!("traces.jsonl line {}: at_seq {} != {i}", i + 1, t.at_seq);
+            }
+            let want =
+                crate::governance::trace_id(&t.checkpoint_id, &t.consumer, &t.query_hash, t.at_seq);
+            if t.trace_id != want {
+                bail!(
+                    "traces.jsonl line {}: trace_id {} != {want}",
+                    i + 1,
+                    t.trace_id
+                );
+            }
+            if !self
+                .state
+                .checkpoints
+                .iter()
+                .any(|c| c.checkpoint.checkpoint_id == t.checkpoint_id)
+            {
+                bail!(
+                    "traces.jsonl line {}: unknown checkpoint {}",
+                    i + 1,
+                    t.checkpoint_id
+                );
+            }
+            if t.at_seq >= since {
+                out.push(t);
+            }
+        }
+        Ok(out)
+    }
+
+    /// Every event that names `lineage` (in `lineage_ids` or as a split/merge
+    /// source), in log order.
+    pub fn history(&self, lineage: &str) -> Result<Vec<Event>> {
+        let out: Vec<Event> = read_events(&self.events_path())?
+            .into_iter()
+            .filter(|e| {
+                e.kind != EventKind::SnapshotCommitted
+                    && (e.lineage_ids.iter().any(|l| l == lineage)
+                        || meta_list(e, "from_lineages").iter().any(|l| l == lineage))
+            })
+            .collect();
+        if out.is_empty() {
+            bail!("no event names lineage {lineage}");
+        }
+        Ok(out)
+    }
+
+    /// Per block of `doc_path` (document order, at the head or as of a
+    /// checkpoint): lineage, version, layer, author, source, the seq that
+    /// created the lineage and the last seq that named it.
+    pub fn blame(&self, doc_path: &str, checkpoint: Option<&str>) -> Result<Vec<BlameLine>> {
+        let at;
+        let st = match checkpoint {
+            Some(c) => {
+                at = self.state_at(c)?.1;
+                &at
+            }
+            None => &self.state,
+        };
+        let ds = st
+            .docs
+            .get(doc_path)
+            .with_context(|| format!("no snapshot for {doc_path}"))?;
+        let snap = ds
+            .head
+            .clone()
+            .with_context(|| format!("no snapshot for {doc_path}"))?;
+        self.blocks_of(Some(ds), &snap)?
+            .into_iter()
+            .map(|b| {
+                let l = &b.lineage_id;
+                Ok(BlameLine {
+                    lineage_id: l.clone(),
+                    version_id: b.version_id.clone(),
+                    layer: b.layer,
+                    inactive: ds.inactive.contains(l),
+                    author_kind: b.provenance.author_kind,
+                    source: b.provenance.source.clone(),
+                    seq_created: *ds
+                        .created_seq
+                        .get(l)
+                        .context("lineage without creation seq")?,
+                    seq_last: *ds.last_seq.get(l).context("lineage without last seq")?,
+                })
+            })
+            .collect()
+    }
+}
+
+/// One `blame` row (TASKS B6).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct BlameLine {
+    pub lineage_id: String,
+    pub version_id: String,
+    pub layer: Layer,
+    pub inactive: bool,
+    pub author_kind: AuthorKind,
+    pub source: String,
+    pub seq_created: u64,
+    pub seq_last: u64,
 }

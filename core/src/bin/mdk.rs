@@ -40,6 +40,15 @@ enum Cmd {
         #[arg(long, default_value = "structural")]
         strategy: String,
     },
+    /// Per block of a document: lineage, version, layer, author, source,
+    /// creating and last seq (at the head, or as of a checkpoint)
+    Blame {
+        vault: PathBuf,
+        doc: String,
+        /// checkpoint id or name
+        #[arg(long)]
+        at: Option<String>,
+    },
     /// Resolve a content-referenced truth to a lineage id
     Resolve {
         vault: PathBuf,
@@ -91,6 +100,11 @@ fn run(cmd: Cmd, m: MatcherVersion) -> Result<Value> {
                 .snapshot(&doc)?
                 .with_context(|| format!("no snapshot for {doc}"))?;
             serde_json::to_value(chunk(&snap, &v, Strategy::parse(&strategy)?)?)?
+        }
+        Cmd::Blame { vault, doc, at } => {
+            let v = Vault::open(&vault)?;
+            let blocks = v.blame(&doc, at.as_deref())?;
+            json!({"doc_path": doc, "at": at, "blocks": blocks})
         }
         Cmd::Resolve {
             vault,

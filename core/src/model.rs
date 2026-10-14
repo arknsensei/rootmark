@@ -62,15 +62,15 @@ impl Default for Provenance {
     }
 }
 
-/// Governance status of a version (spec §7, Draft). Round P1-A: only the
-/// default by `author_kind` is assigned; there are no transitions and the
-/// layer is not written to the event log (layer events arrive in P1-B).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+/// Governance status of a version (spec §7). Ordered by trust:
+/// `Derived < Proposal < Canonical`. Ingest never raises a lineage's layer
+/// (only a `Promoted` event does); see `Vault` for the transition rules.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Layer {
-    Canonical,
-    Proposal,
     Derived,
+    Proposal,
+    Canonical,
 }
 
 impl Layer {
@@ -84,6 +84,15 @@ impl Layer {
             AuthorKind::Human | AuthorKind::Synthetic => Layer::Canonical,
             AuthorKind::Agent | AuthorKind::Transcript => Layer::Proposal,
         }
+    }
+
+    pub fn parse(s: &str) -> anyhow::Result<Layer> {
+        Ok(match s {
+            "canonical" => Layer::Canonical,
+            "proposal" => Layer::Proposal,
+            "derived" => Layer::Derived,
+            _ => anyhow::bail!("unknown layer {s:?} (canonical|proposal|derived)"),
+        })
     }
 
     pub fn as_str(self) -> &'static str {
@@ -122,8 +131,8 @@ pub struct Block {
     pub heading_level: Option<u8>,
     pub parents: Vec<String>,
     pub provenance: Provenance,
-    /// Derived from `provenance.author_kind` (`Layer::default_for`); P1-A has
-    /// no layer transitions.
+    /// Layer of the lineage at this snapshot (replayed from the event log;
+    /// `Layer::default_for(author_kind)` for lineages without layer history).
     pub layer: Layer,
 }
 
