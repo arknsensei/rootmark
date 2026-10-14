@@ -409,3 +409,38 @@ fn only_layer_event_removed_reads_as_v3_final_and_is_marked_derived() {
     );
     done(root);
 }
+
+#[test]
+fn first_of_two_layer_changed_removed_reads_as_derived_prefix() {
+    // limit of K-B1.1 (ASSUMPTIONS B11-2, B1.1 review): with the first of two
+    // drops removed the log equals a v3-final log continued by the current
+    // core; it opens, the layer is the same, the first drop reads as derived
+    let root = human_doc_edited_by_agent("b12-first", false);
+    let mut v = Vault::open(&root).unwrap();
+    let agent = Provenance {
+        author_kind: A,
+        source: "claude-code".into(),
+    };
+    v.ingest(
+        "d.md",
+        "# D\n\nHuman text one, edited.\n\nHuman text two, edited.\n",
+        agent,
+        MatcherVersion::V3,
+    )
+    .unwrap();
+    drop(v);
+    let evs = read_log(&root);
+    let first = (0..evs.len())
+        .find(|&i| evs[i].kind == mdkcore::EventKind::LayerChanged)
+        .unwrap();
+    drop_event(&root, first);
+    let v = Vault::open(&root).unwrap();
+    let b = v.blame("d.md", None).unwrap();
+    assert_eq!(
+        b.iter()
+            .map(|b| (b.layer, b.layer_source))
+            .collect::<Vec<_>>(),
+        vec![(C, E), (P, D), (P, E)]
+    );
+    done(root);
+}
