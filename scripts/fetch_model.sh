@@ -5,11 +5,11 @@
 #   scripts/fetch_model.sh [<repo-root>]
 #
 # Every file is downloaded from the manifest's `source` repository at its
-# pinned `revision`; a file already present is kept only if its blake3 and
-# sha256 match the manifest. The download is checked against the manifest's
-# sha256 (HuggingFace LFS/git oid is not used) and blake3 before it is moved
-# into place; any mismatch is an error and nothing is overwritten. The blake3
-# check itself is `mdk-index models verify` (Rust), run by `make models`.
+# pinned `revision`; a file already present is kept only if its sha256
+# matches the manifest. A download is checked against the manifest's size and
+# sha256 before it is moved into place; any mismatch is an error and nothing
+# is overwritten. The blake3 check is `mdk-index models verify` (Rust), the
+# next step of `make models`.
 set -euo pipefail
 
 root="$(cd "${1:-$(dirname "${BASH_SOURCE[0]}")/..}" && pwd)"
