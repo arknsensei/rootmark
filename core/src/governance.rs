@@ -4,6 +4,27 @@
 //! The kernel never decides a transition: `Vault::promote`, `Vault::demote`
 //! and `Vault::prune_inactive` take a `&dyn PromotionPolicy` (there is no
 //! overload without one) and write an event only when it returns `Allow`.
+//! A promotion without a hook does not compile (C2-03):
+//!
+//! ```compile_fail
+//! # use mdkcore::{Actor, ActorKind, Layer, TransitionKind, Vault};
+//! # fn f(v: &mut Vault, l: &str) -> anyhow::Result<()> {
+//! let actor = Actor::new(ActorKind::Human, "alice")?;
+//! let req = v.request(TransitionKind::Promote, l, Layer::Canonical, actor, "ok")?;
+//! v.promote(&req)?; // error: a PromotionPolicy argument is required
+//! # Ok(()) }
+//! ```
+//!
+//! The same call with a hook compiles:
+//!
+//! ```
+//! # use mdkcore::{Actor, ActorKind, HumanOnly, Layer, TransitionKind, Vault};
+//! # fn f(v: &mut Vault, l: &str) -> anyhow::Result<()> {
+//! let actor = Actor::new(ActorKind::Human, "alice")?;
+//! let req = v.request(TransitionKind::Promote, l, Layer::Canonical, actor, "ok")?;
+//! v.promote(&req, &HumanOnly)?;
+//! # Ok(()) }
+//! ```
 
 use crate::model::{hash32, Layer};
 use anyhow::{bail, Result};

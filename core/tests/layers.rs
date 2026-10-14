@@ -223,3 +223,33 @@ fn b5_v3_final_logs_open_unchanged() {
         fs::remove_dir_all(&fresh_root).unwrap();
     }
 }
+
+/// Split (B1 review note 4): an agent splits a canonical paragraph — the
+/// dominant piece keeps its lineage and is lowered by `LayerChanged`, the new
+/// piece starts as a proposal; a human split of a proposal stays proposal.
+#[test]
+fn split_pieces_take_the_lowest_layer() {
+    let root = tmp("split");
+    let mut v = Vault::open(&root).unwrap();
+    let one = "# S\n\nThe grinder needs new burrs every year because steel wears down. The water filter should be replaced each month to protect the boiler.\n";
+    v.ingest("s.md", one, prov(AuthorKind::Human), M).unwrap();
+    let two = "# S\n\nThe grinder needs new burrs every year because steel wears down.\n\nThe water filter should be replaced each month to protect the boiler.\n";
+    let r = v.ingest("s.md", two, prov(AuthorKind::Agent), M).unwrap();
+    let kinds: Vec<EventKind> = r.events.iter().map(|e| e.kind).collect();
+    assert_eq!(
+        kinds,
+        vec![
+            EventKind::BlockSplit,
+            EventKind::LayerChanged,
+            EventKind::SnapshotCommitted
+        ]
+    );
+    assert_eq!(
+        layers(&v, "s.md"),
+        vec![Layer::Canonical, Layer::Proposal, Layer::Proposal]
+    );
+    let before = layer_map(&v);
+    drop(v);
+    assert_eq!(layer_map(&Vault::open(&root).unwrap()), before);
+    fs::remove_dir_all(&root).unwrap();
+}

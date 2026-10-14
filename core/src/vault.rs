@@ -1,7 +1,7 @@
 //! Vault: object store + event log + per-document heads (SPEC §2–4, §7).
 
 use crate::events::{append_events, read_events, Event, EventKind};
-use crate::governance::{checkpoint_id, Actor, Checkpoint};
+use crate::governance::{checkpoint_id, Actor, ActorKind, Checkpoint};
 use crate::lineage::{match_blocks, MatchParams, MatcherVersion, PrevBlock};
 use crate::model::{hash32, AuthorKind, Block, Layer, Provenance};
 use crate::parse::heading_paths;
@@ -134,6 +134,24 @@ pub struct TransitionMeta {
     pub prune: bool,
 }
 
+/// Built-in policies whose decision replay can re-check from the event
+/// alone: `deny` never allows, `human_only` only for a human actor.
+fn check_builtin_policy(ev: &Event, m: &TransitionMeta) -> Result<()> {
+    match m.policy.as_str() {
+        "deny" => bail!(
+            "event seq {}: policy deny cannot have allowed {:?}",
+            ev.seq,
+            ev.kind
+        ),
+        "human_only" if m.actor.kind != ActorKind::Human => bail!(
+            "event seq {}: policy human_only cannot have allowed actor {:?}",
+            ev.seq,
+            m.actor.id
+        ),
+        _ => Ok(()),
+    }
+}
+
 pub fn transition_meta(ev: &Event) -> Result<TransitionMeta> {
     let req = |k: &str| -> Result<String> {
         let s = meta_str(ev, k)
@@ -180,11 +198,16 @@ pub fn transition_meta(ev: &Event) -> Result<TransitionMeta> {
 /// the ingest must record it with a `LayerChanged` event before its
 /// `SnapshotCommitted`. Ingest never raises a layer; only `Promoted` does.
 pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
-    let prov = || -> Provenance {
-        ev.meta
-            .get("provenance")
-            .and_then(|p| serde_json::from_value(p.clone()).ok())
-            .unwrap_or_default()
+    // provenance of the version a block event creates (spec §4.3). Absent:
+    // the v3-final reading (`Provenance::default()`, human) — logs built
+    // through the low-level `commit` API had none (ASSUMPTIONS B2-1).
+    // Present but malformed: an error, never a default.
+    let prov = || -> Result<Provenance> {
+        match ev.meta.get("provenance") {
+            None => Ok(Provenance::default()),
+            Some(p) => serde_json::from_value(p.clone())
+                .with_context(|| format!("event seq {}: malformed meta.provenance", ev.seq)),
+        }
     };
     let lower = |st: &mut DocState, l: &str, target: Layer| -> Result<()> {
         let cur = st.layer_of(l, ev)?;
@@ -201,7 +224,7 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             if st.live.contains_key(l) {
                 bail!("event seq {}: lineage {l} already live", ev.seq);
             }
-            let p = prov();
+            let p = prov()?;
             st.layer.insert(l.into(), author_layer(ev, &p)?);
             st.live.insert(l.into(), v.into());
             st.parents.insert(l.into(), Vec::new());
@@ -220,7 +243,7 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                     ev.seq
                 );
             }
-            let p = prov();
+            let p = prov()?;
             lower(st, l, author_layer(ev, &p)?)?;
             st.live.insert(l.into(), v.into());
             st.parents.insert(l.into(), vec![old.into()]);
@@ -241,7 +264,7 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             {
                 bail!("event seq {}: malformed {:?}", ev.seq, ev.kind);
             }
-            let p = prov();
+            let p = prov()?;
             // lowest layer among the sources and the author
             let mut target = author_layer(ev, &p)?;
             let mut kept: HashMap<String, (Layer, bool, u64)> = HashMap::new();
@@ -300,8 +323,9 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             let cur = st.layer_of(l, ev)?;
             let due = st.pending.iter().position(|(q, _)| q == l);
             match due {
-                Some(i) if cur == from && st.pending[i].1 == to => {
-                    st.pending.remove(i);
+                // in the order the block events implied them
+                Some(0) if cur == from && st.pending[0].1 == to => {
+                    st.pending.remove(0);
                 }
                 _ => bail!(
                     "event seq {}: LayerChanged {l} {}→{} does not match the replayed layer rule",
@@ -334,6 +358,7 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                 );
             }
             let m = transition_meta(ev)?;
+            check_builtin_policy(ev, &m)?;
             let cur = st.layer_of(l, ev)?;
             check_transition(ev.kind, &m, cur, st.inactive.contains(l))
                 .with_context(|| format!("event seq {}: {l}", ev.seq))?;
