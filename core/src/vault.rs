@@ -1433,6 +1433,24 @@ impl Vault {
         if cp.checkpoint_id != checkpoint_id {
             bail!("record_trace takes a checkpoint id, not the name {checkpoint_id:?}");
         }
+        // every returned version must be live at the checkpoint (B4 review)
+        if !returned.is_empty() {
+            let (_, st) = self.state_at(checkpoint_id)?;
+            for e in &returned {
+                let live = st
+                    .docs
+                    .get(&e.doc_path)
+                    .and_then(|d| d.live.get(&e.lineage_id));
+                if live != Some(&e.version_id) {
+                    bail!(
+                        "trace entry {}/{}@{} is not live at checkpoint {checkpoint_id}",
+                        e.doc_path,
+                        e.lineage_id,
+                        e.version_id
+                    );
+                }
+            }
+        }
         let at_seq = self.next_trace;
         let t = crate::governance::Trace {
             trace_id: crate::governance::trace_id(checkpoint_id, consumer, query_hash, at_seq),

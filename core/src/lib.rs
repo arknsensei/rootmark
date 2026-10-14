@@ -5,10 +5,12 @@ pub mod chunk;
 pub mod events;
 pub mod files;
 pub mod governance;
+pub mod journal;
 pub mod lineage;
 pub mod model;
 pub mod normalize;
 pub mod parse;
+pub mod policy;
 pub mod store;
 pub mod vault;
 pub mod wikilink;
@@ -19,12 +21,17 @@ pub use governance::{
     checkpoint_id, trace_id, Actor, ActorKind, Checkpoint, Decision, Deny, HumanOnly,
     PromotionPolicy, PromotionRequest, Trace, TraceEntry, TransitionKind,
 };
+pub use journal::{
+    IdleOrDistance, JournalRecord, JournalRetention, PruneReport, TriggerInput, VersionTrigger,
+    MIN_RETENTION_HOURS,
+};
 pub use lineage::{MatchParams, MatcherVersion};
 pub use model::{
     hash32, version_id, AuthorKind, Block, BlockDraft, BlockType, Layer, Provenance, WikiLink,
 };
 pub use normalize::normalize;
 pub use parse::parse_document;
+pub use policy::{Policy, PolicySource, Promotion};
 pub use store::BlockObject;
 pub use vault::{snapshot_id, BlameLine, IngestResult, ReadBlock, Snapshot, Vault};
 pub use wikilink::extract_wikilinks;

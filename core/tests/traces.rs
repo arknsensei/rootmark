@@ -155,3 +155,28 @@ fn derived_is_never_returned() {
     assert!(!root.join(".mdkernel/traces.jsonl").exists());
     fs::remove_dir_all(&root).unwrap();
 }
+
+/// B4 review: `record_trace` refuses entries that were not live at the checkpoint.
+#[test]
+fn record_trace_checks_returned() {
+    let root = tmp("returned");
+    let mut v = Vault::open(&root).unwrap();
+    v.ingest("n.md", "# N\n\nText.\n", Provenance::default(), M)
+        .unwrap();
+    let cp = v.checkpoint(None).unwrap();
+    let snap = v.snapshot("n.md").unwrap().unwrap();
+    let good = TraceEntry {
+        doc_path: "n.md".into(),
+        lineage_id: snap.blocks[1].0.clone(),
+        version_id: snap.blocks[1].1.clone(),
+    };
+    let mut bad = good.clone();
+    bad.version_id = "0".repeat(32);
+    assert!(v
+        .record_trace(&cp.checkpoint_id, "c", "q", vec![bad])
+        .is_err_and(|e| e.to_string().contains("not live")));
+    assert!(!root.join(".mdkernel/traces.jsonl").exists());
+    v.record_trace(&cp.checkpoint_id, "c", "q", vec![good])
+        .unwrap();
+    fs::remove_dir_all(&root).unwrap();
+}
