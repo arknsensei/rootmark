@@ -1,0 +1,460 @@
+{
+ "phases": {
+  "h1r": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h1r.json"
+   ],
+   "params": {
+    "theta": 0.6
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h1r_v3": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "h1r_v3.json"
+   ],
+   "params": {
+    "matcher": "v3",
+    "theta": 0.5
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h1s_test": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h1s.json"
+   ],
+   "params": {
+    "theta": 0.6,
+    "theta_split": 0.7
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h1s_tune": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.6,
+    0.7
+   ],
+   "outputs": [
+    "h1s_tuning.json"
+   ],
+   "params": {
+    "theta": 0.6,
+    "theta_split": 0.7
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h1s_v3_test": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "h1s_v3.json"
+   ],
+   "params": {
+    "theta": 0.5,
+    "theta_split": 0.65
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h1s_v3_tune": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "h1s_v3_tuning.json"
+   ],
+   "params": {
+    "theta": 0.5,
+    "theta_split": 0.65
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h3_v3": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "h3_v3.json"
+   ],
+   "params": {
+    "k": 10,
+    "matcher": "v3",
+    "n_edits": 200,
+    "warmup": 5
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h4_v2repro": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "h4_v2repro.json"
+   ],
+   "params": {
+    "matcher": "v2"
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "h4_v3": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "h4_v3.json"
+   ],
+   "params": {
+    "matcher": "v3"
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "holdout": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "holdout.json"
+   ],
+   "params": {
+    "matcher": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "holdout_split": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "holdout_split.json"
+   ],
+   "params": {
+    "matcher": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "p1a_checks": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "p1a_checks.json"
+   ],
+   "params": {},
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "p1b1_checks": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "p1b1_checks.json"
+   ],
+   "params": {},
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "p1b_checks": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "p1b_checks.json"
+   ],
+   "params": {
+    "seeds": [
+     20261014,
+     7
+    ]
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "split_grid": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70"
+   },
+   "git_sha": "226b511bda34c1e09a9f8e43890df8ac85b9dfec",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "split_grid.json"
+   ],
+   "params": {
+    "matcher": "v3",
+    "theta": 0.5,
+    "theta_splits": [
+     0.45,
+     0.55,
+     0.65,
+     0.75,
+     0.85
+    ]
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  }
+ },
+ "run_id": "20261014T212243Z-226b511",
+ "seed": 20261013
+}

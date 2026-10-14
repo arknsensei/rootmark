@@ -1,0 +1,404 @@
+{
+ "B-1": {
+  "passed": 8,
+  "tests": [
+   {
+    "actual_hash": "406aa930fd34aae3a8378e76b41862da",
+    "expected_hash": "406aa930fd34aae3a8378e76b41862da",
+    "id": "C2-01",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "2ec313f7fc685f09f3b204476e0975bb",
+    "expected_hash": "2ec313f7fc685f09f3b204476e0975bb",
+    "id": "C2-02",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "cdc42577813ee9fcd24b0c863b30f453",
+    "expected_hash": "cdc42577813ee9fcd24b0c863b30f453",
+    "id": "C2-03",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "14df52c87ab9f864e98adcccc788dce4",
+    "expected_hash": "14df52c87ab9f864e98adcccc788dce4",
+    "id": "C2-04",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "002d962be0862d298afeb3566cc0e408",
+    "expected_hash": "002d962be0862d298afeb3566cc0e408",
+    "id": "C2-05",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "05523a35c3c89e9d83b08570d29ed53e",
+    "expected_hash": "05523a35c3c89e9d83b08570d29ed53e",
+    "id": "C2-06",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "03f9907946bb4e238ae6937604c33e58",
+    "expected_hash": "03f9907946bb4e238ae6937604c33e58",
+    "id": "C2-07",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "ff1b278b0372fa2576503d0be0e853c2",
+    "expected_hash": "ff1b278b0372fa2576503d0be0e853c2",
+    "id": "C2-08",
+    "result": "pass"
+   }
+  ],
+  "total": 8
+ },
+ "B-10": {
+  "replay_equal": true,
+  "seeds": {
+   "20261014": {
+    "canonical": 19,
+    "derived": 23,
+    "events_hash": "d2ae612ff06e33ccb80248b938c630cb",
+    "inactive": 25,
+    "live_lineages": 80,
+    "ops": {
+     "demote_ok": 79,
+     "demote_refused_state": 54,
+     "hook_refused": 99,
+     "ingest_human": 126,
+     "promote_ok": 69,
+     "promote_refused_state": 167,
+     "propose": 283,
+     "prune_ok": 54,
+     "prune_refused_state": 69
+    },
+    "proposal": 38,
+    "replay_equal": true,
+    "seed": 20261014,
+    "steps": 1000
+   },
+   "7": {
+    "canonical": 24,
+    "derived": 13,
+    "events_hash": "2699484c7589cc98f95f80857430c58a",
+    "inactive": 21,
+    "live_lineages": 68,
+    "ops": {
+     "demote_ok": 71,
+     "demote_refused_state": 51,
+     "hook_refused": 128,
+     "ingest_human": 109,
+     "promote_ok": 81,
+     "promote_refused_state": 188,
+     "propose": 245,
+     "prune_ok": 48,
+     "prune_refused_state": 79
+    },
+    "proposal": 31,
+    "replay_equal": true,
+    "seed": 7,
+    "steps": 1000
+   }
+  }
+ },
+ "B-2": {
+  "passed": 17,
+  "tests": [
+   {
+    "actual_hash": "0baed808727516e78e29d13a15ffa6aa",
+    "expected_hash": "0baed808727516e78e29d13a15ffa6aa",
+    "id": "C1-01",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "e28d522cdb2b4dca6f733da557ce15dd",
+    "expected_hash": "e28d522cdb2b4dca6f733da557ce15dd",
+    "id": "C1-02",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "9f79428a27f043004f4c76bd5df6d83d",
+    "expected_hash": "9f79428a27f043004f4c76bd5df6d83d",
+    "id": "C1-03",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "21cc694288fe49651b6709a25d371304",
+    "expected_hash": "21cc694288fe49651b6709a25d371304",
+    "id": "C1-04",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "d2aadd29a9a14203ebf454fb5e5fecfb",
+    "expected_hash": "d2aadd29a9a14203ebf454fb5e5fecfb",
+    "id": "C1-05",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "a2ac1ce6d6a4c691a6fb3e6d14acb97b",
+    "expected_hash": "a2ac1ce6d6a4c691a6fb3e6d14acb97b",
+    "id": "C1-06",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "a05fba62a1f2a9cfa6762669e236be5e",
+    "expected_hash": "a05fba62a1f2a9cfa6762669e236be5e",
+    "id": "C1-07",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "f5627f977cf37d9cfff42245b52b7aec",
+    "expected_hash": "f5627f977cf37d9cfff42245b52b7aec",
+    "id": "C1-08",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "cf0d74806534e82c3708075c251a465e",
+    "expected_hash": "cf0d74806534e82c3708075c251a465e",
+    "id": "C1-09",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "ff2f90b1c13c75acc55cc8a83712ea0b",
+    "expected_hash": "ff2f90b1c13c75acc55cc8a83712ea0b",
+    "id": "C1-10",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "bd030cb4e6203695740b1e748f58c1c7",
+    "expected_hash": "bd030cb4e6203695740b1e748f58c1c7",
+    "id": "C1-11",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "eee7d45ff4860869c04941458dcacd03",
+    "expected_hash": "eee7d45ff4860869c04941458dcacd03",
+    "id": "C1-12",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "f3f534eab105b4a89b6f89efc1d9caf5",
+    "expected_hash": "f3f534eab105b4a89b6f89efc1d9caf5",
+    "id": "C1-13",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "e08796ff352d1a1fa2bf72158b08dcd1",
+    "expected_hash": "e08796ff352d1a1fa2bf72158b08dcd1",
+    "id": "C1-14",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "95d280f9ade16eab65f0fc51e0434291",
+    "expected_hash": "95d280f9ade16eab65f0fc51e0434291",
+    "id": "C1-15",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "4d29824584b6e01f2d33ca2ccfd6e2b6",
+    "expected_hash": "4d29824584b6e01f2d33ca2ccfd6e2b6",
+    "id": "C1-16",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "3b506d3d4e0273f500046a04487b2b7e",
+    "expected_hash": "3b506d3d4e0273f500046a04487b2b7e",
+    "id": "C1-17",
+    "result": "pass"
+   }
+  ],
+  "total": 17
+ },
+ "B-3": {
+  "equal": true,
+  "p1a_official": {
+   "files": [
+    "h1s_tuning.json",
+    "h1s.json",
+    "h1r.json",
+    "h1s_v3_tuning.json",
+    "h1s_v3.json",
+    "h1r_v3.json",
+    "h3_v3.json",
+    "h4_v3.json",
+    "h4_v2repro.json",
+    "holdout.json",
+    "split_grid.json"
+   ],
+   "max_relative_difference": 0.0,
+   "n_fields": 1790
+  },
+  "v3_final": {
+   "files": [
+    "h1s_tuning.json",
+    "h1s.json",
+    "h1r.json",
+    "h1s_v3_tuning.json",
+    "h1s_v3.json",
+    "h1r_v3.json",
+    "h3_v3.json",
+    "h4_v3.json",
+    "h4_v2repro.json"
+   ],
+   "max_relative_difference": 0.0,
+   "n_fields": 1577
+  }
+ },
+ "B-5": {
+  "docs": 12,
+  "events_hash_current": "f3cb01242e8cb7123e417a72a196250f",
+  "events_hash_v3_final": "f3cb01242e8cb7123e417a72a196250f",
+  "pass": true,
+  "replay_equal": true,
+  "v3_final_sha": "71c244e551258601bfd5550b61d1aa7335a938fa"
+ },
+ "B-6": {
+  "all_err": true,
+  "cases": [
+   {
+    "case": "retention < 24h",
+    "default_word": false,
+    "error_matches": "kernel minimum is 24",
+    "exit": 1,
+    "id": "B6-1",
+    "stdout_empty": true
+   },
+   {
+    "case": "idle_ms < 0",
+    "default_word": false,
+    "error_matches": "idle_ms = -1: must be >= 0",
+    "exit": 1,
+    "id": "B6-2",
+    "stdout_empty": true
+   },
+   {
+    "case": "min_sim_change > 1",
+    "default_word": false,
+    "error_matches": "must lie in \\[0, 1\\]",
+    "exit": 1,
+    "id": "B6-3",
+    "stdout_empty": true
+   },
+   {
+    "case": "unknown promotion",
+    "default_word": false,
+    "error_matches": "unknown promotion policy",
+    "exit": 1,
+    "id": "B6-4",
+    "stdout_empty": true
+   },
+   {
+    "case": "promotion without a hook (no recipe: deny)",
+    "default_word": false,
+    "error_matches": "denied by policy deny",
+    "exit": 1,
+    "id": "B6-5",
+    "stdout_empty": true
+   },
+   {
+    "case": "Promoted without actor",
+    "default_word": false,
+    "error_matches": "actor id is empty",
+    "exit": 1,
+    "id": "B6-6",
+    "stdout_empty": true
+   }
+  ],
+  "no_fallback": true
+ },
+ "deps": {
+  "check_deps_ok": true,
+  "deliberate_reverse_dependency_test_ok": true,
+  "violations": 0
+ },
+ "fixtures_manifest": "ok",
+ "fixtures_manifest_hash": "6788d15d415db148ddc64323bebd4d76",
+ "fixtures_root_absolute": true,
+ "fixtures_root_source": "MDK_FIXTURES",
+ "governance": {
+  "agent_note_layers": [
+   {
+    "inactive": false,
+    "layer": "proposal",
+    "seq_created": 110,
+    "seq_last": 110
+   },
+   {
+    "inactive": false,
+    "layer": "canonical",
+    "seq_created": 111,
+    "seq_last": 118
+   },
+   {
+    "inactive": false,
+    "layer": "proposal",
+    "seq_created": 112,
+    "seq_last": 120
+   },
+   {
+    "inactive": true,
+    "layer": "proposal",
+    "seq_created": 113,
+    "seq_last": 121
+   }
+  ],
+  "agent_note_layers_at_proposed": [
+   {
+    "inactive": false,
+    "layer": "proposal"
+   },
+   {
+    "inactive": false,
+    "layer": "proposal"
+   },
+   {
+    "inactive": false,
+    "layer": "proposal"
+   },
+   {
+    "inactive": false,
+    "layer": "proposal"
+   }
+  ],
+  "checkpoints": [
+   {
+    "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+    "event_seq": 109,
+    "name": "baseline"
+   },
+   {
+    "checkpoint_id": "5271bd54094606469a63ef744edf82db",
+    "event_seq": 117,
+    "name": "proposed"
+   },
+   {
+    "checkpoint_id": "ddb97fec7cd9e862c11866765a75d747",
+    "event_seq": 122,
+    "name": "reviewed"
+   },
+   {
+    "checkpoint_id": "786b2c0080c85dd7a993ef669c5259ef",
+    "event_seq": 126,
+    "name": "final"
+   }
+  ],
+  "events": 127,
+  "events_hash": "2b0dc8e88f8d56ee4c6be6356d4c0fee",
+  "journal": [
+   {
+    "bytes_len": 562,
+    "content_hash": "b59a2401a200d38aa0b488f1228bb7be",
+    "seq": 2
+   }
+  ],
+  "journal_prune": {
+   "blobs_removed": 2,
+   "records_kept": 1,
+   "records_removed": 2
+  },
+  "traces": 4,
+  "traces_sha256": "0c1928ec184a8b8deb776aa9400e77f1185086cca578d71cffaa390863adafc2"
+ },
+ "level_claimed": 2
+}

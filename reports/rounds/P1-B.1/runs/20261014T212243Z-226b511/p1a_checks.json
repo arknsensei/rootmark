@@ -1,0 +1,142 @@
+{
+ "A-1": {
+  "fixtures_manifest": "ok",
+  "level_claimed": 2,
+  "passed": 17,
+  "tests": [
+   {
+    "actual_hash": "0baed808727516e78e29d13a15ffa6aa",
+    "expected_hash": "0baed808727516e78e29d13a15ffa6aa",
+    "id": "C1-01",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "e28d522cdb2b4dca6f733da557ce15dd",
+    "expected_hash": "e28d522cdb2b4dca6f733da557ce15dd",
+    "id": "C1-02",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "9f79428a27f043004f4c76bd5df6d83d",
+    "expected_hash": "9f79428a27f043004f4c76bd5df6d83d",
+    "id": "C1-03",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "21cc694288fe49651b6709a25d371304",
+    "expected_hash": "21cc694288fe49651b6709a25d371304",
+    "id": "C1-04",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "d2aadd29a9a14203ebf454fb5e5fecfb",
+    "expected_hash": "d2aadd29a9a14203ebf454fb5e5fecfb",
+    "id": "C1-05",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "a2ac1ce6d6a4c691a6fb3e6d14acb97b",
+    "expected_hash": "a2ac1ce6d6a4c691a6fb3e6d14acb97b",
+    "id": "C1-06",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "a05fba62a1f2a9cfa6762669e236be5e",
+    "expected_hash": "a05fba62a1f2a9cfa6762669e236be5e",
+    "id": "C1-07",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "f5627f977cf37d9cfff42245b52b7aec",
+    "expected_hash": "f5627f977cf37d9cfff42245b52b7aec",
+    "id": "C1-08",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "cf0d74806534e82c3708075c251a465e",
+    "expected_hash": "cf0d74806534e82c3708075c251a465e",
+    "id": "C1-09",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "ff2f90b1c13c75acc55cc8a83712ea0b",
+    "expected_hash": "ff2f90b1c13c75acc55cc8a83712ea0b",
+    "id": "C1-10",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "bd030cb4e6203695740b1e748f58c1c7",
+    "expected_hash": "bd030cb4e6203695740b1e748f58c1c7",
+    "id": "C1-11",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "eee7d45ff4860869c04941458dcacd03",
+    "expected_hash": "eee7d45ff4860869c04941458dcacd03",
+    "id": "C1-12",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "f3f534eab105b4a89b6f89efc1d9caf5",
+    "expected_hash": "f3f534eab105b4a89b6f89efc1d9caf5",
+    "id": "C1-13",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "e08796ff352d1a1fa2bf72158b08dcd1",
+    "expected_hash": "e08796ff352d1a1fa2bf72158b08dcd1",
+    "id": "C1-14",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "95d280f9ade16eab65f0fc51e0434291",
+    "expected_hash": "95d280f9ade16eab65f0fc51e0434291",
+    "id": "C1-15",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "4d29824584b6e01f2d33ca2ccfd6e2b6",
+    "expected_hash": "4d29824584b6e01f2d33ca2ccfd6e2b6",
+    "id": "C1-16",
+    "result": "pass"
+   },
+   {
+    "actual_hash": "3b506d3d4e0273f500046a04487b2b7e",
+    "expected_hash": "3b506d3d4e0273f500046a04487b2b7e",
+    "id": "C1-17",
+    "result": "pass"
+   }
+  ],
+  "total": 17
+ },
+ "A-5": {
+  "equal": {
+   "v2": true,
+   "v3": true
+  },
+  "events_hash": {
+   "v2": "8914f9b418ae360d49c85c951050f432",
+   "v3": "808a41f21a43e121d7d688fee9f5bc24"
+  },
+  "expected": {
+   "v2": "8914f9b418ae360d49c85c951050f432",
+   "v3": "808a41f21a43e121d7d688fee9f5bc24"
+  }
+ },
+ "A-6": {
+  "check_deps_ok": true,
+  "deliberate_reverse_dependency_test_ok": true,
+  "log": [
+   "check_deps: OK (core ← index ← server ← clients; research → bindings/python)",
+   "ok   [pass] unmodified workspace",
+   "ok   [fail] core depends on index",
+   "ok   [fail] index depends on server",
+   "ok   [fail] core dev-depends on server",
+   "ok   [fail] core depends on server (table form)",
+   "ok   [fail] research reaches past bindings/python",
+   "ok   [fail] client imports core directly",
+   "test_check_deps: OK"
+  ],
+  "violations": 0
+ }
+}

@@ -1,0 +1,139 @@
+{
+ "H1-G": 4,
+ "H1-H1": 0.9882451721242653,
+ "H1-H2": 0.0,
+ "H1-H3": 0.9967213114754099,
+ "H1-H4": 1.0,
+ "H1-S1": 1.0,
+ "H1-S2": 0.0,
+ "H1-S3": 1.0,
+ "H1-S4": 1.0,
+ "easy": {
+  "H1-S1": 1.0,
+  "H1-S2": 0.0,
+  "H1-S2_v2def": 0.5066006600660066,
+  "H1-S3": 1.0,
+  "H1-S3_detail": {
+   "f1": 1.0,
+   "n_pred": 307,
+   "n_truth": 307,
+   "precision": 1.0,
+   "recall": 1.0,
+   "tp": 307
+  },
+  "H1-S4": 1.0,
+  "n_docs": 150,
+  "n_dup": 300,
+  "n_false_match": 299,
+  "n_false_match_v2def": 606,
+  "n_retention": 799,
+  "n_steps": 1500,
+  "per_op": {
+   "delete": {
+    "steps": 73
+   },
+   "dup_delete": {
+    "retention": 1.0,
+    "steps": 150
+   },
+   "insert": {
+    "false_match": 0.0,
+    "steps": 171
+   },
+   "merge": {
+    "event_recall": 1.0,
+    "retention": 1.0,
+    "steps": 179
+   },
+   "move": {
+    "retention": 1.0,
+    "steps": 230
+   },
+   "rephrase_heavy": {
+    "retention": 1.0,
+    "steps": 222
+   },
+   "rephrase_light": {
+    "retention": 1.0,
+    "steps": 347
+   },
+   "split": {
+    "event_recall": 1.0,
+    "false_match": 0.0,
+    "retention": 1.0,
+    "steps": 128
+   }
+  },
+  "set": "d1k4",
+  "split": "test"
+ },
+ "hard": {
+  "H1-H1": 0.9882451721242653,
+  "H1-H2": 0.0,
+  "H1-H2_v2def": 0.5324825986078886,
+  "H1-H3": 0.9967213114754099,
+  "H1-H3_detail": {
+   "f1": 0.9967213114754099,
+   "n_pred": 456,
+   "n_truth": 459,
+   "precision": 1.0,
+   "recall": 0.9934640522875817,
+   "tp": 456
+  },
+  "H1-H4": 1.0,
+  "n_docs": 150,
+  "n_dup": 330,
+  "n_false_match": 403,
+  "n_false_match_v2def": 862,
+  "n_retention": 1191,
+  "n_steps": 1500,
+  "per_op": {
+   "dup_delete_adjacent": {
+    "retention": 1.0,
+    "steps": 165
+   },
+   "insert": {
+    "false_match": 0.0,
+    "steps": 91
+   },
+   "merge_edit": {
+    "event_recall": 0.985,
+    "retention": 1.0,
+    "steps": 200
+   },
+   "move_edit": {
+    "retention": 1.0,
+    "steps": 170
+   },
+   "rephrase_extreme": {
+    "retention": 0.9135802469135802,
+    "steps": 162
+   },
+   "rephrase_heavy": {
+    "retention": 1.0,
+    "steps": 224
+   },
+   "rephrase_light": {
+    "retention": 1.0,
+    "steps": 229
+   },
+   "split_edit": {
+    "event_recall": 1.0,
+    "false_match": 0.0,
+    "retention": 1.0,
+    "steps": 206
+   },
+   "split_three": {
+    "event_recall": 1.0,
+    "false_match": 0.0,
+    "retention": 1.0,
+    "steps": 53
+   }
+  },
+  "set": "d1h",
+  "split": "test"
+ },
+ "matcher": "v3",
+ "theta": 0.5,
+ "theta_split": 0.65
+}
