@@ -5,10 +5,8 @@
 //! Vectors of different `embedder_id`s never meet: mixing them, or querying
 //! them with another embedder, is an error.
 
-use anyhow::{bail, Context, Result};
+use anyhow::{bail, Result};
 use serde::{Deserialize, Serialize};
-use std::fs;
-use std::path::Path;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct VectorMeta {
@@ -67,18 +65,4 @@ pub fn cosine(q: &[f32], v: &[f32]) -> f64 {
         .zip(v)
         .map(|(a, b)| f64::from(*a) * f64::from(*b))
         .sum()
-}
-
-pub fn read(dir: &Path, dim: usize) -> Result<(Vec<Vec<f32>>, Vec<VectorMeta>)> {
-    let bytes = fs::read(dir.join("vectors.f32")).context("vectors.f32")?;
-    let vecs = decode(&bytes, dim)?;
-    let text = fs::read_to_string(dir.join("embedders.jsonl")).context("embedders.jsonl")?;
-    let metas = text
-        .lines()
-        .map(|l| Ok(serde_json::from_str(l)?))
-        .collect::<Result<Vec<VectorMeta>>>()?;
-    if metas.len() != vecs.len() {
-        bail!("{} vectors, {} embedder rows", vecs.len(), metas.len());
-    }
-    Ok((vecs, metas))
 }

@@ -1,7 +1,7 @@
 //! The on-disk index of a vault, `<vault>/.mdkernel/index/` (GOAL P1-C):
 //!
-//! - `manifest.json` — format, counts, tokenizer and BM25 parameters, blake3
-//!   of `records.jsonl` and `snapshots.jsonl`
+//! - `manifest.json` — format, counts, tokenizer and BM25 parameters,
+//!   embedder, blake3 of every other file (`store::load` checks them all)
 //! - `records.jsonl` — every chunk record the index has seen, in storage
 //!   order `(doc_path, chunk_id, record_id)`
 //! - `snapshots.jsonl` — `(doc_path, snapshot_id)` → its records in document
