@@ -227,7 +227,10 @@ fn now_or(t: Option<u64>) -> Result<u64> {
     }
 }
 
-/// `<vault>/<doc>` for a vault-relative, `/`-separated doc path.
+/// `<vault>/<doc>` for a vault-relative, `/`-separated doc path. The path
+/// must stay inside the vault: no `..`/absolute components, and no existing
+/// component (directory or the file itself) may be a symbolic link, so a
+/// read or write can never leave the vault through a link.
 fn doc_file(vault: &Path, doc: &str) -> Result<PathBuf> {
     let rel = Path::new(doc);
     if doc.is_empty()
@@ -236,7 +239,21 @@ fn doc_file(vault: &Path, doc: &str) -> Result<PathBuf> {
     {
         bail!("doc {doc:?}: expected a vault-relative path to a .md file");
     }
-    Ok(vault.join(rel))
+    let root =
+        std::fs::canonicalize(vault).with_context(|| format!("vault {}", vault.display()))?;
+    let mut p = root.clone();
+    for c in rel.components() {
+        p.push(c);
+        if let Ok(m) = std::fs::symlink_metadata(&p) {
+            if m.file_type().is_symlink() {
+                bail!("doc {doc:?}: {} is a symbolic link", p.display());
+            }
+        }
+    }
+    if !p.starts_with(&root) {
+        bail!("doc {doc:?} resolves outside the vault");
+    }
+    Ok(p)
 }
 
 /// The vault and its policy; an invalid policy.toml fails before anything else.
@@ -457,6 +474,7 @@ fn run(cmd: Cmd, m: MatcherVersion) -> Result<Value> {
                 source,
             } => {
                 let (mut v, policy) = open_governed(&vault)?;
+                doc_file(&vault, &doc)?;
                 let now = now_or(now_ms)?;
                 let prov = Provenance {
                     author_kind: author(&a)?,

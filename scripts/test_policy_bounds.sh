@@ -41,8 +41,9 @@ case_fail() { # case_fail <id> <label> <pattern> <command...>
     echo "FAIL $id $label: fallback wording or output" >&2; cat "$scratch/stdout" "$scratch/stderr" >&2; exit 1
   fi
   echo "ok   $id $label (exit $rc: $(head -c 160 "$scratch/stderr" | tr '\n' ' '))"
-  results="$(jq -c --arg id "$id" --arg l "$label" --argjson rc "$rc" --arg e "$(head -c 300 "$scratch/stderr")" \
-    '. + [{id: $id, case: $l, exit: $rc, error: $e}]' <<<"$results")"
+  # the matched pattern, not the message (messages hold temp paths)
+  results="$(jq -c --arg id "$id" --arg l "$label" --argjson rc "$rc" --arg e "$pat" \
+    '. + [{id: $id, case: $l, exit: $rc, error_matches: $e, stdout_empty: true, default_word: false}]' <<<"$results")"
   n=$((n + 1))
 }
 policy() { printf '%s' "$1" >"$v/.mdkernel/policy.toml"; }

@@ -103,7 +103,9 @@ impl Policy {
     /// `<vault>/.mdkernel/policy.toml`, or the built-in recipe if absent.
     pub fn load(vault_root: &Path) -> Result<Policy> {
         let p = Self::path(vault_root);
-        if !p.exists() {
+        // only a path that is absent altogether means "no recipe"; a broken
+        // link or unreadable entry is an error (B6 review)
+        if std::fs::symlink_metadata(&p).is_err() {
             return Ok(Self::builtin());
         }
         let text = std::fs::read_to_string(&p).with_context(|| format!("read {}", p.display()))?;

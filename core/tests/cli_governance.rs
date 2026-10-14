@@ -396,3 +396,74 @@ fn b6_six_bound_cases() {
     ok(&promote);
     fs::remove_dir_all(&root).unwrap();
 }
+
+/// Security review: `propose` / `journal append` never read or write through
+/// a symbolic link out of the vault.
+#[cfg(unix)]
+#[test]
+fn doc_paths_cannot_escape_through_symlinks() {
+    let root = tmp("symlink");
+    let vault = root.join("vault");
+    let outside = root.join("outside");
+    fs::create_dir_all(&vault).unwrap();
+    fs::create_dir_all(&outside).unwrap();
+    std::os::unix::fs::symlink(&outside, vault.join("link")).unwrap();
+    std::os::unix::fs::symlink(outside.join("x.md"), vault.join("f.md")).unwrap();
+    let vs = vault.to_str().unwrap();
+    let draft = root.join("d.md");
+    fs::write(&draft, "# D\n\nText.\n").unwrap();
+    let df = draft.to_str().unwrap();
+    fails(
+        &["propose", vs, "link/x.md", df, "--source", "a"],
+        "symbolic link",
+    );
+    fails(
+        &["propose", vs, "f.md", df, "--source", "a"],
+        "symbolic link",
+    );
+    fails(
+        &[
+            "journal",
+            "append",
+            vs,
+            "link/x.md",
+            "--now-ms",
+            "1",
+            "--author",
+            "human",
+            "--source",
+            "e",
+        ],
+        "symbolic link",
+    );
+    assert!(
+        !outside.join("x.md").exists(),
+        "nothing written outside the vault"
+    );
+    fs::remove_dir_all(&root).unwrap();
+}
+
+/// B6 review notes 1 and 4: a broken policy link is an error, not "no
+/// recipe"; `journal tick` validates the doc path.
+#[cfg(unix)]
+#[test]
+fn broken_policy_link_and_tick_path() {
+    let root = tmp("brokenlink");
+    let vault = root.join("vault");
+    fs::create_dir_all(vault.join(".mdkernel")).unwrap();
+    let vs = vault.to_str().unwrap();
+    std::os::unix::fs::symlink(
+        root.join("nowhere.toml"),
+        vault.join(".mdkernel/policy.toml"),
+    )
+    .unwrap();
+    fails(&["policy", "show", vs], "policy");
+    fs::remove_file(vault.join(".mdkernel/policy.toml")).unwrap();
+    fails(
+        &[
+            "journal", "tick", vs, "../x.md", "--now-ms", "1", "--author", "human", "--source", "e",
+        ],
+        "vault-relative",
+    );
+    fs::remove_dir_all(&root).unwrap();
+}
