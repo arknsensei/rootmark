@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Deliberate corruption tests (TASKS A6; VERIFY V8). Every corruption is made
-# in a scratch copy; the working tree is never touched. Each case must fail
-# loudly with the named error.
+# Deliberate corruption tests (P1-A TASKS A6, VERIFY V8; P1-B TASKS B0: B-7,
+# B-8). Every corruption is made in a scratch copy; the working tree is never
+# touched. Each case must fail loudly with the named error.
 #
 #   scripts/test_tamper.sh <run-dir>
 #
@@ -125,5 +125,44 @@ open(p, "w").write(json.dumps(d))
 PY
 expect_fail "holdout H1-H1 changed by 1e-12 relative -> compare_p1a" "A-4 FAILED" \
   bash -c "cd '$here/research' && '$py' -m eval.compare_p1a '$run_dir' '$b'"
+
+# --- 4. moved target/ + corrupted fixture (P1-B B-7, P1-A recommendation Ö2):
+# the copy keeps the built target/ (mtimes preserved, so cargo may reuse the
+# test binary); the fixture root must still be the copy's, not a compiled-in
+# path of this tree.
+moved="$scratch/moved"
+copy_tree "$moved"
+cp -pR "$here/target" "$moved/target"
+moved="$(cd "$moved" && pwd -P)"
+flip_vid "$moved/spec/fixtures/C1-04/expected.json"
+expect_fail "moved target/ + fixture changed -> make conformance (B-7)" "spec/fixtures changed|conformance failures" \
+  env -u CARGO_TARGET_DIR make -C "$moved" conformance
+got_root="$(jq -r .fixtures_root "$moved/reports/conformance.json")"
+if [ "$got_root" != "$moved/spec/fixtures" ]; then
+  echo "FAIL moved target/: conformance.json fixtures_root=$got_root, expected $moved/spec/fixtures" >&2
+  exit 1
+fi
+echo "ok   moved target/: conformance.json fixtures_root is the copy's ($got_root)"
+
+# --- 5. FROZEN.md frozen-table rows (P1-B B-8, P1-A recommendation Ö1): a
+# clone of the committed HEAD, clean first, then rows removed or relaxed
+fz="$scratch/frozen"
+git clone --quiet "$here" "$fz"
+bash "$fz/scripts/check_frozen.sh" "$fz" >"$scratch/out" 2>&1 \
+  || { echo "FAIL check_frozen on a clean clone: exit $?" >&2; tail -8 "$scratch/out" >&2; exit 1; }
+echo "ok   check_frozen clean clone -> exit 0"
+row="$(grep -m1 -E '^\| `research/eval/\*\*`' "$fz/research/FROZEN.md")"
+grep -vxF "$row" "$fz/research/FROZEN.md" >"$scratch/FROZEN.md" && cp "$scratch/FROZEN.md" "$fz/research/FROZEN.md"
+expect_fail "FROZEN.md row deleted (uncommitted) -> check_frozen (B-8)" "rows removed or rewritten" \
+  bash "$fz/scripts/check_frozen.sh" "$fz"
+git -C "$fz" -c user.name=tamper -c user.email=tamper@invalid commit --quiet -am "tamper: drop a frozen row"
+expect_fail "FROZEN.md row deleted (committed) -> check_frozen (B-8)" "rows removed or rewritten" \
+  bash "$fz/scripts/check_frozen.sh" "$fz"
+git -C "$fz" reset --quiet --hard HEAD~1
+sed -i.bak 's/^| `scripts\/verify.sh` | `P1-A\/A6:`/| `scripts\/verify.sh` | `P1-Z\/never:`/' "$fz/research/FROZEN.md"
+rm -f "$fz/research/FROZEN.md.bak"
+git -C "$fz" -c user.name=tamper -c user.email=tamper@invalid commit --quiet -am "tamper: relax a frozen row"
+expect_fail "FROZEN.md row relaxed (committed) -> check_frozen (B-8)" "rows removed or rewritten" \
+  bash "$fz/scripts/check_frozen.sh" "$fz"
 
 echo "test_tamper: OK ($n corruptions detected)"

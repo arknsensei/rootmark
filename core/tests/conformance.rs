@@ -8,7 +8,14 @@
 //!
 //! `make conformance` sets `MDK_CONFORMANCE_REPORT` to write
 //! `reports/conformance.json`: one entry per test with pass/fail and the
-//! blake3 of the actual and expected output.
+//! blake3 of the actual and expected output, plus the absolute fixture root
+//! and the blake3 of its `MANIFEST.json`.
+//!
+//! The fixture root is resolved at run time, never compiled in (P1-A verifier
+//! recommendation Ö2): `MDK_FIXTURES` (`make conformance` passes
+//! `$(CURDIR)/spec/fixtures`), else `<cwd>/../spec/fixtures` — cargo runs
+//! tests in `core/`. A test binary moved with its `target/` therefore reads
+//! the fixtures of the tree it runs in.
 
 #[allow(dead_code)] // `case_dirs` is used by the fixture generator only
 #[path = "conformance/eval.rs"]
@@ -23,16 +30,36 @@ const LEVEL1: [&str; 17] = [
     "C1-11", "C1-12", "C1-13", "C1-14", "C1-15", "C1-16", "C1-17",
 ];
 
-fn fixtures() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("../spec/fixtures")
+/// `(absolute fixture root, how it was resolved)`; a root without
+/// `MANIFEST.json` is an error, not a fallback.
+fn fixtures() -> (PathBuf, &'static str) {
+    let (root, source) = match std::env::var_os("MDK_FIXTURES") {
+        Some(p) if !p.is_empty() => (PathBuf::from(p), "MDK_FIXTURES"),
+        _ => (
+            std::env::current_dir()
+                .expect("current directory")
+                .join("../spec/fixtures"),
+            "cwd",
+        ),
+    };
+    let root = fs::canonicalize(&root)
+        .unwrap_or_else(|e| panic!("fixture root {} ({source}): {e}", root.display()));
+    assert!(
+        root.join("MANIFEST.json").is_file(),
+        "fixture root {} ({source}) has no MANIFEST.json",
+        root.display()
+    );
+    (root, source)
+}
+
+fn blake32(bytes: &[u8]) -> String {
+    let mut h = blake3::hash(bytes).to_hex().to_string();
+    h.truncate(32);
+    h
 }
 
 fn hash(v: &Value) -> String {
-    let mut h = blake3::hash(serde_json::to_string(v).unwrap().as_bytes())
-        .to_hex()
-        .to_string();
-    h.truncate(32);
-    h
+    blake32(serde_json::to_string(v).unwrap().as_bytes())
 }
 
 /// Fixture freeze: every file listed with its hash, no file missing or added.
@@ -73,7 +100,10 @@ fn manifest_problems(root: &Path) -> Vec<String> {
 
 #[test]
 fn conformance_level_1() {
-    let root = fixtures();
+    let (root, root_source) = fixtures();
+    let manifest_hash = fs::read(root.join("MANIFEST.json"))
+        .ok()
+        .map(|b| blake32(&b));
     let manifest = manifest_problems(&root);
     let mut entries = Vec::new();
     let mut failures = Vec::new();
@@ -118,6 +148,9 @@ fn conformance_level_1() {
     let report = json!({
         "spec_version": "1.0",
         "level_claimed": if all_ok { 1 } else { 0 },
+        "fixtures_root": root.to_str().expect("UTF-8 fixture root"),
+        "fixtures_root_source": root_source,
+        "fixtures_manifest_hash": manifest_hash,
         "fixtures_manifest": if manifest.is_empty() { "ok" } else { "mismatch" },
         "fixtures_manifest_problems": manifest,
         "passed": passed,

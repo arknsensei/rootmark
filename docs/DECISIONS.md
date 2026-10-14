@@ -15,6 +15,9 @@ Biçim: `K<n> · tarih · başlık` → karar, gerekçe, etkilenen belgeler, "so
 - **K11 · 2026-10-13 · Spesifikasyon yayımlanır.** Apache-2.0, İngilizce. Etki: spec/.
 - **K12 · 2026-10-13 · Faz 1 varsayılan terfi politikası yalnız insan onayı.** Örtük onay (düzenleme, referans) bir politika plugin'i olarak faz 2'de. Etki: spec §7, ROADMAP P1-D.
 - **K13 · 2026-10-13 · Bu sohbet geçmişi arşivdir.** Tek gerçek kaynak bu belge setidir; yeni oturumlar yalnız buradan beslenir.
+- **K14 · 2026-10-14 · P1-A sonucu.** A-1..A-6 geçti, bağımsız doğrulandı; spec §1–6 "frozen" teyit. Etki: spec, ROADMAP.
+- **K15 · 2026-10-14 · P1-A doğrulama önerileri.** Ö1 (FROZEN.md kendi listesinde, git-geçmişi denetimi) ve Ö2 (fixture kökü çalışma anında) P1-B'de kapatılır; Ö3 (bölme-ağırlıklı holdout) ek dilim olarak eklenir, mevcut holdout regresyon olarak kalır. Etki: P1-B GOAL.
+- **K16 · 2026-10-14 · Faz 1 terfi politikaları.** Çekirdekte yalnız `Deny` ve `HumanOnly`; örtük onay faz 2 politika plugin'i. Etki: spec §7, P1-B.
 
 ## Karar talepleri (açık)
 - **K14-T · 2026-10-13 · Eşleyici parametrelerinin olay `meta`'sına yazılması (P1-A/A2'de tespit).** spec §5: "Implementations MAY use other values but MUST record `matcher_version` and parameters in `meta` of every event". v3-final çekirdeği (ve dolayısıyla C1 fixture'ları, mini_vault/D3 `events_hash`'leri) yalnız `meta.matcher_version` yazar. Parametre eklemek `events.jsonl` baytlarını ve A-5 hash'lerini değiştirir (P1-A kırmızı çizgisi). Seçenekler: (a) spec metnini "parameters MUST be recorded when they differ from the validated defaults of `matcher_version`" olarak netleştir (bayt uyumlu; varsayılan dışı parametre için yeni `meta.params` alanı); (b) spec sürüm artışı + yeni hash'ler. P1-A davranışı değiştirmez; karar P1-B öncesi. Etki: spec §5, core `lineage.rs`, CONFORMANCE C1-15.

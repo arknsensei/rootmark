@@ -84,13 +84,14 @@ test-check-deps:
 
 # Level 1 (spec/CONFORMANCE.md): spec/fixtures/C1-* against the current core;
 # writes reports/conformance.json and fails unless 17/17 pass and the frozen
-# fixture manifest matches.
+# fixture manifest matches. The fixture root is this tree's, resolved at run
+# time (MDK_FIXTURES; P1-A verifier recommendation Ö2).
 conformance:
 	rm -f reports/conformance.json
-	MDK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
+	MDK_FIXTURES="$(CURDIR)/spec/fixtures" MDK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
 	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
 	@test -f reports/conformance.json || { echo "error: reports/conformance.json not written" >&2; exit 1; }
-	@jq -e '.level_claimed == 1 and .passed == .total and .total == 17' reports/conformance.json >/dev/null \
+	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 1 and .passed == .total and .total == 17 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string"' reports/conformance.json >/dev/null \
 	  || { echo "error: conformance level 1 not reached (reports/conformance.json)" >&2; exit 1; }
 	@echo "conformance: level 1, $$(jq -r '"\(.passed)/\(.total)"' reports/conformance.json) (reports/conformance.json)"
 
