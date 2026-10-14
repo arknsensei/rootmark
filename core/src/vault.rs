@@ -816,7 +816,23 @@ impl Vault {
 
     /// Low-level commit: stores objects, assigns `seq`, appends the events,
     /// then applies them to the in-memory state (which re-verifies them).
-    pub fn commit(
+    /// Layer transitions (`Promoted`, `Demoted`) are refused here: they are
+    /// written only by `promote` / `demote` / `prune_inactive`, after the
+    /// policy hook allowed them (C2-03; B2 review).
+    pub fn commit(&mut self, objects: &[BlockObject], events: Vec<Event>) -> Result<Vec<Event>> {
+        if let Some(e) = events
+            .iter()
+            .find(|e| matches!(e.kind, EventKind::Promoted | EventKind::Demoted))
+        {
+            bail!(
+                "{:?} is written only through the policy hook (promote/demote/prune_inactive)",
+                e.kind
+            );
+        }
+        self.commit_inner(objects, events)
+    }
+
+    fn commit_inner(
         &mut self,
         objects: &[BlockObject],
         mut events: Vec<Event>,
@@ -1238,7 +1254,7 @@ impl Vault {
                 policy.version()
             ),
         }
-        let mut out = self.commit(&[], vec![ev])?;
+        let mut out = self.commit_inner(&[], vec![ev])?;
         Ok(out.remove(0))
     }
 

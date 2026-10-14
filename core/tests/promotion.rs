@@ -321,3 +321,39 @@ fn replay_rechecks_builtin_policy_and_provenance() {
     Vault::open(&root).unwrap();
     fs::remove_dir_all(&root).unwrap();
 }
+
+/// B2 review: a transition event cannot be written around the hook through
+/// the low-level `commit`.
+#[test]
+fn commit_refuses_transition_events() {
+    let root = tmp("bypass");
+    let (mut v, ls) = proposal_vault(&root);
+    let log = fs::read(v.events_path()).unwrap();
+    let ver = v.snapshot("plan.md").unwrap().unwrap().blocks[1].1.clone();
+    for (kind, to) in [
+        (EventKind::Promoted, "canonical"),
+        (EventKind::Demoted, "derived"),
+    ] {
+        let ev = mdkcore::Event {
+            seq: 0,
+            doc_path: "plan.md".into(),
+            kind,
+            lineage_ids: vec![ls[1].clone()],
+            old_version_ids: vec![ver.clone()],
+            new_version_ids: vec![ver.clone()],
+            snapshot_id: None,
+            meta: serde_json::json!({
+                "actor": {"kind": "agent", "id": "claude"},
+                "reason": "self-approval",
+                "policy": "anything",
+                "policy_version": "1",
+                "from": "proposal",
+                "to": to,
+            }),
+        };
+        assert!(err(v.commit(&[], vec![ev])).contains("only through the policy hook"));
+    }
+    assert_eq!(fs::read(v.events_path()).unwrap(), log);
+    assert_eq!(v.layer_of(&ls[1]).unwrap(), Layer::Proposal);
+    fs::remove_dir_all(&root).unwrap();
+}
