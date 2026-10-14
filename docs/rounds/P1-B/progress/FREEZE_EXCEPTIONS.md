@@ -6,7 +6,7 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Ne:** (1) Her `docs/rounds/*/progress/ROUND_START` sha'sından beri `research/FROZEN.md` tablosundan satır silinmediği/yeniden yazılmadığı `git log -p` (commit'ler) + `git diff HEAD` (çalışma ağacı) ile, ayrıca o sha'daki satırların sırayla ve aynen hâlâ var olduğu uç karşılaştırmasıyla denetlenir; en az bir `ROUND_START` zorunlu. (2) `[append-only]` notlu satır (yalnız `research/FROZEN.md`) bayt eşitliği yerine aynı yalnız-ekleme kuralıyla denetlenir. (3) Yeniden dondurma: aynı kalıplı sonraki satır öncekinin yerine geçer; commit'i öncekinin torunu olmalı, notu bu dosyadaki bir `F<n>` girdisini anmalı.
 - **Neden:** GOAL P1-B Ö1 ve TASKS B0. (3) zorunlu: bu turun görevleri dondurulmuş dosyaları açıkça değiştirir (Ö1 `check_frozen.sh`, Ö2 `conformance.rs`, B0 `test_tamper.sh`, B7 `spec/fixtures/MANIFEST.json` + C2 denetleyicisi, B9 `verify.sh`); Ö1'in "satır silinmez/gevşetilmez" kuralıyla bunun tek tutarlı yolu satır **eklemektir** (ASSUMPTIONS B0-1).
 - **Diff:** `git diff 983c62d -- scripts/check_frozen.sh` — satır işleme ilk döngüsü korunur (aynı ilk-commit kuralı, aynı glob, aynı `git diff --name-only`); eklenenler: `append_only()`, yeniden dondurma döngüsü, `ROUND_START` bölümü.
-- **Önce/sonra bit eşitliği:** önce (`983c62d`'deki denetleyici, `983c62d` ağacında): 25 satırın hepsi "unchanged", `check_frozen: OK`. Sonra (B0 commit'i): aynı 21 yeniden dondurulmamış satır aynı dosya sayılarıyla "unchanged"; yeniden dondurulan 3 satır "superseded", yeni satırlar B0'dan itibaren "unchanged"; `check_frozen: OK`. Kayıt: B0.md.
+- **Önce/sonra bit eşitliği:** önce (`983c62d`'deki denetleyici, `983c62d` ağacında): 25 satırın hepsi "unchanged", `check_frozen: OK`. Sonra (B0 commit'i): aynı 22 yeniden dondurulmamış satır aynı dosya sayılarıyla "unchanged"; yeniden dondurulan 3 satır "superseded", yeni satırlar B0'dan itibaren "unchanged"; `check_frozen: OK`. Kayıt: B0.md.
 - **Gözden geçirici onayı:** B0.review.md.
 
 ## F2 · B0 · `core/tests/conformance.rs` — Ö2 (fixture kökü çalışma anında)
@@ -20,3 +20,10 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** TASKS B0 kabulü ("`scripts/test_tamper.sh` iki yeni vaka").
 - **Önce/sonra bit eşitliği:** mevcut 8 vaka (1–3. bölümler) değişmedi (diff yalnız başlık yorumu ve 4–5. bölümler); B0 koşturmasında 8 eski vaka aynı etiket ve aynı hata kalıplarıyla yakalandı. Kayıt: B0.md.
 - **Gözden geçirici onayı:** B0.review.md.
+
+## F4 · B0 · `scripts/check_frozen.sh` — tablo işaretçisi açığı (B0 gözden geçirmesi)
+- **Ne:** dosyada tam olarak bir `<!-- frozen-table -->` ve bir `<!-- /frozen-table -->` işaretçisi (bu sırayla) zorunlu; `ROUND_START`/[append-only] geçmiş denetiminde eklenen (`+`) işaretçi satırı da ihlal.
+- **Neden:** B0 gözden geçirici: son denetim noktasından sonra eklenen bir satır, üstüne ikinci bir bitiş işaretçisi eklenerek hiçbir satır silinmeden tablodan çıkarılabiliyordu (klonda yeniden üretildi).
+- **Diff:** `git diff 3f2be39 -- scripts/check_frozen.sh` — işaretçi sayımı bloğu ve `grep -E` kalıbına `^\+.*<!-- /?frozen-table -->` eklendi; başka değişiklik yok.
+- **Önce/sonra bit eşitliği:** temiz ağaçta önce/sonra aynı satır raporları ve `check_frozen: OK`; `test_tamper.sh` 12/12 + yeni vaka (ikinci bitiş işaretçisi) yakalanıyor. Kayıt: B0.md.
+- **Gözden geçirici onayı:** B0.review.md (ek).

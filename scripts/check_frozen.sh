@@ -20,7 +20,9 @@
 # 2. Table append-only (P1-A verifier recommendation Ö1): for every
 #    docs/rounds/*/progress/ROUND_START sha, the frozen table may only have
 #    gained rows since that sha — no row removed or rewritten in any commit
-#    since (`git log -p`) nor in the working tree, and every row of the table
+#    since (`git log -p`) nor in the working tree, no table marker added or
+#    removed (the file must hold exactly one start and one end marker), and
+#    every row of the table
 #    at that sha is still present, unchanged and in order. At least one
 #    ROUND_START must exist.
 # Exit 1 on any violation.
@@ -34,6 +36,13 @@ table_of() { # table_of < file → the table rows between the markers
 }
 table="$(table_of <"$frozen")"
 [ -n "$table" ] || { echo "check_frozen: no frozen table in $frozen" >&2; exit 1; }
+# exactly one start and one end marker, start first: a second end marker
+# could otherwise push later rows out of the table (B0 review)
+markers="$(grep -nE '^<!-- /?frozen-table -->$' "$frozen" | cut -d: -f2 | tr '\n' ' ')"
+if [ "$markers" != "<!-- frozen-table --> <!-- /frozen-table --> " ]; then
+  echo "check_frozen: $frozen must hold exactly one frozen-table start and end marker (found: $markers)" >&2
+  exit 1
+fi
 
 fail=0
 violation() { echo "check_frozen: VIOLATION: $*" >&2; fail=1; }
@@ -51,7 +60,7 @@ append_only() {
   fi
   # every commit since <sha>, then the uncommitted working tree
   removed="$( { git log -p --no-merges --format= "$sha"..HEAD -- "$frozen"; git diff HEAD -- "$frozen"; } |
-    grep -E '^-(\| `|<!-- /?frozen-table -->)' || true)"
+    grep -E '^-(\| `|<!-- /?frozen-table -->)|^\+.*<!-- /?frozen-table -->' || true)"
   if [ -n "$removed" ]; then
     violation "$label: frozen-table rows removed or rewritten since ${sha:0:7}:"
     echo "$removed" | sed 's/^/  /' >&2

@@ -36,6 +36,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/check_frozen.sh` | `P1-B/B0:` | yeniden dondurma P1-B/F1: Ö1 (tablo yalnız-ekleme denetimi, yeniden dondurma kuralı) |
 | `core/tests/conformance.rs` | `P1-B/B0:` | yeniden dondurma P1-B/F2: Ö2 (fixture kökü çalışma anında, `fixtures_root`, `fixtures_manifest_hash`) |
 | `scripts/test_tamper.sh` | `P1-B/B0:` | yeniden dondurma P1-B/F3: B-7 ve B-8 kasıtlı vakaları |
+| `scripts/check_frozen.sh` | `P1-B/B0-fix:` | yeniden dondurma P1-B/F4: tablo işaretçisi ekleme/çoğaltma açığı (B0 gözden geçirmesi) |
 <!-- /frozen-table -->
 
 ## Notlar
