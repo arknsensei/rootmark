@@ -69,6 +69,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `core/tests/conformance_c2_gen.rs` | `P1-C/C0:` | yeniden dondurma P1-C/F4: 9 C2 dizini |
 | `research/eval/gen_embed_ref.py` | `P1-C/C1:` | C-10 referans üreteci (prototip `sentence-transformers`) |
 | `research/data/embed_ref.json` | `P1-C/C1:` | C-10 referansı: 50 D3 structural chunk + prototip vektörleri |
+| `research/eval/gen_tok_ref.py` | `P1-C/C2:` | tokenizer referans üreteci (prototip `bm25_tokens`) |
+| `research/data/tok_ref.json` | `P1-C/C2:` | tokenizer referansı: 200 D3 structural chunk + 8 kenar dizgisi |
 <!-- /frozen-table -->
 
 ## Notlar

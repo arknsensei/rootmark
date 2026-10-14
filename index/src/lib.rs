@@ -6,6 +6,11 @@
 //! embedder per index, recorded as `embedder_id` with every vector.
 
 pub mod embed;
+pub mod lexical;
 pub mod models;
+pub mod record;
+pub mod search;
+pub mod store;
+pub mod tokenize;
 
 pub use embed::{Embedder, OnnxMiniLm};

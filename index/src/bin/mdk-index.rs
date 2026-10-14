@@ -7,6 +7,7 @@ use anyhow::Result;
 use clap::{Parser, Subcommand};
 use mdkindex::models;
 use serde_json::json;
+use std::path::PathBuf;
 
 #[derive(Parser)]
 #[command(name = "mdk-index", about = "mdkernel index CLI")]
@@ -20,11 +21,22 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Cmd {
+    /// Index commands
+    Index {
+        #[command(subcommand)]
+        cmd: IndexCmd,
+    },
     /// Model files (models/MANIFEST.json)
     Models {
         #[command(subcommand)]
         cmd: ModelsCmd,
     },
+}
+
+#[derive(Subcommand)]
+enum IndexCmd {
+    /// Rebuild <vault>/.mdkernel/index/ (heads and every checkpoint's snapshots)
+    Build { vault: PathBuf },
 }
 
 #[derive(Subcommand)]
@@ -53,6 +65,12 @@ fn main() {
 
 fn run(cli: &Cli) -> Result<serde_json::Value> {
     match &cli.cmd {
+        Cmd::Index {
+            cmd: IndexCmd::Build { vault },
+        } => {
+            let v = mdkcore::Vault::open(vault)?;
+            Ok(serde_json::to_value(mdkindex::store::build(&v)?)?)
+        }
         Cmd::Models {
             cmd: ModelsCmd::Verify,
         } => {
