@@ -60,6 +60,9 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/gen_v3final_mixed.sh` | `P1-B.1/B1.3:` | v3-final karışık yazarlı vault üreteci betiği (B1-1) |
 | `scripts/v3final-mixed-gen/**` | `P1-B.1/B1.3:` | üreteç kaynağı + `scenarios.json` (`expect_blame` dahil) |
 | `core/tests/fixtures/v3_final_mixed/**` | `P1-B.1/B1.3:` | v3-final'den üretilmiş 9 senaryo fixture'ı |
+| `research/eval/compare_p1b1.py` | `P1-B.1/B1.4-pre:` | B1-6 karşılaştırıcısı (P1-B resmi RUN'ı; yalnız C2-07 ve `traces.jsonl` hariç) |
+| `research/eval/run_p1b1_checks.py` | `P1-B.1/B1.4-pre:` | B1-1..B1-6 RUN kaydı |
+| `research/eval/report_p1b1.py` | `P1-B.1/B1.4-pre:` | P1-B.1 rapor üreteci (resmi RUN'dan önce) |
 <!-- /frozen-table -->
 
 ## Notlar

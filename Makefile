@@ -20,7 +20,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
 
 .PHONY: report report-p1b test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
-        eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
+        eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps conformance regress verify
 
 setup: setup-py build
@@ -219,6 +219,24 @@ p1b-checks: require-run
 	rm -rf research/reports/runs/$(RUN)/governance
 	bash scripts/governance_scenario.sh target/release/mdk research/reports/runs/$(RUN)/governance
 	$(PY) -m eval.run_p1b_checks --run $(RUN) --seeds $(FUZZ_SEEDS)
+
+# P1-B.1 checks into the RUN (GOAL B1-1..B1-6): the compat and trace_id tests
+# (log), the P1-B official RUN comparison (B1-6), then p1b1_checks.json.
+# Needs a RUN that `make p1b-checks` completed (conformance, v3_compat_mixed).
+P1B_REF_RUN := ../reports/rounds/P1-B/runs/20261014T135400Z-7735a07
+p1b1-checks: require-run
+	cargo test -p mdkernel-core --release --test compat_v3final --test trace_id_v101 -- --test-threads=1 \
+	  >research/reports/runs/$(RUN)/p1b1_tests.log 2>&1 \
+	  || { cat research/reports/runs/$(RUN)/p1b1_tests.log >&2; exit 1; }
+	$(PY) -m eval.compare_p1b1 $(P1B_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p1b.json >/dev/null
+	$(PY) -m eval.run_p1b1_checks --run $(RUN)
+
+# P1-B.1 round report from one RUN directory (TASKS B1.4): <RUN_DIR>/FINAL.md
+# and reports/rounds/P1-B.1/FINAL.md; the RUN must hold pair_compare.json
+report-p1b1:
+	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
+	$(PY) -m eval.report_p1b1 --run-dir "$(abspath $(RUN_DIR))"
 
 # P1-A round report from one RUN directory (TASKS A7): writes <RUN_DIR>/FINAL.md
 # and reports/rounds/P1-A/FINAL.md
