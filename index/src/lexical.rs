@@ -2,8 +2,8 @@
 //!
 //! tantivy holds the inverted index of the cold records: one document per
 //! record, written by one writer thread in storage order (`(doc_path,
-//! chunk_id)`, then `record_id`), committed once and merged into a single
-//! segment; the fast field `ord` is the record's position in
+//! chunk_id)`, then `record_id`) and committed once as a single segment (an
+//! intermediate segment is an error, see `write_with_budget`); the fast field `ord` is the record's position in
 //! `records.jsonl`. Text is indexed with term frequencies only, through
 //! `MdkTokenizer` (`crate::tokenize`).
 //!
@@ -73,7 +73,7 @@ pub fn budget_for(records: &[ChunkRecord]) -> Result<usize> {
         .checked_mul(BUDGET_PER_TEXT_BYTE)
         .context("lexical budget overflow")?
         .max(BUDGET_FLOOR);
-    if want > WRITER_BUDGET_MAX {
+    if want >= WRITER_BUDGET_MAX {
         bail!(
             "{text} bytes of chunk text exceed the single-segment lexical index (writer budget {want} > {})",
             WRITER_BUDGET_MAX
