@@ -45,6 +45,13 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/datasets/synthetic_edits_v4.py` | `P1-B/B8-pre:` | d1hs üreteci (Ö3), H1 sonucu görülmeden |
 | `research/data/MANIFEST.d1hs.json` | `P1-B/B8-pre:` | d1hs manifest'i |
 | `research/eval/run_holdout_split.py` | `P1-B/B8-pre:` | B-9 koşturucusu (eşikler kodda) |
+| `scripts/verify.sh` | `P1-B/B9-pre:` | yeniden dondurma P1-B/F7: P1-B doğrulama zinciri (Seviye 2, regress + d1hs, p1b-checks, tamper, compare_p1b) |
+| `research/eval/run_p1b_checks.py` | `P1-B/B9-pre:` | B-1/B-2/B-3/B-5/B-6/B-10 RUN kaydı |
+| `research/eval/compare_p1b.py` | `P1-B/B9-pre:` | B-4 karşılaştırıcısı (alanlar + bayt) |
+| `research/eval/report_p1b.py` | `P1-B/B9-pre:` | P1-B rapor üreteci (resmi RUN'dan önce) |
+| `scripts/governance_scenario.sh` | `P1-B/B9-pre:` | B-4 yönetişim senaryosu |
+| `scripts/test_policy_bounds.sh` | `P1-B/B9-pre:` | B-6 betiği |
+| `scripts/check_v3_compat.sh` | `P1-B/B9-pre:` | B-5 betiği (v3-final ikilisi) |
 <!-- /frozen-table -->
 
 ## Notlar

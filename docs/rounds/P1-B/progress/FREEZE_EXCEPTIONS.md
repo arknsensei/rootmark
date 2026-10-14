@@ -39,3 +39,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** TASKS B7 ("beklenen değerler mevcut çekirdekten üretilir ve `MANIFEST.json`'a eklenir (C1 fixture'ları değişmez)").
 - **Önce/sonra bit eşitliği:** `git diff P1-B/B6 -- spec/fixtures` yalnız `MANIFEST.json`'da 31 eklenen satır (C2 dosyaları), silinen satır yok; `git diff --stat` C1 dizinlerinde değişiklik yok; v3-final üreteci C1 `expected.json`'larını bayt eşit yeniden üretti.
 - **Gözden geçirici onayı:** B7.review.md.
+
+## F7 · B9 · `scripts/verify.sh` — P1-B doğrulama zinciri
+- **Ne:** zincir: veri setleri (+`d1hs`) → freeze-check (v2, v3) + `check_frozen.sh` → `make conformance` (Seviye 2) → RUN altında `make regress` (P1-A seti + `d1hs`; holdout/split_grid P1-A resmi RUN'ı ile) → `make p1b-checks` → `scripts/test_tamper.sh` (günlük RUN'a) ; `compare` artık `eval.compare_p1b` (P1-A seti + `holdout_split.json` + `p1b_checks.json` + `governance/governance.json` alan alan; senaryo vault'unun `events.jsonl`, `traces.jsonl`, `checkpoints/` bayt bayt). `make p1a-checks` zincirden çıktı: dondurulmuş `run_p1a_checks.py` uyumluluk raporunda tam 17 test bekler, Seviye 2 raporu 25 test taşır (A-1/A-5/A-6'nın karşılıkları `p1b_checks.json` B-1/B-2, `v3_final_compat.rs`, `deps`).
+- **Neden:** TASKS B9 ("conformance (L2) → regress → holdout → holdout-split → governance fuzz → tamper (B-6, B-7, B-8) → pair compare (`traces.jsonl` ve `checkpoints/` bayt karşılaştırması dahil)").
+- **Önce/sonra bit eşitliği:** P1-A zincirinin ürettiği kalite dosyaları (v3 9 dosya + `holdout.json` + `split_grid.json`) aynı hedeflerle üretilir; resmi P1-B RUN'ında `regress_vs_p1a.json` P1-A resmi RUN'ı ile alan alan fark 0 (B-3) — eski zincirle aynı sayılar. `compare_p1b` P1-A dosya kümesini (dondurulmuş `compare_p1a.RESULT_FILES_P1A`) kapsar.
+- **Gözden geçirici onayı:** B9.review.md.
