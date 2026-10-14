@@ -26,7 +26,7 @@ mdkernel/
 
 | Paket | Dil | Sorumluluk | Bağımlılık | Durum | Dağıtım |
 |---|---|---|---|---|---|
-| `spec` | Markdown + fixture | normatif tanım, uyumluluk testleri | — | v1.0 §1–6 donmuş, §7–11 taslak | yayım (Apache-2.0) |
+| `spec` | Markdown + fixture | normatif tanım, uyumluluk testleri | — | v1.0 §1–6 donmuş, §7/§8/§11 doğrulandı (P1-B), §9–10 taslak | yayım (Apache-2.0) |
 | `core` | Rust | parser, blok, soy (matcher v3), olay günlüğü, nesne deposu, chunk, katman/terfi, kontrol noktası, tüketim izi, sürüm tetikleyici sınırları, politika hook'ları | `pulldown-cmark`, `blake3`, `strsim`, `serde` | **nihai** | crates.io |
 | `index` | Rust | sözcüksel (tantivy), vektör deposu + kesin arama, embedder trait + ONNX varsayılan (`ort`), hibrit RRF, kontrol noktasına göre sorgu, sıcak katman | `core`, `tantivy`, `ort` | **nihai** | crates.io |
 | `server` | Rust | `mdk` CLI, MCP sunucusu (`rmcp`), HTTP API, dosya izleyici, politika tarif dosyası yükleyici | `core`, `index` | **nihai** | tek ikili (Linux/macOS/Windows), Homebrew/cargo-binstall |

@@ -1,6 +1,6 @@
 # mdkernel Specification v1.0
 
-Status: **Frozen for §1–§6 (validated by prototype rounds v1–v3, Oct 2026); Draft for §7–§11 (to be validated in Phase 1).** License: Apache-2.0 (specification). Language: English, for publication; implementation directives are maintained in Turkish under `docs/`.
+Status: **Frozen for §1–§6 (validated by prototype rounds v1–v3, Oct 2026); Validated for §7, §8, §11 (Phase 1 round P1-B, Oct 2026; conformance Level 2); Draft for §9–§10 (to be validated in Phase 1).** License: Apache-2.0 (specification). Language: English, for publication; implementation directives are maintained in Turkish under `docs/`.
 
 The key words MUST, MUST NOT, SHOULD, MAY are to be interpreted as in RFC 2119.
 
@@ -84,7 +84,7 @@ Measured behaviour (prototype v3, reference implementation): lineage retention 1
 
 Chunks reference blocks; blocks never reference chunks. Rebuilding chunks with a different strategy MUST NOT change any `lineage_id` and MUST NOT emit events. Reference strategies: `structural` (consecutive blocks under one `heading_path`, ≤ 512 tokens, oversized single blocks stand alone) and `fixed` (512-token window, 64 overlap; baseline only). Chunk `text` is prefixed with `heading_path` joined by ` > `.
 
-## 7. Layers and promotion (Draft)
+## 7. Layers and promotion (Validated, P1-B)
 
 Every version has `layer ∈ {canonical, proposal, derived}` (serialized in lowercase, as written here). Default on ingest: `human` → `canonical`; `agent`, `transcript` → `proposal`; `synthetic` → as declared.
 
@@ -92,7 +92,7 @@ Every version has `layer ∈ {canonical, proposal, derived}` (serialized in lowe
 - Retrieval defaults: `canonical` full weight; `proposal` MUST be excluded or clearly down-weighted and labelled; `derived` is never returned as content.
 - Layer transitions are events and therefore replayable and auditable.
 
-## 8. Checkpoints and consumption traces (Draft)
+## 8. Checkpoints and consumption traces (Validated, P1-B)
 
 - **Checkpoint**: `{checkpoint_id, name?, event_seq, docs: {doc_path: snapshot_id}}`. Immutable. Any query MAY be evaluated "as of" a checkpoint; the result MUST be identical for the same checkpoint and query (§10).
 - **Consumption trace**: `.mdkernel/traces.jsonl`, append-only: `{trace_id, checkpoint_id, consumer, query_hash, returned: [(doc_path, lineage_id, version_id)], at_seq}`; each `returned` entry is serialized as an object with the keys `doc_path`, `lineage_id`, `version_id`. `trace_id = H(checkpoint_id + consumer + query_hash + at_seq)`, where `+` is plain string concatenation and `at_seq` is written in decimal. Traces answer "which block versions did this answer depend on".
@@ -108,7 +108,7 @@ Every version has `layer ∈ {canonical, proposal, derived}` (serialized in lowe
 
 For the same vault contents ingested in the same order with the same matcher version and parameters, two conforming implementations (or two runs of one) MUST produce byte-identical `events.jsonl`, identical `snapshot_id`s and `lineage_id`s, and identical retrieval results at any checkpoint. Evaluation truth MUST reference content `(doc_path, version_id, k)`, never lineage ids.
 
-## 11. Raw journal and version triggers (Draft)
+## 11. Raw journal and version triggers (Validated, P1-B)
 
 Implementations SHOULD keep a prunable raw journal of every save (keystroke-level data is never lost) separate from versions. A **version** is created only by a trigger policy (idle time, semantic distance to the previous version, block boundary exit). The kernel defines bounds (a version never carries less than the journal; unversioned content is never indexed; minimum journal retention); policies supply parameters within those bounds. (Informative: the reference implementation's minimum journal retention is 24 hours.)
 

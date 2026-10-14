@@ -1,0 +1,8 @@
+promotion = "human_only"
+
+[version_trigger]
+idle_ms = 60000
+min_sim_change = 0.15
+
+[journal]
+retention_hours = 24
