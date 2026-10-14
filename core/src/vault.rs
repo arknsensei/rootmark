@@ -545,6 +545,14 @@ impl Replayed {
                 self.content_offset
             );
         }
+        let name = match ev.meta.get("name") {
+            None | Some(serde_json::Value::Null) => None,
+            Some(serde_json::Value::String(n)) if !n.trim().is_empty() => Some(n.clone()),
+            Some(other) => bail!(
+                "event seq {}: checkpoint meta.name {other} is not a name",
+                ev.seq
+            ),
+        };
         let docs = self.heads();
         let computed = checkpoint_id(&docs, event_seq);
         if computed != cid {
@@ -557,7 +565,7 @@ impl Replayed {
             seq: ev.seq,
             checkpoint: Checkpoint {
                 checkpoint_id: cid,
-                name: meta_str(ev, "name"),
+                name,
                 event_seq,
                 docs,
             },
@@ -1287,6 +1295,10 @@ impl Vault {
         if let Some(n) = name {
             if n.trim().is_empty() || n != n.trim() {
                 bail!("checkpoint name {n:?}: empty or padded with whitespace");
+            }
+            // ids and names share `--at`: a name must not look like an id
+            if n.len() == 32 && n.bytes().all(|b| b.is_ascii_hexdigit()) {
+                bail!("checkpoint name {n:?} has the form of a checkpoint id");
             }
         }
         let event_seq = self.state.content_offset;

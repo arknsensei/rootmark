@@ -183,3 +183,24 @@ fn c2_06_queries_as_of_checkpoint_ignore_later_events() {
     assert_eq!(v.block_at(&l_agent, "before").unwrap(), old_block);
     fs::remove_dir_all(&root).unwrap();
 }
+
+/// B3 review notes 1–2: a checkpoint name in the log must be a string, and a
+/// name cannot take the form of a checkpoint id.
+#[test]
+fn checkpoint_name_checks() {
+    let root = tmp("names");
+    let mut v = seeded(&root);
+    let cp = v.checkpoint(Some("n1")).unwrap();
+    assert!(v
+        .checkpoint(Some(&"a".repeat(32)))
+        .is_err_and(|e| e.to_string().contains("form of a checkpoint id")));
+    drop(v);
+    let p = root.join(".mdkernel/events.jsonl");
+    let log = fs::read_to_string(&p).unwrap();
+    fs::write(&p, log.replace(r#""name":"n1""#, r#""name":5"#)).unwrap();
+    let e = format!("{:#}", Vault::open(&root).err().expect("bad name type"));
+    assert!(e.contains("is not a name"), "{e}");
+    fs::write(&p, &log).unwrap();
+    assert_eq!(Vault::open(&root).unwrap().checkpoints(), vec![cp]);
+    fs::remove_dir_all(&root).unwrap();
+}
