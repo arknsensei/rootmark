@@ -19,6 +19,9 @@
 #   scripts/verify.sh pair <source-repo> <workdir-A> <workdir-B>
 #       two independent chains, then `compare` A ↔ B.
 #   scripts/verify.sh compare <repo> <run-dir-A> <run-dir-B> [<out.json>]
+#       research/eval/compare_p1a.py (P1-A set: v3 + holdout + split_grid;
+#       unchanged P1-A semantics) run inside <repo>/research.
+#   scripts/verify.sh compare-p1b <repo> <run-dir-A> <run-dir-B> [<out.json>]
 #       research/eval/compare_p1b.py (P1-A set + holdout_split +
 #       p1b_checks + governance summary, and the governance vault's
 #       events.jsonl, traces.jsonl and checkpoints/ byte for byte) run inside
@@ -65,8 +68,13 @@ chain() {
   local run
   run="$(cd research && uv run --frozen python -m eval.runinfo)"
   log "RUN=$run"
+  log "holdout (P1-A A-2) and THETA_SPLIT grid (A-7)"
+  make eval-holdout RUN="$run"
+  make eval-split-grid RUN="$run"
   log "regress (v2 + v3 phases vs v3-final; holdout + split grid vs P1-A; holdout-split)"
   make regress RUN="$run"
+  log "A-1 / A-5 / A-6 into the RUN (level-1 view)"
+  make p1a-checks RUN="$run"
   log "governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)"
   make p1b-checks RUN="$run"
   log "deliberate corruptions (B-7, B-8 and the P1-A cases)"
@@ -106,10 +114,23 @@ pair() {
     fi
   done
   cat "$res_a" "$res_b"
-  compare "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+  compare_p1b "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
 }
 
 compare() {
+  local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
+  log "compare $dir_a $dir_b"
+  local rc=0
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p1a "$dir_a" "$dir_b" \
+    ${out:+--out "$out"}) >&2 || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "error: run comparison failed (compare_p1a exit $rc)" >&2
+    exit "$rc"
+  fi
+  log "max relative difference of quality fields = 0"
+}
+
+compare_p1b() {
   local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
   log "compare $dir_a $dir_b"
   local rc=0
@@ -126,6 +147,7 @@ case "${1:-}" in
   chain) chain "${2:?source repo}" "${3:?workdir}" ;;
   pair) pair "${2:?source repo}" "${3:?workdir A}" "${4:?workdir B}" ;;
   compare) compare "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
+  compare-p1b) compare_p1b "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t mdk-verify.XXXXXX)"
@@ -133,7 +155,7 @@ case "${1:-}" in
     pair "$src" "$base/A" "$base/B"
     ;;
   *)
-    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare <repo> <runA> <runB> [out]]" >&2
+    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac

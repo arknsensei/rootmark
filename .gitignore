@@ -25,6 +25,7 @@ node_modules/
 
 # conformance output (written by `make conformance`)
 /reports/conformance.json
+/reports/conformance_l1.json
 
 # test scratch vaults
 **/fixtures/**/.mdkernel/

@@ -52,6 +52,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/governance_scenario.sh` | `P1-B/B9-pre:` | B-4 yönetişim senaryosu |
 | `scripts/test_policy_bounds.sh` | `P1-B/B9-pre:` | B-6 betiği |
 | `scripts/check_v3_compat.sh` | `P1-B/B9-pre:` | B-5 betiği (v3-final ikilisi) |
+| `scripts/verify.sh` | `P1-B/B9-pre2:` | yeniden dondurma P1-B/F8: P1-A zincir adımları ve `compare` anlamı korunur, `pair` `compare-p1b` kullanır |
 <!-- /frozen-table -->
 
 ## Notlar

@@ -175,16 +175,29 @@ eval-holdout: require-run
 eval-split-grid: require-run
 	$(PY) -m eval.run_split_grid --run $(RUN)
 
+research/reports/runs/%/holdout.json:
+	$(MAKE) eval-holdout RUN=$*
+
+research/reports/runs/%/split_grid.json:
+	$(MAKE) eval-split-grid RUN=$*
+
+research/reports/runs/%/holdout_split.json:
+	$(MAKE) eval-holdout-split RUN=$*
+
 # P1-B: holdout-split at the compiled v3 parameters (B-9)
 eval-holdout-split: require-run
 	$(PY) -m eval.run_holdout_split --run $(RUN)
 
 # A-1 / A-5 / A-6 recorded in the RUN (the round report reads one RUN only)
+# Since P1-B the conformance report holds levels 1 and 2; A-1 is level 1, so
+# the frozen recorder reads the level-1 view of it (same 17 entries).
 p1a-checks: require-run
 	$(MAKE) conformance
+	jq '.tests |= map(select(.level == 1)) | .total = 17 | .passed = ([.tests[] | select(.result == "pass")] | length)' \
+	  reports/conformance.json >reports/conformance_l1.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
-	$(PY) -m eval.run_p1a_checks --run $(RUN) --conformance ../reports/conformance.json \
+	$(PY) -m eval.run_p1a_checks --run $(RUN) --conformance ../reports/conformance_l1.json \
 	  --deps-log reports/runs/$(RUN)/check_deps.log
 
 # P1-B governance checks into the RUN (B-1, B-2, B-5, B-6, B-10, scenario for
@@ -235,7 +248,9 @@ regress: require-run
 	$(PY) -m eval.compare_runs reports/runs/$(V3_REF_RUN) reports/runs/$(RUN) --set v3 \
 	  --out reports/runs/$(RUN)/regress_vs_v3final.json
 	@echo "regress: RUN=$(RUN) equal to v3-final $(V3_REF_RUN) (research/reports/runs/$(RUN)/regress_vs_v3final.json)"
-	$(MAKE) eval-holdout eval-split-grid eval-holdout-split RUN=$(RUN)
+	@# file targets: outputs a chain already produced are not recomputed
+	$(MAKE) research/reports/runs/$(RUN)/holdout.json research/reports/runs/$(RUN)/split_grid.json \
+	  research/reports/runs/$(RUN)/holdout_split.json RUN=$(RUN)
 	$(PY) -m eval.compare_p1a $(P1A_REF_RUN) reports/runs/$(RUN) \
 	  --out reports/runs/$(RUN)/regress_vs_p1a.json >/dev/null
 	@echo "regress: RUN=$(RUN) P1-A set equal to the P1-A official RUN (research/reports/runs/$(RUN)/regress_vs_p1a.json)"

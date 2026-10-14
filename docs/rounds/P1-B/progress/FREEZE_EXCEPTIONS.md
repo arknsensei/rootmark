@@ -45,3 +45,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** TASKS B9 ("conformance (L2) → regress → holdout → holdout-split → governance fuzz → tamper (B-6, B-7, B-8) → pair compare (`traces.jsonl` ve `checkpoints/` bayt karşılaştırması dahil)").
 - **Önce/sonra bit eşitliği:** P1-A zincirinin ürettiği kalite dosyaları (v3 9 dosya + `holdout.json` + `split_grid.json`) aynı hedeflerle üretilir; resmi P1-B RUN'ında `regress_vs_p1a.json` P1-A resmi RUN'ı ile alan alan fark 0 (B-3) — eski zincirle aynı sayılar. `compare_p1b` P1-A dosya kümesini (dondurulmuş `compare_p1a.RESULT_FILES_P1A`) kapsar.
 - **Gözden geçirici onayı:** B9.review.md.
+
+## F8 · B9 · `scripts/verify.sh` — P1-A sözleşmesinin korunması
+- **Ne:** B9-pre zinciri P1-A testlerini (`research/tests/test_verify_v3.py`, değiştirilemez) kırdı: zincir `make eval-holdout`, `make eval-split-grid`, `make p1a-checks` adımlarını açıkça çalıştırmalı ve `verify.sh compare` P1-A anlamını (`compare_p1a`, "H4-2"/A-4) korumalı. Düzeltme: bu üç adım zincirde geri (holdout/split_grid `make regress`'ten önce; `regress` artık bunları make dosya hedefleri olarak çağırır, var olan çıktı yeniden hesaplanmaz); `compare` = `compare_p1a` (P1-A ile aynı), yeni `compare-p1b` modu; `pair` `compare-p1b` kullanır. `make p1a-checks` dondurulmuş `run_p1a_checks.py`'ye Seviye 2 raporunun 17 girdilik Seviye 1 görünümünü (`reports/conformance_l1.json`) verir.
+- **Neden:** "testleri geçmek için test değiştirilmez" — doğrulama betiği P1-A testleriyle uyumlu kalmalı; TASKS B9 zinciri de korunur.
+- **Önce/sonra bit eşitliği:** `uv run pytest` 173/173 (B9-pre'de 4 başarısız); `verify.sh compare` P1-A davranışı testlerle aynı; dosya hedefli `regress` var olan `holdout.json`'ı yeniden üretmiyor ("is up to date"); `make p1a-checks` → "A-1 17/17; A-6 ok=True".
+- **Gözden geçirici onayı:** B9.review.md.
