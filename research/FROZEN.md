@@ -54,6 +54,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/check_v3_compat.sh` | `P1-B/B9-pre:` | B-5 betiği (v3-final ikilisi) |
 | `scripts/verify.sh` | `P1-B/B9-pre2:` | yeniden dondurma P1-B/F8: P1-A zincir adımları ve `compare` anlamı korunur, `pair` `compare-p1b` kullanır |
 | `scripts/check_frozen.sh` | `P1-B.1/B1.0:` | yeniden dondurma P1-B.1/F1: noktalı tur kimliği (`P1-B.1/F<n>`) istisna atfında |
+| `spec/fixtures/**` | `P1-B.1/B1.2:` | yeniden dondurma P1-B.1/F2: C2-07 beklenen değeri ve `MANIFEST.json` satırı (K-B1.2, spec 1.0.1) |
+| `core/tests/conformance.rs` | `P1-B.1/B1.2:` | yeniden dondurma P1-B.1/F3: `spec_version` 1.0.1 |
 <!-- /frozen-table -->
 
 ## Notlar

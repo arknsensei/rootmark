@@ -18,8 +18,8 @@ pub mod wikilink;
 pub use chunk::{chunk, Chunk, Strategy};
 pub use events::{Event, EventKind};
 pub use governance::{
-    checkpoint_id, trace_id, Actor, ActorKind, Checkpoint, Decision, Deny, HumanOnly,
-    PromotionPolicy, PromotionRequest, Trace, TraceEntry, TransitionKind,
+    check_trace_input, checkpoint_id, trace_id, Actor, ActorKind, Checkpoint, Decision, Deny,
+    HumanOnly, PromotionPolicy, PromotionRequest, Trace, TraceEntry, TransitionKind,
 };
 pub use journal::{
     IdleOrDistance, JournalRecord, JournalRetention, PruneReport, TriggerInput, VersionTrigger,

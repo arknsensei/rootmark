@@ -113,7 +113,7 @@
               "version_id": "faef9deba678891bd9d566b9e3478a52"
             }
           ],
-          "trace_id": "052ae79acfb79b10b8e8a99e32b0b733"
+          "trace_id": "17536b4d8a7216c8c84d04652e4dc37a"
         }
       }
     },
@@ -181,7 +181,7 @@
               "version_id": "faef9deba678891bd9d566b9e3478a52"
             }
           ],
-          "trace_id": "8e2df27f62c54418ec49ef11a19b2eed"
+          "trace_id": "f4ee3c576f456b43ff6f4821ba9d9131"
         }
       }
     },
@@ -193,7 +193,7 @@
     },
     {
       "op": "traces",
-      "result": "{\"trace_id\":\"052ae79acfb79b10b8e8a99e32b0b733\",\"checkpoint_id\":\"136c74aa1d702d88d65a17a7ed34b43b\",\"consumer\":\"claude-code\",\"query_hash\":\"97ee37d2bfaebde913b7c859261d4b7e\",\"returned\":[{\"doc_path\":\"notes.md\",\"lineage_id\":\"5118e1e4cd00ea75199b527f886fb179\",\"version_id\":\"e77f653e443f2c6b95d7b7a9302a184e\"},{\"doc_path\":\"draft.md\",\"lineage_id\":\"dd24e194ff72dc139c3f84f932bae88d\",\"version_id\":\"faef9deba678891bd9d566b9e3478a52\"}],\"at_seq\":0}\n{\"trace_id\":\"8e2df27f62c54418ec49ef11a19b2eed\",\"checkpoint_id\":\"136c74aa1d702d88d65a17a7ed34b43b\",\"consumer\":\"claude-code\",\"query_hash\":\"97ee37d2bfaebde913b7c859261d4b7e\",\"returned\":[{\"doc_path\":\"notes.md\",\"lineage_id\":\"5118e1e4cd00ea75199b527f886fb179\",\"version_id\":\"e77f653e443f2c6b95d7b7a9302a184e\"},{\"doc_path\":\"draft.md\",\"lineage_id\":\"dd24e194ff72dc139c3f84f932bae88d\",\"version_id\":\"faef9deba678891bd9d566b9e3478a52\"}],\"at_seq\":1}\n"
+      "result": "{\"trace_id\":\"17536b4d8a7216c8c84d04652e4dc37a\",\"checkpoint_id\":\"136c74aa1d702d88d65a17a7ed34b43b\",\"consumer\":\"claude-code\",\"query_hash\":\"97ee37d2bfaebde913b7c859261d4b7e\",\"returned\":[{\"doc_path\":\"notes.md\",\"lineage_id\":\"5118e1e4cd00ea75199b527f886fb179\",\"version_id\":\"e77f653e443f2c6b95d7b7a9302a184e\"},{\"doc_path\":\"draft.md\",\"lineage_id\":\"dd24e194ff72dc139c3f84f932bae88d\",\"version_id\":\"faef9deba678891bd9d566b9e3478a52\"}],\"at_seq\":0}\n{\"trace_id\":\"f4ee3c576f456b43ff6f4821ba9d9131\",\"checkpoint_id\":\"136c74aa1d702d88d65a17a7ed34b43b\",\"consumer\":\"claude-code\",\"query_hash\":\"97ee37d2bfaebde913b7c859261d4b7e\",\"returned\":[{\"doc_path\":\"notes.md\",\"lineage_id\":\"5118e1e4cd00ea75199b527f886fb179\",\"version_id\":\"e77f653e443f2c6b95d7b7a9302a184e\"},{\"doc_path\":\"draft.md\",\"lineage_id\":\"dd24e194ff72dc139c3f84f932bae88d\",\"version_id\":\"faef9deba678891bd9d566b9e3478a52\"}],\"at_seq\":1}\n"
     }
   ]
 }

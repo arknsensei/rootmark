@@ -183,8 +183,28 @@ pub struct Trace {
     pub at_seq: u64,
 }
 
-/// `trace_id = H(checkpoint_id + consumer + query_hash + at_seq)` (spec §8):
-/// plain concatenation, `at_seq` in decimal.
+/// `trace_id = H(checkpoint_id + "\n" + consumer + "\n" + query_hash + "\n" +
+/// at_seq)` (spec 1.0.1 §8, K-B1.2), `at_seq` in decimal. The inputs are
+/// valid only as `check_trace_input` accepts them.
 pub fn trace_id(checkpoint_id: &str, consumer: &str, query_hash: &str, at_seq: u64) -> String {
-    hash32(&format!("{checkpoint_id}{consumer}{query_hash}{at_seq}"))
+    hash32(&format!(
+        "{checkpoint_id}\n{consumer}\n{query_hash}\n{at_seq}"
+    ))
+}
+
+/// Spec 1.0.1 §8 (K-B1.2): `query_hash` is exactly 32 lowercase hex
+/// characters (the form of every §3 identifier) and `consumer` holds no
+/// `"\n"`, so the separated fields of `trace_id` cannot shift.
+pub fn check_trace_input(consumer: &str, query_hash: &str) -> anyhow::Result<()> {
+    if consumer.contains('\n') {
+        anyhow::bail!("trace consumer {consumer:?} contains a newline");
+    }
+    if query_hash.len() != 32
+        || !query_hash
+            .bytes()
+            .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+    {
+        anyhow::bail!("trace query_hash {query_hash:?} is not 32 lowercase hex characters");
+    }
+    Ok(())
 }

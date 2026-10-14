@@ -1518,6 +1518,7 @@ impl Vault {
                 }
             }
         }
+        crate::governance::check_trace_input(consumer, query_hash)?;
         let at_seq = self.next_trace;
         let t = crate::governance::Trace {
             trace_id: crate::governance::trace_id(checkpoint_id, consumer, query_hash, at_seq),
@@ -1592,6 +1593,8 @@ impl Vault {
             if t.at_seq != i as u64 {
                 bail!("traces.jsonl line {}: at_seq {} != {i}", i + 1, t.at_seq);
             }
+            crate::governance::check_trace_input(&t.consumer, &t.query_hash)
+                .with_context(|| format!("traces.jsonl line {}", i + 1))?;
             let want =
                 crate::governance::trace_id(&t.checkpoint_id, &t.consumer, &t.query_hash, t.at_seq);
             if t.trace_id != want {

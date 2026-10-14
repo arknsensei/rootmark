@@ -53,7 +53,8 @@ fn c2_07_trace_per_read_and_id_formula() {
 
     // the line, byte for byte
     let qh = hash32(&format!("read_blocks\n{}\n{}", refs[0], refs[1]));
-    let tid = hash32(&format!("{}claude-code{qh}0", cp.checkpoint_id));
+    // spec 1.0.1 §8 (K-B1.2): "\n" between the fields
+    let tid = hash32(&format!("{}\nclaude-code\n{qh}\n0", cp.checkpoint_id));
     assert_eq!(tid, trace_id(&cp.checkpoint_id, "claude-code", &qh, 0));
     let want = format!(
         concat!(
@@ -176,7 +177,8 @@ fn record_trace_checks_returned() {
         .record_trace(&cp.checkpoint_id, "c", "q", vec![bad])
         .is_err_and(|e| e.to_string().contains("not live")));
     assert!(!root.join(".mdkernel/traces.jsonl").exists());
-    v.record_trace(&cp.checkpoint_id, "c", "q", vec![good])
+    // spec 1.0.1 §8 (K-B1.2): query_hash is 32 lowercase hex ("q" is now refused)
+    v.record_trace(&cp.checkpoint_id, "c", &hash32("q"), vec![good])
         .unwrap();
     fs::remove_dir_all(&root).unwrap();
 }
