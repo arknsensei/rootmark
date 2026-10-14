@@ -203,13 +203,15 @@ p1a-checks: require-run
 # P1-B governance checks into the RUN (B-1, B-2, B-5, B-6, B-10, scenario for
 # B-4): conformance level 2, v3-final compat, policy bounds, fuzz with two
 # seeds, the deterministic governance scenario, dependency direction.
+# P1-B.1: v3_compat_mixed.json — mixed-author v3-final vaults (B1-1).
 p1b-checks: require-run
 	$(MAKE) conformance
 	cp reports/conformance.json research/reports/runs/$(RUN)/conformance.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
 	cargo build --release -q -p mdkernel-core --bin mdk
-	bash scripts/check_v3_compat.sh research/reports/runs/$(RUN)/v3_compat.json >/dev/null
+	bash scripts/check_v3_compat.sh research/reports/runs/$(RUN)/v3_compat.json \
+	  research/reports/runs/$(RUN)/v3_compat_mixed.json >/dev/null
 	bash scripts/test_policy_bounds.sh target/release/mdk research/reports/runs/$(RUN)/policy_bounds.json
 	@for s in $(FUZZ_SEEDS); do \
 	  MDK_FUZZ_SEED=$$s MDK_FUZZ_OUT="$(CURDIR)/research/reports/runs/$(RUN)/fuzz_$$s.json" \

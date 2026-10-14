@@ -56,6 +56,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/check_frozen.sh` | `P1-B.1/B1.0:` | yeniden dondurma P1-B.1/F1: noktalı tur kimliği (`P1-B.1/F<n>`) istisna atfında |
 | `spec/fixtures/**` | `P1-B.1/B1.2:` | yeniden dondurma P1-B.1/F2: C2-07 beklenen değeri ve `MANIFEST.json` satırı (K-B1.2, spec 1.0.1) |
 | `core/tests/conformance.rs` | `P1-B.1/B1.2:` | yeniden dondurma P1-B.1/F3: `spec_version` 1.0.1 |
+| `scripts/check_v3_compat.sh` | `P1-B.1/B1.3:` | yeniden dondurma P1-B.1/F4: v3-final kütüphane API'siyle karışık yazarlı 9 senaryo (eski senaryo çıktısı bayt eşit) |
+| `scripts/gen_v3final_mixed.sh` | `P1-B.1/B1.3:` | v3-final karışık yazarlı vault üreteci betiği (B1-1) |
+| `scripts/v3final-mixed-gen/**` | `P1-B.1/B1.3:` | üreteç kaynağı + `scenarios.json` (`expect_blame` dahil) |
+| `core/tests/fixtures/v3_final_mixed/**` | `P1-B.1/B1.3:` | v3-final'den üretilmiş 9 senaryo fixture'ı |
 <!-- /frozen-table -->
 
 ## Notlar

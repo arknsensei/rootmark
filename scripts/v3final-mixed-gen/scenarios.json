@@ -17,7 +17,36 @@
           "source": "agent-2",
           "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
         }
-      ]
+      ],
+      "expect_blame": {
+        "notes.md": [
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ]
+        ]
+      }
     },
     {
       "name": "transcript_only",
@@ -35,7 +64,36 @@
           "source": "transcript-2",
           "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
         }
-      ]
+      ],
+      "expect_blame": {
+        "notes.md": [
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ],
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ],
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ],
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ],
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ]
+        ]
+      }
     },
     {
       "name": "synthetic_only",
@@ -53,7 +111,36 @@
           "source": "synthetic-2",
           "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
         }
-      ]
+      ],
+      "expect_blame": {
+        "notes.md": [
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ],
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ],
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ],
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ],
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ]
+        ]
+      }
     },
     {
       "name": "human_synthetic",
@@ -71,7 +158,36 @@
           "source": "synthetic-2",
           "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
         }
-      ]
+      ],
+      "expect_blame": {
+        "notes.md": [
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ],
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ]
+        ]
+      }
     },
     {
       "name": "agent_human",
@@ -89,7 +205,36 @@
           "source": "human-2",
           "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
         }
-      ]
+      ],
+      "expect_blame": {
+        "notes.md": [
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Human",
+            "proposal",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Human",
+            "canonical",
+            "event"
+          ]
+        ]
+      }
     },
     {
       "name": "human_agent",
@@ -107,7 +252,36 @@
           "source": "agent-2",
           "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
         }
-      ]
+      ],
+      "expect_blame": {
+        "notes.md": [
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "derived"
+          ],
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ]
+        ]
+      }
     },
     {
       "name": "human_transcript",
@@ -125,7 +299,36 @@
           "source": "transcript-2",
           "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
         }
-      ]
+      ],
+      "expect_blame": {
+        "notes.md": [
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Transcript",
+            "proposal",
+            "derived"
+          ],
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ]
+        ]
+      }
     },
     {
       "name": "synthetic_agent",
@@ -143,7 +346,36 @@
           "source": "agent-2",
           "text": "# Coffee notes\n\nEspresso needs a fine grind and roughly twenty five seconds of extraction time at nine bar.\n\nPour over coffee benefits from a medium grind and a slow, steady pour of hot water.\n\nCold brew steeps for twelve to eighteen hours in the refrigerator before serving.\n\nA French press uses a coarse grind and about four minutes of steeping.\n"
         }
-      ]
+      ],
+      "expect_blame": {
+        "notes.md": [
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "derived"
+          ],
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ],
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ]
+        ]
+      }
     },
     {
       "name": "mixed_vault",
@@ -197,7 +429,93 @@
           "source": "claude-code",
           "text": "# Garden plan\n\nTomatoes go along the south fence where they get full sun all afternoon.\n\nThe basil is planted between them to keep pests away and to save space.\n\nWater the beds early in the morning, three times a week in dry weather.\n"
         }
-      ]
+      ],
+      "expect_blame": {
+        "garden.md": [
+          [
+            "Human",
+            "canonical",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "derived"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "derived"
+          ]
+        ],
+        "release.md": [
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Human",
+            "proposal",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "event"
+          ],
+          [
+            "Human",
+            "canonical",
+            "event"
+          ]
+        ],
+        "summary.md": [
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ],
+          [
+            "Agent",
+            "proposal",
+            "derived"
+          ],
+          [
+            "Synthetic",
+            "canonical",
+            "event"
+          ]
+        ],
+        "meeting.md": [
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ],
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ],
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ],
+          [
+            "Transcript",
+            "proposal",
+            "event"
+          ]
+        ]
+      }
     }
-  ]
+  ],
+  "expect_blame_note": "expect_blame: per document, every block's [author_kind, layer, layer_source] under spec §7 + K17-T + K-B1.1 (read by scripts/check_v3_compat.sh; the generator ignores it)"
 }
