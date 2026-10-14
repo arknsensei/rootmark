@@ -32,9 +32,18 @@ use tantivy::{DocSet, Index, IndexReader, ReloadPolicy, TantivyDocument, Term, T
 
 const TEXT: &str = "text";
 const ORD: &str = "ord";
-/// Writer memory budget: large enough for one segment at the measured scale;
-/// more segments are merged into one anyway.
-const WRITER_BUDGET: usize = 200_000_000;
+/// Writer memory budget per byte of indexed text. The writer must never
+/// flush an intermediate segment: tantivy merges segments of equal size in
+/// an order set by their random ids, so the merged document order — and the
+/// bytes — would vary between builds (C2 review). The budget is sized from
+/// the corpus, a corpus that cannot fit is an error, and `write` verifies
+/// one segment whose document order is storage order (`ord == doc`).
+const BUDGET_PER_TEXT_BYTE: usize = 32;
+const BUDGET_FLOOR: usize = 200_000_000;
+/// tantivy 0.26 per-thread writer budget bounds (`index_writer.rs`, not
+/// exported): `MARGIN_IN_BYTES` 1 MB; min 15 MB, max `u32::MAX` − 1 MB.
+pub const WRITER_BUDGET_MIN: usize = 15_000_000;
+pub const WRITER_BUDGET_MAX: usize = u32::MAX as usize - 1_000_000;
 
 fn schema() -> (Schema, Field, Field) {
     let mut sb = Schema::builder();
@@ -56,9 +65,32 @@ fn register(index: &Index) {
     );
 }
 
+/// Writer budget for `records`: `BUDGET_PER_TEXT_BYTE` × text bytes, at
+/// least `BUDGET_FLOOR`; beyond tantivy's maximum → error.
+pub fn budget_for(records: &[ChunkRecord]) -> Result<usize> {
+    let text: usize = records.iter().map(|r| r.text.len()).sum();
+    let want = text
+        .checked_mul(BUDGET_PER_TEXT_BYTE)
+        .context("lexical budget overflow")?
+        .max(BUDGET_FLOOR);
+    if want > WRITER_BUDGET_MAX {
+        bail!(
+            "{text} bytes of chunk text exceed the single-segment lexical index (writer budget {want} > {})",
+            WRITER_BUDGET_MAX
+        );
+    }
+    Ok(want)
+}
+
 /// Writes the tantivy index of `records` (storage order) into the empty or
 /// missing directory `dir`, then canonicalizes it.
 pub fn write(dir: &Path, records: &[ChunkRecord]) -> Result<()> {
+    write_with_budget(dir, records, budget_for(records)?)
+}
+
+/// `write` with an explicit writer budget (tests force intermediate
+/// segments with it): anything but one segment in storage order is an error.
+pub fn write_with_budget(dir: &Path, records: &[ChunkRecord], budget: usize) -> Result<()> {
     if dir.exists() && fs::read_dir(dir)?.next().is_some() {
         bail!("{} is not empty", dir.display());
     }
@@ -66,7 +98,7 @@ pub fn write(dir: &Path, records: &[ChunkRecord]) -> Result<()> {
     let (schema, text, ord) = schema();
     let index = Index::create_in_dir(dir, schema)?;
     register(&index);
-    let mut w = index.writer_with_num_threads::<TantivyDocument>(1, WRITER_BUDGET)?;
+    let mut w = index.writer_with_num_threads::<TantivyDocument>(1, budget)?;
     for (i, r) in records.iter().enumerate() {
         let mut d = TantivyDocument::default();
         d.add_text(text, &r.text);
@@ -74,15 +106,36 @@ pub fn write(dir: &Path, records: &[ChunkRecord]) -> Result<()> {
         w.add_document(d)?;
     }
     w.commit()?;
-    let ids = index.searchable_segment_ids()?;
-    if ids.len() > 1 {
-        w.merge(&ids).wait()?;
-    }
     w.wait_merging_threads()?;
     let n = index.searchable_segment_ids()?.len();
-    if n > usize::from(!records.is_empty()) {
-        bail!("lexical index has {n} segments after merge");
+    if n > 1 {
+        bail!(
+            "lexical writer flushed {n} segments (budget {budget} bytes): their merge order would not be deterministic"
+        );
     }
+    // document order must be storage order
+    let reader = index
+        .reader_builder()
+        .reload_policy(ReloadPolicy::Manual)
+        .try_into()?;
+    let searcher: tantivy::Searcher = reader.searcher();
+    for seg in searcher.segment_readers() {
+        let col = seg.fast_fields().u64(ORD)?;
+        for doc in 0..seg.max_doc() {
+            if col.first(doc) != Some(u64::from(doc)) {
+                bail!("lexical document {doc} is not record {doc}");
+            }
+        }
+    }
+    if searcher.num_docs() != records.len() as u64 {
+        bail!(
+            "lexical index holds {} of {} records",
+            searcher.num_docs(),
+            records.len()
+        );
+    }
+    drop(searcher);
+    drop(reader);
     canonicalize(dir)
 }
 

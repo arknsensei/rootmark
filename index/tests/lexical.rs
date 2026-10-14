@@ -261,3 +261,40 @@ fn tampered_index_files_are_errors() {
     assert!(format!("{:#}", Store::open(&v).err().unwrap()).contains("no index"));
     fs::remove_dir_all(root).unwrap();
 }
+
+/// C2 review fix 1: an intermediate segment (writer over budget) is an
+/// error, never a nondeterministic merge; the corpus-sized budget writes the
+/// same records as one segment.
+#[test]
+fn intermediate_segments_are_an_error_and_the_sized_budget_avoids_them() {
+    use mdkindex::lexical;
+    use mdkindex::record::ChunkRecord;
+    let word = |i: usize| format!("w{} ", i % 5000);
+    let records: Vec<ChunkRecord> = (0..3000)
+        .map(|i| {
+            let text: String = (0..1000).map(|j| word(i * 7 + j)).collect();
+            ChunkRecord {
+                record_id: format!("{i:032x}"),
+                doc_path: format!("d{i:05}.md"),
+                chunk_id: format!("{i:032x}"),
+                heading_path: vec![],
+                blocks: vec![],
+                lineage_ids: vec![],
+                lexical_len: 1000,
+                text,
+            }
+        })
+        .collect();
+    let small = tmp("small-budget");
+    let e =
+        lexical::write_with_budget(&small.join("lexical"), &records, lexical::WRITER_BUDGET_MIN)
+            .expect_err("over budget");
+    assert!(format!("{e:#}").contains("segments"), "{e:#}");
+    let (a, b) = (tmp("sized-a"), tmp("sized-b"));
+    lexical::write(&a.join("lexical"), &records).unwrap();
+    lexical::write(&b.join("lexical"), &records).unwrap();
+    assert_eq!(tree(&a), tree(&b));
+    for d in [small, a, b] {
+        fs::remove_dir_all(d).unwrap();
+    }
+}
