@@ -29,14 +29,23 @@ pub struct Manifest {
     pub files: BTreeMap<String, FileEntry>,
 }
 
-/// A model directory whose every file matched the manifest.
+/// A model directory whose every file matched the manifest; only `verify`
+/// constructs one.
 #[derive(Debug, Clone)]
 pub struct VerifiedModel {
-    pub dir: PathBuf,
-    pub manifest: Manifest,
+    dir: PathBuf,
+    manifest: Manifest,
 }
 
 impl VerifiedModel {
+    pub fn dir(&self) -> &Path {
+        &self.dir
+    }
+
+    pub fn manifest(&self) -> &Manifest {
+        &self.manifest
+    }
+
     pub fn path(&self, file: &str) -> PathBuf {
         self.dir.join(file)
     }

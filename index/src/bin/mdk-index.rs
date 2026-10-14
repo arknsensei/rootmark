@@ -61,9 +61,9 @@ fn run(cli: &Cli) -> Result<serde_json::Value> {
             Ok(json!({
                 "ok": true,
                 "root": root.display().to_string(),
-                "name": m.manifest.name,
-                "revision": m.manifest.revision,
-                "files": m.manifest.files.len(),
+                "name": m.manifest().name,
+                "revision": m.manifest().revision,
+                "files": m.manifest().files.len(),
                 "embedder_id": m.embedder_id(),
             }))
         }
