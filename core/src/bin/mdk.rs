@@ -1,5 +1,6 @@
-//! `mdk` CLI (SPEC §7–§8, §11). Every command prints JSON; `--pretty` indents
-//! it. Governance commands read `<vault>/.mdkernel/policy.toml` (built-in
+//! `mdk` CLI (SPEC §7–§9, §11). Every command prints JSON; `--pretty` indents
+//! it. `mdk index …` and `mdk search …` run the `mdk-index` binary of the
+//! `index` crate (see `delegate`). Governance commands read `<vault>/.mdkernel/policy.toml` (built-in
 //! recipe without one) and fail on an invalid recipe. Moves to `server` in
 //! P1-D.
 
@@ -15,7 +16,11 @@ use serde_json::{json, Value};
 use std::path::{Component, Path, PathBuf};
 
 #[derive(Parser)]
-#[command(name = "mdk", about = "mdkernel core CLI")]
+#[command(
+    name = "mdk",
+    about = "mdkernel core CLI",
+    after_help = "Index commands (run by mdk-index): mdk index build|status|compact|watch, mdk search <vault> <query> [--k] [--mode flat|lexical|hybrid] [--at <checkpoint>] [--include-proposal]"
+)]
 struct Cli {
     /// Indent JSON output
     #[arg(long, global = true)]
@@ -495,7 +500,68 @@ fn run(cmd: Cmd, m: MatcherVersion) -> Result<Value> {
     })
 }
 
+/// `mdk index …` and `mdk search …` (GOAL P1-C "CLI") are served by the
+/// `mdk-index` binary of the `index` crate: `core` cannot link `index`
+/// (dependency direction core ← index; ASSUMPTIONS P1-C C0-1), so `mdk`
+/// runs it with the same arguments and exits with its status. No index
+/// logic lives here. `$MDK_INDEX_BIN` overrides the binary next to `mdk`.
+const DELEGATED: [&str; 2] = ["index", "search"];
+
+fn index_bin() -> anyhow::Result<PathBuf> {
+    if let Some(p) = std::env::var_os("MDK_INDEX_BIN").filter(|p| !p.is_empty()) {
+        return Ok(PathBuf::from(p));
+    }
+    let exe = std::env::current_exe().context("locate mdk")?;
+    let p = exe.with_file_name(format!("mdk-index{}", std::env::consts::EXE_SUFFIX));
+    if !p.is_file() {
+        bail!(
+            "{} not found: `mdk index`/`mdk search` need the mdk-index binary next to mdk (cargo build --release -p mdkernel-index)",
+            p.display()
+        );
+    }
+    Ok(p)
+}
+
+/// The exit status of `mdk-index` when the command is delegated.
+fn delegate() -> Option<i32> {
+    let args: Vec<std::ffi::OsString> = std::env::args_os().skip(1).collect();
+    // the subcommand is the first argument that is neither a flag nor the
+    // value of `--matcher`
+    let mut skip_value = false;
+    let first = args.iter().find(|a| {
+        let s = a.to_string_lossy();
+        if skip_value {
+            skip_value = false;
+            return false;
+        }
+        if s == "--matcher" {
+            skip_value = true;
+            return false;
+        }
+        !s.starts_with('-')
+    })?;
+    if !DELEGATED.iter().any(|d| first == *d) {
+        return None;
+    }
+    let status = index_bin().and_then(|bin| {
+        std::process::Command::new(&bin)
+            .args(&args)
+            .status()
+            .with_context(|| format!("run {}", bin.display()))
+    });
+    Some(match status {
+        Ok(st) => st.code().unwrap_or(1),
+        Err(e) => {
+            eprintln!("error: {e:#}");
+            1
+        }
+    })
+}
+
 fn main() {
+    if let Some(code) = delegate() {
+        std::process::exit(code);
+    }
     let cli = Cli::parse();
     let name = cli
         .matcher
