@@ -96,6 +96,15 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `index/tests/conformance/eval_c3.rs` | `P1-C.1/C1.3:` | yeniden dondurma P1-C.1/F3: `canonical_prefix_of` gözlemi |
 | `index/tests/conformance_c3.rs` | `P1-C.1/C1.3:` | yeniden dondurma P1-C.1/F4: Seviye 3 = C3-01..C3-05, toplam 31 |
 | `index/tests/conformance_c3_gen.rs` | `P1-C.1/C1.3:` | yeniden dondurma P1-C.1/F5: 5 C3 dizini |
+| `scripts/verify.sh` | `P1-C.1/C1.4-pre:` | yeniden dondurma P1-C.1/F6: P1-C.1 zinciri (`p1c1-checks`, `compare_p1c1 pair`) |
+| `scripts/test_tamper_p1c.sh` | `P1-C.1/C1.4-pre:` | yeniden dondurma P1-C.1/F7: Seviye 3 toplamı 31 |
+| `scripts/test_p1c1.sh` | `P1-C.1/C1.4-pre:` | C1-4..C1-6 CLI kasıtlı testleri (kilit dosyası, boş sorgu, manifest alanları) |
+| `index/tests/p1c1.rs` | `P1-C.1/C1.4-pre:` | C1-2..C1-6 testleri (`MDK_P1C1_OUT`) |
+| `research/eval/compare_p1c1.py` | `P1-C.1/C1.4-pre:` | C1-8 karşılaştırıcısı (pair hariçsiz; regress K-C1.6 hariçleri) |
+| `research/eval/run_p1c1_checks.py` | `P1-C.1/C1.4-pre:` | C1-1..C1-9 RUN kaydı |
+| `research/eval/gen_quality_ref.py` | `P1-C.1/C1.4-pre:` | C1-9 referans üreteci (yalnız geçen C1-1 kanıtıyla) |
+| `research/data/quality_ref_rust.json` | `P1-C.1/C1.4-pre:` | Rust kalite regresyon referansı (K-C1.2; P1-C resmi RUN `c3_quality.json`'ından) |
+| `research/eval/report_p1c1.py` | `P1-C.1/C1.4-pre:` | P1-C.1 rapor üreteci (resmi RUN'dan önce) |
 <!-- /frozen-table -->
 
 ## Notlar

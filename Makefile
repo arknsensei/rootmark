@@ -22,7 +22,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps conformance regress verify models c3-quality p1c-checks report-p1c \
-        c1-variant
+        c1-variant p1c1-checks report-p1c1
 
 setup: setup-py build
 
@@ -313,7 +313,13 @@ P1C_WORK ?= $(CURDIR)/research/reports/p1c_work
 p1c-checks: require-run
 	cargo run -q --release -p mdkernel-index --bin mdk-index -- models verify >research/reports/runs/$(RUN)/models_verify.json
 	$(MAKE) conformance
-	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_full.json
+	@# since P1-C.1 the report holds C3-05 (K-C1.3, 31 entries, spec 1.0.2);
+	@# the frozen P1-C recorder reads the P1-C view of it (C1, C2, C3-01..04:
+	@# 30 entries, level 3 iff all 30 pass with an intact manifest; K-C1.6),
+	@# as p1b-checks reads the P1-B view; the full report is kept beside it
+	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_p1c1.json
+	jq '.tests |= map(select(.id != "C3-05")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_full.json
 	cargo test -p mdkernel-core --release --test compat_v3final kc01 -- --test-threads=1 \
 	  >research/reports/runs/$(RUN)/c13_tests.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/c13_tests.log >&2; exit 1; }
@@ -324,8 +330,12 @@ p1c-checks: require-run
 	MDK_C8_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c8_latency.json" \
 	  cargo test -q -p mdkernel-index --release --test hot c8 -- --test-threads=1
 	$(MAKE) c3-quality RUN=$(RUN)
-	$(PY) -m eval.compare_p1c regress $(P1B1_REF_RUN) reports/runs/$(RUN) \
-	  --out reports/runs/$(RUN)/regress_vs_p1b1.json >/dev/null
+	@# exit 3 (a difference) is recorded, not fatal, since P1-C.1: the spec
+	@# version 1.0.2 differs from the frozen B1-3 record by decision (K-C1.6);
+	@# C1-8 (compare_p1c1 regress) decides; a missing file/field (1) fails
+	rc=0; $(PY) -m eval.compare_p1c regress $(P1B1_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p1b1.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
 	$(PY) -m eval.run_p1c_checks --run $(RUN) --work "$(P1C_WORK)/$(RUN)"
 
 # P1-C round report from one RUN directory (TASKS C9): <RUN_DIR>/FINAL.md and
@@ -340,6 +350,33 @@ report-p1c:
 # cache data/d3_index/structural is built if missing).
 c1-variant: require-run
 	$(PY) -m eval.run_c1_variant --run $(RUN)
+
+# P1-C.1 criteria into the RUN (GOAL C1-1..C1-9): C1-1 (c1-variant), the
+# C1-2..C1-6 Rust tests (index/tests/p1c1.rs → p1c1/*.json), the CLI
+# deliberate tests (scripts/test_p1c1.sh → p1c1_cli.json), C1-8 regress
+# against the P1-C official RUN (eval.compare_p1c1, K-C1.6 exclusions;
+# exit 3 recorded, not fatal), then run_p1c1_checks → p1c1_checks.json (C1-7
+# from conformance_p1c1.json, C1-9 against data/quality_ref_rust.json).
+# Needs a RUN that `make p1c-checks` completed.
+P1C_REF_RUN := ../reports/rounds/P1-C/runs/20261015T014417Z-9aa326b
+p1c1-checks: require-run
+	$(MAKE) c1-variant RUN=$(RUN)
+	mkdir -p research/reports/runs/$(RUN)/p1c1
+	MDK_P1C1_OUT="$(CURDIR)/research/reports/runs/$(RUN)/p1c1" \
+	  cargo test -q -p mdkernel-index --release --test p1c1 -- --test-threads=1
+	bash scripts/test_p1c1.sh research/reports/runs/$(RUN)/p1c1_cli.json \
+	  >research/reports/runs/$(RUN)/p1c1_cli.log 2>&1 \
+	  || { cat research/reports/runs/$(RUN)/p1c1_cli.log >&2; exit 1; }
+	rc=0; $(PY) -m eval.compare_p1c1 regress $(P1C_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p1c.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	$(PY) -m eval.run_p1c1_checks --run $(RUN)
+
+# P1-C.1 round report from one RUN directory (TASKS C1.4): <RUN_DIR>/FINAL.md
+# and reports/rounds/P1-C.1/FINAL.md; the RUN must hold pair_compare.json
+report-p1c1:
+	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
+	$(PY) -m eval.report_p1c1 --run-dir "$(abspath $(RUN_DIR))"
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:

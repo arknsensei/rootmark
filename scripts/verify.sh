@@ -12,6 +12,14 @@
 # and P1-C files, the 200 rankings and every index file hash, the
 # governance vault bytes) and `compare-p1b` is kept unchanged.
 #
+# P1-C.1 (re-freeze P1-C.1/F6): after the P1-C corruptions the chain records
+# `make p1c1-checks` (C1-1 Python variant, C1-2..C1-6 tests, the CLI
+# deliberate tests `scripts/test_p1c1.sh`, C1-8 regress against the P1-C
+# official RUN, C1-9 → p1c1_checks.json); `pair` compares A ↔ B with
+# `eval.compare_p1c1 pair` (the P1-C pair set plus c1_variant.json and
+# p1c1_checks.json, no exclusion); `compare-p1c` is kept unchanged and
+# `compare-p1c1` is new.
+#
 #   scripts/verify.sh chain <source-repo> <workdir>
 #       clone <source-repo> into <workdir>/repo, `make setup`, rebuild and
 #       verify every research dataset against its committed manifest (d1hs
@@ -97,6 +105,9 @@ chain() {
   bash scripts/test_tamper_p1c.sh >"research/reports/runs/$run/tamper_p1c.log" 2>&1 \
     || { cat "research/reports/runs/$run/tamper_p1c.log" >&2; exit 1; }
   tail -1 "research/reports/runs/$run/tamper_p1c.log" >&2
+  log "P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)"
+  make p1c1-checks RUN="$run"
+  tail -1 "research/reports/runs/$run/p1c1_cli.log" >&2
   log "deliberate corruptions (B-7, B-8 and the P1-A cases)"
   bash scripts/test_tamper.sh "research/reports/runs/$run" >"research/reports/runs/$run/tamper.log" 2>&1 \
     || { cat "research/reports/runs/$run/tamper.log" >&2; exit 1; }
@@ -134,7 +145,7 @@ pair() {
     fi
   done
   cat "$res_a" "$res_b"
-  compare_p1c "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+  compare_p1c1 "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
 }
 
 compare() {
@@ -163,6 +174,19 @@ compare_p1c() {
   log "quality fields, rankings and index file hashes equal; traces.jsonl, checkpoints/, events.jsonl byte-equal"
 }
 
+compare_p1c1() {
+  local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
+  log "compare (P1-C.1) $dir_a $dir_b"
+  local rc=0
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p1c1 pair "$dir_a" "$dir_b" \
+    ${out:+--out "$out"}) >&2 || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "error: run comparison failed (compare_p1c1 pair exit $rc)" >&2
+    exit "$rc"
+  fi
+  log "quality fields, rankings, index file hashes, P1-C.1 checks equal; traces.jsonl, checkpoints/, events.jsonl byte-equal"
+}
+
 compare_p1b() {
   local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
   log "compare $dir_a $dir_b"
@@ -182,6 +206,7 @@ case "${1:-}" in
   compare) compare "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p1b) compare_p1b "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p1c) compare_p1c "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
+  compare-p1c1) compare_p1c1 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t mdk-verify.XXXXXX)"
@@ -189,7 +214,7 @@ case "${1:-}" in
     pair "$src" "$base/A" "$base/B"
     ;;
   *)
-    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c <repo> <runA> <runB> [out]]" >&2
+    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1 <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac

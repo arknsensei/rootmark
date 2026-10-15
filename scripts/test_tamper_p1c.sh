@@ -89,7 +89,7 @@ conf() { # conf <fixture root>: levels 1–3 against <root>, report in $work
     || { echo "error: level 1-2 checker failed (manifest $(jq -r .fixtures_manifest "$r" 2>/dev/null))"; return 1; }
   MDK_FIXTURES="$1" MDK_CONFORMANCE_REPORT="$r" cargo test -q -p mdkernel-index --release --test conformance_c3 >/dev/null 2>&1 \
     || { echo "error: level 3 checker failed ($(jq -r '[.tests[] | select(.result != "pass") | .id] | join(",")' "$r" 2>/dev/null))"; return 1; }
-  jq -e '.level_claimed == 3 and .passed == .total and .total == 30' "$r" >/dev/null
+  jq -e '.level_claimed == 3 and .passed == .total and .total == 31' "$r" >/dev/null
 }
 cp -R spec/fixtures "$work/fx0"
 conf "$work/fx0" || { echo "tamper P1-C: untouched fixture copy fails conformance" >&2; exit 1; }

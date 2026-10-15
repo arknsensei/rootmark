@@ -31,3 +31,15 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** üreteç C3-05'i de yazar.
 - **Önce/sonra bit eşitliği:** F2 ile aynı kayıt; üreteç iki kez koşturulunca ağaç değişmiyor.
 - **Gözden geçirici onayı:** C1.3.review.md.
+
+## F6 · C1.4-pre · `scripts/verify.sh` — P1-C.1 zinciri
+- **Ne:** `chain`'e P1-C kasıtlı bozmalarından sonra `make p1c1-checks RUN=…` (+ `p1c1_cli.log`'un son satırı); `pair`'in karşılaştırması `compare_p1c` → yeni `compare_p1c1` işlevi (`eval.compare_p1c1 pair`); yeni `compare-p1c1` modu; başlık yorumu; kullanım metni. `compare_p1c`, `compare_p1b`, `compare` işlevleri ve modları aynen duruyor; P1-A/P1-B/P1-C zincir adımlarının hepsi aynı sırada ve aynı komutlarla (`git diff p1c-final -- scripts/verify.sh`: silinen 2 satır = `pair`'deki çağrı ve kullanım metni).
+- **Neden:** GOAL C1.4 "verify.sh genişletme (C1-2..C1-6 kasıtlı testler dahil)"; C1-8 çift koşturma.
+- **Önce/sonra:** `compare_p1c1 pair`, `compare_p1c pair`'in her dosyasını (`compare_p1c.PAIR_FILES`) aynı dondurulmuş yaprak çıkarımı ve alan karşılaştırmasıyla, hariçsiz karşılaştırır ve `c1_variant.json`, `p1c1_checks.json`'u ekler (üst küme); bayt yapıtları `compare_p1b.bytes_equal` ile aynı. Geliştirme zinciri: C1.4.md.
+- **Gözden geçirici onayı:** C1.4.review.md.
+
+## F7 · C1.4-pre · `scripts/test_tamper_p1c.sh` — Seviye 3 toplamı 31
+- **Ne:** `conf()` içindeki `.total == 30` → `.total == 31` (tek satır).
+- **Neden:** C3-05 (K-C1.3, F2/F4): bozulmamış fixture kopyası artık 31/31; eski sayı "untouched fixture copy fails conformance" ile betiği durdururdu.
+- **Önce/sonra:** `bash scripts/test_tamper_p1c.sh` → 6/6 bozma reddedildi (P1-C'deki altı vaka, aynı ret nedenleri).
+- **Gözden geçirici onayı:** C1.4.review.md.
