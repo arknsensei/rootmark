@@ -1,6 +1,6 @@
 # P1-D — Bekleme (D3 PARK)
 
-Durum: AÇIK
+Durum: KAPANDI
 
 PROMPT: "D3 ve sonrası için ek koşul: `p1c1-final` etiketi ve reports/rounds/P1-C.1/VERIFICATION.md 'Güvenilir'. D2 bitince bu yoksa D3'ü PARK et, progress/WAITING.md yaz ve dur; etiket gelince aynı istemle devam et ve WAITING.md'yi kapat."
 
@@ -13,3 +13,6 @@ PARK: **D3** (search, read_block) ve ona bağlı **D4–D8** (propose, promote/c
 Devam: `p1c1-final` atanınca (P1-C.1'in doğrulanan READY commit'i `4856262`; emsal `p1c-final` = P1-C READY), aynı istemle (`/goal @docs/rounds/P1-D/PROMPT.md`) devam edilir: bu dosya "Durum: KAPANDI" + etiketin sha'sıyla kapatılır, D3 başlar.
 
 D3'e devredilen açık notlar: D-10'un `search` ile yeniden ölçümü; MCP tüketici kimliğinin (`<name>/<version>`) ize ulaştığının uçtan uca sınaması; Inspector 7/7.
+
+## Kapanış (2026-10-15)
+- `p1c1-final` = `4856262cd…` (P1-C.1 READY commit'i; `git rev-parse 'p1c1-final^{commit}'`). Etiket, kullanıcının bu oturumdaki açık onayıyla ("Tag 4856262 and continue") ajan tarafından atandı (ASSUMPTIONS D3-0). P1-C.1 VERIFICATION hükmü "Güvenilir" (satır 95). Koşulun iki yarısı da sağlandı; D3 PARK'tan çıkar.
