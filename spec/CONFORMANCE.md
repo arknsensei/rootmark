@@ -46,6 +46,7 @@ Each test has a fixture under `spec/fixtures/` (added in Phase 1 round A) and an
 | C3-02 | Hybrid fusion deterministic: same checkpoint + query → identical ranking, 10 runs | equality |
 | C3-03 | Index rebuild from checkpoint yields identical ranking | equality |
 | C3-04 | Retrieval never returns `derived` as content | property |
+| C3-05 | With `proposal` results requested, the `canonical` prefix equals the result without the request, every mode (§9, 1.0.2) | property |
 
 ## Reporting
 A conformance run produces `conformance.json` with one entry per test (`pass`/`fail`, actual vs expected hash). Level is claimed only if all tests of that level and below pass.
