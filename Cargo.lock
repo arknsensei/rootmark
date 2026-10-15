@@ -1351,6 +1351,7 @@ dependencies = [
  "anyhow",
  "axum",
  "clap",
+ "getrandom 0.3.4",
  "jsonschema",
  "mdkernel-core",
  "mdkernel-index",
@@ -1360,6 +1361,7 @@ dependencies = [
  "serde",
  "serde_json",
  "tokio",
+ "toml",
 ]
 
 [[package]]

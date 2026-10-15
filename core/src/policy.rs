@@ -2,7 +2,8 @@
 //! are declarative recipes with parameters inside the kernel bounds).
 //!
 //! ```toml
-//! promotion = "human_only"          # "deny" | "human_only"
+//! promotion = "human_only"          # "deny" | "human_only"; or the table
+//!                                   # [promotion] policy = "human_only"
 //!
 //! [version_trigger]
 //! idle_ms = 30000                   # >= 0
@@ -11,6 +12,10 @@
 //! [journal]
 //! retention_hours = 168             # >= 24
 //! ```
+//!
+//! The optional `[server]` and `[index]` tables (P1-D) belong to the
+//! `server` package: the kernel keeps them as written (`Policy::server`,
+//! `Policy::index`) and does not interpret them; `server` validates them.
 //!
 //! A present file must hold every field; unknown fields, unknown policies
 //! and values outside the kernel bounds are load errors — the loader never
@@ -61,14 +66,46 @@ pub struct Policy {
     pub trigger: IdleOrDistance,
     pub retention: JournalRetention,
     pub source: PolicySource,
+    /// `[server]` as written, for the `server` package (P1-D)
+    pub server: Option<toml::Table>,
+    /// `[index]` as written, for the `server` package (P1-D)
+    pub index: Option<toml::Table>,
 }
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct RawPolicy {
-    promotion: String,
+    promotion: RawPromotion,
     version_trigger: RawTrigger,
     journal: RawJournal,
+    server: Option<toml::Table>,
+    index: Option<toml::Table>,
+}
+
+/// `promotion = "<policy>"` or `[promotion] policy = "<policy>"` (P1-D).
+#[derive(Deserialize)]
+#[serde(untagged)]
+enum RawPromotion {
+    Name(String),
+    Table(toml::Table),
+}
+
+impl RawPromotion {
+    fn name(&self) -> Result<&str> {
+        match self {
+            RawPromotion::Name(n) => Ok(n),
+            RawPromotion::Table(t) => {
+                if let Some(k) = t.keys().find(|k| k.as_str() != "policy") {
+                    bail!("[promotion]: unknown field `{k}`, expected `policy`");
+                }
+                match t.get("policy") {
+                    Some(toml::Value::String(n)) => Ok(n),
+                    Some(_) => bail!("[promotion] policy must be a string"),
+                    None => bail!("[promotion]: missing field `policy`"),
+                }
+            }
+        }
+    }
 }
 
 #[derive(Deserialize)]
@@ -93,6 +130,8 @@ impl Policy {
             trigger: IdleOrDistance::new(30_000, 0.2).expect("built-in trigger within bounds"),
             retention: JournalRetention::new(168).expect("built-in retention within bounds"),
             source: PolicySource::Builtin,
+            server: None,
+            index: None,
         }
     }
 
@@ -116,13 +155,15 @@ impl Policy {
     pub fn parse(text: &str, source: PolicySource) -> Result<Policy> {
         let raw: RawPolicy = toml::from_str(text).context("invalid policy.toml")?;
         Ok(Policy {
-            promotion: Promotion::parse(&raw.promotion)?,
+            promotion: Promotion::parse(raw.promotion.name()?)?,
             trigger: IdleOrDistance::new(
                 raw.version_trigger.idle_ms,
                 raw.version_trigger.min_sim_change,
             )?,
             retention: JournalRetention::new(raw.journal.retention_hours)?,
             source,
+            server: raw.server,
+            index: raw.index,
         })
     }
 

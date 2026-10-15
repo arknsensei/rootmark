@@ -12,8 +12,9 @@ use mdkcore::vault::IngestSummary;
 use mdkcore::{
     Actor, AuthorKind, Layer, MatcherVersion, Policy, Provenance, TransitionKind, Vault,
 };
+use mdkserver::paths::doc_file;
 use serde_json::{json, Value};
-use std::path::{Component, Path, PathBuf};
+use std::path::{Path, PathBuf};
 
 #[derive(Parser)]
 #[command(name = "mdk", about = "mdkernel CLI")]
@@ -133,8 +134,9 @@ enum Cmd {
     Index(mdkindex::cli::IndexCmd),
     /// Ranked chunks as of a checkpoint; records one consumption trace
     Search(mdkindex::cli::SearchArgs),
-    /// Serve one vault: MCP over stdio (GOAL P1-D). Runs until the client
-    /// closes the stream; stdout carries only the protocol.
+    /// Serve one vault (GOAL P1-D): MCP over stdio, local HTTP API, file
+    /// watcher, hot-tier compaction; until SIGTERM/SIGINT or the end of the
+    /// MCP stream. stdout carries only MCP; progress goes to stderr.
     Serve(ServeArgs),
 }
 
@@ -145,18 +147,12 @@ struct ServeArgs {
     /// MCP transport (only `stdio`)
     #[arg(long, value_parser = ["stdio"])]
     mcp: Option<String>,
-}
-
-fn serve(a: ServeArgs) -> Result<()> {
-    if a.mcp.is_none() {
-        bail!("mdk serve: nothing to serve (--mcp stdio)");
-    }
-    let kernel = std::sync::Arc::new(mdkserver::tools::Kernel::open(&a.vault)?);
-    let rt = tokio::runtime::Builder::new_multi_thread()
-        .enable_all()
-        .build()
-        .context("tokio runtime")?;
-    rt.block_on(mdkserver::mcp::serve_stdio(kernel))
+    /// HTTP API address: 127.0.0.1:PORT (or 127.0.0.1 with [server] http_port)
+    #[arg(long)]
+    http: Option<String>,
+    /// ingest Markdown files changed under the vault as human content
+    #[arg(long)]
+    watch: bool,
 }
 
 #[derive(Subcommand)]
@@ -255,35 +251,6 @@ fn now_or(t: Option<u64>) -> Result<u64> {
                 .as_millis(),
         )?),
     }
-}
-
-/// `<vault>/<doc>` for a vault-relative, `/`-separated doc path. The path
-/// must stay inside the vault: no `..`/absolute components, and no existing
-/// component (directory or the file itself) may be a symbolic link, so a
-/// read or write can never leave the vault through a link.
-fn doc_file(vault: &Path, doc: &str) -> Result<PathBuf> {
-    let rel = Path::new(doc);
-    if doc.is_empty()
-        || !doc.ends_with(".md")
-        || rel.components().any(|c| !matches!(c, Component::Normal(_)))
-    {
-        bail!("doc {doc:?}: expected a vault-relative path to a .md file");
-    }
-    let root =
-        std::fs::canonicalize(vault).with_context(|| format!("vault {}", vault.display()))?;
-    let mut p = root.clone();
-    for c in rel.components() {
-        p.push(c);
-        if let Ok(m) = std::fs::symlink_metadata(&p) {
-            if m.file_type().is_symlink() {
-                bail!("doc {doc:?}: {} is a symbolic link", p.display());
-            }
-        }
-    }
-    if !p.starts_with(&root) {
-        bail!("doc {doc:?} resolves outside the vault");
-    }
-    Ok(p)
 }
 
 /// The vault and its policy; an invalid policy.toml fails before anything else.
@@ -539,7 +506,20 @@ fn main() {
         let res = if cli.pretty {
             Err(anyhow::anyhow!("mdk serve: --pretty does not apply"))
         } else {
-            serve(a)
+            cli.matcher
+                .clone()
+                .or_else(|| std::env::var("MDK_MATCHER").ok())
+                .map(|n| MatcherVersion::parse(&n))
+                .transpose()
+                .and_then(|matcher| {
+                    mdkserver::serve::run(mdkserver::serve::ServeOptions {
+                        vault: a.vault,
+                        mcp_stdio: a.mcp.is_some(),
+                        http: a.http,
+                        watch: a.watch,
+                        matcher,
+                    })
+                })
         };
         if let Err(e) = res {
             eprintln!("error: {e:#}");

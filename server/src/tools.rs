@@ -10,12 +10,14 @@
 //! a tool that has a CLI twin is the JSON that command prints.
 
 use anyhow::{bail, Context, Result};
-use mdkcore::{Policy, Vault};
+use mdkcore::{AuthorKind, MatcherVersion, Policy, Provenance, Vault};
+use mdkindex::store::{self, Store};
+use mdkindex::OnnxMiniLm;
 use serde::de::DeserializeOwned;
 use serde::Deserialize;
 use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 
 /// Spec version this build implements (spec/SPEC.md title).
 pub const SPEC_VERSION: &str = "1.0.2";
@@ -108,7 +110,12 @@ pub fn specs() -> Vec<ToolSpec> {
 pub struct Kernel {
     /// the vault path as given (`mdk serve --vault`); `status` reports it
     vault: PathBuf,
+    /// `--matcher` for ingests the server makes (watcher, `propose`); `None`:
+    /// the vault's lock, else v3 (as `mdk index watch`)
+    matcher: Option<MatcherVersion>,
     lock: Mutex<()>,
+    /// loaded on first use, then shared (ONNX session behind a mutex)
+    embedder: Mutex<Option<Arc<OnnxMiniLm>>>,
 }
 
 #[derive(Deserialize)]
@@ -156,14 +163,89 @@ impl Kernel {
     /// A kernel serving `vault`, which must be an existing vault directory
     /// whose log opens.
     pub fn open(vault: &Path) -> Result<Kernel> {
+        Self::open_with(vault, None)
+    }
+
+    pub fn open_with(vault: &Path, matcher: Option<MatcherVersion>) -> Result<Kernel> {
         if !vault.is_dir() {
             bail!("vault {} is not a directory", vault.display());
         }
         Vault::open(vault).with_context(|| format!("open vault {}", vault.display()))?;
         Ok(Kernel {
             vault: vault.to_path_buf(),
+            matcher,
             lock: Mutex::new(()),
+            embedder: Mutex::new(None),
         })
+    }
+
+    fn guard(&self) -> Result<std::sync::MutexGuard<'_, ()>> {
+        self.lock
+            .lock()
+            .map_err(|_| anyhow::anyhow!("an earlier tool call panicked; restart the server"))
+    }
+
+    /// The embedder (the only one, `minilm-l6-v2`; models/MANIFEST.json).
+    pub fn embedder(&self) -> Result<Arc<OnnxMiniLm>> {
+        let mut e = self
+            .embedder
+            .lock()
+            .map_err(|_| anyhow::anyhow!("embedder lock poisoned"))?;
+        if e.is_none() {
+            *e = Some(Arc::new(OnnxMiniLm::load_default()?));
+        }
+        Ok(e.as_ref().expect("set above").clone())
+    }
+
+    fn matcher_for(&self, v: &Vault) -> MatcherVersion {
+        self.matcher
+            .or_else(|| v.matcher_lock())
+            .unwrap_or(MatcherVersion::V3)
+    }
+
+    /// Builds the index if the vault has none (`mdk index build`); `None`
+    /// if one exists. The served index must exist before searches and
+    /// watched edits.
+    pub fn ensure_index(&self) -> Result<Option<store::BuildReport>> {
+        let _g = self.guard()?;
+        let v = Vault::open(&self.vault)?;
+        if store::index_dir(&v).join("manifest.json").exists() {
+            return Ok(None);
+        }
+        let e = self.embedder()?;
+        Ok(Some(store::build(&v, e.as_ref())?))
+    }
+
+    /// A document edited outside the server (`--watch`): ingested as human
+    /// content (spec §7: `human` → `canonical`), new chunks to the hot tier
+    /// (`Store::watch_with`). An unchanged document writes nothing.
+    pub fn watch_doc(&self, doc: &str, source: &str) -> Result<store::WatchReport> {
+        let _g = self.guard()?;
+        let path = crate::paths::doc_file(&self.vault, doc)?;
+        let text =
+            std::fs::read_to_string(&path).with_context(|| format!("read {}", path.display()))?;
+        let mut v = Vault::open(&self.vault)?;
+        let e = self.embedder()?;
+        let mut s = Store::open(&v, e.as_ref())?;
+        let m = self.matcher_for(&v);
+        let prov = Provenance {
+            author_kind: AuthorKind::Human,
+            source: source.to_string(),
+        };
+        s.watch_with(&mut v, e.as_ref(), doc, &text, prov, m)
+    }
+
+    /// Moves the hot tier into the cold index if it holds anything
+    /// (`mdk index compact`); `None` when the hot tier is empty.
+    pub fn compact(&self) -> Result<Option<store::CompactReport>> {
+        let _g = self.guard()?;
+        let v = Vault::open(&self.vault)?;
+        let e = self.embedder()?;
+        let st = Store::open(&v, e.as_ref())?.status(&v)?;
+        if st.hot_records == 0 && st.hot_snapshots == 0 {
+            return Ok(None);
+        }
+        Ok(Some(store::compact(&v, e.as_ref())?))
     }
 
     pub fn vault(&self) -> &Path {
@@ -174,10 +256,7 @@ impl Kernel {
     /// `X-Consumer`; `None`: unidentified, refused by tools that record a
     /// trace); an unknown tool is an error.
     pub fn call(&self, name: &str, a: &Value, consumer: Option<&str>) -> Result<Value> {
-        let _g = self
-            .lock
-            .lock()
-            .map_err(|_| anyhow::anyhow!("an earlier tool call panicked; restart the server"))?;
+        let _g = self.guard()?;
         let _ = consumer;
         match name {
             "status" => {
@@ -241,6 +320,7 @@ impl Kernel {
             "index": if embedder.is_null() { "absent" } else { "present" },
             "last_checkpoint": v.checkpoints().last(),
             "policy": policy.to_json(),
+            "server_policy": crate::config::ServerConfig::from_policy(&policy)?.to_json(),
         }))
     }
 }

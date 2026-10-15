@@ -9,7 +9,8 @@
 #      one agent document (`mdk propose`), one CLI read (one trace),
 #      checkpoint `t1` — all through the CLI, before the server starts;
 #   2. `mdk serve --vault vault --mcp stdio` (cwd = the run directory, so
-#      the vault path is the same relative path in both runs), driven by
+#      the vault path is the same relative path in both runs; it writes the
+#      default policy recipe and builds the index at start), driven by
 #      `session.jsonl`: initialize (clientInfo mcp-e2e/1.0), tools/list,
 #      then for every tool its calls, valid and deliberately invalid;
 #   3. per tool, every check on its responses (jq) must hold.
@@ -107,8 +108,8 @@ check handshake "tools/list has every tool of this round" \
 check status "valid call" "$ok_result" 3
 check status "versions, level, relative vault path" \
   '.result.structuredContent | .spec_version == "1.0.2" and .level_claimed == 3 and .vault == "vault" and (.mdk_version | type == "string")' 3
-check status "last checkpoint t1, policy reported" \
-  '.result.structuredContent | .last_checkpoint.name == "t1" and (.policy.promotion | type == "string") and .embedder == null' 3
+check status "last checkpoint t1, default policy human_only, index built at start" \
+  '.result.structuredContent | .last_checkpoint.name == "t1" and .policy.promotion == "human_only" and .index == "present" and (.embedder | startswith("minilm-l6-v2/")) and .server_policy.server.max_propose_bytes == 1048576' 3
 check status "unknown argument is an error" "$tool_err" 4
 
 check history "valid call" "$ok_result" 5
