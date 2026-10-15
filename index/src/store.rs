@@ -429,6 +429,9 @@ pub struct Store {
     lexical: Lexical,
     /// hot postings: token → (position, term frequency), position order
     hot_postings: HashMap<String, Vec<(usize, u32)>>,
+    /// a hot append failed part-way: the files may be misaligned, no
+    /// further append (reopen to get the error, rebuild to repair)
+    poisoned: bool,
 }
 
 impl Store {
@@ -462,7 +465,9 @@ impl Store {
         let cold_len = records.len();
         let mut all_snaps = snaps;
         let mut hot_snapshots = 0;
-        if let Some(hot) = load_hot(&dir, &manifest)? {
+        if let Some(hot) = load_hot(&dir, &manifest)
+            .context("hot tier invalid (rebuild with `mdk index build`)")?
+        {
             hot_snapshots = hot.snaps.len();
             records.extend(hot.records);
             vecs.extend(hot.vecs);
@@ -479,6 +484,7 @@ impl Store {
             snapshots: HashMap::new(),
             lexical,
             hot_postings: HashMap::new(),
+            poisoned: false,
         };
         for (r, v) in records.into_iter().zip(vecs) {
             store.add_record(r, v)?;
@@ -582,6 +588,9 @@ impl Store {
         text: &str,
         prov: mdkcore::Provenance,
     ) -> Result<WatchReport> {
+        if self.poisoned {
+            bail!("an earlier hot append failed; reopen the index (`mdk index build` repairs it)");
+        }
         if embedder.id() != self.manifest.embedder_id {
             bail!(
                 "watch embedder {} != index embedder {}",
@@ -637,16 +646,18 @@ impl Store {
                 embedder_id: embedder.id().to_string(),
             })
             .collect();
-        append(&h.join("records.jsonl"), &jsonl(&owned)?)?;
-        append(&h.join("embedders.jsonl"), &jsonl(&metas)?)?;
-        append(
-            &h.join("vectors.f32"),
-            &vectors::encode(&vecs, self.manifest.dim)?,
-        )?;
-        append(
-            &h.join("snapshots.jsonl"),
-            &jsonl(std::slice::from_ref(&entry))?,
-        )?;
+        let (rb, eb, vb, sb) = (
+            jsonl(&owned)?,
+            jsonl(&metas)?,
+            vectors::encode(&vecs, self.manifest.dim)?,
+            jsonl(std::slice::from_ref(&entry))?,
+        );
+        self.poisoned = true;
+        append(&h.join("records.jsonl"), &rb)?;
+        append(&h.join("embedders.jsonl"), &eb)?;
+        append(&h.join("vectors.f32"), &vb)?;
+        append(&h.join("snapshots.jsonl"), &sb)?;
+        self.poisoned = false;
         report.embedded = owned.len();
         for (r, v) in owned.into_iter().zip(vecs) {
             self.add_record(r, v)?;
