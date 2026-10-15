@@ -86,8 +86,9 @@ fn watched_doc(root: &Path, p: &Path) -> Option<String> {
     doc.ends_with(".md").then_some(doc)
 }
 
-/// The watcher thread: batches events for 50 ms, then ingests each changed
-/// document once, in byte order. Returns the watcher (dropping it stops the
+/// The watcher thread: batches the events that name a document (50 ms of
+/// quiet, at most 250 ms; other events are dropped and never extend a
+/// batch), then ingests each changed document once, in byte order. Returns the watcher (dropping it stops the
 /// events, which ends the thread).
 fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
     use notify::{RecursiveMode, Watcher};
@@ -96,28 +97,52 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
     let mut w = notify::recommended_watcher(tx).context("start the file watcher")?;
     w.watch(&root, RecursiveMode::Recursive)
         .with_context(|| format!("watch {}", root.display()))?;
+    // the documents an event names (none for `.mdkernel/` writes, hidden
+    // or non-Markdown paths, and access events)
+    let docs_of = move |ev: notify::Result<notify::Event>, root: &Path| -> Vec<String> {
+        match ev {
+            Ok(ev) if !matches!(ev.kind, notify::EventKind::Access(_)) => ev
+                .paths
+                .into_iter()
+                // macOS reports /private/var/… for /var/…
+                .filter_map(|p| watched_doc(root, &std::fs::canonicalize(&p).unwrap_or(p)))
+                .collect(),
+            Ok(_) => Vec::new(),
+            Err(e) => {
+                log(format!("watch: error: {e}"));
+                Vec::new()
+            }
+        }
+    };
     std::thread::spawn(move || {
         while let Ok(first) = rx.recv() {
-            let mut batch = vec![first];
-            while let Ok(ev) = rx.recv_timeout(Duration::from_millis(50)) {
-                batch.push(ev);
+            let mut docs: std::collections::BTreeSet<String> =
+                docs_of(first, &root).into_iter().collect();
+            if docs.is_empty() {
+                continue; // the server's own writes under .mdkernel/ etc.
             }
-            let mut docs = std::collections::BTreeSet::new();
-            for ev in batch {
-                match ev {
+            // gather the rest of the batch: until 50 ms pass without an
+            // event naming a document, and at most 250 ms in all, so a
+            // stream of unrelated events (searches writing traces) can
+            // never hold a change back
+            let start = std::time::Instant::now();
+            let mut last = start;
+            loop {
+                let quiet = Duration::from_millis(50).saturating_sub(last.elapsed());
+                let left = Duration::from_millis(250).saturating_sub(start.elapsed());
+                let wait = quiet.min(left);
+                if wait.is_zero() {
+                    break;
+                }
+                match rx.recv_timeout(wait) {
                     Ok(ev) => {
-                        if matches!(ev.kind, notify::EventKind::Access(_)) {
-                            continue;
-                        }
-                        for p in ev.paths {
-                            // macOS reports /private/var/… for /var/…
-                            let p = std::fs::canonicalize(&p).unwrap_or(p);
-                            if let Some(d) = watched_doc(&root, &p) {
-                                docs.insert(d);
-                            }
+                        let d = docs_of(ev, &root);
+                        if !d.is_empty() {
+                            last = std::time::Instant::now();
+                            docs.extend(d);
                         }
                     }
-                    Err(e) => log(format!("watch: error: {e}")),
+                    Err(_) => break,
                 }
             }
             for d in docs {

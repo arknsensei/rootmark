@@ -1,11 +1,11 @@
 //! D-10 (GOAL P1-D; TASKS D2): `mdk serve --watch`. A copy of
 //! spec/fixtures/mini_vault is served (`--http 127.0.0.1:0 --watch`); 20
 //! times a human paragraph with a new word is appended to a document from
-//! outside the server, and the time until the server has ingested and
-//! indexed it is measured: the HTTP `blame` of the document shows the new
-//! block (the watcher ingests and appends to the hot tier under the same
-//! lock as tool calls, so a block visible to `blame` is in the hot tier).
-//! Every new block must be `canonical`, author `Human`. Pass: p95 < 1000 ms.
+//! outside the server, and the time until the HTTP `search` (lexical, at
+//! the checkpoint of the current state) returns that document for the new
+//! word is measured (P1-D/D3; in D2 the HTTP `blame` stood in for it). The
+//! hit must be `canonical` and the new block's author `Human` (`blame`).
+//! Pass: p95 < 1000 ms.
 //! `MDK_D10_OUT` receives the latencies and the result. Then SIGTERM: the
 //! server compacts and exits 0. Needs the model files (`make models`).
 
@@ -126,28 +126,42 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
     let mut layers_ok = true;
     for i in 0..20 {
         let doc = docs[i % docs.len()];
-        let before = blame(port, &token, doc).len();
+        let word = format!("quetzal{i}");
         let p = vault.join(doc);
         let mut text = std::fs::read_to_string(&p).unwrap();
         text.push_str(&format!(
-            "\nWatched human paragraph number {i} about quetzal{i} extraction.\n"
+            "\nWatched human paragraph number {i} about {word} extraction.\n"
         ));
         let t0 = Instant::now();
         std::fs::write(&p, text).unwrap();
-        let blocks = loop {
-            let b = blame(port, &token, doc);
-            if b.len() > before {
-                break b;
+        // found by `search` (hot tier), at the checkpoint of the current state
+        let hit = loop {
+            let (st, v) = http(
+                port,
+                "POST",
+                "/v1/search",
+                &token,
+                &json!({"query": word, "mode": "lexical", "k": 1}).to_string(),
+            );
+            assert_eq!(st, 200, "{v}");
+            if let Some(h) = v["hits"].as_array().and_then(|h| h.first()) {
+                if h["doc_path"] == doc {
+                    break h.clone();
+                }
             }
             assert!(
                 t0.elapsed() < Duration::from_secs(10),
-                "edit {i} of {doc} not ingested after 10 s"
+                "edit {i} of {doc} not searchable after 10 s"
             );
             std::thread::sleep(Duration::from_millis(5));
         };
         lat.push(t0.elapsed().as_secs_f64() * 1000.0);
+        let blocks = blame(port, &token, doc);
         let last = blocks.last().unwrap();
-        if last["layer"] != "canonical" || last["author_kind"] != "Human" {
+        if hit["layer"] != "canonical"
+            || last["layer"] != "canonical"
+            || last["author_kind"] != "Human"
+        {
             layers_ok = false;
         }
         // let the watcher's batch window close before the next edit

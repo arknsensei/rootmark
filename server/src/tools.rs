@@ -11,6 +11,7 @@
 
 use anyhow::{bail, Context, Result};
 use mdkcore::{AuthorKind, MatcherVersion, Policy, Provenance, Vault};
+use mdkindex::search::{Mode, Searcher};
 use mdkindex::store::{self, Store};
 use mdkindex::OnnxMiniLm;
 use serde::de::DeserializeOwned;
@@ -54,6 +55,52 @@ pub fn specs() -> Vec<ToolSpec> {
                 last checkpoint (spec §8) and the active policy recipe (promotion policy, spec §7). \
                 Writes nothing.",
             input_schema: object_schema(json!({}), &[]),
+        },
+        ToolSpec {
+            name: "search",
+            description: "Retrieval as of a checkpoint (spec §9): ranked chunks for a query, lexical \
+                (BM25), flat (exact cosine) or hybrid (reciprocal rank fusion, the default), at the \
+                checkpoint `at` or at the checkpoint of the current state. Only `canonical` content \
+                is returned unless `include_proposal` is set; then up to `k` `proposal` chunks, \
+                ranked apart with the canonical statistics, labelled `proposal` with their score \
+                multiplied by 0.5, follow the unchanged canonical hits (spec §7, §9). `derived` is \
+                never returned. Records one consumption trace for the calling consumer (spec §8). \
+                An empty or whitespace-only query is an error and records nothing.",
+            input_schema: object_schema(
+                json!({
+                    "query": {"type": "string", "minLength": 1,
+                        "description": "the query text (not empty, not only whitespace)"},
+                    "k": {"type": "integer", "minimum": 1, "maximum": 1000,
+                        "description": "canonical hits to return (default 10)"},
+                    "mode": {"type": "string", "enum": ["hybrid", "lexical", "flat"],
+                        "description": "retrieval mode (default hybrid)"},
+                    "at": {"type": "string", "minLength": 1,
+                        "description": "checkpoint id or name (default: the current state's)"},
+                    "include_proposal": {"type": "boolean",
+                        "description": "also return labelled proposal chunks (default false)"},
+                }),
+                &["query"],
+            ),
+        },
+        ToolSpec {
+            name: "read_block",
+            description: "One block as of a checkpoint (spec §8): its version (version id, type, \
+                text, heading path, parents), layer (spec §7) and provenance (author kind, \
+                source), for lineage `lineage_id` of document `doc_path`; at checkpoint `at` or at \
+                the checkpoint of the current state. Records one consumption trace for the calling \
+                consumer. A `derived` block is never returned; a lineage that is not live in that \
+                document at that checkpoint is an error and records nothing.",
+            input_schema: object_schema(
+                json!({
+                    "doc_path": {"type": "string", "minLength": 1,
+                        "description": "vault-relative path of the Markdown document"},
+                    "lineage_id": {"type": "string", "minLength": 1,
+                        "description": "lineage id (32 lowercase hex)"},
+                    "at": {"type": "string", "minLength": 1,
+                        "description": "checkpoint id or name (default: the current state's)"},
+                }),
+                &["doc_path", "lineage_id"],
+            ),
         },
         ToolSpec {
             name: "history",
@@ -124,6 +171,24 @@ struct NoArgs {}
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
+struct SearchArgs {
+    query: String,
+    k: Option<usize>,
+    mode: Option<String>,
+    at: Option<String>,
+    include_proposal: Option<bool>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct ReadBlockArgs {
+    doc_path: String,
+    lineage_id: String,
+    at: Option<String>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
 struct HistoryArgs {
     lineage_id: String,
 }
@@ -150,6 +215,15 @@ fn args<T: DeserializeOwned>(tool: &str, a: &Value) -> Result<T> {
         bail!("{tool}: arguments must be a JSON object");
     }
     serde_json::from_value(a).with_context(|| format!("{tool}: invalid arguments"))
+}
+
+/// The consumer a trace-recording tool records; none → error (an MCP client
+/// that has not identified itself in `initialize`, or no `X-Consumer`).
+fn need_consumer<'c>(tool: &str, consumer: Option<&'c str>) -> Result<&'c str> {
+    match consumer {
+        Some(c) if !c.trim().is_empty() => Ok(c),
+        _ => bail!("{tool}: records a consumption trace and needs a consumer identity (MCP initialize clientInfo, or HTTP X-Consumer)"),
+    }
 }
 
 fn non_empty(tool: &str, field: &str, v: &str) -> Result<()> {
@@ -257,8 +331,64 @@ impl Kernel {
     /// trace); an unknown tool is an error.
     pub fn call(&self, name: &str, a: &Value, consumer: Option<&str>) -> Result<Value> {
         let _g = self.guard()?;
-        let _ = consumer;
         match name {
+            "search" => {
+                let x: SearchArgs = args(name, a)?;
+                // before anything is opened: an empty query records nothing (K-C1.5)
+                mdkindex::search::check_query(&x.query)?;
+                let consumer = need_consumer(name, consumer)?;
+                let k = x.k.unwrap_or(10);
+                if !(1..=1000).contains(&k) {
+                    bail!("search: k = {k} outside [1, 1000]");
+                }
+                let mode = Mode::parse(x.mode.as_deref().unwrap_or("hybrid"))?;
+                let mut v = Vault::open(&self.vault)?;
+                let e = self.embedder()?;
+                let s = Store::open(&v, e.as_ref())?;
+                let mut se = Searcher::new(&s, e.as_ref(), consumer)?;
+                let r = se.search(
+                    &mut v,
+                    mode,
+                    &x.query,
+                    k,
+                    x.at.as_deref(),
+                    x.include_proposal.unwrap_or(false),
+                )?;
+                Ok(serde_json::to_value(r)?)
+            }
+            "read_block" => {
+                let x: ReadBlockArgs = args(name, a)?;
+                non_empty(name, "doc_path", &x.doc_path)?;
+                non_empty(name, "lineage_id", &x.lineage_id)?;
+                let consumer = need_consumer(name, consumer)?;
+                mdkcore::check_trace_input(consumer, &mdkcore::hash32(""))?;
+                let mut v = Vault::open(&self.vault)?;
+                let cp = match &x.at {
+                    Some(a) => v.find_checkpoint(a)?,
+                    None => v.head_checkpoint()?,
+                };
+                // the lineage must be live in this document at the
+                // checkpoint, checked before the trace is written
+                let in_doc = v
+                    .blocks_at(&x.doc_path, &cp.checkpoint_id)?
+                    .iter()
+                    .any(|b| b.lineage_id == x.lineage_id);
+                if !in_doc {
+                    bail!(
+                        "read_block: lineage {} is not live in {} at checkpoint {}",
+                        x.lineage_id,
+                        x.doc_path,
+                        cp.checkpoint_id
+                    );
+                }
+                let (mut blocks, trace) = v.read_blocks(
+                    std::slice::from_ref(&x.lineage_id),
+                    consumer,
+                    &cp.checkpoint_id,
+                )?;
+                let rb = blocks.pop().context("read_blocks returned no block")?;
+                Ok(json!({"checkpoint_id": cp.checkpoint_id, "block": rb, "trace": trace}))
+            }
             "status" => {
                 args::<NoArgs>(name, a)?;
                 self.status()

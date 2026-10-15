@@ -15,4 +15,4 @@ Devam: `p1c1-final` atanınca (P1-C.1'in doğrulanan READY commit'i `4856262`; e
 D3'e devredilen açık notlar: D-10'un `search` ile yeniden ölçümü; MCP tüketici kimliğinin (`<name>/<version>`) ize ulaştığının uçtan uca sınaması; Inspector 7/7.
 
 ## Kapanış (2026-10-15)
-- `p1c1-final` = `4856262cd…` (P1-C.1 READY commit'i; `git rev-parse 'p1c1-final^{commit}'`). Etiket, kullanıcının bu oturumdaki açık onayıyla ("Tag 4856262 and continue") ajan tarafından atandı (ASSUMPTIONS D3-0). P1-C.1 VERIFICATION hükmü "Güvenilir" (satır 95). Koşulun iki yarısı da sağlandı; D3 PARK'tan çıkar.
+- `p1c1-final` = `48562625f8…` (P1-C.1 READY commit'i; `git rev-parse 'p1c1-final^{commit}'`). Etiket, kullanıcının bu oturumdaki açık onayıyla ("Tag 4856262 and continue") ajan tarafından atandı (ASSUMPTIONS D3-0). P1-C.1 VERIFICATION hükmü "Güvenilir" (satır 95). Koşulun iki yarısı da sağlandı; D3 PARK'tan çıkar.

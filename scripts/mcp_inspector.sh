@@ -61,6 +61,8 @@ tool_args() {
     history) echo "lineage_id=$lineage" ;;
     blame) echo "doc_path=espresso.md" ;;
     trace) echo "since_seq=0" ;;
+    search) echo "query=espresso k=3" ;;
+    read_block) echo "doc_path=espresso.md lineage_id=$lineage" ;;
     *) echo "mcp_inspector: no call arguments for tool $1" >&2; return 1 ;;
   esac
 }
