@@ -9,7 +9,7 @@
 | S3 | C1.0 | §9, yeni madde 7 | "Informative: lexical scoring is declarative …" — `lexical.{variant,idf,k1,b,tokenizer}` manifest kaydı, başvuru değerleri | sağlar (bilgilendirici) | sağlar (bilgilendirici not hiçbir uygulamayı bağlamaz) | **açıklık** (K-C1.1) |
 | S4 | C1.0 | §9, son madde (P1-C S1'in bilgilendirici notu) | istatistikler "uygun chunk'lar" → "`canonical` chunk'lar"; proposal'lar kendi aralarında sıralanır (hybrid: her tarafın ilk 50 proposal'ı), her katmandan en çok `k`; "sorgu yalnız indeks dosyalarını okur" (K-C1.4) | sağlar (bilgilendirici; normatif değer S1'den gelir) | sağlar | **açıklık** |
 | S5 | C1.0 | başlık + durum satırı | `v1.0.1` → `v1.0.2`, sürüm cümlesi | sağlar | sağlar | **açıklık** (sürüm damgası; artışın gerekçesi aşağıda) |
-| S6 | C1.4 | durum satırı | §9 "Draft" → "Validated" **yalnız** GOAL karar kuralı sağlanırsa (C1-1 ∧ diğerleri geçti) | sağlar | sağlar | **açıklık** (karar kuralına bağlı damga; P1-B E4 emsali) — C1.4'te uygulanıp uygulanmadığı READY/FINAL'de |
+| S6 | C1.4 | durum satırı | §9 "Draft" → "Validated" **yalnız** GOAL karar kuralı sağlanırsa (C1-1 ∧ diğerleri geçti) | sağlar | sağlar | **açıklık** (karar kuralına bağlı damga; P1-B E4 emsali) — **uygulandı** (C1.4): resmi RUN `20261015T094412Z-b9f7622`'de C1-1..C1-9 geçti; durum satırı "Validated for §9 (P1-C, P1-C.1; Level 3)", başlık "§9 (Validated, P1-C.1)" |
 
 Uyumluluk: `spec/CONFORMANCE.md` Seviye 3'e **C3-05** satırı (K-C1.3). `core/tests/conformance.rs` `spec_version` `1.0.1` → `1.0.2` (dondurma istisnası P1-C.1/F1). C3-01..04'ün beklenen değerlerinden K-C1.3 gereği değişenler C1.3'te aşağıya eklenir.
 

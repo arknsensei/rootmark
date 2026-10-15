@@ -1,6 +1,6 @@
 # mdkernel Specification v1.0.2
 
-Status: **Frozen for §1–§6 (validated by prototype rounds v1–v3, Oct 2026); Validated for §7, §8, §11 (Phase 1 round P1-B, Oct 2026; conformance Level 2); Draft for §9–§10 (to be validated in Phase 1).** Version 1.0.2 (Phase 1 round P1-C.1): §9 requested `proposal` results are ranked apart from, and appended after, unchanged `canonical` results; empty queries are rejected; lexical scoring is declared in the index manifest (informative). Version 1.0.1 (Phase 1 round P1-B.1): §7 undeclared `synthetic` → `canonical`; §8 `trace_id` with separators and input validation; §7/§8 serialization normative. §1–§6 are unchanged. License: Apache-2.0 (specification). Language: English, for publication; implementation directives are maintained in Turkish under `docs/`.
+Status: **Frozen for §1–§6 (validated by prototype rounds v1–v3, Oct 2026); Validated for §7, §8, §11 (Phase 1 round P1-B, Oct 2026; conformance Level 2); Validated for §9 (Phase 1 rounds P1-C, P1-C.1, Oct 2026; conformance Level 3); Draft for §10 (to be validated in Phase 1).** Version 1.0.2 (Phase 1 round P1-C.1): §9 requested `proposal` results are ranked apart from, and appended after, unchanged `canonical` results; empty queries are rejected; lexical scoring is declared in the index manifest (informative). Version 1.0.1 (Phase 1 round P1-B.1): §7 undeclared `synthetic` → `canonical`; §8 `trace_id` with separators and input validation; §7/§8 serialization normative. §1–§6 are unchanged. License: Apache-2.0 (specification). Language: English, for publication; implementation directives are maintained in Turkish under `docs/`.
 
 The key words MUST, MUST NOT, SHOULD, MAY are to be interpreted as in RFC 2119.
 
@@ -97,7 +97,7 @@ Every version has `layer ∈ {canonical, proposal, derived}`; layers MUST be ser
 - **Checkpoint**: `{checkpoint_id, name?, event_seq, docs: {doc_path: snapshot_id}}`. Immutable. Any query MAY be evaluated "as of" a checkpoint; the result MUST be identical for the same checkpoint and query (§10).
 - **Consumption trace**: `.mdkernel/traces.jsonl`, append-only: `{trace_id, checkpoint_id, consumer, query_hash, returned: [(doc_path, lineage_id, version_id)], at_seq}`; each `returned` entry MUST be serialized as an object with the keys `doc_path`, `lineage_id`, `version_id`. `trace_id = H(checkpoint_id + "\n" + consumer + "\n" + query_hash + "\n" + at_seq)`, where `at_seq` is written in decimal. `query_hash` MUST be exactly 32 lowercase hexadecimal characters and `consumer` MUST NOT contain `"\n"`; a trace violating either MUST be rejected. Traces answer "which block versions did this answer depend on".
 
-## 9. Indexes and retrieval (Draft)
+## 9. Indexes and retrieval (Validated, P1-C.1)
 
 - A lexical index (BM25 or equivalent) MUST be provided and is part of the default retrieval path.
 - A vector index MAY be provided. Hybrid fusion (reciprocal rank fusion) is the reference default.

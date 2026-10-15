@@ -1,0 +1,126 @@
+{
+ "H1-H1": 0.9928741092636579,
+ "H1-H2": 0.0,
+ "H1-H3": 0.9972222222222222,
+ "H1-H4": 1.0,
+ "b9": {
+  "H1-H1": {
+   "pass": true,
+   "threshold": ">= 0.9",
+   "value": 0.9928741092636579
+  },
+  "H1-H2": {
+   "pass": true,
+   "threshold": "<= 0.03",
+   "value": 0.0
+  },
+  "H1-H3": {
+   "pass": true,
+   "threshold": ">= 0.7",
+   "value": 0.9972222222222222
+  }
+ },
+ "disjoint": {
+  "d1ho_and_easy": 0,
+  "d1ho_and_hard": 0,
+  "d1hs_and_d1ho": 0,
+  "d1hs_and_easy": 0,
+  "d1hs_and_hard": 0,
+  "d1hs_texts_equal_to_d3": 0,
+  "easy_and_hard": 0,
+  "n": {
+   "d1ho": 100,
+   "d1hs": 60,
+   "easy": 200,
+   "hard": 200
+  }
+ },
+ "eligible_docs": 102,
+ "holdout_split": {
+  "H1-H1": 0.9928741092636579,
+  "H1-H2": 0.0,
+  "H1-H2_v2def": 0.4444444444444444,
+  "H1-H3": 0.9972222222222222,
+  "H1-H3_detail": {
+   "f1": 0.9972222222222222,
+   "n_pred": 360,
+   "n_truth": 360,
+   "precision": 0.9972222222222222,
+   "recall": 0.9972222222222222,
+   "tp": 359
+  },
+  "H1-H4": 1.0,
+  "n_docs": 60,
+  "n_dup": 58,
+  "n_false_match": 450,
+  "n_false_match_v2def": 810,
+  "n_retention": 421,
+  "n_steps": 600,
+  "per_op": {
+   "dup_delete_adjacent": {
+    "retention": 1.0,
+    "steps": 29
+   },
+   "insert": {
+    "false_match": 0.0,
+    "steps": 27
+   },
+   "merge_edit": {
+    "event_recall": 1.0,
+    "retention": 1.0,
+    "steps": 60
+   },
+   "move_edit": {
+    "retention": 1.0,
+    "steps": 39
+   },
+   "rephrase_extreme": {
+    "retention": 0.896551724137931,
+    "steps": 29
+   },
+   "rephrase_heavy": {
+    "retention": 1.0,
+    "steps": 45
+   },
+   "rephrase_light": {
+    "retention": 1.0,
+    "steps": 71
+   },
+   "split_edit": {
+    "event_recall": 1.0,
+    "false_match": 0.0,
+    "retention": 1.0,
+    "steps": 177
+   },
+   "split_three": {
+    "event_recall": 0.991869918699187,
+    "false_match": 0.0,
+    "retention": 1.0,
+    "steps": 123
+   }
+  }
+ },
+ "matcher": "v3",
+ "realised_ops": {
+  "n_scored": 600,
+  "rates": {
+   "dup_delete_adjacent": 0.048333,
+   "insert": 0.045,
+   "merge_edit": 0.1,
+   "move_edit": 0.065,
+   "rephrase_extreme": 0.048333,
+   "rephrase_heavy": 0.075,
+   "rephrase_light": 0.118333,
+   "split_edit": 0.295,
+   "split_three": 0.205
+  }
+ },
+ "set": "d1hs",
+ "source": {
+  "pathspec": "src/*.md",
+  "repo": "https://github.com/rust-lang/book",
+  "rev": "1500248d8f230566e4ec9f27fcbb8fe9e2898ab1"
+ },
+ "theta": 0.5,
+ "theta_split": 0.65
+}
