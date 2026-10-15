@@ -21,7 +21,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
 .PHONY: report report-p1b test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
-        check-deps test-check-deps conformance regress verify models c3-quality
+        check-deps test-check-deps conformance regress verify models c3-quality p1c-checks report-p1c
 
 setup: setup-py build
 
@@ -213,7 +213,13 @@ p1a-checks: require-run
 # P1-B.1: v3_compat_mixed.json — mixed-author v3-final vaults (B1-1).
 p1b-checks: require-run
 	$(MAKE) conformance
-	cp reports/conformance.json research/reports/runs/$(RUN)/conformance.json
+	@# since P1-C the report holds levels 1–3 and C2-09 (K-C0.2); the frozen
+	@# P1-B/P1-B.1 recorders read the P1-B view of it (C1-01..17, C2-01..08:
+	@# 25 entries, level 2 iff all 25 pass with an intact manifest), as
+	@# p1a-checks reads the level-1 view; the full report is kept beside it
+	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_full.json
+	jq '.tests |= map(select(.level <= 2 and .id != "C2-09")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
+	  reports/conformance.json >research/reports/runs/$(RUN)/conformance.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
 	cargo build --release -q -p mdkernel-core --bin mdk
@@ -294,6 +300,38 @@ models:
 # c3_quality.json into the RUN (needs `make models`, `make d3`).
 c3-quality: require-run
 	$(PY) -m eval.run_c3_quality --run $(RUN)
+
+# P1-C criteria into the RUN (TASKS C9; GOAL C-1..C-13): model manifest,
+# conformance levels 1–3, the C-13 compat tests (log), the C-7 property,
+# C-10 embedding and C-8 latency tests (JSON; C-8 single-threaded), C-3
+# (c3-quality), C-11 (compare_p1c regress against the P1-B.1 official RUN;
+# needs p1b-checks and p1b1-checks in the same RUN), then run_p1c_checks
+# (C-4, C-5, C-6 inputs, C-9 on a D3 copy under P1C_WORK) → p1c_checks.json.
+P1B1_REF_RUN := ../reports/rounds/P1-B.1/runs/20261014T212243Z-226b511
+P1C_WORK ?= $(CURDIR)/research/reports/p1c_work
+p1c-checks: require-run
+	cargo run -q --release -p mdkernel-index --bin mdk-index -- models verify >research/reports/runs/$(RUN)/models_verify.json
+	$(MAKE) conformance
+	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_full.json
+	cargo test -p mdkernel-core --release --test compat_v3final kc01 -- --test-threads=1 \
+	  >research/reports/runs/$(RUN)/c13_tests.log 2>&1 \
+	  || { cat research/reports/runs/$(RUN)/c13_tests.log >&2; exit 1; }
+	MDK_C7_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c7_property.json" \
+	  cargo test -q -p mdkernel-index --release --test governance c7_property -- --test-threads=1
+	MDK_C10_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c10_embedding.json" \
+	  cargo test -q -p mdkernel-index --release --test embed c10 -- --test-threads=1
+	MDK_C8_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c8_latency.json" \
+	  cargo test -q -p mdkernel-index --release --test hot c8 -- --test-threads=1
+	$(MAKE) c3-quality RUN=$(RUN)
+	$(PY) -m eval.compare_p1c regress $(P1B1_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p1b1.json >/dev/null
+	$(PY) -m eval.run_p1c_checks --run $(RUN) --work "$(P1C_WORK)/$(RUN)"
+
+# P1-C round report from one RUN directory (TASKS C9): <RUN_DIR>/FINAL.md and
+# reports/rounds/P1-C/FINAL.md; the RUN must hold pair_compare.json
+report-p1c:
+	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
+	$(PY) -m eval.report_p1c --run-dir "$(abspath $(RUN_DIR))"
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:

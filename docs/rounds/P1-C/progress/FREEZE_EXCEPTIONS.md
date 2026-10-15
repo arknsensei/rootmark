@@ -43,3 +43,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** C7 gözden geçirme 1, not 2: aynı kökten ama başka fixture'larla yazılmış eski bir raporun elle uzatılmasını kapatır.
 - **Önce/sonra bit eşitliği:** `make conformance` → 30/30, `level_claimed 3`; rapor girdileri değişmedi (yalnız C3-03'ün beklenen hash'i, F6).
 - **Gözden geçirici onayı:** C7.review.md (gözden geçirme 2).
+
+## F8 · C9-pre · `scripts/verify.sh` — P1-C doğrulama zinciri
+- **Ne:** zincire eklenenler: `make setup`'tan sonra `make models` (indir + manifest), `make p1b-checks`'ten sonra `make p1b1-checks` (C-11 girdisi), `make p1c-checks` (D3 determinizm vault'u `<workdir>/p1c_work/<RUN>/`), `scripts/test_tamper_p1c.sh` (log RUN'a); `pair` A ↔ B karşılaştırmasında `compare_p1c pair` (P1-B kümesi + P1-B.1 ve P1-C dosyaları + 200 sıralama + her indeks dosyasının hash'i + yönetişim baytları); yeni `compare-p1c` modu. Değişen eski satırlar (`git diff p1b1-final -- scripts/verify.sh`, silinen 4 satır): başlık yorumu (P1-C eklendi), günlük metni "conformance (level 2)" → "(level 3)", `pair`'in karşılaştırma çağrısı (`compare_p1b` → `compare_p1c`; `compare-p1b` modu ve işlevi aynen duruyor), kullanım metni (`compare-p1c` eklendi). P1-A/P1-B zincir adımlarının hepsi aynı sırada ve aynı komutlarla.
+- **Neden:** TASKS C9 "verify.sh: models → conformance L3 → regress (P1-B.1 seti + C-3) → determinism → hot → property → tamper → pair compare".
+- **Önce/sonra:** `compare_p1c pair`, `compare_p1b`'nin karşılaştırdığı her dosyayı (`RESULT_FILES_P1B`) ve her bayt yapıtını (`compare_p1b.bytes_equal`) aynı dondurulmuş `compare_runs.compare` ile karşılaştırır, üstüne yeni dosyaları ekler (üst küme; hariç tutma yok). Geliştirme koşturmasında (bu ağaç, atılan RUN) zincirin adımları sırayla geçti; `compare_p1c pair` bir RUN'ı kendisiyle 99 053 alanda fark 0 buldu; `test_tamper_p1c.sh` 6/6 ret. Resmi çift koşturma: C9.md.
+- **Gözden geçirici onayı:** C9.review.md.

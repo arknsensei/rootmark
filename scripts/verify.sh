@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 # Independent end-to-end reproduction (docs/DEV_PROCESS.md §5,
-# docs/rounds/P1-B/VERIFY.md; P1-B TASKS B9).
+# docs/rounds/P1-B/VERIFY.md; P1-B TASKS B9; P1-C TASKS C9).
+#
+# P1-C (re-freeze P1-C/F8): after `make setup` the chain fetches and checks
+# the embedder model (`make models`); conformance is level 3 (30 tests);
+# after p1b-checks it records `make p1b1-checks` (P1-B.1 set, C-11 input)
+# and `make p1c-checks` (C-1..C-13 into p1c_checks.json; the D3
+# determinism vault in <workdir>/p1c_work/<RUN>/.mdkernel/index/) and runs
+# the P1-C deliberate corruptions (`scripts/test_tamper_p1c.sh`); `pair`
+# compares A ↔ B with `eval.compare_p1c pair` (the P1-B set plus the P1-B.1
+# and P1-C files, the 200 rankings and every index file hash, the
+# governance vault bytes) and `compare-p1b` is kept unchanged.
 #
 #   scripts/verify.sh chain <source-repo> <workdir>
 #       clone <source-repo> into <workdir>/repo, `make setup`, rebuild and
@@ -57,13 +67,15 @@ chain() {
   log "commit $(git rev-parse HEAD)"
   log "setup"
   make setup >"$work/setup.log" 2>&1 || { tail -40 "$work/setup.log" >&2; exit 1; }
+  log "models (fetch + manifest check)"
+  make models >"$work/models.log" 2>&1 || { tail -20 "$work/models.log" >&2; exit 1; }
   log "datasets (d2 d3 d1 d1k4 d1h d1ho d1sh d1hs, manifests verified)"
   make datasets
   log "freeze-check (v2), freeze-check-v3, check_frozen"
   make freeze-check
   make freeze-check-v3
   bash scripts/check_frozen.sh
-  log "conformance (level 2)"
+  log "conformance (level 3)"
   make conformance
   local run
   run="$(cd research && uv run --frozen python -m eval.runinfo)"
@@ -77,6 +89,14 @@ chain() {
   make p1a-checks RUN="$run"
   log "governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)"
   make p1b-checks RUN="$run"
+  log "P1-B.1 checks (B1-1..B1-6 recorded again; C-11 input)"
+  make p1b1-checks RUN="$run"
+  log "P1-C checks (C-1..C-13; D3 determinism vault under $work/p1c_work)"
+  make p1c-checks RUN="$run" P1C_WORK="$work/p1c_work"
+  log "P1-C deliberate corruptions (model manifest, embedder_id, fixtures)"
+  bash scripts/test_tamper_p1c.sh >"research/reports/runs/$run/tamper_p1c.log" 2>&1 \
+    || { cat "research/reports/runs/$run/tamper_p1c.log" >&2; exit 1; }
+  tail -1 "research/reports/runs/$run/tamper_p1c.log" >&2
   log "deliberate corruptions (B-7, B-8 and the P1-A cases)"
   bash scripts/test_tamper.sh "research/reports/runs/$run" >"research/reports/runs/$run/tamper.log" 2>&1 \
     || { cat "research/reports/runs/$run/tamper.log" >&2; exit 1; }
@@ -114,7 +134,7 @@ pair() {
     fi
   done
   cat "$res_a" "$res_b"
-  compare_p1b "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+  compare_p1c "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
 }
 
 compare() {
@@ -128,6 +148,19 @@ compare() {
     exit "$rc"
   fi
   log "max relative difference of quality fields = 0"
+}
+
+compare_p1c() {
+  local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
+  log "compare (P1-C) $dir_a $dir_b"
+  local rc=0
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p1c pair "$dir_a" "$dir_b" \
+    ${out:+--out "$out"}) >&2 || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "error: run comparison failed (compare_p1c pair exit $rc)" >&2
+    exit "$rc"
+  fi
+  log "quality fields, rankings and index file hashes equal; traces.jsonl, checkpoints/, events.jsonl byte-equal"
 }
 
 compare_p1b() {
@@ -148,6 +181,7 @@ case "${1:-}" in
   pair) pair "${2:?source repo}" "${3:?workdir A}" "${4:?workdir B}" ;;
   compare) compare "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p1b) compare_p1b "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
+  compare-p1c) compare_p1c "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t mdk-verify.XXXXXX)"
@@ -155,7 +189,7 @@ case "${1:-}" in
     pair "$src" "$base/A" "$base/B"
     ;;
   *)
-    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b <repo> <runA> <runB> [out]]" >&2
+    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac

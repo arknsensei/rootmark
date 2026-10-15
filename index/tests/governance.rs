@@ -216,6 +216,23 @@ fn c7_property_1000_queries() {
         }
     }
     eprintln!("c7: {} queries x 2 settings, {seen_proposal} proposal hits returned with include_proposal; layers {:?}", qs.len(), [counts(Layer::Canonical), counts(Layer::Proposal), counts(Layer::Derived)]);
+    if let Ok(p) = std::env::var("MDK_C7_OUT") {
+        let out = serde_json::json!({
+            "queries": qs.len(),
+            "modes": ["flat", "lexical", "hybrid"],
+            "settings": ["default", "include_proposal"],
+            "chunks_by_layer": {
+                "canonical": counts(Layer::Canonical),
+                "proposal": counts(Layer::Proposal),
+                "derived": counts(Layer::Derived),
+            },
+            "proposal_hits_with_include_proposal": seen_proposal,
+            "proposal_or_derived_hits_by_default": 0,
+            "derived_hits": 0,
+            "pass": seen_proposal > 0,
+        });
+        fs::write(p, serde_json::to_string_pretty(&out).unwrap() + "\n").unwrap();
+    }
     assert!(seen_proposal > 0, "no query reached a proposal");
     fs::remove_dir_all(root).unwrap();
 }

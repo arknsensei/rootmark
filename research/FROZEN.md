@@ -79,6 +79,15 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `spec/fixtures/**` | `P1-C/C7-fix:` | yeniden dondurma P1-C/F6: C3-03 sonraki içerikle güçlendirildi (C7 gözden geçirme 1) |
 | `index/tests/conformance_c3.rs` | `P1-C/C7-fix:` | yeniden dondurma P1-C/F7: rapor `fixtures_manifest_hash` denetimi |
 | `research/eval/run_c3_quality.py` | `P1-C/C8:` | C-3 koşturucusu (eşik kodda; sonuç görüldükten sonra değiştirilmedi) |
+| `scripts/verify.sh` | `P1-C/C9-pre:` | yeniden dondurma P1-C/F8: P1-C zinciri (models, Seviye 3, p1b1-checks, p1c-checks, tamper P1-C, `compare_p1c pair`) |
+| `research/eval/run_p1c_checks.py` | `P1-C/C9-pre:` | C-1..C-13 RUN kaydı (C-4/5/6/9 D3'te) |
+| `research/eval/compare_p1c.py` | `P1-C/C9-pre:` | C-6 (pair) ve C-11 (regress, karar gereği hariçler) karşılaştırıcısı |
+| `research/eval/report_p1c.py` | `P1-C/C9-pre:` | P1-C rapor üreteci (resmi RUN'dan önce) |
+| `scripts/test_tamper_p1c.sh` | `P1-C/C9-pre:` | P1-C kasıtlı bozma vakaları |
+| `index/tests/governance.rs` | `P1-C/C9-pre:` | C-7 property testi (`MDK_C7_OUT`) |
+| `index/tests/embed.rs` | `P1-C/C9-pre:` | C-10 testi (`MDK_C10_OUT`) |
+| `index/tests/hot.rs` | `P1-C/C9-pre:` | C-8 ve C-9 testleri (`MDK_C8_OUT`) |
+| `core/tests/compat_v3final.rs` | `P1-C/C9-pre:` | C-13 testleri (`kc01_*`) |
 <!-- /frozen-table -->
 
 ## Notlar

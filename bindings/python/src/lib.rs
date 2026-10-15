@@ -194,6 +194,42 @@ impl Vault {
         self.inner.matcher_lock().map(|m| m.as_str())
     }
 
+    /// `index watch` (P1-C): ingests `text` as `doc_path` with this handle's
+    /// matcher and adds the new head's unindexed chunks to the hot tier.
+    #[pyo3(signature = (doc_path, text, author_kind="Human", source=""))]
+    fn index_watch(
+        &mut self,
+        py: Python<'_>,
+        doc_path: &str,
+        text: &str,
+        author_kind: &str,
+        source: &str,
+    ) -> PyResult<Py<PyAny>> {
+        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let mut store = mdkindex::store::Store::open(&self.inner, &e).map_err(err)?;
+        let prov = Provenance {
+            author_kind: author(author_kind)?,
+            source: source.to_string(),
+        };
+        let r = store
+            .watch_with(&mut self.inner, &e, doc_path, text, prov, self.matcher)
+            .map_err(err)?;
+        to_py(py, &r)
+    }
+
+    /// `index compact` (P1-C): the hot tier moved into a new cold index.
+    fn index_compact(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
+        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
+        to_py(py, &mdkindex::store::compact(&self.inner, &e).map_err(err)?)
+    }
+
+    /// `index status` (P1-C).
+    fn index_status(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
+        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let store = mdkindex::store::Store::open(&self.inner, &e).map_err(err)?;
+        to_py(py, &store.status(&self.inner).map_err(err)?)
+    }
+
     /// Checkpoint of the current state (spec §8): `{checkpoint_id, name,
     /// event_seq, docs}`; same state → same id.
     #[pyo3(signature = (name=None))]

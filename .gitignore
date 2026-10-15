@@ -23,6 +23,8 @@ node_modules/
 # research run outputs (local; reference runs and round reports are committed explicitly)
 /research/reports/runs/*
 !/research/reports/runs/.gitkeep
+# P1-C determinism vaults (D3 copies, ~70 MB; make p1c-checks)
+/research/reports/p1c_work/
 !/research/reports/runs/20261013T154851Z-f133d0b/
 !/research/reports/runs/20261013T182004Z-f82dabd/
 
