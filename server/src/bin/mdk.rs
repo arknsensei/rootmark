@@ -535,7 +535,13 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
 fn main() {
     let cli = Cli::parse();
     if let Cmd::Serve(a) = cli.cmd {
-        if let Err(e) = serve(a) {
+        // serve prints no JSON: --pretty would be silently ignored
+        let res = if cli.pretty {
+            Err(anyhow::anyhow!("mdk serve: --pretty does not apply"))
+        } else {
+            serve(a)
+        };
+        if let Err(e) = res {
             eprintln!("error: {e:#}");
             std::process::exit(1);
         }

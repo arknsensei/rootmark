@@ -188,12 +188,9 @@ impl Kernel {
                 let x: HistoryArgs = args(name, a)?;
                 non_empty(name, "lineage_id", &x.lineage_id)?;
                 let v = Vault::open(&self.vault)?;
-                // the CLI's `history` output (unknown lineage: layer null)
+                // the CLI's `history` output (an unknown lineage is an error)
                 let layer = v.layer_of(&x.lineage_id).ok();
                 let events = v.history(&x.lineage_id)?;
-                if events.is_empty() {
-                    bail!("history: lineage {} is not in the log", x.lineage_id);
-                }
                 Ok(json!({"lineage_id": x.lineage_id, "layer": layer, "events": events}))
             }
             "blame" => {
