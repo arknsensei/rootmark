@@ -1,0 +1,73 @@
+{
+  "id": "C3-02",
+  "title": "Hybrid fusion deterministic: same checkpoint and query give an identical ranking over 10 runs",
+  "kind": "retrieval",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest_dir",
+      "dir": "../mini_vault"
+    },
+    {
+      "op": "ingest",
+      "doc": "agent/zanzibar.md",
+      "file": "agent.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "checkpoint",
+      "name": "t0"
+    },
+    {
+      "op": "build"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "roast development after first crack",
+        "descaling the machine every month",
+        "water temperature for filter coffee",
+        "cupping score sheet",
+        "grinder burr cleaning",
+        "staff opening shift",
+        "safety around hot water",
+        "zanzibar steeping method"
+      ],
+      "repeat": 10
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 10,
+      "include_proposal": true,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "roast development after first crack",
+        "descaling the machine every month",
+        "water temperature for filter coffee",
+        "cupping score sheet",
+        "grinder burr cleaning",
+        "staff opening shift",
+        "safety around hot water",
+        "zanzibar steeping method"
+      ],
+      "repeat": 10
+    },
+    {
+      "op": "traces"
+    }
+  ]
+}

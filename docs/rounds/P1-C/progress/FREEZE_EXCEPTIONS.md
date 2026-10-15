@@ -25,3 +25,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** üreteç C2-09'u da yazar; eski sayı denetimi üretimi durdururdu.
 - **Önce/sonra bit eşitliği:** F3 ile aynı kayıt.
 - **Gözden geçirici onayı:** C0.review.md.
+
+## F5 · C7 · `spec/fixtures/**` — C3-01..C3-04 (Seviye 3)
+- **Ne:** yeni dizinler `spec/fixtures/C3-01..04/` (`case.c3.json`, `agent.md`, `expected.json`; insan belgeleri `../mini_vault`'tan okunur) ve `MANIFEST.json`'a yalnız bu on iki dosyanın satırı. Üretim: `bash scripts/gen_fixtures_c3.sh` (C3 mevcut indeksten, C1 + manifest dondurulmuş v3-final üretecinden).
+- **Neden:** GOAL P1-C C-1, TASKS C7.
+- **Önce/sonra bit eşitliği:** `git diff p1b1-final -- spec/fixtures` silinen satır 0 (C1, C2-01..08 ve C0'daki C2-09 dosyaları bayt eşit); `make conformance` raporunda Seviye 1–2'nin C2-09 dışındaki 25 girdisi P1-B.1 resmi RUN'ı ile bayt eşit (sha256 `f5196a0d…`), C2-09 C0'daki değerle aynı; çekirdek denetleyici (`core/tests/conformance.rs`) değişmedi.
+- **Gözden geçirici onayı:** C7.review.md.

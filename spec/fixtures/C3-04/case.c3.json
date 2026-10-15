@@ -1,0 +1,162 @@
+{
+  "id": "C3-04",
+  "title": "Retrieval never returns derived as content",
+  "kind": "retrieval",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest_dir",
+      "dir": "../mini_vault"
+    },
+    {
+      "op": "ingest",
+      "doc": "agent/zanzibar.md",
+      "file": "agent.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "demote",
+      "doc": "agent/zanzibar.md",
+      "block": 2,
+      "to": "derived",
+      "reason": "machine summary"
+    },
+    {
+      "op": "demote",
+      "doc": "espresso.md",
+      "block": 1,
+      "to": "derived",
+      "reason": "generated text"
+    },
+    {
+      "op": "checkpoint",
+      "name": "t0"
+    },
+    {
+      "op": "build"
+    },
+    {
+      "op": "view",
+      "at": "t0"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "flat",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "roast development after first crack",
+        "descaling the machine every month",
+        "water temperature for filter coffee",
+        "cupping score sheet",
+        "grinder burr cleaning",
+        "staff opening shift",
+        "safety around hot water",
+        "zanzibar steeping method"
+      ]
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "flat",
+      "k": 10,
+      "include_proposal": true,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "roast development after first crack",
+        "descaling the machine every month",
+        "water temperature for filter coffee",
+        "cupping score sheet",
+        "grinder burr cleaning",
+        "staff opening shift",
+        "safety around hot water",
+        "zanzibar steeping method"
+      ]
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "lexical",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "roast development after first crack",
+        "descaling the machine every month",
+        "water temperature for filter coffee",
+        "cupping score sheet",
+        "grinder burr cleaning",
+        "staff opening shift",
+        "safety around hot water",
+        "zanzibar steeping method"
+      ]
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "lexical",
+      "k": 10,
+      "include_proposal": true,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "roast development after first crack",
+        "descaling the machine every month",
+        "water temperature for filter coffee",
+        "cupping score sheet",
+        "grinder burr cleaning",
+        "staff opening shift",
+        "safety around hot water",
+        "zanzibar steeping method"
+      ]
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "roast development after first crack",
+        "descaling the machine every month",
+        "water temperature for filter coffee",
+        "cupping score sheet",
+        "grinder burr cleaning",
+        "staff opening shift",
+        "safety around hot water",
+        "zanzibar steeping method"
+      ]
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 10,
+      "include_proposal": true,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "roast development after first crack",
+        "descaling the machine every month",
+        "water temperature for filter coffee",
+        "cupping score sheet",
+        "grinder burr cleaning",
+        "staff opening shift",
+        "safety around hot water",
+        "zanzibar steeping method"
+      ]
+    }
+  ]
+}

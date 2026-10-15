@@ -71,6 +71,11 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/data/embed_ref.json` | `P1-C/C1:` | C-10 referansı: 50 D3 structural chunk + prototip vektörleri |
 | `research/eval/gen_tok_ref.py` | `P1-C/C2:` | tokenizer referans üreteci (prototip `bm25_tokens`) |
 | `research/data/tok_ref.json` | `P1-C/C2:` | tokenizer referansı: 200 D3 structural chunk + 8 kenar dizgisi |
+| `spec/fixtures/**` | `P1-C/C7:` | yeniden dondurma P1-C/F5: C3-01..C3-04 (Seviye 3); `MANIFEST.json` yalnız C3 satırları |
+| `index/tests/conformance_c3.rs` | `P1-C/C7:` | Seviye 3 denetleyicisi (raporu uzatır, `level_claimed 3`) |
+| `index/tests/conformance/eval_c3.rs` | `P1-C/C7:` | C3 değerlendiricisi (üreteçle ortak) |
+| `index/tests/conformance_c3_gen.rs` | `P1-C/C7:` | C3 fixture üreteci (mevcut indeksten) |
+| `scripts/gen_fixtures_c3.sh` | `P1-C/C7:` | C3 fixture üreteci betiği |
 <!-- /frozen-table -->
 
 ## Notlar
