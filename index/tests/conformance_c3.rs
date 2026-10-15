@@ -1,12 +1,13 @@
-//! Conformance Level 3 (spec/CONFORMANCE.md C3-01..C3-04; spec §9) — the
+//! Conformance Level 3 (spec/CONFORMANCE.md C3-01..C3-05 — C3-05 since
+//! P1-C.1, K-C1.3; spec §9) — the
 //! index part of `make conformance`.
 //!
 //! `core`'s frozen checker (`core/tests/conformance.rs`) evaluates Levels 1
 //! and 2 and writes `reports/conformance.json`; it cannot run the index
 //! (`core` does not depend on `index`). This checker evaluates
 //! `spec/fixtures/C3-*/case.c3.json` with `conformance/eval_c3.rs` and, with
-//! `MDK_CONFORMANCE_REPORT`, extends that report: four Level 3 entries,
-//! `total` 30, `level_claimed` 3 when Levels 1–2 were claimed (2, intact
+//! `MDK_CONFORMANCE_REPORT`, extends that report: five Level 3 entries,
+//! `total` 31, `level_claimed` 3 when Levels 1–2 were claimed (2, intact
 //! fixture manifest — which also lists every C3 file) and every C3 case
 //! passes. Expected outputs are written by `scripts/gen_fixtures_c3.sh`.
 //! The fixture root is resolved at run time (`MDK_FIXTURES`, else
@@ -20,7 +21,7 @@ use serde_json::{json, Value};
 use std::fs;
 use std::path::{Path, PathBuf};
 
-const LEVEL3: [&str; 4] = ["C3-01", "C3-02", "C3-03", "C3-04"];
+const LEVEL3: [&str; 5] = ["C3-01", "C3-02", "C3-03", "C3-04", "C3-05"];
 const LOWER_TOTAL: u64 = 26;
 
 fn fixtures() -> PathBuf {

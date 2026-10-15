@@ -22,3 +22,19 @@ Uyumluluk: `spec/CONFORMANCE.md` Seviye 3'e **C3-05** satırı (K-C1.3). `core/t
 3. S1 ve S2 yalnız §9'u etkiler; §9'un damgası **Draft**'tır (K-C0.3: damga spec'ten). §1–6'ya dokunulmaz. → yama koşulu sağlanır.
 4. "Kırıcı değişiklik → majör" ile çakışma: (b)'yi sağlamayan her düzenleme bir anlamda kırıcıdır; CRITERION'un kendi yeniden sınıflandırma tablosu ve emsal K-B1.2/K-B1.3 bunu çözer: P1-B.1'de §7/§8'deki (b)'yi sağlamayan değişiklikler (E1 küçük harf katman, E2 `returned` biçimi, K-B1.2 `trace_id` formülü — C2-07 beklenen değeri değişti) **yama** olarak `1.0.0 → 1.0.1` yapıldı. Draft bir bölümün doğrulanmadan önce daraltılması aynı sınıftadır. DEV_PROCESS §8'in "kırıcı → majör" kuralı `mdk 0.1.0` yayımından sonraki SemVer içindir (henüz yayım yok, K-C8-T).
 5. Sonuç: `1.0.1 → 1.0.2`. C1-7'deki `spec_version 1.1.0` bu kuralla `1.0.2` olarak okunur ve FINAL'de böyle raporlanır (ASSUMPTIONS C1.0-1).
+
+## Fixture değişiklikleri (C1.3; K-C1.3, dondurma istisnası P1-C.1/F2)
+
+Kural (PROMPT): C3-01..04 beklenen değerleri yalnız canonical-yalnız istatistik / K-C1.3 gereği değişebilir. Eski ve yeni `expected.json` işlem işlem karşılaştırıldı:
+
+- **Bayrak kapalı her arama gözlemi bayt eşit** (C3-01..04'ün bütün `include_proposal: false` aramaları; ingest, checkpoint, build, view, traces gözlemleri de). Değişen işlemlerin hepsi `include_proposal: true` aramalarıdır ve her birinde değişen tek alan `rankings`'tir.
+- Yeni dosyalarda bayrak açık her sıralamanın canonical öneki, aynı checkpoint/mod/`k`/sorgularla yapılan bayrak kapalı ikizine eşit: **50/50** (ikizi olan 5 arama × 10 sorgu).
+- Değişikliğin üç nedeni (sorgu düzeyinde, eski ↔ yeni): (i) **liste uzunluğu / proposal kısmı** — eski `finalize` ağırlıklı skorla ortak ilk `k`'yı alıyordu, yeni her katmandan `k` (C1.2-1); proposal sayısı ör. C3-02 hybrid 3 → 30; (ii) **canonical kısım kısalmıştı** — eski listede proposal'lar canonical yer kaplıyordu, yeni canonical liste eskinin uzantısı (11 sorgu: eski canonical liste yeninin öneki); (iii) **canonical sıra değişti** — eski karışık istatistikler (lexical: `N`, `df`, ortalama uzunluk proposal'larla) ve hybrid'de proposal'larla paylaşılan ilk 50 RRF adayı canonical sırayı kaydırıyordu (11 sorgu; P1-C doğrulamasının Ş1'i).
+
+| Fixture | Değişen işlemler (hepsi bayrak açık) | Nedenler |
+|---|---|---|
+| C3-01 | op5 lexical | (i) proposal 3 → 7, 2 sorgu |
+| C3-02 | op5 hybrid | (i) 3 → 30; (ii); (iii) 1 sorgu |
+| C3-03 | op4/11/15/18 flat; op5/12/16/19 lexical; op6/13/17/20 hybrid | (i) her biri; (ii); (iii) op6/13/17 1, op19 2, op20 2 sorgu |
+| C3-04 | op8 flat, op10 lexical, op12 hybrid | (i); (ii); (iii) op10 1, op12 2 sorgu |
+| C3-05 | yeni | K-C1.3 özellik vakası: 3 mod × 8 sorgu, `canonical_prefix_of` üçünde `equal: true`; proposal hit 13 / 32 / 32 (boş değil), `derived` 0 |

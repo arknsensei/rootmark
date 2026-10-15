@@ -92,6 +92,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `core/tests/conformance.rs` | `P1-C.1/C1.0:` | yeniden dondurma P1-C.1/F1: `spec_version` 1.0.2 (K-C1.3, K-C1.5) |
 | `research/eval/bm25_lucene.py` | `P1-C.1/C1.1:` | C1-1: Lucene/tantivy BM25 (K-C1.1) Python'da, yalnız formülden |
 | `research/eval/run_c1_variant.py` | `P1-C.1/C1.1:` | C1-1 koşturucusu (eşik kodda; ilk geliştirme koşturmasından sonra değiştirilmedi) |
+| `spec/fixtures/**` | `P1-C.1/C1.3:` | yeniden dondurma P1-C.1/F2: C3-05 eklendi; C3-01..04 beklenen değerleri K-C1.3 gereği (yalnız `include_proposal: true` gözlemleri); `MANIFEST.json` yalnız C3 satırları |
+| `index/tests/conformance/eval_c3.rs` | `P1-C.1/C1.3:` | yeniden dondurma P1-C.1/F3: `canonical_prefix_of` gözlemi |
+| `index/tests/conformance_c3.rs` | `P1-C.1/C1.3:` | yeniden dondurma P1-C.1/F4: Seviye 3 = C3-01..C3-05, toplam 31 |
+| `index/tests/conformance_c3_gen.rs` | `P1-C.1/C1.3:` | yeniden dondurma P1-C.1/F5: 5 C3 dizini |
 <!-- /frozen-table -->
 
 ## Notlar

@@ -1,0 +1,145 @@
+{
+  "id": "C3-05",
+  "title": "With proposal results requested, the canonical prefix equals the result without the request (lexical, flat, hybrid; spec §9, 1.0.2)",
+  "kind": "retrieval",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest_dir",
+      "dir": "../mini_vault"
+    },
+    {
+      "op": "ingest",
+      "doc": "agent/brewing.md",
+      "file": "agent.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "checkpoint",
+      "name": "t0"
+    },
+    {
+      "op": "build"
+    },
+    {
+      "op": "view",
+      "at": "t0"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "lexical",
+      "k": 5,
+      "include_proposal": false,
+      "queries": [
+        "espresso grind and extraction",
+        "water temperature for filter coffee",
+        "descaling the machine every month",
+        "roast development and sweetness",
+        "cleaning the group head",
+        "staff opening shift",
+        "house blend recipe",
+        "grinder burr cleaning"
+      ],
+      "label": "off-lexical"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "lexical",
+      "k": 5,
+      "include_proposal": true,
+      "queries": [
+        "espresso grind and extraction",
+        "water temperature for filter coffee",
+        "descaling the machine every month",
+        "roast development and sweetness",
+        "cleaning the group head",
+        "staff opening shift",
+        "house blend recipe",
+        "grinder burr cleaning"
+      ],
+      "canonical_prefix_of": "off-lexical"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "flat",
+      "k": 5,
+      "include_proposal": false,
+      "queries": [
+        "espresso grind and extraction",
+        "water temperature for filter coffee",
+        "descaling the machine every month",
+        "roast development and sweetness",
+        "cleaning the group head",
+        "staff opening shift",
+        "house blend recipe",
+        "grinder burr cleaning"
+      ],
+      "label": "off-flat"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "flat",
+      "k": 5,
+      "include_proposal": true,
+      "queries": [
+        "espresso grind and extraction",
+        "water temperature for filter coffee",
+        "descaling the machine every month",
+        "roast development and sweetness",
+        "cleaning the group head",
+        "staff opening shift",
+        "house blend recipe",
+        "grinder burr cleaning"
+      ],
+      "canonical_prefix_of": "off-flat"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 5,
+      "include_proposal": false,
+      "queries": [
+        "espresso grind and extraction",
+        "water temperature for filter coffee",
+        "descaling the machine every month",
+        "roast development and sweetness",
+        "cleaning the group head",
+        "staff opening shift",
+        "house blend recipe",
+        "grinder burr cleaning"
+      ],
+      "label": "off-hybrid"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 5,
+      "include_proposal": true,
+      "queries": [
+        "espresso grind and extraction",
+        "water temperature for filter coffee",
+        "descaling the machine every month",
+        "roast development and sweetness",
+        "cleaning the group head",
+        "staff opening shift",
+        "house blend recipe",
+        "grinder burr cleaning"
+      ],
+      "canonical_prefix_of": "off-hybrid"
+    },
+    {
+      "op": "traces"
+    }
+  ]
+}

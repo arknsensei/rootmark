@@ -669,6 +669,16 @@
                 "glossary.md",
                 "8f7cb256bdb20a28c16547ca1a194ad1",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -724,6 +734,16 @@
                 "grinders.md",
                 "cde621bcb59f58d8e6460823c1b0a7fa",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -779,6 +799,16 @@
                 "maintenance.md",
                 "5f8b580cb276953d269434eec9a68dc4",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -834,6 +864,16 @@
                 "roast-log.md",
                 "a38f7786c420c06fd068a3942852b261",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -889,6 +929,16 @@
                 "glossary.md",
                 "8f7cb256bdb20a28c16547ca1a194ad1",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -944,6 +994,16 @@
                 "maintenance.md",
                 "2a453ed2e065e0efcbb78add9ed8c8c4",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -999,6 +1059,16 @@
                 "espresso.md",
                 "e1ab6ef6e655bf02b4c0b39c2f3da810",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -1054,6 +1124,16 @@
                 "roasting.md",
                 "326e58dcb8319def7ccc49476d4aa3ea",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -1109,6 +1189,16 @@
                 "filter.md",
                 "b54aedf70c6a2863447e95a5a762f994",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -1153,6 +1243,16 @@
               [
                 "blends.md",
                 "17927d5509eda6a71ee9b0345472608d",
+                "canonical"
+              ],
+              [
+                "glossary.md",
+                "8f7cb256bdb20a28c16547ca1a194ad1",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "17c51c275f2400c8a123451b7768dc08",
                 "canonical"
               ],
               [
@@ -1599,6 +1699,11 @@
                 "maintenance.md",
                 "af07e4e6ed2aaf03dd1a7d666314c9cf",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
               ]
             ]
           },
@@ -1729,6 +1834,11 @@
                 "origins.md",
                 "5838f63499556e694a7bd934d735b0ed",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
               ]
             ]
           },
@@ -1746,13 +1856,13 @@
                 "canonical"
               ],
               [
-                "grinders.md",
-                "cde621bcb59f58d8e6460823c1b0a7fa",
+                "glossary.md",
+                "8f7cb256bdb20a28c16547ca1a194ad1",
                 "canonical"
               ],
               [
-                "glossary.md",
-                "8f7cb256bdb20a28c16547ca1a194ad1",
+                "grinders.md",
+                "cde621bcb59f58d8e6460823c1b0a7fa",
                 "canonical"
               ],
               [
@@ -2512,23 +2622,23 @@
                 "canonical"
               ],
               [
-                "espresso.md",
-                "e1ab6ef6e655bf02b4c0b39c2f3da810",
-                "canonical"
-              ],
-              [
-                "roasting.md",
-                "326e58dcb8319def7ccc49476d4aa3ea",
-                "canonical"
-              ],
-              [
                 "grinders.md",
                 "cde621bcb59f58d8e6460823c1b0a7fa",
                 "canonical"
               ],
               [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
                 "maintenance.md",
                 "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "roasting.md",
+                "326e58dcb8319def7ccc49476d4aa3ea",
                 "canonical"
               ],
               [
@@ -2540,6 +2650,16 @@
                 "origins.md",
                 "653b224c7298b541436b927ba02671bf",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -2595,6 +2715,16 @@
                 "grinders.md",
                 "cde621bcb59f58d8e6460823c1b0a7fa",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -2650,6 +2780,16 @@
                 "maintenance.md",
                 "af07e4e6ed2aaf03dd1a7d666314c9cf",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -2705,6 +2845,16 @@
                 "grinders.md",
                 "2a3336f4ad7a9a23ebfc51966ff27527",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -2732,13 +2882,13 @@
                 "canonical"
               ],
               [
-                "maintenance.md",
-                "af07e4e6ed2aaf03dd1a7d666314c9cf",
+                "glossary.md",
+                "8f7cb256bdb20a28c16547ca1a194ad1",
                 "canonical"
               ],
               [
-                "glossary.md",
-                "8f7cb256bdb20a28c16547ca1a194ad1",
+                "maintenance.md",
+                "af07e4e6ed2aaf03dd1a7d666314c9cf",
                 "canonical"
               ],
               [
@@ -2760,6 +2910,16 @@
                 "roasting.md",
                 "326e58dcb8319def7ccc49476d4aa3ea",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -2815,6 +2975,16 @@
                 "maintenance.md",
                 "2a453ed2e065e0efcbb78add9ed8c8c4",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -2870,6 +3040,16 @@
                 "blends.md",
                 "970dcdaa33a4e6cbf6f9b975624fd664",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -2925,6 +3105,16 @@
                 "roasting.md",
                 "326e58dcb8319def7ccc49476d4aa3ea",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -2980,6 +3170,16 @@
                 "cupping.md",
                 "57d21cd2875a6d55446c9bb8be4deb47",
                 "canonical"
+              ],
+              [
+                "agent/zanzibar.md",
+                "66bf9bdf4dab10384d1279a19dee6bde",
+                "proposal"
+              ],
+              [
+                "agent/zanzibar.md",
+                "def52d831fbe6cca31b5f6bcd31bc23a",
+                "proposal"
               ]
             ]
           },
@@ -3024,6 +3224,16 @@
               [
                 "blends.md",
                 "17927d5509eda6a71ee9b0345472608d",
+                "canonical"
+              ],
+              [
+                "glossary.md",
+                "8f7cb256bdb20a28c16547ca1a194ad1",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "17c51c275f2400c8a123451b7768dc08",
                 "canonical"
               ],
               [

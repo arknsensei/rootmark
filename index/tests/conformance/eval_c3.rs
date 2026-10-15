@@ -24,7 +24,9 @@
 //! - `traces` — number of trace lines
 //!
 //! `label` on a search stores its rankings; `same_as` on a later search
-//! records whether its rankings equal that label's.
+//! records whether its rankings equal that label's; `canonical_prefix_of`
+//! (P1-C.1, C3-05) records whether the `canonical` prefix of each of its
+//! rankings equals that label's ranking.
 
 use anyhow::{anyhow, bail, Context, Result};
 use mdkcore::{
@@ -222,6 +224,30 @@ pub fn evaluate_c3(dir: &Path) -> Result<Value> {
                             .get(l)
                             .with_context(|| format!("unknown label {l:?}"))?;
                         obs["same_as"] = json!({"label": l, "equal": *other == obs["rankings"]});
+                    }
+                    if let Some(l) = op.get("canonical_prefix_of").and_then(Value::as_str) {
+                        let other = labels
+                            .get(l)
+                            .with_context(|| format!("unknown label {l:?}"))?;
+                        let prefixes: Vec<Value> = obs["rankings"]
+                            .as_array()
+                            .context("rankings")?
+                            .iter()
+                            .map(|r| {
+                                let ranking: Vec<Value> = r["ranking"]
+                                    .as_array()
+                                    .map(|a| {
+                                        a.iter()
+                                            .take_while(|h| h[2] == "canonical")
+                                            .cloned()
+                                            .collect()
+                                    })
+                                    .unwrap_or_default();
+                                json!({"query": r["query"], "ranking": ranking})
+                            })
+                            .collect();
+                        obs["canonical_prefix_of"] =
+                            json!({"label": l, "equal": *other == Value::Array(prefixes)});
                     }
                     if let Some(l) = op.get("label").and_then(Value::as_str) {
                         labels.insert(l.to_string(), obs["rankings"].clone());
