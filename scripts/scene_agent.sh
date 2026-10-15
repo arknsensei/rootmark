@@ -33,7 +33,8 @@ cargo build -q --release -p mdkernel-server --bin mdk --example mcp_client
 mdk="$root/target/release/mdk"
 client="$root/target/release/examples/mcp_client"
 work="$(mktemp -d -t mdk-scene.XXXXXX)"
-trap 'rm -rf "$work"' EXIT
+# on failure the server's stderr is shown before the temp dir goes
+trap 'rc=$?; if [ "$rc" != 0 ] && [ -s "$work/serve.err" ]; then echo "scene: server stderr:" >&2; cat "$work/serve.err" >&2; fi; rm -rf "$work"' EXIT
 cd "$work"
 mkdir vault
 cp "$root"/spec/fixtures/mini_vault/*.md vault/
@@ -86,7 +87,7 @@ done
 serve b.jsonl tb.jsonl
 
 plain=false
-if [ "$(printf "$TEXT")" = "$(cat "vault/$DOC")" ] && [ "$(grep -cE 'lineage|version_id|mdkernel' "vault/$DOC" || true)" = 0 ]; then plain=true; fi
+if printf "$TEXT" | cmp -s - "vault/$DOC" && [ "$(grep -cE 'lineage|version_id|mdkernel' "vault/$DOC" || true)" = 0 ]; then plain=true; fi
 
 jq -n --slurpfile cli <(jq -c . cli.jsonl) \
   --argjson status "$(res ta.jsonl 2)" --argjson propose "$(res ta.jsonl 3)" \
@@ -127,7 +128,7 @@ jq -n --slurpfile cli <(jq -c . cli.jsonl) \
              returned_from_doc: [$trace.structuredContent.traces[] | [.returned[] | select(.doc_path == $doc)] | length]},
      pass: (($trace.structuredContent.traces | length) == 3
             and all($trace.structuredContent.traces[]; .consumer == "scene-agent/1.0")
-            and ($trace.structuredContent.traces[-1].returned | any(.doc_path == $doc)))},
+            and [$trace.structuredContent.traces[] | [.returned[] | select(.doc_path == $doc)] | length] == [0, 2, 2])},
     {step: 9, tool: "checkpoint",
      shows: {checkpoint_id: $cp.structuredContent.checkpoint_id, event_seq: $cp.structuredContent.event_seq,
              same_as_search_step_7: ($cp.structuredContent.checkpoint_id == $s_after.structuredContent.checkpoint_id)},
