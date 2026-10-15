@@ -7,14 +7,9 @@ edition = "2021"
 name = "mdkcore"
 path = "src/lib.rs"
 
-[[bin]]
-name = "mdk"
-path = "src/bin/mdk.rs"
-
 [dependencies]
 anyhow = "1.0.104"
 blake3 = { version = "1.8.7", features = ["pure"] }
-clap = { version = "4.6.7", features = ["derive"] }
 pathfinding = "4.16.0"
 pulldown-cmark = "0.13.4"
 regex = "1.13.1"

@@ -223,7 +223,7 @@ p1b-checks: require-run
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
-	cargo build --release -q -p mdkernel-core --bin mdk
+	cargo build --release -q -p mdkernel-server --bin mdk
 	bash scripts/check_v3_compat.sh research/reports/runs/$(RUN)/v3_compat.json \
 	  research/reports/runs/$(RUN)/v3_compat_mixed.json >/dev/null
 	bash scripts/test_policy_bounds.sh target/release/mdk research/reports/runs/$(RUN)/policy_bounds.json

@@ -28,7 +28,7 @@ cd "$root"
 out="${1:-}"
 work="$(mktemp -d -t mdk-p1c1.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
-cargo build -q --release -p mdkernel-core --bin mdk -p mdkernel-index --bin mdk-index
+cargo build -q --release -p mdkernel-server --bin mdk -p mdkernel-index --bin mdk-index
 mdk="$root/target/release/mdk"
 n=0 ok=0
 check() { # check <label> <0|1 = expected success|failure> <cmd...>

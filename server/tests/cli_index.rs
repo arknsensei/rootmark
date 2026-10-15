@@ -1,6 +1,6 @@
 //! P1-C/C6 (TASKS C6): `mdk index build/status/compact/watch` and `mdk
-//! search` end to end through the `mdk` binary (which runs `mdk-index`, built
-//! by the `index` crate next to it; ASSUMPTIONS P1-C C0-1). JSON output,
+//! search` end to end through the `mdk` binary (moved to `server` in
+//! P1-D/D0; it links `mdkindex::cli`, no `mdk-index` process). JSON output,
 //! `--at` an old checkpoint, `--include-proposal` labelled, `--mode`, one
 //! trace per search. Needs the model files (`make models`).
 
@@ -13,30 +13,7 @@ fn here(rel: &str) -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join(rel)
 }
 
-/// `mdk-index` next to `mdk`: built by `cargo test --workspace`; a lone
-/// `cargo test -p mdkernel-core` builds it here (same profile).
-fn ensure_index_bin() {
-    let mdk = PathBuf::from(env!("CARGO_BIN_EXE_mdk"));
-    let bin = mdk.with_file_name(format!("mdk-index{}", std::env::consts::EXE_SUFFIX));
-    if bin.is_file() {
-        return;
-    }
-    let release = mdk.parent().and_then(|p| p.file_name()) == Some("release".as_ref());
-    let mut c = Command::new(env!("CARGO"));
-    c.args(["build", "-q", "-p", "mdkernel-index", "--bin", "mdk-index"]);
-    if release {
-        c.arg("--release");
-    }
-    let st = c.status().expect("cargo build mdk-index");
-    assert!(
-        st.success() && bin.is_file(),
-        "mdk-index not built at {}",
-        bin.display()
-    );
-}
-
 fn mdk(args: &[&str]) -> (i32, Value, String) {
-    ensure_index_bin();
     let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
         .args(args)
         .output()
@@ -205,7 +182,7 @@ fn index_and_search_end_to_end() {
         let (code, _, err) = mdk(&a);
         assert_eq!(code, 0, "{a:?}: {err}");
     }
-    // `mdk help search` is mdk-index's help
+    // `mdk help search` lists the search flags
     let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
         .args(["help", "search"])
         .output()
@@ -215,15 +192,19 @@ fn index_and_search_end_to_end() {
     fs::remove_dir_all(root).unwrap();
 }
 
+/// P1-D/D0: `mdk` no longer runs `mdk-index` (K-C6.1's run-time link is
+/// gone): `$MDK_INDEX_BIN` is ignored, and a failing search reports its own
+/// error (exit 1), not a missing binary.
 #[test]
-fn missing_mdk_index_is_an_error() {
+fn mdk_index_binary_is_not_used() {
     let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
         .args(["search", "/nonexistent", "q"])
         .env("MDK_INDEX_BIN", "/nonexistent/mdk-index")
         .output()
         .unwrap();
     assert_eq!(out.status.code(), Some(1));
-    assert!(String::from_utf8_lossy(&out.stderr).contains("mdk-index"));
+    let err = String::from_utf8_lossy(&out.stderr);
+    assert!(!err.contains("mdk-index"), "{err}");
 }
 
 /// `$MDK_MATCHER` / `--matcher` reach `index watch` as they reach `mdk
@@ -238,7 +219,6 @@ fn watch_uses_the_matcher_like_ingest() {
     // an index of an empty vault, then a watched document under v2
     ok(&["index", "build", vs]);
     fs::write(vault.join("a.md"), "# A\n\nFirst text about espresso.\n").unwrap();
-    ensure_index_bin();
     let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
         .args(["index", "watch", vs, "a.md"])
         .env("MDK_MATCHER", "v2")

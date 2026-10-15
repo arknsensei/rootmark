@@ -20,7 +20,7 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
 work="$(mktemp -d -t mdk-tamper-p1c.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
-cargo build -q --release -p mdkernel-core --bin mdk -p mdkernel-index --bin mdk-index
+cargo build -q --release -p mdkernel-server --bin mdk -p mdkernel-index --bin mdk-index
 mdk="$root/target/release/mdk"
 mdki="$root/target/release/mdk-index"
 n=0 rejected=0

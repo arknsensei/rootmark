@@ -31,7 +31,7 @@ git -C "$here" archive "$sha" Cargo.lock rust-toolchain.toml .cargo core | tar -
 printf '[workspace]\nresolver = "2"\nmembers = ["core"]\n' >"$work/Cargo.toml"
 (cd "$work" && cargo build --offline --release -q -p mdkernel-core --bin mdk)
 old="$work/target/release/mdk"
-(cd "$here" && cargo build --release -q -p mdkernel-core --bin mdk)
+(cd "$here" && cargo build --release -q -p mdkernel-server --bin mdk)
 new="$here/target/release/mdk"
 
 vault="$work/vault"

@@ -2,12 +2,27 @@
 name = "mdkernel-server"
 version = "0.2.0"
 edition = "2021"
-description = "mdk CLI, MCP and HTTP surfaces (P1-D). P1-A: empty crate."
+description = "The mdk binary: CLI, MCP server (rmcp, stdio), local HTTP API (axum), file watcher, server policy (P1-D)."
 
 [lib]
 name = "mdkserver"
 path = "src/lib.rs"
 
+[[bin]]
+name = "mdk"
+path = "src/bin/mdk.rs"
+
+# Direct dependencies are pinned exactly to releases at least 14 days old
+# at P1-D/D0 (2026-10-15; TASKS D0).
 [dependencies]
+anyhow = "1.0.104"
 mdkernel-core = { path = "../core" }
 mdkernel-index = { path = "../index" }
+axum = { version = "=0.8.9", default-features = false, features = ["http1", "json", "tokio"] }
+clap = { version = "4.6.7", features = ["derive"] }
+notify = { version = "=8.2.0", default-features = false, features = ["macos_fsevent"] }
+rmcp = { version = "=3.5.0", default-features = false, features = ["server", "macros", "transport-io"] }
+schemars = "=1.2.1"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+tokio = { version = "=1.53.1", features = ["rt-multi-thread", "macros", "io-std", "net", "signal", "sync", "time"] }

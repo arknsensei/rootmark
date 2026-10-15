@@ -5,6 +5,7 @@
 //! identical ranked results (spec §9, §10). Search is exact (no ANN); one
 //! embedder per index, recorded as `embedder_id` with every vector.
 
+pub mod cli;
 pub mod embed;
 pub mod lexical;
 pub mod models;
