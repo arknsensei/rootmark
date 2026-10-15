@@ -78,7 +78,7 @@ def compare(a: Path, b: Path, files: list[str], allow: bool) -> dict:
             if tag is None:
                 raise M.MetricError(f"{name}: field sets differ at {C._key(p)}")
             excluded.setdefault(tag, []).append(f"{C._key(p)} only in {'A' if p in la else 'B'}")
-        common = sorted(set(la) & set(lb))
+        common = sorted(set(la) & set(lb), key=C._key)
         fa = {C._key(p): la[p] for p in common}
         fb = {C._key(p): lb[p] for p in common}
         r = M.max_relative_difference(fa, fb, sorted(fa))

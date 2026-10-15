@@ -105,6 +105,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/gen_quality_ref.py` | `P1-C.1/C1.4-pre:` | C1-9 referans üreteci (yalnız geçen C1-1 kanıtıyla) |
 | `research/data/quality_ref_rust.json` | `P1-C.1/C1.4-pre:` | Rust kalite regresyon referansı (K-C1.2; P1-C resmi RUN `c3_quality.json`'ından) |
 | `research/eval/report_p1c1.py` | `P1-C.1/C1.4-pre:` | P1-C.1 rapor üreteci (resmi RUN'dan önce) |
+| `research/eval/compare_p1c1.py` | `P1-C.1/C1.4-fix:` | yeniden dondurma P1-C.1/F8: ortak yaprakların anahtar dizgisiyle sıralanması (geliştirme zincirinde `TypeError`) |
 <!-- /frozen-table -->
 
 ## Notlar

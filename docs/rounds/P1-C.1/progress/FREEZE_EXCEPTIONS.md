@@ -43,3 +43,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** C3-05 (K-C1.3, F2/F4): bozulmamış fixture kopyası artık 31/31; eski sayı "untouched fixture copy fails conformance" ile betiği durdururdu.
 - **Önce/sonra:** `bash scripts/test_tamper_p1c.sh` → 6/6 bozma reddedildi (P1-C'deki altı vaka, aynı ret nedenleri).
 - **Gözden geçirici onayı:** C1.4.review.md.
+
+## F8 · C1.4-fix · `research/eval/compare_p1c1.py` — ortak yaprakların sıralanması
+- **Ne:** `compare()` içinde `sorted(set(la) & set(lb))` → `sorted(…, key=C._key)` (tek satır).
+- **Neden:** geliştirme zinciri `regress`'te `TypeError: '<' not supported between instances of 'str' and 'int'` ile durdu: yaprak yolları dizgi ve liste indeksi karıştırır (`compare_runs.leaves`). Ölçüm henüz hiç sonuç üretmemişti (çökme).
+- **Önce/sonra:** önceki sürüm hiçbir RUN'da sonuç üretmedi; sıralama yalnız karşılaştırma sırasını belirler, hangi alanların karşılaştırıldığını ya da sonucunu değil. `research/tests/test_p1c1_tools.py::test_leaves_with_lists_and_dicts` (liste + sözlük yaprakları) eklendi; 5/5.
+- **Gözden geçirici onayı:** C1.4.review.md.

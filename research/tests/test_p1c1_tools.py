@@ -75,3 +75,12 @@ def test_gen_quality_ref_refuses_failed_evidence(tmp_path):
     p.write_text(json.dumps({"criterion": "C1-1", "pass": False, "rust_run": G.SOURCE_RUN.name}))
     with pytest.raises(RuntimeError, match="did not pass"):
         G.main(["--c1-variant", str(p)])
+
+
+def test_leaves_with_lists_and_dicts(tmp_path):
+    a, b = tmp_path / "a", tmp_path / "b"
+    obj = {"x": [1, {"y": 2}], "z": {"w": [3]}}
+    _write(a, "p1c_index.json", obj)
+    _write(b, "p1c_index.json", obj)
+    res = P.compare(a, b, ["p1c_index.json"], allow=True)
+    assert res["differing_fields"] == {} and res["n_fields"] == 5
