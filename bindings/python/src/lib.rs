@@ -193,6 +193,51 @@ impl Vault {
     fn matcher_lock(&self) -> Option<&'static str> {
         self.inner.matcher_lock().map(|m| m.as_str())
     }
+
+    /// Checkpoint of the current state (spec §8): `{checkpoint_id, name,
+    /// event_seq, docs}`; same state → same id.
+    #[pyo3(signature = (name=None))]
+    fn checkpoint(&mut self, py: Python<'_>, name: Option<&str>) -> PyResult<Py<PyAny>> {
+        to_py(py, &self.inner.checkpoint(name).map_err(err)?)
+    }
+
+    /// `index build` (P1-C): `<root>/.mdkernel/index/` from every head and
+    /// checkpoint snapshot, with the manifest-verified ONNX embedder.
+    fn index_build(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
+        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
+        to_py(py, &mdkindex::store::build(&self.inner, &e).map_err(err)?)
+    }
+
+    /// `search` (P1-C) for every query, in order, as of checkpoint `at`
+    /// (id or name): one `SearchResult` dict per query
+    /// (`checkpoint_id, mode, include_proposal, query_hash, trace_id, hits`);
+    /// every search records one consumption trace. The index and the
+    /// embedder are opened once.
+    #[pyo3(signature = (queries, at, k=10, mode="hybrid", include_proposal=false, consumer="research"))]
+    #[allow(clippy::too_many_arguments)] // the Python keyword signature
+    fn search_many(
+        &mut self,
+        py: Python<'_>,
+        queries: Vec<String>,
+        at: &str,
+        k: usize,
+        mode: &str,
+        include_proposal: bool,
+        consumer: &str,
+    ) -> PyResult<Py<PyAny>> {
+        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let store = mdkindex::store::Store::open(&self.inner, &e).map_err(err)?;
+        let mode = mdkindex::search::Mode::parse(mode).map_err(err)?;
+        let mut se = mdkindex::search::Searcher::new(&store, &e, consumer).map_err(err)?;
+        let mut out = Vec::with_capacity(queries.len());
+        for q in &queries {
+            out.push(
+                se.search(&mut self.inner, mode, q, k, Some(at), include_proposal)
+                    .map_err(err)?,
+            );
+        }
+        to_py(py, &out)
+    }
 }
 
 #[pymodule]

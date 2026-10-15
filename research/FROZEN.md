@@ -78,6 +78,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/gen_fixtures_c3.sh` | `P1-C/C7:` | C3 fixture üreteci betiği |
 | `spec/fixtures/**` | `P1-C/C7-fix:` | yeniden dondurma P1-C/F6: C3-03 sonraki içerikle güçlendirildi (C7 gözden geçirme 1) |
 | `index/tests/conformance_c3.rs` | `P1-C/C7-fix:` | yeniden dondurma P1-C/F7: rapor `fixtures_manifest_hash` denetimi |
+| `research/eval/run_c3_quality.py` | `P1-C/C8:` | C-3 koşturucusu (eşik kodda; sonuç görüldükten sonra değiştirilmedi) |
 <!-- /frozen-table -->
 
 ## Notlar

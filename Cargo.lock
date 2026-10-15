@@ -904,6 +904,7 @@ version = "0.2.0"
 dependencies = [
  "anyhow",
  "mdkernel-core",
+ "mdkernel-index",
  "pyo3",
  "serde",
  "serde_json",

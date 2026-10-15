@@ -21,7 +21,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
 .PHONY: report report-p1b test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
-        check-deps test-check-deps conformance regress verify models
+        check-deps test-check-deps conformance regress verify models c3-quality
 
 setup: setup-py build
 
@@ -288,6 +288,12 @@ regress: require-run
 models:
 	bash scripts/fetch_model.sh
 	cargo run -q --release -p mdkernel-index --bin mdk-index -- models verify
+
+# P1-C C-3 (TASKS C8): D3 copy → checkpoint → index build → D4 test split,
+# hybrid and flat (structural, k 10) vs the v2-final hybrid cells; writes
+# c3_quality.json into the RUN (needs `make models`, `make d3`).
+c3-quality: require-run
+	$(PY) -m eval.run_c3_quality --run $(RUN)
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:
