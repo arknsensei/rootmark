@@ -95,11 +95,17 @@ enum ModelsCmd {
 
 fn main() {
     let cli = Cli::parse();
+    // as `mdk`: the flag, else $MDK_MATCHER (validated for every command)
     let matcher = cli
         .matcher
         .clone()
-        .or_else(|| std::env::var("MDK_MATCHER").ok().filter(|m| !m.is_empty()));
-    match run(cli.cmd, matcher.as_deref()) {
+        .or_else(|| std::env::var("MDK_MATCHER").ok())
+        .map(|m| MatcherVersion::parse(&m));
+    let res = match matcher.transpose() {
+        Ok(m) => run(cli.cmd, m),
+        Err(e) => Err(e),
+    };
+    match res {
         Ok(v) => {
             let s = if cli.pretty {
                 serde_json::to_string_pretty(&v)
@@ -148,7 +154,7 @@ fn author(s: &str) -> Result<AuthorKind> {
     })
 }
 
-fn run(cmd: Cmd, matcher: Option<&str>) -> Result<serde_json::Value> {
+fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<serde_json::Value> {
     Ok(match cmd {
         Cmd::Index(IndexCmd::Build {
             vault,
@@ -183,7 +189,7 @@ fn run(cmd: Cmd, matcher: Option<&str>) -> Result<serde_json::Value> {
                 source,
             };
             let m = match matcher {
-                Some(m) => MatcherVersion::parse(m)?,
+                Some(m) => m,
                 None => v.matcher_lock().unwrap_or(MatcherVersion::V3),
             };
             serde_json::to_value(s.watch_with(&mut v, &e, &doc, &text, prov, m)?)?
