@@ -1,0 +1,32 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"blocks\":[{\"author_kind\":\"Agent\",\"inactive\":false,\"layer\":\"proposal\",\"layer_source\":\"event\",\"lineage_id\":\"f82d6fe60c01a0f39660486e47510013\",\"seq_created\":110,\"seq_last\":110,\"source\":\"inspector-cli/2.9.0\",\"version_id\":\"8c487173536304e92aa811723e9b9ddc\"}],\"bytes\":24,\"chunks_embedded\":1,\"doc_path\":\"inspector/note.md\",\"events\":2,\"events_hash\":\"322f19d9bba80f2f95b7cfd5e70976c9\",\"mode\":\"create\",\"snapshot_id\":\"4c6ac5cdbafc5ba4285ccb8af8b0e26b\",\"synced_external_events\":0}"
+    }
+  ],
+  "structuredContent": {
+    "blocks": [
+      {
+        "author_kind": "Agent",
+        "inactive": false,
+        "layer": "proposal",
+        "layer_source": "event",
+        "lineage_id": "f82d6fe60c01a0f39660486e47510013",
+        "seq_created": 110,
+        "seq_last": 110,
+        "source": "inspector-cli/2.9.0",
+        "version_id": "8c487173536304e92aa811723e9b9ddc"
+      }
+    ],
+    "bytes": 24,
+    "chunks_embedded": 1,
+    "doc_path": "inspector/note.md",
+    "events": 2,
+    "events_hash": "322f19d9bba80f2f95b7cfd5e70976c9",
+    "mode": "create",
+    "snapshot_id": "4c6ac5cdbafc5ba4285ccb8af8b0e26b",
+    "synced_external_events": 0
+  },
+  "isError": false
+}

@@ -1,0 +1,102 @@
+{
+ "bytes": {
+  "governance/vault/.mdkernel/checkpoints/": {
+   "equal": true,
+   "files": 4
+  },
+  "governance/vault/.mdkernel/events.jsonl": {
+   "blake3": "2b0dc8e88f8d56ee4c6be6356d4c0fee",
+   "equal": true
+  },
+  "governance/vault/.mdkernel/traces.jsonl": {
+   "blake3": "4e0906770480e03802021d9dfb2a67a5",
+   "equal": true
+  },
+  "p1d/inspector/tools_list.json": {
+   "blake3": "dc339125dd1071e67ec8beaa75809965",
+   "bytes": 10003,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/cli_promote.jsonl": {
+   "blake3": "98fc3468913aa3d67b338851bd5c2d0b",
+   "bytes": 1714,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/transcript.jsonl": {
+   "blake3": "67bdbda80661fbc145736a27c00970af",
+   "bytes": 11276217,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/transcript_b.jsonl": {
+   "blake3": "1f9d5cd90c49f32019882de2cfd3df94",
+   "bytes": 12372,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/.mdkernel/events.jsonl": {
+   "blake3": "45ad4ea291b35d5912a4b5ae0a8d1d64",
+   "bytes": 46169,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/.mdkernel/proposals.jsonl": {
+   "blake3": "874d08f6359ae245327adfff1774b942",
+   "bytes": 672,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/.mdkernel/traces.jsonl": {
+   "blake3": "e102b4c187a4c0a949ee3716ec3301a9",
+   "bytes": 155695,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/agent/plan.md": {
+   "blake3": "bb7a57f8d1071b59435bf4a8b70e0ac7",
+   "bytes": 46,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/espresso.md": {
+   "blake3": "a54f427b27c1d38a5a82fb6ad65790c8",
+   "bytes": 430,
+   "equal": true
+  },
+  "p1d/scene/scene.json": {
+   "blake3": "a5de271cba6608643d570389303e9c70",
+   "bytes": 2563,
+   "equal": true
+  }
+ },
+ "bytes_equal": true,
+ "differing_fields": {},
+ "equal": true,
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json",
+  "c1_variant.json",
+  "p1c1_checks.json",
+  "p1d_checks.json",
+  "p1d/inspector/inspector.json",
+  "p1d/mcp_e2e/mcp_e2e.json",
+  "p1d/http/http_e2e.json",
+  "p1d/scene/scene.json",
+  "p1d/tamper_p1d.json",
+  "p1d/d10.json",
+  "p1d/sigterm.json"
+ ],
+ "n_fields": 99985,
+ "run_a": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/bc12ecb7-3d77-4085-bc55-c7ae2596cefa/scratchpad/vpair/A/repo/research/reports/runs/20261015T210419Z-a6b52fe",
+ "run_b": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/bc12ecb7-3d77-4085-bc55-c7ae2596cefa/scratchpad/vpair/B/repo/research/reports/runs/20261015T212646Z-a6b52fe"
+}

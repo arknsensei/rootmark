@@ -1,0 +1,200 @@
+{
+ "C1-1": {
+  "cells": {
+   "flat/structural/multi": {
+    "delta": {
+     "full_cover@10": 0.0,
+     "mrr": 0.0,
+     "ndcg@10": 0.0,
+     "recall@10": 0.0,
+     "recall@5": 0.0
+    },
+    "pass": true
+   },
+   "flat/structural/single": {
+    "delta": {
+     "full_cover@10": 0.0,
+     "mrr": 0.0,
+     "ndcg@10": 0.0,
+     "recall@10": 0.0,
+     "recall@5": 0.0
+    },
+    "pass": true
+   },
+   "hybrid/structural/multi": {
+    "delta": {
+     "full_cover@10": 0.0,
+     "mrr": 0.0,
+     "ndcg@10": 0.0,
+     "recall@10": 0.0,
+     "recall@5": 0.0
+    },
+    "pass": true
+   },
+   "hybrid/structural/single": {
+    "delta": {
+     "full_cover@10": 0.0,
+     "mrr": 0.0,
+     "ndcg@10": 0.0,
+     "recall@10": 0.0,
+     "recall@5": 0.0
+    },
+    "pass": true
+   }
+  },
+  "okapi_delta_vs_v2": {
+   "flat/structural/multi": {
+    "full_cover@10": 0.0,
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0
+   },
+   "flat/structural/single": {
+    "full_cover@10": 0.0,
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0
+   },
+   "hybrid/structural/multi": {
+    "full_cover@10": 0.0,
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0
+   },
+   "hybrid/structural/single": {
+    "full_cover@10": 0.0,
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0
+   }
+  },
+  "pass": true,
+  "per_query_equal_to_rust": {
+   "flat": {
+    "full_cover@10": 297,
+    "mrr": 297,
+    "n": 297,
+    "ndcg@10": 297,
+    "recall@10": 297,
+    "recall@5": 297
+   },
+   "hybrid": {
+    "full_cover@10": 297,
+    "mrr": 297,
+    "n": 297,
+    "ndcg@10": 297,
+    "recall@10": 297,
+    "recall@5": 297
+   }
+  },
+  "threshold": 0.001
+ },
+ "C1-2": {
+  "canonical_prefix_equal": 3000,
+  "pass": true,
+  "searches": 3000
+ },
+ "C1-3": {
+  "chunks_by_layer": {
+   "canonical": 32,
+   "derived": 1,
+   "proposal": 7
+  },
+  "lexical_queries_sensitive_to_mixed_statistics": 980,
+  "pass": true,
+  "proposal_hits": 14529,
+  "searches": 3000,
+  "searches_matching_independent_ranking": 3000
+ },
+ "C1-4": {
+  "cli": {
+   "as_expected": 45,
+   "cases": 45,
+   "pass": true
+  },
+  "library": {
+   "files": 13,
+   "lock_files": 0,
+   "pass": true,
+   "searches": 24
+  },
+  "pass": true
+ },
+ "C1-5": {
+  "cli": {
+   "as_expected": 45,
+   "cases": 45,
+   "pass": true
+  },
+  "library": {
+   "checkpoints_unchanged": true,
+   "events_unchanged": true,
+   "pass": true,
+   "rejected": 96,
+   "traces_unchanged": true,
+   "tried": 96
+  },
+  "pass": true
+ },
+ "C1-6": {
+  "cli": {
+   "as_expected": 45,
+   "cases": 45,
+   "pass": true
+  },
+  "lexical": {
+   "b": 0.75,
+   "idf": "ln(1 + (N - n + 0.5) / (n + 0.5))",
+   "k1": 1.2,
+   "tokenizer": "mdk_lower_alnum",
+   "variant": "lucene-bm25"
+  },
+  "pass": true,
+  "rejected_cases": 12
+ },
+ "C1-7": {
+  "C1": "17/17",
+  "C2": "9/9",
+  "C3": "5/5",
+  "fixtures_manifest": "ok",
+  "level_claimed": 3,
+  "pass": true,
+  "spec_version": "1.0.2",
+  "spec_version_expected": "1.0.2"
+ },
+ "C1-8": {
+  "pair": {
+   "decided_by": "eval.compare_p1c1 pair (pair_compare.json)"
+  },
+  "pass": true,
+  "regress": {
+   "differing_excluded": [
+    "p1b1_checks.json:criteria›B1-3›pass",
+    "p1b1_checks.json:criteria›B1-3›spec_version",
+    "p1b_checks.json:fixtures_manifest_hash",
+    "p1c_checks.json:C-11›differing_outside_exclusions",
+    "p1c_checks.json:C-11›pass",
+    "p1c_checks.json:C-1›spec_version",
+    "p1c_checks.json:C-7›proposal_hits_with_include_proposal",
+    "p1c_index.json:index_files_build›manifest·json",
+    "p1c_index.json:index_files_compact›manifest·json",
+    "p1c_index.json:index_files_final›manifest·json"
+   ],
+   "differing_fields": {},
+   "equal": true,
+   "n_fields": 99053,
+   "reference_run": "20261015T014417Z-9aa326b"
+  }
+ },
+ "C1-9": {
+  "compared": 618,
+  "differing": [],
+  "pass": true,
+  "reference": "quality_ref_rust.json",
+  "source_run": "20261015T014417Z-9aa326b"
+ }
+}

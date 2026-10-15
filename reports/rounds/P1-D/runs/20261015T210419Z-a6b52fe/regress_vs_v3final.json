@@ -1,0 +1,50 @@
+{
+ "H4-2_equal": true,
+ "differing_fields": {},
+ "excluded_latency_paths": {
+  "h2.json": [
+   "H2-3",
+   "latency_ms"
+  ],
+  "h3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ],
+  "h3_v3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ]
+ },
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json"
+ ],
+ "max_relative_difference": 0.0,
+ "n_fields": 1577,
+ "per_file": {
+  "h1r.json": 0.0,
+  "h1r_v3.json": 0.0,
+  "h1s.json": 0.0,
+  "h1s_tuning.json": 0.0,
+  "h1s_v3.json": 0.0,
+  "h1s_v3_tuning.json": 0.0,
+  "h3_v3.json": 0.0,
+  "h4_v2repro.json": 0.0,
+  "h4_v3.json": 0.0
+ },
+ "run_a": "reports/runs/20261013T182004Z-f82dabd",
+ "run_b": "reports/runs/20261015T210419Z-a6b52fe"
+}

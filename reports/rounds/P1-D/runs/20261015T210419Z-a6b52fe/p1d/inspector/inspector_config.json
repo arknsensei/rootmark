@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "mdk": {
+      "command": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/bc12ecb7-3d77-4085-bc55-c7ae2596cefa/scratchpad/vpair/A/repo/target/release/mdk",
+      "args": [
+        "serve",
+        "--vault",
+        "vault",
+        "--mcp",
+        "stdio"
+      ]
+    }
+  }
+}

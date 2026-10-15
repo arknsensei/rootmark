@@ -1,0 +1,6 @@
+mdk serve: watching vault
+mdk serve: watch: filter.md ingested (2 events, 1 chunks embedded, snapshot 097acabebab6438b479cc55ff7f2da80)
+mdk serve: compact (timer): 36 records, 15 snapshots, 1 moved from the hot tier
+mdk serve: stopping (SIGTERM)
+mdk serve: compact (shutdown): hot tier empty
+mdk serve: stopped
