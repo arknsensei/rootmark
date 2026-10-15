@@ -76,6 +76,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `index/tests/conformance/eval_c3.rs` | `P1-C/C7:` | C3 değerlendiricisi (üreteçle ortak) |
 | `index/tests/conformance_c3_gen.rs` | `P1-C/C7:` | C3 fixture üreteci (mevcut indeksten) |
 | `scripts/gen_fixtures_c3.sh` | `P1-C/C7:` | C3 fixture üreteci betiği |
+| `spec/fixtures/**` | `P1-C/C7-fix:` | yeniden dondurma P1-C/F6: C3-03 sonraki içerikle güçlendirildi (C7 gözden geçirme 1) |
+| `index/tests/conformance_c3.rs` | `P1-C/C7-fix:` | yeniden dondurma P1-C/F7: rapor `fixtures_manifest_hash` denetimi |
 <!-- /frozen-table -->
 
 ## Notlar

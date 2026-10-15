@@ -109,6 +109,14 @@ fn conformance_level_3() {
             root.to_str(),
             "the report is of another fixture root"
         );
+        // the report must be of this manifest (a stale report of the same
+        // root with other fixtures cannot be extended; C7 review note 2)
+        let manifest_hash = blake32(&fs::read(root.join("MANIFEST.json")).unwrap());
+        assert_eq!(
+            report["fixtures_manifest_hash"].as_str(),
+            Some(manifest_hash.as_str()),
+            "the report is of another fixture manifest"
+        );
         let lower_ok = report["level_claimed"] == 2
             && report["fixtures_manifest"] == "ok"
             && report["passed"] == LOWER_TOTAL
