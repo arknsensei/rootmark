@@ -133,6 +133,30 @@ enum Cmd {
     Index(mdkindex::cli::IndexCmd),
     /// Ranked chunks as of a checkpoint; records one consumption trace
     Search(mdkindex::cli::SearchArgs),
+    /// Serve one vault: MCP over stdio (GOAL P1-D). Runs until the client
+    /// closes the stream; stdout carries only the protocol.
+    Serve(ServeArgs),
+}
+
+#[derive(clap::Args)]
+struct ServeArgs {
+    #[arg(long)]
+    vault: PathBuf,
+    /// MCP transport (only `stdio`)
+    #[arg(long, value_parser = ["stdio"])]
+    mcp: Option<String>,
+}
+
+fn serve(a: ServeArgs) -> Result<()> {
+    if a.mcp.is_none() {
+        bail!("mdk serve: nothing to serve (--mcp stdio)");
+    }
+    let kernel = std::sync::Arc::new(mdkserver::tools::Kernel::open(&a.vault)?);
+    let rt = tokio::runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()
+        .context("tokio runtime")?;
+    rt.block_on(mdkserver::mcp::serve_stdio(kernel))
 }
 
 #[derive(Subcommand)]
@@ -307,6 +331,7 @@ fn transition(
 fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
     let m = matcher.unwrap_or(MatcherVersion::V3);
     Ok(match cmd {
+        Cmd::Serve(_) => bail!("mdk serve is not a JSON command"),
         Cmd::Index(c) => mdkindex::cli::run(mdkindex::cli::Cmd::Index(c), matcher)?,
         Cmd::Search(a) => mdkindex::cli::run(mdkindex::cli::Cmd::Search(a), matcher)?,
         Cmd::Ingest { vault, files } => {
@@ -509,6 +534,13 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
 
 fn main() {
     let cli = Cli::parse();
+    if let Cmd::Serve(a) = cli.cmd {
+        if let Err(e) = serve(a) {
+            eprintln!("error: {e:#}");
+            std::process::exit(1);
+        }
+        return;
+    }
     let name = cli.matcher.or_else(|| std::env::var("MDK_MATCHER").ok());
     let res = name
         .map(|n| MatcherVersion::parse(&n))

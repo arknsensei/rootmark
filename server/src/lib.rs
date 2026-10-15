@@ -1,4 +1,5 @@
-//! mdkernel-server — the `mdk` CLI, MCP server and HTTP API (docs/PACKAGES.md).
-//!
-//! Empty in round P1-A: the prototype `mdk` CLI stays in `core/src/bin/mdk.rs`
-//! until P1-D moves it here (docs/rounds/P1-A/TASKS.md A2).
+//! mdkernel-server — the `mdk` CLI, MCP server and HTTP API (docs/PACKAGES.md
+//! `server`; GOAL P1-D). Depends on `core` and `index` only.
+
+pub mod mcp;
+pub mod tools;
