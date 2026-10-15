@@ -130,6 +130,34 @@ pub fn specs() -> Vec<ToolSpec> {
             ),
         },
         ToolSpec {
+            name: "propose",
+            description: "The only way an agent writes Markdown (spec §7, K8): the agent's text is \
+                written into the vault as plain Markdown — a new document (`mode` create, the \
+                default; an existing document is never overwritten), appended to an existing one \
+                (`append`), or as the body of the section under `heading` (`replace_section`) — \
+                and ingested with `author_kind` agent and the consumer as source, so new and \
+                changed blocks are `proposal`, excluded from default retrieval until a human \
+                promotes them. Nothing but the agent's text is written to the file (no ids, no \
+                metadata). `reason` is recorded beside the vault (`.mdkernel/proposals.jsonl`). \
+                The path must stay inside the vault (no `..`, no absolute path, no hidden \
+                directory) and the text may not exceed the server's `max_propose_bytes`.",
+            input_schema: object_schema(
+                json!({
+                    "doc_path": {"type": "string", "minLength": 1,
+                        "description": "vault-relative path of a .md document"},
+                    "content": {"type": "string",
+                        "description": "the agent's Markdown text"},
+                    "reason": {"type": "string", "minLength": 1,
+                        "description": "why the agent proposes this (recorded, not written to the document)"},
+                    "mode": {"type": "string", "enum": ["create", "append", "replace_section"],
+                        "description": "create (default), append or replace_section"},
+                    "heading": {"type": "string", "minLength": 1,
+                        "description": "the section heading text (replace_section only)"},
+                }),
+                &["doc_path", "content", "reason"],
+            ),
+        },
+        ToolSpec {
             name: "checkpoints",
             description: "Every checkpoint of the vault (spec §8: checkpoint id, optional name, \
                 event offset, snapshot per document), in creation order. Writes nothing.",
@@ -185,6 +213,16 @@ struct ReadBlockArgs {
     doc_path: String,
     lineage_id: String,
     at: Option<String>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct ProposeArgs {
+    doc_path: String,
+    content: String,
+    reason: String,
+    mode: Option<String>,
+    heading: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -393,6 +431,11 @@ impl Kernel {
                 args::<NoArgs>(name, a)?;
                 self.status()
             }
+            "propose" => {
+                let x: ProposeArgs = args(name, a)?;
+                let consumer = need_consumer(name, consumer)?;
+                self.propose(x, consumer)
+            }
             "history" => {
                 let x: HistoryArgs = args(name, a)?;
                 non_empty(name, "lineage_id", &x.lineage_id)?;
@@ -425,6 +468,160 @@ impl Kernel {
             }
             _ => bail!("unknown tool {name:?}"),
         }
+    }
+
+    /// `propose` (under the call lock): checks, sync of external edits,
+    /// write, agent ingest, record. See the tool description.
+    fn propose(&self, x: ProposeArgs, consumer: &str) -> Result<Value> {
+        use crate::propose::{self, Mode as PMode};
+        let mode = PMode::parse(x.mode.as_deref().unwrap_or("create"))?;
+        if x.reason.trim().is_empty() {
+            bail!("propose: reason must not be empty");
+        }
+        match (mode, &x.heading) {
+            (PMode::ReplaceSection, None) => bail!("propose: replace_section needs `heading`"),
+            (PMode::Create | PMode::Append, Some(_)) => {
+                bail!("propose: `heading` applies to replace_section only")
+            }
+            _ => {}
+        }
+        let cfg = crate::config::ServerConfig::from_policy(&Policy::load(&self.vault)?)?;
+        let size = x.content.len() as u64;
+        if size > cfg.max_propose_bytes {
+            bail!(
+                "propose: content is {size} bytes; the limit is [server] max_propose_bytes = {}",
+                cfg.max_propose_bytes
+            );
+        }
+        propose::check_doc_path(&x.doc_path)?;
+        let path = crate::paths::doc_file(&self.vault, &x.doc_path)?;
+        let mut v = Vault::open(&self.vault)?;
+        let e = self.embedder()?;
+        let mut s = Store::open(&v, e.as_ref())?;
+        let m = self.matcher_for(&v);
+        let exists = std::fs::symlink_metadata(&path).is_ok();
+        if exists && !path.is_file() {
+            bail!("propose: {} is not a file", x.doc_path);
+        }
+        let old = if exists {
+            Some(
+                std::fs::read_to_string(&path)
+                    .with_context(|| format!("read {}", path.display()))?,
+            )
+        } else {
+            None
+        };
+        let new = match (mode, &old) {
+            (PMode::Create, Some(_)) => bail!(
+                "propose: {} exists; propose never overwrites (use mode append or replace_section)",
+                x.doc_path
+            ),
+            (PMode::Create, None) => {
+                if v.doc_state(&x.doc_path).is_some() {
+                    bail!(
+                        "propose: {} is in the vault's log but its file is missing",
+                        x.doc_path
+                    );
+                }
+                propose::append("", &x.content)
+            }
+            (PMode::Append | PMode::ReplaceSection, None) => bail!(
+                "propose: {} does not exist ({} needs an existing document)",
+                x.doc_path,
+                mode.as_str()
+            ),
+            (PMode::Append, Some(o)) => propose::append(o, &x.content),
+            (PMode::ReplaceSection, Some(o)) => propose::replace_section(
+                o,
+                x.heading.as_deref().expect("checked above"),
+                &x.content,
+            )?,
+        };
+        if new.trim().is_empty() {
+            bail!("propose: the resulting document would be empty");
+        }
+        // an edit made outside the server and not yet ingested is human
+        // content (the watcher's rule); it must not be attributed to the agent
+        let synced = match &old {
+            Some(o) => {
+                let prov = Provenance {
+                    author_kind: AuthorKind::Human,
+                    source: "mdk-serve-watch".to_string(),
+                };
+                s.watch_with(&mut v, e.as_ref(), &x.doc_path, o, prov, m)?
+                    .events
+            }
+            None => 0,
+        };
+        // write: a hidden temporary file in the same directory, then rename
+        let dir = path.parent().context("document without a directory")?;
+        let created_dir = !dir.exists();
+        std::fs::create_dir_all(dir).with_context(|| format!("create {}", dir.display()))?;
+        let tmp = dir.join(format!(
+            ".{}.mdk-propose.tmp",
+            path.file_name().and_then(|n| n.to_str()).unwrap_or("doc")
+        ));
+        std::fs::write(&tmp, new.as_bytes()).with_context(|| format!("write {}", tmp.display()))?;
+        std::fs::rename(&tmp, &path).with_context(|| format!("write {}", path.display()))?;
+        let prov = Provenance {
+            author_kind: AuthorKind::Agent,
+            source: consumer.to_string(),
+        };
+        let report = match s.watch_with(&mut v, e.as_ref(), &x.doc_path, &new, prov, m) {
+            Ok(r) => r,
+            Err(err) => {
+                // the file is restored: it never holds text the vault did not take
+                let undo = match &old {
+                    Some(o) => std::fs::write(&path, o),
+                    // and a directory this call created goes again
+                    None => std::fs::remove_file(&path).and_then(|_| {
+                        if created_dir {
+                            std::fs::remove_dir(dir)
+                        } else {
+                            Ok(())
+                        }
+                    }),
+                };
+                return Err(match undo {
+                    Ok(()) => err.context("propose: ingest failed; the file was restored"),
+                    Err(u) => err.context(format!(
+                        "propose: ingest failed and restoring {} failed too: {u}",
+                        path.display()
+                    )),
+                });
+            }
+        };
+        let record = json!({
+            "doc_path": x.doc_path,
+            "mode": mode.as_str(),
+            "heading": x.heading,
+            "consumer": consumer,
+            "reason": x.reason,
+            "snapshot_id": report.snapshot_id,
+            "events": report.events,
+        });
+        let mut line = serde_json::to_vec(&record)?;
+        line.push(b'\n');
+        let rp = v.store_dir().join("proposals.jsonl");
+        let mut f = std::fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(&rp)
+            .with_context(|| format!("open {}", rp.display()))?;
+        std::io::Write::write_all(&mut f, &line)?;
+        f.sync_data()?;
+        let blocks = v.blame(&x.doc_path, None)?;
+        Ok(json!({
+            "doc_path": x.doc_path,
+            "mode": mode.as_str(),
+            "bytes": new.len(),
+            "synced_external_events": synced,
+            "snapshot_id": report.snapshot_id,
+            "events": report.events,
+            "chunks_embedded": report.embedded,
+            "blocks": blocks,
+            "events_hash": v.events_hash()?,
+        }))
     }
 
     fn status(&self) -> Result<Value> {

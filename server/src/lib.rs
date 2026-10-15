@@ -5,6 +5,7 @@ pub mod config;
 pub mod http;
 pub mod mcp;
 pub mod paths;
+pub mod propose;
 pub mod serve;
 pub mod token;
 pub mod tools;
