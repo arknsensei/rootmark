@@ -181,7 +181,9 @@ pub fn specs() -> Vec<ToolSpec> {
             description: "Create a checkpoint of the vault's current state (spec §8): an immutable \
                 map doc path → snapshot at an event offset, optionally named; the same state \
                 gives the same checkpoint id. Queries can then be evaluated as of it (`search \
-                at`, `blame at`, `read_block at`). Returns the checkpoint.",
+                at`, `blame at`, `read_block at`). Returns the checkpoint. A state has one \
+                checkpoint: if it already has one (a search or read creates an unnamed one), \
+                creating another is an error naming the existing id.",
             input_schema: object_schema(
                 json!({"name": {"type": "string", "minLength": 1,
                     "description": "optional checkpoint name"}}),

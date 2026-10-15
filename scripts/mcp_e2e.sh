@@ -339,10 +339,10 @@ echo "mcp_e2e: $( [ "$cp_ok" = true ] && echo 'ok  ' || echo FAIL) [promote] D-4
 checkb promote "D-4 after the human promotion, default search finds the block (canonical)" \
   'any(.result.structuredContent.hits[]; .doc_path == "agent/notes.md" and .layer == "canonical")' 4
 checkb promote "history: Promoted by human:alice" \
-  "any(.result.structuredContent.events[]; .kind == \"Promoted\") and .result.structuredContent.layer == \"canonical\"" 5
+  "any(.result.structuredContent.events[]; .kind == \"Promoted\" and .meta.actor == {\"kind\": \"human\", \"id\": \"alice\"}) and .result.structuredContent.layer == \"canonical\"" 5
 checkb promote "a later agent request is still denied" '.result.structuredContent.decision == "denied"' 6
-checkb checkpoint "D-6 search --at d6 gives the old state (no agent/d6.md)" \
-  '.result.isError == false and all(.result.structuredContent.hits[]; .doc_path != "agent/d6.md")' 2
+checkb checkpoint "D-6 search --at d6 gives the old state (checkpoint d6, no agent/d6.md)" \
+  ".result.isError == false and .result.structuredContent.checkpoint_id == $(r 241 | jq -c .result.structuredContent.checkpoint_id) and all(.result.structuredContent.hits[]; .doc_path != \"agent/d6.md\")" 2
 checkb checkpoint "D-6 search gives the new state (agent/d6.md, canonical)" \
   'any(.result.structuredContent.hits[]; .doc_path == "agent/d6.md" and .layer == "canonical")' 3
 
