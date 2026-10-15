@@ -33,7 +33,7 @@ cd "$root"
 cargo build -q --release -p mdkernel-server --bin mdk --example mcp_client
 mdk="$root/target/release/mdk"
 client="$root/target/release/examples/mcp_client"
-TOOLS="status search read_block history blame propose checkpoints trace"
+TOOLS="status search read_block history blame propose promote checkpoint checkpoints trace"
 
 prepare() { # prepare <run-dir>: the vault, through the CLI
   local d="$1"
@@ -112,6 +112,27 @@ session() { # session <lineage> <agent-lineage>: the JSON-RPC messages, one per 
   call propose '{"doc_path":"espresso.md","content":"x","reason":"no heading","mode":"replace_section"}' # 238
   call propose '{"doc_path":"espresso.md","content":"Agent recipe: 18 g in, 36 g out, about yuzu.","reason":"e2e section","mode":"replace_section","heading":"Recipe"}' # 239
   call blame '{"doc_path":"espresso.md"}'                    # 240
+  # D5: checkpoint, then a proposal, then promote requests (denied)
+  call checkpoint '{"name":"d6"}'                            # 241
+  call checkpoint '{}'                                       # 242 same state again
+  call propose '{"doc_path":"agent/d6.md","content":"# D6\n\nAn agent note about wombat burrs.\n","reason":"e2e d6"}' # 243
+  call promote "{\"lineage_id\":\"$al\",\"reason\":\"the agent asks\"}"  # 244 D-4: denied/human_only
+  call promote '{"lineage_id":"00000000000000000000000000000000","reason":"x"}' # 245 unknown lineage
+  call promote "{\"lineage_id\":\"$al\"}"                    # 246 no reason
+  call history "{\"lineage_id\":\"$al\"}"                    # 247 no Promoted event
+}
+
+session_b() { # session_b <agent-lineage>: after the human's CLI promotions
+  local al="$1" id=0
+  req() { id=$((id + 1)); printf '{"jsonrpc":"2.0","id":%d,"method":"%s","params":%s}\n' "$id" "$1" "$2"; }
+  call() { req tools/call "{\"name\":\"$1\",\"arguments\":$2}"; }
+  req initialize '{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"mcp-e2e","version":"1.0"}}'
+  printf '{"jsonrpc":"2.0","method":"notifications/initialized"}\n'
+  call search '{"query":"wombat","mode":"lexical","at":"d6"}' # 2 D-6: the old state
+  call search '{"query":"wombat","mode":"lexical"}'          # 3 D-6: the new state
+  call search '{"query":"agent suggests finer espresso grind light roasts","mode":"lexical","k":50}' # 4 D-4: found after the human promotion
+  call history "{\"lineage_id\":\"$al\"}"                    # 5 Promoted by human:alice
+  call promote "{\"lineage_id\":\"$al\",\"reason\":\"again\"}" # 6 still denied for the agent
 }
 
 run() { # run <run-dir>
@@ -119,8 +140,22 @@ run() { # run <run-dir>
   prepare "$d"
   session "$(cat "$d/lineage.txt")" "$(cat "$d/agent_lineage.txt")" >"$d/session.jsonl"
   (cd "$d" && "$client" session.jsonl transcript.jsonl -- "$mdk" serve --vault vault --mcp stdio 2>server.err)
+  cp "$d/vault/.mdkernel/traces.jsonl" "$d/traces_a.jsonl"
   # the CLI twin of call 16, on the copy taken before the session
   (cd "$d" && "$mdk" search vault_cli "espresso grind" --consumer mcp-e2e/1.0 >cli_search.json)
+  # D-4/D-6: a human promotes through the CLI, between the two sessions:
+  # the prepared agent document and both blocks of the proposal of call 243
+  (
+    cd "$d"
+    : >cli_promote.jsonl
+    # every block of agent/notes.md: a chunk takes the lowest layer of its
+    # blocks (spec §9), so the heading must be promoted with the paragraph
+    for l in $("$mdk" blame vault agent/notes.md | jq -r '.blocks[].lineage_id') $(jq -r 'select(.request.id == 243) | .response.result.structuredContent.blocks[].lineage_id' transcript.jsonl); do
+      "$mdk" promote vault "$l" --actor human:alice --reason "reviewed" >>cli_promote.jsonl
+    done
+  )
+  session_b "$(cat "$d/agent_lineage.txt")" >"$d/session_b.jsonl"
+  (cd "$d" && "$client" session_b.jsonl transcript_b.jsonl -- "$mdk" serve --vault vault --mcp stdio 2>server_b.err)
 }
 
 run "$out/run1"
@@ -217,7 +252,7 @@ ok_load=true
 for i in $(seq 26 225); do
   r "$i" | jq -e '.result.isError == false' >/dev/null || ok_load=false
 done
-tl="$out/run1/vault/.mdkernel/traces.jsonl"
+tl="$out/run1/traces_a.jsonl" # traces.jsonl as session A left it
 n_lines="$(wc -l <"$tl" | tr -d ' ')"
 n_mcp="$(jq -r 'select(.consumer == "mcp-e2e/1.0") | .trace_id' "$tl" | wc -l | tr -d ' ')"
 d5=false
@@ -263,24 +298,60 @@ if [ "$(sed -n '/^## Recipe/,$!p' "$out/run1/vault_cli/espresso.md")" = "$(sed -
    [ "$(grep -cE 'lineage|version_id|mdkernel' "$v1/espresso.md" || true)" = 0 ]; then pd=true; fi
 results+=("{\"tool\":\"propose\",\"check\":\"espresso.md: text before ## Recipe unchanged, agent text present, appended line last, no ids\",\"pass\":$pd}")
 echo "mcp_e2e: $( [ "$pd" = true ] && echo 'ok  ' || echo FAIL) [propose] espresso.md edits are the agent's text only"
-# events: every event after the session's start (checkpoints aside) belongs
+# events: every event after the session's start (checkpoints and the
+# human's CLI promotions aside) belongs
 # to a proposed document, and every event that creates a block version
 # carries the agent's provenance (SnapshotCommitted, BlockDeleted and
 # LayerChanged carry none)
 n_prep="$(wc -l <"$out/run1/vault_cli/.mdkernel/events.jsonl" | tr -d ' ')"
-bad_ev="$(tail -n +"$((n_prep + 1))" "$v1/.mdkernel/events.jsonl" | jq -c 'select(.kind != "CheckpointCreated") | select(((.doc_path | IN("agent/plan.md", "espresso.md")) and (if (.kind | IN("SnapshotCommitted", "BlockDeleted", "LayerChanged")) then true else (.meta.provenance.author_kind == "Agent" and .meta.provenance.source == "mcp-e2e/1.0") end)) | not)' | wc -l | tr -d ' ')"
+bad_ev="$(tail -n +"$((n_prep + 1))" "$v1/.mdkernel/events.jsonl" | jq -c 'select(.kind != "CheckpointCreated") | select(.kind != "Promoted" or .meta.actor.kind != "human") | select(((.doc_path | IN("agent/plan.md", "espresso.md", "agent/d6.md")) and (if (.kind | IN("SnapshotCommitted", "BlockDeleted", "LayerChanged")) then true else (.meta.provenance.author_kind == "Agent" and .meta.provenance.source == "mcp-e2e/1.0") end)) | not)' | wc -l | tr -d ' ')"
 n_rec="$(wc -l <"$v1/.mdkernel/proposals.jsonl" | tr -d ' ')"
 pe=false
-if [ "$bad_ev" = 0 ] && [ "$n_rec" = 3 ] && jq -e -s 'map(.reason) == ["e2e create", "e2e append", "e2e section"]' "$v1/.mdkernel/proposals.jsonl" >/dev/null; then pe=true; fi
-results+=("{\"tool\":\"propose\",\"check\":\"events.jsonl: only the proposed documents' agent block events (+ layer/checkpoint events); proposals.jsonl 3 reasons\",\"pass\":$pe}")
+if [ "$bad_ev" = 0 ] && [ "$n_rec" = 4 ] && jq -e -s 'map(.reason) == ["e2e create", "e2e append", "e2e section", "e2e d6"]' "$v1/.mdkernel/proposals.jsonl" >/dev/null; then pe=true; fi
+results+=("{\"tool\":\"propose\",\"check\":\"events.jsonl: only the proposed documents' agent block events (+ layer/checkpoint events); proposals.jsonl 4 reasons\",\"pass\":$pe}")
 echo "mcp_e2e: $( [ "$pe" = true ] && echo 'ok  ' || echo FAIL) [propose] events only for proposed documents ($bad_ev unexpected), $n_rec proposal records"
+
+# D5: promote and checkpoint (session A), then session B
+check checkpoint "named checkpoint d6" "$ok_result and .result.structuredContent.name == \"d6\"" 241
+check checkpoint "same state again: explicit error naming the existing checkpoint (one checkpoint per state)" \
+  "$tool_err and (.result.content[0].text | contains($(r 241 | jq -c .result.structuredContent.checkpoint_id)))" 242
+check promote "D-4 MCP promote → decision denied, policy human_only (a response, not an error), layer proposal" \
+  "$ok_result and (.result.structuredContent | .decision == \"denied\" and .policy == \"human_only\" and .layer == \"proposal\" and .actor.kind == \"agent\" and .actor.id == \"mcp-e2e/1.0\")" 244
+check promote "unknown lineage is an error" "$tool_err" 245
+check promote "missing reason is an error" "$tool_err" 246
+check promote "the denied request wrote no event (history: no Promoted, still proposal)" \
+  ".result.structuredContent | .layer == \"proposal\" and all(.events[]; .kind != \"Promoted\")" 247
+tb="$out/run1/transcript_b.jsonl"
+rb() { jq -c --argjson id "$1" 'select(.request.id == $id) | .response' "$tb"; }
+checkb() { # checkb <tool> <label> <jq> <id>: as check, on session B
+  local v
+  v="$(rb "$4" | jq -e "$3" 2>/dev/null || true)"
+  if [ "$v" = "true" ]; then
+    echo "mcp_e2e: ok   [$1] $2"; results+=("{\"tool\":\"$1\",\"check\":\"$2\",\"pass\":true}")
+  else
+    echo "mcp_e2e: FAIL [$1] $2: $(rb "$4" | cut -c1-300)" >&2; results+=("{\"tool\":\"$1\",\"check\":\"$2\",\"pass\":false}")
+  fi
+}
+cp_ok=false
+if [ "$(jq -s 'length' "$out/run1/cli_promote.jsonl")" = 4 ] && jq -e -s 'all(.[]; .event.kind == "Promoted" and .layer == "canonical")' "$out/run1/cli_promote.jsonl" >/dev/null; then cp_ok=true; fi
+results+=("{\"tool\":\"promote\",\"check\":\"D-4 CLI promote --actor human:alice → Promoted (4 lineages)\",\"pass\":$cp_ok}")
+echo "mcp_e2e: $( [ "$cp_ok" = true ] && echo 'ok  ' || echo FAIL) [promote] D-4 CLI promote --actor human:alice → Promoted"
+checkb promote "D-4 after the human promotion, default search finds the block (canonical)" \
+  'any(.result.structuredContent.hits[]; .doc_path == "agent/notes.md" and .layer == "canonical")' 4
+checkb promote "history: Promoted by human:alice" \
+  "any(.result.structuredContent.events[]; .kind == \"Promoted\") and .result.structuredContent.layer == \"canonical\"" 5
+checkb promote "a later agent request is still denied" '.result.structuredContent.decision == "denied"' 6
+checkb checkpoint "D-6 search --at d6 gives the old state (no agent/d6.md)" \
+  '.result.isError == false and all(.result.structuredContent.hits[]; .doc_path != "agent/d6.md")' 2
+checkb checkpoint "D-6 search gives the new state (agent/d6.md, canonical)" \
+  'any(.result.structuredContent.hits[]; .doc_path == "agent/d6.md" and .layer == "canonical")' 3
 
 # pass per tool: every check of that tool holds
 per_tool="$(printf '%s\n' "${results[@]}" | jq -sc 'group_by(.tool) | map({key: .[0].tool, value: {checks: length, passed: (map(select(.pass)) | length)}}) | from_entries')"
 
 # determinism: run1 ↔ run2
 same=true
-for f in transcript.jsonl vault/.mdkernel/events.jsonl vault/.mdkernel/traces.jsonl vault/.mdkernel/proposals.jsonl vault/espresso.md vault/agent/plan.md; do
+for f in transcript.jsonl transcript_b.jsonl cli_promote.jsonl vault/.mdkernel/events.jsonl vault/.mdkernel/traces.jsonl vault/.mdkernel/proposals.jsonl vault/espresso.md vault/agent/plan.md; do
   if ! cmp -s "$out/run1/$f" "$out/run2/$f"; then
     echo "mcp_e2e: runs differ: $f" >&2
     same=false

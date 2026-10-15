@@ -158,6 +158,37 @@ pub fn specs() -> Vec<ToolSpec> {
             ),
         },
         ToolSpec {
+            name: "promote",
+            description: "Request the promotion of a lineage from `proposal` to `canonical` (spec §7). \
+                The kernel does not decide: the vault's promotion policy hook does, for the actor \
+                agent:<consumer> (the MCP client or HTTP consumer; it cannot be chosen). Under the \
+                phase-1 policies (`human_only`, the default, or `deny`) an agent's request is \
+                denied: the answer is `decision: denied` with the policy and its reason, not an \
+                error, and no event is written. A human promotes through the CLI (`mdk promote \
+                --actor human:<id>`). An allowed request writes a `Promoted` event.",
+            input_schema: object_schema(
+                json!({
+                    "lineage_id": {"type": "string", "minLength": 1,
+                        "description": "lineage id (32 lowercase hex)"},
+                    "reason": {"type": "string", "minLength": 1,
+                        "description": "why the promotion is requested"},
+                }),
+                &["lineage_id", "reason"],
+            ),
+        },
+        ToolSpec {
+            name: "checkpoint",
+            description: "Create a checkpoint of the vault's current state (spec §8): an immutable \
+                map doc path → snapshot at an event offset, optionally named; the same state \
+                gives the same checkpoint id. Queries can then be evaluated as of it (`search \
+                at`, `blame at`, `read_block at`). Returns the checkpoint.",
+            input_schema: object_schema(
+                json!({"name": {"type": "string", "minLength": 1,
+                    "description": "optional checkpoint name"}}),
+                &[],
+            ),
+        },
+        ToolSpec {
             name: "checkpoints",
             description: "Every checkpoint of the vault (spec §8: checkpoint id, optional name, \
                 event offset, snapshot per document), in creation order. Writes nothing.",
@@ -223,6 +254,19 @@ struct ProposeArgs {
     reason: String,
     mode: Option<String>,
     heading: Option<String>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct PromoteArgs {
+    lineage_id: String,
+    reason: String,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct CheckpointArgs {
+    name: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -435,6 +479,56 @@ impl Kernel {
                 let x: ProposeArgs = args(name, a)?;
                 let consumer = need_consumer(name, consumer)?;
                 self.propose(x, consumer)
+            }
+            "promote" => {
+                let x: PromoteArgs = args(name, a)?;
+                non_empty(name, "lineage_id", &x.lineage_id)?;
+                if x.reason.trim().is_empty() {
+                    bail!("promote: reason must not be empty");
+                }
+                let consumer = need_consumer(name, consumer)?;
+                // the actor is the consumer, always an agent (K12, K16)
+                let actor = mdkcore::Actor::new(mdkcore::ActorKind::Agent, consumer)?;
+                let policy = Policy::load(&self.vault)?;
+                let hook = policy.promotion.hook();
+                let mut v = Vault::open(&self.vault)?;
+                let req = v.request(
+                    mdkcore::TransitionKind::Promote,
+                    &x.lineage_id,
+                    mdkcore::Layer::Canonical,
+                    actor.clone(),
+                    &x.reason,
+                )?;
+                match hook.decide(&req) {
+                    mdkcore::Decision::Deny(why) => Ok(json!({
+                        "decision": "denied",
+                        "policy": hook.name(),
+                        "policy_version": hook.version(),
+                        "reason": why,
+                        "lineage_id": x.lineage_id,
+                        "layer": req.from,
+                        "actor": actor,
+                    })),
+                    mdkcore::Decision::Allow => {
+                        let ev = v.promote(&req, hook)?;
+                        Ok(json!({
+                            "decision": "promoted",
+                            "policy": hook.name(),
+                            "policy_version": hook.version(),
+                            "lineage_id": x.lineage_id,
+                            "layer": v.layer_of(&x.lineage_id)?,
+                            "event": ev,
+                        }))
+                    }
+                }
+            }
+            "checkpoint" => {
+                let x: CheckpointArgs = args(name, a)?;
+                if let Some(n) = &x.name {
+                    non_empty(name, "name", n)?;
+                }
+                let mut v = Vault::open(&self.vault)?;
+                Ok(serde_json::to_value(v.checkpoint(x.name.as_deref())?)?)
             }
             "history" => {
                 let x: HistoryArgs = args(name, a)?;

@@ -64,6 +64,8 @@ tool_args() {
     search) echo "query=espresso k=3" ;;
     read_block) echo "doc_path=espresso.md lineage_id=$lineage" ;;
     propose) echo "doc_path=inspector/note.md content=Inspector-proposed-text reason=inspector" ;;
+    promote) echo "lineage_id=$lineage reason=inspector" ;;
+    checkpoint) echo "name=inspector" ;;
     *) echo "mcp_inspector: no call arguments for tool $1" >&2; return 1 ;;
   esac
 }
