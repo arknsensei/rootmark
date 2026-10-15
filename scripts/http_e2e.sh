@@ -21,6 +21,8 @@
 # ingests it (`blame`: new block canonical, author Human, source
 # mdk-serve-watch) within 1 s; `mdk index status` → no stale document, hot
 # tier non-empty. (Latency over many edits: server/tests/serve_watch.rs.)
+# Hidden entries (`.obsidian/h.md`, `.dotfile.md`, `sub/.x/y.md`) and
+# non-.md files are not ingested by the watcher.
 # SIGTERM: exit 0, stderr "compact (shutdown)", hot tier gone (`index
 # status` hot_records 0), and the edit still found by `mdk search` (cold).
 # Timer: with `[index] compact_every_s = 1`, a watched edit leaves the hot
@@ -64,6 +66,13 @@ start() { # start <stderr-file> <args…>: background server, waits for the port
 }
 
 code() { curl -s -o "$out/body.json" -w '%{http_code}' "$@"; }
+
+# a refused start writes nothing (no policy.toml, token or index yet)
+rc=0
+"$mdk" serve --vault vault --http 0.0.0.0:0 2>refused.err || rc=$?
+ok=false
+if [ "$rc" != 0 ] && [ ! -e vault/.mdkernel/policy.toml ] && [ ! -e vault/.mdkernel/server.token ] && [ ! -e vault/.mdkernel/index ]; then ok=true; fi
+record R-1 "refused start (--http 0.0.0.0) writes no policy, token or index" "$ok" "exit $rc"
 
 start serve.err --http 127.0.0.1:0 --watch
 base="http://127.0.0.1:$port/v1"
@@ -128,6 +137,26 @@ record W-1 "external human edit ingested within 2 s: canonical, Human, mdk-serve
 "$mdk" index status vault >status_hot.json
 record W-2 "index: no stale document, hot tier non-empty" \
   "$(jq -e '.stale_docs == [] and .hot_records > 0' status_hot.json >/dev/null && echo true || echo false)"
+
+# hidden entries and non-Markdown files are not watched (the rule of
+# `ingest-dir`, core::files::markdown_files); a visible edit afterwards
+# marks the end of the batch
+mkdir -p vault/.obsidian vault/sub/.x
+printf '# Hidden\n\nObsidian settings note.\n' >vault/.obsidian/h.md
+printf '# Dot\n\nA dotfile note.\n' >vault/.dotfile.md
+printf '# Deep\n\nA note in a hidden directory.\n' >vault/sub/.x/y.md
+printf 'not markdown\n' >vault/notes.txt
+n_f="$(code -X POST -H "Authorization: Bearer $tok" -H 'X-Consumer: http-e2e' -d '{"doc_path":"filter.md"}' "$base/blame" >/dev/null; jq '.blocks | length' body.json)"
+printf '\nA visible marker paragraph about kiwano filters.\n' >>vault/filter.md
+for _ in $(seq 1 20); do
+  sleep 0.1
+  code -X POST -H "Authorization: Bearer $tok" -H 'X-Consumer: http-e2e' -d '{"doc_path":"filter.md"}' "$base/blame" >/dev/null
+  [ "$(jq '.blocks | length' body.json)" -gt "$n_f" ] && break
+done
+c1="$(code -X POST -H "Authorization: Bearer $tok" -H 'X-Consumer: http-e2e' -d '{"doc_path":".dotfile.md"}' "$base/blame")"
+hidden_docs="$(jq -r '.doc_path' vault/.mdkernel/events.jsonl | sort -u | grep -E '(^|/)\.|\.txt$' || true)"
+record W-3 "hidden .md files and non-.md files are not ingested" \
+  "$( [ "$c1" = 422 ] && [ -z "$hidden_docs" ] && echo true || echo false)" "blame .dotfile.md $c1; logged: $hidden_docs"
 
 # SIGTERM: compact, exit 0
 kill -TERM "$pid"

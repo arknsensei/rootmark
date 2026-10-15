@@ -181,3 +181,145 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
     assert_eq!(report["pass"], true, "{report}\n{log}{tail}");
     std::fs::remove_dir_all(root).unwrap();
 }
+
+/// D2 review 1: a SIGTERM that arrives while a timer compaction runs is not
+/// lost. 162 documents (mini_vault + 150 generated), `compact_every_s = 1`,
+/// a document edited every 100 ms from outside; in each of 10 trials one
+/// SIGTERM is sent at a different moment and the server must compact and
+/// exit 0 within 15 s, without a second signal.
+#[test]
+fn sigterm_is_never_lost_during_timer_compaction() {
+    let root = tmp("sigterm");
+    let vault = root.join("vault");
+    std::fs::create_dir_all(&vault).unwrap();
+    let mini = Path::new(env!("CARGO_MANIFEST_DIR")).join("../spec/fixtures/mini_vault");
+    for e in std::fs::read_dir(&mini).unwrap() {
+        let p = e.unwrap().path();
+        if p.extension().is_some_and(|x| x == "md") {
+            std::fs::copy(&p, vault.join(p.file_name().unwrap())).unwrap();
+        }
+    }
+    for i in 0..150 {
+        let mut t = format!("# Generated note {i}\n\n");
+        for j in 0..6 {
+            t.push_str(&format!(
+                "Paragraph {j} of note {i} about roast profile {}, grind {} and water {}.\n\n",
+                i * 7 + j,
+                (i + j) % 13,
+                (i * j) % 17
+            ));
+        }
+        std::fs::write(vault.join(format!("gen-{i:03}.md")), t).unwrap();
+    }
+    let vs = vault.to_str().unwrap();
+    assert!(Command::new(mdk())
+        .args(["ingest-dir", vs, vs])
+        .output()
+        .unwrap()
+        .status
+        .success());
+    std::fs::create_dir_all(vault.join(".mdkernel")).unwrap();
+    std::fs::write(
+        vault.join(".mdkernel/policy.toml"),
+        mdkserver::config::default_recipe().replace("compact_every_s = 300", "compact_every_s = 1"),
+    )
+    .unwrap();
+    // index once (the first start builds it)
+    assert!(Command::new(mdk())
+        .args(["index", "build", vs])
+        .output()
+        .unwrap()
+        .status
+        .success());
+
+    let stop = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    let editor = {
+        let stop = stop.clone();
+        let vault = vault.clone();
+        std::thread::spawn(move || {
+            let mut n = 0u32;
+            while !stop.load(std::sync::atomic::Ordering::Relaxed) {
+                let p = vault.join(format!("gen-{:03}.md", n % 150));
+                let mut t = std::fs::read_to_string(&p).unwrap();
+                t.push_str(&format!("\nEdit {n} under load about tamarind{n}.\n"));
+                std::fs::write(&p, t).unwrap();
+                n += 1;
+                std::thread::sleep(Duration::from_millis(100));
+            }
+        })
+    };
+    let mut outcomes = Vec::new();
+    for trial in 0..10u64 {
+        let mut child = Command::new(mdk())
+            .args(["serve", "--vault", vs, "--watch"])
+            .stderr(Stdio::piped())
+            .spawn()
+            .unwrap();
+        let err = child.stderr.take().unwrap();
+        let (tx, rx) = std::sync::mpsc::channel::<String>();
+        let reader = std::thread::spawn(move || {
+            let mut all = String::new();
+            for l in BufReader::new(err).lines() {
+                let l = l.unwrap_or_default();
+                let _ = tx.send(l.clone());
+                all.push_str(&l);
+                all.push('\n');
+            }
+            all
+        });
+        loop {
+            let l = rx
+                .recv_timeout(Duration::from_secs(60))
+                .expect("server start");
+            if l.contains("mdk serve: watching") {
+                break;
+            }
+        }
+        // different moments relative to the 1 s compaction timer
+        std::thread::sleep(Duration::from_millis(1000 + trial * 137));
+        assert!(Command::new("kill")
+            .args(["-TERM", &child.id().to_string()])
+            .status()
+            .unwrap()
+            .success());
+        let t0 = Instant::now();
+        let exited = loop {
+            if let Some(st) = child.try_wait().unwrap() {
+                break Some(st);
+            }
+            if t0.elapsed() > Duration::from_secs(15) {
+                break None;
+            }
+            std::thread::sleep(Duration::from_millis(20));
+        };
+        if exited.is_none() {
+            let _ = child.kill();
+            let _ = child.wait();
+        }
+        let log = reader.join().unwrap();
+        outcomes.push(json!({
+            "trial": trial,
+            "exited": exited.is_some(),
+            "exit_0": exited.is_some_and(|s| s.success()),
+            "compacted_on_shutdown": log.contains("compact (shutdown)"),
+            "timer_compactions": log.matches("compact (timer)").count(),
+        }));
+    }
+    stop.store(true, std::sync::atomic::Ordering::Relaxed);
+    editor.join().unwrap();
+    let all_ok = outcomes
+        .iter()
+        .all(|o| o["exit_0"] == true && o["compacted_on_shutdown"] == true);
+    let timer_ran = outcomes
+        .iter()
+        .map(|o| o["timer_compactions"].as_u64().unwrap())
+        .sum::<u64>();
+    let report = json!({"trials": outcomes, "timer_compactions": timer_ran, "pass": all_ok && timer_ran > 0});
+    if let Ok(p) = std::env::var("MDK_SIGTERM_OUT") {
+        if !p.is_empty() {
+            std::fs::write(&p, serde_json::to_string_pretty(&report).unwrap() + "\n").unwrap();
+        }
+    }
+    assert_eq!(report["pass"], true, "{report}");
+    std::fs::remove_dir_all(root).unwrap();
+}

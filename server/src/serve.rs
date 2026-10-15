@@ -21,7 +21,7 @@
 use crate::config::{self, ServerConfig};
 use crate::tools::Kernel;
 use anyhow::{bail, Context, Result};
-use mdkcore::{MatcherVersion, Policy};
+use mdkcore::{MatcherVersion, Policy, PolicySource};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Duration;
@@ -38,26 +38,38 @@ fn log(msg: impl AsRef<str>) {
     eprintln!("mdk serve: {}", msg.as_ref());
 }
 
-/// The vault's policy, writing the default recipe first if there is none.
-fn policy_of(vault: &Path) -> Result<(Policy, ServerConfig)> {
+/// The vault's policy and server settings. Without `policy.toml` the
+/// default recipe is used and returned for writing (`true`); nothing is
+/// written here, so a start that fails later leaves the vault untouched.
+fn policy_of(vault: &Path) -> Result<(Policy, ServerConfig, bool)> {
     let p = Policy::path(vault);
-    if std::fs::symlink_metadata(&p).is_err() {
-        std::fs::create_dir_all(vault.join(".mdkernel"))?;
-        std::fs::write(&p, config::default_recipe())
-            .with_context(|| format!("write {}", p.display()))?;
-        log(format!(
-            "no policy.toml: wrote the default recipe (promotion human_only) to {}",
-            p.display()
-        ));
-    }
-    let policy = Policy::load(vault)?;
+    let missing = std::fs::symlink_metadata(&p).is_err();
+    let policy = if missing {
+        Policy::parse(&config::default_recipe(), PolicySource::File(p.clone()))?
+    } else {
+        Policy::load(vault)?
+    };
     let cfg = ServerConfig::from_policy(&policy)
         .with_context(|| format!("policy {} rejected", p.display()))?;
-    Ok((policy, cfg))
+    Ok((policy, cfg, missing))
+}
+
+fn write_default_policy(vault: &Path) -> Result<()> {
+    let p = Policy::path(vault);
+    std::fs::create_dir_all(vault.join(".mdkernel"))?;
+    std::fs::write(&p, config::default_recipe())
+        .with_context(|| format!("write {}", p.display()))?;
+    log(format!(
+        "no policy.toml: wrote the default recipe (promotion human_only) to {}",
+        p.display()
+    ));
+    Ok(())
 }
 
 /// Vault-relative `/` path of a changed file, if it is a Markdown document
-/// of the vault (not under `.mdkernel/`).
+/// of the vault: a `.md` file none of whose path components is hidden
+/// (starts with `.`, so `.mdkernel/`, `.obsidian/`, `.x.md` are skipped) —
+/// the rule of `mdkcore::files::markdown_files`, which `ingest-dir` uses.
 fn watched_doc(root: &Path, p: &Path) -> Option<String> {
     let rel = p.strip_prefix(root).ok()?;
     let mut parts = Vec::new();
@@ -67,7 +79,7 @@ fn watched_doc(root: &Path, p: &Path) -> Option<String> {
             _ => return None,
         }
     }
-    if parts.first().map(String::as_str) == Some(".mdkernel") {
+    if parts.iter().any(|c| c.starts_with('.')) {
         return None;
     }
     let doc = parts.join("/");
@@ -147,21 +159,44 @@ async fn compact(kernel: &Arc<Kernel>, why: &str) -> Result<()> {
     }
 }
 
-#[cfg(unix)]
-async fn signal() -> &'static str {
-    use tokio::signal::unix::{signal, SignalKind};
-    let mut term = signal(SignalKind::terminate()).expect("SIGTERM handler");
-    let mut int = signal(SignalKind::interrupt()).expect("SIGINT handler");
-    tokio::select! {
-        _ = term.recv() => "SIGTERM",
-        _ = int.recv() => "SIGINT",
-    }
+/// SIGTERM and SIGINT, registered once for the whole service: a signal
+/// that arrives while the loop is busy (a timer compaction) stays pending
+/// in its stream and is seen at the next poll — none is lost.
+struct Signals {
+    #[cfg(unix)]
+    term: tokio::signal::unix::Signal,
+    #[cfg(unix)]
+    int: tokio::signal::unix::Signal,
 }
 
-#[cfg(not(unix))]
-async fn signal() -> &'static str {
-    let _ = tokio::signal::ctrl_c().await;
-    "Ctrl-C"
+impl Signals {
+    fn new() -> Result<Signals> {
+        #[cfg(unix)]
+        {
+            use tokio::signal::unix::{signal, SignalKind};
+            Ok(Signals {
+                term: signal(SignalKind::terminate()).context("SIGTERM handler")?,
+                int: signal(SignalKind::interrupt()).context("SIGINT handler")?,
+            })
+        }
+        #[cfg(not(unix))]
+        Ok(Signals {})
+    }
+
+    async fn next(&mut self) -> &'static str {
+        #[cfg(unix)]
+        {
+            tokio::select! {
+                _ = self.term.recv() => "SIGTERM",
+                _ = self.int.recv() => "SIGINT",
+            }
+        }
+        #[cfg(not(unix))]
+        {
+            let _ = tokio::signal::ctrl_c().await;
+            "Ctrl-C"
+        }
+    }
 }
 
 pub fn run(o: ServeOptions) -> Result<()> {
@@ -169,12 +204,15 @@ pub fn run(o: ServeOptions) -> Result<()> {
         bail!("mdk serve: nothing to serve (--mcp stdio, --http 127.0.0.1:PORT, --watch)");
     }
     let kernel = Arc::new(Kernel::open_with(&o.vault, o.matcher)?);
-    let (_policy, cfg) = policy_of(&o.vault)?;
-    // the HTTP address is checked before anything is built
+    let (_policy, cfg, write_policy) = policy_of(&o.vault)?;
+    // the HTTP address is checked before anything is written or built
     let http_addr = match &o.http {
         Some(s) => Some(crate::http::parse_addr(s, cfg.http_port)?),
         None => None,
     };
+    if write_policy {
+        write_default_policy(&o.vault)?;
+    }
     if let Some(r) = kernel.ensure_index()? {
         log(format!(
             "no index: built one ({} records, {} snapshots, {})",
@@ -186,6 +224,7 @@ pub fn run(o: ServeOptions) -> Result<()> {
         .build()
         .context("tokio runtime")?;
     rt.block_on(async move {
+        let mut signals = Signals::new()?;
         let (stop_tx, stop_rx) = tokio::sync::watch::channel(false);
         let mut http_task = None;
         if let Some(addr) = http_addr {
@@ -226,7 +265,7 @@ pub fn run(o: ServeOptions) -> Result<()> {
         tokio::pin!(mcp);
         let why = loop {
             tokio::select! {
-                s = signal() => break s.to_string(),
+                s = signals.next() => break s.to_string(),
                 r = &mut mcp => {
                     if let Err(e) = r {
                         log(format!("mcp: error: {e:#}"));
