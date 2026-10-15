@@ -50,7 +50,8 @@ enum Cmd {
         /// state, created if the state has none)
         #[arg(long)]
         at: Option<String>,
-        /// also return proposal chunks: labelled, score ×0.5, after canonical
+        /// also return up to k proposal chunks, ranked apart with the canonical
+        /// statistics: labelled, score ×0.5, after the unchanged canonical hits
         #[arg(long)]
         include_proposal: bool,
         /// consumer recorded in the trace
@@ -203,6 +204,8 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<serde_json::Value> {
             include_proposal,
             consumer,
         } => {
+            // before the vault is opened: an empty query touches nothing (K-C1.5)
+            mdkindex::search::check_query(&query)?;
             let mut v = Vault::open(&vault)?;
             let e = embedder("minilm-l6-v2")?;
             let s = Store::open(&v, &e)?;

@@ -1,7 +1,9 @@
 //! The on-disk index of a vault, `<vault>/.mdkernel/index/` (GOAL P1-C):
 //!
-//! - `manifest.json` — format, counts, tokenizer and BM25 parameters,
-//!   embedder, blake3 of every other file (`store::load` checks them all)
+//! - `manifest.json` — format, counts, the lexical scoring record
+//!   (`lexical.{variant, idf, k1, b, tokenizer}`, K-C1.1), embedder, blake3
+//!   of every other file (`store::load` checks them all; a missing or
+//!   different lexical record is an error)
 //! - `records.jsonl` — every chunk record the index has seen, in storage
 //!   order `(doc_path, chunk_id, record_id)`
 //! - `snapshots.jsonl` — `(doc_path, snapshot_id)` → its records in document
@@ -30,19 +32,49 @@ use std::collections::{BTreeMap, HashMap};
 use std::fs;
 use std::path::{Path, PathBuf};
 
-pub const FORMAT: &str = "mdkernel-index/1";
-/// BM25 parameters: tantivy's defaults (GOAL "BM25 varsayılan parametreler").
+/// `/2` (P1-C.1): the lexical scoring record replaced the `/1` fields
+/// `tokenizer`, `bm25_k1`, `bm25_b`.
+pub const FORMAT: &str = "mdkernel-index/2";
+/// BM25 parameters: tantivy's defaults (GOAL P1-C "BM25 varsayılan
+/// parametreler"); the variant is declared in the manifest (K-C1.1).
+pub const BM25_VARIANT: &str = "lucene-bm25";
+pub const BM25_IDF: &str = "ln(1 + (N - n + 0.5) / (n + 0.5))";
 pub const BM25_K1: f64 = 1.2;
 pub const BM25_B: f64 = 0.75;
-pub const TOKENIZER: &str = "lowercase, [a-z0-9]+";
+
+/// How the lexical scores of this index are computed (K-C1.1; spec §9
+/// informative note). `search::bm25_with` implements exactly this record.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct LexicalParams {
+    pub variant: String,
+    pub idf: String,
+    pub k1: f64,
+    pub b: f64,
+    /// tokenizer id (`crate::tokenize::TOKENIZER_NAME`: lower case, maximal
+    /// runs of `[a-z0-9]`)
+    pub tokenizer: String,
+}
+
+impl LexicalParams {
+    /// The record of this build of the index.
+    pub fn current() -> LexicalParams {
+        LexicalParams {
+            variant: BM25_VARIANT.into(),
+            idf: BM25_IDF.into(),
+            k1: BM25_K1,
+            b: BM25_B,
+            tokenizer: crate::tokenize::TOKENIZER_NAME.into(),
+        }
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Manifest {
     pub format: String,
     pub chunking: String,
-    pub tokenizer: String,
-    pub bm25_k1: f64,
-    pub bm25_b: f64,
+    pub lexical: LexicalParams,
     pub embedder_id: String,
     pub dim: usize,
     pub records: usize,
@@ -146,8 +178,12 @@ fn load(dir: &Path) -> Result<Loaded> {
     if manifest.format != FORMAT {
         bail!("index format {:?} != {FORMAT:?}", manifest.format);
     }
-    if manifest.bm25_k1 != BM25_K1 || manifest.bm25_b != BM25_B || manifest.tokenizer != TOKENIZER {
-        bail!("index was built with other lexical parameters; rebuild it");
+    if manifest.lexical != LexicalParams::current() {
+        bail!(
+            "index lexical record {:?} != this implementation's {:?}; rebuild it",
+            manifest.lexical,
+            LexicalParams::current()
+        );
     }
     let (records, rh): (Vec<ChunkRecord>, String) = read_jsonl(&dir.join("records.jsonl"))?;
     let (snaps, sh): (Vec<SnapshotChunks>, String) = read_jsonl(&dir.join("snapshots.jsonl"))?;
@@ -275,9 +311,7 @@ fn write_cold(
     let manifest = Manifest {
         format: FORMAT.into(),
         chunking: "structural".into(),
-        tokenizer: TOKENIZER.into(),
-        bm25_k1: BM25_K1,
-        bm25_b: BM25_B,
+        lexical: LexicalParams::current(),
         embedder_id: embedder_id.to_string(),
         dim,
         records: records.len(),

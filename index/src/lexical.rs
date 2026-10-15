@@ -19,13 +19,26 @@
 //! rank exactly as one rebuilt from that checkpoint, GOAL C-5), so the
 //! postings give `(ord, tf)` and `crate::search` computes BM25 with tantivy's
 //! default parameters and IDF formula.
+//!
+//! The read side never writes (K-C1.4): `Lexical::open` opens the directory
+//! through `ReadOnlyDir`, which refuses every write, delete and the writer
+//! lock, and takes the reader's meta lock without creating a lock file (the
+//! index directory is replaced as a whole by a build, never modified in
+//! place, so a reader needs no lock against a writer).
 
 use crate::record::ChunkRecord;
 use crate::tokenize::{MdkTokenizer, TOKENIZER_NAME};
 use anyhow::{bail, Context, Result};
 use std::fs;
+use std::io;
 use std::path::Path;
+use std::sync::Arc;
 use tantivy::columnar::Column;
+use tantivy::directory::error::{DeleteError, LockError, OpenReadError, OpenWriteError};
+use tantivy::directory::{
+    Directory, DirectoryLock, FileHandle, Lock, MmapDirectory, WatchCallback, WatchHandle,
+    WritePtr, META_LOCK,
+};
 use tantivy::postings::Postings;
 use tantivy::schema::{Field, IndexRecordOption, Schema, TextFieldIndexing, TextOptions, FAST};
 use tantivy::{DocSet, Index, IndexReader, ReloadPolicy, TantivyDocument, Term, TERMINATED};
@@ -208,6 +221,71 @@ fn canonicalize(dir: &Path) -> Result<()> {
     Ok(())
 }
 
+/// A tantivy directory that cannot be written (K-C1.4): reads go to the
+/// memory-mapped directory; writes, deletes, `sync_directory` and any lock
+/// but the reader's meta lock are errors; the meta lock is taken without a
+/// lock file.
+#[derive(Clone, Debug)]
+struct ReadOnlyDir(MmapDirectory);
+
+fn read_only(path: &Path) -> io::Error {
+    io::Error::new(
+        io::ErrorKind::PermissionDenied,
+        format!(
+            "{}: the lexical index is opened read-only (a query never writes)",
+            path.display()
+        ),
+    )
+}
+
+impl Directory for ReadOnlyDir {
+    fn get_file_handle(&self, path: &Path) -> Result<Arc<dyn FileHandle>, OpenReadError> {
+        self.0.get_file_handle(path)
+    }
+
+    fn delete(&self, path: &Path) -> Result<(), DeleteError> {
+        Err(DeleteError::IoError {
+            io_error: Arc::new(read_only(path)),
+            filepath: path.to_path_buf(),
+        })
+    }
+
+    fn exists(&self, path: &Path) -> Result<bool, OpenReadError> {
+        self.0.exists(path)
+    }
+
+    fn open_write(&self, path: &Path) -> Result<WritePtr, OpenWriteError> {
+        Err(OpenWriteError::IoError {
+            io_error: Arc::new(read_only(path)),
+            filepath: path.to_path_buf(),
+        })
+    }
+
+    fn atomic_read(&self, path: &Path) -> Result<Vec<u8>, OpenReadError> {
+        self.0.atomic_read(path)
+    }
+
+    fn atomic_write(&self, path: &Path, _data: &[u8]) -> io::Result<()> {
+        Err(read_only(path))
+    }
+
+    fn sync_directory(&self) -> io::Result<()> {
+        Err(read_only(Path::new(".")))
+    }
+
+    fn acquire_lock(&self, lock: &Lock) -> Result<DirectoryLock, LockError> {
+        if lock.filepath == META_LOCK.filepath {
+            Ok(DirectoryLock::from(Box::new(())))
+        } else {
+            Err(LockError::IoError(Arc::new(read_only(&lock.filepath))))
+        }
+    }
+
+    fn watch(&self, cb: WatchCallback) -> tantivy::Result<WatchHandle> {
+        self.0.watch(cb)
+    }
+}
+
 /// Read side: `(ord, tf)` postings of a term.
 pub struct Lexical {
     reader: IndexReader,
@@ -217,8 +295,11 @@ pub struct Lexical {
 }
 
 impl Lexical {
+    /// Opens `dir` read-only (K-C1.4): nothing in it is created or changed.
     pub fn open(dir: &Path) -> Result<Lexical> {
-        let index = Index::open_in_dir(dir)
+        let mmap = MmapDirectory::open(dir)
+            .with_context(|| format!("open lexical index {}", dir.display()))?;
+        let index = Index::open(ReadOnlyDir(mmap))
             .with_context(|| format!("open lexical index {}", dir.display()))?;
         register(&index);
         let text = index.schema().get_field(TEXT)?;

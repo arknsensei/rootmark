@@ -261,6 +261,11 @@ impl Vault {
         include_proposal: bool,
         consumer: &str,
     ) -> PyResult<Py<PyAny>> {
+        // every query first: an empty one is refused before anything is
+        // opened or written (spec §9, K-C1.5)
+        for q in &queries {
+            mdkindex::search::check_query(q).map_err(err)?;
+        }
         let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
         let store = mdkindex::store::Store::open(&self.inner, &e).map_err(err)?;
         let mode = mdkindex::search::Mode::parse(mode).map_err(err)?;

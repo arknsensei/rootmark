@@ -1,5 +1,5 @@
 //! Retrieval as of a checkpoint (GOAL P1-C "Hibrit", "Kontrol noktasına göre
-//! sorgu"; spec §7, §9).
+//! sorgu"; spec §7, §9; P1-C.1 K-C1.3, K-C1.5).
 //!
 //! A `View` is the set of records a checkpoint names (the snapshots of its
 //! `docs` map) with each record's layer **as of that checkpoint**: the lowest
@@ -7,24 +7,28 @@
 //! Layers come from the replayed log at the checkpoint, not from the index,
 //! because a layer transition (spec §7) changes no `snapshot_id`.
 //!
-//! Eligible records: `canonical`; `proposal` only with `include_proposal`;
-//! `derived` never. Ranking statistics (BM25 `N`, `df`, `avgdl`) are those
-//! of the eligible records, so the result depends only on the checkpoint,
-//! the query and the index configuration (spec §9) — not on which other
-//! chunk versions the index holds.
+//! Ranking statistics (BM25 `N`, `df`, `avgdl`) are those of the view's
+//! `canonical` records, so the result depends only on the checkpoint, the
+//! query and the index configuration (spec §9) — not on which other chunk
+//! versions the index holds, nor on whether proposals were requested.
+//!
+//! The `canonical` pass ranks the canonical records. With
+//! `include_proposal`, a second pass ranks the `proposal` records among
+//! themselves with the canonical statistics (K-C1.3); the canonical results
+//! are byte-identical to those without the flag, and up to `k` proposal hits
+//! (score × `PROPOSAL_WEIGHT`, labelled by `layer`) follow them
+//! (ASSUMPTIONS P1-C.1 C1.2-1). `derived` records are never ranked.
 //!
 //! Every ranking is total: score descending, then `(doc_path, chunk_id)`
-//! ascending (unique within a view). With `include_proposal`, a proposal
-//! hit's score is multiplied by `PROPOSAL_WEIGHT`, the top `k` are taken,
-//! and the proposal hits are placed after the canonical ones (labelled by
-//! `layer`).
+//! ascending (unique within a view). An empty or whitespace-only query is an
+//! error (spec §9, K-C1.5).
 
 use crate::store::{Store, BM25_B, BM25_K1};
 use crate::tokenize::tokens;
 use anyhow::{bail, Context, Result};
 use mdkcore::{Checkpoint, Layer, Vault};
 use serde::{Deserialize, Serialize};
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, HashMap, HashSet};
 
 pub const PROPOSAL_WEIGHT: f64 = 0.5;
 
@@ -94,6 +98,15 @@ impl View {
         })
     }
 
+    /// `(storage position, layer)` of the records of one layer.
+    pub fn layer(&self, layer: Layer) -> Vec<(usize, Layer)> {
+        self.entries
+            .iter()
+            .copied()
+            .filter(|(_, l)| *l == layer)
+            .collect()
+    }
+
     /// Eligible `(storage position, layer)` (never `derived`).
     pub fn eligible(&self, include_proposal: bool) -> Vec<(usize, Layer)> {
         self.entries
@@ -121,65 +134,101 @@ pub fn sort_scored(store: &Store, v: &mut [Scored]) {
     });
 }
 
-/// BM25 over the eligible records (tantivy's IDF `ln(1 + (N − n + 0.5) /
-/// (n + 0.5))`, `k1` 1.2, `b` 0.75, document length = token count); every
-/// record with a query term, best first. Repeated query tokens count again
-/// (as the prototype's `BM25Okapi.get_scores`).
-pub fn bm25(store: &Store, eligible: &[(usize, Layer)], query: &str) -> Result<Vec<Scored>> {
+/// Document frequency over the statistics records and `(position in
+/// scored, tf)` postings of one query token.
+type TermPostings = (usize, Vec<(usize, u32)>);
+
+/// Rejects an empty or whitespace-only query (Unicode `White_Space`; spec
+/// §9, K-C1.5) before anything is read or written.
+pub fn check_query(query: &str) -> Result<()> {
+    if query.trim().is_empty() {
+        bail!("empty query: a query must hold a non-whitespace character (spec §9)");
+    }
+    Ok(())
+}
+
+/// BM25 of `records` with their own statistics (`bm25_with(store, records,
+/// records, query)`).
+pub fn bm25(store: &Store, records: &[(usize, Layer)], query: &str) -> Result<Vec<Scored>> {
+    bm25_with(store, records, records, query)
+}
+
+/// BM25 (`lexical.variant` `lucene-bm25`: IDF `ln(1 + (N − n + 0.5) / (n +
+/// 0.5))`, `k1` 1.2, `b` 0.75, document length = token count) of the
+/// `scored` records, with `N`, `n` and the average length taken over the
+/// `stats` records (K-C1.3: the canonical records of the view); every scored
+/// record with a query term, best first. An average length of 0 (no stats
+/// record, or no token in them) is taken as 1 (ASSUMPTIONS P1-C.1 C1.2-2).
+/// Repeated query tokens count again (as the prototype's
+/// `BM25Okapi.get_scores`).
+pub fn bm25_with(
+    store: &Store,
+    stats: &[(usize, Layer)],
+    scored: &[(usize, Layer)],
+    query: &str,
+) -> Result<Vec<Scored>> {
     let q = tokens(query);
-    if q.is_empty() || eligible.is_empty() {
+    if q.is_empty() || scored.is_empty() {
         return Ok(Vec::new());
     }
-    let pos: HashMap<usize, usize> = eligible
+    let in_stats: HashSet<usize> = stats.iter().map(|(i, _)| *i).collect();
+    let pos: HashMap<usize, usize> = scored
         .iter()
         .enumerate()
         .map(|(j, (i, _))| (*i, j))
         .collect();
-    let n = eligible.len() as f64;
-    let total: u64 = eligible
+    let n = stats.len() as f64;
+    let total: u64 = stats
         .iter()
         .map(|(i, _)| u64::from(store.records[*i].lexical_len))
         .sum();
-    let avgdl = total as f64 / n;
-    let mut postings: BTreeMap<&str, Vec<(usize, u32)>> = BTreeMap::new();
+    let avgdl = if total == 0 { 1.0 } else { total as f64 / n };
+    // token → (document frequency over `stats`, postings over `scored`)
+    let mut postings: BTreeMap<&str, TermPostings> = BTreeMap::new();
     for t in &q {
         if postings.contains_key(t.as_str()) {
             continue;
         }
+        let mut df = 0usize;
         let mut p = Vec::new();
         for (i, tf) in store.postings(t)? {
+            if in_stats.contains(&i) {
+                df += 1;
+            }
             if let Some(&j) = pos.get(&i) {
                 p.push((j, tf));
             }
         }
-        postings.insert(t, p);
+        postings.insert(t, (df, p));
     }
-    let mut score = vec![0f64; eligible.len()];
-    let mut hit = vec![false; eligible.len()];
+    let mut score = vec![0f64; scored.len()];
+    let mut hit = vec![false; scored.len()];
     for t in &q {
-        let p = &postings[t.as_str()];
+        let (df, p) = &postings[t.as_str()];
         if p.is_empty() {
             continue;
         }
-        let df = p.len() as f64;
+        let df = *df as f64;
         let idf = (1.0 + (n - df + 0.5) / (df + 0.5)).ln();
         for &(j, tf) in p {
             let tf = f64::from(tf);
-            let dl = f64::from(store.records[eligible[j].0].lexical_len);
+            let dl = f64::from(store.records[scored[j].0].lexical_len);
             score[j] +=
                 idf * tf * (BM25_K1 + 1.0) / (tf + BM25_K1 * (1.0 - BM25_B + BM25_B * dl / avgdl));
             hit[j] = true;
         }
     }
-    let mut out: Vec<Scored> = (0..eligible.len())
+    let mut out: Vec<Scored> = (0..scored.len())
         .filter(|&j| hit[j])
-        .map(|j| (eligible[j].0, eligible[j].1, score[j]))
+        .map(|j| (scored[j].0, scored[j].1, score[j]))
         .collect();
     sort_scored(store, &mut out);
     Ok(out)
 }
 
-/// The returned list: proposals down-weighted, top `k`, canonical first.
+/// The returned list: the top `k` canonical hits, then the top `k` proposal
+/// hits with their score × `PROPOSAL_WEIGHT` (K-C1.3; ASSUMPTIONS P1-C.1
+/// C1.2-1). `ranked` holds no `derived` record.
 pub fn finalize(store: &Store, ranked: Vec<Scored>, k: usize) -> Vec<Hit> {
     finalize_ix(store, ranked, k)
         .into_iter()
@@ -188,16 +237,16 @@ pub fn finalize(store: &Store, ranked: Vec<Scored>, k: usize) -> Vec<Hit> {
 }
 
 /// `finalize` with each hit's storage position.
-pub fn finalize_ix(store: &Store, mut ranked: Vec<Scored>, k: usize) -> Vec<(usize, Hit)> {
-    for s in &mut ranked {
-        if s.1 == Layer::Proposal {
-            s.2 *= PROPOSAL_WEIGHT;
-        }
-    }
-    sort_scored(store, &mut ranked);
-    ranked.truncate(k);
-    let (canon, prop): (Vec<Scored>, Vec<Scored>) =
+pub fn finalize_ix(store: &Store, ranked: Vec<Scored>, k: usize) -> Vec<(usize, Hit)> {
+    let (mut canon, mut prop): (Vec<Scored>, Vec<Scored>) =
         ranked.into_iter().partition(|s| s.1 == Layer::Canonical);
+    for s in &mut prop {
+        s.2 *= PROPOSAL_WEIGHT;
+    }
+    sort_scored(store, &mut canon);
+    sort_scored(store, &mut prop);
+    canon.truncate(k);
+    prop.truncate(k);
     canon
         .into_iter()
         .chain(prop)
@@ -225,7 +274,17 @@ pub fn lexical(
     k: usize,
     include_proposal: bool,
 ) -> Result<Vec<Hit>> {
-    let ranked = bm25(store, &view.eligible(include_proposal), query)?;
+    check_query(query)?;
+    let canon = view.layer(Layer::Canonical);
+    let mut ranked = bm25(store, &canon, query)?;
+    if include_proposal {
+        ranked.extend(bm25_with(
+            store,
+            &canon,
+            &view.layer(Layer::Proposal),
+            query,
+        )?);
+    }
     Ok(finalize(store, ranked, k))
 }
 
@@ -275,8 +334,34 @@ fn query_vector(
         .context("embedder returned no vector")
 }
 
-/// Unweighted ranking of the eligible records of `view` for `mode` (the one
-/// implementation behind `flat`, `lexical`, `hybrid` and `Searcher`).
+/// One pass of `mode` over the `scored` records, BM25 statistics from
+/// `stats`; `qv` is the query vector (`flat`, `hybrid`).
+fn pass(
+    store: &Store,
+    stats: &[(usize, Layer)],
+    scored: &[(usize, Layer)],
+    mode: Mode,
+    query: &str,
+    qv: Option<&[f32]>,
+) -> Result<Vec<Scored>> {
+    let vector = || qv.context("query vector");
+    Ok(match mode {
+        Mode::Lexical => bm25_with(store, stats, scored, query)?,
+        Mode::Flat => cosine_ranking(store, scored, vector()?),
+        Mode::Hybrid => {
+            let mut dense = cosine_ranking(store, scored, vector()?);
+            dense.truncate(CANDIDATES);
+            let mut sparse = bm25_with(store, stats, scored, query)?;
+            sparse.truncate(CANDIDATES);
+            rrf(store, &[&dense, &sparse])
+        }
+    })
+}
+
+/// Unweighted ranking of `view` for `mode` (the one implementation behind
+/// `flat`, `lexical`, `hybrid` and `Searcher`): the canonical pass, then,
+/// with `include_proposal`, the proposal pass with the canonical statistics
+/// (K-C1.3). An empty or whitespace-only query is an error (K-C1.5).
 pub fn ranked(
     store: &Store,
     embedder: &dyn crate::embed::Embedder,
@@ -285,19 +370,18 @@ pub fn ranked(
     query: &str,
     include_proposal: bool,
 ) -> Result<Vec<Scored>> {
-    let eligible = view.eligible(include_proposal);
-    Ok(match mode {
-        Mode::Lexical => bm25(store, &eligible, query)?,
-        Mode::Flat => cosine_ranking(store, &eligible, &query_vector(embedder, store, query)?),
-        Mode::Hybrid => {
-            let q = query_vector(embedder, store, query)?;
-            let mut dense = cosine_ranking(store, &eligible, &q);
-            dense.truncate(CANDIDATES);
-            let mut sparse = bm25(store, &eligible, query)?;
-            sparse.truncate(CANDIDATES);
-            rrf(store, &[&dense, &sparse])
-        }
-    })
+    check_query(query)?;
+    let qv = match mode {
+        Mode::Lexical => None,
+        Mode::Flat | Mode::Hybrid => Some(query_vector(embedder, store, query)?),
+    };
+    let canon = view.layer(Layer::Canonical);
+    let mut out = pass(store, &canon, &canon, mode, query, qv.as_deref())?;
+    if include_proposal {
+        let prop = view.layer(Layer::Proposal);
+        out.extend(pass(store, &canon, &prop, mode, query, qv.as_deref())?);
+    }
+    Ok(out)
 }
 
 /// Vector retrieval (exact cosine) as of `view`'s checkpoint.
@@ -411,6 +495,8 @@ impl<'a> Searcher<'a> {
         at: Option<&str>,
         include_proposal: bool,
     ) -> Result<SearchResult> {
+        // before the checkpoint lookup: an empty query writes nothing (K-C1.5)
+        check_query(query)?;
         let cp = match at {
             Some(a) => vault.find_checkpoint(a)?,
             None => vault.head_checkpoint()?,

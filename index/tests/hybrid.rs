@@ -291,14 +291,24 @@ fn proposal_weight_and_order_by_hand() {
     let s = Store::open(&v, embedder()).unwrap();
     let (c, p) = (Layer::Canonical, Layer::Proposal);
     let ranked: Vec<Scored> = vec![(0, p, 1.0), (1, c, 0.6), (2, c, 0.4), (3, p, 0.7)];
-    let hits = search::finalize(&s, ranked, 3);
-    // ×0.5: 0 → 0.5, 3 → 0.35; top 3 by score: 1 (0.6), 0 (0.5), 2 (0.4);
-    // canonical first, proposals after
-    let got: Vec<(String, Layer, f64)> = hits
-        .iter()
-        .map(|h| (h.chunk_id.clone(), h.layer, h.score))
-        .collect();
+    // K-C1.3 (P1-C.1; ASSUMPTIONS C1.2-1): the top k canonical hits, then the
+    // top k proposal hits with ×0.5 (0 → 0.5, 3 → 0.35)
+    let got = |k: usize| -> Vec<(String, Layer, f64)> {
+        search::finalize(&s, ranked.clone(), k)
+            .iter()
+            .map(|h| (h.chunk_id.clone(), h.layer, h.score))
+            .collect()
+    };
     let id = |i: usize| s.records[i].chunk_id.clone();
-    assert_eq!(got, vec![(id(1), c, 0.6), (id(2), c, 0.4), (id(0), p, 0.5)]);
+    assert_eq!(
+        got(3),
+        vec![
+            (id(1), c, 0.6),
+            (id(2), c, 0.4),
+            (id(0), p, 0.5),
+            (id(3), p, 0.35)
+        ]
+    );
+    assert_eq!(got(1), vec![(id(1), c, 0.6), (id(0), p, 0.5)]);
     fs::remove_dir_all(root).unwrap();
 }
