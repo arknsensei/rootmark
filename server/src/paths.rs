@@ -32,3 +32,59 @@ pub fn doc_file(vault: &Path, doc: &str) -> Result<PathBuf> {
     }
     Ok(p)
 }
+
+/// Every component of `doc` that exists under `vault` has a directory
+/// entry with exactly that name (byte for byte). On a case- or Unicode-
+/// normalization-insensitive file system (macOS) `ESPRESSO.md` or the NFD
+/// form of `café.md` open the file the vault knows as `espresso.md` or the
+/// NFC name; such a spelling is refused, so no write reaches a document
+/// under a doc_path other than its own.
+pub fn exact_on_disk(vault: &Path, doc: &str) -> Result<()> {
+    let mut dir =
+        std::fs::canonicalize(vault).with_context(|| format!("vault {}", vault.display()))?;
+    for c in doc.split('/') {
+        let next = dir.join(c);
+        if std::fs::symlink_metadata(&next).is_err() {
+            return Ok(()); // from here on nothing exists
+        }
+        let found = std::fs::read_dir(&dir)
+            .with_context(|| format!("read {}", dir.display()))?
+            .any(|e| e.is_ok_and(|e| e.file_name().as_encoded_bytes() == c.as_bytes()));
+        if !found {
+            bail!(
+                "doc {doc:?}: {c:?} matches an existing entry of {} only by case or Unicode form; use the name as it is on disk",
+                dir.display()
+            );
+        }
+        dir = next;
+    }
+    Ok(())
+}
+
+/// Replaces `path` with `bytes` through a fresh hidden temporary file in
+/// the same directory (`create_new`: an existing entry there, a symbolic
+/// link included, is removed first and never followed) and a rename, so
+/// the write never leaves the directory and never half-writes the file.
+pub fn replace_file(path: &Path, bytes: &[u8]) -> Result<()> {
+    use std::io::Write;
+    let dir = path.parent().context("file without a directory")?;
+    let name = path
+        .file_name()
+        .and_then(|n| n.to_str())
+        .context("file name is not UTF-8")?;
+    let tmp = dir.join(format!(".{name}.mdk-propose.tmp"));
+    if std::fs::symlink_metadata(&tmp).is_ok() {
+        std::fs::remove_file(&tmp).with_context(|| format!("remove {}", tmp.display()))?;
+    }
+    let mut f = std::fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(&tmp)
+        .with_context(|| format!("create {}", tmp.display()))?;
+    f.write_all(bytes)
+        .and_then(|_| f.sync_all())
+        .with_context(|| format!("write {}", tmp.display()))?;
+    std::fs::rename(&tmp, path)
+        .with_context(|| format!("rename {} to {}", tmp.display(), path.display()))?;
+    Ok(())
+}

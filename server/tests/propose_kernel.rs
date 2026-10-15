@@ -134,3 +134,69 @@ fn size_limit_from_policy() {
     );
     std::fs::remove_dir_all(v.parent().unwrap()).unwrap();
 }
+
+/// D4 review / security review: other spellings of existing names (case,
+/// Unicode form) never reach a document under a foreign doc_path.
+#[test]
+fn other_spellings_of_existing_names_are_refused() {
+    let v = vault("spell");
+    let k = Kernel::open(&v).unwrap();
+    k.ensure_index().unwrap();
+    let p = |doc: &str, mode: &str, c: &str| {
+        k.call(
+            "propose",
+            &json!({"doc_path": doc, "content": c, "reason": "spelling", "mode": mode}),
+            Some("agent/1"),
+        )
+    };
+    let before = std::fs::read(v.join("espresso.md")).unwrap();
+    // case variant of an existing document (macOS: the same file)
+    assert!(p("ESPRESSO.md", "append", "agent text").is_err());
+    assert_eq!(std::fs::read(v.join("espresso.md")).unwrap(), before);
+    // case variant of an existing directory
+    p("sub/a.md", "create", "# A\n\nfirst").unwrap();
+    let r = p("SUB/b.md", "create", "agent text about quokka");
+    let in_sub: Vec<String> = std::fs::read_dir(v.join("sub"))
+        .unwrap()
+        .map(|e| e.unwrap().file_name().into_string().unwrap())
+        .collect();
+    assert!(!in_sub.contains(&"b.md".to_string()), "{r:?} {in_sub:?}");
+    // NFD spelling of an NFC name
+    p("caf\u{e9}.md", "create", "# Caf\u{e9}\n\nnfc").unwrap();
+    let before = std::fs::read(v.join("caf\u{e9}.md")).unwrap();
+    assert!(p("cafe\u{301}.md", "append", "agent text").is_err());
+    assert_eq!(std::fs::read(v.join("caf\u{e9}.md")).unwrap(), before);
+    // the log names no foreign spelling
+    let log = std::fs::read_to_string(v.join(".mdkernel/events.jsonl")).unwrap();
+    for bad in ["\"ESPRESSO.md\"", "\"SUB/b.md\"", "cafe\u{301}.md"] {
+        assert!(!log.contains(bad), "{bad} in the log");
+    }
+    std::fs::remove_dir_all(v.parent().unwrap()).unwrap();
+}
+
+/// D4 review / security review: a symbolic link planted at the temporary
+/// file's name is never followed.
+#[cfg(unix)]
+#[test]
+fn planted_temporary_symlink_is_not_followed() {
+    let v = vault("symlink");
+    let k = Kernel::open(&v).unwrap();
+    k.ensure_index().unwrap();
+    let outside = v.parent().unwrap().join("outside.txt");
+    std::os::unix::fs::symlink(&outside, v.join(".evil.md.mdk-propose.tmp")).unwrap();
+    k.call(
+        "propose",
+        &json!({"doc_path": "evil.md", "content": "agent text", "reason": "symlink"}),
+        Some("agent/1"),
+    )
+    .unwrap();
+    assert!(!outside.exists(), "the write followed the link");
+    let m = std::fs::symlink_metadata(v.join("evil.md")).unwrap();
+    assert!(m.file_type().is_file());
+    assert_eq!(
+        std::fs::read_to_string(v.join("evil.md")).unwrap(),
+        "agent text\n"
+    );
+    assert!(std::fs::symlink_metadata(v.join(".evil.md.mdk-propose.tmp")).is_err());
+    std::fs::remove_dir_all(v.parent().unwrap()).unwrap();
+}

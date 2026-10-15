@@ -495,6 +495,10 @@ impl Kernel {
         }
         propose::check_doc_path(&x.doc_path)?;
         let path = crate::paths::doc_file(&self.vault, &x.doc_path)?;
+        // on a case- or normalization-insensitive file system another
+        // spelling of an existing name would write into a document the log
+        // knows under another doc_path
+        crate::paths::exact_on_disk(&self.vault, &x.doc_path)?;
         let mut v = Vault::open(&self.vault)?;
         let e = self.embedder()?;
         let mut s = Store::open(&v, e.as_ref())?;
@@ -530,6 +534,15 @@ impl Kernel {
                 x.doc_path,
                 mode.as_str()
             ),
+            (PMode::Append | PMode::ReplaceSection, Some(_))
+                if v.doc_state(&x.doc_path).is_none() =>
+            {
+                bail!(
+                    "propose: {} is not a document of the vault's log ({} needs one)",
+                    x.doc_path,
+                    mode.as_str()
+                )
+            }
             (PMode::Append, Some(o)) => propose::append(o, &x.content),
             (PMode::ReplaceSection, Some(o)) => propose::replace_section(
                 o,
@@ -553,16 +566,18 @@ impl Kernel {
             }
             None => 0,
         };
-        // write: a hidden temporary file in the same directory, then rename
+        // write: directories this call creates are remembered (and removed
+        // again if the ingest fails); the file goes through a fresh hidden
+        // temporary file (never a symbolic link) and a rename
         let dir = path.parent().context("document without a directory")?;
-        let created_dir = !dir.exists();
-        std::fs::create_dir_all(dir).with_context(|| format!("create {}", dir.display()))?;
-        let tmp = dir.join(format!(
-            ".{}.mdk-propose.tmp",
-            path.file_name().and_then(|n| n.to_str()).unwrap_or("doc")
-        ));
-        std::fs::write(&tmp, new.as_bytes()).with_context(|| format!("write {}", tmp.display()))?;
-        std::fs::rename(&tmp, &path).with_context(|| format!("write {}", path.display()))?;
+        let mut created: Vec<std::path::PathBuf> = Vec::new();
+        for d in dir.ancestors().collect::<Vec<_>>().into_iter().rev() {
+            if std::fs::symlink_metadata(d).is_err() {
+                std::fs::create_dir(d).with_context(|| format!("create {}", d.display()))?;
+                created.push(d.to_path_buf());
+            }
+        }
+        crate::paths::replace_file(&path, new.as_bytes())?;
         let prov = Provenance {
             author_kind: AuthorKind::Agent,
             source: consumer.to_string(),
@@ -572,20 +587,22 @@ impl Kernel {
             Err(err) => {
                 // the file is restored: it never holds text the vault did not take
                 let undo = match &old {
-                    Some(o) => std::fs::write(&path, o),
-                    // and a directory this call created goes again
-                    None => std::fs::remove_file(&path).and_then(|_| {
-                        if created_dir {
-                            std::fs::remove_dir(dir)
-                        } else {
+                    Some(o) => crate::paths::replace_file(&path, o.as_bytes()),
+                    // and the directories this call created go again
+                    None => std::fs::remove_file(&path)
+                        .map_err(anyhow::Error::from)
+                        .and_then(|_| {
+                            for d in created.iter().rev() {
+                                std::fs::remove_dir(d)
+                                    .with_context(|| format!("remove {}", d.display()))?;
+                            }
                             Ok(())
-                        }
-                    }),
+                        }),
                 };
                 return Err(match undo {
                     Ok(()) => err.context("propose: ingest failed; the file was restored"),
                     Err(u) => err.context(format!(
-                        "propose: ingest failed and restoring {} failed too: {u}",
+                        "propose: ingest failed and restoring {} failed too: {u:#}",
                         path.display()
                     )),
                 });
@@ -603,13 +620,22 @@ impl Kernel {
         let mut line = serde_json::to_vec(&record)?;
         line.push(b'\n');
         let rp = v.store_dir().join("proposals.jsonl");
-        let mut f = std::fs::OpenOptions::new()
+        std::fs::OpenOptions::new()
             .create(true)
             .append(true)
             .open(&rp)
-            .with_context(|| format!("open {}", rp.display()))?;
-        std::io::Write::write_all(&mut f, &line)?;
-        f.sync_data()?;
+            .and_then(|mut f| {
+                std::io::Write::write_all(&mut f, &line)?;
+                f.sync_data()
+            })
+            .with_context(|| {
+                format!(
+                    "propose: {} was written and ingested (snapshot {}), but recording its reason in {} failed",
+                    x.doc_path,
+                    report.snapshot_id,
+                    rp.display()
+                )
+            })?;
         let blocks = v.blame(&x.doc_path, None)?;
         Ok(json!({
             "doc_path": x.doc_path,

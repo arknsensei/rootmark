@@ -58,29 +58,44 @@ pub fn check_doc_path(doc: &str) -> Result<()> {
     Ok(())
 }
 
-/// `text` ending with exactly one newline (nothing added when empty).
-fn one_newline(text: &str) -> String {
-    let t = text.trim_end_matches(['\n', '\r']);
-    if t.is_empty() {
-        String::new()
+/// The line ending of a document: CRLF if it uses CRLF, else LF. The
+/// agent's text and the separators take the document's line ending, so a
+/// CRLF file never gets mixed endings.
+fn eol(old: &str) -> &'static str {
+    if old.contains("\r\n") {
+        "\r\n"
     } else {
-        format!("{t}\n")
+        "\n"
     }
+}
+
+/// `text` with line ending `eol` throughout, ending with exactly one
+/// (nothing when empty).
+fn lines_with(text: &str, eol: &str) -> String {
+    let t = text.replace("\r\n", "\n");
+    let t = t.trim_end_matches('\n');
+    if t.is_empty() {
+        return String::new();
+    }
+    let mut out = t.replace('\n', eol);
+    out.push_str(eol);
+    out
 }
 
 /// The new document of an `append`: the old text unchanged, a blank line,
 /// then the agent's text. Only the added lines differ.
 pub fn append(old: &str, content: &str) -> String {
-    let add = one_newline(content);
+    let e = eol(old);
+    let add = lines_with(content, e);
     if old.is_empty() {
         return add;
     }
-    let sep = if old.ends_with("\n\n") {
-        ""
+    let sep = if old.ends_with(&format!("{e}{e}")) || old.ends_with("\n\n") {
+        String::new()
     } else if old.ends_with('\n') {
-        "\n"
+        e.to_string()
     } else {
-        "\n\n"
+        format!("{e}{e}")
     };
     format!("{old}{sep}{add}")
 }
@@ -119,10 +134,24 @@ pub fn replace_section(old: &str, heading: &str, content: &str) -> Result<String
     if want.is_empty() {
         bail!("propose: replace_section needs a non-empty heading");
     }
+    let e = eol(old);
     let lines: Vec<&str> = old.split_inclusive('\n').collect();
+    // YAML front matter (`---` on the first line up to the next `---` or
+    // `...`) holds no headings
+    let body_start = if lines.first().map(|l| l.trim_end()) == Some("---") {
+        lines
+            .iter()
+            .enumerate()
+            .skip(1)
+            .find(|(_, l)| matches!(l.trim_end(), "---" | "..."))
+            .map(|(i, _)| i + 1)
+            .unwrap_or(0)
+    } else {
+        0
+    };
     let mut fence: Option<String> = None;
     let mut heads: Vec<(usize, usize, String)> = Vec::new(); // (line, level, text)
-    for (i, l) in lines.iter().enumerate() {
+    for (i, l) in lines.iter().enumerate().skip(body_start) {
         let body = l.trim_end_matches(['\n', '\r']);
         let lead = body.trim_start();
         if let Some(f) = &fence {
@@ -165,15 +194,15 @@ pub fn replace_section(old: &str, heading: &str, content: &str) -> Result<String
         out.push_str(l);
     }
     if !out.ends_with('\n') {
-        out.push('\n');
+        out.push_str(e);
     }
-    let body = one_newline(content);
+    let body = lines_with(content, e);
     if !body.is_empty() {
-        out.push('\n');
+        out.push_str(e);
         out.push_str(&body);
     }
     if end < lines.len() {
-        out.push('\n');
+        out.push_str(e);
         for l in &lines[end..] {
             out.push_str(l);
         }
@@ -238,6 +267,27 @@ mod tests {
         assert_eq!(
             replace_section("## A ##\n\nq\n", "A", "r").unwrap(),
             "## A ##\n\nr\n"
+        );
+    }
+
+    #[test]
+    fn front_matter_holds_no_heading() {
+        let fm = "---\ntitle: x\n# A\n---\n## A\n\nold\n";
+        assert_eq!(
+            replace_section(fm, "A", "new").unwrap(),
+            "---\ntitle: x\n# A\n---\n## A\n\nnew\n"
+        );
+    }
+
+    #[test]
+    fn crlf_documents_stay_crlf() {
+        assert_eq!(
+            append("# A\r\n\r\nx\r\n", "y\nz"),
+            "# A\r\n\r\nx\r\n\r\ny\r\nz\r\n"
+        );
+        assert_eq!(
+            replace_section("## A\r\n\r\nold\r\n\r\n## B\r\n", "A", "n1\nn2").unwrap(),
+            "## A\r\n\r\nn1\r\nn2\r\n\r\n## B\r\n"
         );
     }
 }
