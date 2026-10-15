@@ -191,9 +191,27 @@ fn index_and_search_end_to_end() {
         .map(Vec::len)
         .unwrap_or_else(|| traces["traces"].as_array().unwrap().len());
     assert_eq!(n, 1 + 6 + 1 + 1 + 1 + 1, "{traces}");
-    // --pretty is passed through
-    let (code, _, _) = mdk(&["--pretty", "index", "status", vs]);
-    assert_eq!(code, 0);
+    // --pretty is passed through (indented output)
+    let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
+        .args(["--pretty", "index", "status", vs])
+        .output()
+        .unwrap();
+    assert!(out.status.success());
+    assert!(String::from_utf8_lossy(&out.stdout).contains("\n  \""));
+    // --matcher before the delegated command is accepted (C6 review fix)
+    for m in [&["--matcher", "v3"][..], &["--matcher=v3"][..]] {
+        let mut a: Vec<&str> = m.to_vec();
+        a.extend(["search", vs, "espresso", "--at", "t0", "--mode", "lexical"]);
+        let (code, _, err) = mdk(&a);
+        assert_eq!(code, 0, "{a:?}: {err}");
+    }
+    // `mdk help search` is mdk-index's help
+    let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
+        .args(["help", "search"])
+        .output()
+        .unwrap();
+    assert!(out.status.success());
+    assert!(String::from_utf8_lossy(&out.stdout).contains("--include-proposal"));
     fs::remove_dir_all(root).unwrap();
 }
 
@@ -206,4 +224,42 @@ fn missing_mdk_index_is_an_error() {
         .unwrap();
     assert_eq!(out.status.code(), Some(1));
     assert!(String::from_utf8_lossy(&out.stderr).contains("mdk-index"));
+}
+
+/// `$MDK_MATCHER` / `--matcher` reach `index watch` as they reach `mdk
+/// ingest` (C6 review fix): an empty vault watched with v2 is locked to v2;
+/// a vault locked to v3 refuses an explicit v2.
+#[test]
+fn watch_uses_the_matcher_like_ingest() {
+    let root = tmp("matcher");
+    let vault = root.join("vault");
+    let vs = vault.to_str().unwrap();
+    fs::create_dir_all(&vault).unwrap();
+    // an index of an empty vault, then a watched document under v2
+    ok(&["index", "build", vs]);
+    fs::write(vault.join("a.md"), "# A\n\nFirst text about espresso.\n").unwrap();
+    ensure_index_bin();
+    let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
+        .args(["index", "watch", vs, "a.md"])
+        .env("MDK_MATCHER", "v2")
+        .output()
+        .unwrap();
+    assert!(
+        out.status.success(),
+        "{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    let log = fs::read_to_string(vault.join(".mdkernel/events.jsonl")).unwrap();
+    assert!(log.contains("\"matcher_version\":\"v2\""), "{log}");
+    // the vault is now v2: an explicit v3 is refused, the lock is used otherwise
+    fs::write(
+        vault.join("a.md"),
+        "# A\n\nFirst text about espresso, edited.\n",
+    )
+    .unwrap();
+    let (code, _, err) = mdk(&["--matcher", "v3", "index", "watch", vs, "a.md"]);
+    assert_ne!(code, 0);
+    assert!(err.to_lowercase().contains("matcher"), "{err}");
+    ok(&["index", "watch", vs, "a.md"]);
+    fs::remove_dir_all(root).unwrap();
 }

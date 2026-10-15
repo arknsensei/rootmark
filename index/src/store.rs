@@ -588,6 +588,21 @@ impl Store {
         text: &str,
         prov: mdkcore::Provenance,
     ) -> Result<WatchReport> {
+        let matcher = vault.matcher_lock().unwrap_or(mdkcore::MatcherVersion::V3);
+        self.watch_with(vault, embedder, doc_path, text, prov, matcher)
+    }
+
+    /// `watch` with an explicit matcher (a vault locked to another matcher
+    /// refuses the ingest, `Vault::ingest`).
+    pub fn watch_with(
+        &mut self,
+        vault: &mut Vault,
+        embedder: &dyn Embedder,
+        doc_path: &str,
+        text: &str,
+        prov: mdkcore::Provenance,
+        matcher: mdkcore::MatcherVersion,
+    ) -> Result<WatchReport> {
         if self.poisoned {
             bail!("an earlier hot append failed; reopen the index (`mdk index build` repairs it)");
         }
@@ -598,7 +613,6 @@ impl Store {
                 self.manifest.embedder_id
             );
         }
-        let matcher = vault.matcher_lock().unwrap_or(mdkcore::MatcherVersion::V3);
         let res = vault.ingest(doc_path, text, prov, matcher)?;
         let snap = vault
             .snapshot(doc_path)?

@@ -503,8 +503,9 @@ fn run(cmd: Cmd, m: MatcherVersion) -> Result<Value> {
 /// `mdk index …` and `mdk search …` (GOAL P1-C "CLI") are served by the
 /// `mdk-index` binary of the `index` crate: `core` cannot link `index`
 /// (dependency direction core ← index; ASSUMPTIONS P1-C C0-1), so `mdk`
-/// runs it with the same arguments and exits with its status. No index
-/// logic lives here. `$MDK_INDEX_BIN` overrides the binary next to `mdk`.
+/// runs it with the same arguments (global `--pretty` and `--matcher`
+/// included; `mdk-index` resolves `--matcher` like `mdk`) and exits with its
+/// status. No index logic lives here. `$MDK_INDEX_BIN` overrides the binary next to `mdk`.
 const DELEGATED: [&str; 2] = ["index", "search"];
 
 fn index_bin() -> anyhow::Result<PathBuf> {
@@ -540,7 +541,15 @@ fn delegate() -> Option<i32> {
         }
         !s.starts_with('-')
     })?;
-    if !DELEGATED.iter().any(|d| first == *d) {
+    let delegated = |a: &std::ffi::OsString| DELEGATED.iter().any(|d| a == *d);
+    // `mdk help index|search` is the delegated binary's help
+    let is_help = first == "help"
+        && args
+            .iter()
+            .skip_while(|a| *a != first)
+            .nth(1)
+            .is_some_and(delegated);
+    if !delegated(first) && !is_help {
         return None;
     }
     let status = index_bin().and_then(|bin| {

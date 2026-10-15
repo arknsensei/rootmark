@@ -7,7 +7,7 @@
 
 use anyhow::{bail, Context, Result};
 use clap::{Parser, Subcommand};
-use mdkcore::{AuthorKind, Provenance, Vault};
+use mdkcore::{AuthorKind, MatcherVersion, Provenance, Vault};
 use mdkindex::embed::Embedder;
 use mdkindex::models;
 use mdkindex::search::{Mode, Searcher};
@@ -25,6 +25,10 @@ struct Cli {
     /// Indent JSON output
     #[arg(long, global = true)]
     pretty: bool,
+    /// Lineage matcher version for `index watch` ingest (v2|v3; default:
+    /// $MDK_MATCHER, else the vault's lock, else v3) — as `mdk`
+    #[arg(long, global = true, value_parser = ["v2", "v3"])]
+    matcher: Option<String>,
     #[command(subcommand)]
     cmd: Cmd,
 }
@@ -91,7 +95,11 @@ enum ModelsCmd {
 
 fn main() {
     let cli = Cli::parse();
-    match run(cli.cmd) {
+    let matcher = cli
+        .matcher
+        .clone()
+        .or_else(|| std::env::var("MDK_MATCHER").ok().filter(|m| !m.is_empty()));
+    match run(cli.cmd, matcher.as_deref()) {
         Ok(v) => {
             let s = if cli.pretty {
                 serde_json::to_string_pretty(&v)
@@ -140,7 +148,7 @@ fn author(s: &str) -> Result<AuthorKind> {
     })
 }
 
-fn run(cmd: Cmd) -> Result<serde_json::Value> {
+fn run(cmd: Cmd, matcher: Option<&str>) -> Result<serde_json::Value> {
     Ok(match cmd {
         Cmd::Index(IndexCmd::Build {
             vault,
@@ -174,7 +182,11 @@ fn run(cmd: Cmd) -> Result<serde_json::Value> {
                 author_kind: author(&a)?,
                 source,
             };
-            serde_json::to_value(s.watch(&mut v, &e, &doc, &text, prov)?)?
+            let m = match matcher {
+                Some(m) => MatcherVersion::parse(m)?,
+                None => v.matcher_lock().unwrap_or(MatcherVersion::V3),
+            };
+            serde_json::to_value(s.watch_with(&mut v, &e, &doc, &text, prov, m)?)?
         }
         Cmd::Search {
             vault,
