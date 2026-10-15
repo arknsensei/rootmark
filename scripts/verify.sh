@@ -20,6 +20,17 @@
 # p1c1_checks.json, no exclusion); `compare-p1c` is kept unchanged and
 # `compare-p1c1` is new.
 #
+# P1-D (re-freeze P1-D/F4): after the P1-C.1 checks the chain records `make
+# p1d-checks` (D-1..D-11: the official MCP Inspector — Node.js and network
+# needed —, the MCP e2e, the HTTP/service tests, the watcher latency and
+# SIGTERM tests, the agent scene, the P1-D deliberate corruptions, D-9
+# against the P1-C.1 official RUN → p1d_checks.json); `pair` compares A ↔ B
+# with `eval.compare_p1d pair` (the P1-C.1 pair set plus the P1-D files and
+# the P1-D artefacts byte for byte: MCP transcripts, the e2e vault's
+# events.jsonl/traces.jsonl/proposals.jsonl and Markdown, the scene, the
+# Inspector's tool list); `compare-p1c1` is kept unchanged and `compare-p1d`
+# is new.
+#
 #   scripts/verify.sh chain <source-repo> <workdir>
 #       clone <source-repo> into <workdir>/repo, `make setup`, rebuild and
 #       verify every research dataset against its committed manifest (d1hs
@@ -108,6 +119,8 @@ chain() {
   log "P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)"
   make p1c1-checks RUN="$run"
   tail -1 "research/reports/runs/$run/p1c1_cli.log" >&2
+  log "P1-D checks (D-1..D-11: Inspector, MCP e2e, HTTP/service, watch, scene, tamper; D-9 vs P1-C.1)"
+  make p1d-checks RUN="$run"
   log "deliberate corruptions (B-7, B-8 and the P1-A cases)"
   bash scripts/test_tamper.sh "research/reports/runs/$run" >"research/reports/runs/$run/tamper.log" 2>&1 \
     || { cat "research/reports/runs/$run/tamper.log" >&2; exit 1; }
@@ -145,7 +158,7 @@ pair() {
     fi
   done
   cat "$res_a" "$res_b"
-  compare_p1c1 "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+  compare_p1d "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
 }
 
 compare() {
@@ -187,6 +200,19 @@ compare_p1c1() {
   log "quality fields, rankings, index file hashes, P1-C.1 checks equal; traces.jsonl, checkpoints/, events.jsonl byte-equal"
 }
 
+compare_p1d() {
+  local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
+  log "compare (P1-D) $dir_a $dir_b"
+  local rc=0
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p1d pair "$dir_a" "$dir_b" \
+    ${out:+--out "$out"}) >&2 || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "error: run comparison failed (compare_p1d pair exit $rc)" >&2
+    exit "$rc"
+  fi
+  log "P1-C.1 set and P1-D results equal; MCP transcripts, e2e vault, scene, Inspector list byte-equal"
+}
+
 compare_p1b() {
   local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
   log "compare $dir_a $dir_b"
@@ -207,6 +233,7 @@ case "${1:-}" in
   compare-p1b) compare_p1b "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p1c) compare_p1c "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p1c1) compare_p1c1 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
+  compare-p1d) compare_p1d "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t mdk-verify.XXXXXX)"
@@ -214,7 +241,7 @@ case "${1:-}" in
     pair "$src" "$base/A" "$base/B"
     ;;
   *)
-    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1 <repo> <runA> <runB> [out]]" >&2
+    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac

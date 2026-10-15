@@ -22,7 +22,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps conformance regress verify models c3-quality p1c-checks report-p1c \
-        c1-variant p1c1-checks report-p1c1
+        c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d
 
 setup: setup-py build
 
@@ -377,6 +377,50 @@ p1c1-checks: require-run
 report-p1c1:
 	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
 	$(PY) -m eval.report_p1c1 --run-dir "$(abspath $(RUN_DIR))"
+
+# P1-D criteria into the RUN (GOAL D-1..D-11; TASKS D7), under
+# research/reports/runs/<RUN>/p1d/: the official MCP Inspector (D-1; needs
+# Node.js and network), the MCP e2e (D-2..D-6, D-8 half, D-11), the HTTP
+# and service tests (D-7), the watcher latency and SIGTERM tests (D-10), the
+# agent scene (TASKS D6), the P1-D deliberate corruptions; then D-9
+# (eval.compare_p1d regress against the P1-C.1 official RUN) and
+# run_p1d_checks → p1d_checks.json. A criterion that fails is recorded, not
+# fatal (its script's JSON must exist); a missing result fails.
+P1C1_REF_RUN := ../reports/rounds/P1-C.1/runs/20261015T094412Z-b9f7622
+P1D_DIR = research/reports/runs/$(RUN)/p1d
+p1d-checks: require-run
+	rm -rf $(P1D_DIR)
+	mkdir -p $(P1D_DIR)
+	bash scripts/mcp_inspector.sh $(P1D_DIR)/inspector >$(P1D_DIR)/inspector.log 2>&1 \
+	  || echo "p1d-checks: mcp_inspector.sh exit $$? (recorded)" >&2
+	@test -f $(P1D_DIR)/inspector/inspector.json || { cat $(P1D_DIR)/inspector.log >&2; exit 1; }
+	bash scripts/mcp_e2e.sh $(P1D_DIR)/mcp_e2e >$(P1D_DIR)/mcp_e2e.log 2>&1 \
+	  || echo "p1d-checks: mcp_e2e.sh exit $$? (recorded)" >&2
+	@test -f $(P1D_DIR)/mcp_e2e/mcp_e2e.json || { tail -40 $(P1D_DIR)/mcp_e2e.log >&2; exit 1; }
+	bash scripts/http_e2e.sh $(P1D_DIR)/http >$(P1D_DIR)/http_e2e.log 2>&1 \
+	  || echo "p1d-checks: http_e2e.sh exit $$? (recorded)" >&2
+	@test -f $(P1D_DIR)/http/http_e2e.json || { tail -40 $(P1D_DIR)/http_e2e.log >&2; exit 1; }
+	MDK_D10_OUT="$(CURDIR)/$(P1D_DIR)/d10.json" MDK_SIGTERM_OUT="$(CURDIR)/$(P1D_DIR)/sigterm.json" \
+	  cargo test -q -p mdkernel-server --release --test serve_watch -- --test-threads=1 >$(P1D_DIR)/serve_watch.log 2>&1 \
+	  || echo "p1d-checks: serve_watch exit $$? (recorded)" >&2
+	@test -f $(P1D_DIR)/d10.json && test -f $(P1D_DIR)/sigterm.json || { tail -40 $(P1D_DIR)/serve_watch.log >&2; exit 1; }
+	bash scripts/scene_agent.sh $(P1D_DIR)/scene >$(P1D_DIR)/scene.log 2>&1 \
+	  || echo "p1d-checks: scene_agent.sh exit $$? (recorded)" >&2
+	@test -f $(P1D_DIR)/scene/scene.json || { cat $(P1D_DIR)/scene.log >&2; exit 1; }
+	bash scripts/test_tamper_p1d.sh $(P1D_DIR)/inspector/tools_list.json $(P1D_DIR)/tamper_p1d.json >$(P1D_DIR)/tamper_p1d.log 2>&1 \
+	  || echo "p1d-checks: test_tamper_p1d.sh exit $$? (recorded)" >&2
+	@test -f $(P1D_DIR)/tamper_p1d.json || { cat $(P1D_DIR)/tamper_p1d.log >&2; exit 1; }
+	@# exit 3 (a difference) is recorded, not fatal; a missing file/field (1) fails
+	rc=0; $(PY) -m eval.compare_p1d regress $(P1C1_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p1c1.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	$(PY) -m eval.run_p1d_checks --run $(RUN)
+
+# P1-D round report from one RUN directory (TASKS D8): <RUN_DIR>/FINAL.md and
+# reports/rounds/P1-D/FINAL.md; the RUN must hold pair_compare.json
+report-p1d:
+	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
+	$(PY) -m eval.report_p1d --run-dir "$(abspath $(RUN_DIR))"
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:

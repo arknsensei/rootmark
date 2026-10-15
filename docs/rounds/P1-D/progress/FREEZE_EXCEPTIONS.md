@@ -18,3 +18,15 @@ Ortak neden (F1–F3): TASKS D0 `mdk` ikilisini `core/src/bin/mdk.rs`'ten `serve
 - **Ne:** satır 23, F2 ile aynı değişiklik. +1/−1. `mdk-index` (model doğrulama vakası) hâlâ `index` paketinden derlenir.
 - **Önce/sonra bit eşitliği:** çıkış 0. Günlük, resmi RUN'ın `tamper_p1c.log`'uyla satır satır aynı. Tek fark `mktemp` dizin sonekleri (`mdk-tamper-p1c.XXXX`), bu sonekler her koşturmada değişir.
 - **Gözden geçirici onayı:** D0.review.md.
+
+## F4 · D7 · `scripts/verify.sh` — P1-D zinciri
+- **Ne:**
+  - başlık yorumuna P1-D paragrafı;
+  - `chain`'de `make p1c1-checks`'ten sonra `make p1d-checks RUN=$run` (2 satır);
+  - `pair`'in son satırı `compare_p1c1` → `compare_p1d` (P1-C.1 kümesi bunun içinde, aynen);
+  - yeni `compare_p1d` işlevi ve `compare-p1d` alt komutu; kullanım iletisine `compare-p1d`.
+
+  `diff`: 2 satır değişti (pair karşılaştırıcısı, kullanım iletisi), gerisi ekleme. Önceki zincir adımları, sırası ve `compare`/`compare-p1b`/`compare-p1c`/`compare-p1c1` aynen duruyor.
+- **Neden:** TASKS D7 ("`verify.sh`: conformance → regress (P1-C.1 referansı) → mcp_e2e → http tests → scene → tamper → pair compare"). P1-D'nin ölçümleri D-8 için zincirin içinde, iki bağımsız klonda koşmalı.
+- **Önce/sonra bit eşitliği:** önceki adımlar değişmeden koştuğu için P1-C.1 çift kümesinin bütün alanları P1-C.1 resmi RUN'ıyla karşılaştırılır (D-9, `regress_vs_p1c1.json`, hariçsiz). Geliştirme sırasında P1-C.1 resmi RUN'ının kopyalarına `make p1d-checks` koşturuldu. `compare_p1d regress` 99 341 alan eşit verdi; C1 17/17, C2 9/9, C3 5/5, farklı test 0. İki kopya arasında `compare_p1d pair` 99 985 alan eşit, bütün baytlar eşit verdi. `research/tests/test_verify_script.py` geçti (4/4).
+- **Gözden geçirici onayı:** D7.review.md.

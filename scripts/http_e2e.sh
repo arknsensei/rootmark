@@ -103,15 +103,19 @@ record D7-4 "no / empty X-Consumer → 400" \
 ext_ok=true
 detail=""
 lan="$(ifconfig 2>/dev/null | awk '/inet / && $2 != "127.0.0.1" {print $2; exit}')"
+# (the detail names the address classes, never the port or this machine's
+# LAN address, so two runs record the same text)
 for a in "0.0.0.0:0" ${lan:+"$lan:0"} "[::]:0" "[::1]:0"; do
   rc=0
   "$mdk" serve --vault vault --http "$a" 2>ext.err >/dev/null || rc=$?
   if [ "$rc" = 0 ] || ! grep -q "127.0.0.1 only" ext.err || grep -q "listening" ext.err; then ext_ok=false; fi
-  detail="$detail $a:exit$rc"
+  case "$a" in "$lan:0") cls="lan" ;; *) cls="${a%:0}" ;; esac
+  detail="$detail $cls:exit$rc"
 done
 socks="$(lsof -nP -a -p "$pid" -iTCP -sTCP:LISTEN 2>/dev/null | awk 'NR > 1 {print $9}' | sort -u | tr '\n' ' ')"
-[ "$socks" = "127.0.0.1:$port " ] || ext_ok=false
-record D7-5 "external interface refused; listening only on 127.0.0.1" "$ext_ok" "$detail; listen: $socks"
+listen="other"
+if [ "$socks" = "127.0.0.1:$port " ]; then listen="127.0.0.1 only"; else ext_ok=false; fi
+record D7-5 "external interface refused; listening only on 127.0.0.1" "$ext_ok" "$detail; listen: $listen"
 
 # other routes and tool errors
 c="$(code -X POST -H "Authorization: Bearer $tok" -H 'X-Consumer: http-e2e' "$base/nope")"

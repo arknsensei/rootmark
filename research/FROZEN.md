@@ -109,6 +109,18 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/check_v3_compat.sh` | `P1-D/D0:` | yeniden dondurma P1-D/F1: güncel `mdk` `-p mdkernel-server` ile derlenir (ikili `server`'a taşındı; v3-final tarafı değişmedi) |
 | `scripts/test_p1c1.sh` | `P1-D/D0:` | yeniden dondurma P1-D/F2: `mdk` `-p mdkernel-server` ile derlenir |
 | `scripts/test_tamper_p1c.sh` | `P1-D/D0:` | yeniden dondurma P1-D/F3: `mdk` `-p mdkernel-server` ile derlenir |
+| `scripts/verify.sh` | `P1-D/D7-pre:` | yeniden dondurma P1-D/F4: P1-D zinciri (`p1d-checks`), `pair` → `compare_p1d pair`, `compare-p1d` alt komutu |
+| `research/eval/compare_p1d.py` | `P1-D/D7-pre:` | D-8 (pair: P1-C.1 kümesi + P1-D dosyaları + baytlar) ve D-9 (regress: P1-C.1 resmi RUN, hariçsiz) karşılaştırıcısı |
+| `research/eval/run_p1d_checks.py` | `P1-D/D7-pre:` | D-1..D-11 RUN kaydı (`p1d_checks.json`) |
+| `research/eval/report_p1d.py` | `P1-D/D7-pre:` | P1-D rapor üreteci ve karar kuralı (resmi RUN'dan önce) |
+| `scripts/mcp_e2e.sh` | `P1-D/D7-pre:` | D-2..D-6, D-8 (zincir içi), D-11 MCP uçtan uca betiği |
+| `scripts/mcp_inspector.sh` | `P1-D/D7-pre:` | D-1 resmi MCP Inspector betiği (`@modelcontextprotocol/inspector@2.9.0`) |
+| `scripts/http_e2e.sh` | `P1-D/D7-pre:` | D-7 ve servis (izleyici, SIGTERM, zamanlayıcı, token) betiği |
+| `scripts/scene_agent.sh` | `P1-D/D7-pre:` | TASKS D6 ajan sahnesi |
+| `scripts/test_tamper_p1d.sh` | `P1-D/D7-pre:` | P1-D kasıtlı bozmaları (şema, token, X-Consumer, D-11) |
+| `server/tests/serve_watch.rs` | `P1-D/D7-pre:` | D-10 gecikme (`MDK_D10_OUT`) ve SIGTERM testi (`MDK_SIGTERM_OUT`) |
+| `server/tests/mcp_schemas.rs` | `P1-D/D7-pre:` | D-1 şema denetleyicisi (`MDK_TOOLS_LIST`) |
+| `server/examples/mcp_client.rs` | `P1-D/D7-pre:` | e2e/sahne stdio JSON-RPC sürücüsü |
 <!-- /frozen-table -->
 
 ## Notlar
