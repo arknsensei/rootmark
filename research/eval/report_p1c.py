@@ -86,7 +86,7 @@ def evaluate(d: Path) -> list[dict]:
             "value": f"single {q['single']['ndcg@10']:.4f} (v2 {q['single']['reference']:.4f}, "
             f"Δ {q['single']['delta']:+.4f}); multi {q['multi']['ndcg@10']:.4f} "
             f"(v2 {q['multi']['reference']:.4f}, Δ {q['multi']['delta']:+.4f})",
-            "threshold": f"|Δ| ≤ {q['threshold']}",
+            "threshold": f"\\|Δ\\| ≤ {q['threshold']}",
             "pass": q["pass"],
             "source": "c3_quality.json",
         },

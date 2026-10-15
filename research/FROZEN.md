@@ -88,6 +88,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `index/tests/embed.rs` | `P1-C/C9-pre:` | C-10 testi (`MDK_C10_OUT`) |
 | `index/tests/hot.rs` | `P1-C/C9-pre:` | C-8 ve C-9 testleri (`MDK_C8_OUT`) |
 | `core/tests/compat_v3final.rs` | `P1-C/C9-pre:` | C-13 testleri (`kc01_*`) |
+| `research/eval/report_p1c.py` | `P1-C/C9-fix:` | yeniden dondurma P1-C/F9: C-3 eşik hücresinde `\|` kaçışı (Markdown tablo) |
 <!-- /frozen-table -->
 
 ## Notlar

@@ -49,3 +49,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** TASKS C9 "verify.sh: models → conformance L3 → regress (P1-B.1 seti + C-3) → determinism → hot → property → tamper → pair compare".
 - **Önce/sonra:** `compare_p1c pair`, `compare_p1b`'nin karşılaştırdığı her dosyayı (`RESULT_FILES_P1B`) ve her bayt yapıtını (`compare_p1b.bytes_equal`) aynı dondurulmuş `compare_runs.compare` ile karşılaştırır, üstüne yeni dosyaları ekler (üst küme; hariç tutma yok). Geliştirme koşturmasında (bu ağaç, atılan RUN) zincirin adımları sırayla geçti; `compare_p1c pair` bir RUN'ı kendisiyle 99 053 alanda fark 0 buldu; `test_tamper_p1c.sh` 6/6 ret. Resmi çift koşturma: C9.md.
 - **Gözden geçirici onayı:** C9.review.md.
+
+## F9 · C9 · `research/eval/report_p1c.py` — tablo kaçışı
+- **Ne:** C-3 satırının eşik hücresi `f"|Δ| ≤ …"` → `f"\\|Δ\\| ≤ …"` (tek satır). Çıplak `|` Markdown tablosunda hücreyi bölüyordu.
+- **Neden:** resmi RUN'dan üretilen FINAL.md'de C-3 satırı yanlış sütunlara kayıyordu (biçim hatası; hiçbir ölçüm ya da karar değişmez).
+- **Önce/sonra:** aynı RUN (`20261015T014417Z-9aa326b`) için eski ve yeni üreteçle FINAL.md `diff`: yalnız satır 13'teki eşik hücresi (`|Δ| ≤ 0.01` → `\|Δ\| ≤ 0.01`); diğer her satır bayt eşit.
+- **Gözden geçirici onayı:** C9.review.md.
