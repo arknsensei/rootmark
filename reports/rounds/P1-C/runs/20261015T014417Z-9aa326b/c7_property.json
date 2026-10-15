@@ -1,0 +1,21 @@
+{
+  "chunks_by_layer": {
+    "canonical": 32,
+    "derived": 1,
+    "proposal": 7
+  },
+  "derived_hits": 0,
+  "modes": [
+    "flat",
+    "lexical",
+    "hybrid"
+  ],
+  "pass": true,
+  "proposal_hits_with_include_proposal": 297,
+  "proposal_or_derived_hits_by_default": 0,
+  "queries": 1000,
+  "settings": [
+    "default",
+    "include_proposal"
+  ]
+}

@@ -1,0 +1,1 @@
+{"canonical":24,"derived":13,"events_hash":"2699484c7589cc98f95f80857430c58a","inactive":21,"live_lineages":68,"ops":{"demote_ok":71,"demote_refused_state":51,"hook_refused":128,"ingest_human":109,"promote_ok":81,"promote_refused_state":188,"propose":245,"prune_ok":48,"prune_refused_state":79},"proposal":31,"replay_equal":true,"seed":7,"steps":1000}

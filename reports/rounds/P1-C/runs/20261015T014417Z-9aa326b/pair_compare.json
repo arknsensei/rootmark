@@ -1,0 +1,84 @@
+{
+ "C-6_equal": true,
+ "H4-2_equal": true,
+ "bytes": {
+  "governance/vault/.mdkernel/checkpoints/": {
+   "equal": true,
+   "files": 4
+  },
+  "governance/vault/.mdkernel/events.jsonl": {
+   "blake3": "2b0dc8e88f8d56ee4c6be6356d4c0fee",
+   "equal": true
+  },
+  "governance/vault/.mdkernel/traces.jsonl": {
+   "blake3": "4e0906770480e03802021d9dfb2a67a5",
+   "equal": true
+  }
+ },
+ "bytes_equal": true,
+ "differing_fields": {},
+ "excluded_latency_paths": {
+  "h2.json": [
+   "H2-3",
+   "latency_ms"
+  ],
+  "h3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ],
+  "h3_v3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ]
+ },
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json"
+ ],
+ "max_relative_difference": 0.0,
+ "n_fields": 99053,
+ "per_file": {
+  "c3_quality.json": 0.0,
+  "governance/governance.json": 0.0,
+  "h1r.json": 0.0,
+  "h1r_v3.json": 0.0,
+  "h1s.json": 0.0,
+  "h1s_tuning.json": 0.0,
+  "h1s_v3.json": 0.0,
+  "h1s_v3_tuning.json": 0.0,
+  "h3_v3.json": 0.0,
+  "h4_v2repro.json": 0.0,
+  "h4_v3.json": 0.0,
+  "holdout.json": 0.0,
+  "holdout_split.json": 0.0,
+  "p1b1_checks.json": 0.0,
+  "p1b_checks.json": 0.0,
+  "p1c_checks.json": 0.0,
+  "p1c_index.json": 0.0,
+  "split_grid.json": 0.0
+ },
+ "run_a": "/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-verify.XXXXXX.zX7P50Bdf7/A/repo/research/reports/runs/20261015T014417Z-9aa326b",
+ "run_b": "/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-verify.XXXXXX.zX7P50Bdf7/B/repo/research/reports/runs/20261015T020305Z-9aa326b"
+}
