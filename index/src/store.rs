@@ -215,18 +215,93 @@ fn reusable(dir: &Path, embedder_id: &str, dim: usize) -> (HashMap<String, Vec<f
                 l.manifest.embedder_id, l.manifest.dim
             ),
         ),
-        Ok(l) => (
-            l.records
-                .into_iter()
-                .zip(l.vecs)
-                .map(|(r, v)| (r.record_id, v))
-                .collect(),
-            "previous index".into(),
-        ),
+        Ok(l) => {
+            let mut have: HashMap<String, Vec<f32>> = HashMap::new();
+            let mut why = String::from("previous index");
+            match load_hot(dir, &l.manifest) {
+                Ok(Some(h)) => {
+                    have.extend(h.records.into_iter().map(|r| r.record_id).zip(h.vecs));
+                    why.push_str(" (cold + hot)");
+                }
+                Ok(None) => {}
+                Err(e) => why.push_str(&format!(" (cold only; hot tier invalid: {e:#})")),
+            }
+            have.extend(l.records.into_iter().map(|r| r.record_id).zip(l.vecs));
+            (have, why)
+        }
     }
 }
 
-/// Rebuilds `<vault>/.mdkernel/index/` from the vault.
+/// Writes a complete cold index (records in storage order) into the new
+/// directory `tmp`.
+fn write_cold(
+    tmp: &Path,
+    records: &[ChunkRecord],
+    snaps: &[SnapshotChunks],
+    vecs: &[Vec<f32>],
+    embedder_id: &str,
+    dim: usize,
+) -> Result<()> {
+    if records
+        .windows(2)
+        .any(|w| w[0].sort_key() >= w[1].sort_key())
+    {
+        bail!("records are not in storage order");
+    }
+    if vecs.len() != records.len() {
+        bail!("{} vectors for {} records", vecs.len(), records.len());
+    }
+    if tmp.exists() {
+        fs::remove_dir_all(tmp)?;
+    }
+    fs::create_dir_all(tmp)?;
+    let metas: Vec<VectorMeta> = records
+        .iter()
+        .map(|r| VectorMeta {
+            record_id: r.record_id.clone(),
+            embedder_id: embedder_id.to_string(),
+        })
+        .collect();
+    let rec_bytes = jsonl(records)?;
+    let snap_bytes = jsonl(snaps)?;
+    fs::write(tmp.join("records.jsonl"), &rec_bytes)?;
+    fs::write(tmp.join("snapshots.jsonl"), &snap_bytes)?;
+    lexical::write(&tmp.join("lexical"), records)?;
+    let vec_bytes = vectors::encode(vecs, dim)?;
+    fs::create_dir_all(tmp.join("vectors"))?;
+    fs::write(tmp.join("vectors/vectors.f32"), &vec_bytes)?;
+    let emb_bytes = jsonl(&metas)?;
+    fs::write(tmp.join("vectors/embedders.jsonl"), &emb_bytes)?;
+    let manifest = Manifest {
+        format: FORMAT.into(),
+        chunking: "structural".into(),
+        tokenizer: TOKENIZER.into(),
+        bm25_k1: BM25_K1,
+        bm25_b: BM25_B,
+        embedder_id: embedder_id.to_string(),
+        dim,
+        records: records.len(),
+        snapshots: snaps.len(),
+        records_blake3: blake3::hash(&rec_bytes).to_hex().to_string(),
+        snapshots_blake3: blake3::hash(&snap_bytes).to_hex().to_string(),
+        vectors_blake3: blake3::hash(&vec_bytes).to_hex().to_string(),
+        embedders_blake3: blake3::hash(&emb_bytes).to_hex().to_string(),
+    };
+    write_pretty(&tmp.join("manifest.json"), &manifest)
+}
+
+/// Replaces `<vault>/.mdkernel/index/` (hot tier included) by `tmp`.
+fn install(vault: &Vault, tmp: &Path) -> Result<()> {
+    let dir = index_dir(vault);
+    if dir.exists() {
+        fs::remove_dir_all(&dir)?;
+    }
+    fs::rename(tmp, &dir)?;
+    Ok(())
+}
+
+/// Rebuilds `<vault>/.mdkernel/index/` from the vault (the hot tier is
+/// dropped: every head and checkpoint snapshot is in the new cold index).
 pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
     let (records, snaps) = collect(vault)?;
     let dir = index_dir(vault);
@@ -243,48 +318,9 @@ pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
         .iter()
         .map(|r| have.remove(&r.record_id).context("vector"))
         .collect::<Result<_>>()?;
-    let metas: Vec<VectorMeta> = records
-        .iter()
-        .map(|r| VectorMeta {
-            record_id: r.record_id.clone(),
-            embedder_id: embedder.id().to_string(),
-        })
-        .collect();
     let tmp = vault.store_dir().join("index.build");
-    if tmp.exists() {
-        fs::remove_dir_all(&tmp)?;
-    }
-    fs::create_dir_all(&tmp)?;
-    let rec_bytes = jsonl(&records)?;
-    let snap_bytes = jsonl(&snaps)?;
-    fs::write(tmp.join("records.jsonl"), &rec_bytes)?;
-    fs::write(tmp.join("snapshots.jsonl"), &snap_bytes)?;
-    lexical::write(&tmp.join("lexical"), &records)?;
-    let vec_bytes = vectors::encode(&vecs, embedder.dim())?;
-    fs::create_dir_all(tmp.join("vectors"))?;
-    fs::write(tmp.join("vectors/vectors.f32"), &vec_bytes)?;
-    let emb_bytes = jsonl(&metas)?;
-    fs::write(tmp.join("vectors/embedders.jsonl"), &emb_bytes)?;
-    let manifest = Manifest {
-        format: FORMAT.into(),
-        chunking: "structural".into(),
-        tokenizer: TOKENIZER.into(),
-        bm25_k1: BM25_K1,
-        bm25_b: BM25_B,
-        embedder_id: embedder.id().to_string(),
-        dim: embedder.dim(),
-        records: records.len(),
-        snapshots: snaps.len(),
-        records_blake3: blake3::hash(&rec_bytes).to_hex().to_string(),
-        snapshots_blake3: blake3::hash(&snap_bytes).to_hex().to_string(),
-        vectors_blake3: blake3::hash(&vec_bytes).to_hex().to_string(),
-        embedders_blake3: blake3::hash(&emb_bytes).to_hex().to_string(),
-    };
-    write_pretty(&tmp.join("manifest.json"), &manifest)?;
-    if dir.exists() {
-        fs::remove_dir_all(&dir)?;
-    }
-    fs::rename(&tmp, &dir)?;
+    write_cold(&tmp, &records, &snaps, &vecs, embedder.id(), embedder.dim())?;
+    install(vault, &tmp)?;
     Ok(BuildReport {
         records: records.len(),
         snapshots: snaps.len(),
@@ -294,53 +330,118 @@ pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
     })
 }
 
-/// An opened index: records, snapshot map, lexical postings, vectors.
+// ---- hot tier (GOAL P1-C "Sıcak katman")
+
+/// `<index>/hot/`: append-only files of the records a `watch` added after
+/// the cold index was written — `records.jsonl`, `snapshots.jsonl`,
+/// `vectors.f32`, `embedders.jsonl` (same formats as cold), and `base.json`
+/// naming the cold index they extend (its `records_blake3`). A hot tier of
+/// another cold index, misaligned files, or a record also in cold is an
+/// error. `compact` moves everything to a new cold index.
+pub const HOT_DIR: &str = "hot";
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+struct HotBase {
+    cold_records_blake3: String,
+}
+
+struct Hot {
+    records: Vec<ChunkRecord>,
+    snaps: Vec<SnapshotChunks>,
+    vecs: Vec<Vec<f32>>,
+}
+
+fn load_hot(dir: &Path, cold: &Manifest) -> Result<Option<Hot>> {
+    let h = dir.join(HOT_DIR);
+    if !h.exists() {
+        return Ok(None);
+    }
+    let base: HotBase =
+        serde_json::from_str(&fs::read_to_string(h.join("base.json"))?).context("hot/base.json")?;
+    if base.cold_records_blake3 != cold.records_blake3 {
+        bail!("hot tier extends another cold index");
+    }
+    let (records, _): (Vec<ChunkRecord>, String) = read_jsonl(&h.join("records.jsonl"))?;
+    let (snaps, _): (Vec<SnapshotChunks>, String) = read_jsonl(&h.join("snapshots.jsonl"))?;
+    let (metas, _): (Vec<VectorMeta>, String) = read_jsonl(&h.join("embedders.jsonl"))?;
+    let vecs = vectors::decode(&fs::read(h.join("vectors.f32"))?, cold.dim)?;
+    if vecs.len() != records.len()
+        || metas.len() != records.len()
+        || metas
+            .iter()
+            .zip(&records)
+            .any(|(m, r)| m.record_id != r.record_id || m.embedder_id != cold.embedder_id)
+    {
+        bail!("hot tier vectors do not line up with its records (or mix embedder ids)");
+    }
+    Ok(Some(Hot {
+        records,
+        snaps,
+        vecs,
+    }))
+}
+
+/// Result of `Store::watch`.
+#[derive(Debug, Clone, Serialize)]
+pub struct WatchReport {
+    pub doc_path: String,
+    pub snapshot_id: String,
+    pub events: usize,
+    /// chunks of the new snapshot
+    pub chunks: usize,
+    /// chunks new to the index, embedded and appended to the hot tier
+    pub embedded: usize,
+}
+
+/// Result of `compact`.
+#[derive(Debug, Clone, Serialize)]
+pub struct CompactReport {
+    pub records: usize,
+    pub snapshots: usize,
+    pub moved_from_hot: usize,
+}
+
+/// `index status`.
+#[derive(Debug, Clone, Serialize)]
+pub struct Status {
+    pub embedder_id: String,
+    pub cold_records: usize,
+    pub cold_snapshots: usize,
+    pub hot_records: usize,
+    pub hot_snapshots: usize,
+    /// documents whose head snapshot the index does not hold
+    pub stale_docs: Vec<String>,
+}
+
+/// An opened index: records (cold, then hot), snapshot map, postings,
+/// vectors.
 pub struct Store {
     pub dir: PathBuf,
     pub manifest: Manifest,
+    /// cold records in storage order, then hot records in append order
     pub records: Vec<ChunkRecord>,
+    /// one vector per record
+    pub vectors: Vec<Vec<f32>>,
+    pub cold_len: usize,
+    hot_snapshots: usize,
     by_id: HashMap<String, usize>,
     snapshots: HashMap<(String, String), Vec<usize>>,
-    pub lexical: Lexical,
-    /// one vector per record (storage order)
-    pub vectors: Vec<Vec<f32>>,
+    lexical: Lexical,
+    /// hot postings: token → (position, term frequency), position order
+    hot_postings: HashMap<String, Vec<(usize, u32)>>,
 }
 
 impl Store {
-    /// Opens the index of `vault` for queries embedded by `embedder`: the
-    /// index must hold exactly that `embedder_id`.
+    /// Opens the index of `vault` (cold and hot) for queries embedded by
+    /// `embedder`: the index must hold exactly that `embedder_id`.
     pub fn open(vault: &Vault, embedder: &dyn Embedder) -> Result<Store> {
         let dir = index_dir(vault);
         let Loaded {
             manifest,
-            records,
+            mut records,
             snaps,
-            vecs,
+            mut vecs,
         } = load(&dir)?;
-        let by_id: HashMap<String, usize> = records
-            .iter()
-            .enumerate()
-            .map(|(i, r)| (r.record_id.clone(), i))
-            .collect();
-        let mut snapshots = HashMap::new();
-        for s in snaps {
-            let ix = s
-                .records
-                .iter()
-                .map(|id| {
-                    by_id
-                        .get(id)
-                        .copied()
-                        .with_context(|| format!("snapshots.jsonl: unknown record {id}"))
-                })
-                .collect::<Result<Vec<_>>>()?;
-            if snapshots
-                .insert((s.doc_path.clone(), s.snapshot_id.clone()), ix)
-                .is_some()
-            {
-                bail!("snapshots.jsonl: {}@{} twice", s.doc_path, s.snapshot_id);
-            }
-        }
         if manifest.embedder_id != embedder.id() || manifest.dim != embedder.dim() {
             bail!(
                 "index embedder_id {} (dim {}) != query embedder {} (dim {}): rebuild the index",
@@ -358,31 +459,267 @@ impl Store {
                 records.len()
             );
         }
-        Ok(Store {
+        let cold_len = records.len();
+        let mut all_snaps = snaps;
+        let mut hot_snapshots = 0;
+        if let Some(hot) = load_hot(&dir, &manifest)? {
+            hot_snapshots = hot.snaps.len();
+            records.extend(hot.records);
+            vecs.extend(hot.vecs);
+            all_snaps.extend(hot.snaps);
+        }
+        let mut store = Store {
             dir,
             manifest,
-            records,
-            by_id,
-            snapshots,
+            records: Vec::new(),
+            vectors: Vec::new(),
+            cold_len,
+            hot_snapshots,
+            by_id: HashMap::new(),
+            snapshots: HashMap::new(),
             lexical,
-            vectors: vecs,
-        })
+            hot_postings: HashMap::new(),
+        };
+        for (r, v) in records.into_iter().zip(vecs) {
+            store.add_record(r, v)?;
+        }
+        for s in all_snaps {
+            store.add_snapshot(s)?;
+        }
+        Ok(store)
+    }
+
+    fn add_record(&mut self, r: ChunkRecord, v: Vec<f32>) -> Result<usize> {
+        let i = self.records.len();
+        if self.by_id.insert(r.record_id.clone(), i).is_some() {
+            bail!("record {} is indexed twice", r.record_id);
+        }
+        if i >= self.cold_len {
+            let mut tf: BTreeMap<String, u32> = BTreeMap::new();
+            for t in crate::tokenize::tokens(&r.text) {
+                *tf.entry(t).or_insert(0) += 1;
+            }
+            for (t, n) in tf {
+                self.hot_postings.entry(t).or_default().push((i, n));
+            }
+        }
+        self.records.push(r);
+        self.vectors.push(v);
+        Ok(i)
+    }
+
+    fn add_snapshot(&mut self, s: SnapshotChunks) -> Result<()> {
+        let ix = s
+            .records
+            .iter()
+            .map(|id| {
+                self.by_id
+                    .get(id)
+                    .copied()
+                    .with_context(|| format!("snapshot entry: unknown record {id}"))
+            })
+            .collect::<Result<Vec<_>>>()?;
+        if self
+            .snapshots
+            .insert((s.doc_path.clone(), s.snapshot_id.clone()), ix)
+            .is_some()
+        {
+            bail!("snapshot {}@{} indexed twice", s.doc_path, s.snapshot_id);
+        }
+        Ok(())
     }
 
     pub fn record_index(&self, record_id: &str) -> Option<usize> {
         self.by_id.get(record_id).copied()
     }
 
-    /// Records (storage positions) of one document snapshot; a snapshot the
-    /// index never saw is an error, never an empty result.
+    pub fn hot_len(&self) -> usize {
+        self.records.len() - self.cold_len
+    }
+
+    /// `(position, term frequency)` of `token` in every record, cold
+    /// (tantivy) then hot (memory).
+    pub fn postings(&self, token: &str) -> Result<Vec<(usize, u32)>> {
+        let mut out: Vec<(usize, u32)> = self
+            .lexical
+            .postings(token)?
+            .into_iter()
+            .map(|(o, tf)| Ok((usize::try_from(o)?, tf)))
+            .collect::<Result<_>>()?;
+        if let Some(h) = self.hot_postings.get(token) {
+            out.extend_from_slice(h);
+        }
+        Ok(out)
+    }
+
+    /// Records (positions) of one document snapshot; a snapshot the index
+    /// never saw is an error, never an empty result.
     pub fn snapshot(&self, doc_path: &str, snapshot_id: &str) -> Result<&[usize]> {
         self.snapshots
             .get(&(doc_path.to_string(), snapshot_id.to_string()))
             .map(Vec::as_slice)
             .with_context(|| {
                 format!(
-                    "snapshot {snapshot_id} of {doc_path} is not indexed (run `mdk index build`)"
+                    "snapshot {snapshot_id} of {doc_path} is not indexed (run `mdk index build` or `mdk index watch`)"
                 )
             })
     }
+
+    pub fn has_snapshot(&self, doc_path: &str, snapshot_id: &str) -> bool {
+        self.snapshots
+            .contains_key(&(doc_path.to_string(), snapshot_id.to_string()))
+    }
+
+    /// GOAL "watch(doc)": ingests `text` as `doc_path` (`core::ingest`), then
+    /// the chunks of the new head that the index does not hold are embedded
+    /// and appended to the hot tier (memory and `hot/`). Unchanged chunks
+    /// are not embedded again (`WatchReport.embedded`).
+    pub fn watch(
+        &mut self,
+        vault: &mut Vault,
+        embedder: &dyn Embedder,
+        doc_path: &str,
+        text: &str,
+        prov: mdkcore::Provenance,
+    ) -> Result<WatchReport> {
+        if embedder.id() != self.manifest.embedder_id {
+            bail!(
+                "watch embedder {} != index embedder {}",
+                embedder.id(),
+                self.manifest.embedder_id
+            );
+        }
+        let matcher = vault.matcher_lock().unwrap_or(mdkcore::MatcherVersion::V3);
+        let res = vault.ingest(doc_path, text, prov, matcher)?;
+        let snap = vault
+            .snapshot(doc_path)?
+            .with_context(|| format!("{doc_path}: no head after ingest"))?;
+        let mut report = WatchReport {
+            doc_path: doc_path.to_string(),
+            snapshot_id: snap.snapshot_id.clone(),
+            events: res.events.len(),
+            chunks: 0,
+            embedded: 0,
+        };
+        if self.has_snapshot(doc_path, &snap.snapshot_id) {
+            report.chunks = self.snapshot(doc_path, &snap.snapshot_id)?.len();
+            return Ok(report);
+        }
+        let recs = snapshot_records(vault, &snap)?;
+        report.chunks = recs.len();
+        let new: Vec<&ChunkRecord> = recs
+            .iter()
+            .filter(|r| !self.by_id.contains_key(&r.record_id))
+            .collect();
+        let texts: Vec<&str> = new.iter().map(|r| r.text.as_str()).collect();
+        let vecs = embedder.embed(&texts)?;
+        let entry = SnapshotChunks {
+            doc_path: doc_path.to_string(),
+            snapshot_id: snap.snapshot_id.clone(),
+            records: recs.iter().map(|r| r.record_id.clone()).collect(),
+        };
+        // disk first (append), then memory
+        let h = self.dir.join(HOT_DIR);
+        if !h.exists() {
+            fs::create_dir_all(&h)?;
+            write_pretty(
+                &h.join("base.json"),
+                &HotBase {
+                    cold_records_blake3: self.manifest.records_blake3.clone(),
+                },
+            )?;
+        }
+        let owned: Vec<ChunkRecord> = new.iter().map(|r| (*r).clone()).collect();
+        let metas: Vec<VectorMeta> = owned
+            .iter()
+            .map(|r| VectorMeta {
+                record_id: r.record_id.clone(),
+                embedder_id: embedder.id().to_string(),
+            })
+            .collect();
+        append(&h.join("records.jsonl"), &jsonl(&owned)?)?;
+        append(&h.join("embedders.jsonl"), &jsonl(&metas)?)?;
+        append(
+            &h.join("vectors.f32"),
+            &vectors::encode(&vecs, self.manifest.dim)?,
+        )?;
+        append(
+            &h.join("snapshots.jsonl"),
+            &jsonl(std::slice::from_ref(&entry))?,
+        )?;
+        report.embedded = owned.len();
+        for (r, v) in owned.into_iter().zip(vecs) {
+            self.add_record(r, v)?;
+        }
+        self.add_snapshot(entry)?;
+        self.hot_snapshots += 1;
+        Ok(report)
+    }
+
+    pub fn status(&self, vault: &Vault) -> Result<Status> {
+        let mut stale = Vec::new();
+        for d in vault.doc_paths() {
+            let h = vault.snapshot(&d)?.context("head")?;
+            if !self.has_snapshot(&d, &h.snapshot_id) {
+                stale.push(d);
+            }
+        }
+        Ok(Status {
+            embedder_id: self.manifest.embedder_id.clone(),
+            cold_records: self.cold_len,
+            cold_snapshots: self.manifest.snapshots,
+            hot_records: self.hot_len(),
+            hot_snapshots: self.hot_snapshots,
+            stale_docs: stale,
+        })
+    }
+}
+
+fn append(p: &Path, bytes: &[u8]) -> Result<()> {
+    use std::io::Write;
+    let mut f = fs::OpenOptions::new().create(true).append(true).open(p)?;
+    f.write_all(bytes)?;
+    f.sync_data()?;
+    Ok(())
+}
+
+/// GOAL "compact()": moves the hot tier into a new cold index — every
+/// record and snapshot the index holds, nothing embedded again — and drops
+/// `hot/`. Rankings do not change (statistics are per checkpoint, C2-1).
+pub fn compact(vault: &Vault, embedder: &dyn Embedder) -> Result<CompactReport> {
+    let s = Store::open(vault, embedder)?;
+    let moved = s.hot_len();
+    let mut order: Vec<usize> = (0..s.records.len()).collect();
+    order.sort_by(|&a, &b| s.records[a].sort_key().cmp(&s.records[b].sort_key()));
+    let records: Vec<ChunkRecord> = order.iter().map(|&i| s.records[i].clone()).collect();
+    let vecs: Vec<Vec<f32>> = order.iter().map(|&i| s.vectors[i].clone()).collect();
+    let mut keys: Vec<&(String, String)> = s.snapshots.keys().collect();
+    keys.sort();
+    let snaps: Vec<SnapshotChunks> = keys
+        .into_iter()
+        .map(|k| SnapshotChunks {
+            doc_path: k.0.clone(),
+            snapshot_id: k.1.clone(),
+            records: s.snapshots[k]
+                .iter()
+                .map(|&i| s.records[i].record_id.clone())
+                .collect(),
+        })
+        .collect();
+    let tmp = vault.store_dir().join("index.build");
+    write_cold(
+        &tmp,
+        &records,
+        &snaps,
+        &vecs,
+        &s.manifest.embedder_id,
+        s.manifest.dim,
+    )?;
+    drop(s);
+    install(vault, &tmp)?;
+    Ok(CompactReport {
+        records: records.len(),
+        snapshots: snaps.len(),
+        moved_from_hot: moved,
+    })
 }

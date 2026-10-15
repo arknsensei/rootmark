@@ -147,8 +147,8 @@ pub fn bm25(store: &Store, eligible: &[(usize, Layer)], query: &str) -> Result<V
             continue;
         }
         let mut p = Vec::new();
-        for (ord, tf) in store.lexical.postings(t)? {
-            if let Some(&j) = pos.get(&usize::try_from(ord)?) {
+        for (i, tf) in store.postings(t)? {
+            if let Some(&j) = pos.get(&i) {
                 p.push((j, tf));
             }
         }
