@@ -30,3 +30,5 @@ Ortak neden (F1–F3): TASKS D0 `mdk` ikilisini `core/src/bin/mdk.rs`'ten `serve
 - **Neden:** TASKS D7 ("`verify.sh`: conformance → regress (P1-C.1 referansı) → mcp_e2e → http tests → scene → tamper → pair compare"). P1-D'nin ölçümleri D-8 için zincirin içinde, iki bağımsız klonda koşmalı.
 - **Önce/sonra bit eşitliği:** önceki adımlar değişmeden koştuğu için P1-C.1 çift kümesinin bütün alanları P1-C.1 resmi RUN'ıyla karşılaştırılır (D-9, `regress_vs_p1c1.json`, hariçsiz). Geliştirme sırasında P1-C.1 resmi RUN'ının kopyalarına `make p1d-checks` koşturuldu. `compare_p1d regress` 99 341 alan eşit verdi; C1 17/17, C2 9/9, C3 5/5, farklı test 0. İki kopya arasında `compare_p1d pair` 99 985 alan eşit, bütün baytlar eşit verdi. `research/tests/test_verify_script.py` geçti (4/4).
 - **Gözden geçirici onayı:** D7.review.md.
+
+  F4 gözden geçirici onayı: D7.review.md (TAMAMLANDI). `verify.sh` farkı +29/−2. Önceki adımlar ve karşılaştırma alt komutları değişmedi. `compare_p1c1 pair A B` de 99 341 alan eşit.
