@@ -33,9 +33,14 @@ impl McpServer {
     }
 }
 
-/// `<name>/<version>` of the client's `initialize` request.
-pub fn consumer_of(info: &Implementation) -> String {
-    format!("{}/{}", info.name, info.version)
+/// `<name>/<version>` of the client's `initialize` request; `None` when the
+/// name or the version is empty or whitespace (an unidentified client, as an
+/// empty HTTP `X-Consumer`), so trace-recording tools refuse to run.
+pub fn consumer_of(info: &Implementation) -> Option<String> {
+    if info.name.trim().is_empty() || info.version.trim().is_empty() {
+        return None;
+    }
+    Some(format!("{}/{}", info.name, info.version))
 }
 
 fn tool_list() -> Vec<Tool> {
@@ -98,7 +103,7 @@ impl ServerHandler for McpServer {
         let consumer = context
             .peer
             .peer_info()
-            .map(|p| consumer_of(&p.client_info));
+            .and_then(|p| consumer_of(&p.client_info));
         let args = request.arguments.map(Value::Object).unwrap_or(Value::Null);
         let kernel = self.kernel.clone();
         let res =

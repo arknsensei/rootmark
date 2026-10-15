@@ -168,8 +168,16 @@ alin="$(cat "$out/run1/agent_lineage.txt")"
 check search "valid call (hybrid default)" "$ok_result" 16
 check search "canonical hits only, agent document absent, trace by mcp-e2e/1.0" \
   '.result.structuredContent | (.hits | length) > 0 and all(.hits[]; .layer == "canonical" and .doc_path != "agent/notes.md") and .mode == "hybrid" and .include_proposal == false and (.trace_id | length) == 32' 16
-check search "byte-equal to the CLI twin (mdk search --consumer mcp-e2e/1.0, same state)" \
+check search "JSON-equal to the CLI twin (mdk search --consumer mcp-e2e/1.0, same state)" \
   ".result.structuredContent == $(jq -c . "$out/run1/cli_search.json")" 16
+# bytes, not only JSON values: the tool's text content is the CLI's stdout
+if cmp -s <(r 16 | jq -j '.result.content[0].text') <(tr -d '\n' <"$out/run1/cli_search.json"); then
+  results+=('{"tool":"search","check":"text content byte-equal to the CLI stdout","pass":true}')
+  echo "mcp_e2e: ok   [search] text content byte-equal to the CLI stdout (cmp)"
+else
+  results+=('{"tool":"search","check":"text content byte-equal to the CLI stdout","pass":false}')
+  echo "mcp_e2e: FAIL [search] text content byte-equal to the CLI stdout (cmp)" >&2
+fi
 check search "include_proposal: canonical prefix unchanged, agent proposal labelled after it" \
   "(.result.structuredContent.hits | map(select(.layer == \"canonical\"))) == $(r 16 | jq -c .result.structuredContent.hits) and any(.result.structuredContent.hits[]; .doc_path == \"agent/notes.md\" and .layer == \"proposal\") and (.result.structuredContent.hits | (map(.layer) | index(\"proposal\")) >= ([.[] | select(.layer == \"canonical\")] | length))" 17
 check search "whitespace-only query is an error" "$tool_err and (.result.content[0].text | test(\"empty query\"))" 18
