@@ -297,6 +297,12 @@ fn c12_c13_include_proposal_1000_queries() {
     let ind = Independent::new(&s, &view);
     let count = |l: Layer| truth.values().filter(|x| **x == l).count();
     assert!(count(Layer::Proposal) >= 4 && count(Layer::Derived) >= 1);
+    // the layer sets of the passes (canonical statistics included) are the
+    // `blame` layers (C1.2 review note 2)
+    for &(i, l) in &view.entries {
+        let r = &s.records[i];
+        assert_eq!(l, truth[&(r.doc_path.clone(), r.chunk_id.clone())]);
+    }
     let qs = queries(&v, &s, &cp, N_QUERIES, 20261015);
     let mut se = Searcher::new(&s, embedder(), "c1-2").unwrap();
     let (mut prefix_equal, mut searches, mut prop_hits) = (0usize, 0usize, 0usize);

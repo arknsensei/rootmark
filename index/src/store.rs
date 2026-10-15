@@ -173,11 +173,16 @@ fn load(dir: &Path) -> Result<Loaded> {
     if !dir.join("manifest.json").is_file() {
         bail!("no index at {} (run `mdk index build`)", dir.display());
     }
-    let manifest: Manifest = serde_json::from_str(&fs::read_to_string(dir.join("manifest.json"))?)
-        .context("index manifest.json")?;
-    if manifest.format != FORMAT {
-        bail!("index format {:?} != {FORMAT:?}", manifest.format);
+    let text = fs::read_to_string(dir.join("manifest.json"))?;
+    // the format first, so that an index of another format says so
+    let raw: serde_json::Value = serde_json::from_str(&text).context("index manifest.json")?;
+    if raw["format"] != FORMAT {
+        bail!(
+            "index format {} != {FORMAT:?} (rebuild it with `mdk index build`)",
+            raw["format"]
+        );
     }
+    let manifest: Manifest = serde_json::from_value(raw).context("index manifest.json")?;
     if manifest.lexical != LexicalParams::current() {
         bail!(
             "index lexical record {:?} != this implementation's {:?}; rebuild it",
