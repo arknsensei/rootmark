@@ -1425,6 +1425,21 @@ impl Vault {
         Ok(cp)
     }
 
+    /// The checkpoint of the current state: the existing one (named or not)
+    /// if this state already has one, else a new unnamed checkpoint (spec §8).
+    /// Searches without an explicit checkpoint run, and trace, at this one.
+    pub fn head_checkpoint(&mut self) -> Result<Checkpoint> {
+        let cid = checkpoint_id(&self.state.heads(), self.state.content_offset);
+        if let Some(c) = self
+            .checkpoints()
+            .into_iter()
+            .find(|c| c.checkpoint_id == cid)
+        {
+            return Ok(c);
+        }
+        self.checkpoint(None)
+    }
+
     /// The vault as of a checkpoint: the log replayed up to its offset.
     pub fn state_at(&self, checkpoint: &str) -> Result<(Checkpoint, Replayed)> {
         let cp = self.find_checkpoint(checkpoint)?;

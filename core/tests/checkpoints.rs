@@ -204,3 +204,46 @@ fn checkpoint_name_checks() {
     assert_eq!(Vault::open(&root).unwrap().checkpoints(), vec![cp]);
     fs::remove_dir_all(&root).unwrap();
 }
+
+/// P1-C/C4: `head_checkpoint` returns the checkpoint of the current state
+/// (named or not) and creates an unnamed one only when the state has none.
+#[test]
+fn head_checkpoint_reuses_or_creates() {
+    let root = std::env::temp_dir().join(format!("mdk-headcp-{}", std::process::id()));
+    let _ = std::fs::remove_dir_all(&root);
+    let mut v = mdkcore::Vault::open(&root).unwrap();
+    v.ingest(
+        "a.md",
+        "# A\n\nText.\n",
+        mdkcore::Provenance::default(),
+        mdkcore::MatcherVersion::V3,
+    )
+    .unwrap();
+    let named = v.checkpoint(Some("t0")).unwrap();
+    let n_events = std::fs::read_to_string(v.events_path())
+        .unwrap()
+        .lines()
+        .count();
+    assert_eq!(v.head_checkpoint().unwrap(), named);
+    assert_eq!(
+        std::fs::read_to_string(v.events_path())
+            .unwrap()
+            .lines()
+            .count(),
+        n_events,
+        "nothing written for an existing checkpoint"
+    );
+    v.ingest(
+        "a.md",
+        "# A\n\nText, edited.\n",
+        mdkcore::Provenance::default(),
+        mdkcore::MatcherVersion::V3,
+    )
+    .unwrap();
+    let fresh = v.head_checkpoint().unwrap();
+    assert_ne!(fresh.checkpoint_id, named.checkpoint_id);
+    assert_eq!(fresh.name, None);
+    assert_eq!(v.head_checkpoint().unwrap(), fresh);
+    assert_eq!(v.checkpoints().len(), 2);
+    std::fs::remove_dir_all(root).unwrap();
+}

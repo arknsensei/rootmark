@@ -180,7 +180,15 @@ pub fn bm25(store: &Store, eligible: &[(usize, Layer)], query: &str) -> Result<V
 }
 
 /// The returned list: proposals down-weighted, top `k`, canonical first.
-pub fn finalize(store: &Store, mut ranked: Vec<Scored>, k: usize) -> Vec<Hit> {
+pub fn finalize(store: &Store, ranked: Vec<Scored>, k: usize) -> Vec<Hit> {
+    finalize_ix(store, ranked, k)
+        .into_iter()
+        .map(|(_, h)| h)
+        .collect()
+}
+
+/// `finalize` with each hit's storage position.
+pub fn finalize_ix(store: &Store, mut ranked: Vec<Scored>, k: usize) -> Vec<(usize, Hit)> {
     for s in &mut ranked {
         if s.1 == Layer::Proposal {
             s.2 *= PROPOSAL_WEIGHT;
@@ -195,13 +203,16 @@ pub fn finalize(store: &Store, mut ranked: Vec<Scored>, k: usize) -> Vec<Hit> {
         .chain(prop)
         .map(|(i, layer, score)| {
             let r = &store.records[i];
-            Hit {
-                doc_path: r.doc_path.clone(),
-                chunk_id: r.chunk_id.clone(),
-                lineage_ids: r.lineage_ids.clone(),
-                layer,
-                score,
-            }
+            (
+                i,
+                Hit {
+                    doc_path: r.doc_path.clone(),
+                    chunk_id: r.chunk_id.clone(),
+                    lineage_ids: r.lineage_ids.clone(),
+                    layer,
+                    score,
+                },
+            )
         })
         .collect()
 }
@@ -295,4 +306,138 @@ pub fn hybrid(
     let mut sparse = bm25(store, &eligible, query)?;
     sparse.truncate(CANDIDATES);
     Ok(finalize(store, rrf(store, &[&dense, &sparse]), k))
+}
+
+/// Retrieval mode (GOAL: `flat`, `lexical`, `hybrid`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum Mode {
+    Flat,
+    Lexical,
+    Hybrid,
+}
+
+impl Mode {
+    pub fn parse(s: &str) -> Result<Mode> {
+        Ok(match s {
+            "flat" => Mode::Flat,
+            "lexical" => Mode::Lexical,
+            "hybrid" => Mode::Hybrid,
+            _ => bail!("unknown search mode {s:?} (flat|lexical|hybrid)"),
+        })
+    }
+
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Mode::Flat => "flat",
+            Mode::Lexical => "lexical",
+            Mode::Hybrid => "hybrid",
+        }
+    }
+}
+
+/// One search: its checkpoint, hits and consumption trace (spec §8).
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct SearchResult {
+    pub checkpoint_id: String,
+    pub mode: Mode,
+    pub include_proposal: bool,
+    pub query_hash: String,
+    pub trace_id: String,
+    pub hits: Vec<Hit>,
+}
+
+/// `query_hash = H(query)` (spec §3 hash: blake3, 32 lowercase hex).
+pub fn query_hash(query: &str) -> String {
+    mdkcore::hash32(query)
+}
+
+/// Searches with one store and embedder for one consumer; views are cached
+/// per checkpoint (a checkpoint is immutable, spec §8).
+pub struct Searcher<'a> {
+    pub store: &'a Store,
+    pub embedder: &'a dyn crate::embed::Embedder,
+    pub consumer: String,
+    views: HashMap<String, View>,
+}
+
+impl<'a> Searcher<'a> {
+    pub fn new(
+        store: &'a Store,
+        embedder: &'a dyn crate::embed::Embedder,
+        consumer: &str,
+    ) -> Result<Searcher<'a>> {
+        mdkcore::check_trace_input(consumer, &query_hash(""))?;
+        if consumer.trim().is_empty() {
+            bail!("a search requires a consumer");
+        }
+        Ok(Searcher {
+            store,
+            embedder,
+            consumer: consumer.to_string(),
+            views: HashMap::new(),
+        })
+    }
+
+    /// Ranked hits as of checkpoint `at` (id or name; `None`: the checkpoint
+    /// of the vault's current state, created if missing), then one trace
+    /// line: every block of every returned chunk (`record_trace`, spec §8).
+    #[allow(clippy::too_many_arguments)]
+    pub fn search(
+        &mut self,
+        vault: &mut Vault,
+        mode: Mode,
+        query: &str,
+        k: usize,
+        at: Option<&str>,
+        include_proposal: bool,
+    ) -> Result<SearchResult> {
+        let cp = match at {
+            Some(a) => vault.find_checkpoint(a)?,
+            None => vault.head_checkpoint()?,
+        };
+        if !self.views.contains_key(&cp.checkpoint_id) {
+            let v = View::new(vault, self.store, &cp.checkpoint_id)?;
+            self.views.insert(cp.checkpoint_id.clone(), v);
+        }
+        let view = &self.views[&cp.checkpoint_id];
+        let ranked = match mode {
+            Mode::Lexical => bm25(self.store, &view.eligible(include_proposal), query)?,
+            Mode::Flat => {
+                let q = query_vector(self.embedder, self.store, query)?;
+                cosine_ranking(self.store, &view.eligible(include_proposal), &q)
+            }
+            Mode::Hybrid => {
+                let eligible = view.eligible(include_proposal);
+                let q = query_vector(self.embedder, self.store, query)?;
+                let mut dense = cosine_ranking(self.store, &eligible, &q);
+                dense.truncate(CANDIDATES);
+                let mut sparse = bm25(self.store, &eligible, query)?;
+                sparse.truncate(CANDIDATES);
+                rrf(self.store, &[&dense, &sparse])
+            }
+        };
+        let picked = finalize_ix(self.store, ranked, k);
+        let returned = picked
+            .iter()
+            .flat_map(|(i, _)| {
+                let r = &self.store.records[*i];
+                r.blocks.iter().map(|b| mdkcore::TraceEntry {
+                    doc_path: r.doc_path.clone(),
+                    lineage_id: b.lineage_id.clone(),
+                    version_id: b.version_id.clone(),
+                })
+            })
+            .collect();
+        let qh = query_hash(query);
+        let trace = vault.record_trace(&cp.checkpoint_id, &self.consumer, &qh, returned)?;
+        Ok(SearchResult {
+            checkpoint_id: cp.checkpoint_id,
+            mode,
+            include_proposal,
+            query_hash: qh,
+            trace_id: trace.trace_id,
+            hits: picked.into_iter().map(|(_, h)| h).collect(),
+        })
+    }
 }
