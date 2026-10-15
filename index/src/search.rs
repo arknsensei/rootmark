@@ -275,6 +275,31 @@ fn query_vector(
         .context("embedder returned no vector")
 }
 
+/// Unweighted ranking of the eligible records of `view` for `mode` (the one
+/// implementation behind `flat`, `lexical`, `hybrid` and `Searcher`).
+pub fn ranked(
+    store: &Store,
+    embedder: &dyn crate::embed::Embedder,
+    view: &View,
+    mode: Mode,
+    query: &str,
+    include_proposal: bool,
+) -> Result<Vec<Scored>> {
+    let eligible = view.eligible(include_proposal);
+    Ok(match mode {
+        Mode::Lexical => bm25(store, &eligible, query)?,
+        Mode::Flat => cosine_ranking(store, &eligible, &query_vector(embedder, store, query)?),
+        Mode::Hybrid => {
+            let q = query_vector(embedder, store, query)?;
+            let mut dense = cosine_ranking(store, &eligible, &q);
+            dense.truncate(CANDIDATES);
+            let mut sparse = bm25(store, &eligible, query)?;
+            sparse.truncate(CANDIDATES);
+            rrf(store, &[&dense, &sparse])
+        }
+    })
+}
+
 /// Vector retrieval (exact cosine) as of `view`'s checkpoint.
 pub fn flat(
     store: &Store,
@@ -284,9 +309,8 @@ pub fn flat(
     k: usize,
     include_proposal: bool,
 ) -> Result<Vec<Hit>> {
-    let q = query_vector(embedder, store, query)?;
-    let ranked = cosine_ranking(store, &view.eligible(include_proposal), &q);
-    Ok(finalize(store, ranked, k))
+    let r = ranked(store, embedder, view, Mode::Flat, query, include_proposal)?;
+    Ok(finalize(store, r, k))
 }
 
 /// Hybrid retrieval: RRF of the top `CANDIDATES` of the cosine and BM25
@@ -299,13 +323,8 @@ pub fn hybrid(
     k: usize,
     include_proposal: bool,
 ) -> Result<Vec<Hit>> {
-    let eligible = view.eligible(include_proposal);
-    let q = query_vector(embedder, store, query)?;
-    let mut dense = cosine_ranking(store, &eligible, &q);
-    dense.truncate(CANDIDATES);
-    let mut sparse = bm25(store, &eligible, query)?;
-    sparse.truncate(CANDIDATES);
-    Ok(finalize(store, rrf(store, &[&dense, &sparse]), k))
+    let r = ranked(store, embedder, view, Mode::Hybrid, query, include_proposal)?;
+    Ok(finalize(store, r, k))
 }
 
 /// Retrieval mode (GOAL: `flat`, `lexical`, `hybrid`).
@@ -401,22 +420,14 @@ impl<'a> Searcher<'a> {
             self.views.insert(cp.checkpoint_id.clone(), v);
         }
         let view = &self.views[&cp.checkpoint_id];
-        let ranked = match mode {
-            Mode::Lexical => bm25(self.store, &view.eligible(include_proposal), query)?,
-            Mode::Flat => {
-                let q = query_vector(self.embedder, self.store, query)?;
-                cosine_ranking(self.store, &view.eligible(include_proposal), &q)
-            }
-            Mode::Hybrid => {
-                let eligible = view.eligible(include_proposal);
-                let q = query_vector(self.embedder, self.store, query)?;
-                let mut dense = cosine_ranking(self.store, &eligible, &q);
-                dense.truncate(CANDIDATES);
-                let mut sparse = bm25(self.store, &eligible, query)?;
-                sparse.truncate(CANDIDATES);
-                rrf(self.store, &[&dense, &sparse])
-            }
-        };
+        let ranked = ranked(
+            self.store,
+            self.embedder,
+            view,
+            mode,
+            query,
+            include_proposal,
+        )?;
         let picked = finalize_ix(self.store, ranked, k);
         let returned = picked
             .iter()

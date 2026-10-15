@@ -200,9 +200,9 @@ fn c7_property_1000_queries() {
                 assert!(!in_proposals, "canonical after a proposal for {q:?}");
             }
         }
-        // ×0.5: for lexical, recompute the unweighted BM25 of the same pool
-        if mode == Mode::Lexical {
-            let raw = search::bm25(&s, &view.eligible(true), q).unwrap();
+        // ×0.5: recompute the unweighted score of the same pool
+        if mode != Mode::Hybrid || n % 2 == 0 {
+            let raw = search::ranked(&s, embedder(), &view, mode, q, true).unwrap();
             for h in on.hits.iter().filter(|h| h.layer == Layer::Proposal) {
                 let r = raw
                     .iter()
@@ -366,5 +366,80 @@ fn every_search_writes_one_trace_with_the_k_b1_2_id() {
         a.checkpoint_id, cp,
         "the current state is the one checkpointed as \"gov\""
     );
+    fs::remove_dir_all(root).unwrap();
+}
+
+/// Free functions and `Searcher` share one ranking (C4 review note 1).
+#[test]
+fn searcher_equals_the_free_functions() {
+    let (root, cp) = governed_vault("same");
+    let mut v = Vault::open(&root).unwrap();
+    let s = Store::open(&v, embedder()).unwrap();
+    let view = View::new(&v, &s, &cp).unwrap();
+    let mut se = Searcher::new(&s, embedder(), "c4-same").unwrap();
+    for q in queries(&v, &s, &cp, 20, 99) {
+        for p in [false, true] {
+            assert_eq!(
+                se.search(&mut v, Mode::Flat, &q, 7, Some("gov"), p)
+                    .unwrap()
+                    .hits,
+                search::flat(&s, embedder(), &view, &q, 7, p).unwrap()
+            );
+            assert_eq!(
+                se.search(&mut v, Mode::Lexical, &q, 7, Some("gov"), p)
+                    .unwrap()
+                    .hits,
+                search::lexical(&s, &view, &q, 7, p).unwrap()
+            );
+            assert_eq!(
+                se.search(&mut v, Mode::Hybrid, &q, 7, Some("gov"), p)
+                    .unwrap()
+                    .hits,
+                search::hybrid(&s, embedder(), &view, &q, 7, p).unwrap()
+            );
+        }
+    }
+    fs::remove_dir_all(root).unwrap();
+}
+
+/// A promotion alone (no new snapshot, no rebuild) is visible at the next
+/// checkpoint and invisible at the earlier one (C4-1; review note 4).
+#[test]
+fn promotion_without_rebuild_changes_the_layer_at_the_new_checkpoint() {
+    let (root, _) = governed_vault("promote");
+    let mut v = Vault::open(&root).unwrap();
+    let s = Store::open(&v, embedder()).unwrap();
+    let mut se = Searcher::new(&s, embedder(), "c4-promote").unwrap();
+    let q = "development time first crack sweetens light roasts";
+    let doc = "agent/roast-ideas.md";
+    let before = se
+        .search(&mut v, Mode::Lexical, q, 40, Some("gov"), false)
+        .unwrap();
+    assert!(before.hits.iter().all(|h| h.doc_path != doc));
+    let snap = v.snapshot(doc).unwrap().unwrap();
+    for (lin, _) in &snap.blocks {
+        let req = v
+            .request(
+                TransitionKind::Promote,
+                lin,
+                Layer::Canonical,
+                Actor::new(ActorKind::Human, "editor").unwrap(),
+                "reviewed",
+            )
+            .unwrap();
+        v.promote(&req, &HumanOnly).unwrap();
+    }
+    v.checkpoint(Some("promoted")).unwrap();
+    let after = se
+        .search(&mut v, Mode::Lexical, q, 40, Some("promoted"), false)
+        .unwrap();
+    assert!(after
+        .hits
+        .iter()
+        .any(|h| h.doc_path == doc && h.layer == Layer::Canonical));
+    let again = se
+        .search(&mut v, Mode::Lexical, q, 40, Some("gov"), false)
+        .unwrap();
+    assert_eq!(again.hits, before.hits);
     fs::remove_dir_all(root).unwrap();
 }
