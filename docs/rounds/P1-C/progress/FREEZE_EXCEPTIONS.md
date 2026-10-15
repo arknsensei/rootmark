@@ -33,7 +33,7 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Gözden geçirici onayı:** C7.review.md.
 
 ## F6 · C7 düzeltme · `spec/fixtures/**` — C3-03 güçlendirildi
-- **Ne:** `C3-03/case.c3.json` (t0 aramalarından sonra insan düzenlemesi `espresso_v2.md` → `espresso.md`, yeni `later.md`, checkpoint t1, derleme (36 → 40 kayıt), t0'da üç mod `same_as`, silip yeniden derleme, yine t0 `same_as`, t1'de üç mod `same_as` → farklı), yeni dosyalar `C3-03/espresso_v2.md`, `C3-03/later.md`, `C3-03/expected.json`; `MANIFEST.json`'da yalnız bu üç dosyanın satırları (iki yeni, iki değişen: `case.c3.json`, `expected.json`).
+- **Ne:** `C3-03/case.c3.json` (t0 aramalarından sonra insan düzenlemesi `espresso_v2.md` → `espresso.md`, yeni `later.md`, checkpoint t1, derleme (36 → 40 kayıt), t0'da üç mod `same_as`, silip yeniden derleme, yine t0 `same_as`, t1'de üç mod `same_as` → farklı), yeni dosyalar `C3-03/espresso_v2.md`, `C3-03/later.md`, `C3-03/expected.json`; `MANIFEST.json`'da yalnız C3-03'ün dört dosyasının satırları (iki yeni: `espresso_v2.md`, `later.md`; iki değişen: `case.c3.json`, `expected.json`).
 - **Neden:** C7 gözden geçirme 1, zorunlu düzeltme 1: önceki C3-03 aynı durumdan derleme/yeniden derleme yapıyordu; BM25 istatistiklerini tüm indeksten alan bir uygulama da geçerdi.
 - **Önce/sonra bit eşitliği:** `git diff b4f0e75 -- spec/fixtures` yalnız `C3-03/` ve `MANIFEST.json`'daki C3-03 satırları; C1, C2, C3-01/02/04 dosyaları bayt eşit; `make conformance` 30/30, Seviye 1–2'nin 26 girdisi önceki raporla aynı.
 - **Gözden geçirici onayı:** C7.review.md (gözden geçirme 2).
