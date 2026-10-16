@@ -18,8 +18,9 @@ pub mod wikilink;
 pub use chunk::{chunk, Chunk, Strategy};
 pub use events::{Event, EventKind};
 pub use governance::{
-    check_trace_input, checkpoint_id, trace_id, Actor, ActorKind, Checkpoint, Decision, Deny,
-    HumanOnly, PromotionPolicy, PromotionRequest, Trace, TraceEntry, TransitionKind,
+    check_trace_input, checkpoint_id, trace_id, Actor, ActorKind, AppendOnly, Checkpoint, Decision,
+    Deny, EditEffect, EditMode, EditPolicy, EditRequest, HumanOnly, PromotionPolicy,
+    PromotionRequest, TouchedLineage, Trace, TraceEntry, TransitionKind, Unrestricted,
 };
 pub use journal::{
     IdleOrDistance, JournalRecord, JournalRetention, PruneReport, TriggerInput, VersionTrigger,
@@ -32,7 +33,7 @@ pub use model::{
 };
 pub use normalize::normalize;
 pub use parse::parse_document;
-pub use policy::{Policy, PolicySource, Promotion};
+pub use policy::{Edit, Policy, PolicySource, Promotion};
 pub use store::BlockObject;
-pub use vault::{snapshot_id, BlameLine, IngestResult, ReadBlock, Snapshot, Vault};
+pub use vault::{snapshot_id, BlameLine, IngestPlan, IngestResult, ReadBlock, Snapshot, Vault};
 pub use wikilink::extract_wikilinks;

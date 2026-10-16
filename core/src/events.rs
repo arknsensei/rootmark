@@ -24,6 +24,9 @@ pub enum EventKind {
     Demoted,
     /// spec §8: vault-wide (`doc_path` ""), `meta.{checkpoint_id, name, event_seq}`
     CheckpointCreated,
+    /// spec §8 (K-D1.6): vault-wide, `meta.{checkpoint_id, name}` — names an
+    /// unnamed checkpoint; its id and file do not change
+    CheckpointNamed,
 }
 
 /// One log line. Field semantics per kind:
@@ -41,6 +44,12 @@ pub enum EventKind {
 /// - `Promoted` / `Demoted`: `lineage_ids=[l]`, old = new = `[v]` (the live version);
 ///   `meta.{actor, reason, policy, policy_version, from, to}` (+ `prune: true`).
 /// - `CheckpointCreated`: `doc_path` "", no ids; `meta.{checkpoint_id, name, event_seq}`.
+/// - `CheckpointNamed`: `doc_path` "", no ids; `meta.{checkpoint_id, name}`.
+///
+/// K-D1.2: `BlockUpdated`, `BlockMoved`, `BlockSplit`, `BlockMerged` and
+/// `BlockDeleted` written by an attributed ingest (`Vault::ingest_by`) also
+/// carry `meta.actor` (`{kind, id}`) and `meta.source`; logs without them
+/// (written before, or by the unattributed core API) remain valid.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Event {
     pub seq: u64,

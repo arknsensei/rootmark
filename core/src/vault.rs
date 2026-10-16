@@ -1,7 +1,7 @@
 //! Vault: object store + event log + per-document heads (SPEC §2–4, §7).
 
 use crate::events::{append_events, read_events, Event, EventKind};
-use crate::governance::{checkpoint_id, Actor, ActorKind, Checkpoint};
+use crate::governance::{checkpoint_id, Actor, ActorKind, Checkpoint, EditEffect, TouchedLineage};
 use crate::lineage::{match_blocks, MatchParams, MatcherVersion, PrevBlock};
 use crate::model::{hash32, AuthorKind, Block, Layer, LayerSource, Provenance};
 use crate::parse::heading_paths;
@@ -9,7 +9,7 @@ use crate::parse::parse_document;
 use crate::store::{self, BlockObject, SnapshotObject};
 use anyhow::{bail, Context, Result};
 use serde::{Deserialize, Serialize};
-use std::collections::{BTreeMap, HashMap, HashSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -223,6 +223,49 @@ pub fn transition_meta(ev: &Event) -> Result<TransitionMeta> {
 /// Applies one event to a document state. `SnapshotCommitted` is verified
 /// against the state built from the preceding block events.
 ///
+/// K-D1.2: `meta.actor` (`{kind, id}`, id not empty) and `meta.source` (a
+/// string) of a block event, when present, must be well formed; absent is
+/// the reading of logs written before 1.0.3 or by the unattributed API.
+fn check_event_actor(ev: &Event) -> Result<()> {
+    if let Some(a) = ev.meta.get("actor") {
+        let a: Actor = serde_json::from_value(a.clone())
+            .with_context(|| format!("event seq {}: malformed meta.actor", ev.seq))?;
+        if a.id.trim().is_empty() {
+            bail!("event seq {}: meta.actor.id is empty", ev.seq);
+        }
+    }
+    if let Some(s) = ev.meta.get("source") {
+        if !s.is_string() {
+            bail!("event seq {}: meta.source is not a string", ev.seq);
+        }
+    }
+    Ok(())
+}
+
+/// The block events that carry the ingest's actor (K-D1.2).
+fn carries_actor(k: EventKind) -> bool {
+    matches!(
+        k,
+        EventKind::BlockUpdated
+            | EventKind::BlockMoved
+            | EventKind::BlockSplit
+            | EventKind::BlockMerged
+            | EventKind::BlockDeleted
+    )
+}
+
+/// A checkpoint name (spec §8): not empty, not padded, and not of the form
+/// of a checkpoint id (ids and names share `at`).
+fn check_checkpoint_name(n: &str) -> Result<()> {
+    if n.trim().is_empty() || n != n.trim() {
+        bail!("checkpoint name {n:?}: empty or padded with whitespace");
+    }
+    if n.len() == 32 && n.bytes().all(|b| b.is_ascii_hexdigit()) {
+        bail!("checkpoint name {n:?} has the form of a checkpoint id");
+    }
+    Ok(())
+}
+
 /// Layers (spec §7): a new lineage gets the lowest of its author's layer and
 /// its parents' layers; an inherited lineage (update, dominant split piece,
 /// merge target) keeps its layer, and when the same rule gives a lower one
@@ -243,6 +286,7 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
                 .with_context(|| format!("event seq {}: malformed meta.provenance", ev.seq)),
         }
     };
+    check_event_actor(ev)?;
     let lower = |st: &mut DocState, l: &str, target: Layer| -> Result<()> {
         let cur = st.layer_of(l, ev)?;
         if target < cur {
@@ -415,10 +459,11 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             }
             st.last_seq.insert(l.into(), ev.seq);
         }
-        EventKind::CheckpointCreated => {
+        EventKind::CheckpointCreated | EventKind::CheckpointNamed => {
             bail!(
-                "event seq {}: CheckpointCreated is not a document event",
-                ev.seq
+                "event seq {}: {:?} is not a document event",
+                ev.seq,
+                ev.kind
             );
         }
         EventKind::SnapshotCommitted => {
@@ -545,7 +590,10 @@ fn committed_pairs(ev: &Event) -> Vec<(String, String)> {
 #[derive(Debug, Clone)]
 pub struct ReplayedCheckpoint {
     pub seq: u64,
+    /// the checkpoint, with the name a later `CheckpointNamed` gave it
     pub checkpoint: Checkpoint,
+    /// the name its `CheckpointCreated` recorded (its write-once file's)
+    pub created_name: Option<String>,
 }
 
 /// Whole-log replay: document states plus every checkpoint, each verified
@@ -571,6 +619,9 @@ impl Replayed {
 
     pub fn apply(&mut self, ev: &Event) -> Result<()> {
         self.layered |= carries_layer(ev);
+        if ev.kind == EventKind::CheckpointNamed {
+            return self.apply_named(ev);
+        }
         if ev.kind != EventKind::CheckpointCreated {
             if ev.doc_path.is_empty() {
                 bail!("event seq {}: {:?} without doc_path", ev.seq, ev.kind);
@@ -622,6 +673,7 @@ impl Replayed {
         }
         self.checkpoints.push(ReplayedCheckpoint {
             seq: ev.seq,
+            created_name: name.clone(),
             checkpoint: Checkpoint {
                 checkpoint_id: cid,
                 name,
@@ -629,6 +681,44 @@ impl Replayed {
                 docs,
             },
         });
+        Ok(())
+    }
+
+    /// `CheckpointNamed` (K-D1.6): names an existing unnamed checkpoint with
+    /// a name no checkpoint has; the id, offset and file stay as created.
+    /// It is not a content event (the next checkpoint's `event_seq` ignores it).
+    fn apply_named(&mut self, ev: &Event) -> Result<()> {
+        if !ev.doc_path.is_empty() || !ev.lineage_ids.is_empty() {
+            bail!("event seq {}: CheckpointNamed is vault-wide", ev.seq);
+        }
+        let cid = meta_str(ev, "checkpoint_id")
+            .with_context(|| format!("event seq {}: no meta.checkpoint_id", ev.seq))?;
+        let name = meta_str(ev, "name")
+            .with_context(|| format!("event seq {}: CheckpointNamed without meta.name", ev.seq))?;
+        check_checkpoint_name(&name).with_context(|| format!("event seq {}", ev.seq))?;
+        if let Some(c) = self
+            .checkpoints
+            .iter()
+            .find(|c| c.checkpoint.name.as_deref() == Some(name.as_str()))
+        {
+            bail!(
+                "event seq {}: checkpoint name {name:?} is taken by {}",
+                ev.seq,
+                c.checkpoint.checkpoint_id
+            );
+        }
+        let c = self
+            .checkpoints
+            .iter_mut()
+            .find(|c| c.checkpoint.checkpoint_id == cid)
+            .with_context(|| format!("event seq {}: no checkpoint {cid} to name", ev.seq))?;
+        if let Some(n) = &c.checkpoint.name {
+            bail!(
+                "event seq {}: checkpoint {cid} is already named {n:?}",
+                ev.seq
+            );
+        }
+        c.checkpoint.name = Some(name);
         Ok(())
     }
 }
@@ -649,6 +739,25 @@ pub struct IngestResult {
     /// lineages touched by block events (created, updated, moved, split,
     /// merged, deleted, including split/merge sources), in event order
     pub changed_lineages: Vec<String>,
+}
+
+/// An ingest computed but not written (`Vault::plan_ingest`,
+/// `Vault::commit_plan`).
+#[derive(Debug, Clone)]
+pub struct IngestPlan {
+    pub doc_path: String,
+    matcher: MatcherVersion,
+    /// the events in log order (`seq` assigned on commit); empty when the
+    /// document does not change
+    pub events: Vec<Event>,
+    objects: Vec<BlockObject>,
+    changed: Vec<String>,
+    /// the document's blocks before the ingest (head, current layers)
+    pub blocks_before: Vec<Block>,
+    /// the document's blocks after it, with the layers they would have
+    pub blocks_after: Vec<Block>,
+    /// `Some(head)`: nothing changes
+    unchanged: Option<Snapshot>,
 }
 
 /// Compact per-document ingest report (CLI / `ingest_dir`).
@@ -717,7 +826,10 @@ impl Vault {
         // every logged checkpoint has its write-once file, byte for byte
         for c in &state.checkpoints {
             let p = checkpoint_path(&meta_dir, &c.checkpoint.checkpoint_id);
-            let want = checkpoint_bytes(&c.checkpoint)?;
+            let want = checkpoint_bytes(&Checkpoint {
+                name: c.created_name.clone(),
+                ..c.checkpoint.clone()
+            })?;
             let got = fs::read(&p).with_context(|| {
                 format!(
                     "checkpoint {} (event seq {}) has no file",
@@ -984,6 +1096,40 @@ impl Vault {
         matcher: MatcherVersion,
         declared: Option<Layer>,
     ) -> Result<IngestResult> {
+        let plan = self.plan_ingest(doc_path, text, prov, matcher, declared, None)?;
+        self.commit_plan(plan)
+    }
+
+    /// An attributed ingest (K-D1.2): like `ingest`, and every
+    /// `BlockUpdated`, `BlockMoved`, `BlockSplit`, `BlockMerged` and
+    /// `BlockDeleted` it writes carries `meta.actor` (who caused the ingest)
+    /// and `meta.source` (`prov.source`). Every write path of the server
+    /// (MCP, HTTP, watcher, `mdk propose`) ingests through this.
+    pub fn ingest_by(
+        &mut self,
+        doc_path: &str,
+        text: &str,
+        prov: Provenance,
+        matcher: MatcherVersion,
+        actor: &Actor,
+    ) -> Result<IngestResult> {
+        let plan = self.plan_ingest(doc_path, text, prov, matcher, None, Some(actor))?;
+        self.commit_plan(plan)
+    }
+
+    /// The ingest of `text` as `doc_path`, computed and verified against the
+    /// replayed state but not written (`commit_plan` writes it). With
+    /// `actor`, the block events that change or remove existing blocks carry
+    /// it (`ingest_by`).
+    pub fn plan_ingest(
+        &self,
+        doc_path: &str,
+        text: &str,
+        prov: Provenance,
+        matcher: MatcherVersion,
+        declared: Option<Layer>,
+        actor: Option<&Actor>,
+    ) -> Result<IngestPlan> {
         if declared.is_some() && prov.author_kind != AuthorKind::Synthetic {
             bail!(
                 "a layer can be declared for synthetic content only, not {:?}",
@@ -1002,27 +1148,34 @@ impl Vault {
                 );
             }
         }
+        if let Some(a) = actor {
+            if a.id.trim().is_empty() {
+                bail!("actor id is empty");
+            }
+        }
         let (drafts, frontmatter) = parse_document(text, doc_path)?;
         let st = self.state.docs.get(doc_path);
         let head = st.and_then(|s| s.head.clone());
-        let prev: Vec<PrevBlock> = match &head {
-            Some(h) => self
-                .snapshot_blocks(h)?
-                .iter()
-                .map(PrevBlock::from)
-                .collect(),
+        let before = match &head {
+            Some(h) => self.snapshot_blocks(h)?,
             None => Vec::new(),
         };
+        let prev: Vec<PrevBlock> = before.iter().map(PrevBlock::from).collect();
         let used = st.map(|s| s.used.clone()).unwrap_or_default();
         let params = self.params_for(matcher);
         let r = match_blocks(doc_path, &prev, &drafts, &used, params, &prov, matcher);
         let fm_changed = head.as_ref().is_none_or(|h| h.frontmatter != frontmatter);
         if r.events.is_empty() && !fm_changed {
             let snapshot = head.expect("head exists when frontmatter is unchanged");
-            return Ok(IngestResult {
-                snapshot,
+            return Ok(IngestPlan {
+                doc_path: doc_path.to_string(),
+                matcher,
                 events: Vec::new(),
-                changed_lineages: Vec::new(),
+                objects: Vec::new(),
+                changed: Vec::new(),
+                blocks_before: before.clone(),
+                blocks_after: before,
+                unchanged: Some(snapshot),
             });
         }
         let mut changed: Vec<String> = Vec::new();
@@ -1057,6 +1210,12 @@ impl Vault {
                 ev.meta["layer"] = serde_json::json!(layer.as_str());
             }
         }
+        if let Some(a) = actor {
+            for ev in events.iter_mut().filter(|e| carries_actor(e.kind)) {
+                ev.meta["actor"] = serde_json::to_value(a)?;
+                ev.meta["source"] = serde_json::json!(prov.source);
+            }
+        }
         // layer transitions the edit implies, recorded before the snapshot
         let mut probe = self.state.docs.get(doc_path).cloned().unwrap_or_default();
         for ev in &events {
@@ -1080,6 +1239,10 @@ impl Vault {
                     "author_kind": prov.author_kind,
                 }),
             });
+        }
+        // the layers after the ingest: the pending drops applied
+        for (l, to) in std::mem::take(&mut probe.pending) {
+            probe.layer.insert(l, to);
         }
         events.push(Event {
             seq: 0,
@@ -1105,13 +1268,112 @@ impl Vault {
                 heading_level: b.heading_level,
             })
             .collect();
-        let events = self.commit(&objects, events)?;
-        self.lock.get_or_insert(matcher);
-        let snapshot = self.snapshot(doc_path)?.context("snapshot after commit")?;
+        let blocks_after: Vec<Block> = r
+            .blocks
+            .iter()
+            .map(|b| {
+                let mut b = b.clone();
+                if let Some(l) = probe.layer.get(&b.lineage_id) {
+                    b.layer = *l;
+                }
+                if let Some(p) = probe.provenance.get(&b.lineage_id) {
+                    b.provenance = p.clone();
+                }
+                b
+            })
+            .collect();
+        Ok(IngestPlan {
+            doc_path: doc_path.to_string(),
+            matcher,
+            events,
+            objects,
+            changed,
+            blocks_before: before,
+            blocks_after,
+            unchanged: None,
+        })
+    }
+
+    /// Writes a plan of `plan_ingest` (objects, snapshot, events). The plan
+    /// must be applied to the state it was computed on: the events are
+    /// verified again, and a plan of an earlier state fails.
+    pub fn commit_plan(&mut self, plan: IngestPlan) -> Result<IngestResult> {
+        if let Some(snapshot) = plan.unchanged {
+            return Ok(IngestResult {
+                snapshot,
+                events: Vec::new(),
+                changed_lineages: Vec::new(),
+            });
+        }
+        let events = self.commit(&plan.objects, plan.events)?;
+        self.lock.get_or_insert(plan.matcher);
+        let snapshot = self
+            .snapshot(&plan.doc_path)?
+            .context("snapshot after commit")?;
         Ok(IngestResult {
             snapshot,
             events,
-            changed_lineages: changed,
+            changed_lineages: plan.changed,
+        })
+    }
+
+    /// What a planned ingest would do to the document's existing content
+    /// (K-D1.1, `EditPolicy`): the live lineages its events change or remove,
+    /// with their layer before; and the structural chunks (spec §6) made only
+    /// of `canonical` blocks that it would remove or add.
+    pub fn edit_effect(&self, plan: &IngestPlan) -> Result<EditEffect> {
+        let layer_before: HashMap<&str, Layer> = plan
+            .blocks_before
+            .iter()
+            .map(|b| (b.lineage_id.as_str(), b.layer))
+            .collect();
+        let mut touched: Vec<TouchedLineage> = Vec::new();
+        for ev in &plan.events {
+            let names: Vec<String> = match ev.kind {
+                EventKind::BlockUpdated
+                | EventKind::BlockMoved
+                | EventKind::BlockDeleted
+                | EventKind::LayerChanged => ev.lineage_ids.clone(),
+                EventKind::BlockSplit | EventKind::BlockMerged => meta_list(ev, "from_lineages"),
+                _ => Vec::new(),
+            };
+            for l in names {
+                let Some(&layer) = layer_before.get(l.as_str()) else {
+                    // a lineage this ingest itself created (e.g. a layer
+                    // drop of a new split piece): not existing content
+                    continue;
+                };
+                match touched.iter_mut().find(|t| t.lineage_id == l) {
+                    Some(t) => t.kinds.push(ev.kind),
+                    None => touched.push(TouchedLineage {
+                        lineage_id: l,
+                        layer,
+                        kinds: vec![ev.kind],
+                    }),
+                }
+            }
+        }
+        let canonical = |blocks: &[Block]| -> BTreeSet<(String, String)> {
+            let chunks = crate::chunk::structural(&plan.doc_path, blocks);
+            chunks
+                .into_iter()
+                .filter(|c| {
+                    c.lineage_ids.iter().all(|l| {
+                        blocks
+                            .iter()
+                            .find(|b| &b.lineage_id == l)
+                            .is_some_and(|b| b.layer == Layer::Canonical)
+                    })
+                })
+                .map(|c| (c.chunk_id, c.text))
+                .collect()
+        };
+        let before = canonical(&plan.blocks_before);
+        let after = canonical(&plan.blocks_after);
+        Ok(EditEffect {
+            touched,
+            canonical_chunks_removed: before.difference(&after).map(|c| c.0.clone()).collect(),
+            canonical_chunks_added: after.difference(&before).map(|c| c.0.clone()).collect(),
         })
     }
 
@@ -1357,16 +1619,14 @@ impl Vault {
     /// (spec §8). `event_seq` is the log offset after the last
     /// non-checkpoint event, so calling this twice on the same state yields
     /// the same `checkpoint_id` and writes nothing the second time. The
-    /// file `.mdkernel/checkpoints/<cid>.json` is write-once.
+    /// file `.mdkernel/checkpoints/<cid>.json` is write-once. If this state
+    /// already has an unnamed checkpoint and `name` is given, the checkpoint
+    /// is named (`CheckpointNamed`, K-D1.6; same id); a state whose
+    /// checkpoint has another name, or a name another checkpoint has, is an
+    /// error.
     pub fn checkpoint(&mut self, name: Option<&str>) -> Result<Checkpoint> {
         if let Some(n) = name {
-            if n.trim().is_empty() || n != n.trim() {
-                bail!("checkpoint name {n:?}: empty or padded with whitespace");
-            }
-            // ids and names share `--at`: a name must not look like an id
-            if n.len() == 32 && n.bytes().all(|b| b.is_ascii_hexdigit()) {
-                bail!("checkpoint name {n:?} has the form of a checkpoint id");
-            }
+            check_checkpoint_name(n)?;
         }
         let event_seq = self.state.content_offset;
         let docs = self.state.heads();
@@ -1376,13 +1636,14 @@ impl Vault {
             .into_iter()
             .find(|c| c.checkpoint_id == cid)
         {
-            if c.name.as_deref() != name {
-                bail!(
+            return match (c.name.as_deref(), name) {
+                (a, b) if a == b => Ok(c),
+                (None, Some(n)) => self.name_checkpoint(&cid, n),
+                (a, _) => bail!(
                     "checkpoint {cid} of this state already exists with name {:?}",
-                    c.name
-                );
-            }
-            return Ok(c);
+                    a
+                ),
+            };
         }
         if let Some(n) = name {
             if let Some(c) = self
@@ -1425,6 +1686,12 @@ impl Vault {
         Ok(cp)
     }
 
+    /// The id the checkpoint of the current state has (or would have), by
+    /// the spec §3 formula; nothing is written.
+    pub fn current_checkpoint_id(&self) -> String {
+        checkpoint_id(&self.state.heads(), self.state.content_offset)
+    }
+
     /// The checkpoint of the current state: the existing one (named or not)
     /// if this state already has one, else a new unnamed checkpoint (spec §8).
     /// Searches without an explicit checkpoint run, and trace, at this one.
@@ -1438,6 +1705,28 @@ impl Vault {
             return Ok(c);
         }
         self.checkpoint(None)
+    }
+
+    /// Names the unnamed checkpoint `cid` (K-D1.6): one `CheckpointNamed`
+    /// event; the checkpoint id and file do not change.
+    pub fn name_checkpoint(&mut self, cid: &str, name: &str) -> Result<Checkpoint> {
+        check_checkpoint_name(name)?;
+        let ev = Event {
+            seq: self.next_seq,
+            doc_path: String::new(),
+            kind: EventKind::CheckpointNamed,
+            lineage_ids: Vec::new(),
+            old_version_ids: Vec::new(),
+            new_version_ids: Vec::new(),
+            snapshot_id: None,
+            meta: serde_json::json!({"checkpoint_id": cid, "name": name}),
+        };
+        let mut probe = self.state.clone();
+        probe.apply(&ev)?;
+        append_events(&self.events_path(), std::slice::from_ref(&ev))?;
+        self.next_seq += 1;
+        self.state = probe;
+        self.find_checkpoint(cid)
     }
 
     /// The vault as of a checkpoint: the log replayed up to its offset.

@@ -13,9 +13,14 @@
 //! retention_hours = 168             # >= 24
 //! ```
 //!
-//! The optional `[server]` and `[index]` tables (P1-D) belong to the
-//! `server` package: the kernel keeps them as written (`Policy::server`,
-//! `Policy::index`) and does not interpret them; `server` validates them.
+//! The optional `[server]`, `[index]` (P1-D) and `[identity]` (P1-D.1,
+//! K-D1.3) tables belong to the `server` package: the kernel keeps them as
+//! written (`Policy::server`, `Policy::index`, `Policy::identity`) and does
+//! not interpret them; `server` validates them.
+//!
+//! The optional `[edit]` table (P1-D.1, K-D1.1) chooses the edit policy of
+//! agent writes: `policy = "append_only"` (also when the table is absent)
+//! or `"unrestricted"`, which only an explicit table gives.
 //!
 //! A present file must hold every field; unknown fields, unknown policies
 //! and values outside the kernel bounds are load errors — the loader never
@@ -23,7 +28,7 @@
 //! the built-in recipe applies (`Policy::builtin`, promotion `deny`), and
 //! `Policy::source` says so.
 
-use crate::governance::{Deny, HumanOnly, PromotionPolicy};
+use crate::governance::{AppendOnly, Deny, EditPolicy, HumanOnly, PromotionPolicy, Unrestricted};
 use crate::journal::{IdleOrDistance, JournalRetention};
 use anyhow::{bail, Context, Result};
 use serde::Deserialize;
@@ -52,6 +57,30 @@ impl Promotion {
     }
 }
 
+/// The edit policy of agent writes (K-D1.1).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Edit {
+    AppendOnly,
+    Unrestricted,
+}
+
+impl Edit {
+    pub fn parse(s: &str) -> Result<Edit> {
+        Ok(match s {
+            "append_only" => Edit::AppendOnly,
+            "unrestricted" => Edit::Unrestricted,
+            _ => bail!("unknown edit policy {s:?} (append_only|unrestricted)"),
+        })
+    }
+
+    pub fn hook(self) -> &'static dyn EditPolicy {
+        match self {
+            Edit::AppendOnly => &AppendOnly,
+            Edit::Unrestricted => &Unrestricted,
+        }
+    }
+}
+
 /// Where a policy came from.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PolicySource {
@@ -70,6 +99,10 @@ pub struct Policy {
     pub server: Option<toml::Table>,
     /// `[index]` as written, for the `server` package (P1-D)
     pub index: Option<toml::Table>,
+    /// `[edit] policy` (K-D1.1); `AppendOnly` when absent
+    pub edit: Edit,
+    /// `[identity]` as written, for the `server` package (K-D1.3)
+    pub identity: Option<toml::Table>,
 }
 
 #[derive(Deserialize)]
@@ -80,6 +113,23 @@ struct RawPolicy {
     journal: RawJournal,
     server: Option<toml::Table>,
     index: Option<toml::Table>,
+    edit: Option<toml::Table>,
+    identity: Option<toml::Table>,
+}
+
+/// `[edit] policy = "<policy>"` (the only field).
+fn edit_of(t: Option<&toml::Table>) -> Result<Edit> {
+    let Some(t) = t else {
+        return Ok(Edit::AppendOnly);
+    };
+    if let Some(k) = t.keys().find(|k| k.as_str() != "policy") {
+        bail!("[edit]: unknown field `{k}`, expected `policy`");
+    }
+    match t.get("policy") {
+        Some(toml::Value::String(n)) => Edit::parse(n),
+        Some(_) => bail!("[edit] policy must be a string"),
+        None => bail!("[edit]: missing field `policy`"),
+    }
 }
 
 /// `promotion = "<policy>"` or `[promotion] policy = "<policy>"` (P1-D).
@@ -132,6 +182,8 @@ impl Policy {
             source: PolicySource::Builtin,
             server: None,
             index: None,
+            edit: Edit::AppendOnly,
+            identity: None,
         }
     }
 
@@ -162,8 +214,10 @@ impl Policy {
             )?,
             retention: JournalRetention::new(raw.journal.retention_hours)?,
             source,
+            edit: edit_of(raw.edit.as_ref())?,
             server: raw.server,
             index: raw.index,
+            identity: raw.identity,
         })
     }
 
@@ -181,6 +235,8 @@ impl Policy {
                 "min_sim_change": self.trigger.min_sim_change(),
             },
             "journal": {"retention_hours": self.retention.hours()},
+            "edit": self.edit.hook().name(),
+            "edit_version": self.edit.hook().version(),
         })
     }
 }

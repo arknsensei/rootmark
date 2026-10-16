@@ -144,6 +144,138 @@ impl PromotionPolicy for HumanOnly {
     }
 }
 
+/// How an agent's text enters a document (`propose`; K-D1.1).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum EditMode {
+    Create,
+    Append,
+    ReplaceSection,
+}
+
+impl EditMode {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            EditMode::Create => "create",
+            EditMode::Append => "append",
+            EditMode::ReplaceSection => "replace_section",
+        }
+    }
+}
+
+/// A lineage live before an edit that the edit's events would change
+/// (update, move, split or merge source, delete, layer drop).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct TouchedLineage {
+    pub lineage_id: String,
+    /// its layer before the edit
+    pub layer: Layer,
+    /// the event kinds that name it, in log order
+    pub kinds: Vec<crate::events::EventKind>,
+}
+
+/// What an ingest would do to a document's existing content, computed
+/// before anything is written (`Vault::edit_effect`).
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct EditEffect {
+    pub touched: Vec<TouchedLineage>,
+    /// structural chunks (spec §6) made only of `canonical` blocks that the
+    /// edit would remove or add, by `chunk_id`: such a chunk is a unit of
+    /// default retrieval (spec §9), so either changes canonical results
+    pub canonical_chunks_removed: Vec<String>,
+    pub canonical_chunks_added: Vec<String>,
+}
+
+/// An agent's request to change a document (K-D1.1).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct EditRequest {
+    pub doc_path: String,
+    pub mode: EditMode,
+    pub actor: Actor,
+    /// `replace_section` only: the blocks of the target section (its
+    /// heading and body) before the edit, `(lineage_id, layer)`
+    pub section: Vec<(String, Layer)>,
+    pub effect: EditEffect,
+}
+
+/// The edit hook (K-D1.1): decides whether an agent's write may change a
+/// document. The kernel computes the effect; the policy decides.
+pub trait EditPolicy {
+    fn name(&self) -> &str;
+    fn version(&self) -> &str;
+    fn decide(&self, req: &EditRequest) -> Decision;
+}
+
+/// The default (K-D1.1): an agent's write may add content and change its
+/// own proposals, never a `canonical` (or `derived`) block, nor a canonical
+/// retrieval unit. `replace_section` is allowed only when every block of
+/// the section is a `proposal`.
+pub struct AppendOnly;
+
+impl EditPolicy for AppendOnly {
+    fn name(&self) -> &str {
+        "append_only"
+    }
+    fn version(&self) -> &str {
+        "1"
+    }
+    fn decide(&self, req: &EditRequest) -> Decision {
+        let protected = |l: Layer| l != Layer::Proposal;
+        if req.mode == EditMode::ReplaceSection {
+            let held: Vec<String> = req
+                .section
+                .iter()
+                .filter(|(_, l)| protected(*l))
+                .map(|(id, l)| format!("{id} ({})", l.as_str()))
+                .collect();
+            if !held.is_empty() {
+                return Decision::Deny(format!(
+                    "policy append_only: replace_section only replaces a section made of proposal blocks; this section holds {}",
+                    held.join(", ")
+                ));
+            }
+        }
+        let touched: Vec<String> = req
+            .effect
+            .touched
+            .iter()
+            .filter(|t| protected(t.layer))
+            .map(|t| format!("{} ({})", t.lineage_id, t.layer.as_str()))
+            .collect();
+        if !touched.is_empty() {
+            return Decision::Deny(format!(
+                "policy append_only: the edit would change or remove blocks that are not proposals: {}",
+                touched.join(", ")
+            ));
+        }
+        let e = &req.effect;
+        if !e.canonical_chunks_removed.is_empty() || !e.canonical_chunks_added.is_empty() {
+            return Decision::Deny(format!(
+                "policy append_only: the edit would change canonical retrieval units (chunks removed: {}; added: {}); text added to a section of canonical blocks joins their chunk — start it with a heading of its own",
+                e.canonical_chunks_removed.len(),
+                e.canonical_chunks_added.len()
+            ));
+        }
+        Decision::Allow
+    }
+}
+
+/// Allows every edit (K-D1.1; only when `policy.toml` says so). Deletions
+/// and changes still carry their actor (K-D1.2).
+pub struct Unrestricted;
+
+impl EditPolicy for Unrestricted {
+    fn name(&self) -> &str {
+        "unrestricted"
+    }
+    fn version(&self) -> &str {
+        "1"
+    }
+    fn decide(&self, _req: &EditRequest) -> Decision {
+        Decision::Allow
+    }
+}
+
 /// Immutable vault-wide map `doc_path → snapshot_id` at an event-log offset
 /// (spec §1, §8). `checkpoint_id` follows spec §3 (`checkpoint_id`).
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
