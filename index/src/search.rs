@@ -515,6 +515,23 @@ impl<'a> Searcher<'a> {
             include_proposal,
         )?;
         let picked = finalize_ix(self.store, ranked, k);
+        // spec §9 (1.0.3, K-D1.8): at most `k` per layer, `2k` in all —
+        // checked before the trace is written, never silently cut
+        for layer in [Layer::Canonical, Layer::Proposal] {
+            let n = picked.iter().filter(|(_, h)| h.layer == layer).count();
+            if n > k {
+                anyhow::bail!(
+                    "search: {n} {} hits for k = {k} (spec §9: at most k per layer)",
+                    layer.as_str()
+                );
+            }
+        }
+        if picked.len() > 2 * k {
+            anyhow::bail!(
+                "search: {} hits for k = {k} (spec §9: at most 2k)",
+                picked.len()
+            );
+        }
         let returned = picked
             .iter()
             .flat_map(|(i, _)| {

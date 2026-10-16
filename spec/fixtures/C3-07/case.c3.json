@@ -1,0 +1,138 @@
+{
+  "id": "C3-07",
+  "title": "Response length with proposal results requested: at most k canonical and at most k proposal hits, at most 2k in total, every mode (spec \u00a79; 1.0.3)",
+  "kind": "retrieval",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest_dir",
+      "dir": "../mini_vault"
+    },
+    {
+      "op": "ingest",
+      "doc": "agent/a0.md",
+      "file": "agent0.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "ingest",
+      "doc": "agent/a1.md",
+      "file": "agent1.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "ingest",
+      "doc": "agent/a2.md",
+      "file": "agent2.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "checkpoint",
+      "name": "t0"
+    },
+    {
+      "op": "build"
+    },
+    {
+      "op": "view",
+      "at": "t0"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "lexical",
+      "k": 3,
+      "include_proposal": true,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "lengths": true
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "flat",
+      "k": 3,
+      "include_proposal": true,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "lengths": true
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 3,
+      "include_proposal": true,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "lengths": true
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "lexical",
+      "k": 5,
+      "include_proposal": true,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "lengths": true
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "flat",
+      "k": 5,
+      "include_proposal": true,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "lengths": true
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 5,
+      "include_proposal": true,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "lengths": true
+    }
+  ]
+}

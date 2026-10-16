@@ -22,6 +22,16 @@
 //! - `view {at}` — number of chunks per layer at the checkpoint (so that a
 //!   "never returned" observation is not vacuous)
 //! - `traces` — number of trace lines
+//! - `agent_write {doc, file, source, mode, heading?}` (P1-D.1, C3-06) — an
+//!   agent's write of the whole new text of `doc` (`mode` create, append or
+//!   replace_section; `heading`: the replaced section — that heading's
+//!   block and the blocks under it), decided by the default edit policy
+//!   `append_only` on the ingest's effect (K-D1.1); allowed writes are
+//!   ingested (attributed, K-D1.2) and indexed, denied ones write nothing;
+//!   observed as `{decision, events}`
+//! - `search … lengths: true` (P1-D.1, C3-07) — also observes the largest
+//!   number of canonical, proposal and all hits of one query and whether
+//!   every response holds at most `k` per layer and `2k` in all
 //!
 //! `label` on a search stores its rankings; `same_as` on a later search
 //! records whether its rankings equal that label's; `canonical_prefix_of`
@@ -30,8 +40,8 @@
 
 use anyhow::{anyhow, bail, Context, Result};
 use mdkcore::{
-    Actor, ActorKind, AuthorKind, HumanOnly, Layer, MatcherVersion, Provenance, TransitionKind,
-    Vault,
+    Actor, ActorKind, AppendOnly, AuthorKind, BlockType, Decision, EditMode, EditPolicy,
+    EditRequest, HumanOnly, Layer, MatcherVersion, Provenance, TransitionKind, Vault,
 };
 use mdkindex::embed::OnnxMiniLm;
 use mdkindex::search::{Mode, Searcher};
@@ -175,6 +185,7 @@ pub fn evaluate_c3(dir: &Path) -> Result<Value> {
                     let mut runs_equal = true;
                     let mut derived = 0usize;
                     let mut proposal_after_canonical = true;
+                    let (mut max_c, mut max_p, mut max_all) = (0usize, 0usize, 0usize);
                     for q in op
                         .get("queries")
                         .and_then(Value::as_array)
@@ -184,6 +195,15 @@ pub fn evaluate_c3(dir: &Path) -> Result<Value> {
                         let mut first: Option<Value> = None;
                         for _ in 0..repeat {
                             let r = se.search(&mut v, mode, q, k, Some(at), inc)?;
+                            let n_c = r
+                                .hits
+                                .iter()
+                                .filter(|h| h.layer == Layer::Canonical)
+                                .count();
+                            let n_p = r.hits.iter().filter(|h| h.layer == Layer::Proposal).count();
+                            max_c = max_c.max(n_c);
+                            max_p = max_p.max(n_p);
+                            max_all = max_all.max(r.hits.len());
                             let mut seen_prop = false;
                             let ranking: Vec<Value> = r
                                 .hits
@@ -219,6 +239,15 @@ pub fn evaluate_c3(dir: &Path) -> Result<Value> {
                         "derived_hits": derived,
                         "proposals_after_canonical": proposal_after_canonical,
                     });
+                    if op.get("lengths").and_then(Value::as_bool) == Some(true) {
+                        obs["lengths"] = json!({
+                            "k": k,
+                            "max_canonical": max_c,
+                            "max_proposal": max_p,
+                            "max_total": max_all,
+                            "within_bounds": max_c <= k && max_p <= k && max_all <= 2 * k,
+                        });
+                    }
                     if let Some(l) = op.get("same_as").and_then(Value::as_str) {
                         let other = labels
                             .get(l)
@@ -264,6 +293,67 @@ pub fn evaluate_c3(dir: &Path) -> Result<Value> {
                     json!(n)
                 }
                 "traces" => json!({"lines": v.traces(0)?.len()}),
+                "agent_write" => {
+                    let doc = s(op, "doc")?;
+                    let text = fs::read_to_string(dir.join(s(op, "file")?))?;
+                    let source = s(op, "source")?;
+                    let mode = match s(op, "mode")? {
+                        "create" => EditMode::Create,
+                        "append" => EditMode::Append,
+                        "replace_section" => EditMode::ReplaceSection,
+                        o => bail!("unknown mode {o:?}"),
+                    };
+                    let actor = Actor::new(ActorKind::Agent, source)?;
+                    let prov = Provenance {
+                        author_kind: AuthorKind::Agent,
+                        source: source.to_string(),
+                    };
+                    // the section: the heading's block and the blocks under it
+                    let section = match op.get("heading").and_then(Value::as_str) {
+                        None => Vec::new(),
+                        Some(h) => {
+                            let snap = v.snapshot(doc)?.context("head")?;
+                            let blocks = v.snapshot_blocks(&snap)?;
+                            let at = blocks
+                                .iter()
+                                .position(|b| {
+                                    b.block_type == BlockType::Heading
+                                        && mdkcore::parse::heading_title(&b.normalized_text) == h
+                                })
+                                .with_context(|| format!("no heading {h:?}"))?;
+                            let level = blocks[at].heading_level;
+                            let end = blocks
+                                .iter()
+                                .enumerate()
+                                .skip(at + 1)
+                                .find(|(_, b)| {
+                                    b.block_type == BlockType::Heading && b.heading_level <= level
+                                })
+                                .map(|(i, _)| i)
+                                .unwrap_or(blocks.len());
+                            blocks[at..end]
+                                .iter()
+                                .map(|b| (b.lineage_id.clone(), b.layer))
+                                .collect()
+                        }
+                    };
+                    let plan = v.plan_ingest(doc, &text, prov, m, None, Some(&actor))?;
+                    let req = EditRequest {
+                        doc_path: doc.to_string(),
+                        mode,
+                        actor,
+                        section,
+                        effect: v.edit_effect(&plan)?,
+                    };
+                    match AppendOnly.decide(&req) {
+                        Decision::Deny(_) => json!({"decision": "denied", "events": 0}),
+                        Decision::Allow => {
+                            let mut st = Store::open(&v, e)?;
+                            let r = st.watch_plan(&mut v, e, plan)?;
+                            json!({"decision": "allowed", "events": r.events})
+                        }
+                    }
+                }
                 o => bail!("unknown op {o:?}"),
             })
         })()

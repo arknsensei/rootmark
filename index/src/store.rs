@@ -1,7 +1,7 @@
 //! The on-disk index of a vault, `<vault>/.mdkernel/index/` (GOAL P1-C):
 //!
 //! - `manifest.json` — format, counts, the lexical scoring record
-//!   (`lexical.{variant, idf, k1, b, tokenizer}`, K-C1.1), embedder, blake3
+//!   (`lexical.{variant, idf, k1, b, tokenizer, dl}`, K-C1.1, K-D1.7), embedder, blake3
 //!   of every other file (`store::load` checks them all; a missing or
 //!   different lexical record is an error)
 //! - `records.jsonl` — every chunk record the index has seen, in storage
@@ -33,14 +33,18 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 /// `/2` (P1-C.1): the lexical scoring record replaced the `/1` fields
-/// `tokenizer`, `bm25_k1`, `bm25_b`.
-pub const FORMAT: &str = "mdkernel-index/2";
+/// `tokenizer`, `bm25_k1`, `bm25_b`. `/3` (P1-D.1, K-D1.7): the record
+/// declares the document length (`lexical.dl`).
+pub const FORMAT: &str = "mdkernel-index/3";
 /// BM25 parameters: tantivy's defaults (GOAL P1-C "BM25 varsayılan
 /// parametreler"); the variant is declared in the manifest (K-C1.1).
 pub const BM25_VARIANT: &str = "lucene-bm25";
 pub const BM25_IDF: &str = "ln(1 + (N - n + 0.5) / (n + 0.5))";
 pub const BM25_K1: f64 = 1.2;
 pub const BM25_B: f64 = 0.75;
+/// The document length BM25 uses (K-D1.7): a chunk's exact token count as a
+/// 64-bit float, the average not quantized (no one-byte field norms).
+pub const BM25_DL: &str = "exact token count, f64, no fieldnorm quantization";
 
 /// How the lexical scores of this index are computed (K-C1.1; spec §9
 /// informative note). `search::bm25_with` implements exactly this record.
@@ -54,6 +58,8 @@ pub struct LexicalParams {
     /// tokenizer id (`crate::tokenize::TOKENIZER_NAME`: lower case, maximal
     /// runs of `[a-z0-9]`)
     pub tokenizer: String,
+    /// document length (`BM25_DL`; K-D1.7)
+    pub dl: String,
 }
 
 impl LexicalParams {
@@ -65,6 +71,7 @@ impl LexicalParams {
             k1: BM25_K1,
             b: BM25_B,
             tokenizer: crate::tokenize::TOKENIZER_NAME.into(),
+            dl: BM25_DL.into(),
         }
     }
 }

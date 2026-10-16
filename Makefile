@@ -92,7 +92,8 @@ test-check-deps:
 # reports/conformance.json: 26 entries, level_claimed 2; C2-09 since
 # P1-C/C0, K-C0.2), then spec/fixtures/C3-* against the current index
 # (index/tests/conformance_c3.rs extends the report: 31 entries since
-# P1-C.1 (C3-05, K-C1.3), level_claimed 3; P1-C/C7). Fails unless 31/31 pass (level_claimed 3) and
+# P1-C.1 (C3-05, K-C1.3); 33 since P1-D.1/D1.3 (C3-06, C3-07, K-D1.1, K-D1.8),
+# level_claimed 3; P1-C/C7). Fails unless 33/33 pass (level_claimed 3) and
 # the frozen fixture manifest matches. The fixture root is this tree's,
 # resolved at run time (MDK_FIXTURES; P1-A verifier recommendation Ö2).
 # Level 3 needs the model files (`make models`).
@@ -103,7 +104,7 @@ conformance:
 	@test -f reports/conformance.json || { echo "error: reports/conformance.json not written" >&2; exit 1; }
 	MDK_FIXTURES="$(CURDIR)/spec/fixtures" MDK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
 	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
-	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 3 and .passed == .total and .total == 31 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string" and ([.tests[] | select(.level == 3)] | length) == 5' reports/conformance.json >/dev/null \
+	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 3 and .passed == .total and .total == 33 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string" and ([.tests[] | select(.level == 3)] | length) == 7' reports/conformance.json >/dev/null \
 	  || { echo "error: conformance level 3 not reached (reports/conformance.json)" >&2; exit 1; }
 	@echo "conformance: level $$(jq -r .level_claimed reports/conformance.json), $$(jq -r '"\(.passed)/\(.total)"' reports/conformance.json) (reports/conformance.json)"
 
@@ -218,8 +219,9 @@ p1b-checks: require-run
 	@# P1-B/P1-B.1 recorders read the P1-B view of it (C1-01..17, C2-01..08:
 	@# 25 entries, level 2 iff all 25 pass with an intact manifest), as
 	@# p1a-checks reads the level-1 view; the full report is kept beside it
+	@# (P1-D.1: C2-10 is outside the P1-B view too)
 	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_full.json
-	jq '.tests |= map(select(.level <= 2 and .id != "C2-09")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
+	jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
@@ -316,9 +318,15 @@ p1c-checks: require-run
 	@# since P1-C.1 the report holds C3-05 (K-C1.3, 31 entries, spec 1.0.2);
 	@# the frozen P1-C recorder reads the P1-C view of it (C1, C2, C3-01..04:
 	@# 30 entries, level 3 iff all 30 pass with an intact manifest; K-C1.6),
-	@# as p1b-checks reads the P1-B view; the full report is kept beside it
-	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_p1c1.json
-	jq '.tests |= map(select(.id != "C3-05")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	@# as p1b-checks reads the P1-B view; the full report is kept beside it.
+	@# P1-D.1: the report holds C2-10, C3-06, C3-07 too (34 entries, spec
+	@# 1.0.3); conformance_p1c1.json is the P1-C.1 view (31 entries, level 3
+	@# iff all 31 pass with an intact manifest) and conformance_p1d1.json the
+	@# full report
+	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_p1d1.json
+	jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_p1c1.json
+	jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_full.json
 	cargo test -p mdkernel-core --release --test compat_v3final kc01 -- --test-threads=1 \
 	  >research/reports/runs/$(RUN)/c13_tests.log 2>&1 \

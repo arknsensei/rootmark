@@ -14,7 +14,8 @@
 //!   `.tantivy-meta.lock`)
 //! - C1-5: empty / whitespace-only queries are `Err` in every entry point;
 //!   no trace line, no checkpoint, `events.jsonl` unchanged
-//! - C1-6: the manifest holds `lexical.{variant, idf, k1, b, tokenizer}`;
+//! - C1-6: the manifest holds `lexical.{variant, idf, k1, b, tokenizer, dl}`
+//!   (`dl` since P1-D.1, K-D1.7);
 //!   removing or changing any of them makes opening the index (`status`) an
 //!   error
 //!
@@ -524,7 +525,8 @@ fn c16_manifest_lexical_record() {
     let p = store::index_dir(&v).join("manifest.json");
     let orig = fs::read_to_string(&p).unwrap();
     let m: Value = serde_json::from_str(&orig).unwrap();
-    assert_eq!(m["format"], "mdkernel-index/2");
+    // P1-D.1 (K-D1.7, freeze exception P1-D.1/F1): format `/3`, `lexical.dl`
+    assert_eq!(m["format"], "mdkernel-index/3");
     assert_eq!(
         m["lexical"],
         json!({
@@ -533,11 +535,12 @@ fn c16_manifest_lexical_record() {
             "k1": 1.2,
             "b": 0.75,
             "tokenizer": "mdk_lower_alnum",
+            "dl": "exact token count, f64, no fieldnorm quantization",
         })
     );
     Store::open(&v, embedder()).unwrap().status(&v).unwrap();
     let mut cases: Vec<(String, Value)> = Vec::new();
-    for f in ["variant", "idf", "k1", "b", "tokenizer"] {
+    for f in ["variant", "idf", "k1", "b", "tokenizer", "dl"] {
         let mut x = m.clone();
         x["lexical"].as_object_mut().unwrap().remove(f);
         cases.push((format!("remove lexical.{f}"), x));
@@ -551,6 +554,7 @@ fn c16_manifest_lexical_record() {
         ("k1", json!(1.5)),
         ("b", json!(0.7)),
         ("tokenizer", json!("whitespace")),
+        ("dl", json!("fieldnorm, 1 byte")),
     ] {
         let mut x = m.clone();
         x["lexical"][f] = val;

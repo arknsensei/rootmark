@@ -1,0 +1,238 @@
+{
+  "id": "C3-06",
+  "title": "Canonical invariance: agent writes the default edit policy (append_only) allows never change the canonical ranking of any query, every mode; writes touching canonical blocks or canonical chunks are denied and write nothing (spec §7, §9; 1.0.3)",
+  "kind": "retrieval",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest_dir",
+      "dir": "../mini_vault"
+    },
+    {
+      "op": "checkpoint",
+      "name": "before"
+    },
+    {
+      "op": "build"
+    },
+    {
+      "op": "search",
+      "at": "before",
+      "mode": "lexical",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "descaling the machine every month",
+        "grinder burr cleaning",
+        "water temperature for filter coffee",
+        "safety around hot water",
+        "milk steaming temperature",
+        "preinfusion for light roasts"
+      ],
+      "label": "before-lexical"
+    },
+    {
+      "op": "search",
+      "at": "before",
+      "mode": "flat",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "descaling the machine every month",
+        "grinder burr cleaning",
+        "water temperature for filter coffee",
+        "safety around hot water",
+        "milk steaming temperature",
+        "preinfusion for light roasts"
+      ],
+      "label": "before-flat"
+    },
+    {
+      "op": "search",
+      "at": "before",
+      "mode": "hybrid",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "descaling the machine every month",
+        "grinder burr cleaning",
+        "water temperature for filter coffee",
+        "safety around hot water",
+        "milk steaming temperature",
+        "preinfusion for light roasts"
+      ],
+      "label": "before-hybrid"
+    },
+    {
+      "op": "agent_write",
+      "doc": "agent/notes.md",
+      "file": "w1_notes.md",
+      "source": "conformance-agent",
+      "mode": "create"
+    },
+    {
+      "op": "agent_write",
+      "doc": "espresso.md",
+      "file": "w2_espresso_append.md",
+      "source": "conformance-agent",
+      "mode": "append"
+    },
+    {
+      "op": "agent_write",
+      "doc": "espresso.md",
+      "file": "w3_espresso_headed.md",
+      "source": "conformance-agent",
+      "mode": "append"
+    },
+    {
+      "op": "agent_write",
+      "doc": "espresso.md",
+      "file": "w4_espresso_recipe.md",
+      "source": "conformance-agent",
+      "mode": "replace_section",
+      "heading": "Recipe"
+    },
+    {
+      "op": "agent_write",
+      "doc": "agent/notes.md",
+      "file": "w5_notes_milk.md",
+      "source": "conformance-agent",
+      "mode": "replace_section",
+      "heading": "Milk"
+    },
+    {
+      "op": "agent_write",
+      "doc": "safety.md",
+      "file": "w6_safety_delete.md",
+      "source": "conformance-agent",
+      "mode": "replace_section",
+      "heading": "Safety"
+    },
+    {
+      "op": "checkpoint",
+      "name": "after"
+    },
+    {
+      "op": "view",
+      "at": "after"
+    },
+    {
+      "op": "search",
+      "at": "after",
+      "mode": "lexical",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "descaling the machine every month",
+        "grinder burr cleaning",
+        "water temperature for filter coffee",
+        "safety around hot water",
+        "milk steaming temperature",
+        "preinfusion for light roasts"
+      ],
+      "same_as": "before-lexical"
+    },
+    {
+      "op": "search",
+      "at": "after",
+      "mode": "lexical",
+      "k": 10,
+      "include_proposal": true,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "descaling the machine every month",
+        "grinder burr cleaning",
+        "water temperature for filter coffee",
+        "safety around hot water",
+        "milk steaming temperature",
+        "preinfusion for light roasts"
+      ],
+      "canonical_prefix_of": "before-lexical"
+    },
+    {
+      "op": "search",
+      "at": "after",
+      "mode": "flat",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "descaling the machine every month",
+        "grinder burr cleaning",
+        "water temperature for filter coffee",
+        "safety around hot water",
+        "milk steaming temperature",
+        "preinfusion for light roasts"
+      ],
+      "same_as": "before-flat"
+    },
+    {
+      "op": "search",
+      "at": "after",
+      "mode": "flat",
+      "k": 10,
+      "include_proposal": true,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "descaling the machine every month",
+        "grinder burr cleaning",
+        "water temperature for filter coffee",
+        "safety around hot water",
+        "milk steaming temperature",
+        "preinfusion for light roasts"
+      ],
+      "canonical_prefix_of": "before-flat"
+    },
+    {
+      "op": "search",
+      "at": "after",
+      "mode": "hybrid",
+      "k": 10,
+      "include_proposal": false,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "descaling the machine every month",
+        "grinder burr cleaning",
+        "water temperature for filter coffee",
+        "safety around hot water",
+        "milk steaming temperature",
+        "preinfusion for light roasts"
+      ],
+      "same_as": "before-hybrid"
+    },
+    {
+      "op": "search",
+      "at": "after",
+      "mode": "hybrid",
+      "k": 10,
+      "include_proposal": true,
+      "queries": [
+        "espresso pressure and extraction time",
+        "house blend recipe",
+        "descaling the machine every month",
+        "grinder burr cleaning",
+        "water temperature for filter coffee",
+        "safety around hot water",
+        "milk steaming temperature",
+        "preinfusion for light roasts"
+      ],
+      "canonical_prefix_of": "before-hybrid"
+    }
+  ]
+}

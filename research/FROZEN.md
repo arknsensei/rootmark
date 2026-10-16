@@ -121,6 +121,11 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `server/tests/serve_watch.rs` | `P1-D/D7-pre:` | D-10 gecikme (`MDK_D10_OUT`) ve SIGTERM testi (`MDK_SIGTERM_OUT`) |
 | `server/tests/mcp_schemas.rs` | `P1-D/D7-pre:` | D-1 şema denetleyicisi (`MDK_TOOLS_LIST`) |
 | `server/examples/mcp_client.rs` | `P1-D/D7-pre:` | e2e/sahne stdio JSON-RPC sürücüsü |
+| `index/tests/p1c1.rs` | `P1-D.1/D1.3:` | yeniden dondurma P1-D.1/F1: C1-6 `lexical.dl`, biçim `mdkernel-index/3` (K-D1.7) |
+| `spec/fixtures/**` | `P1-D.1/D1.3:` | yeniden dondurma P1-D.1/F2: C3-06, C3-07 eklendi; `MANIFEST.json` yalnız bu satırları kazandı |
+| `index/tests/conformance/eval_c3.rs` | `P1-D.1/D1.3:` | yeniden dondurma P1-D.1/F3: `agent_write` işlemi, `lengths` gözlemi |
+| `index/tests/conformance_c3.rs` | `P1-D.1/D1.3:` | yeniden dondurma P1-D.1/F4: Seviye 3 = C3-01..C3-07 |
+| `index/tests/conformance_c3_gen.rs` | `P1-D.1/D1.3:` | yeniden dondurma P1-D.1/F5: 7 C3 dizini |
 <!-- /frozen-table -->
 
 ## Notlar

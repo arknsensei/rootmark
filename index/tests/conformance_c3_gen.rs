@@ -14,7 +14,7 @@ use std::path::PathBuf;
 fn write_c3_expected() {
     let root = PathBuf::from(std::env::var("MDK_FIXTURES").expect("MDK_FIXTURES"));
     let dirs = eval_c3::c3_case_dirs(&root).unwrap();
-    assert_eq!(dirs.len(), 5, "C3-01..C3-05");
+    assert_eq!(dirs.len(), 7, "C3-01..C3-07");
     for d in dirs {
         let v = eval_c3::evaluate_c3(&d).unwrap_or_else(|e| panic!("{}: {e:#}", d.display()));
         let mut text = serde_json::to_string_pretty(&v).unwrap();
