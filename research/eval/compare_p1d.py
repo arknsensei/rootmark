@@ -86,8 +86,8 @@ def _load(d: Path, name: str):
 
 
 def compare(a: Path, b: Path, files: list[str]) -> dict:
-    """Every leaf of every file (latency paths aside); a field set that
-    differs is an error."""
+    """Every leaf of every file (latency paths aside); a field one side lacks
+    is a differing field `{"a", "b"}` with "absent" (P1-D.1/F15)."""
     n = 0
     differing: dict = {}
     for name in files:
@@ -97,9 +97,10 @@ def compare(a: Path, b: Path, files: list[str]) -> dict:
 
         la = {p: v for p, v in C.leaves(_load(a, name)).items() if keep(p)}
         lb = {p: v for p, v in C.leaves(_load(b, name)).items() if keep(p)}
-        if set(la) != set(lb):
-            only = sorted(C._key(p) for p in set(la) ^ set(lb))[:5]
-            raise M.MetricError(f"{name}: field sets differ at {only}")
+        # P1-D.1/F15: a field only one side has is a difference (recorded,
+        # exit 3), not an error; equal field sets compare as before
+        for p in sorted(set(la) ^ set(lb), key=C._key):
+            differing[f"{name}:{C._key(p)}"] = {"a": la.pop(p, "absent"), "b": lb.pop(p, "absent")}
         keys = sorted(la, key=C._key)
         fa = {C._key(p): la[p] for p in keys}
         fb = {C._key(p): lb[p] for p in keys}

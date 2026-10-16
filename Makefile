@@ -22,7 +22,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps conformance regress verify models c3-quality p1c-checks report-p1c \
-        c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d
+        c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1
 
 setup: setup-py build
 
@@ -430,6 +430,37 @@ p1d-checks: require-run
 report-p1d:
 	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
 	$(PY) -m eval.report_p1d --run-dir "$(abspath $(RUN_DIR))"
+
+# P1-D.1 criteria into the RUN (GOAL D1-1..D1-13; TASKS D1.7), under
+# research/reports/runs/<RUN>/p1d1/: scripts/test_p1d1.sh (D1-1..D1-9 by
+# server/tests/p1d1_criteria.rs, D1-11 old vaults with the p1d-final tree,
+# D1-13 contract check), the P1-D.1 deliberate corruptions, then D1-12's
+# regress half (eval.compare_p1d1 regress against the P1-D official RUN,
+# decision exclusions only) and run_p1d1_checks → p1d1_checks.json. Needs
+# p1c1-checks (conformance_p1d1.json) and p1d-checks in the same RUN. A
+# criterion that fails is recorded, not fatal; a missing result fails.
+P1D_REF_RUN := ../reports/rounds/P1-D/runs/20261015T210419Z-a6b52fe
+P1D1_DIR = research/reports/runs/$(RUN)/p1d1
+p1d1-checks: require-run
+	rm -rf $(P1D1_DIR)
+	mkdir -p $(P1D1_DIR)
+	bash scripts/test_p1d1.sh $(P1D1_DIR) >$(P1D1_DIR)/test_p1d1.log 2>&1 \
+	  || { tail -40 $(P1D1_DIR)/test_p1d1.log >&2; exit 1; }
+	@test -f $(P1D1_DIR)/p1d1.json || { tail -40 $(P1D1_DIR)/test_p1d1.log >&2; exit 1; }
+	bash scripts/test_tamper_p1d1.sh $(P1D1_DIR)/tamper_p1d1.json >$(P1D1_DIR)/tamper_p1d1.log 2>&1 \
+	  || echo "p1d1-checks: test_tamper_p1d1.sh exit $$? (recorded)" >&2
+	@test -f $(P1D1_DIR)/tamper_p1d1.json || { cat $(P1D1_DIR)/tamper_p1d1.log >&2; exit 1; }
+	@# exit 3 (a difference) is recorded, not fatal; a missing file/field (1) fails
+	rc=0; $(PY) -m eval.compare_p1d1 regress $(P1D_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p1d.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	$(PY) -m eval.run_p1d1_checks --run $(RUN)
+
+# P1-D.1 round report from one RUN directory (TASKS D1.7): <RUN_DIR>/FINAL.md
+# and reports/rounds/P1-D.1/FINAL.md; the RUN must hold pair_compare.json
+report-p1d1:
+	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
+	$(PY) -m eval.report_p1d1 --run-dir "$(abspath $(RUN_DIR))"
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:

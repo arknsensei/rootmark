@@ -28,6 +28,9 @@ min_sim_change = 0.15
 
 [journal]
 retention_hours = 24
+
+[edit]
+policy = "unrestricted"
 TOML
 
 j() { "$mdk" "$@"; }
@@ -50,11 +53,16 @@ The agent suggests logging grinder settings next to each roast batch.
 The agent suggests a weekly backflush with detergent for the group heads.
 MD
 j propose "$v" agents/notes.md "$work/agent-note.md" --source claude-code >"$work/propose1.json"
-sed 's/clean, sweet cups/clean, sweet and balanced cups/' "$v/espresso.md" >"$work/espresso.md"
-if cmp -s "$work/espresso.md" "$v/espresso.md"; then
-  printf '\nThe agent adds that shots should be timed from the first drop.\n' >>"$work/espresso.md"
+# P1-D.1/F13: since K-D1.1 `mdk propose` never overwrites a document; the
+# edit is the appended paragraph it always was (the fixture has no "clean,
+# sweet cups"), proposed with `--mode append`, which the agent edit of a
+# human section needs `[edit] policy = "unrestricted"` for (above)
+if grep -q 'clean, sweet cups' "$v/espresso.md"; then
+  echo "error: mini_vault espresso.md changed; the scenario's edit is the appended paragraph" >&2
+  exit 1
 fi
-j propose "$v" espresso.md "$work/espresso.md" --source claude-code >"$work/propose2.json"
+printf 'The agent adds that shots should be timed from the first drop.\n' >"$work/espresso-add.md"
+j propose "$v" espresso.md "$work/espresso-add.md" --source claude-code --mode append >"$work/propose2.json"
 cp1="$(j checkpoint create "$v" --name proposed | jq -r .checkpoint_id)"
 
 # governance: refused promotion (agent actor), promote, demote, re-promote, prune

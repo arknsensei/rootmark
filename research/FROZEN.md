@@ -132,6 +132,19 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `core/tests/conformance.rs` | `P1-D.1/D1.4:` | yeniden dondurma P1-D.1/F9: Seviye 2 = C2-01..C2-10, `spec_version` 1.0.3 |
 | `index/tests/conformance_c3.rs` | `P1-D.1/D1.4:` | yeniden dondurma P1-D.1/F10: alt düzey toplamı 27 (toplam 34) |
 | `scripts/test_tamper_p1c.sh` | `P1-D.1/D1.4:` | yeniden dondurma P1-D.1/F11: Seviye 3 toplamı 34 |
+| `scripts/verify.sh` | `P1-D.1/D1.7-pre:` | yeniden dondurma P1-D.1/F12: P1-D.1 zinciri (`p1d1-checks`), `pair` → `compare_p1d1 pair`, `compare-p1d1` alt komutu |
+| `research/eval/compare_p1d1.py` | `P1-D.1/D1.7-pre:` | D1-12 karşılaştırıcısı (pair: P1-D kümesi + P1-D.1 dosyaları; regress: P1-D resmi RUN, karar gereği hariçler ölçümden önce) |
+| `research/eval/run_p1d1_checks.py` | `P1-D.1/D1.7-pre:` | D1-1..D1-13 RUN kaydı (`p1d1_checks.json`) |
+| `research/eval/report_p1d1.py` | `P1-D.1/D1.7-pre:` | P1-D.1 rapor üreteci ve karar kuralı (resmi RUN'dan önce) |
+| `scripts/test_p1d1.sh` | `P1-D.1/D1.7-pre:` | D1-1..D1-9, D1-11, D1-13 betiği |
+| `scripts/test_tamper_p1d1.sh` | `P1-D.1/D1.7-pre:` | P1-D.1 kasıtlı bozmaları (sözleşme, olay aktörü, fixture, politika) |
+| `scripts/contract_check.sh` | `P1-D.1/D1.7-pre:` | D1-13 sözleşme denetleyicisi |
+| `server/tests/p1d1_criteria.rs` | `P1-D.1/D1.7-pre:` | D1-1..D1-9 ölçümleri (`MDK_P1D1_OUT`) |
+| `server/tests/contract.rs` | `P1-D.1/D1.7-pre:` | sözleşme vakaları (D1-13 eşleşmesi) |
+| `server/examples/mcp_pipeline.rs` | `P1-D.1/D1.7-pre:` | boru hatlı stdio JSON-RPC sürücüsü |
+| `scripts/governance_scenario.sh` | `P1-D.1/D1.7-pre:` | yeniden dondurma P1-D.1/F13: ajan düzenlemesi `--mode append`, senaryo vault'u `[edit] unrestricted` (K-D1.1, D1.0-5) |
+| `scripts/test_p1c1.sh` | `P1-D.1/D1.7-pre:` | yeniden dondurma P1-D.1/F14: C1-6 anahtar listesinde `lexical.dl` (K-D1.7) |
+| `research/eval/compare_p1d.py` | `P1-D.1/D1.7-pre:` | yeniden dondurma P1-D.1/F15: alan kümesi farkı kayıtlı fark (çıkış 3), hata değil |
 <!-- /frozen-table -->
 
 ## Notlar

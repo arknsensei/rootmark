@@ -93,8 +93,9 @@ check "C1-5 control: one trace line" 0 test "$(wc -l <"$s/traces.jsonl" | tr -d 
 # ---- 3. C1-6
 m="$idx/manifest.json"
 cp "$m" "$work/manifest.orig"
-check "C1-6 manifest holds lexical.{variant,idf,k1,b,tokenizer}" 0 \
-  jq -e '.lexical | keys == ["b","idf","k1","tokenizer","variant"]' "$m"
+# P1-D.1/F14 (K-D1.7): the record also declares the document length (`dl`)
+check "C1-6 manifest holds lexical.{variant,idf,k1,b,tokenizer,dl}" 0 \
+  jq -e '.lexical | keys == ["b","dl","idf","k1","tokenizer","variant"]' "$m"
 for f in variant idf k1 b tokenizer; do
   jq "del(.lexical.$f)" "$work/manifest.orig" >"$m"
   check "C1-6 lexical.$f removed: index status" 1 "$mdk" index status "$v"

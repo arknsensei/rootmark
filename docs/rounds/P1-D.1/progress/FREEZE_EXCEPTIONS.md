@@ -73,3 +73,37 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** betik zincirde ölümcül bir adımdır (`verify.sh`). Uyumluluk raporu artık 34 girdi tutuyor (emsal P1-C.1/F7: 30 → 31).
 - **Önce/sonra bit eşitliği:** betik çıkış 0. Günlük satırları P1-D resmi RUN'ının `tamper_p1c.log`'uyla aynı, fark yalnız `mktemp` sonekleri (D1.4 kaydı).
 - **Gözden geçirici onayı:** D1.4.review.md.
+
+## F12 · D1.7 · `scripts/verify.sh` — P1-D.1 zinciri
+- **Ne:** dört değişiklik.
+  - Başlık yorumuna P1-D.1 paragrafı.
+  - `chain`'de `make p1d-checks`'ten sonra `make p1d1-checks RUN=$run` (2 satır).
+  - `pair`'in son satırı `compare_p1d` → `compare_p1d1`. P1-D kümesi bunun içinde, aynen `compare_p1d.pair`.
+  - Yeni `compare_p1d1` işlevi ve `compare-p1d1` alt komutu; kullanım iletisine `compare-p1d1`.
+
+  `diff` +26/−2: değişen 2 satır pair karşılaştırıcısı ve kullanım iletisi, gerisi ekleme. Önceki zincir adımları, sırası ve `compare`…`compare-p1d` aynen duruyor.
+- **Neden:** TASKS D1.7 ("`verify.sh` genişletme"). D1-12'nin çift koşturması P1-D.1 ölçümlerini iki bağımsız klonda koşturmalı.
+- **Önce/sonra bit eşitliği:** önceki adımlar değişmeden koşar. P1-D çift kümesinin bütün alanları `compare_p1d1 pair` içinde `compare_p1d.pair` ile karşılaştırılır. P1-D resmi RUN'ına göre fark yalnız karar gereği hariçlerde kalır (`compare_p1d1 regress`, D1.7 kaydı).
+- **Gözden geçirici onayı:** D1.7.review.md.
+
+## F13 · D1.7 · `scripts/governance_scenario.sh` — ajan düzenlemesi `--mode append`
+- **Ne:** iki değişiklik.
+  - Senaryo vault'unun `policy.toml`'una `[edit] policy = "unrestricted"`.
+  - `espresso.md`'nin ajan düzenlemesi: eskiden dosyanın tamamı `mdk propose` ile üzerine yazılıyordu, artık eklenen paragraf `--mode append` ile öneriliyor. Fixture `clean, sweet cups` içermediği için eski `sed` hiçbir şey değiştirmiyordu ve düzenleme her zaman bu paragrafın eklenmesiydi. Fixture değişirse betik artık açıkça hata verir.
+
+  Başka değişiklik yok.
+- **Neden:** K-D1.1 ve D1.0-5 (K-D4-T b) gereği CLI `mdk propose` var olan bir belgenin üzerine yazmaz (`exists`). İnsan bölümüne başlıksız ek de `append_only` altında reddedilir. Değişmeden kalsaydı P1-B `p1b-checks` zincirde ölümcül biçimde dururdu (geliştirme zinciri `20261016T101541Z-142d979`: "espresso.md exists; propose never overwrites").
+- **Önce/sonra bit eşitliği:** `bash scripts/governance_scenario.sh target/release/mdk <out>` çıktısı P1-D resmi RUN'ının `governance/` dizini ile karşılaştırıldı. `events.jsonl` ve `traces.jsonl` bayt eşit, `governance.json` eşit (`events_hash` `2b0dc8e8…` aynı). `espresso.md` eski üzerine yazmanın üreteceği baytlarla aynı.
+- **Gözden geçirici onayı:** D1.7.review.md.
+
+## F14 · D1.7 · `scripts/test_p1c1.sh` — C1-6 anahtar listesinde `dl`
+- **Ne:** C1-6 denetiminin beklediği anahtar listesi `["b","idf","k1","tokenizer","variant"]` → `["b","dl","idf","k1","tokenizer","variant"]`, denetim etiketi ve bir yorum satırı. Vakalar ve diğer denetimler aynı.
+- **Neden:** K-D1.7 manifest'e `lexical.dl` ekler. Betik `make p1c1-checks`'te ölümcüldür: geliştirme zinciri `20261016T102619Z` "44/45 cases" ile durdu.
+- **Önce/sonra bit eşitliği:** `bash scripts/test_p1c1.sh <out>` çıkış 0, 45/45. `p1c1_cli.json`, P1-D resmi RUN'ınınkiyle `jq -S` karşılaştırmasında fark yok.
+- **Gözden geçirici onayı:** D1.7.review.md.
+
+## F15 · D1.7 · `research/eval/compare_p1d.py` — alan kümesi farkı kayıtlı fark olur
+- **Ne:** `compare()` iki tarafın alan kümeleri farklı olduğunda artık `MetricError` (çıkış 1) atmaz. Yalnız bir tarafta olan her alanı `{"a", "b"}` (öbür taraf `"absent"`) olarak `differing_fields`'a yazar (çıkış 3, kaydedilir). Ortak alanların karşılaştırması aynı. Başka değişiklik yok (+5/−3).
+- **Neden:** K-D1.7 `p1c1_checks.json`'a `C1-6›lexical›dl` alanını ekler. P1-D'nin dondurulmuş D-9 karşılaştırıcısı (`compare_p1d regress`, P1-C.1 resmi RUN'ına göre) alan kümesi farkını ölümcül sayıyordu. Bu yüzden `make p1d-checks` zincirde duruyordu (geliştirme zinciri `20261016T105235Z-7a4718b`: "field sets differ at ['C1-6›lexical›dl']"). Fark kararın sonucudur ve kaydedilmelidir, çünkü P1-D'nin kendi kuralı da "a criterion that fails is recorded, not fatal"dır.
+- **Önce/sonra bit eşitliği:** alan kümeleri eşit olduğunda (A↔B `pair`, P1-D resmi RUN'ı) çıktı değişmez. Değişen tek şey, önceden hata veren durumun artık bir fark kaydı vermesidir. Geliştirme RUN'ında regress (P1-C.1'e göre) çıkış 3 verdi; farklar yalnız karar gereği alanlarda: `spec_version` (×3), `fixtures_manifest_hash`, `C1-6›lexical›dl`, `C1-6›rejected_cases`, `C1-7›pass`, üç indeks manifest hash'i.
+- **Gözden geçirici onayı:** D1.7.review.md.
