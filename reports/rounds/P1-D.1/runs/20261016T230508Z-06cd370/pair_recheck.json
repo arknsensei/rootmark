@@ -1,0 +1,151 @@
+{
+  "purpose": "P1-E/E0 E-12 (ADDENDUM Ş0): P1-D.1 verify.sh pair re-run from two clean clones with the fixed comparator (F1, F2)",
+  "commit": "06cd370b2bd7d991bc010d81f8d40e93f2e3a985",
+  "run_a": "20261016T230508Z-06cd370",
+  "run_b": "20261016T233030Z-06cd370",
+  "exit_code": 0,
+  "chain_seconds": [
+    1532,
+    1515
+  ],
+  "pair_compare": {
+    "bytes": {
+      "governance/vault/.mdkernel/checkpoints/": {
+        "equal": true,
+        "files": 4
+      },
+      "governance/vault/.mdkernel/events.jsonl": {
+        "blake3": "2b0dc8e88f8d56ee4c6be6356d4c0fee",
+        "equal": true
+      },
+      "governance/vault/.mdkernel/traces.jsonl": {
+        "blake3": "4e0906770480e03802021d9dfb2a67a5",
+        "equal": true
+      },
+      "p1d/inspector/tools_list.json": {
+        "blake3": "4a430a2f114b3888fdcf91e467b7f07b",
+        "bytes": 10791,
+        "equal": true
+      },
+      "p1d/mcp_e2e/run1/cli_promote.jsonl": {
+        "blake3": "343094e8f7255147a905c40d6bb88062",
+        "bytes": 1714,
+        "equal": true
+      },
+      "p1d/mcp_e2e/run1/transcript.jsonl": {
+        "blake3": "e4f9048d6120c2007cb785c3575c4f03",
+        "bytes": 11271827,
+        "equal": true
+      },
+      "p1d/mcp_e2e/run1/transcript_b.jsonl": {
+        "blake3": "13ef3cd8568a459322322c841217621a",
+        "bytes": 13526,
+        "equal": true
+      },
+      "p1d/mcp_e2e/run1/vault/.mdkernel/events.jsonl": {
+        "blake3": "453c8685fd05e0161d7b07a5eff36f0d",
+        "bytes": 42898,
+        "equal": true
+      },
+      "p1d/mcp_e2e/run1/vault/.mdkernel/proposals.jsonl": {
+        "blake3": "93795dcd89eed407ad0ea02533330082",
+        "bytes": 637,
+        "equal": true
+      },
+      "p1d/mcp_e2e/run1/vault/.mdkernel/traces.jsonl": {
+        "blake3": "d04f86889aacdf47aa1edf5e15323903",
+        "bytes": 156679,
+        "equal": true
+      },
+      "p1d/mcp_e2e/run1/vault/agent/plan.md": {
+        "blake3": "bb7a57f8d1071b59435bf4a8b70e0ac7",
+        "bytes": 46,
+        "equal": true
+      },
+      "p1d/mcp_e2e/run1/vault/espresso.md": {
+        "blake3": "4d7568de2512522ac296843deb0658e7",
+        "bytes": 458,
+        "equal": true
+      },
+      "p1d/scene/scene.json": {
+        "blake3": "faa842022a9f726594d24b2e8a1d3053",
+        "bytes": 2563,
+        "equal": true
+      },
+      "p1d1/d1_13.json": {
+        "blake3": "d8db26f0ecb65c51097bf5c10d39654c",
+        "bytes": 4451,
+        "equal": true
+      },
+      "p1d1/d1_3.json": {
+        "blake3": "23dcb35ba3805fc1f8d59f0f7b2023b2",
+        "bytes": 606,
+        "equal": true
+      },
+      "p1d1/d1_8.json": {
+        "blake3": "9ed036898854d28c498656679e490b04",
+        "bytes": 3705,
+        "equal": true
+      }
+    },
+    "bytes_equal": true,
+    "differing_fields": {},
+    "equal": true,
+    "files": [
+      "h1s_tuning.json",
+      "h1s.json",
+      "h1r.json",
+      "h1s_v3_tuning.json",
+      "h1s_v3.json",
+      "h1r_v3.json",
+      "h3_v3.json",
+      "h4_v3.json",
+      "h4_v2repro.json",
+      "holdout.json",
+      "split_grid.json",
+      "holdout_split.json",
+      "p1b_checks.json",
+      "governance/governance.json",
+      "p1b1_checks.json",
+      "c3_quality.json",
+      "p1c_checks.json",
+      "p1c_index.json",
+      "c1_variant.json",
+      "p1c1_checks.json",
+      "p1d_checks.json",
+      "p1d/inspector/inspector.json",
+      "p1d/mcp_e2e/mcp_e2e.json",
+      "p1d/http/http_e2e.json",
+      "p1d/scene/scene.json",
+      "p1d/tamper_p1d.json",
+      "p1d/d10.json",
+      "p1d/sigterm.json",
+      "p1d1_checks.json",
+      "conformance_p1d1.json",
+      "p1d1/p1d1.json",
+      "p1d1/d1_1.json",
+      "p1d1/d1_2.json",
+      "p1d1/d1_3.json",
+      "p1d1/d1_4.json",
+      "p1d1/d1_5.json",
+      "p1d1/d1_6.json",
+      "p1d1/d1_7.json",
+      "p1d1/d1_8.json",
+      "p1d1/d1_9.json",
+      "p1d1/d1_11.json",
+      "p1d1/d1_13.json",
+      "p1d1/v3_compat.json",
+      "p1d1/v3_compat_mixed.json",
+      "p1d1/tamper_p1d1.json"
+    ],
+    "informational_fields": {
+      "p1d1/d1_5.json": [
+        "responses_a_vs_b_equal",
+        "responses_pipelined_vs_lockstep_equal"
+      ]
+    },
+    "n_fields": 100982,
+    "run_a": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/08482034-97b3-417b-8ad2-cbd87cb83b1e/scratchpad/pair/A/repo/research/reports/runs/20261016T230508Z-06cd370",
+    "run_b": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/08482034-97b3-417b-8ad2-cbd87cb83b1e/scratchpad/pair/B/repo/research/reports/runs/20261016T233030Z-06cd370"
+  }
+}

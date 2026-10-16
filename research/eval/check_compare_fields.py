@@ -220,6 +220,8 @@ def check_runs(decl: dict, runs: list[Path]) -> dict:
             if k.split(".")[1]
             not in ("BYTE_FILES", "BYTE_DIRS", "P1D_BYTES", "P1D1_BYTES", "P1E_BYTES")
             and k != "compare_p1c.REGRESS_FILES"
+            # regress only, compared by test id (`compare_p1d.regress`)
+            and k != "compare_p1d.CONFORMANCE"
             and k != "compare_runs.RESULT_FILES"
             for f in v
         }

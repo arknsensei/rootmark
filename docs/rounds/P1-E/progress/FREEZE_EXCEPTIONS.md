@@ -29,3 +29,15 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** K-E0.3 sözleşme §3'e kod ekler; `contract_check.sh` her sözleşme kodunu bu dosyada gerçek bir çağrıyla arar (D1-13). `want.len() == Code::ALL.len()` denetimi yeni kodu zorunlu kılar.
 - **Önce/sonra bit eşitliği:** `cargo test -p mdkernel-server --release --test contract` 4/4 geçer; değişmeden önceki dosya yeni kodla `http_statuses_of_the_codes`'ta (10 ≠ 11) düşüyordu, bu yüzden istisna zorunlu. Diğer üç test birebir aynı.
 - **Gözden geçirici onayı:** E0.review.md.
+
+## F5 · E0 · `research/eval/check_compare_fields.py` — `--runs` kipinde `compare_p1d.CONFORMANCE` pair dosyası değil
+- **Ne:** `check_runs`'ın dosya kümesinden `compare_p1d.CONFORMANCE` (`conformance_p1c1.json`) çıkarıldı (+2 satır). Bildirim/kod eşlemesi (`audit`) değişmedi.
+- **Neden:** E-12 pair'inin iki RUN'ında `--runs` denetimi `conformance_p1c1.json:fixtures_root`'u (klonun mutlak yolu) farklı buldu. Bu dosyayı hiçbir `pair` karşılaştırmaz: `compare_p1d` onu yalnız `regress`'te, test kimliğiyle karşılaştırır. Denetleyicinin kendi hatası (dosyayı pair kümesine katmış), belirlenimsizlik değil.
+- **Önce/sonra:** önce `--runs A B`: 101 209 yaprak, 1 fark (`fixtures_root`); sonra 100 982 yaprak, fark 0 — `compare_p1d1 pair`'in `n_fields`'ı (100 982) ile aynı sayı. `audit` çıktısı (74 alan, 14 sabit, eşleşmeyen 0) önce ve sonra aynı.
+- **Gözden geçirici onayı:** E0.review.md (3. tur).
+
+## F6 · E0 · `scripts/check_compare_fields.sh` — seçenekler yol sayılmaz
+- **Ne:** argüman döngüsü: `-` ile başlayan argüman olduğu gibi geçer; ötekiler, dizini varsa mutlak yola çevrilir (`dirname --`).
+- **Neden:** eski koşul `--runs`'ı `dirname`'e veriyordu (macOS'ta "illegal option" uyarısı, çıktıyı kirletiyor); öncelik belirsizdi.
+- **Önce/sonra:** argümansız çağrı ve `--runs A B --out f` çağrısı aynı JSON'u üretir; uyarı yok.
+- **Gözden geçirici onayı:** E0.review.md (3. tur).

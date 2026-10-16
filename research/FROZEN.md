@@ -152,6 +152,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `server/tests/contract.rs` | `P1-E/E0:` | yeniden dondurma P1-E/F4: `index_stale` 503 ve gerçek çağrısı, başlıksız `append` → `policy_violation` (K-E0.3, K-E0.4) |
 | `research/eval/check_compare_fields.py` | `P1-E/E0:` | K-E0.2 belirlenimli alan denetleyicisi (bildirim ↔ karşılaştırıcı kodu) |
 | `scripts/check_compare_fields.sh` | `P1-E/E0:` | K-E0.2 denetleyicisinin sarmalayıcısı (`make check-compare-fields`) |
+| `research/eval/check_compare_fields.py` | `P1-E/E0-fix2:` | yeniden dondurma P1-E/F5: `--runs` kipinde `compare_p1d.CONFORMANCE` pair kümesi dışında |
+| `scripts/check_compare_fields.sh` | `P1-E/E0-fix2:` | yeniden dondurma P1-E/F6: seçenekler yol olarak çözülmez |
 <!-- /frozen-table -->
 
 ## Notlar

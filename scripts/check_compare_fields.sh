@@ -8,9 +8,12 @@ set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 args=()
 for a in "$@"; do
-  # run directories and the output path are taken from the caller's directory
-  if [ -e "$a" ] || [ -e "$(dirname "$a")" ] && [ "${a#-}" = "$a" ]; then
-    args+=("$(cd "$(dirname "$a")" && pwd)/$(basename "$a")")
+  # run directories and the output path are taken from the caller's
+  # directory; options pass through unchanged
+  if [ "${a#-}" != "$a" ]; then
+    args+=("$a")
+  elif [ -d "$(dirname -- "$a")" ]; then
+    args+=("$(cd "$(dirname -- "$a")" && pwd)/$(basename -- "$a")")
   else
     args+=("$a")
   fi
