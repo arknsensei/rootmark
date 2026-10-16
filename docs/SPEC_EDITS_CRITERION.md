@@ -15,6 +15,14 @@ Bilgilendirici not ("Informative: …") hiçbir uygulamayı bağlamadığı içi
 ## Uygulama
 Her tur, spec düzenlemelerini `docs/rounds/<tur>/progress/SPEC_EDITS.md` tablosunda satır satır kaydeder ve her satırı bu ölçüte göre sınıflandırır: **açıklık** / **serileştirme kararı** / **anlam değişikliği** (karar numarasıyla).
 
+## Sürüm numarası (K-D1.9, P1-D.1)
+Sürüm numarasını yalnız bu ölçüt belirler, GOAL belirlemez (`docs/DEV_PROCESS.md` §1). Bir turun düzenlemeleri sınıflandırıldıktan sonra sürüm şöyle seçilir:
+- yalnız **açıklık** satırları → sürüm değişmez;
+- en az bir **serileştirme kararı** ya da **anlam değişikliği**, hepsi Validated/Draft bölümlerde ve kırıcı değil → **yama** (`1.0.x` → `1.0.x+1`);
+- §1–6'da (Frozen) açıklık olmayan bir düzenleme ya da daha önce uyumlu bir uygulamanın verisini (log, indeks) okunamaz kılan kırıcı bir değişiklik → **majör**.
+
+Spec sürümünde ara (minör) düzey kullanılmaz (ASSUMPTIONS P1-D.1 D1.0-6): spec yalnız yama ve majör adım atar. Bu kural `mdk` paket sürümünü bağlamaz; paket DEV_PROCESS §8'deki SemVer'e uyar. Frozen bir bölüme eklenen bilgilendirici not açıklıktır ve sürüm gerektirmez. `SPEC_EDITS.md`, seçilen sürümü bu listedeki maddeye atıfla yazar.
+
 ## Yeniden sınıflandırma (P1-B, K-B1.3)
 | P1-B düzenlemesi | (a) | (b) | Sınıf |
 |---|---|---|---|

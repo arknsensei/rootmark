@@ -11,6 +11,10 @@ Her tur `docs/rounds/<id>/` altında dört dosya ile tanımlanır:
 
 Tur başladıktan sonra `GOAL.md` değişmez. Yeni ihtiyaç bir sonraki tura gider ve `docs/DECISIONS.md`'ye yazılır.
 
+`GOAL.md` yazım kuralları (K-D1.9, P1-D.1):
+- **Spec sürümü öngörülmez.** Bir GOAL spec düzenlemesi isterse sürüm numarası yazmaz, yalnız "sürüm `docs/SPEC_EDITS_CRITERION.md` kuralıyla" der. Sürümü, düzenlemeler yapıldıktan sonra CRITERION belirler ve `SPEC_EDITS.md` kaydeder.
+- **Karar kuralı tamdır.** Her karar kuralı, adlandırdığı dalların yanında bir varsayılan dal taşır: "**tanımlanmamış kalış → tur kaldı, karar talebi**". Kuralda adı geçmeyen bir kriter kalırsa tur kalmış sayılır ve `DECISIONS.md`'ye karar talebi yazılır. Hiçbir kalış sessizce "sonraki tur başlar" sonucuna düşmez.
+
 ## 2. Ajan disiplini (kök `CLAUDE.md` bunu uygular)
 - Okuma sırası: `NORTH_STAR.md` → `spec/SPEC.md` → `docs/ARCHITECTURE.md` → `docs/PACKAGES.md` → aktif tur dosyaları → ilgili paketin `CLAUDE.md`'si → `docs/rounds/<id>/progress/`.
 - Görev başı/sonu kayıtları, gözden geçirici alt-ajan (yalnız kabul ölçütleri + değişen dosya listesi ile; kod yazmaz), görev başına commit (`<round>/<task>: ...`).
