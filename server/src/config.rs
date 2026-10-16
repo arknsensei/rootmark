@@ -13,6 +13,7 @@
 //!
 //! [index]
 //! compact_every_s = 300       # 1..=86400
+//! auto_rebuild = true         # a stale index is rebuilt at start (K-E0.3)
 //!
 //! [identity]
 //! human_id = "ada"            # the human behind the HTTP token (K-D1.3)
@@ -42,6 +43,9 @@ pub struct ServerConfig {
     pub token_rotate_days: u32,
     pub max_propose_bytes: u64,
     pub compact_every_s: u64,
+    /// `[index] auto_rebuild` (K-E0.3): `mdk serve` rebuilds an index of
+    /// another format at start; without it, searches answer `index_stale`
+    pub auto_rebuild: bool,
     /// `[identity] human_id` (K-D1.3)
     pub human_id: Option<String>,
 }
@@ -53,6 +57,7 @@ impl Default for ServerConfig {
             token_rotate_days: DEFAULT_TOKEN_ROTATE_DAYS,
             max_propose_bytes: DEFAULT_MAX_PROPOSE_BYTES,
             compact_every_s: DEFAULT_COMPACT_EVERY_S,
+            auto_rebuild: true,
             human_id: None,
         }
     }
@@ -95,7 +100,13 @@ impl ServerConfig {
                     "compact_every_s" => {
                         c.compact_every_s = int_in("index", k, v, 1, 86_400)? as u64
                     }
-                    _ => bail!("[index]: unknown field `{k}` (compact_every_s)"),
+                    "auto_rebuild" => {
+                        let Some(b) = v.as_bool() else {
+                            bail!("[index] auto_rebuild must be a boolean");
+                        };
+                        c.auto_rebuild = b;
+                    }
+                    _ => bail!("[index]: unknown field `{k}` (compact_every_s, auto_rebuild)"),
                 }
             }
         }

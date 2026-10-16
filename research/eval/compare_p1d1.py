@@ -5,9 +5,11 @@ and the frozen P1-D comparator (`compare_p1d`).
 `pair <run_A> <run_B>` (D1-12, `scripts/verify.sh pair`): the P1-D pair set
 (`compare_p1d.pair`: the P1-C.1 set, the P1-D files, the P1-D artefacts
 byte for byte) and the P1-D.1 result files (`P1D1_FILES`), every field
-except the P1-D.1 wall-clock fields (`P1D1_TIMING`), and the P1-D.1
-artefacts byte for byte (`P1D1_BYTES`). No other exclusion: two chains of
-one commit must agree everywhere.
+except the P1-D.1 wall-clock fields (`P1D1_TIMING`) and the fields the
+contract leaves nondeterministic (`P1D1_INFO`, P1-E/E0 K-E0.2), and the
+P1-D.1 artefacts byte for byte (`P1D1_BYTES`). No other exclusion: two
+chains of one commit must agree on every deterministic field
+(research/eval/DETERMINISTIC_FIELDS.md).
 
 `regress <p1d_run> <run>` (D1-12, "P1-D kalite alanları"): the P1-D pair
 set of files (`compare_p1d`: P1-C.1 set + P1-D files) of the P1-D official
@@ -63,6 +65,19 @@ P1D1_TIMING = {
     "p1d1_checks.json": [("D1-6", "measured")],
     # absolute fixture root of the chain's clone
     "conformance_p1d1.json": [("fixtures_root",)],
+}
+# fields that are not deterministic by contract (P1-E/E0, K-E0.2;
+# research/eval/DETERMINISTIC_FIELDS.md): recorded, never compared. D1-5's
+# 100 pipelined calls hold read-only `blame`s, which run in parallel and may
+# not see an earlier write (docs/CLIENT_CONTRACT.md §5), so the equality of
+# *every* response is a chance observation; the responses of the writing and
+# trace-writing calls (`write_responses_*_equal`) are deterministic and
+# compared.
+P1D1_INFO = {
+    "p1d1/d1_5.json": [
+        ("responses_a_vs_b_equal",),
+        ("responses_pipelined_vs_lockstep_equal",),
+    ],
 }
 P1D1_BYTES = [
     P1D1 / "d1_3.json",
@@ -246,7 +261,7 @@ def _excl_match(name: str, path: tuple) -> tuple | None:
 
 
 def _timing(name: str, path: tuple) -> bool:
-    for pat in P1D1_TIMING.get(name, []):
+    for pat in [*P1D1_TIMING.get(name, []), *P1D1_INFO.get(name, [])]:
         if len(path) >= len(pat) and all(
             p == "*" or p == str(x) for p, x in zip(pat, path, strict=False)
         ):
@@ -319,6 +334,9 @@ def pair(a: Path, b: Path) -> dict:
     res["differing_fields"].update(q["differing_fields"])
     res["bytes"].update(p1d1_bytes(a, b))
     res["bytes_equal"] = all(v["equal"] for v in res["bytes"].values())
+    res["informational_fields"] = {
+        f: ["/".join(p) for p in pats] for f, pats in sorted(P1D1_INFO.items())
+    }
     res["equal"] = not res["differing_fields"] and res["bytes_equal"]
     return res
 

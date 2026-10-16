@@ -1,6 +1,6 @@
-# mdk istemci sözleşmesi (P1-D.1, K-D1.5)
+# mdk istemci sözleşmesi (P1-D.1, K-D1.5; P1-E/E0 K-E0.3, K-E0.4)
 
-Durum: P1-D.1. Bu belge P1-E istemcisinin (ve her MCP/HTTP istemcisinin) `mdk serve`'e bağımlılığının **tamamıdır**. Burada yazmayan bir davranışa istemci güvenmez. Sözleşmedeki her araç ve her hata kodu en az bir testle eşleşir (`scripts/contract_check.sh`). Spec kavramları için `spec/SPEC.md`, güvenlik modeli için `docs/SECURITY.md`.
+Durum: P1-E/E0. Bu belge P1-E istemcisinin (ve her MCP/HTTP istemcisinin) `mdk serve`'e bağımlılığının **tamamıdır**. Burada yazmayan bir davranışa istemci güvenmez. Sözleşmedeki her araç ve her hata kodu en az bir testle, her §1 ucu ve §3 durum satırı gerçek bir HTTP çağrısıyla eşleşir (`scripts/contract_check.sh`). Spec kavramları için `spec/SPEC.md`, güvenlik modeli için `docs/SECURITY.md`.
 
 ## 1. Taşımalar ve kanal → aktör (K-D1.3)
 | Taşıma | Başlatma | Kimlik | Aktör |
@@ -37,7 +37,7 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
   - yalnız canonical bloklardan oluşan bir arama birimini (chunk) değiştiren yazım;
   - var olan bir belgenin ön bilgisini (front matter) değiştiren yazım;
   - proposal olmayan bir blok içeren bölüme `replace_section`.
-- **İstemci kuralı:** insan yazımı bir bölümün sonuna eklenen metin o bölümün chunk'ına katılır ve reddedilir. Eklenecek metin kendi başlığıyla başlamalıdır (`## Öneri: …`). Yalnız proposal bloklardan oluşan bölüm (ajanın kendi önerisi) `replace_section` ile düzeltilebilir.
+- **İstemci kuralı:** insan yazımı bir bölümün sonuna eklenen metin o bölümün chunk'ına katılır ve reddedilir. Eklenecek metin kendi başlığıyla başlamalıdır (`## Öneri: …`; §4.1 ajan yönergesi). Başlıksız böyle bir `append` `policy_violation` (422) ve `hint` ile döner (K-E0.4); başlıkla başlayan ama yine canonical içeriğe dokunan yazım `denied`'dır. Yalnız proposal bloklardan oluşan bölüm (ajanın kendi önerisi) `replace_section` ile düzeltilebilir.
 - `[edit] policy = "unrestricted"` yalnız açıkça yazılırsa her yazıma izin verir. O zaman da silme ve değiştirme olayları aktörü taşır.
 - Sunucunun dışında yapılmış, henüz alınmamış bir düzenleme varsa, politika kararından önce insan yazımı olarak alınır (`synced_external_events`). Ret durumunda da insanın yazdığı olarak `events.jsonl`'de kalır. Bu olaylar ajanın değil, insanındır.
 
@@ -72,6 +72,7 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
 Başarısız bir araç çağrısı şu biçimlerde döner:
 - **MCP:** `result.isError: true`, `content[0].text` = `"error: <mesaj>"` ve `structuredContent = {"error": {"code": "<kod>", "message": "<mesaj>"}}`.
 - **HTTP:** durum kodu aşağıdaki tablodan, gövde `{"error": {"code", "message"}}`.
+- Bazı hatalar ayrıca `"hint"` taşır (`{"error": {"code", "message", "hint"}}`): çağıranın ne yapabileceği, kararlı bir dizge. Şimdilik tek örnek: başlıksız `append` → `"hint": "start the appended text with a heading"` (K-E0.4). İstemci hint'i kullanıcıya gösterir; `hint` yoksa alan yoktur.
 
 İstemci yalnız `code`'a göre karar verir. `message` insanlar içindir ve değişebilir.
 
@@ -85,14 +86,24 @@ Başarısız bir araç çağrısı şu biçimlerde döner:
 | `exists` | 409 | Yaratılacak şey var: `create` ile var olan belge; `doc_path`'i yalnız harf ya da Unicode biçimiyle var olan bir belgeden ayrılan yol; alınmış checkpoint adı; adlı durum için başka bir ad ya da adsız istek. |
 | `too_large` | 413 | `content` `[server] max_propose_bytes`'ı aşıyor ya da HTTP gövdesi sınırı aşıyor. |
 | `heading_not_found` | 422 | `replace_section` başlığı belgede yok ya da birden fazla. |
-| `policy_violation` | 422 | Vault'un `policy.toml`'u geçersiz. |
-| `internal` | 500 | Sunucu ya da vault hatası. Raporlanması gereken bir hatadır, sessiz başarı değildir. |
+| `policy_violation` | 422 | Vault'un `policy.toml`'u geçersiz; ya da ajanın insan bloklarına `append`'i kendi başlığıyla başlamadığı için `append_only` altında reddedildi (K-E0.4; `hint` taşır). |
+| `index_stale` | 503 | Vault'un indeksi eksik ya da başka bir biçimde (eski `mdk`'nin yazdığı indeks): yeniden kurulmalı (`mdk index build`, ya da `[index] auto_rebuild = true` ile `mdk serve`'i yeniden başlatmak; K-E0.3). Kurtarılabilir bir durumdur, `internal` değildir. |
+| `internal` | 500 | Sunucu ya da vault hatası (ör. bozuk indeks dosyası). Raporlanması gereken bir hatadır, sessiz başarı değildir. |
 
 İstisnalar:
 - MCP'de bilinmeyen araç bir JSON-RPC hatasıdır (`-32602`). HTTP'de 404 `not_found`'dur.
+- `mdk serve` başlarken indeks yoksa kurar; başka biçimdeyse `[index] auto_rebuild = true` (varsayılan) ile yeniden kurar. `auto_rebuild = false` ise indeksi olduğu gibi bırakır, stderr'e yazar ve indeks isteyen çağrılar (`search`, indeks taşıyan vault'ta `propose`) `index_stale` döner. Salt okunur çağrılar (`status`, `blame`, `history`, …) indekssiz de çalışır (K-E0.3).
 - Politikanın `promote` reddi her kanalda yanıttır, hata değildir (§2.4).
 
-## 4. Olaylar ve köken (spec §4.3, K-D1.2)
+## 4. Olaylar, köken ve ajan yönergesi
+
+### 4.1 Ajan yönergesi (K-E0.4, K-D1.1)
+- Ajan bir insan belgesine (insan yazımı, `canonical` bloklar içeren belgeye) `append` ile yazarken metni **yeni bir başlıkla** (`## …`) başlatır. Böylece metin kendi bölümünü ve kendi chunk'ını açar, hiçbir canonical bloğa ya da canonical arama birimine dokunmaz ve `append_only` altında kabul edilir.
+- Başlıksız bir `append` insan bölümünün chunk'ına katılırsa reddedilir: `policy_violation` + `hint: "start the appended text with a heading"`. Hiçbir şey yazılmaz.
+- Ajan kendi önerisini (yalnız proposal bloklardan oluşan bölüm) `replace_section` ile düzeltir. İnsan bölümünü değiştirmek ya da silmek `denied`'dır; bunun yolu insanın kendisidir.
+- MCP `propose` aracının açıklaması bu yönergeyi söyler (`tools/list`).
+
+### 4.2 Olaylar ve köken (spec §4.3, K-D1.2)
 - `history` çıktısındaki silme ve değiştirme olayları (`BlockDeleted`, `BlockUpdated`, `BlockMoved`, `BlockSplit`, `BlockMerged`) sunucu üzerinden yazıldıysa `meta.actor {kind, id}` ve `meta.source` taşır. Aktör kanaldan gelir: `agent:<istemci>`, `human:<human_id>`; izleyicinin aldığı dış düzenlemeler için `human:<human_id>` ya da `human:unidentified`.
 - 1.0.3 öncesi yazılmış olaylar ve `mdk ingest`/`ingest-dir` (düşük düzey çekirdek yolu) aktör taşımaz. İstemci bunu "aktör kaydedilmemiş" olarak gösterir, aktör uydurmaz.
 
@@ -103,4 +114,4 @@ Başarısız bir araç çağrısı şu biçimlerde döner:
 - Salt okunur çağrılar (`status`, `history`, `blame`, `checkpoints`, `trace`) birbirleriyle paralel çalışır, bir yazar çalışırken bekler. Bir okuma, kendinden önce gönderilmiş ama henüz işlenmemiş bir yazmayı görmeyebilir. Bir yazmanın sonucunu görmek isteyen istemci onun yanıtını bekler.
 
 ## 6. Sürüm
-`status.spec_version` (spec sürümü, `docs/SPEC_EDITS_CRITERION.md`) ve `status.mdk_version`. Bu sözleşme P1-D.1'in davranışıdır. Değişiklikleri bir karar kaydıyla (`docs/DECISIONS.md`) ve bu belgenin güncellenmesiyle olur.
+`status.spec_version` (spec sürümü, `docs/SPEC_EDITS_CRITERION.md`) ve `status.mdk_version`. Bu sözleşme P1-D.1'in davranışı ve P1-E/E0'ın iki eki (K-E0.3 `index_stale`, K-E0.4 `hint` ve ajan yönergesi) birliktedir. Değişiklikleri bir karar kaydıyla (`docs/DECISIONS.md`) ve bu belgenin güncellenmesiyle olur.

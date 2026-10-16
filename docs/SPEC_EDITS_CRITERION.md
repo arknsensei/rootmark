@@ -19,7 +19,9 @@ Her tur, spec düzenlemelerini `docs/rounds/<tur>/progress/SPEC_EDITS.md` tablos
 Sürüm numarasını yalnız bu ölçüt belirler, GOAL belirlemez (`docs/DEV_PROCESS.md` §1). Bir turun düzenlemeleri sınıflandırıldıktan sonra sürüm şöyle seçilir:
 - yalnız **açıklık** satırları → sürüm değişmez;
 - en az bir **serileştirme kararı** ya da **anlam değişikliği**, hepsi Validated/Draft bölümlerde ve kırıcı değil → **yama** (`1.0.x` → `1.0.x+1`);
-- §1–6'da (Frozen) açıklık olmayan bir düzenleme ya da daha önce uyumlu bir uygulamanın verisini (log, indeks) okunamaz kılan kırıcı bir değişiklik → **majör**.
+- §1–6'da (Frozen) açıklık olmayan bir düzenleme ya da kırıcı bir değişiklik → **majör**.
+
+**Kırıcı (K-E0.1, P1-E/E0):** önceki sürüme uyumlu bir uygulamanın **yazdığı** veri (log, indeks) yeni sürümün uygulaması tarafından okunamıyorsa, ya da yeni sürümün uygulamasının yazdığı veri önceki sürümün okuma kurallarıyla okunamıyorsa. "Veri", bir uygulamanın gerçekte yazdığı veridir, önceki spec'in yalnız izin verdiği her olası değer değildir. Açık bir yapıya (ör. §4.2 `meta` JSON nesnesi) yeni bir alan eklemek, eski okuyucular onu yok sayabildiği sürece kırıcı değildir; yeni alanı yazmayı zorunlu kılmak yazarın yükümlülüğüdür. Örnek: 1.0.3'ün `meta.actor`/`meta.source`'u yama düzeyindedir (K-E0.1, K-D1.4-T).
 
 Spec sürümünde ara (minör) düzey kullanılmaz (ASSUMPTIONS P1-D.1 D1.0-6): spec yalnız yama ve majör adım atar. Bu kural `mdk` paket sürümünü bağlamaz; paket DEV_PROCESS §8'deki SemVer'e uyar. Frozen bir bölüme eklenen bilgilendirici not açıklıktır ve sürüm gerektirmez. `SPEC_EDITS.md`, seçilen sürümü bu listedeki maddeye atıfla yazar.
 

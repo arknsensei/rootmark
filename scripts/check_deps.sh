@@ -85,15 +85,29 @@ if [ -d research ]; then
 $hits"
 fi
 
-# 3b. clients: no direct import of core, index, bindings, research
+# 3b. clients: no direct import of core, index, server, bindings, research
+#     (P1-E/E0: `server` added — a client reaches the server only over the
+#     contract); and every HTTP path a client source names (`/v1/<x>`) is an
+#     endpoint of docs/CLIENT_CONTRACT.md §1 (`POST /v1/<§2 tool>`, `GET
+#     /v1/status`)
 if [ -d clients ]; then
   hits="$(grep -RInE \
-      -e "(from|require\(|import\()[[:space:]]*['\"](\.\./)+(core|index|bindings|research|prototype)(/|['\"])" \
-      -e "(from|require\(|import\()[[:space:]]*['\"]@mdkernel/(core|index)['\"]" \
+      -e "(from|require\(|import\()[[:space:]]*['\"](\.\./)+(core|index|server|bindings|research|prototype)(/|['\"])" \
+      -e "(from|require\(|import\()[[:space:]]*['\"]@mdkernel/(core|index|server)['\"]" \
       --include='*.ts' --include='*.tsx' --include='*.js' --include='*.mjs' --include='*.cjs' \
       clients 2>/dev/null | grep -v '/node_modules/' || true)"
   [ -z "$hits" ] || violation "clients/ imports a kernel package directly:
 $hits"
+  if [ -f docs/CLIENT_CONTRACT.md ]; then
+    endpoints="$(sed -n '/^## 2\. /,/^## 3\. /p' docs/CLIENT_CONTRACT.md | grep -E '^\| `[a-z_]+` \|' | sed -E 's/^\| `([a-z_]+)`.*/\1/' | sort -u)"
+    used="$(grep -RhoE --include='*.ts' --include='*.tsx' --include='*.js' --include='*.mjs' \
+        --exclude-dir=node_modules --exclude=main.js "/v1/[A-Za-z0-9_]+" clients 2>/dev/null | sed 's#^/v1/##' | sort -u || true)"
+    for u in $used; do
+      if ! echo "$endpoints" | grep -qx "$u"; then
+        violation "clients/ names /v1/$u, not an endpoint of docs/CLIENT_CONTRACT.md"
+      fi
+    done
+  fi
 fi
 
 if [ "$fail" -ne 0 ]; then

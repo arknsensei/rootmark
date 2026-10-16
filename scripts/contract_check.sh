@@ -9,11 +9,21 @@
 #   3. every tool and every code is matched by a test of
 #      server/tests/contract.rs: the tool by a real call
 #      (`call_tool(&k, "<tool>", …)`), the code by a real call expecting it
-#      (`expect_code(&k, …, Code::<Variant>);`); comments do not count.
-# Prints and writes (<out.json>, optional) {tools, codes, missing, pass};
-# exit 1 if anything is missing or differs.
+#      (`expect_code(&k, …, Code::<Variant>);`); comments do not count;
+#   4. (P1-E/E0, K-E0.2 Ö3/Ş4) over real HTTP against a live
+#      `mdk serve --http 127.0.0.1:0`: every §1 endpoint (`POST /v1/<tool>`
+#      for each §2 tool, `GET /v1/status`) answers 200 with a JSON object
+#      and no error; every §3 code is triggered by a real request and
+#      answers the status of its §3 row with that `error.code`; the §1/§3
+#      transport rules (no token → 401 `denied`, unknown path → 404
+#      `not_found`, GET of a tool → 405 `invalid_arguments`). A contract
+#      code with no HTTP trigger here is missing (`http-code:<code>`).
+# Prints and writes (<out.json>, optional) {tools, codes, http, missing,
+# pass}; exit 1 if anything is missing or differs.
 #
-#   scripts/contract_check.sh [<out.json>]   (MDK_CONTRACT: another contract file)
+#   scripts/contract_check.sh [<out.json>]   (MDK_CONTRACT: another contract
+#   file; MDK_BIN: another `mdk` binary to serve, e.g. a deliberately broken
+#   build — `scripts/test_tamper_p1e.sh`)
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -23,7 +33,7 @@ work="$(mktemp -d -t mdk-contract.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
 
 (cd "$here" && cargo build -q --release -p mdkernel-server --bin mdk --example mcp_pipeline)
-mdk="$here/target/release/mdk"
+mdk="${MDK_BIN:-$here/target/release/mdk}"
 pipe="$here/target/release/examples/mcp_pipeline"
 
 # 1. tools: contract §2 rows `| \`name\` | …` between "## 2." and "## 3."
@@ -73,17 +83,158 @@ while read -r c st; do
   if ! printf '%s' "$flat" | perl -ne 'BEGIN{$v=shift} $f.=$_; END{ exit(($f =~ /expect_code\( ?&k,[^;]*Code::$v\s*,?\s*\)\s*;/) ? 0 : 1) }' "$v"; then missing+=("code:$c"); fi
 done <<<"$contract_codes"
 
+# 4. HTTP: a live server on a vault of one human document
+hv="$work/http_vault"
+mkdir -p "$hv"
+printf '# A\n\nSome text about espresso.\n' >"$hv/a.md"
+"$mdk" ingest-dir "$hv" "$hv" >/dev/null
+cat >"$hv/.mdkernel/policy.toml" <<'T'
+[promotion]
+policy = "human_only"
+
+[edit]
+policy = "append_only"
+
+[version_trigger]
+idle_ms = 60000
+min_sim_change = 0.15
+
+[journal]
+retention_hours = 24
+
+[server]
+max_propose_bytes = 64
+
+[index]
+auto_rebuild = false
+
+[identity]
+human_id = "contract-http"
+T
+"$mdk" serve --vault "$hv" --http 127.0.0.1:0 </dev/null >/dev/null 2>"$work/http.err" &
+serve_pid=$!
+trap 'kill "$serve_pid" 2>/dev/null || true; rm -rf "$work"' EXIT
+port=""
+for _ in $(seq 1 600); do
+  port="$(sed -n 's/^mdk serve: http listening on 127\.0\.0\.1:\([0-9]*\)$/\1/p' "$work/http.err")"
+  [ -n "$port" ] && break
+  kill -0 "$serve_pid" 2>/dev/null || break
+  sleep 0.1
+done
+if [ -z "$port" ]; then
+  cat "$work/http.err" >&2
+  echo "contract_check: mdk serve --http did not start" >&2
+  exit 1
+fi
+token="$(tr -d '[:space:]' <"$hv/.mdkernel/server.token")"
+# req <method> <path> <body> [token] → "<status> <compact JSON body>"
+req() {
+  local t="${4-$token}" st
+  st="$(curl -sS -o "$work/body" -w '%{http_code}' -X "$1" \
+    ${t:+-H "Authorization: Bearer $t"} -H 'X-Consumer: contract-http' \
+    -H 'Content-Type: application/json' --data-binary "$3" "http://127.0.0.1:$port$2")"
+  echo "$st $(jq -c . "$work/body" 2>/dev/null || echo null)"
+}
+endpoints="[]"
+add_endpoint() { # <method> <path> <status> <json>
+  local ok=false
+  if [ "$3" = 200 ] && echo "$4" | jq -e 'type == "object" and (has("error") | not)' >/dev/null; then ok=true; fi
+  $ok || missing+=("http-endpoint:$1 $2")
+  endpoints="$(echo "$endpoints" | jq -c --arg m "$1" --arg p "$2" --argjson st "$3" --argjson ok "$ok" \
+    '. + [{endpoint: ($m + " " + $p), status: $st, ok: $ok}]')"
+}
+lineage="$(req POST /v1/search '{"query":"espresso"}' | cut -d' ' -f2- | jq -r '.hits[0].lineage_ids[0] // empty')"
+proposed="$(req POST /v1/propose '{"doc_path":"agent/p.md","content":"# P\n\nAgent text.","reason":"contract-http"}' | cut -d' ' -f2- | jq -r '.blocks[-1].lineage_id // empty')"
+tool_args() { # the §2 tool → a valid body
+  case "$1" in
+    status | checkpoints) echo '{}' ;;
+    search) echo '{"query":"espresso"}' ;;
+    read_block) echo "{\"doc_path\":\"a.md\",\"lineage_id\":\"$lineage\"}" ;;
+    history) echo "{\"lineage_id\":\"$lineage\"}" ;;
+    blame) echo '{"doc_path":"a.md"}' ;;
+    propose) echo '{"doc_path":"agent/q.md","content":"# Q\n\nMore.","reason":"contract-http"}' ;;
+    promote) echo "{\"lineage_id\":\"$proposed\",\"reason\":\"contract-http\"}" ;;
+    checkpoint) echo '{"name":"contract-http"}' ;;
+    trace) echo '{"consumer":"contract-http"}' ;;
+    *) echo "" ;;
+  esac
+}
+while read -r t; do
+  [ -n "$t" ] || continue
+  body="$(tool_args "$t")"
+  if [ -z "$body" ]; then missing+=("http-endpoint:POST /v1/$t (no request in this script)"); continue; fi
+  r="$(req POST "/v1/$t" "$body")"
+  add_endpoint POST "/v1/$t" "${r%% *}" "${r#* }"
+done <<<"$contract_tools"
+r="$(req GET /v1/status '')"
+add_endpoint GET /v1/status "${r%% *}" "${r#* }"
+# §3: each code from a real request (index_stale and internal last: they
+# age, then damage the index)
+code_req() {
+  case "$1" in
+    invalid_arguments) req POST /v1/search '{"query":"x","mode":"bogus"}' ;;
+    empty_query) req POST /v1/search '{"query":" "}' ;;
+    path_outside_vault) req POST /v1/propose '{"doc_path":"../x.md","content":"x","reason":"r"}' ;;
+    denied) req POST /v1/propose '{"doc_path":"a.md","mode":"replace_section","heading":"A","content":"x","reason":"r"}' ;;
+    not_found) req POST /v1/history '{"lineage_id":"0123"}' ;;
+    exists) req POST /v1/propose '{"doc_path":"a.md","content":"x","reason":"r"}' ;;
+    too_large) req POST /v1/propose "{\"doc_path\":\"big.md\",\"content\":\"$(printf 'x%.0s' $(seq 1 100))\",\"reason\":\"r\"}" ;;
+    heading_not_found) req POST /v1/propose '{"doc_path":"a.md","mode":"replace_section","heading":"Nope","content":"x","reason":"r"}' ;;
+    policy_violation) req POST /v1/propose '{"doc_path":"a.md","mode":"append","content":"x","reason":"r"}' ;;
+    index_stale)
+      m="$hv/.mdkernel/index/manifest.json"
+      jq -c '.format = "mdkernel-index/2"' "$m" >"$work/m" && cp "$work/m" "$m"
+      req POST /v1/search '{"query":"espresso"}' ;;
+    internal)
+      printf '{ not json' >"$hv/.mdkernel/index/manifest.json"
+      req POST /v1/search '{"query":"espresso"}' ;;
+    *) echo "" ;;
+  esac
+}
+http_codes="[]"
+order="$(echo "$contract_codes" | awk '$1 != "index_stale" && $1 != "internal"'; echo "$contract_codes" | awk '$1 == "index_stale"'; echo "$contract_codes" | awk '$1 == "internal"')"
+while read -r c st; do
+  [ -n "$c" ] || continue
+  r="$(code_req "$c")"
+  if [ -z "$r" ]; then missing+=("http-code:$c"); continue; fi
+  got="${r%% *}"; gcode="$(echo "${r#* }" | jq -r '.error.code // empty')"
+  ok=false; [ "$got" = "$st" ] && [ "$gcode" = "$c" ] && ok=true
+  $ok || missing+=("http-code:$c (status $got, code ${gcode:-none}; contract $st)")
+  http_codes="$(echo "$http_codes" | jq -c --arg c "$c" --argjson want "$st" --argjson got "$got" --arg gc "$gcode" --argjson ok "$ok" \
+    '. + [{code: $c, contract_status: $want, status: $got, error_code: $gc, ok: $ok}]')"
+done <<<"$order"
+# §1/§3 transport rules
+transport="[]"
+add_transport() { # <case> <want status> <want code> <response>
+  local got="${4%% *}" gc ok=false
+  gc="$(echo "${4#* }" | jq -r '.error.code // empty')"
+  [ "$got" = "$2" ] && [ "$gc" = "$3" ] && ok=true
+  $ok || missing+=("http-transport:$1")
+  transport="$(echo "$transport" | jq -c --arg n "$1" --argjson st "$got" --arg gc "$gc" --argjson ok "$ok" \
+    '. + [{case: $n, status: $st, error_code: $gc, ok: $ok}]')"
+}
+add_transport "no token" 401 denied "$(req POST /v1/status '{}' '')"
+add_transport "unknown path" 404 not_found "$(req POST /v1/nope '{}')"
+add_transport "GET of a tool" 405 invalid_arguments "$(req GET /v1/search '')"
+kill "$serve_pid" 2>/dev/null || true
+wait "$serve_pid" 2>/dev/null || true
+http_pass="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson t "$transport" \
+  '($e | length) > 0 and ($c | length) > 0 and all($e[]; .ok) and all($c[]; .ok) and all($t[]; .ok)')"
+http_json="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson t "$transport" --argjson p "$http_pass" \
+  '{endpoints: $e, codes: $c, transport: $t, pass: $p}')"
+
 tools_equal=false; [ "$contract_tools" = "$server_tools" ] && tools_equal=true
 codes_equal=false; [ "$contract_codes" = "$server_codes" ] && codes_equal=true
 pass=false
-if $tools_equal && $codes_equal && [ "${#missing[@]}" -eq 0 ] && [ -n "$contract_tools" ] && [ -n "$contract_codes" ]; then pass=true; fi
+if $tools_equal && $codes_equal && [ "$http_pass" = true ] && [ "${#missing[@]}" -eq 0 ] && [ -n "$contract_tools" ] && [ -n "$contract_codes" ]; then pass=true; fi
 result="$(jq -n \
   --arg ct "$contract_tools" --arg st "$server_tools" \
   --arg cc "$contract_codes" --arg sc "$server_codes" \
-  --argjson te "$tools_equal" --argjson ce "$codes_equal" --argjson pass "$pass" \
+  --argjson te "$tools_equal" --argjson ce "$codes_equal" --argjson pass "$pass" --argjson http "$http_json" \
   --args '{
     tools: {contract: ($ct | split("\n")), server: ($st | split("\n")), equal: $te},
     codes: {contract: ($cc | split("\n")), server: ($sc | split("\n")), equal: $ce},
+    http: $http,
     missing: $ARGS.positional, pass: $pass}' "${missing[@]+"${missing[@]}"}")"
 [ -z "$out" ] || echo "$result" >"$out"
 echo "$result"
@@ -91,4 +242,4 @@ if [ "$pass" != true ]; then
   echo "contract_check: FAILED" >&2
   exit 1
 fi
-echo "contract_check: OK ($(echo "$contract_tools" | wc -l | tr -d ' ') tools, $(echo "$contract_codes" | wc -l | tr -d ' ') codes, each matched by a test)" >&2
+echo "contract_check: OK ($(echo "$contract_tools" | wc -l | tr -d ' ') tools, $(echo "$contract_codes" | wc -l | tr -d ' ') codes, each matched by a test and by a real HTTP call)" >&2

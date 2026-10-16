@@ -57,6 +57,7 @@ fn http_statuses_of_the_codes() {
         (Code::TooLarge, 413),
         (Code::HeadingNotFound, 422),
         (Code::PolicyViolation, 422),
+        (Code::IndexStale, 503),
         (Code::Internal, 500),
     ];
     assert_eq!(want.len(), Code::ALL.len());
@@ -173,6 +174,18 @@ fn every_code_from_a_real_call() {
     std::fs::write(v.join(".mdkernel/policy.toml"), "promotion = 7\n").unwrap();
     expect_code(&k, "status", json!({}), Code::PolicyViolation);
     std::fs::remove_file(v.join(".mdkernel/policy.toml")).unwrap();
+    // K-E0.4: an append to human blocks without a heading of its own
+    expect_code(
+        &k,
+        "propose",
+        json!({"doc_path": "a.md", "mode": "append", "content": "x", "reason": "r"}),
+        Code::PolicyViolation,
+    );
+    // K-E0.3: an index of another format is stale, not internal
+    let m = v.join(".mdkernel/index/manifest.json");
+    let fresh = std::fs::read_to_string(&m).unwrap();
+    std::fs::write(&m, fresh.replace("mdkernel-index/3", "mdkernel-index/2")).unwrap();
+    expect_code(&k, "search", json!({"query": "espresso"}), Code::IndexStale);
     std::fs::write(v.join(".mdkernel/index/manifest.json"), "{ not json").unwrap();
     expect_code(&k, "search", json!({"query": "espresso"}), Code::Internal);
 }

@@ -176,27 +176,67 @@ struct Loaded {
     vecs: Vec<Vec<f32>>,
 }
 
-fn load(dir: &Path) -> Result<Loaded> {
+/// The index is missing, of another format or of another lexical record:
+/// nothing in it is wrong, it is only not this implementation's, and a
+/// rebuild (`mdk index build`) makes it current (K-E0.3). The message is the
+/// reason. Every other failure of `load` (a file that does not match the
+/// manifest, broken order, misaligned vectors) is damage, not staleness.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct IndexStale(pub String);
+
+impl std::fmt::Display for IndexStale {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.0)
+    }
+}
+
+impl std::error::Error for IndexStale {}
+
+/// Why the index of `vault` is stale (`IndexStale`), or `None` when its
+/// manifest is of this format and lexical record. Reads `manifest.json`
+/// only; the full check is `Store::open`.
+pub fn staleness(vault: &Vault) -> Result<Option<IndexStale>> {
+    match manifest_of(&index_dir(vault)) {
+        Ok(_) => Ok(None),
+        Err(e) => match e.downcast::<IndexStale>() {
+            Ok(s) => Ok(Some(s)),
+            Err(e) => Err(e),
+        },
+    }
+}
+
+/// `manifest.json` of `dir`, checked for format and lexical record first
+/// (an index of another format says so: `IndexStale`).
+fn manifest_of(dir: &Path) -> Result<Manifest> {
+    let stale = |m: String| anyhow::Error::new(IndexStale(m));
     if !dir.join("manifest.json").is_file() {
-        bail!("no index at {} (run `mdk index build`)", dir.display());
+        return Err(stale(format!(
+            "no index at {} (run `mdk index build`)",
+            dir.display()
+        )));
     }
     let text = fs::read_to_string(dir.join("manifest.json"))?;
     // the format first, so that an index of another format says so
     let raw: serde_json::Value = serde_json::from_str(&text).context("index manifest.json")?;
     if raw["format"] != FORMAT {
-        bail!(
+        return Err(stale(format!(
             "index format {} != {FORMAT:?} (rebuild it with `mdk index build`)",
             raw["format"]
-        );
+        )));
     }
     let manifest: Manifest = serde_json::from_value(raw).context("index manifest.json")?;
     if manifest.lexical != LexicalParams::current() {
-        bail!(
+        return Err(stale(format!(
             "index lexical record {:?} != this implementation's {:?}; rebuild it",
             manifest.lexical,
             LexicalParams::current()
-        );
+        )));
     }
+    Ok(manifest)
+}
+
+fn load(dir: &Path) -> Result<Loaded> {
+    let manifest = manifest_of(dir)?;
     let (records, rh): (Vec<ChunkRecord>, String) = read_jsonl(&dir.join("records.jsonl"))?;
     let (snaps, sh): (Vec<SnapshotChunks>, String) = read_jsonl(&dir.join("snapshots.jsonl"))?;
     let (metas, eh): (Vec<VectorMeta>, String) = read_jsonl(&dir.join("vectors/embedders.jsonl"))?;

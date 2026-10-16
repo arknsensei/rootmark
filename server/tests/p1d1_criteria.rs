@@ -602,6 +602,17 @@ fn d1_5_pipelined_calls_give_identical_logs() {
     let ab = eq(&a, &b);
     let ac = eq(&a, &c);
     let all_true = |m: &Value| m.as_object().unwrap().values().all(|x| x == true);
+    // the responses of the writing and trace-writing calls (propose,
+    // search): deterministic by contract §5 (one FIFO queue, arrival order);
+    // the read-only blame runs in parallel and may not see an earlier write,
+    // so `responses_*_equal` (every response) is informational (P1-E/E0, K-E0.2)
+    let writes = |r: &[Value]| -> Vec<Value> {
+        r.iter()
+            .zip(&calls)
+            .filter(|(_, c)| c["name"] == "propose" || c["name"] == "search")
+            .map(|(r, _)| r.clone())
+            .collect()
+    };
     let proposes: Vec<&Value> = ra
         .iter()
         .zip(&calls)
@@ -616,6 +627,9 @@ fn d1_5_pipelined_calls_give_identical_logs() {
         "propose_denied": denied, "traces": String::from_utf8(read(&a, ".mdkernel/traces.jsonl")).unwrap().lines().count(),
         "pipelined_a_vs_b": ab, "pipelined_vs_lockstep": ac,
         "responses_a_vs_b_equal": ra == rb, "responses_pipelined_vs_lockstep_equal": ra == rc,
+        "write_responses": writes(&ra).len(),
+        "write_responses_a_vs_b_equal": writes(&ra) == writes(&rb),
+        "write_responses_pipelined_vs_lockstep_equal": writes(&ra) == writes(&rc),
         "elapsed_ms_pipelined": ta, "elapsed_ms_lockstep": tc,
         "events_hash32": mdkcore::hash32(&String::from_utf8(read(&a, ".mdkernel/events.jsonl")).unwrap()),
         "traces_hash32": mdkcore::hash32(&String::from_utf8(read(&a, ".mdkernel/traces.jsonl")).unwrap()),

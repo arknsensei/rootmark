@@ -26,14 +26,20 @@ pub enum Code {
     /// a policy or the channel refuses the call (`EditPolicy`, an HTTP
     /// write without `[identity] human_id`, a missing or wrong token)
     Denied,
-    /// the vault's `policy.toml` is invalid
+    /// the vault's `policy.toml` is invalid, or an agent's `append` to a
+    /// document of human blocks does not start with a heading of its own
+    /// (K-E0.4; the error carries a `hint`)
     PolicyViolation,
+    /// the vault's index is missing or of another format: rebuild it
+    /// (`mdk index build`, or `mdk serve` with `[index] auto_rebuild`;
+    /// K-E0.3)
+    IndexStale,
     /// anything else: a failure of the server or the vault
     Internal,
 }
 
 impl Code {
-    pub const ALL: [Code; 10] = [
+    pub const ALL: [Code; 11] = [
         Code::InvalidArguments,
         Code::EmptyQuery,
         Code::PathOutsideVault,
@@ -43,6 +49,7 @@ impl Code {
         Code::HeadingNotFound,
         Code::Denied,
         Code::PolicyViolation,
+        Code::IndexStale,
         Code::Internal,
     ];
 
@@ -57,6 +64,7 @@ impl Code {
             Code::HeadingNotFound => "heading_not_found",
             Code::Denied => "denied",
             Code::PolicyViolation => "policy_violation",
+            Code::IndexStale => "index_stale",
             Code::Internal => "internal",
         }
     }
@@ -72,6 +80,7 @@ impl Code {
             Code::TooLarge => 413,
             Code::HeadingNotFound | Code::PolicyViolation => 422,
             Code::Internal => 500,
+            Code::IndexStale => 503,
         }
     }
 }
@@ -82,6 +91,8 @@ impl Code {
 pub struct Coded {
     pub code: Code,
     pub message: String,
+    /// what the caller can do about it (`{"error": {…, "hint"}}`; K-E0.4)
+    pub hint: Option<String>,
 }
 
 impl std::fmt::Display for Coded {
@@ -97,6 +108,20 @@ pub fn coded(code: Code, message: impl Into<String>) -> anyhow::Error {
     anyhow::Error::new(Coded {
         code,
         message: message.into(),
+        hint: None,
+    })
+}
+
+/// A new error with `code` and a `hint` for the caller.
+pub fn coded_hint(
+    code: Code,
+    message: impl Into<String>,
+    hint: impl Into<String>,
+) -> anyhow::Error {
+    anyhow::Error::new(Coded {
+        code,
+        message: message.into(),
+        hint: Some(hint.into()),
     })
 }
 
@@ -108,9 +133,16 @@ pub fn recode(code: Code, e: anyhow::Error) -> anyhow::Error {
     coded(code, format!("{e:#}"))
 }
 
+/// The code under `e`: its `Coded` root, or `index_stale` for a stale
+/// index anywhere below (`mdkindex::store::IndexStale`, K-E0.3).
 fn code_in(e: &anyhow::Error) -> Option<Code> {
     e.chain()
         .find_map(|c| c.downcast_ref::<Coded>().map(|c| c.code))
+        .or_else(|| {
+            e.chain()
+                .any(|c| c.is::<mdkindex::store::IndexStale>())
+                .then_some(Code::IndexStale)
+        })
 }
 
 /// The code of a tool error; unclassified → `internal`.
@@ -138,9 +170,17 @@ macro_rules! bail_code {
 }
 
 /// The JSON of a tool error: `{"error": {"code", "message"}}` (MCP
-/// `structuredContent`, HTTP body).
+/// `structuredContent`, HTTP body), and `"hint"` when the error has one.
 pub fn error_json(e: &anyhow::Error) -> serde_json::Value {
-    serde_json::json!({"error": {"code": code_of(e).as_str(), "message": format!("{e:#}")}})
+    let mut v =
+        serde_json::json!({"error": {"code": code_of(e).as_str(), "message": format!("{e:#}")}});
+    let hint = e
+        .chain()
+        .find_map(|c| c.downcast_ref::<Coded>().and_then(|c| c.hint.clone()));
+    if let Some(h) = hint {
+        v["error"]["hint"] = serde_json::Value::String(h);
+    }
+    v
 }
 
 #[cfg(test)]
@@ -157,8 +197,20 @@ mod tests {
         // an existing code is kept
         let r: anyhow::Result<()> = Err(coded(Code::TooLarge, "big")).code(Code::Internal);
         assert_eq!(code_of(&r.unwrap_err()), Code::TooLarge);
+        // a stale index under any context is index_stale
+        let e = anyhow::Error::new(mdkindex::store::IndexStale("old".into())).context("search");
+        assert_eq!(code_of(&e), Code::IndexStale);
         let names: Vec<&str> = Code::ALL.iter().map(|c| c.as_str()).collect();
-        assert_eq!(names.len(), 10);
+        assert_eq!(names.len(), 11);
+        // a hint travels in the JSON; without one there is no key
+        let e = coded_hint(Code::PolicyViolation, "no heading", "start with a heading")
+            .context("propose");
+        assert_eq!(error_json(&e)["error"]["hint"], "start with a heading");
+        assert!(error_json(&coded(Code::Exists, "x"))
+            .get("error")
+            .unwrap()
+            .get("hint")
+            .is_none());
         for c in Code::ALL {
             assert_eq!(serde_json::to_value(c).unwrap(), c.as_str());
         }

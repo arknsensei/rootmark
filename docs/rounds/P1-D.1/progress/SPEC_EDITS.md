@@ -21,6 +21,8 @@
   - (iii) reddetme sessiz başarısızlığı önler (bozuk bir aktör okunup uydurulmaz).
 
   Seçim etiketli varsayımdır (ASSUMPTIONS D1.4-1), kesinleşmesi DECISIONS K-D1.4-T'dedir. Majör seçilirse sürüm 2.0.0 olur ve hiçbir davranış değişmez.
+
+  **Not (2026-10-17, P1-E/E0, K-E0.1):** K-D1.4-T yama lehine kapandı. CRITERION'daki "veri" bir uygulamanın **yazdığı** veridir. İki yönde de okunabilirlik korunur: 1.0.2 okuyucuları yeni `meta` alanlarını (`actor`, `source`) yok sayar, çünkü §4.2 `meta`'yı açık bir JSON nesnesi olarak tanımlar; hiçbir biçim okunamaz hale gelmez. 1.0.3 okuyucusu yalnız biçimsiz bir `meta.actor`'ı reddeder; böyle bir veriyi yazmış bilinen bir 1.0.2 uygulaması yoktur. Sürüm 1.0.3 kalır.
 - Frozen bölümlerde (§4.2, §4.3) yalnız bilgilendirici not var (E1, E2), yani açıklık. CRITERION'a göre majör gerekmez. §1–3 ve §5–6'da düzenleme yok (PROMPT kırmızı çizgisi).
 - Uyumluluk: Seviye 2'ye C2-10 (E3), Seviye 3'e C3-06 (E4'ün başvuru davranışı, §9 değişmezliği) ve C3-07 (E6) eklendi (`spec/CONFORMANCE.md`). Var olan fixture'ların hiçbiri değişmedi.
 - Not (indeks biçimi): K-D1.7 indeks manifest biçimini `mdkernel-index/3`'e çıkarır. Bu bir spec düzenlemesi değil, başvuru uygulamasının türev indeks biçimidir. Eski indeks açıkça reddedilir ve `mdk index build` ile yeniden kurulur. Vault ve günlük etkilenmez.

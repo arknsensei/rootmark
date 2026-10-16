@@ -1,0 +1,9 @@
+{
+  "id": "mdkernel",
+  "name": "mdkernel",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Block-level provenance for your vault: blame, agent proposals, promote, search, checkpoints and traces from a local mdk serve.",
+  "author": "mdkernel",
+  "isDesktopOnly": true
+}

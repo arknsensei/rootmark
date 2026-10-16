@@ -146,6 +146,12 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/test_p1c1.sh` | `P1-D.1/D1.7-pre:` | yeniden dondurma P1-D.1/F14: C1-6 anahtar listesinde `lexical.dl` (K-D1.7) |
 | `research/eval/compare_p1d.py` | `P1-D.1/D1.7-pre:` | yeniden dondurma P1-D.1/F15: alan kümesi farkı kayıtlı fark (çıkış 3), hata değil |
 | `research/eval/compare_p1d1.py` | `P1-D.1/D1.7-fix:` | yeniden dondurma P1-D.1/F16: `d1_5.json` bayt listesinden çıktı (duvar saati alanları) |
+| `server/tests/p1d1_criteria.rs` | `P1-E/E0:` | yeniden dondurma P1-E/F1: D1-5 `write_responses_*_equal` (K-E0.2) |
+| `research/eval/compare_p1d1.py` | `P1-E/E0:` | yeniden dondurma P1-E/F2: `P1D1_INFO`, D1-5'in iki bilgi alanı (K-E0.2) |
+| `scripts/contract_check.sh` | `P1-E/E0:` | yeniden dondurma P1-E/F3: §1 uçları ve §3 durumları gerçek HTTP ile, `MDK_BIN` (Ş4) |
+| `server/tests/contract.rs` | `P1-E/E0:` | yeniden dondurma P1-E/F4: `index_stale` 503 ve gerçek çağrısı, başlıksız `append` → `policy_violation` (K-E0.3, K-E0.4) |
+| `research/eval/check_compare_fields.py` | `P1-E/E0:` | K-E0.2 belirlenimli alan denetleyicisi (bildirim ↔ karşılaştırıcı kodu) |
+| `scripts/check_compare_fields.sh` | `P1-E/E0:` | K-E0.2 denetleyicisinin sarmalayıcısı (`make check-compare-fields`) |
 <!-- /frozen-table -->
 
 ## Notlar

@@ -1,0 +1,34 @@
+{
+ "official_vs_itself": {
+  "old": {
+   "n_fields": 878,
+   "differing": []
+  },
+  "new": {
+   "n_fields": 876,
+   "differing": []
+  }
+ },
+ "official_vs_flipped_responses_a_vs_b_equal": {
+  "old": {
+   "n_fields": 878,
+   "differing": [
+    "p1d1/d1_5.json:responses_a_vs_b_equal"
+   ]
+  },
+  "new": {
+   "n_fields": 876,
+   "differing": []
+  }
+ },
+ "compared_leaves": {
+  "old": 878,
+  "new": 876,
+  "old_minus_new": [
+   "p1d1/d1_5.json:responses_a_vs_b_equal",
+   "p1d1/d1_5.json:responses_pipelined_vs_lockstep_equal"
+  ],
+  "new_minus_old": []
+ },
+ "deterministic_leaves_identical": true
+}

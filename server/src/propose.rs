@@ -119,6 +119,19 @@ pub fn append(old: &str, content: &str) -> String {
     format!("{old}{sep}{add}")
 }
 
+/// The hint of an `append` refused for want of a heading of its own (K-E0.4;
+/// `{"error": {"code": "policy_violation", "hint"}}`).
+pub const APPEND_HINT: &str = "start the appended text with a heading";
+
+/// Whether the agent's text starts (after blank lines) with an ATX heading
+/// line: an `append` that does opens a section of its own (K-E0.4).
+pub fn starts_with_heading(content: &str) -> bool {
+    content
+        .lines()
+        .find(|l| !l.trim().is_empty())
+        .is_some_and(|l| atx(l).is_some())
+}
+
 /// An ATX heading line (`#`–`######`, then a space or the end): its level
 /// and text (closing `#`s and surrounding spaces removed).
 fn atx(line: &str) -> Option<(usize, String)> {
@@ -273,6 +286,18 @@ mod tests {
         ] {
             assert!(check_doc_path(bad).is_err(), "{bad}");
         }
+    }
+
+    #[test]
+    fn heading_first() {
+        assert!(starts_with_heading("## Öneri: x\n\nText."));
+        assert!(starts_with_heading("\n\n# Top\nText."));
+        assert!(starts_with_heading("   ### Indented three\n"));
+        assert!(!starts_with_heading("A plain line."));
+        assert!(!starts_with_heading("#hashtag line"));
+        assert!(!starts_with_heading("    ## four spaces is code"));
+        assert!(!starts_with_heading("Title\n====="));
+        assert!(!starts_with_heading(""));
     }
 
     #[test]

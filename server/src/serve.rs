@@ -3,7 +3,9 @@
 //! Start: the vault must open; without `.mdkernel/policy.toml` the default
 //! recipe (`config::default_recipe`, promotion `human_only`) is written; the
 //! policy and its `[server]`/`[index]` tables must be valid; without an
-//! index one is built. Then, as asked:
+//! index one is built, and an index of another format is rebuilt unless
+//! `[index] auto_rebuild = false` (then searches answer `index_stale`,
+//! K-E0.3). Then, as asked:
 //! - `--mcp stdio`: MCP over stdin/stdout (`crate::mcp`); the end of stdin
 //!   ends the service;
 //! - `--http 127.0.0.1:PORT`: the HTTP API (`crate::http`), token in
@@ -19,7 +21,7 @@
 //! to stderr (`mdk serve: …`); stdout carries only MCP.
 
 use crate::config::{self, ServerConfig};
-use crate::tools::Kernel;
+use crate::tools::{IndexAtStart, Kernel};
 use anyhow::{bail, Context, Result};
 use mdkcore::{MatcherVersion, Policy, PolicySource};
 use std::path::{Path, PathBuf};
@@ -238,11 +240,19 @@ pub fn run(o: ServeOptions) -> Result<()> {
     if write_policy {
         write_default_policy(&o.vault)?;
     }
-    if let Some(r) = kernel.ensure_index()? {
-        log(format!(
+    match kernel.start_index(cfg.auto_rebuild)? {
+        IndexAtStart::Current => {}
+        IndexAtStart::Built(r) => log(format!(
             "no index: built one ({} records, {} snapshots, {})",
             r.records, r.snapshots, r.embedder_id
-        ));
+        )),
+        IndexAtStart::Rebuilt(why, r) => log(format!(
+            "index stale ({why}): rebuilt ({} records, {} snapshots, {})",
+            r.records, r.snapshots, r.embedder_id
+        )),
+        IndexAtStart::Stale(why) => log(format!(
+            "index stale ({why}); [index] auto_rebuild = false: searches answer index_stale until `mdk index build`"
+        )),
     }
     let rt = tokio::runtime::Builder::new_multi_thread()
         .enable_all()

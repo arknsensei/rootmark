@@ -150,8 +150,11 @@ pub fn specs() -> Vec<ToolSpec> {
                 promotes them. The vault's edit policy decides first (`[edit]`, default \
                 `append_only`): a write that would change or remove a `canonical` block, or a \
                 canonical retrieval unit (text appended to a section of canonical blocks joins \
-                their chunk; start it with a heading of its own), is refused with code `denied` \
-                and writes nothing; `replace_section` is allowed only on a section made of \
+                their chunk), is refused with code `denied` and writes nothing. Agent guideline \
+                (K-E0.4): text appended to a document of human blocks is accepted only as a section \
+                of its own, so start it with a heading (`## …`); an append without one that the \
+                policy refuses answers `policy_violation` with the hint \"start the appended text \
+                with a heading\"; `replace_section` is allowed only on a section made of \
                 proposals. Change and delete events name the actor (spec §4.3). Nothing but the \
                 agent's text is written to the file (no ids, no metadata). `reason` is recorded \
                 beside the vault (`.mdkernel/proposals.jsonl`). \
@@ -280,6 +283,19 @@ pub fn is_writer(tool: &str) -> bool {
 /// those that change the vault's content or governance state.
 pub fn needs_human_id(tool: &str) -> bool {
     matches!(tool, "propose" | "promote" | "checkpoint")
+}
+
+/// What `Kernel::ensure_index` found and did at the start of `mdk serve`.
+#[derive(Debug)]
+pub enum IndexAtStart {
+    /// the index is of this format and lexical record
+    Current,
+    /// there was none: built
+    Built(store::BuildReport),
+    /// it was stale (the reason): rebuilt (`[index] auto_rebuild`)
+    Rebuilt(String, store::BuildReport),
+    /// it is stale (the reason) and `auto_rebuild = false`: left as it is
+    Stale(String),
 }
 
 /// The served vault and its writer queue.
@@ -497,6 +513,33 @@ impl Kernel {
             }
             let e = self.embedder()?;
             Ok(Some(store::build(&v, e.as_ref())?))
+        })
+    }
+
+    /// `mdk serve`'s start: `ensure_index`, and an index of another format
+    /// is rebuilt when `auto_rebuild` (`[index] auto_rebuild`, K-E0.3); see
+    /// `IndexAtStart`. A stale index left in place makes searches answer
+    /// `index_stale`.
+    pub fn start_index(&self, auto_rebuild: bool) -> Result<IndexAtStart> {
+        self.ticket().run(|| {
+            let v = Vault::open(&self.vault)?;
+            let missing = !store::index_dir(&v).join("manifest.json").exists();
+            let stale = match missing {
+                true => None,
+                false => match store::staleness(&v)? {
+                    None => return Ok(IndexAtStart::Current),
+                    Some(s) => Some(s),
+                },
+            };
+            if let (Some(s), false) = (&stale, auto_rebuild) {
+                return Ok(IndexAtStart::Stale(s.0.clone()));
+            }
+            let e = self.embedder()?;
+            let r = store::build(&v, e.as_ref())?;
+            Ok(match stale {
+                None => IndexAtStart::Built(r),
+                Some(s) => IndexAtStart::Rebuilt(s.0, r),
+            })
         })
     }
 
@@ -979,6 +1022,15 @@ impl Kernel {
             effect: v.edit_effect(&plan)?,
         };
         if let Decision::Deny(why) = edit.decide(&req) {
+            // K-E0.4: an append to human blocks is accepted only as a section
+            // of its own; without a leading heading the agent is told so
+            if mode == PMode::Append && !propose::starts_with_heading(&x.content) {
+                return Err(crate::error::coded_hint(
+                    Code::PolicyViolation,
+                    format!("propose: denied by edit policy {}: {why}", edit.name()),
+                    propose::APPEND_HINT,
+                ));
+            }
             bail_code!(
                 Code::Denied,
                 "propose: denied by edit policy {}: {why}",

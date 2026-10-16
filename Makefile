@@ -21,7 +21,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
 .PHONY: report report-p1b test-tamper check-frozen setup setup-py build require-run d2 d3 d1 d1k4 d1h datasets freeze-check freeze-check-v3 \
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
-        check-deps test-check-deps conformance regress verify models c3-quality p1c-checks report-p1c \
+        check-deps test-check-deps check-compare-fields conformance regress verify models c3-quality p1c-checks report-p1c \
         c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1
 
 setup: setup-py build
@@ -53,7 +53,7 @@ else
 	@for p in $(dir $(TS_PKGS)); do (cd "$$p" && npm ci && npx vitest run); done
 endif
 
-lint: lint-rust lint-py lint-ts check-deps test-check-deps check-frozen
+lint: lint-rust lint-py lint-ts check-deps test-check-deps check-frozen check-compare-fields
 
 lint-rust:
 	cargo fmt --all --check
@@ -73,6 +73,11 @@ endif
 # Dependency direction core ← index ← server ← clients; research → bindings/python only (A-6)
 check-deps:
 	bash scripts/check_deps.sh
+
+# K-E0.2 (P1-E/E0): research/eval/DETERMINISTIC_FIELDS.md matches every
+# run comparator's compared files and excluded fields, both ways
+check-compare-fields: setup-py
+	bash scripts/check_compare_fields.sh >/dev/null
 
 # Frozen files unchanged since their freeze commit (research/FROZEN.md)
 check-frozen:

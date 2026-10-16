@@ -12,9 +12,10 @@ trap 'rm -rf "$scratch"' EXIT
 fresh() { # fresh <name> → path of a new copy of the workspace (no target/, no data)
   local d="$scratch/$1"
   mkdir -p "$d"
-  (cd "$here" && tar -cf - Cargo.toml Cargo.lock rust-toolchain.toml .cargo scripts \
+  (cd "$here" && tar --exclude node_modules -cf - Cargo.toml Cargo.lock rust-toolchain.toml .cargo scripts \
       core index server bindings/python \
       $( [ -d clients ] && echo clients ) \
+      $( [ -f docs/CLIENT_CONTRACT.md ] && echo docs/CLIENT_CONTRACT.md ) \
       $( [ -f research/pyproject.toml ] && echo research/pyproject.toml ) \
       $( [ -d research/tests ] && echo research/tests ) ) | tar -xf - -C "$d"
   echo "$d"
@@ -64,5 +65,20 @@ d="$(fresh client-import)"
 mkdir -p "$d/clients/obsidian/src"
 printf "import { parse } from '../../../core/src/parse';\n" >"$d/clients/obsidian/src/bad.ts"
 expect fail "$d" "client imports core directly"
+
+d="$(fresh client-import-server)"
+mkdir -p "$d/clients/obsidian/src"
+printf "import { Kernel } from '../../../server/src/tools';\n" >"$d/clients/obsidian/src/bad.ts"
+expect fail "$d" "client imports server directly (P1-E/E0)"
+
+d="$(fresh client-path)"
+mkdir -p "$d/clients/obsidian/src"
+printf 'export const p = "/v1/demote";\n' >"$d/clients/obsidian/src/bad.ts"
+expect fail "$d" "client names an HTTP path outside the contract (P1-E/E0)"
+
+d="$(fresh client-path-ok)"
+mkdir -p "$d/clients/obsidian/src"
+printf 'export const p = "/v1/promote";\n' >"$d/clients/obsidian/src/ok.ts"
+expect pass "$d" "client names a contract endpoint"
 
 echo "test_check_deps: OK"

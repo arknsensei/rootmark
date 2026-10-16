@@ -122,13 +122,16 @@ fn append_only_refuses_every_canonical_replace_and_allows_proposal_sections() {
     }
     assert_eq!(log_of(&v), before_log);
     assert_eq!(files_of(&v), before_files);
-    // an append without a heading of its own joins the human chunk: denied
+    // an append without a heading of its own joins the human chunk: refused,
+    // and since K-E0.4 (P1-E/E0) as `policy_violation` with a hint
     let e = propose(
         &k,
         json!({"doc_path": "safety.md", "mode": "append", "content": "An agent line."}),
     )
     .unwrap_err();
-    assert_eq!(code_of(&e), Code::Denied, "{e:#}");
+    assert_eq!(code_of(&e), Code::PolicyViolation, "{e:#}");
+    assert_eq!(log_of(&v), before_log);
+    assert_eq!(files_of(&v), before_files);
     // with its own heading: accepted, proposal
     propose(&k, json!({"doc_path": "safety.md", "mode": "append", "content": "## Agent notes\n\nAn agent line."})).unwrap();
     // D1-2: replace_section of a section made only of proposals
