@@ -1,0 +1,537 @@
+{
+  "id": "C2-10",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "1ec8dcfb2bd5d2f3bec0a4eaee3c052f"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockMoved",
+            {
+              "id": "conformance-agent/1.0",
+              "kind": "agent"
+            },
+            "conformance-agent/1.0"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockMoved",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "72948a6dda66cacf8435465f0119d307"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockMoved",
+            {
+              "id": "conformance-agent/1.0",
+              "kind": "agent"
+            },
+            "conformance-agent/1.0"
+          ],
+          [
+            "BlockMoved",
+            {
+              "id": "conformance-agent/1.0",
+              "kind": "agent"
+            },
+            "conformance-agent/1.0"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockMoved",
+          "BlockMoved",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "2ff784626440f5d6017f20ca395a95e0"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "da74375125efd27d9d655d191a79641b"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockSplit",
+            {
+              "id": "conformance-agent/1.0",
+              "kind": "agent"
+            },
+            "conformance-agent/1.0"
+          ],
+          [
+            "LayerChanged",
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockSplit",
+          "LayerChanged",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "963361c5871d48f79ba0d9b20e1a176a"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "963361c5871d48f79ba0d9b20e1a176a"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockMerged",
+            {
+              "id": "conformance-agent/1.0",
+              "kind": "agent"
+            },
+            "conformance-agent/1.0"
+          ],
+          [
+            "LayerChanged",
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockMerged",
+          "LayerChanged",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "da74375125efd27d9d655d191a79641b"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "58e1a8bc52f8a861e28ed02b4efd7656"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockUpdated",
+            {
+              "id": "conformance-agent/1.0",
+              "kind": "agent"
+            },
+            "conformance-agent/1.0"
+          ],
+          [
+            "LayerChanged",
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockUpdated",
+          "LayerChanged",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "14b7658de429b854e970b947e518dec1"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "58e1a8bc52f8a861e28ed02b4efd7656"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null
+          ],
+          [
+            "BlockDeleted",
+            {
+              "id": "conformance-agent/1.0",
+              "kind": "agent"
+            },
+            "conformance-agent/1.0"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockCreated",
+          "BlockDeleted",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "d2320e9e22029fdfba83e36d1f842d44"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "94f33308d2da5e11c187ef5ebc533603"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockDeleted",
+            {
+              "id": "conformance-agent/1.0",
+              "kind": "agent"
+            },
+            "conformance-agent/1.0"
+          ],
+          [
+            "BlockDeleted",
+            {
+              "id": "conformance-agent/1.0",
+              "kind": "agent"
+            },
+            "conformance-agent/1.0"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockDeleted",
+          "BlockDeleted",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "c8d2d87aa98001b2f440f028ecbd14ee"
+      }
+    },
+    {
+      "op": "events",
+      "result": [
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockMoved",
+        "SnapshotCommitted",
+        "BlockMoved",
+        "BlockMoved",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockSplit",
+        "LayerChanged",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockMerged",
+        "LayerChanged",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockUpdated",
+        "LayerChanged",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockDeleted",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockDeleted",
+        "BlockDeleted",
+        "SnapshotCommitted"
+      ]
+    },
+    {
+      "op": "actor_tamper",
+      "result": {
+        "opened": true
+      }
+    },
+    {
+      "op": "actor_tamper",
+      "result": {
+        "open_err": "meta.actor and meta.source go together"
+      }
+    },
+    {
+      "op": "actor_tamper",
+      "result": {
+        "open_err": "malformed meta.actor"
+      }
+    },
+    {
+      "op": "actor_tamper",
+      "result": {
+        "open_err": "meta.actor.id is empty"
+      }
+    },
+    {
+      "op": "actor_tamper",
+      "result": {
+        "open_err": "malformed meta.actor"
+      }
+    },
+    {
+      "op": "actor_tamper",
+      "result": {
+        "open_err": "meta.source is not a string"
+      }
+    },
+    {
+      "op": "actor_tamper",
+      "result": {
+        "open_err": "carries no meta.actor/meta.source"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "a.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "bc69405b129b325c28378b81cae9c61a"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "028c1c6e53dc6ea513bace14762740f1"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "97ee85d11f27c41b41ef60ca86d363fd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "762e6438a509f347ccb211d6da0a633a"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "1a70c5ea1b9eb4e9cd880b1ac4477c41"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "88dc6e9bee4d6a2d7e6dfc07f02ae55e"
+            }
+          ],
+          "b.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "36d8ffc527ece302fc45e98f4164789c"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6ed071a309e275df6e7b48386672d6bf"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "291ba53b0f38e15977ae087dbe8664e6"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "281aebee087b47f133aff6d591ce6ab1"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "26db1bc870b9aeec1b30c16be317bccf"
+            }
+          ],
+          "c.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "3963e45e9f7f69b3cefdf41efc336702"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "e1a831222e68a5920d9da1c5d3b65a55"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "35ee26d8bdc1d38d41c7539df90e107e"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "a2872a868cfdab09717e2a129039dc79"
+            }
+          ],
+          "d.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6dc3e9afa95c6542a809e403a618a375"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c35461c7d1ee111e1951029f33d44f57"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "785560e7c1d8149fa5fe58ab545392a5"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "60834fe189fa021e6d183a6abc1a38c0"
+            }
+          ],
+          "e.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c5c050ab3536769b4e84501045d10193"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "467dbf34ddfb8eee42494c97ff720a1b"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "b8b97a7bc50046a5f861e05cc9895003"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    }
+  ]
+}

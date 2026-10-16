@@ -37,6 +37,7 @@ Each test has a fixture under `spec/fixtures/` (added in Phase 1 round A) and an
 | C2-07 | Consumption trace written for every retrieval; id formula | trace line equals fixture |
 | C2-08 | Layer transitions replayable from events | equality |
 | C2-09 | Invalid trace input in `traces.jsonl` (`query_hash` of 31 or 33 characters, non-hex, uppercase; `consumer` containing `"\n"`) rejected when the vault is opened (§8, 1.0.1) | error |
+| C2-10 | Provenance of events: change and delete events of an attributed ingest carry `meta.actor` and `meta.source`, events without them replay, malformed or unpaired values are rejected when the vault is opened (§7, 1.0.3) | events equal fixture; error |
 
 ## Level 3 — Retrieval
 
@@ -47,6 +48,8 @@ Each test has a fixture under `spec/fixtures/` (added in Phase 1 round A) and an
 | C3-03 | Index rebuild from checkpoint yields identical ranking | equality |
 | C3-04 | Retrieval never returns `derived` as content | property |
 | C3-05 | With `proposal` results requested, the `canonical` prefix equals the result without the request, every mode (§9, 1.0.2) | property |
+| C3-06 | Canonical invariance: agent writes allowed by the default edit policy leave the `canonical` ranking of every query unchanged, every mode; writes touching `canonical` content are denied (§7, §9, 1.0.3) | decisions and rankings equal fixture |
+| C3-07 | Response length with `proposal` results requested: at most `k` per layer, `2k` in all, every mode (§9, 1.0.3) | property |
 
 ## Reporting
 A conformance run produces `conformance.json` with one entry per test (`pass`/`fail`, actual vs expected hash). Level is claimed only if all tests of that level and below pass.

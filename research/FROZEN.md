@@ -126,6 +126,12 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `index/tests/conformance/eval_c3.rs` | `P1-D.1/D1.3:` | yeniden dondurma P1-D.1/F3: `agent_write` işlemi, `lengths` gözlemi |
 | `index/tests/conformance_c3.rs` | `P1-D.1/D1.3:` | yeniden dondurma P1-D.1/F4: Seviye 3 = C3-01..C3-07 |
 | `index/tests/conformance_c3_gen.rs` | `P1-D.1/D1.3:` | yeniden dondurma P1-D.1/F5: 7 C3 dizini |
+| `spec/fixtures/**` | `P1-D.1/D1.4:` | yeniden dondurma P1-D.1/F6: C2-10 eklendi; `MANIFEST.json` yalnız C2-10 satırları |
+| `core/tests/conformance/eval_c2.rs` | `P1-D.1/D1.4:` | yeniden dondurma P1-D.1/F7: `ingest … actor`, `actor_tamper` |
+| `core/tests/conformance_c2_gen.rs` | `P1-D.1/D1.4:` | yeniden dondurma P1-D.1/F8: 10 C2 dizini |
+| `core/tests/conformance.rs` | `P1-D.1/D1.4:` | yeniden dondurma P1-D.1/F9: Seviye 2 = C2-01..C2-10, `spec_version` 1.0.3 |
+| `index/tests/conformance_c3.rs` | `P1-D.1/D1.4:` | yeniden dondurma P1-D.1/F10: alt düzey toplamı 27 (toplam 34) |
+| `scripts/test_tamper_p1c.sh` | `P1-D.1/D1.4:` | yeniden dondurma P1-D.1/F11: Seviye 3 toplamı 34 |
 <!-- /frozen-table -->
 
 ## Notlar

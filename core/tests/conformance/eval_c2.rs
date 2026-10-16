@@ -1,4 +1,4 @@
-//! Conformance Level 2 evaluator (spec/CONFORMANCE.md C2-01..C2-09).
+//! Conformance Level 2 evaluator (spec/CONFORMANCE.md C2-01..C2-10).
 //!
 //! A C2 case (`spec/fixtures/C2-xx/case.c2.json` — not `case.json`, which the
 //! frozen v3-final C1 generator walks) is a script of governance operations
@@ -7,7 +7,9 @@
 //! (`conformance_c2_gen`), compared by `core/tests/conformance.rs`.
 //!
 //! Operations (`op`):
-//! - `ingest {doc, file, author, source, declared?}`
+//! - `ingest {doc, file, author, source, declared?, actor?}` — with `actor`
+//!   (`<kind>:<id>`, C2-10, 1.0.3) the attributed ingest (`Vault::ingest_by`),
+//!   observed with `attributed`: `[kind, meta.actor, meta.source]` per event
 //! - `label {name, doc, block}` — remember the lineage of a head block
 //! - `promote|demote|prune {lineage, actor, reason, policy, to?}`
 //! - `checkpoint {name?}`; `checkpoint_file_overwrite {at}`
@@ -22,6 +24,10 @@
 //!   with `field` (`query_hash` or `consumer`) of the last `traces.jsonl` line
 //!   set to `value` and its `trace_id` recomputed with the §8 formula (so
 //!   only the input rule can reject it), then restore
+//! - `actor_tamper {kind, change, expect_open_err?}` (C2-10, 1.0.3) — reopen
+//!   with the last event of `kind` changed (`remove_both`, `remove_actor`,
+//!   `actor_kind`, `actor_id_empty`, `actor_extra_field`, `source_number`,
+//!   `add_both`), then restore; observed as `{opened}` or `{open_err}`
 //!
 //! `expect_err` (substring) marks an operation that must fail; an error is
 //! recorded as `{"err": true}` only (messages may hold temp paths).
@@ -174,11 +180,36 @@ impl Run<'_> {
                     .map(Layer::parse)
                     .transpose()?;
                 let doc = s(op, "doc")?.to_string();
-                let r = self.v()?.ingest_declared(&doc, &text, prov, m, declared)?;
-                json!({
+                let actor = op.get("actor").and_then(Value::as_str);
+                let r = match actor {
+                    None => self.v()?.ingest_declared(&doc, &text, prov, m, declared)?,
+                    Some(a) => {
+                        if declared.is_some() {
+                            bail!("`declared` and `actor` together are not a case");
+                        }
+                        let a = Actor::parse(a)?;
+                        self.v()?.ingest_by(&doc, &text, prov, m, &a)?
+                    }
+                };
+                let mut o = json!({
                     "snapshot_id": r.snapshot.snapshot_id,
                     "events": r.events.iter().map(|e| serde_json::to_value(e.kind)).collect::<serde_json::Result<Vec<_>>>()?,
-                })
+                });
+                if actor.is_some() {
+                    o["attributed"] = r
+                        .events
+                        .iter()
+                        .map(|e| {
+                            Ok(json!([
+                                serde_json::to_value(e.kind)?,
+                                e.meta.get("actor").cloned().unwrap_or(Value::Null),
+                                e.meta.get("source").cloned().unwrap_or(Value::Null)
+                            ]))
+                        })
+                        .collect::<serde_json::Result<Vec<_>>>()?
+                        .into();
+                }
+                o
             }
             "label" => {
                 let doc = s(op, "doc")?;
@@ -329,6 +360,54 @@ impl Run<'_> {
                         }
                         json!({"open_err": want})
                     }
+                }
+            }
+            "actor_tamper" => {
+                let kind = s(op, "kind")?;
+                let change = s(op, "change")?;
+                self.v = None;
+                let p = self.root.join(".mdkernel/events.jsonl");
+                let log = fs::read_to_string(&p)?;
+                let mut lines: Vec<String> = log.lines().map(str::to_string).collect();
+                let i = lines
+                    .iter()
+                    .rposition(|l| l.contains(&format!("\"kind\":\"{kind}\"")))
+                    .context("no event of that kind")?;
+                let mut ev: Value = serde_json::from_str(&lines[i])?;
+                let meta = ev["meta"].as_object_mut().context("meta")?;
+                match change {
+                    "remove_both" => {
+                        meta.remove("actor").context("no meta.actor")?;
+                        meta.remove("source").context("no meta.source")?;
+                    }
+                    "remove_actor" => {
+                        meta.remove("actor").context("no meta.actor")?;
+                    }
+                    "actor_kind" => meta["actor"]["kind"] = json!("robot"),
+                    "actor_id_empty" => meta["actor"]["id"] = json!(""),
+                    "actor_extra_field" => meta["actor"]["extra"] = json!(1),
+                    "source_number" => meta["source"] = json!(7),
+                    "add_both" => {
+                        meta.insert("actor".into(), json!({"kind": "agent", "id": "x"}));
+                        meta.insert("source".into(), json!("x"));
+                    }
+                    o => bail!("unknown change {o:?}"),
+                }
+                lines[i] = serde_json::to_string(&ev)?;
+                fs::write(&p, lines.join("\n") + "\n")?;
+                let res = Vault::open_with(&self.root, self.params);
+                fs::write(&p, &log)?;
+                match (res, op.get("expect_open_err").and_then(Value::as_str)) {
+                    (Ok(_), None) => json!({"opened": true}),
+                    (Ok(_), Some(_)) => bail!("tampered log opened"),
+                    (Err(e), Some(want)) => {
+                        let msg = format!("{e:#}");
+                        if !msg.contains(want) {
+                            bail!("actor_tamper: {msg:?} lacks {want:?}");
+                        }
+                        json!({"open_err": want})
+                    }
+                    (Err(e), None) => bail!("actor_tamper {change}: open failed: {e:#}"),
                 }
             }
             "trace_tamper" => {

@@ -31,7 +31,7 @@ use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
 /// Spec version this build implements (spec/SPEC.md title).
-pub const SPEC_VERSION: &str = "1.0.2";
+pub const SPEC_VERSION: &str = "1.0.3";
 /// Conformance level the reference implementation claims (spec §12;
 /// `make conformance`).
 pub const LEVEL_CLAIMED: u8 = 3;

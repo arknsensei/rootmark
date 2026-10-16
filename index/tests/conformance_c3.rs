@@ -7,7 +7,7 @@
 //! (`core` does not depend on `index`). This checker evaluates
 //! `spec/fixtures/C3-*/case.c3.json` with `conformance/eval_c3.rs` and, with
 //! `MDK_CONFORMANCE_REPORT`, extends that report: seven Level 3 entries,
-//! `total` 26 + 7, `level_claimed` 3 when Levels 1–2 were claimed (2, intact
+//! `total` 27 + 7 (C2-10 since P1-D.1), `level_claimed` 3 when Levels 1–2 were claimed (2, intact
 //! fixture manifest — which also lists every C3 file) and every C3 case
 //! passes. Expected outputs are written by `scripts/gen_fixtures_c3.sh`.
 //! The fixture root is resolved at run time (`MDK_FIXTURES`, else
@@ -24,7 +24,7 @@ use std::path::{Path, PathBuf};
 const LEVEL3: [&str; 7] = [
     "C3-01", "C3-02", "C3-03", "C3-04", "C3-05", "C3-06", "C3-07",
 ];
-const LOWER_TOTAL: u64 = 26;
+const LOWER_TOTAL: u64 = 27;
 
 fn fixtures() -> PathBuf {
     let root = match std::env::var_os("MDK_FIXTURES") {

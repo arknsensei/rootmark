@@ -89,11 +89,12 @@ test-check-deps:
 
 # Levels 1, 2 and 3 (spec/CONFORMANCE.md): spec/fixtures/C1-*, C2-* against
 # the current core (frozen core/tests/conformance.rs writes
-# reports/conformance.json: 26 entries, level_claimed 2; C2-09 since
+# reports/conformance.json: 27 entries since P1-D.1 (C2-10), level_claimed 2; C2-09 since
 # P1-C/C0, K-C0.2), then spec/fixtures/C3-* against the current index
 # (index/tests/conformance_c3.rs extends the report: 31 entries since
-# P1-C.1 (C3-05, K-C1.3); 33 since P1-D.1/D1.3 (C3-06, C3-07, K-D1.1, K-D1.8),
-# level_claimed 3; P1-C/C7). Fails unless 33/33 pass (level_claimed 3) and
+# P1-C.1 (C3-05, K-C1.3); 34 since P1-D.1 (C3-06, C3-07, K-D1.1, K-D1.8; C2-10,
+# K-D1.2; spec 1.0.3), level_claimed 3; P1-C/C7). Fails unless 34/34 pass
+# (level_claimed 3) and
 # the frozen fixture manifest matches. The fixture root is this tree's,
 # resolved at run time (MDK_FIXTURES; P1-A verifier recommendation Ö2).
 # Level 3 needs the model files (`make models`).
@@ -104,7 +105,7 @@ conformance:
 	@test -f reports/conformance.json || { echo "error: reports/conformance.json not written" >&2; exit 1; }
 	MDK_FIXTURES="$(CURDIR)/spec/fixtures" MDK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
 	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
-	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 3 and .passed == .total and .total == 33 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string" and ([.tests[] | select(.level == 3)] | length) == 7' reports/conformance.json >/dev/null \
+	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 3 and .passed == .total and .total == 34 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string" and ([.tests[] | select(.level == 3)] | length) == 7' reports/conformance.json >/dev/null \
 	  || { echo "error: conformance level 3 not reached (reports/conformance.json)" >&2; exit 1; }
 	@echo "conformance: level $$(jq -r .level_claimed reports/conformance.json), $$(jq -r '"\(.passed)/\(.total)"' reports/conformance.json) (reports/conformance.json)"
 
