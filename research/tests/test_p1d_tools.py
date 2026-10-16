@@ -7,7 +7,6 @@ import json
 import pytest
 
 from eval import compare_p1d as P
-from eval import metrics as M
 from eval import report_p1d as R
 from eval import run_p1d_checks as K
 
@@ -27,12 +26,16 @@ def test_latency_fields_are_excluded_but_nothing_else(tmp_path):
     assert list(P.compare(a, b, ["p1d/d10.json"])["differing_fields"]) == ["p1d/d10.json:edits"]
 
 
-def test_field_set_difference_is_an_error(tmp_path):
+def test_field_set_difference_is_recorded(tmp_path):
+    # P1-D.1/F15: a field only one side has is a recorded difference (never
+    # a silent pass), no longer an exception
     a, b = tmp_path / "a", tmp_path / "b"
     _write(a, "p1d/scene/scene.json", {"pass": True, "x": 1})
     _write(b, "p1d/scene/scene.json", {"pass": True})
-    with pytest.raises(M.MetricError):
-        P.compare(a, b, ["p1d/scene/scene.json"])
+    r = P.compare(a, b, ["p1d/scene/scene.json"])
+    assert r["differing_fields"] == {"p1d/scene/scene.json:x": {"a": 1, "b": "absent"}}
+    r = P.compare(b, a, ["p1d/scene/scene.json"])
+    assert r["differing_fields"] == {"p1d/scene/scene.json:x": {"a": "absent", "b": 1}}
 
 
 def test_p1d_bytes_catch_one_byte(tmp_path, monkeypatch):
