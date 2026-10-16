@@ -653,13 +653,53 @@ impl Store {
             );
         }
         let res = vault.ingest(doc_path, text, prov, matcher)?;
+        self.index_head(vault, embedder, doc_path, res.events.len())
+    }
+
+    /// `watch_with` for an ingest planned (and checked) beforehand
+    /// (`Vault::plan_ingest`; the server's attributed writes, K-D1.1/K-D1.2):
+    /// commits the plan, then indexes the new head like `watch_with`.
+    pub fn watch_plan(
+        &mut self,
+        vault: &mut Vault,
+        embedder: &dyn Embedder,
+        plan: mdkcore::IngestPlan,
+    ) -> Result<WatchReport> {
+        self.check_watch(embedder)?;
+        let doc_path = plan.doc_path.clone();
+        let res = vault.commit_plan(plan)?;
+        self.index_head(vault, embedder, &doc_path, res.events.len())
+    }
+
+    fn check_watch(&self, embedder: &dyn Embedder) -> Result<()> {
+        if self.poisoned {
+            bail!("an earlier hot append failed; reopen the index (`mdk index build` repairs it)");
+        }
+        if embedder.id() != self.manifest.embedder_id {
+            bail!(
+                "watch embedder {} != index embedder {}",
+                embedder.id(),
+                self.manifest.embedder_id
+            );
+        }
+        Ok(())
+    }
+
+    /// Indexes the head of `doc_path` after an ingest of `events` events.
+    fn index_head(
+        &mut self,
+        vault: &mut Vault,
+        embedder: &dyn Embedder,
+        doc_path: &str,
+        events: usize,
+    ) -> Result<WatchReport> {
         let snap = vault
             .snapshot(doc_path)?
             .with_context(|| format!("{doc_path}: no head after ingest"))?;
         let mut report = WatchReport {
             doc_path: doc_path.to_string(),
             snapshot_id: snap.snapshot_id.clone(),
-            events: res.events.len(),
+            events,
             chunks: 0,
             embedded: 0,
         };

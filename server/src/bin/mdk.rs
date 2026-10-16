@@ -54,15 +54,25 @@ enum Cmd {
         version_id: String,
         k: usize,
     },
-    /// Agent write: copy <file> to <vault>/<doc> and ingest it as agent content
-    /// (new lineages are proposals, spec §7)
+    /// Agent write: the text of <file> into <vault>/<doc> as agent content
+    /// (new lineages are proposals, spec §7), through the same checks and
+    /// edit policy as the MCP/HTTP `propose` tool (K-D1.1; actor agent:<source>)
     Propose {
         vault: PathBuf,
         doc: String,
         file: PathBuf,
-        /// provenance source (e.g. the agent's name)
+        /// provenance source and actor id (e.g. the agent's name)
         #[arg(long)]
         source: String,
+        /// create (default; never overwrites), append or replace_section
+        #[arg(long, value_parser = ["create", "append", "replace_section"])]
+        mode: Option<String>,
+        /// the section heading (replace_section only)
+        #[arg(long)]
+        heading: Option<String>,
+        /// why (recorded in .mdkernel/proposals.jsonl)
+        #[arg(long, default_value = "mdk propose (CLI)")]
+        reason: String,
     },
     /// Promote a lineage proposal → canonical through the vault's promotion policy
     Promote {
@@ -350,26 +360,36 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             doc,
             file,
             source,
+            mode,
+            heading,
+            reason,
         } => {
-            let (mut v, _) = open_governed(&vault)?;
             let text = std::fs::read_to_string(&file)
                 .with_context(|| format!("read {}", file.display()))?;
-            let target = doc_file(&vault, &doc)?;
-            if let Some(d) = target.parent() {
-                std::fs::create_dir_all(d)?;
+            let k = mdkserver::tools::Kernel::open_with(&vault, matcher)?;
+            let mut args = json!({"doc_path": doc, "content": text, "reason": reason});
+            if let Some(md) = mode {
+                args["mode"] = json!(md);
             }
-            std::fs::write(&target, &text)?;
-            let prov = Provenance {
-                author_kind: AuthorKind::Agent,
-                source,
+            if let Some(h) = heading {
+                args["heading"] = json!(h);
+            }
+            let caller = mdkserver::tools::Caller {
+                channel: mdkserver::tools::Channel::Cli,
+                consumer: Some(&source),
             };
-            let r = v.ingest(&doc, &text, prov, m)?;
-            let blocks = v.snapshot_blocks(&r.snapshot)?;
-            json!({
-                "ingested": IngestSummary::new(&doc, &r),
-                "layers": blocks.iter().map(|b| json!({"lineage_id": b.lineage_id, "layer": b.layer})).collect::<Vec<_>>(),
-                "events_hash": v.events_hash()?,
-            })
+            let mut out = k.call("propose", &args, caller)?;
+            // the P1-B output fields: every block's layer
+            let layers: Vec<Value> = out["blocks"]
+                .as_array()
+                .map(|bs| {
+                    bs.iter()
+                        .map(|b| json!({"lineage_id": b["lineage_id"], "layer": b["layer"]}))
+                        .collect()
+                })
+                .unwrap_or_default();
+            out["layers"] = Value::Array(layers);
+            out
         }
         Cmd::Promote {
             vault,

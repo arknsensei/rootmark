@@ -1,16 +1,26 @@
 //! The tools of the MCP server and the HTTP API (GOAL P1-D "MCP araçları"),
 //! independent of the transport: a tool takes a JSON object of arguments and
-//! the consumer's identity and returns JSON, or an error. Every tool opens
-//! the vault afresh (`Vault::open` replays the log), so a change made by
-//! another process — `mdk promote` from the command line — is seen by the
-//! next call; calls are serialised by one lock.
+//! the caller (channel and consumer) and returns JSON, or an error with a
+//! stable code (`crate::error`, K-D1.5). Every tool opens the vault afresh
+//! (`Vault::open` replays the log), so a change made by another process —
+//! `mdk promote` from the command line — is seen by the next call. Writing
+//! calls (content, governance or a consumption trace) run one at a time in
+//! arrival order through the vault's writer queue; read-only calls run in
+//! parallel (`crate::queue`, K-D1.4). The channel fixes the actor (K-D1.3):
+//! MCP is an agent, HTTP the vault's human (`[identity] human_id`).
 //!
 //! The tools expose existing primitives only (spec §7–§9): no tool decides a
 //! promotion, no tool other than `propose` writes Markdown, and the output of
 //! a tool that has a CLI twin is the JSON that command prints.
 
+use crate::bail_code;
+use crate::error::{Code, CodeExt};
+use crate::queue::{Queue, Ticket};
 use anyhow::{bail, Context, Result};
-use mdkcore::{AuthorKind, MatcherVersion, Policy, Provenance, Vault};
+use mdkcore::{
+    Actor, ActorKind, AuthorKind, Decision, EditMode, EditRequest, MatcherVersion, Policy,
+    Provenance, Vault,
+};
 use mdkindex::search::{Mode, Searcher};
 use mdkindex::store::{self, Store};
 use mdkindex::OnnxMiniLm;
@@ -137,8 +147,14 @@ pub fn specs() -> Vec<ToolSpec> {
                 (`append`), or as the body of the section under `heading` (`replace_section`) — \
                 and ingested with `author_kind` agent and the consumer as source, so new and \
                 changed blocks are `proposal`, excluded from default retrieval until a human \
-                promotes them. Nothing but the agent's text is written to the file (no ids, no \
-                metadata). `reason` is recorded beside the vault (`.mdkernel/proposals.jsonl`). \
+                promotes them. The vault's edit policy decides first (`[edit]`, default \
+                `append_only`): a write that would change or remove a `canonical` block, or a \
+                canonical retrieval unit (text appended to a section of canonical blocks joins \
+                their chunk; start it with a heading of its own), is refused with code `denied` \
+                and writes nothing; `replace_section` is allowed only on a section made of \
+                proposals. Change and delete events name the actor (spec §4.3). Nothing but the \
+                agent's text is written to the file (no ids, no metadata). `reason` is recorded \
+                beside the vault (`.mdkernel/proposals.jsonl`). \
                 The path must stay inside the vault (no `..`, no absolute path, no hidden \
                 directory) and the text may not exceed the server's `max_propose_bytes`.",
             input_schema: object_schema(
@@ -161,11 +177,11 @@ pub fn specs() -> Vec<ToolSpec> {
             name: "promote",
             description: "Request the promotion of a lineage from `proposal` to `canonical` (spec §7). \
                 The kernel does not decide: the vault's promotion policy hook does, for the actor \
-                agent:<consumer> (the MCP client or HTTP consumer; it cannot be chosen). Under the \
-                phase-1 policies (`human_only`, the default, or `deny`) an agent's request is \
-                denied: the answer is `decision: denied` with the policy and its reason, not an \
-                error, and no event is written. A human promotes through the CLI (`mdk promote \
-                --actor human:<id>`). An allowed request writes a `Promoted` event.",
+                the channel gives (it cannot be chosen): over MCP the agent agent:<client>, over \
+                HTTP the vault's human human:<[identity] human_id>. Under `human_only` (the \
+                default) an agent's request is denied: the answer is `decision: denied` with the \
+                policy and its reason, not an error, and no event is written; a human's request \
+                writes a `Promoted` event (`decision: promoted`). `deny` refuses everyone.",
             input_schema: object_schema(
                 json!({
                     "lineage_id": {"type": "string", "minLength": 1,
@@ -182,8 +198,9 @@ pub fn specs() -> Vec<ToolSpec> {
                 map doc path → snapshot at an event offset, optionally named; the same state \
                 gives the same checkpoint id. Queries can then be evaluated as of it (`search \
                 at`, `blame at`, `read_block at`). Returns the checkpoint. A state has one \
-                checkpoint: if it already has one (a search or read creates an unnamed one), \
-                creating another is an error naming the existing id.",
+                checkpoint: if a search or read already created its unnamed checkpoint, `name` \
+                names that one (same id, a `CheckpointNamed` event). A name another checkpoint \
+                holds, or another name for an already named state, is an error (`exists`).",
             input_schema: object_schema(
                 json!({"name": {"type": "string", "minLength": 1,
                     "description": "optional checkpoint name"}}),
@@ -214,14 +231,65 @@ pub fn specs() -> Vec<ToolSpec> {
     ]
 }
 
-/// The served vault and the lock that serialises tool calls.
+/// The transport a call came through; it fixes the actor's kind (K-D1.3).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Channel {
+    /// MCP stdio: the agent channel; the actor is `agent:<client>`
+    Mcp,
+    /// HTTP with the token: the human channel; the actor is
+    /// `human:<[identity] human_id>`
+    Http,
+    /// the `mdk` command line (`mdk propose`): the actor is `agent:<--source>`
+    Cli,
+}
+
+/// Who calls: the channel and the consumer identity (the MCP client
+/// `<name>/<version>`, the HTTP `X-Consumer`, the CLI `--source`). The
+/// consumer labels traces; it never changes the actor's kind.
+#[derive(Debug, Clone, Copy)]
+pub struct Caller<'a> {
+    pub channel: Channel,
+    pub consumer: Option<&'a str>,
+}
+
+impl<'a> Caller<'a> {
+    pub fn mcp(consumer: Option<&'a str>) -> Self {
+        Caller {
+            channel: Channel::Mcp,
+            consumer,
+        }
+    }
+    pub fn http(consumer: &'a str) -> Self {
+        Caller {
+            channel: Channel::Http,
+            consumer: Some(consumer),
+        }
+    }
+}
+
+/// Tools that write the vault or a consumption trace: they run through the
+/// vault's writer queue (K-D1.4). The others only read.
+pub fn is_writer(tool: &str) -> bool {
+    matches!(
+        tool,
+        "search" | "read_block" | "propose" | "promote" | "checkpoint"
+    )
+}
+
+/// Tools an HTTP caller may use only with `[identity] human_id` (K-D1.3):
+/// those that change the vault's content or governance state.
+pub fn needs_human_id(tool: &str) -> bool {
+    matches!(tool, "propose" | "promote" | "checkpoint")
+}
+
+/// The served vault and its writer queue.
 pub struct Kernel {
     /// the vault path as given (`mdk serve --vault`); `status` reports it
     vault: PathBuf,
     /// `--matcher` for ingests the server makes (watcher, `propose`); `None`:
     /// the vault's lock, else v3 (as `mdk index watch`)
     matcher: Option<MatcherVersion>,
-    lock: Mutex<()>,
+    queue: Arc<Queue>,
     /// loaded on first use, then shared (ONNX session behind a mutex)
     embedder: Mutex<Option<Arc<OnnxMiniLm>>>,
 }
@@ -250,12 +318,12 @@ struct ReadBlockArgs {
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-struct ProposeArgs {
-    doc_path: String,
-    content: String,
-    reason: String,
-    mode: Option<String>,
-    heading: Option<String>,
+pub struct ProposeArgs {
+    pub doc_path: String,
+    pub content: String,
+    pub reason: String,
+    pub mode: Option<String>,
+    pub heading: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -296,9 +364,14 @@ struct TraceArgs {
 fn args<T: DeserializeOwned>(tool: &str, a: &Value) -> Result<T> {
     let a = if a.is_null() { json!({}) } else { a.clone() };
     if !a.is_object() {
-        bail!("{tool}: arguments must be a JSON object");
+        bail_code!(
+            Code::InvalidArguments,
+            "{tool}: arguments must be a JSON object"
+        );
     }
-    serde_json::from_value(a).with_context(|| format!("{tool}: invalid arguments"))
+    serde_json::from_value(a)
+        .with_context(|| format!("{tool}: invalid arguments"))
+        .code(Code::InvalidArguments)
 }
 
 /// The consumer a trace-recording tool records; none → error (an MCP client
@@ -306,15 +379,27 @@ fn args<T: DeserializeOwned>(tool: &str, a: &Value) -> Result<T> {
 fn need_consumer<'c>(tool: &str, consumer: Option<&'c str>) -> Result<&'c str> {
     match consumer {
         Some(c) if !c.trim().is_empty() => Ok(c),
-        _ => bail!("{tool}: records a consumption trace and needs a consumer identity (MCP initialize clientInfo, or HTTP X-Consumer)"),
+        _ => bail_code!(
+            Code::InvalidArguments,
+            "{tool}: records a consumption trace and needs a consumer identity (MCP initialize clientInfo, or HTTP X-Consumer)"
+        ),
     }
 }
 
 fn non_empty(tool: &str, field: &str, v: &str) -> Result<()> {
     if v.is_empty() {
-        bail!("{tool}: {field} must not be empty");
+        bail_code!(Code::InvalidArguments, "{tool}: {field} must not be empty");
     }
     Ok(())
+}
+
+fn open_vault(vault: &Path) -> Result<Vault> {
+    Vault::open(vault).code(Code::Internal)
+}
+
+/// A checkpoint `at` names (id or name); unknown → `not_found`.
+fn checkpoint_at(v: &Vault, at: &str) -> Result<mdkcore::Checkpoint> {
+    v.find_checkpoint(at).code(Code::NotFound)
 }
 
 impl Kernel {
@@ -332,15 +417,15 @@ impl Kernel {
         Ok(Kernel {
             vault: vault.to_path_buf(),
             matcher,
-            lock: Mutex::new(()),
+            queue: Queue::new(),
             embedder: Mutex::new(None),
         })
     }
 
-    fn guard(&self) -> Result<std::sync::MutexGuard<'_, ()>> {
-        self.lock
-            .lock()
-            .map_err(|_| anyhow::anyhow!("an earlier tool call panicked; restart the server"))
+    /// The vault's writer queue (K-D1.4): transports take a ticket when a
+    /// writing call arrives (`ticket`) and pass it to `run`.
+    pub fn ticket(&self) -> Ticket {
+        self.queue.ticket()
     }
 
     /// The embedder (the only one, `minilm-l6-v2`; models/MANIFEST.json).
@@ -361,72 +446,157 @@ impl Kernel {
             .unwrap_or(MatcherVersion::V3)
     }
 
+    /// The vault's recipe and server settings; an invalid `policy.toml` is
+    /// `policy_violation`.
+    fn policy(&self) -> Result<(Policy, crate::config::ServerConfig)> {
+        let p = Policy::load(&self.vault).code(Code::PolicyViolation)?;
+        let c = crate::config::ServerConfig::from_policy(&p)
+            .with_context(|| format!("policy {} rejected", Policy::path(&self.vault).display()))
+            .code(Code::PolicyViolation)?;
+        Ok((p, c))
+    }
+
+    /// The actor of a call (K-D1.3): MCP and CLI → `agent:<consumer>`;
+    /// HTTP → `human:<[identity] human_id>`, and without `human_id` a
+    /// writing tool is `denied`.
+    fn actor(&self, tool: &str, caller: &Caller) -> Result<Actor> {
+        match caller.channel {
+            Channel::Mcp | Channel::Cli => {
+                let c = need_consumer(tool, caller.consumer)?;
+                Actor::new(ActorKind::Agent, c).code(Code::InvalidArguments)
+            }
+            Channel::Http => {
+                let (_, cfg) = self.policy()?;
+                match cfg.human_id {
+                    Some(id) => Actor::new(ActorKind::Human, &id).code(Code::PolicyViolation),
+                    None => bail_code!(
+                        Code::Denied,
+                        "{tool}: the HTTP channel acts for the human of [identity] human_id, and policy.toml sets none; add `[identity] human_id = \"<id>\"`"
+                    ),
+                }
+            }
+        }
+    }
+
+    /// The actor of a watched edit (spec §7 `human`): the vault's human
+    /// (`[identity] human_id`), or `human:unidentified` without one.
+    fn watch_actor(&self) -> Result<Actor> {
+        let (_, cfg) = self.policy()?;
+        let id = cfg.human_id.unwrap_or_else(|| "unidentified".to_string());
+        Actor::new(ActorKind::Human, &id)
+    }
+
     /// Builds the index if the vault has none (`mdk index build`); `None`
     /// if one exists. The served index must exist before searches and
     /// watched edits.
     pub fn ensure_index(&self) -> Result<Option<store::BuildReport>> {
-        let _g = self.guard()?;
-        let v = Vault::open(&self.vault)?;
-        if store::index_dir(&v).join("manifest.json").exists() {
-            return Ok(None);
-        }
-        let e = self.embedder()?;
-        Ok(Some(store::build(&v, e.as_ref())?))
+        self.ticket().run(|| {
+            let v = Vault::open(&self.vault)?;
+            if store::index_dir(&v).join("manifest.json").exists() {
+                return Ok(None);
+            }
+            let e = self.embedder()?;
+            Ok(Some(store::build(&v, e.as_ref())?))
+        })
     }
 
     /// A document edited outside the server (`--watch`): ingested as human
-    /// content (spec §7: `human` → `canonical`), new chunks to the hot tier
-    /// (`Store::watch_with`). An unchanged document writes nothing.
+    /// content (spec §7: `human` → `canonical`), attributed to the vault's
+    /// human (K-D1.2), new chunks to the hot tier. An unchanged document
+    /// writes nothing. Runs in the writer queue.
     pub fn watch_doc(&self, doc: &str, source: &str) -> Result<store::WatchReport> {
-        let _g = self.guard()?;
-        let path = crate::paths::doc_file(&self.vault, doc)?;
-        let text =
-            std::fs::read_to_string(&path).with_context(|| format!("read {}", path.display()))?;
-        let mut v = Vault::open(&self.vault)?;
-        let e = self.embedder()?;
-        let mut s = Store::open(&v, e.as_ref())?;
-        let m = self.matcher_for(&v);
-        let prov = Provenance {
-            author_kind: AuthorKind::Human,
-            source: source.to_string(),
-        };
-        s.watch_with(&mut v, e.as_ref(), doc, &text, prov, m)
+        self.ticket().run(|| {
+            let path = crate::paths::doc_file(&self.vault, doc)?;
+            let text = std::fs::read_to_string(&path)
+                .with_context(|| format!("read {}", path.display()))?;
+            let mut v = Vault::open(&self.vault)?;
+            let e = self.embedder()?;
+            let mut s = Store::open(&v, e.as_ref())?;
+            let m = self.matcher_for(&v);
+            let prov = Provenance {
+                author_kind: AuthorKind::Human,
+                source: source.to_string(),
+            };
+            let plan = v.plan_ingest(doc, &text, prov, m, None, Some(&self.watch_actor()?))?;
+            s.watch_plan(&mut v, e.as_ref(), plan)
+        })
     }
 
     /// Moves the hot tier into the cold index if it holds anything
-    /// (`mdk index compact`); `None` when the hot tier is empty.
+    /// (`mdk index compact`); `None` when the hot tier is empty. Runs in the
+    /// writer queue.
     pub fn compact(&self) -> Result<Option<store::CompactReport>> {
-        let _g = self.guard()?;
-        let v = Vault::open(&self.vault)?;
-        let e = self.embedder()?;
-        let st = Store::open(&v, e.as_ref())?.status(&v)?;
-        if st.hot_records == 0 && st.hot_snapshots == 0 {
-            return Ok(None);
-        }
-        Ok(Some(store::compact(&v, e.as_ref())?))
+        self.ticket().run(|| {
+            let v = Vault::open(&self.vault)?;
+            let e = self.embedder()?;
+            let st = Store::open(&v, e.as_ref())?.status(&v)?;
+            if st.hot_records == 0 && st.hot_snapshots == 0 {
+                return Ok(None);
+            }
+            Ok(Some(store::compact(&v, e.as_ref())?))
+        })
     }
 
     pub fn vault(&self) -> &Path {
         &self.vault
     }
 
-    /// Calls tool `name` for `consumer` (the MCP client or the HTTP
-    /// `X-Consumer`; `None`: unidentified, refused by tools that record a
-    /// trace); an unknown tool is an error.
-    pub fn call(&self, name: &str, a: &Value, consumer: Option<&str>) -> Result<Value> {
-        let _g = self.guard()?;
+    /// Calls tool `name` for `caller`; a writing tool waits for its turn in
+    /// the writer queue (taken now), a reading tool runs at once (in
+    /// parallel with other readers). An unknown tool is `not_found`. Every
+    /// error carries a code (`crate::error`).
+    pub fn call(&self, name: &str, a: &Value, caller: Caller) -> Result<Value> {
+        let t = is_writer(name).then(|| self.ticket());
+        self.run(t, name, a, caller)
+    }
+
+    /// `call` with the ticket the transport took when the call arrived
+    /// (writing tools; `None` for the others).
+    pub fn run(
+        &self,
+        ticket: Option<Ticket>,
+        name: &str,
+        a: &Value,
+        caller: Caller,
+    ) -> Result<Value> {
+        if !specs().iter().any(|s| s.name == name) {
+            bail_code!(Code::NotFound, "unknown tool {name:?}");
+        }
+        match (is_writer(name), ticket) {
+            (true, Some(t)) => t.run(|| self.dispatch(name, a, caller)),
+            (true, None) => self.ticket().run(|| self.dispatch(name, a, caller)),
+            (false, t) => {
+                drop(t);
+                let _r = self.queue.read();
+                self.dispatch(name, a, caller)
+            }
+        }
+    }
+
+    fn dispatch(&self, name: &str, a: &Value, caller: Caller) -> Result<Value> {
+        let consumer = caller.consumer;
+        if caller.channel == Channel::Http && needs_human_id(name) {
+            // an HTTP write needs the human id before anything else
+            self.actor(name, &caller)?;
+        }
         match name {
             "search" => {
                 let x: SearchArgs = args(name, a)?;
                 // before anything is opened: an empty query records nothing (K-C1.5)
-                mdkindex::search::check_query(&x.query)?;
+                mdkindex::search::check_query(&x.query).code(Code::EmptyQuery)?;
                 let consumer = need_consumer(name, consumer)?;
+                mdkcore::check_trace_input(consumer, &mdkcore::hash32(""))
+                    .code(Code::InvalidArguments)?;
                 let k = x.k.unwrap_or(10);
                 if !(1..=1000).contains(&k) {
-                    bail!("search: k = {k} outside [1, 1000]");
+                    bail_code!(Code::InvalidArguments, "search: k = {k} outside [1, 1000]");
                 }
-                let mode = Mode::parse(x.mode.as_deref().unwrap_or("hybrid"))?;
-                let mut v = Vault::open(&self.vault)?;
+                let mode = Mode::parse(x.mode.as_deref().unwrap_or("hybrid"))
+                    .code(Code::InvalidArguments)?;
+                let mut v = open_vault(&self.vault)?;
+                if let Some(at) = &x.at {
+                    checkpoint_at(&v, at)?;
+                }
                 let e = self.embedder()?;
                 let s = Store::open(&v, e.as_ref())?;
                 let mut se = Searcher::new(&s, e.as_ref(), consumer)?;
@@ -445,20 +615,22 @@ impl Kernel {
                 non_empty(name, "doc_path", &x.doc_path)?;
                 non_empty(name, "lineage_id", &x.lineage_id)?;
                 let consumer = need_consumer(name, consumer)?;
-                mdkcore::check_trace_input(consumer, &mdkcore::hash32(""))?;
-                let mut v = Vault::open(&self.vault)?;
+                mdkcore::check_trace_input(consumer, &mdkcore::hash32(""))
+                    .code(Code::InvalidArguments)?;
+                let mut v = open_vault(&self.vault)?;
                 let cp = match &x.at {
-                    Some(a) => v.find_checkpoint(a)?,
+                    Some(a) => checkpoint_at(&v, a)?,
                     None => v.head_checkpoint()?,
                 };
                 // the lineage must be live in this document at the
                 // checkpoint, checked before the trace is written
-                let in_doc = v
-                    .blocks_at(&x.doc_path, &cp.checkpoint_id)?
-                    .iter()
-                    .any(|b| b.lineage_id == x.lineage_id);
+                let in_doc = match v.blocks_at(&x.doc_path, &cp.checkpoint_id) {
+                    Ok(bs) => bs.iter().any(|b| b.lineage_id == x.lineage_id),
+                    Err(_) => false,
+                };
                 if !in_doc {
-                    bail!(
+                    bail_code!(
+                        Code::NotFound,
                         "read_block: lineage {} is not live in {} at checkpoint {}",
                         x.lineage_id,
                         x.doc_path,
@@ -479,28 +651,32 @@ impl Kernel {
             }
             "propose" => {
                 let x: ProposeArgs = args(name, a)?;
-                let consumer = need_consumer(name, consumer)?;
-                self.propose(x, consumer)
+                let actor = self.actor(name, &caller)?;
+                let source = need_consumer(name, consumer)?;
+                self.propose(x, source, &actor)
             }
             "promote" => {
                 let x: PromoteArgs = args(name, a)?;
                 non_empty(name, "lineage_id", &x.lineage_id)?;
                 if x.reason.trim().is_empty() {
-                    bail!("promote: reason must not be empty");
+                    bail_code!(Code::InvalidArguments, "promote: reason must not be empty");
                 }
-                let consumer = need_consumer(name, consumer)?;
-                // the actor is the consumer, always an agent (K12, K16)
-                let actor = mdkcore::Actor::new(mdkcore::ActorKind::Agent, consumer)?;
-                let policy = Policy::load(&self.vault)?;
+                // the actor comes from the channel (K-D1.3): MCP → agent,
+                // HTTP → the vault's human
+                let actor = self.actor(name, &caller)?;
+                let (policy, _) = self.policy()?;
                 let hook = policy.promotion.hook();
-                let mut v = Vault::open(&self.vault)?;
-                let req = v.request(
-                    mdkcore::TransitionKind::Promote,
-                    &x.lineage_id,
-                    mdkcore::Layer::Canonical,
-                    actor.clone(),
-                    &x.reason,
-                )?;
+                let mut v = open_vault(&self.vault)?;
+                let from = v.layer_of(&x.lineage_id).code(Code::NotFound)?;
+                let req = v
+                    .request(
+                        mdkcore::TransitionKind::Promote,
+                        &x.lineage_id,
+                        mdkcore::Layer::Canonical,
+                        actor.clone(),
+                        &x.reason,
+                    )
+                    .code(Code::InvalidArguments)?;
                 match hook.decide(&req) {
                     mdkcore::Decision::Deny(why) => Ok(json!({
                         "decision": "denied",
@@ -512,6 +688,24 @@ impl Kernel {
                         "actor": actor,
                     })),
                     mdkcore::Decision::Allow => {
+                        // an allowed request for a lineage that is not a
+                        // live proposal is the caller's error (after the
+                        // policy: an agent's request stays a denial)
+                        if from != mdkcore::Layer::Proposal {
+                            bail_code!(
+                                Code::InvalidArguments,
+                                "promote: lineage {} is {}; only a proposal is promoted",
+                                x.lineage_id,
+                                from.as_str()
+                            );
+                        }
+                        if v.is_inactive(&x.lineage_id).code(Code::Internal)? {
+                            bail_code!(
+                                Code::InvalidArguments,
+                                "promote: lineage {} is inactive (pruned)",
+                                x.lineage_id
+                            );
+                        }
                         let ev = v.promote(&req, hook)?;
                         Ok(json!({
                             "decision": "promoted",
@@ -526,35 +720,90 @@ impl Kernel {
             }
             "checkpoint" => {
                 let x: CheckpointArgs = args(name, a)?;
+                let mut v = open_vault(&self.vault)?;
                 if let Some(n) = &x.name {
                     non_empty(name, "name", n)?;
+                    if n != n.trim() || n.chars().any(char::is_control) {
+                        bail_code!(
+                            Code::InvalidArguments,
+                            "checkpoint: name {n:?} is padded with whitespace or holds control characters"
+                        );
+                    }
+                    if n.len() == 32 && n.bytes().all(|b| b.is_ascii_hexdigit()) {
+                        bail_code!(
+                            Code::InvalidArguments,
+                            "checkpoint: name {n:?} has the form of a checkpoint id"
+                        );
+                    }
+                    let cur = v.current_checkpoint_id();
+                    if let Some(c) = v
+                        .checkpoints()
+                        .into_iter()
+                        .find(|c| c.name.as_deref() == Some(n.as_str()) && c.checkpoint_id != cur)
+                    {
+                        bail_code!(
+                            Code::Exists,
+                            "checkpoint: name {n:?} is taken by {}",
+                            c.checkpoint_id
+                        );
+                    }
                 }
-                let mut v = Vault::open(&self.vault)?;
+                let cur = v.current_checkpoint_id();
+                if let Some(c) = v.checkpoints().into_iter().find(|c| c.checkpoint_id == cur) {
+                    if c.name.is_some() && c.name != x.name {
+                        bail_code!(
+                            Code::Exists,
+                            "checkpoint {cur} of this state already exists with name {:?}",
+                            c.name.as_deref().unwrap_or_default()
+                        );
+                    }
+                }
                 Ok(serde_json::to_value(v.checkpoint(x.name.as_deref())?)?)
             }
             "history" => {
                 let x: HistoryArgs = args(name, a)?;
                 non_empty(name, "lineage_id", &x.lineage_id)?;
-                let v = Vault::open(&self.vault)?;
+                let v = open_vault(&self.vault)?;
                 // the CLI's `history` output (an unknown lineage is an error)
                 let layer = v.layer_of(&x.lineage_id).ok();
-                let events = v.history(&x.lineage_id)?;
+                let events = v.history(&x.lineage_id).code(Code::NotFound)?;
                 Ok(json!({"lineage_id": x.lineage_id, "layer": layer, "events": events}))
             }
             "blame" => {
                 let x: BlameArgs = args(name, a)?;
                 non_empty(name, "doc_path", &x.doc_path)?;
-                let v = Vault::open(&self.vault)?;
+                let v = open_vault(&self.vault)?;
+                match &x.at {
+                    Some(at) => {
+                        let cp = checkpoint_at(&v, at)?;
+                        if !cp.docs.contains_key(&x.doc_path) {
+                            bail_code!(
+                                Code::NotFound,
+                                "blame: {} has no snapshot at checkpoint {}",
+                                x.doc_path,
+                                cp.checkpoint_id
+                            );
+                        }
+                    }
+                    None => {
+                        if v.doc_state(&x.doc_path)
+                            .and_then(|s| s.head.as_ref())
+                            .is_none()
+                        {
+                            bail_code!(Code::NotFound, "blame: no snapshot for {}", x.doc_path);
+                        }
+                    }
+                }
                 let blocks = v.blame(&x.doc_path, x.at.as_deref())?;
                 Ok(json!({"doc_path": x.doc_path, "at": x.at, "blocks": blocks}))
             }
             "checkpoints" => {
                 args::<NoArgs>(name, a)?;
-                Ok(json!({"checkpoints": Vault::open(&self.vault)?.checkpoints()}))
+                Ok(json!({"checkpoints": open_vault(&self.vault)?.checkpoints()}))
             }
             "trace" => {
                 let x: TraceArgs = args(name, a)?;
-                let v = Vault::open(&self.vault)?;
+                let v = open_vault(&self.vault)?;
                 let mut traces = v.traces(x.since_seq.unwrap_or(0))?;
                 if let Some(c) = &x.consumer {
                     non_empty(name, "consumer", c)?;
@@ -562,46 +811,71 @@ impl Kernel {
                 }
                 Ok(json!({"traces": traces}))
             }
-            _ => bail!("unknown tool {name:?}"),
+            _ => bail_code!(Code::NotFound, "unknown tool {name:?}"),
         }
     }
 
-    /// `propose` (under the call lock): checks, sync of external edits,
-    /// write, agent ingest, record. See the tool description.
-    fn propose(&self, x: ProposeArgs, consumer: &str) -> Result<Value> {
+    /// `propose` (in the writer queue): checks, sync of external edits,
+    /// the edit policy (K-D1.1), write, attributed agent ingest (K-D1.2),
+    /// record. See the tool description. `source` is the provenance source
+    /// (the consumer), `actor` the channel's actor.
+    fn propose(&self, x: ProposeArgs, source: &str, actor: &Actor) -> Result<Value> {
         use crate::propose::{self, Mode as PMode};
-        let mode = PMode::parse(x.mode.as_deref().unwrap_or("create"))?;
+        let mode =
+            PMode::parse(x.mode.as_deref().unwrap_or("create")).code(Code::InvalidArguments)?;
         if x.reason.trim().is_empty() {
-            bail!("propose: reason must not be empty");
+            bail_code!(Code::InvalidArguments, "propose: reason must not be empty");
         }
         match (mode, &x.heading) {
-            (PMode::ReplaceSection, None) => bail!("propose: replace_section needs `heading`"),
+            (PMode::ReplaceSection, None) => {
+                bail_code!(
+                    Code::InvalidArguments,
+                    "propose: replace_section needs `heading`"
+                )
+            }
             (PMode::Create | PMode::Append, Some(_)) => {
-                bail!("propose: `heading` applies to replace_section only")
+                bail_code!(
+                    Code::InvalidArguments,
+                    "propose: `heading` applies to replace_section only"
+                )
             }
             _ => {}
         }
-        let cfg = crate::config::ServerConfig::from_policy(&Policy::load(&self.vault)?)?;
+        let (policy, cfg) = self.policy()?;
         let size = x.content.len() as u64;
         if size > cfg.max_propose_bytes {
-            bail!(
+            bail_code!(
+                Code::TooLarge,
                 "propose: content is {size} bytes; the limit is [server] max_propose_bytes = {}",
                 cfg.max_propose_bytes
             );
         }
         propose::check_doc_path(&x.doc_path)?;
-        let path = crate::paths::doc_file(&self.vault, &x.doc_path)?;
+        let path = crate::paths::doc_file(&self.vault, &x.doc_path).code(Code::PathOutsideVault)?;
         // on a case- or normalization-insensitive file system another
         // spelling of an existing name would write into a document the log
         // knows under another doc_path
-        crate::paths::exact_on_disk(&self.vault, &x.doc_path)?;
-        let mut v = Vault::open(&self.vault)?;
-        let e = self.embedder()?;
-        let mut s = Store::open(&v, e.as_ref())?;
+        crate::paths::exact_on_disk(&self.vault, &x.doc_path).code(Code::Exists)?;
+        let mut v = open_vault(&self.vault)?;
+        // the index, when the vault has one (the server always does; the
+        // CLI may run before `mdk index build`)
+        let e = if store::index_dir(&v).join("manifest.json").exists() {
+            Some(self.embedder()?)
+        } else {
+            None
+        };
+        let mut s = match &e {
+            Some(e) => Some(Store::open(&v, e.as_ref())?),
+            None => None,
+        };
         let m = self.matcher_for(&v);
         let exists = std::fs::symlink_metadata(&path).is_ok();
         if exists && !path.is_file() {
-            bail!("propose: {} is not a file", x.doc_path);
+            bail_code!(
+                Code::InvalidArguments,
+                "propose: {} is not a file",
+                x.doc_path
+            );
         }
         let old = if exists {
             Some(
@@ -612,20 +886,23 @@ impl Kernel {
             None
         };
         let new = match (mode, &old) {
-            (PMode::Create, Some(_)) => bail!(
+            (PMode::Create, Some(_)) => bail_code!(
+                Code::Exists,
                 "propose: {} exists; propose never overwrites (use mode append or replace_section)",
                 x.doc_path
             ),
             (PMode::Create, None) => {
                 if v.doc_state(&x.doc_path).is_some() {
-                    bail!(
+                    bail_code!(
+                        Code::Exists,
                         "propose: {} is in the vault's log but its file is missing",
                         x.doc_path
                     );
                 }
                 propose::append("", &x.content)
             }
-            (PMode::Append | PMode::ReplaceSection, None) => bail!(
+            (PMode::Append | PMode::ReplaceSection, None) => bail_code!(
+                Code::NotFound,
                 "propose: {} does not exist ({} needs an existing document)",
                 x.doc_path,
                 mode.as_str()
@@ -633,7 +910,8 @@ impl Kernel {
             (PMode::Append | PMode::ReplaceSection, Some(_))
                 if v.doc_state(&x.doc_path).is_none() =>
             {
-                bail!(
+                bail_code!(
+                    Code::NotFound,
                     "propose: {} is not a document of the vault's log ({} needs one)",
                     x.doc_path,
                     mode.as_str()
@@ -647,7 +925,10 @@ impl Kernel {
             )?,
         };
         if new.trim().is_empty() {
-            bail!("propose: the resulting document would be empty");
+            bail_code!(
+                Code::InvalidArguments,
+                "propose: the resulting document would be empty"
+            );
         }
         // an edit made outside the server and not yet ingested is human
         // content (the watcher's rule); it must not be attributed to the agent
@@ -657,11 +938,53 @@ impl Kernel {
                     author_kind: AuthorKind::Human,
                     source: "mdk-serve-watch".to_string(),
                 };
-                s.watch_with(&mut v, e.as_ref(), &x.doc_path, o, prov, m)?
-                    .events
+                let plan =
+                    v.plan_ingest(&x.doc_path, o, prov, m, None, Some(&self.watch_actor()?))?;
+                let n = plan.events.len();
+                match (&mut s, &e) {
+                    (Some(s), Some(e)) => s.watch_plan(&mut v, e.as_ref(), plan)?.events,
+                    _ => {
+                        v.commit_plan(plan)?;
+                        n
+                    }
+                }
             }
             None => 0,
         };
+        // the edit policy (K-D1.1) decides on what the ingest would do
+        let prov = Provenance {
+            author_kind: AuthorKind::Agent,
+            source: source.to_string(),
+        };
+        let plan = v.plan_ingest(&x.doc_path, &new, prov, m, None, Some(actor))?;
+        let section = match (mode, &old) {
+            (PMode::ReplaceSection, Some(o)) => section_blocks(
+                &v,
+                &x.doc_path,
+                o,
+                x.heading.as_deref().expect("checked above"),
+            )?,
+            _ => Vec::new(),
+        };
+        let edit = policy.edit.hook();
+        let req = EditRequest {
+            doc_path: x.doc_path.clone(),
+            mode: match mode {
+                PMode::Create => EditMode::Create,
+                PMode::Append => EditMode::Append,
+                PMode::ReplaceSection => EditMode::ReplaceSection,
+            },
+            actor: actor.clone(),
+            section,
+            effect: v.edit_effect(&plan)?,
+        };
+        if let Decision::Deny(why) = edit.decide(&req) {
+            bail_code!(
+                Code::Denied,
+                "propose: denied by edit policy {}: {why}",
+                edit.name()
+            );
+        }
         // write: directories this call creates are remembered (and removed
         // again if the ingest fails); the file goes through a fresh hidden
         // temporary file (never a symbolic link) and a rename
@@ -674,11 +997,22 @@ impl Kernel {
             }
         }
         crate::paths::replace_file(&path, new.as_bytes())?;
-        let prov = Provenance {
-            author_kind: AuthorKind::Agent,
-            source: consumer.to_string(),
+        let committed = match (&mut s, &e) {
+            (Some(s), Some(e)) => s
+                .watch_plan(&mut v, e.as_ref(), plan)
+                .map(|r| (r.snapshot_id, r.events, r.embedded)),
+            _ => {
+                let n = plan.events.len();
+                v.commit_plan(plan).map(|r| {
+                    (
+                        r.snapshot.snapshot_id,
+                        if r.events.is_empty() { 0 } else { n },
+                        0,
+                    )
+                })
+            }
         };
-        let report = match s.watch_with(&mut v, e.as_ref(), &x.doc_path, &new, prov, m) {
+        let (snapshot_id, events, embedded) = match committed {
             Ok(r) => r,
             Err(err) => {
                 // the file is restored: it never holds text the vault did not take
@@ -708,10 +1042,11 @@ impl Kernel {
             "doc_path": x.doc_path,
             "mode": mode.as_str(),
             "heading": x.heading,
-            "consumer": consumer,
+            "consumer": source,
+            "actor": actor,
             "reason": x.reason,
-            "snapshot_id": report.snapshot_id,
-            "events": report.events,
+            "snapshot_id": snapshot_id,
+            "events": events,
         });
         let mut line = serde_json::to_vec(&record)?;
         line.push(b'\n');
@@ -728,7 +1063,7 @@ impl Kernel {
                 format!(
                     "propose: {} was written and ingested (snapshot {}), but recording its reason in {} failed",
                     x.doc_path,
-                    report.snapshot_id,
+                    snapshot_id,
                     rp.display()
                 )
             })?;
@@ -738,17 +1073,19 @@ impl Kernel {
             "mode": mode.as_str(),
             "bytes": new.len(),
             "synced_external_events": synced,
-            "snapshot_id": report.snapshot_id,
-            "events": report.events,
-            "chunks_embedded": report.embedded,
+            "edit_policy": edit.name(),
+            "actor": actor,
+            "snapshot_id": snapshot_id,
+            "events": events,
+            "chunks_embedded": embedded,
             "blocks": blocks,
             "events_hash": v.events_hash()?,
         }))
     }
 
     fn status(&self) -> Result<Value> {
-        let v = Vault::open(&self.vault)?;
-        let policy = Policy::load(&self.vault)?;
+        let v = open_vault(&self.vault)?;
+        let (policy, cfg) = self.policy()?;
         let manifest = mdkindex::store::index_dir(&v).join("manifest.json");
         let embedder = if manifest.exists() {
             let m: mdkindex::store::Manifest = serde_json::from_slice(
@@ -769,7 +1106,42 @@ impl Kernel {
             "index": if embedder.is_null() { "absent" } else { "present" },
             "last_checkpoint": v.checkpoints().last(),
             "policy": policy.to_json(),
-            "server_policy": crate::config::ServerConfig::from_policy(&policy)?.to_json(),
+            "server_policy": cfg.to_json(),
         }))
     }
+}
+
+/// The blocks of the section `replace_section` would replace in `old` (the
+/// document's head text, after any external edit was synced): the heading
+/// and its body, `(lineage_id, layer)`. The text's blocks must be the head
+/// snapshot's, one for one.
+fn section_blocks(
+    v: &Vault,
+    doc: &str,
+    old: &str,
+    heading: &str,
+) -> Result<Vec<(String, mdkcore::Layer)>> {
+    let (at, end) = crate::propose::section_lines(old, heading)?;
+    let (drafts, _) = mdkcore::parse_document(old, doc)?;
+    let head = v
+        .snapshot(doc)?
+        .with_context(|| format!("{doc}: no head snapshot"))?;
+    let blocks = v.snapshot_blocks(&head)?;
+    if drafts.len() != blocks.len()
+        || drafts
+            .iter()
+            .zip(&blocks)
+            .any(|(d, b)| d.version_id != b.version_id)
+    {
+        bail!("propose: {doc} on disk differs from its head snapshot after the sync");
+    }
+    Ok(drafts
+        .iter()
+        .zip(&blocks)
+        .filter(|(d, _)| {
+            let line = d.line_start as usize - 1;
+            line >= at && line < end
+        })
+        .map(|(_, b)| (b.lineage_id.clone(), b.layer))
+        .collect())
 }

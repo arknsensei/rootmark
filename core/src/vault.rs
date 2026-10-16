@@ -227,6 +227,24 @@ pub fn transition_meta(ev: &Event) -> Result<TransitionMeta> {
 /// string) of a block event, when present, must be well formed; absent is
 /// the reading of logs written before 1.0.3 or by the unattributed API.
 fn check_event_actor(ev: &Event) -> Result<()> {
+    // `Promoted`/`Demoted` carry their own `meta.actor` (`transition_meta`)
+    if matches!(ev.kind, EventKind::Promoted | EventKind::Demoted) {
+        return Ok(());
+    }
+    let (a, s) = (ev.meta.get("actor"), ev.meta.get("source"));
+    if !carries_actor(ev.kind) && (a.is_some() || s.is_some()) {
+        bail!(
+            "event seq {}: {:?} carries no meta.actor/meta.source (only change events do)",
+            ev.seq,
+            ev.kind
+        );
+    }
+    if a.is_some() != s.is_some() {
+        bail!(
+            "event seq {}: meta.actor and meta.source go together",
+            ev.seq
+        );
+    }
     if let Some(a) = ev.meta.get("actor") {
         let a: Actor = serde_json::from_value(a.clone())
             .with_context(|| format!("event seq {}: malformed meta.actor", ev.seq))?;
@@ -257,8 +275,8 @@ fn carries_actor(k: EventKind) -> bool {
 /// A checkpoint name (spec §8): not empty, not padded, and not of the form
 /// of a checkpoint id (ids and names share `at`).
 fn check_checkpoint_name(n: &str) -> Result<()> {
-    if n.trim().is_empty() || n != n.trim() {
-        bail!("checkpoint name {n:?}: empty or padded with whitespace");
+    if n.trim().is_empty() || n != n.trim() || n.chars().any(char::is_control) {
+        bail!("checkpoint name {n:?}: empty, padded with whitespace or holding control characters");
     }
     if n.len() == 32 && n.bytes().all(|b| b.is_ascii_hexdigit()) {
         bail!("checkpoint name {n:?} has the form of a checkpoint id");
@@ -663,6 +681,19 @@ impl Replayed {
                 ev.seq
             ),
         };
+        if let Some(n) = &name {
+            if let Some(c) = self
+                .checkpoints
+                .iter()
+                .find(|c| c.checkpoint.name.as_deref() == Some(n.as_str()))
+            {
+                bail!(
+                    "event seq {}: checkpoint name {n:?} is taken by {}",
+                    ev.seq,
+                    c.checkpoint.checkpoint_id
+                );
+            }
+        }
         let docs = self.heads();
         let computed = checkpoint_id(&docs, event_seq);
         if computed != cid {
@@ -758,6 +789,8 @@ pub struct IngestPlan {
     pub blocks_after: Vec<Block>,
     /// `Some(head)`: nothing changes
     unchanged: Option<Snapshot>,
+    /// an existing document's front matter changes
+    frontmatter_changed: bool,
 }
 
 /// Compact per-document ingest report (CLI / `ingest_dir`).
@@ -1176,6 +1209,7 @@ impl Vault {
                 blocks_before: before.clone(),
                 blocks_after: before,
                 unchanged: Some(snapshot),
+                frontmatter_changed: false,
             });
         }
         let mut changed: Vec<String> = Vec::new();
@@ -1291,6 +1325,7 @@ impl Vault {
             blocks_before: before,
             blocks_after,
             unchanged: None,
+            frontmatter_changed: head.is_some() && fm_changed,
         })
     }
 
@@ -1374,6 +1409,7 @@ impl Vault {
             touched,
             canonical_chunks_removed: before.difference(&after).map(|c| c.0.clone()).collect(),
             canonical_chunks_added: after.difference(&before).map(|c| c.0.clone()).collect(),
+            frontmatter_changed: plan.frontmatter_changed,
         })
     }
 

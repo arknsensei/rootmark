@@ -8,7 +8,7 @@
 //!
 //! Needs the model files (`make models`).
 
-use mdkserver::tools::Kernel;
+use mdkserver::tools::{Caller, Kernel};
 use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
 
@@ -33,7 +33,7 @@ fn vault(name: &str) -> PathBuf {
 }
 
 fn blame(k: &Kernel, doc: &str) -> Vec<Value> {
-    k.call("blame", &json!({"doc_path": doc}), Some("t/1"))
+    k.call("blame", &json!({"doc_path": doc}), Caller::mcp(Some("t/1")))
         .unwrap()["blocks"]
         .as_array()
         .unwrap()
@@ -45,6 +45,16 @@ fn external_human_edit_is_not_credited_to_the_agent() {
     let v = vault("sync");
     let k = Kernel::open(&v).unwrap();
     k.ensure_index().unwrap();
+    // P1-D.1 (K-D1.1, ASSUMPTIONS D1.0-4): under the default `append_only`
+    // a heading-less append to a section of canonical blocks is refused
+    // (it would join their chunk); this test is about the sync, so the
+    // vault allows it explicitly
+    std::fs::write(
+        v.join(".mdkernel/policy.toml"),
+        mdkserver::config::default_recipe()
+            .replace("policy = \"append_only\"", "policy = \"unrestricted\""),
+    )
+    .unwrap();
     let p = v.join("espresso.md");
     let mut text = std::fs::read_to_string(&p).unwrap();
     text.push_str("\nA human wrote this offline about kumquat beans.\n");
@@ -54,7 +64,7 @@ fn external_human_edit_is_not_credited_to_the_agent() {
             "propose",
             &json!({"doc_path": "espresso.md", "content": "An agent adds a line about lychee.",
                     "reason": "sync test", "mode": "append"}),
-            Some("agent/1"),
+            Caller::mcp(Some("agent/1")),
         )
         .unwrap();
     assert!(r["synced_external_events"].as_u64().unwrap() > 0, "{r}");
@@ -86,7 +96,7 @@ fn failed_ingest_leaves_the_file_unchanged() {
             "propose",
             &json!({"doc_path": "filter.md", "content": "agent text", "reason": "fail test",
                     "mode": "append"}),
-            Some("agent/1"),
+            Caller::mcp(Some("agent/1")),
         )
         .unwrap_err();
     assert!(format!("{e:#}").contains("locked to matcher"), "{e:#}");
@@ -96,10 +106,13 @@ fn failed_ingest_leaves_the_file_unchanged() {
         .call(
             "propose",
             &json!({"doc_path": "newdir/new.md", "content": "agent text", "reason": "fail test"}),
-            Some("agent/1"),
+            Caller::mcp(Some("agent/1")),
         )
         .unwrap_err();
-    assert!(format!("{e:#}").contains("restored"), "{e:#}");
+    // P1-D.1: the ingest is planned (and refused) before the file is
+    // written (the edit policy needs its effect, K-D1.1), so nothing is
+    // written to restore
+    assert!(format!("{e:#}").contains("locked to matcher"), "{e:#}");
     assert!(!v.join("newdir/new.md").exists());
     assert!(!v.join("newdir").exists());
     assert!(!v.join(".mdkernel/proposals.jsonl").exists());
@@ -121,7 +134,7 @@ fn size_limit_from_policy() {
         k.call(
             "propose",
             &json!({"doc_path": "s.md", "content": c, "reason": "size"}),
-            Some("agent/1"),
+            Caller::mcp(Some("agent/1")),
         )
     };
     let e = call("seventeen bytes!!").unwrap_err();
@@ -146,7 +159,7 @@ fn other_spellings_of_existing_names_are_refused() {
         k.call(
             "propose",
             &json!({"doc_path": doc, "content": c, "reason": "spelling", "mode": mode}),
-            Some("agent/1"),
+            Caller::mcp(Some("agent/1")),
         )
     };
     let before = std::fs::read(v.join("espresso.md")).unwrap();
@@ -187,7 +200,7 @@ fn planted_temporary_symlink_is_not_followed() {
     k.call(
         "propose",
         &json!({"doc_path": "evil.md", "content": "agent text", "reason": "symlink"}),
-        Some("agent/1"),
+        Caller::mcp(Some("agent/1")),
     )
     .unwrap();
     assert!(!outside.exists(), "the write followed the link");

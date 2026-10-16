@@ -3,7 +3,9 @@
 //! and ingests. Nothing here adds anything to the agent's text: no identity,
 //! no metadata, no markers (NORTH_STAR principle 1).
 
-use anyhow::{bail, Result};
+use crate::bail_code;
+use crate::error::Code;
+use anyhow::Result;
 
 /// How the agent's text enters the document.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -22,7 +24,10 @@ impl Mode {
             "create" => Mode::Create,
             "append" => Mode::Append,
             "replace_section" => Mode::ReplaceSection,
-            _ => bail!("propose: unknown mode {s:?} (create, append, replace_section)"),
+            _ => bail_code!(
+                Code::InvalidArguments,
+                "propose: unknown mode {s:?} (create, append, replace_section)"
+            ),
         })
     }
 
@@ -39,21 +44,35 @@ impl Mode {
 /// `.md` file, no empty, `.` or `..` component, nothing absolute, no
 /// backslash, and no hidden component (`.mdkernel/`, `.obsidian/`, `.x.md`:
 /// the documents `ingest-dir` and the watcher never see). Symbolic links
-/// are refused by `paths::doc_file`.
+/// are refused by `paths::doc_file`. A path that leaves the vault or its
+/// documents is `path_outside_vault`; one that is not a `.md` name,
+/// `invalid_arguments` (K-D1.5).
 pub fn check_doc_path(doc: &str) -> Result<()> {
     if doc.is_empty() || doc.starts_with('/') || doc.contains('\\') || doc.contains('\0') {
-        bail!("propose: doc_path {doc:?} must be a vault-relative path with `/` separators");
+        bail_code!(
+            Code::PathOutsideVault,
+            "propose: doc_path {doc:?} must be a vault-relative path with `/` separators"
+        );
     }
     for c in doc.split('/') {
         if c.is_empty() || c == "." || c == ".." {
-            bail!("propose: doc_path {doc:?}: empty, `.` or `..` component (outside the vault or not normalized)");
+            bail_code!(
+                Code::PathOutsideVault,
+                "propose: doc_path {doc:?} must be a vault-relative path: empty, `.` or `..` component (outside the vault or not normalized)"
+            );
         }
         if c.starts_with('.') {
-            bail!("propose: doc_path {doc:?}: hidden component {c:?} is not a vault document");
+            bail_code!(
+                Code::PathOutsideVault,
+                "propose: doc_path {doc:?}: hidden component {c:?} is not a vault document"
+            );
         }
     }
     if !doc.ends_with(".md") || doc.len() <= 3 || doc.ends_with("/.md") {
-        bail!("propose: doc_path {doc:?} must name a .md file");
+        bail_code!(
+            Code::InvalidArguments,
+            "propose: doc_path {doc:?} must name a .md file"
+        );
     }
     Ok(())
 }
@@ -130,11 +149,43 @@ fn atx(line: &str) -> Option<(usize, String)> {
 /// text; the heading line and everything else are unchanged. No such
 /// heading, or more than one, is an error.
 pub fn replace_section(old: &str, heading: &str, content: &str) -> Result<String> {
+    let (at, end) = section_lines(old, heading)?;
+    let e = eol(old);
+    let lines: Vec<&str> = old.split_inclusive('\n').collect();
+    let mut out = String::new();
+    for l in &lines[..=at] {
+        out.push_str(l);
+    }
+    if !out.ends_with('\n') {
+        out.push_str(e);
+    }
+    let body = lines_with(content, e);
+    if !body.is_empty() {
+        out.push_str(e);
+        out.push_str(&body);
+    }
+    if end < lines.len() {
+        out.push_str(e);
+        for l in &lines[end..] {
+            out.push_str(l);
+        }
+    }
+    Ok(out)
+}
+
+/// The section `replace_section` addresses: `(at, end)`, the 0-based line
+/// of its one ATX heading whose text is `heading` and the line after its
+/// body (the next heading of the same or a higher level outside fenced
+/// code, or the end). No such heading, or more than one, is
+/// `heading_not_found`.
+pub fn section_lines(old: &str, heading: &str) -> Result<(usize, usize)> {
     let want = heading.trim();
     if want.is_empty() {
-        bail!("propose: replace_section needs a non-empty heading");
+        bail_code!(
+            Code::InvalidArguments,
+            "propose: replace_section needs a non-empty heading"
+        );
     }
-    let e = eol(old);
     let lines: Vec<&str> = old.split_inclusive('\n').collect();
     // YAML front matter (`---` on the first line up to the next `---` or
     // `...`) holds no headings
@@ -177,9 +228,13 @@ pub fn replace_section(old: &str, heading: &str, content: &str) -> Result<String
     }
     let found: Vec<&(usize, usize, String)> = heads.iter().filter(|h| h.2 == want).collect();
     let (at, level) = match found.as_slice() {
-        [] => bail!("propose: replace_section: no heading {want:?} in the document"),
+        [] => bail_code!(
+            Code::HeadingNotFound,
+            "propose: replace_section: no heading {want:?} in the document"
+        ),
         [one] => (one.0, one.1),
-        many => bail!(
+        many => bail_code!(
+            Code::HeadingNotFound,
             "propose: replace_section: heading {want:?} occurs {} times (ambiguous)",
             many.len()
         ),
@@ -189,25 +244,7 @@ pub fn replace_section(old: &str, heading: &str, content: &str) -> Result<String
         .find(|h| h.0 > at && h.1 <= level)
         .map(|h| h.0)
         .unwrap_or(lines.len());
-    let mut out = String::new();
-    for l in &lines[..=at] {
-        out.push_str(l);
-    }
-    if !out.ends_with('\n') {
-        out.push_str(e);
-    }
-    let body = lines_with(content, e);
-    if !body.is_empty() {
-        out.push_str(e);
-        out.push_str(&body);
-    }
-    if end < lines.len() {
-        out.push_str(e);
-        for l in &lines[end..] {
-            out.push_str(l);
-        }
-    }
-    Ok(out)
+    Ok((at, end))
 }
 
 #[cfg(test)]

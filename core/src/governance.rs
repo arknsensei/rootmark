@@ -41,6 +41,7 @@ pub enum ActorKind {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Actor {
     pub kind: ActorKind,
     pub id: String,
@@ -184,6 +185,8 @@ pub struct EditEffect {
     /// default retrieval (spec §9), so either changes canonical results
     pub canonical_chunks_removed: Vec<String>,
     pub canonical_chunks_added: Vec<String>,
+    /// an existing document's YAML front matter would change
+    pub frontmatter_changed: bool,
 }
 
 /// An agent's request to change a document (K-D1.1).
@@ -249,6 +252,11 @@ impl EditPolicy for AppendOnly {
             ));
         }
         let e = &req.effect;
+        if e.frontmatter_changed {
+            return Decision::Deny(
+                "policy append_only: the edit would change the document's front matter".into(),
+            );
+        }
         if !e.canonical_chunks_removed.is_empty() || !e.canonical_chunks_added.is_empty() {
             return Decision::Deny(format!(
                 "policy append_only: the edit would change canonical retrieval units (chunks removed: {}; added: {}); text added to a section of canonical blocks joins their chunk — start it with a heading of its own",

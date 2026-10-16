@@ -13,7 +13,15 @@
 //!
 //! [index]
 //! compact_every_s = 300       # 1..=86400
+//!
+//! [identity]
+//! human_id = "ada"            # the human behind the HTTP token (K-D1.3)
 //! ```
+//!
+//! `[identity] human_id` is the actor of every HTTP call (`human:<id>`);
+//! without it the HTTP write tools answer 403 `denied`. It must be a
+//! non-empty string without whitespace at either end and without control
+//! characters.
 //!
 //! Each field is optional and takes the default above (`http_port`: none);
 //! an unknown field, a wrong type or a value outside its bounds is an error,
@@ -34,6 +42,8 @@ pub struct ServerConfig {
     pub token_rotate_days: u32,
     pub max_propose_bytes: u64,
     pub compact_every_s: u64,
+    /// `[identity] human_id` (K-D1.3)
+    pub human_id: Option<String>,
 }
 
 impl Default for ServerConfig {
@@ -43,6 +53,7 @@ impl Default for ServerConfig {
             token_rotate_days: DEFAULT_TOKEN_ROTATE_DAYS,
             max_propose_bytes: DEFAULT_MAX_PROPOSE_BYTES,
             compact_every_s: DEFAULT_COMPACT_EVERY_S,
+            human_id: None,
         }
     }
 }
@@ -88,6 +99,22 @@ impl ServerConfig {
                 }
             }
         }
+        if let Some(t) = &policy.identity {
+            for (k, v) in t {
+                match k.as_str() {
+                    "human_id" => {
+                        let Some(id) = v.as_str() else {
+                            bail!("[identity] human_id must be a string");
+                        };
+                        if id.is_empty() || id != id.trim() || id.chars().any(char::is_control) {
+                            bail!("[identity] human_id {id:?}: empty, padded with whitespace or holding control characters");
+                        }
+                        c.human_id = Some(id.to_string());
+                    }
+                    _ => bail!("[identity]: unknown field `{k}` (human_id)"),
+                }
+            }
+        }
         Ok(c)
     }
 
@@ -99,6 +126,7 @@ impl ServerConfig {
                 "max_propose_bytes": self.max_propose_bytes,
             },
             "index": {"compact_every_s": self.compact_every_s},
+            "identity": {"human_id": self.human_id},
         })
     }
 }
@@ -113,6 +141,9 @@ pub fn default_recipe() -> String {
          [promotion]\n\
          policy = \"human_only\"\n\
          \n\
+         [edit]\n\
+         policy = \"append_only\"\n\
+         \n\
          [version_trigger]\n\
          idle_ms = {}\n\
          min_sim_change = {:?}\n\
@@ -125,7 +156,11 @@ pub fn default_recipe() -> String {
          max_propose_bytes = {DEFAULT_MAX_PROPOSE_BYTES}\n\
          \n\
          [index]\n\
-         compact_every_s = {DEFAULT_COMPACT_EVERY_S}\n",
+         compact_every_s = {DEFAULT_COMPACT_EVERY_S}\n\
+         \n\
+         # the human behind the HTTP token; HTTP writes are refused without it\n\
+         # [identity]\n\
+         # human_id = \"<your id>\"\n",
         b.trigger.idle_ms(),
         b.trigger.min_sim_change(),
         b.retention.hours(),
