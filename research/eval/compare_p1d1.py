@@ -66,7 +66,7 @@ P1D1_TIMING = {
 }
 P1D1_BYTES = [
     P1D1 / "d1_3.json",
-    P1D1 / "d1_5.json",
+    # d1_5.json holds wall-clock fields: compared field by field only (F16)
     P1D1 / "d1_8.json",
     P1D1 / "d1_13.json",
 ]

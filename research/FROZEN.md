@@ -145,6 +145,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/governance_scenario.sh` | `P1-D.1/D1.7-pre:` | yeniden dondurma P1-D.1/F13: ajan düzenlemesi `--mode append`, senaryo vault'u `[edit] unrestricted` (K-D1.1, D1.0-5) |
 | `scripts/test_p1c1.sh` | `P1-D.1/D1.7-pre:` | yeniden dondurma P1-D.1/F14: C1-6 anahtar listesinde `lexical.dl` (K-D1.7) |
 | `research/eval/compare_p1d.py` | `P1-D.1/D1.7-pre:` | yeniden dondurma P1-D.1/F15: alan kümesi farkı kayıtlı fark (çıkış 3), hata değil |
+| `research/eval/compare_p1d1.py` | `P1-D.1/D1.7-fix:` | yeniden dondurma P1-D.1/F16: `d1_5.json` bayt listesinden çıktı (duvar saati alanları) |
 <!-- /frozen-table -->
 
 ## Notlar

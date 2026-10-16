@@ -108,3 +108,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Önce/sonra bit eşitliği:** alan kümeleri eşit olduğunda (A↔B `pair`, P1-D resmi RUN'ı) çıktı değişmez. Değişen tek şey, önceden hata veren durumun artık bir fark kaydı vermesidir. Geliştirme RUN'ında regress (P1-C.1'e göre) çıkış 3 verdi; farklar yalnız karar gereği alanlarda: `spec_version` (×3), `fixtures_manifest_hash`, `C1-6›lexical›dl`, `C1-6›rejected_cases`, `C1-7›pass`, üç indeks manifest hash'i.
 - **Bağlı test:** `research/tests/test_p1d_tools.py` (dondurulmuş değil) eski davranışı birebir sınıyordu: `test_field_set_difference_is_an_error`. Karar gereği `test_field_set_difference_is_recorded` oldu ve aynı sıkılıkta: fark iki yönde de `differing_fields`'ta `"absent"` ile görünmeli, sessiz geçiş yok (D1.7-pre-fix).
 - **Gözden geçirici onayı:** D1.7.review.md.
+
+## F16 · D1.7 · `research/eval/compare_p1d1.py` — `d1_5.json` bayt listesinden çıktı
+- **Ne:** `P1D1_BYTES`'ten `p1d1/d1_5.json` çıkarıldı (bir satır silindi, bir yorum eklendi). Dosyanın bütün alanları `P1D1_FILES` üzerinden alan alan karşılaştırılmaya devam eder: `events.jsonl`/`traces.jsonl` hash'leri ve eşitlikleri dahil, duvar saati alanları (`P1D1_TIMING`) hariç.
+- **Neden:** dosya iki duvar saati alanı (`elapsed_ms_lockstep`, `elapsed_ms_pipelined`) taşır. Bu alanlar alan karşılaştırmasında zaten hariçti ama bayt karşılaştırmasına da girmişti. Bu bir ölçüm kodu hatasıdır. İlk resmi çift (`20261016T115216Z-97bb027` ↔ `20261016T121823Z-97bb027`) bu yüzden çıkış 3 verdi: 100 875 alan eşit, tek bayt farkı bu iki süre.
+- **Önce/sonra bit eşitliği:** aynı iki RUN düzeltilmiş karşılaştırıcıyla yeniden karşılaştırıldı: çıkış 0, 100 875 alan eşit, baytlar eşit. Diğer bütün bayt girdileri aynı. Resmi RUN çifti düzeltmeden sonra temiz klonlardan yeniden koşturuldu (D1.7 kaydı).
+- **Gözden geçirici onayı:** D1.7.review.md.
