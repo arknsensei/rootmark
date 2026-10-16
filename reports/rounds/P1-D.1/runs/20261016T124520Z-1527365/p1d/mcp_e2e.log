@@ -1,0 +1,67 @@
+mcp_e2e: ok   [handshake] initialize names server mdk, tools capability
+mcp_e2e: ok   [handshake] tools/list has every tool of this round
+mcp_e2e: ok   [status] valid call
+mcp_e2e: FAIL [status] versions, level, relative vault path: {"id":3,"jsonrpc":"2.0","result":{"content":[{"text":"{\"embedder\":\"minilm-l6-v2/e73168f9\",\"index\":\"present\",\"last_checkpoint\":{\"checkpoint_id\":\"3a58ba6740f27eb928519f181f682c26\",\"docs\":{\"agent/notes.md\":\"df3e8a6204451c5c6e60029110c4115b\",\"blends.md\":\"070758c57df97061ab8b2c31d7
+mcp_e2e: ok   [status] last checkpoint t1, default policy human_only, index built at start
+mcp_e2e: ok   [status] unknown argument is an error
+mcp_e2e: ok   [history] valid call
+mcp_e2e: ok   [history] lineage, layer, events
+mcp_e2e: ok   [history] unknown lineage is an error
+mcp_e2e: ok   [blame] valid call (head)
+mcp_e2e: ok   [blame] every block: lineage, version, layer, author
+mcp_e2e: ok   [blame] agent document as of t1: proposal blocks
+mcp_e2e: ok   [blame] document absent at t0 is an error
+mcp_e2e: ok   [blame] missing doc_path is an error
+mcp_e2e: ok   [checkpoints] valid call
+mcp_e2e: ok   [checkpoints] t0 then t1, with event offsets
+mcp_e2e: ok   [trace] valid call
+mcp_e2e: ok   [trace] the CLI read's trace
+mcp_e2e: ok   [trace] consumer filter
+mcp_e2e: ok   [trace] since_seq past the end: empty
+mcp_e2e: ok   [trace] negative since_seq is an error
+mcp_e2e: ok   [search] valid call (hybrid default)
+mcp_e2e: ok   [search] canonical hits only, agent document absent, trace by mcp-e2e/1.0
+mcp_e2e: ok   [search] JSON-equal to the CLI twin (mdk search --consumer mcp-e2e/1.0, same state)
+mcp_e2e: ok   [search] text content byte-equal to the CLI stdout (cmp)
+mcp_e2e: ok   [search] include_proposal: canonical prefix unchanged, agent proposal labelled after it
+mcp_e2e: ok   [search] whitespace-only query is an error
+mcp_e2e: ok   [search] unknown mode is an error
+mcp_e2e: ok   [search] k = 0 is an error
+mcp_e2e: ok   [read_block] valid call
+mcp_e2e: ok   [read_block] block version, canonical, human provenance, trace by mcp-e2e/1.0
+mcp_e2e: ok   [read_block] lineage of another document is an error
+mcp_e2e: ok   [read_block] document absent at t0 is an error
+mcp_e2e: ok   [read_block] agent block: proposal, agent provenance
+mcp_e2e: ok   [trace] consumer filter: the 4 MCP traces, at_seq 1..4, failed calls recorded nothing
+mcp_e2e: ok   [trace] D-5: 200 calls → 200 traces, consumer mcp-e2e/1.0
+mcp_e2e: ok   [trace] D-5 traces.jsonl: 207 lines, 206 by mcp-e2e/1.0
+mcp_e2e: ok   [propose] create: ok, every block proposal by Agent (source mcp-e2e/1.0)
+mcp_e2e: ok   [propose] D-3 search by default does not find the proposal
+mcp_e2e: ok   [propose] D-3 search with include_proposal finds it, labelled proposal
+mcp_e2e: ok   [propose] create over an existing document is refused
+mcp_e2e: FAIL [propose] append: human blocks stay canonical, the added block is proposal: {"id":231,"jsonrpc":"2.0","result":{"content":[{"text":"error: propose: denied by edit policy append_only: policy append_only: the edit would change canonical retrieval units (chunks removed: 1; added: 0); text added to a section of canonical blocks joins their chunk — start it with a heading of its
+mcp_e2e: ok   [propose] replace_section on a heading the document lacks is refused (filter.md)
+mcp_e2e: ok   [propose] D-11 ../ path refused
+mcp_e2e: ok   [propose] D-11 path outside the vault refused
+mcp_e2e: ok   [propose] D-11 content over 10 MB refused (max_propose_bytes)
+mcp_e2e: ok   [propose] D-11 replace_section with a missing heading refused
+mcp_e2e: ok   [propose] hidden path (.mdkernel/) refused
+mcp_e2e: ok   [propose] replace_section without heading refused
+mcp_e2e: FAIL [propose] replace_section Recipe: ok: {"id":239,"jsonrpc":"2.0","result":{"content":[{"text":"error: propose: denied by edit policy append_only: policy append_only: replace_section only replaces a section made of proposal blocks; this section holds b8207c223754799bd8d227b68dcb3518 (canonical), ddde6b3b5dd3e2fb53dd11c9177b915b (canonical
+mcp_e2e: FAIL [propose] after the edits: Recipe body is the agent's, other blocks keep their human provenance: {"id":240,"jsonrpc":"2.0","result":{"content":[{"text":"{\"at\":null,\"blocks\":[{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"74ecb4d582f0ffede4479a044f078542\",\"seq_created\":18,\"seq_last\":18,\"source\":\"\",\"version_id\":\"89
+mcp_e2e: ok   [propose] D-3 plain file, refused proposals wrote nothing
+mcp_e2e: FAIL [propose] espresso.md edits are the agent's text only
+mcp_e2e: FAIL [propose] events only for proposed documents (1 unexpected), 3 proposal records
+mcp_e2e: ok   [checkpoint] named checkpoint d6
+mcp_e2e: ok   [checkpoint] same state again: explicit error naming the existing checkpoint (one checkpoint per state)
+mcp_e2e: ok   [promote] D-4 MCP promote → decision denied, policy human_only (a response, not an error), layer proposal
+mcp_e2e: ok   [promote] unknown lineage is an error
+mcp_e2e: ok   [promote] missing reason is an error
+mcp_e2e: ok   [promote] the denied request wrote no event (history: no Promoted, still proposal)
+mcp_e2e: ok   [promote] D-4 CLI promote --actor human:alice → Promoted
+mcp_e2e: ok   [promote] D-4 after the human promotion, default search finds the block (canonical)
+mcp_e2e: ok   [promote] history: Promoted by human:alice
+mcp_e2e: ok   [promote] a later agent request is still denied
+mcp_e2e: ok   [checkpoint] D-6 search --at d6 gives the old state (checkpoint d6, no agent/d6.md)
+mcp_e2e: ok   [checkpoint] D-6 search gives the new state (agent/d6.md, canonical)
+mcp_e2e: tools 8/10, handshake true, runs equal true

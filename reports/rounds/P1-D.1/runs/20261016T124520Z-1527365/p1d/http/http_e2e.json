@@ -1,0 +1,99 @@
+{
+  "cases": [
+    {
+      "id": "R-1",
+      "case": "refused start (--http 0.0.0.0) writes no policy, token or index",
+      "pass": true,
+      "detail": "exit 1"
+    },
+    {
+      "id": "T-1",
+      "case": "token file created, mode 600, 64 hex",
+      "pass": true,
+      "detail": "mode 600"
+    },
+    {
+      "id": "T-2",
+      "case": "default recipe written (promotion human_only)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "D7-1",
+      "case": "no token → 401",
+      "pass": true,
+      "detail": "401"
+    },
+    {
+      "id": "D7-2",
+      "case": "wrong token → 401",
+      "pass": true,
+      "detail": "401"
+    },
+    {
+      "id": "D7-3",
+      "case": "right token → 200 (status: human_only, index built)",
+      "pass": false,
+      "detail": "200"
+    },
+    {
+      "id": "D7-4",
+      "case": "no / empty X-Consumer → 400",
+      "pass": true,
+      "detail": "400 400 400"
+    },
+    {
+      "id": "D7-5",
+      "case": "external interface refused; listening only on 127.0.0.1",
+      "pass": true,
+      "detail": " 0.0.0.0:exit1 lan:exit1 [::]:exit1 [::1]:exit1; listen: 127.0.0.1 only"
+    },
+    {
+      "id": "H-1",
+      "case": "unknown tool 404, non-object body 400, tool error 422 with message, GET on a tool 405",
+      "pass": false,
+      "detail": "404 400 404 405"
+    },
+    {
+      "id": "W-1",
+      "case": "external human edit ingested within 2 s: canonical, Human, mdk-serve-watch",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "W-2",
+      "case": "index: no stale document, hot tier non-empty",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "W-3",
+      "case": "hidden .md files and non-.md files are not ingested",
+      "pass": false,
+      "detail": "blame .dotfile.md 404; logged: "
+    },
+    {
+      "id": "S-1",
+      "case": "SIGTERM → compact, exit 0, hot tier empty, edit found in the cold index",
+      "pass": true,
+      "detail": "exit 0"
+    },
+    {
+      "id": "T-3",
+      "case": "token file mode 644 → refused",
+      "pass": true,
+      "detail": "exit 1"
+    },
+    {
+      "id": "C-1",
+      "case": "compaction timer (compact_every_s = 1) empties the hot tier while serving",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "d7_passed": 4,
+  "d7_total": 5,
+  "passed": 12,
+  "total": 15,
+  "pass": false
+}

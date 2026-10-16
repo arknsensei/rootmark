@@ -1,0 +1,7 @@
+tamper P1-C: rejected: model manifest blake3 changed — error: /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-tamper-p1c.XXXXXX.dO6hGc3y5Q/m1/minilm-l6-v2/tokenizer.json: blake3 82483bb4f0bdb81779f295ecc5a93285
+tamper P1-C: rejected: model file changed — error: /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-tamper-p1c.XXXXXX.dO6hGc3y5Q/m2/minilm-l6-v2/sentence_bert_config.json: size 54 != manifest 53
+tamper P1-C: rejected: embedder_id mixed in embedders.jsonl — error: vector store mixes embedder ids ["minilm-l6-v2/e73168f9", "other/00000000"]
+tamper P1-C: rejected: index manifest names another embedder — error: vectors carry embedder_id Some("minilm-l6-v2/e73168f9"), manifest "other/00000000"
+tamper P1-C: rejected: C3 fixture byte changed (manifest mismatch) — error: level 1-2 checker failed (manifest mismatch)
+tamper P1-C: rejected: C3 expected ranking changed (manifest updated) — error: level 3 checker failed (C3-01)
+tamper P1-C: 6/6 corruptions rejected

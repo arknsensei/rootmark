@@ -1,0 +1,58 @@
+{
+  "tools": {
+    "contract": [
+      "blame",
+      "checkpoint",
+      "checkpoints",
+      "history",
+      "promote",
+      "propose",
+      "read_block",
+      "search",
+      "status",
+      "trace"
+    ],
+    "server": [
+      "blame",
+      "checkpoint",
+      "checkpoints",
+      "history",
+      "promote",
+      "propose",
+      "read_block",
+      "search",
+      "status",
+      "trace"
+    ],
+    "equal": true
+  },
+  "codes": {
+    "contract": [
+      "denied 403",
+      "empty_query 400",
+      "exists 409",
+      "heading_not_found 422",
+      "internal 500",
+      "invalid_arguments 400",
+      "not_found 404",
+      "path_outside_vault 400",
+      "policy_violation 422",
+      "too_large 413"
+    ],
+    "server": [
+      "denied 403",
+      "empty_query 400",
+      "exists 409",
+      "heading_not_found 422",
+      "internal 500",
+      "invalid_arguments 400",
+      "not_found 404",
+      "path_outside_vault 400",
+      "policy_violation 422",
+      "too_large 413"
+    ],
+    "equal": true
+  },
+  "missing": [],
+  "pass": true
+}

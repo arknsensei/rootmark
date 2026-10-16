@@ -1,0 +1,63 @@
+{
+ "conformance": {
+  "by_level": {
+   "1": "17/17",
+   "2": "9/9",
+   "3": "5/5"
+  },
+  "differing_tests": [],
+  "equal": false,
+  "fixtures_manifest_hash_equal": false,
+  "level_claimed": [
+   3,
+   3
+  ],
+  "spec_version": [
+   "1.0.2",
+   "1.0.3"
+  ],
+  "tests": 31
+ },
+ "differing_fields": {
+  "p1b1_checks.json:criteria›B1-3›spec_version": "inf",
+  "p1b_checks.json:fixtures_manifest_hash": "inf",
+  "p1c1_checks.json:C1-6›lexical›dl": {
+   "a": "absent",
+   "b": "exact token count, f64, no fieldnorm quantization"
+  },
+  "p1c1_checks.json:C1-6›rejected_cases": 0.14285714285714285,
+  "p1c1_checks.json:C1-7›pass": "inf",
+  "p1c1_checks.json:C1-7›spec_version": "inf",
+  "p1c_checks.json:C-1›spec_version": "inf",
+  "p1c_index.json:index_files_build›manifest·json": "inf",
+  "p1c_index.json:index_files_compact›manifest·json": "inf",
+  "p1c_index.json:index_files_final›manifest·json": "inf"
+ },
+ "equal": false,
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json",
+  "c1_variant.json",
+  "p1c1_checks.json"
+ ],
+ "n_fields": 99341,
+ "reference_run": "20261015T094412Z-b9f7622",
+ "run_a": "../reports/rounds/P1-C.1/runs/20261015T094412Z-b9f7622",
+ "run_b": "reports/runs/20261016T124520Z-1527365"
+}
