@@ -25,7 +25,7 @@ P1-A kümesi (`RESULT_FILES_P1A` = v3 + holdout + split_grid); kendi hariç tutm
 P1-B kümesi (`RESULT_FILES_P1B`) alan alan + yönetişim vault'unun `events.jsonl`, `traces.jsonl`, `checkpoints/` baytları; kendi hariç tutması yok.
 
 ### `compare_p1b1`
-Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin sonuçları. `<C2-07>`, `p1b_checks.json`'daki C2-07 testinin sırası (kod kimlikle bulur).
+Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin sonuçları. Ayrıca yönetişim vault'unun `traces.jsonl`'i bayt karşılaştırmasında kaydedilir ama hariç tutulur (`excluded: true`, K-B1.2 `trace_id` formülü; kodda satır içi, `main`). `<C2-07>`, `p1b_checks.json`'daki C2-07 testinin sırası (kod kimlikle bulur).
 
 ### `compare_p1c`
 `pair`: P1-C kümesi (`PAIR_FILES`) + yönetişim baytları, hariç tutma yok. `regress`: `REGRESS_FILES`, `REGRESS_ALLOWED`.

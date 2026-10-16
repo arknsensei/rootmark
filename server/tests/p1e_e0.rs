@@ -205,6 +205,32 @@ fn e14_stale_index_answers_index_stale_or_is_rebuilt() {
     assert_eq!(res["pass"], true, "{res:#}");
 }
 
+/// A damaged index manifest is damage, not staleness: `mdk serve` starts as
+/// in P1-D.1 (the index is neither rebuilt nor touched) and `search`
+/// answers 500 `internal` (contract §3; E0 review 1).
+#[test]
+fn damaged_manifest_still_serves_and_search_is_internal() {
+    for (name, extra) in [("dmg-on", ""), ("dmg-off", "auto_rebuild = false\n")] {
+        let v = vault(name, extra);
+        let m = v.join(".mdkernel/index/manifest.json");
+        std::fs::write(&m, "{ not json").unwrap();
+        let s = serve_http(&v);
+        let (st, body) = http(&s, "search", &json!({"query": "extinguisher"}));
+        assert_eq!(st, 500, "{name}: {body}");
+        assert_eq!(body["error"]["code"], "internal", "{name}");
+        assert!(
+            s.start_log.iter().any(|l| l.contains("index damaged")),
+            "{name}: {:?}",
+            s.start_log
+        );
+        assert_eq!(
+            std::fs::read_to_string(&m).unwrap(),
+            "{ not json",
+            "{name}: untouched"
+        );
+    }
+}
+
 // ---- E-15 ---------------------------------------------------------------------
 
 #[test]

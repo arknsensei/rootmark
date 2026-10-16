@@ -296,6 +296,10 @@ pub enum IndexAtStart {
     Rebuilt(String, store::BuildReport),
     /// it is stale (the reason) and `auto_rebuild = false`: left as it is
     Stale(String),
+    /// its manifest cannot be read (the error): left as it is, never
+    /// rebuilt over; the index's tools answer `internal` (damage, not
+    /// staleness)
+    Damaged(String),
 }
 
 /// The served vault and its writer queue.
@@ -526,9 +530,12 @@ impl Kernel {
             let missing = !store::index_dir(&v).join("manifest.json").exists();
             let stale = match missing {
                 true => None,
-                false => match store::staleness(&v)? {
-                    None => return Ok(IndexAtStart::Current),
-                    Some(s) => Some(s),
+                // a damaged manifest is not staleness: the service starts as
+                // before (P1-D.1) and the index's tools answer `internal`
+                false => match store::staleness(&v) {
+                    Ok(None) => return Ok(IndexAtStart::Current),
+                    Ok(Some(s)) => Some(s),
+                    Err(e) => return Ok(IndexAtStart::Damaged(format!("{e:#}"))),
                 },
             };
             if let (Some(s), false) = (&stale, auto_rebuild) {

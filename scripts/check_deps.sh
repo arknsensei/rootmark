@@ -98,7 +98,9 @@ if [ -d clients ]; then
       clients 2>/dev/null | grep -v '/node_modules/' || true)"
   [ -z "$hits" ] || violation "clients/ imports a kernel package directly:
 $hits"
-  if [ -f docs/CLIENT_CONTRACT.md ]; then
+  if [ ! -f docs/CLIENT_CONTRACT.md ]; then
+    violation "clients/ exists but docs/CLIENT_CONTRACT.md does not (the client's only dependency)"
+  else
     endpoints="$(sed -n '/^## 2\. /,/^## 3\. /p' docs/CLIENT_CONTRACT.md | grep -E '^\| `[a-z_]+` \|' | sed -E 's/^\| `([a-z_]+)`.*/\1/' | sort -u)"
     used="$(grep -RhoE --include='*.ts' --include='*.tsx' --include='*.js' --include='*.mjs' \
         --exclude-dir=node_modules --exclude=main.js "/v1/[A-Za-z0-9_]+" clients 2>/dev/null | sed 's#^/v1/##' | sort -u || true)"
