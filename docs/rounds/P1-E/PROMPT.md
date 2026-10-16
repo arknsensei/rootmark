@@ -2,7 +2,9 @@
 
 Aktif tur P1-E. Yönergeler: docs/rounds/P1-E/GOAL.md, TASKS.md; VERIFY.md yalnız doğrulayıcı içindir.
 
-Başlangıç koşulu: reports/rounds/P1-D.1/VERIFICATION.md hükmü "Güvenilir" (koşullu ise koşullar istemciyi ilgilendirmiyor olmalı; ilgilendiriyorsa dur, STOP.md yaz) ve `p1d1-final` etiketi (E0 atar).
+Başlangıç koşulu: reports/rounds/P1-D.1/VERIFICATION.md 'Şu koşullarla güvenilir'; koşullar docs/rounds/P1-E/ADDENDUM.md ile E0'da kapatılır. E0 tamamlanıp E-12..E-16 geçmeden E1'e geçme.
+
+docs/rounds/P1-E/ADDENDUM.md'yi de oku; E0 görevi ADDENDUM'daki işleri içerir.
 
 Önce CLAUDE.md, NORTH_STAR.md (ürün sahnesi), docs/CLIENT_CONTRACT.md (istemcinin tek bağımlılığı), docs/SECURITY.md, docs/ARCHITECTURE.md §2–§3 (istemci bağımsızlığı) ve §4.4, docs/PACKAGES.md (clients), docs/DEV_PROCESS.md, docs/DECISIONS.md (K-D1.1, K-D1.3, K-D1.5), server/CLAUDE.md oku; sonra GOAL.md, TASKS.md.
 
