@@ -93,7 +93,7 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 
   Başka değişiklik yok.
 - **Neden:** K-D1.1 ve D1.0-5 (K-D4-T b) gereği CLI `mdk propose` var olan bir belgenin üzerine yazmaz (`exists`). İnsan bölümüne başlıksız ek de `append_only` altında reddedilir. Değişmeden kalsaydı P1-B `p1b-checks` zincirde ölümcül biçimde dururdu (geliştirme zinciri `20261016T101541Z-142d979`: "espresso.md exists; propose never overwrites").
-- **Önce/sonra bit eşitliği:** `bash scripts/governance_scenario.sh target/release/mdk <out>` çıktısı P1-D resmi RUN'ının `governance/` dizini ile karşılaştırıldı. `events.jsonl` ve `traces.jsonl` bayt eşit, `governance.json` eşit (`events_hash` `2b0dc8e8…` aynı). `espresso.md` eski üzerine yazmanın üreteceği baytlarla aynı.
+- **Önce/sonra bit eşitliği:** `bash scripts/governance_scenario.sh target/release/mdk <out>` çıktısı P1-D resmi RUN'ının `governance/` dizini ile karşılaştırıldı. `events.jsonl` ve `traces.jsonl` bayt eşit, `governance.json` eşit (`events_hash` `2b0dc8e8…` aynı). `espresso.md` eski üzerine yazmanın üreteceği baytlarla aynı. Senaryo dizinindeki iki fark karar gereğidir: `policy.toml`'daki `[edit]` bloğu (bu istisna) ve D1.2'den beri CLI `propose`'un da yazdığı `proposals.jsonl` (D1.0-5). Karşılaştırılan yapıtlar (`events.jsonl`, `traces.jsonl`, `checkpoints/`, `governance.json`) eşit.
 - **Gözden geçirici onayı:** D1.7.review.md.
 
 ## F14 · D1.7 · `scripts/test_p1c1.sh` — C1-6 anahtar listesinde `dl`
