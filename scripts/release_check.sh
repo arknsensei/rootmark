@@ -23,23 +23,38 @@ item R1 "one version $ver" "$( [ "$ver" = 0.1.0 ] && [ "$(echo "$vers" | sort -u
 item R2 "spec version $spec" "$( grep -q "\"spec_version\": \"$spec\"" core/tests/conformance.rs && head -1 spec/SPEC.md | grep -q "v$spec\$"; echo $?)"
 mdk="$root/target/release/mdk"
 item R3 "mdk --version / --spec-version" "$( [ "$("$mdk" --version 2>/dev/null)" = "mdk $ver" ] && [ "$("$mdk" --spec-version 2>/dev/null)" = "$spec" ]; echo $?)"
+head="$(git rev-parse HEAD)"
 if [ -f "$dist/release.json" ]; then
-  item R4 "release binaries pass mdk conformance 34/34" "$(jq -e '.ok == 4' "$dist/release.json" >/dev/null; echo $?)" \
+  # the package must be of this commit and version (a stale dist/ fails)
+  fresh="$(jq -r --arg h "$head" --arg v "$ver" 'if .commit == $h and .version == $v then "yes" else "no: dist/ of \(.commit // "?") version \(.version // "?")" end' "$dist/release.json")"
+  [ "$fresh" = yes ] || item R4 "release binaries of HEAD" 1 "$fresh"
+  item R4 "release binaries pass mdk conformance 34/34" "$( [ "$fresh" = yes ] && jq -e '.ok == 4' "$dist/release.json" >/dev/null; echo $?)" \
     "$(jq -r '[.targets[] | "\(.target): \(if .ok then "ok" elif .built then "built, check failed" else "not built" end)"] | join("; ")' "$dist/release.json")"
 else
   item R4 "release binaries pass mdk conformance 34/34" 1 "dist/release.json missing (scripts/release.sh)"
 fi
 tmp="$(mktemp -d -t mdk-relcheck.XXXXXX)"; trap 'rm -rf "$tmp"' EXIT
-make -s conformance >/dev/null 2>&1; MDK_MODELS="$root/models" "$mdk" conformance >"$tmp/mdk.json" 2>/dev/null
-item R5 "mdk conformance = make conformance" "$(t bash scripts/conformance_equiv.sh reports/conformance.json "$tmp/mdk.json")"
-item R6 "archives and SHA256SUMS" "$( [ -s "$dist/SHA256SUMS" ] && (cd "$dist" && shasum -a 256 -c SHA256SUMS >/dev/null 2>&1) && grep -q 'tar.gz' "$dist/SHA256SUMS"; echo $?)"
+# a fresh make report (a stale reports/conformance.json never counts) and
+# both exit codes
+rm -f reports/conformance.json
+mrc=0; make -s conformance >"$tmp/make.log" 2>&1 || mrc=$?
+crc=0; MDK_MODELS="$root/models" "$mdk" conformance >"$tmp/mdk.json" 2>/dev/null || crc=$?
+erc=1; [ "$mrc" = 0 ] && [ "$crc" = 0 ] && [ -f reports/conformance.json ] && erc="$(t bash scripts/conformance_equiv.sh reports/conformance.json "$tmp/mdk.json")"
+item R5 "mdk conformance = make conformance" "$erc" "make exit $mrc, mdk conformance exit $crc"
+# every archive, the wheel and the zip are listed, and every listed file checks
+unlisted="$(cd "$dist" 2>/dev/null && for f in bin/*.tar.gz wheel/*.whl obsidian/*.zip homebrew/mdk.rb; do [ -f "$f" ] && ! grep -q "  $f\$" SHA256SUMS && echo "$f"; done | tr '\n' ' ')"
+item R6 "archives and SHA256SUMS" "$( [ -s "$dist/SHA256SUMS" ] && [ -z "$unlisted" ] && (cd "$dist" && shasum -a 256 -c SHA256SUMS >/dev/null 2>&1) && grep -q 'tar.gz' "$dist/SHA256SUMS"; echo $?)" "${unlisted:+unlisted: $unlisted}"
 whl="$(ls "$dist"/wheel/*-"$ver"-*.whl 2>/dev/null | head -1)"
 item R7 "Python wheel (module mdkernel_core)" "$( [ -n "$whl" ] && unzip -Z1 "$whl" | grep -qE "^mdkernel_core/"; echo $?)" "${whl##*/}"
 zipl="$(unzip -Z1 "$dist/obsidian/mdkernel-$ver.zip" 2>/dev/null | grep -v '/$' | sed 's#^[^/]*/##' | sort | tr '\n' ' ')"
 size="$(wc -c <"$dist/obsidian/mdkernel-$ver/main.js" 2>/dev/null || echo 999999999)"
 item R8 "Obsidian package" "$( [ "$zipl" = "main.js manifest.json styles.css " ] && [ "$size" -lt 512000 ] && jq -e '(.dependencies // {}) == {}' clients/obsidian/package.json >/dev/null; echo $?)" "files: $zipl; main.js $size B"
 sd="$dist/spec-$spec"
-item R9 "spec publication dist/spec-$spec" "$( for f in SPEC.md CONFORMANCE.md LICENSE fixtures/MANIFEST.json conformance.json; do [ -f "$sd/$f" ] || exit 1; done; jq -e '.level_claimed == 3 and .passed == 34 and .total == 34 and .fixtures_manifest == "ok"' "$sd/conformance.json" >/dev/null; echo $?)"
+# the published copies are the tree's, byte for byte, and pass
+item R9 "spec publication dist/spec-$spec" "$( for f in SPEC.md CONFORMANCE.md LICENSE fixtures/MANIFEST.json conformance.json; do [ -f "$sd/$f" ] || exit 1; done
+  cmp -s "$sd/SPEC.md" spec/SPEC.md && cmp -s "$sd/CONFORMANCE.md" spec/CONFORMANCE.md && cmp -s "$sd/LICENSE" LICENSE \
+  && diff -rq -x .DS_Store -x .mdkernel "$sd/fixtures" spec/fixtures >/dev/null \
+  && jq -e '.level_claimed == 3 and .passed == 34 and .total == 34 and .fixtures_manifest == "ok"' "$sd/conformance.json" >/dev/null; echo $?)"
 item R10 "LICENSE Apache-2.0" "$( grep -q 'Apache License' LICENSE && grep -q 'Version 2.0, January 2004' LICENSE && for a in "$dist"/bin/*.tar.gz; do tar -tzf "$a" | grep -q '/LICENSE$' || exit 1; done; echo $?)"
 item R11 "CHANGELOG, THREAT_MODEL, RELEASE" "$( grep -q "^## $ver" CHANGELOG.md && [ -f docs/THREAT_MODEL.md ] && [ -f docs/RELEASE.md ]; echo $?)"
 item R12 "cargo-binstall metadata, Homebrew draft" "$( grep -q '^\[package.metadata.binstall\]' server/Cargo.toml && grep -q "version \"$ver\"" "$dist/homebrew/mdk.rb" && ! grep -q '@SHA256' "$dist/homebrew/mdk.rb"; echo $?)"

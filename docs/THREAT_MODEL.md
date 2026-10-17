@@ -35,6 +35,7 @@ Durum: P1-E/E5 yayım belgesi; kaynağı `docs/SECURITY.md` (P1-D.1/D1.0, K-D1.3
 - İstemci sözleşme dışı ya da biçimsiz bir yanıtı `bad_response` diye gösterir, sessizce kabul etmez; proposal sonuçlarını istenmeden göstermez, gizlemez.
 
 ## Bilinen açık sınırlar
+- **`mdk conformance`'ın geçici dizinleri:** ikilinin kendi çalışma dizini rastgele adlı, dışlayıcı ve 0700'dür; ama içine derlenen dondurulmuş uyumluluk değerlendiricileri (`core/tests/conformance/eval*.rs`, `index/tests/conformance/eval_c3.rs`) kendi vaka dizinlerini öngörülebilir adlarla (`$TMPDIR/mdk-conf*-<pid>-<n>-…`) kurar ve önce var olanı siler. Paylaşılan bir makinede başka bir yerel kullanıcı bu yolları önceden yaratıp (sembolik bağ dahil) komutu yanıltabilir ya da bozabilir. Azaltma: `mdk conformance`'ı kişisel bir `TMPDIR` ile koşturun (macOS'ta varsayılan `TMPDIR` zaten kullanıcıya özeldir; Linux'ta `TMPDIR=$(mktemp -d)`). Değerlendiriciler dondurulmuş ölçüm kodudur; düzeltme faz 2 dondurma istisnasıyla.
 - **TOCTOU (K-D4-T c):** `propose`'un yol denetimi ile yazımı arasında, vault'a yazma izni olan başka bir yerel süreç bir dizini sembolik bağla değiştirebilir. Tam kapatmak `openat`/`O_NOFOLLOW` zinciri ister (faz 2).
 - **Büyük/küçük harf duyarsız dosya sistemleri:** dosyası silinmiş bir dokümanın harf farklı adıyla yeni doküman yaratılabilir; köken doğru kalır.
 - **CLI'nin aktörü beyan edilir:** `mdk promote --actor human:<id>` komutu çalıştıran kişinin beyanıdır; CLI'yi çalıştırabilen her süreç insan beyan edebilir. Bu, token dosyası varsayımıyla aynı güven düzeyidir.

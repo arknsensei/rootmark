@@ -119,6 +119,8 @@ sha_arm="$(shasum -a 256 "$dist/bin/mdk-$ver-aarch64-apple-darwin.tar.gz" | cut 
 sed -e "s/@VERSION@/$ver/g" -e "s/@SHA256_AARCH64_APPLE_DARWIN@/$sha_arm/g" packaging/homebrew/mdk.rb.in >"$dist/homebrew/mdk.rb"
 
 (cd "$dist" && find bin wheel obsidian homebrew "spec-$spec" -type f \( -name '*.tar.gz' -o -name '*.whl' -o -name '*.zip' -o -name '*.rb' -o -name 'conformance.json' \) | LC_ALL=C sort | xargs shasum -a 256 >SHA256SUMS)
-jq -s '{version: "'"$ver"'", spec_version: "'"$spec"'", targets: ., built: ([.[] | select(.built)] | length), ok: ([.[] | select(.ok)] | length)}' "$dist"/bin/*.json >"$dist/release.json"
+commit="$(git rev-parse HEAD)"
+dirty="$( [ -z "$(git status --porcelain --untracked-files=no)" ] && echo false || echo true)"
+jq -s --arg c "$commit" --argjson d "$dirty" '{version: "'"$ver"'", spec_version: "'"$spec"'", commit: $c, worktree_dirty: $d, targets: ., built: ([.[] | select(.built)] | length), ok: ([.[] | select(.ok)] | length)}' "$dist"/bin/*.json >"$dist/release.json"
 jq -r '.targets[] | "release: \(if .ok then "ok  " else "FAIL" end) \(.target)\(if .built then "" else " (not built: \(.reason))" end)"' "$dist/release.json"
 jq -r '"release: \(.ok)/4 targets built and checked (E-7)"' "$dist/release.json"
