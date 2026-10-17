@@ -1,6 +1,8 @@
 {
   "version": "0.1.0",
   "spec_version": "1.0.3",
+  "commit": "8a62d6e8245adfbeeb492bd4692c6a0e93351ede",
+  "worktree_dirty": false,
   "targets": [
     {
       "target": "aarch64-apple-darwin",

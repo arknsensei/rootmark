@@ -28,7 +28,7 @@
       "id": "R5",
       "item": "mdk conformance = make conformance",
       "ok": true,
-      "detail": ""
+      "detail": "make exit 0, mdk conformance exit 0"
     },
     {
       "id": "R6",
