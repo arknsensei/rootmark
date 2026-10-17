@@ -165,6 +165,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/release_local.sh` | `P1-E/E7-pre:` | E-7 zincir yarısı (yerel ikili, `mdk conformance`) |
 | `scripts/conformance_equiv.sh` | `P1-E/E7-pre:` | `mdk conformance` ↔ `make conformance` eşdeğerliği |
 | `scripts/test_tamper_p1e.sh` | `P1-E/E7-pre:` | P1-E kasıtlı bozmaları |
+| `research/eval/report_p1e.py` | `P1-E/E8:` | P1-E rapor üreteci ve karar kuralı (resmi RUN sonrasında yazıldı; TASKS E8 sırası) |
 <!-- /frozen-table -->
 
 ## Notlar

@@ -82,3 +82,25 @@ def test_declaration_covers_compare_p1e():
     r = K.audit()
     assert "compare_p1e" in r["modules"]
     assert r["unmatched"] == 0
+
+
+def _rows(failed=(), e11=None):
+    from eval import report_p1e as R
+
+    r = [{"id": i, "pass": i not in failed} for i in R.GOAL_IDS] + [{"id": "E-11", "pass": e11}]
+    ad = [{"id": i, "pass": True} for i in R.ADDENDUM_IDS]
+    return r, ad
+
+
+def test_decision_rule_branches():
+    from eval import report_p1e as R
+
+    assert "Faz 1 tamamlandı" in R.decide(*_rows())[0]
+    assert "yayım ertelenir" in R.decide(*_rows(["E-7"]))[0]
+    assert "istemci yönetişimi" in R.decide(*_rows(["E-4", "E-7"]))[0]
+    assert "UI eksik" in R.decide(*_rows(["E-2"]))[0]
+    assert "karar talebi" in R.decide(*_rows(["E-2", "E-7"]))[0]
+    assert "karar talebi" in R.decide(*_rows(["E-9"]))[0]
+    r, ad = _rows()
+    ad[0]["pass"] = False  # E-12
+    assert "E1 başlamazdı" in R.decide(r, ad)[0]
