@@ -1,0 +1,22 @@
+{
+  "tests_equal": true,
+  "manifest_hash_equal": true,
+  "level_claimed": [
+    3,
+    3
+  ],
+  "passed": [
+    34,
+    34
+  ],
+  "total": [
+    34,
+    34
+  ],
+  "spec_version": [
+    "1.0.3",
+    "1.0.3"
+  ],
+  "differing_tests": [],
+  "equal": true
+}

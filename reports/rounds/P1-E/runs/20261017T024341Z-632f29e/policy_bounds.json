@@ -1,0 +1,54 @@
+{
+  "cases": [
+    {
+      "id": "B6-1",
+      "case": "retention < 24h",
+      "exit": 1,
+      "error_matches": "kernel minimum is 24",
+      "stdout_empty": true,
+      "default_word": false
+    },
+    {
+      "id": "B6-2",
+      "case": "idle_ms < 0",
+      "exit": 1,
+      "error_matches": "idle_ms = -1: must be >= 0",
+      "stdout_empty": true,
+      "default_word": false
+    },
+    {
+      "id": "B6-3",
+      "case": "min_sim_change > 1",
+      "exit": 1,
+      "error_matches": "must lie in \\[0, 1\\]",
+      "stdout_empty": true,
+      "default_word": false
+    },
+    {
+      "id": "B6-4",
+      "case": "unknown promotion",
+      "exit": 1,
+      "error_matches": "unknown promotion policy",
+      "stdout_empty": true,
+      "default_word": false
+    },
+    {
+      "id": "B6-5",
+      "case": "promotion without a hook (no recipe: deny)",
+      "exit": 1,
+      "error_matches": "denied by policy deny",
+      "stdout_empty": true,
+      "default_word": false
+    },
+    {
+      "id": "B6-6",
+      "case": "Promoted without actor",
+      "exit": 1,
+      "error_matches": "actor id is empty",
+      "stdout_empty": true,
+      "default_word": false
+    }
+  ],
+  "all_err": true,
+  "no_fallback": true
+}

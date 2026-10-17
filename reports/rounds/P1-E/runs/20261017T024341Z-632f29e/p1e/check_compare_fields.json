@@ -1,0 +1,25 @@
+{
+ "declaration": "DETERMINISTIC_FIELDS.md",
+ "fields_declared": 85,
+ "fields_in_code": 85,
+ "fields_only_declared": [],
+ "fields_only_in_code": [],
+ "file_constants": 16,
+ "file_constants_differing": [],
+ "mode_class_mismatch": [],
+ "modules": [
+  "compare_p1a",
+  "compare_p1b",
+  "compare_p1b1",
+  "compare_p1c",
+  "compare_p1c1",
+  "compare_p1d",
+  "compare_p1d1",
+  "compare_p1e",
+  "compare_runs"
+ ],
+ "modules_without_section": [],
+ "pass": true,
+ "sections_without_module": [],
+ "unmatched": 0
+}

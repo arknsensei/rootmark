@@ -1,0 +1,262 @@
+{
+ "E-1": {
+  "failed": [],
+  "pass": true,
+  "steps": "11/11"
+ },
+ "E-10": {
+  "bundle_bytes": 40701,
+  "bundle_requires": [
+   "@codemirror/state",
+   "@codemirror/view",
+   "obsidian"
+  ],
+  "pass": true,
+  "runtime_dependencies": [],
+  "tsc_eslint_vitest_exit": [
+   0,
+   0,
+   0
+  ],
+  "tsc_strict": true,
+  "vitest": {
+   "failed": 0,
+   "files": 18,
+   "passed": 97,
+   "tests": 97
+  }
+ },
+ "E-12": {
+  "differing_fields": 0,
+  "exit_code": 0,
+  "n_fields": 100982,
+  "pass": true,
+  "record": "reports/rounds/P1-D.1/runs/20261016T230508Z-06cd370/pair_recheck.json"
+ },
+ "E-13": {
+  "pass": true,
+  "unmatched": 0
+ },
+ "E-14": {
+  "pass": true,
+  "passed": "2/2"
+ },
+ "E-15": {
+  "pass": true,
+  "passed": "2/2"
+ },
+ "E-16": {
+  "endpoint_removed_rejected": true,
+  "http_step_pass": true,
+  "pass": true
+ },
+ "E-2": {
+  "failed": [],
+  "harness": "plugin command layer in Node against a real mdk serve (Obsidian not headless; ASSUMPTIONS E4-1)",
+  "pass": true,
+  "steps": "11/11"
+ },
+ "E-3": {
+  "pass": true,
+  "plugin_e2e_md_changes_only_at_propose": true,
+  "scene_md_changes_only_at_propose": true
+ },
+ "E-4": {
+  "endpoints_used": [
+   "GET /v1/status",
+   "POST /v1/blame",
+   "POST /v1/checkpoint",
+   "POST /v1/promote",
+   "POST /v1/search",
+   "POST /v1/trace"
+  ],
+  "outside_contract": 0,
+  "pass": true,
+  "requests": 30
+ },
+ "E-5": {
+  "pass": true,
+  "plugin_promote": {
+   "actors": [
+    {
+     "id": "editor",
+     "kind": "human"
+    },
+    {
+     "id": "editor",
+     "kind": "human"
+    }
+   ],
+   "decisions": [
+    "promoted",
+    "promoted"
+   ],
+   "without_reason": {
+    "code": "invalid_arguments",
+    "status": 400
+   }
+  },
+  "scene_promote": {
+   "actors": [
+    {
+     "id": "editor",
+     "kind": "human"
+    },
+    {
+     "id": "editor",
+     "kind": "human"
+    }
+   ],
+   "decisions": [
+    "promoted",
+    "promoted"
+   ],
+   "reasons": [
+    "approved in the scene",
+    "approved in the scene"
+   ],
+   "without_reason": {
+    "code": "invalid_arguments",
+    "events_written": 0,
+    "status": 400
+   }
+  }
+ },
+ "E-6": {
+  "pass": true,
+  "plugin": {
+   "attempt": {
+    "append": "policy_violation",
+    "describe_error_shows_hint": true,
+    "hint": "start the appended text with a heading",
+    "replace_section": "denied"
+   },
+   "unchanged": {
+    "blame_unchanged": true,
+    "search_unchanged": true
+   }
+  },
+  "scene": {
+   "attempt": {
+    "append": "policy_violation",
+    "events_written": 0,
+    "hint": "start the appended text with a heading",
+    "replace_section": "denied"
+   },
+   "unchanged": {
+    "blame_unchanged": true,
+    "search_unchanged": true
+   }
+  }
+ },
+ "E-7": {
+  "chain_local_target": {
+   "conformance": {
+    "exit": 0,
+    "level_claimed": 3,
+    "passed": 34,
+    "total": 34
+   },
+   "equal_to_make_conformance": true,
+   "pass": true,
+   "spec_version": "1.0.3",
+   "target": "aarch64-apple-darwin",
+   "version": "mdk 0.1.0"
+  },
+  "four_targets": {
+   "commit": "8a62d6e8245adfbeeb492bd4692c6a0e93351ede",
+   "ok": "2/4",
+   "record": "docs/rounds/P1-E/progress/E5_release.json",
+   "targets": {
+    "aarch64-apple-darwin": "ok",
+    "x86_64-apple-darwin": "not built: error: ort-sys@2.0.0-rc.13: no prebuilt binaries available for target x86_64-apple-darwin",
+    "x86_64-pc-windows-msvc": "not built: no MSVC toolchain or Windows host here; built and checked by .github/workflows/release.yml (windows-latest)",
+    "x86_64-unknown-linux-gnu": "ok"
+   }
+  },
+  "pass": false
+ },
+ "E-9": {
+  "conformance": {
+   "level_claimed": 3,
+   "passed": 34,
+   "total": 34
+  },
+  "pass": true,
+  "regress_vs_p1d1": {
+   "conformance": {
+    "differing_tests": [],
+    "equal": true,
+    "level_claimed": [
+     3,
+     3
+    ],
+    "passed": [
+     34,
+     34
+    ],
+    "spec_version": [
+     "1.0.3",
+     "1.0.3"
+    ],
+    "tests": 34
+   },
+   "differing_fields": {},
+   "equal": true,
+   "excluded_differences": {
+    "p1d1/d1_13.json:codes": {
+     "decision": "K-E0.3",
+     "leaves": 16
+    },
+    "p1d1/d1_13.json:http": {
+     "decision": "F3 (ADDENDUM Ş4)",
+     "leaves": 104
+    },
+    "p1d1/d1_3.json:outcomes/append:denied": {
+     "decision": "K-E0.4",
+     "leaves": 1
+    },
+    "p1d1/d1_3.json:outcomes/append:policy_violation": {
+     "decision": "K-E0.4",
+     "leaves": 1
+    },
+    "p1d1/d1_5.json:propose_denied": {
+     "decision": "K-E0.4",
+     "leaves": 1
+    },
+    "p1d1/d1_5.json:write_responses": {
+     "decision": "K-E0.2 (F1)",
+     "leaves": 1
+    },
+    "p1d1/d1_5.json:write_responses_a_vs_b_equal": {
+     "decision": "K-E0.2 (F1)",
+     "leaves": 1
+    },
+    "p1d1/d1_5.json:write_responses_pipelined_vs_lockstep_equal": {
+     "decision": "K-E0.2 (F1)",
+     "leaves": 1
+    },
+    "p1d1_checks.json:D1-13/codes": {
+     "decision": "K-E0.3",
+     "leaves": 1
+    },
+    "p1d1_checks.json:D1-3/outcomes/append:denied": {
+     "decision": "K-E0.4",
+     "leaves": 1
+    },
+    "p1d1_checks.json:D1-3/outcomes/append:policy_violation": {
+     "decision": "K-E0.4",
+     "leaves": 1
+    }
+   },
+   "exclusions_without_difference": [],
+   "n_fields": 100846,
+   "reference_run": "20261016T124520Z-1527365"
+  }
+ },
+ "tamper": {
+  "controls": "5/5",
+  "pass": true,
+  "rejected": "10/10"
+ }
+}

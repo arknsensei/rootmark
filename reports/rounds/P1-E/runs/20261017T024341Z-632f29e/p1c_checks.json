@@ -1,0 +1,142 @@
+{
+ "C-1": {
+  "C3": "4/4",
+  "fixtures_manifest": "ok",
+  "level_claimed": 3,
+  "pass": true,
+  "spec_version": "1.0.3"
+ },
+ "C-10": {
+  "min_cosine": 0.9999999999992171,
+  "n": 50,
+  "pass": true,
+  "threshold": 0.999
+ },
+ "C-11": {
+  "differing_outside_exclusions": [
+   "p1b1_checks.json:criteria›B1-3›pass",
+   "p1b1_checks.json:criteria›B1-3›spec_version"
+  ],
+  "pass": false,
+  "reference_run": "20261014T212243Z-226b511"
+ },
+ "C-12": {
+  "C2-09": "pass",
+  "pass": true
+ },
+ "C-13": {
+  "pass": true,
+  "tests": {
+   "kc01_first_of_two_drops_in_one_snapshot_removed_is_an_error_human": true,
+   "kc01_first_of_two_drops_in_one_snapshot_removed_is_an_error_synthetic": true,
+   "kc01_single_drop_removed_opens_as_derived_prefix": true
+  }
+ },
+ "C-2": {
+  "C1": "17/17",
+  "C2": "9/9",
+  "pass": true
+ },
+ "C-3": {
+  "multi": {
+   "delta": -0.013603101688366315,
+   "ndcg@10": 0.47997718805613127,
+   "reference": 0.4935802897444976
+  },
+  "pass": false,
+  "single": {
+   "delta": 0.002898382452435788,
+   "ndcg@10": 0.6768569809546352,
+   "reference": 0.6739585985021994
+  },
+  "threshold": 0.01
+ },
+ "C-4": {
+  "modes": [
+   "flat",
+   "lexical",
+   "hybrid"
+  ],
+  "pass": true,
+  "queries": 10,
+  "repeats": 100
+ },
+ "C-5": {
+  "index_files_equal": true,
+  "pass": true,
+  "rankings_equal": true,
+  "rebuild": {
+   "embedded": 5998,
+   "embedder_id": "minilm-l6-v2/e73168f9",
+   "records": 5998,
+   "reuse": "none: no previous index",
+   "snapshots": 1012
+  }
+ },
+ "C-6": {
+  "decided_by": "eval.compare_p1c pair (pair_compare.json)"
+ },
+ "C-7": {
+  "chunks_by_layer": {
+   "canonical": 32,
+   "derived": 1,
+   "proposal": 7
+  },
+  "derived_hits": 0,
+  "modes": [
+   "flat",
+   "lexical",
+   "hybrid"
+  ],
+  "pass": true,
+  "proposal_hits_with_include_proposal": 4833,
+  "proposal_or_derived_hits_by_default": 0,
+  "queries": 1000,
+  "settings": [
+   "default",
+   "include_proposal"
+  ]
+ },
+ "C-8": {
+  "decided_by": "report from c8_latency.json (machine-dependent)"
+ },
+ "C-9": {
+  "compact": {
+   "moved_from_hot": 20,
+   "records": 6018,
+   "snapshots": 1032
+  },
+  "edits": 20,
+  "embedded": 20,
+  "hot_status": {
+   "cold_records": 5998,
+   "cold_snapshots": 1012,
+   "embedder_id": "minilm-l6-v2/e73168f9",
+   "hot_records": 20,
+   "hot_snapshots": 20,
+   "stale_docs": []
+  },
+  "pass": true,
+  "rankings_equal": true
+ },
+ "determinism_vault": {
+  "build": {
+   "embedded": 5998,
+   "embedder_id": "minilm-l6-v2/e73168f9",
+   "records": 5998,
+   "reuse": "none: no previous index",
+   "snapshots": 1012
+  },
+  "checkpoint_hot_id": "09423aecac046b629a687db879b4c8d3",
+  "checkpoint_id": "368158345bfc9f0d6cc1daf23f6bf6ee",
+  "events_hash": "a83516f0559e1d1ae46697979831f1a0",
+  "traces": {
+   "blake3": "e2d4489aaad555f70187176a8b90fbba",
+   "lines": 6600
+  }
+ },
+ "models": {
+  "embedder_id": "minilm-l6-v2/e73168f9",
+  "ok": true
+ }
+}

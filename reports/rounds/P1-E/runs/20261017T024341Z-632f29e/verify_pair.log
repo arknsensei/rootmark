@@ -1,0 +1,1631 @@
+[verify 02:40:52] clone /Users/arkns/Works/mdkernel -> <scratchpad>/offpair/A/repo
+[verify 02:40:54] commit 632f29ec77e5c077c674f092fc8b069c5bfc1292
+[verify 02:40:54] setup
+[verify 02:41:34] models (fetch + manifest check)
+[verify 02:41:45] datasets (d2 d3 d1 d1k4 d1h d1ho d1sh d1hs, manifests verified)
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.datasets.git_history 
+data/MANIFEST.d2.json verified
+D2: 300 commits, 836 pairs
+cd research && uv run --frozen python -m eval.d3_v3 
+data/MANIFEST.d3.json verified: events_hash=e6945bbc2da9c47376e017e815d7e51b events_hash_v3=7335baebefba377c84574928dd4cc05c
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.datasets.synthetic_edits 
+data/MANIFEST.d1.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v2 --set d1k4 
+data/MANIFEST.d1k4.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v2 --set d1h 
+data/MANIFEST.d1h.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v3 --set holdout 
+data/MANIFEST.d1ho.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v3 --set split_hard 
+data/MANIFEST.d1sh.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v4 
+data/MANIFEST.d1hs.json verified
+[verify 02:42:46] freeze-check (v2), freeze-check-v3, check_frozen
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.freeze_check
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 69166.40it/s]
+freeze-check OK (d489a0ed44b15d3aeb272e16cdd4a5af)
+cd research && uv run --frozen python -m eval.freeze_check_v3
+freeze-check-v3 OK (d138cddcde1d0978a020a6fe8df2f610)
+check_frozen: research/eval/** — 29 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/tests/fixtures/freeze_fixture/** — 18 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/tests/fixtures/freeze_fixture_v3/** — 17 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/data/MANIFEST.*.json — 5 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/data/d4/** — 3 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/data/splits/** — 1 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/reports/runs/20261013T154851Z-f133d0b/** — 12 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/reports/runs/20261013T182004Z-f82dabd/** — 11 files unchanged since 540783b (P1-A/A4:)
+check_frozen: spec/fixtures/** — P1-A/A3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance.rs — P1-A/A3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance/eval.rs — 1 files unchanged since e8fd5df (P1-A/A3:)
+check_frozen: scripts/gen_fixtures.sh — 1 files unchanged since e8fd5df (P1-A/A3:)
+check_frozen: scripts/fixture-gen/** — 2 files unchanged since e8fd5df (P1-A/A3:)
+check_frozen: scripts/test_freeze_indep.sh — 1 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/eval/datasets/synthetic_edits_v3.py — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/eval/run_holdout.py — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/eval/run_split_grid.py — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/data/MANIFEST.d1ho.json — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/data/MANIFEST.d1sh.json — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/eval/compare_p1a.py — 1 files unchanged since 7c30c30 (P1-A/A6:)
+check_frozen: research/eval/run_p1a_checks.py — 1 files unchanged since 7c30c30 (P1-A/A6:)
+check_frozen: scripts/test_tamper.sh — P1-A/A6: superseded by re-freeze P1-B/B0:
+check_frozen: research/eval/report_p1a.py — 1 files unchanged since 27d8ae8 (P1-A/A7-pre:)
+check_frozen: scripts/verify.sh — P1-A/A6: superseded by re-freeze P1-E/E7-dev:
+check_frozen: scripts/check_frozen.sh — P1-A/A6: superseded by re-freeze P1-B.1/B1.0:
+check_frozen: table append-only since 3f2be39 (research/FROZEN.md row, P1-B/B0:)
+check_frozen: scripts/check_frozen.sh — P1-B/B0: superseded by re-freeze P1-B.1/B1.0:
+check_frozen: core/tests/conformance.rs — P1-B/B0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/test_tamper.sh — 1 files unchanged since 3f2be39 (P1-B/B0:)
+check_frozen: scripts/check_frozen.sh — P1-B/B0-fix: superseded by re-freeze P1-B.1/B1.0:
+check_frozen: core/tests/conformance.rs — P1-B/B7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: spec/fixtures/** — P1-B/B7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance/eval_c2.rs — P1-B/B7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance_c2_gen.rs — P1-B/B7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/gen_fixtures_c2.sh — 1 files unchanged since 44b9624 (P1-B/B7:)
+check_frozen: research/eval/datasets/synthetic_edits_v4.py — 1 files unchanged since df19545 (P1-B/B8-pre:)
+check_frozen: research/data/MANIFEST.d1hs.json — 1 files unchanged since df19545 (P1-B/B8-pre:)
+check_frozen: research/eval/run_holdout_split.py — 1 files unchanged since df19545 (P1-B/B8-pre:)
+check_frozen: scripts/verify.sh — P1-B/B9-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: research/eval/run_p1b_checks.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+check_frozen: research/eval/compare_p1b.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+check_frozen: research/eval/report_p1b.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+check_frozen: scripts/governance_scenario.sh — P1-B/B9-pre: superseded by re-freeze P1-D.1/D1.7-pre:
+check_frozen: scripts/test_policy_bounds.sh — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+check_frozen: scripts/check_v3_compat.sh — P1-B/B9-pre: superseded by re-freeze P1-D/D0:
+check_frozen: scripts/verify.sh — P1-B/B9-pre2: superseded by re-freeze P1-E/E7-dev:
+check_frozen: scripts/check_frozen.sh — 1 files unchanged since 7bf9b11 (P1-B.1/B1.0:)
+check_frozen: spec/fixtures/** — P1-B.1/B1.2: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance.rs — P1-B.1/B1.2: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/check_v3_compat.sh — P1-B.1/B1.3: superseded by re-freeze P1-D/D0:
+check_frozen: scripts/gen_v3final_mixed.sh — 1 files unchanged since e1e2fc7 (P1-B.1/B1.3:)
+check_frozen: scripts/v3final-mixed-gen/** — 3 files unchanged since e1e2fc7 (P1-B.1/B1.3:)
+check_frozen: core/tests/fixtures/v3_final_mixed/** — 110 files unchanged since e1e2fc7 (P1-B.1/B1.3:)
+check_frozen: research/eval/compare_p1b1.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+check_frozen: research/eval/run_p1b1_checks.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+check_frozen: research/eval/report_p1b1.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+check_frozen: spec/fixtures/** — P1-C/C0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance.rs — P1-C/C0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance/eval_c2.rs — P1-C/C0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance_c2_gen.rs — P1-C/C0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: research/eval/gen_embed_ref.py — 1 files unchanged since 9cbbb6c (P1-C/C1:)
+check_frozen: research/data/embed_ref.json — 1 files unchanged since 9cbbb6c (P1-C/C1:)
+check_frozen: research/eval/gen_tok_ref.py — 1 files unchanged since 9340729 (P1-C/C2:)
+check_frozen: research/data/tok_ref.json — 1 files unchanged since 9340729 (P1-C/C2:)
+check_frozen: spec/fixtures/** — P1-C/C7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance_c3.rs — P1-C/C7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance/eval_c3.rs — P1-C/C7: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: index/tests/conformance_c3_gen.rs — P1-C/C7: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: scripts/gen_fixtures_c3.sh — 1 files unchanged since b4f0e75 (P1-C/C7:)
+check_frozen: spec/fixtures/** — P1-C/C7-fix: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance_c3.rs — P1-C/C7-fix: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: research/eval/run_c3_quality.py — 1 files unchanged since c4b55e5 (P1-C/C8:)
+check_frozen: scripts/verify.sh — P1-C/C9-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: research/eval/run_p1c_checks.py — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: research/eval/compare_p1c.py — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: research/eval/report_p1c.py — P1-C/C9-pre: superseded by re-freeze P1-C/C9-fix:
+check_frozen: scripts/test_tamper_p1c.sh — P1-C/C9-pre: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/governance.rs — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: index/tests/embed.rs — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: index/tests/hot.rs — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: core/tests/compat_v3final.rs — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: research/eval/report_p1c.py — 1 files unchanged since 3a0dc23 (P1-C/C9-fix:)
+check_frozen: core/tests/conformance.rs — P1-C.1/C1.0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: research/eval/bm25_lucene.py — 1 files unchanged since b4c2ee0 (P1-C.1/C1.1:)
+check_frozen: research/eval/run_c1_variant.py — 1 files unchanged since b4c2ee0 (P1-C.1/C1.1:)
+check_frozen: spec/fixtures/** — P1-C.1/C1.3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance/eval_c3.rs — P1-C.1/C1.3: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: index/tests/conformance_c3.rs — P1-C.1/C1.3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance_c3_gen.rs — P1-C.1/C1.3: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: scripts/verify.sh — P1-C.1/C1.4-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: scripts/test_tamper_p1c.sh — P1-C.1/C1.4-pre: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/test_p1c1.sh — P1-C.1/C1.4-pre: superseded by re-freeze P1-D.1/D1.7-pre:
+check_frozen: index/tests/p1c1.rs — P1-C.1/C1.4-pre: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: research/eval/compare_p1c1.py — P1-C.1/C1.4-pre: superseded by re-freeze P1-C.1/C1.4-fix:
+check_frozen: research/eval/run_p1c1_checks.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+check_frozen: research/eval/gen_quality_ref.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+check_frozen: research/data/quality_ref_rust.json — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+check_frozen: research/eval/report_p1c1.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+check_frozen: research/eval/compare_p1c1.py — 1 files unchanged since bac9b2c (P1-C.1/C1.4-fix:)
+check_frozen: scripts/check_v3_compat.sh — 1 files unchanged since bf172a9 (P1-D/D0:)
+check_frozen: scripts/test_p1c1.sh — P1-D/D0: superseded by re-freeze P1-D.1/D1.7-pre:
+check_frozen: scripts/test_tamper_p1c.sh — P1-D/D0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/verify.sh — P1-D/D7-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: research/eval/compare_p1d.py — P1-D/D7-pre: superseded by re-freeze P1-D.1/D1.7-pre:
+check_frozen: research/eval/run_p1d_checks.py — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: research/eval/report_p1d.py — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/mcp_e2e.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/mcp_inspector.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/http_e2e.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/scene_agent.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/test_tamper_p1d.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: server/tests/serve_watch.rs — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: server/tests/mcp_schemas.rs — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: server/examples/mcp_client.rs — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: index/tests/p1c1.rs — 1 files unchanged since 3db7984 (P1-D.1/D1.3:)
+check_frozen: spec/fixtures/** — P1-D.1/D1.3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance/eval_c3.rs — 1 files unchanged since 3db7984 (P1-D.1/D1.3:)
+check_frozen: index/tests/conformance_c3.rs — P1-D.1/D1.3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance_c3_gen.rs — 1 files unchanged since 3db7984 (P1-D.1/D1.3:)
+check_frozen: spec/fixtures/** — 151 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: core/tests/conformance/eval_c2.rs — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: core/tests/conformance_c2_gen.rs — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: core/tests/conformance.rs — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: index/tests/conformance_c3.rs — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: scripts/test_tamper_p1c.sh — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: scripts/verify.sh — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: research/eval/compare_p1d1.py — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E0:
+check_frozen: research/eval/run_p1d1_checks.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: research/eval/report_p1d1.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/test_p1d1.sh — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/test_tamper_p1d1.sh — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/contract_check.sh — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E0:
+check_frozen: server/tests/p1d1_criteria.rs — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E0:
+check_frozen: server/tests/contract.rs — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E0:
+check_frozen: server/examples/mcp_pipeline.rs — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/governance_scenario.sh — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/test_p1c1.sh — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: research/eval/compare_p1d.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: research/eval/compare_p1d1.py — P1-D.1/D1.7-fix: superseded by re-freeze P1-E/E0:
+check_frozen: server/tests/p1d1_criteria.rs — 1 files unchanged since cee73fc (P1-E/E0:)
+check_frozen: research/eval/compare_p1d1.py — 1 files unchanged since cee73fc (P1-E/E0:)
+check_frozen: scripts/contract_check.sh — 1 files unchanged since cee73fc (P1-E/E0:)
+check_frozen: server/tests/contract.rs — 1 files unchanged since cee73fc (P1-E/E0:)
+check_frozen: research/eval/check_compare_fields.py — P1-E/E0: superseded by re-freeze P1-E/E0-fix2:
+check_frozen: scripts/check_compare_fields.sh — P1-E/E0: superseded by re-freeze P1-E/E0-fix2:
+check_frozen: research/eval/check_compare_fields.py — 1 files unchanged since 5ade7f8 (P1-E/E0-fix2:)
+check_frozen: scripts/check_compare_fields.sh — 1 files unchanged since 5ade7f8 (P1-E/E0-fix2:)
+check_frozen: scripts/verify.sh — 1 files unchanged since 16b141a (P1-E/E7-dev:)
+check_frozen: research/eval/compare_p1e.py — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: research/eval/run_p1e_checks.py — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: research/eval/DETERMINISTIC_FIELDS.md — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/scene.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/plugin_e2e.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: clients/obsidian/e2e/** — 3 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/client_checks.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/release_local.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/conformance_equiv.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/test_tamper_p1e.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: table append-only since 63a4004 (docs/rounds/P1-B.1/progress/ROUND_START)
+check_frozen: table append-only since 983c62d (docs/rounds/P1-B/progress/ROUND_START)
+check_frozen: table append-only since 00f29bc (docs/rounds/P1-C.1/progress/ROUND_START)
+check_frozen: table append-only since 7053760 (docs/rounds/P1-C/progress/ROUND_START)
+check_frozen: table append-only since e8827f8 (docs/rounds/P1-D.1/progress/ROUND_START)
+check_frozen: table append-only since 2e2c4ea (docs/rounds/P1-D/progress/ROUND_START)
+check_frozen: table append-only since 11e29b0 (docs/rounds/P1-E/progress/ROUND_START)
+check_frozen: OK
+[verify 02:43:26] conformance (level 3)
+rm -f reports/conformance.json
+MDK_FIXTURES="<scratchpad>/offpair/A/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/A/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+   Compiling serde_core v1.0.229
+   Compiling serde v1.0.229
+   Compiling aho-corasick v1.1.5
+   Compiling num-traits v0.2.19
+   Compiling syn v2.0.119
+   Compiling syn v3.0.9
+   Compiling bitflags v2.13.2
+   Compiling pulldown-cmark v0.13.4
+   Compiling deprecate-until v1.0.0
+   Compiling regex-automata v0.4.18
+   Compiling serde_derive v1.0.229
+   Compiling thiserror-impl v2.0.21
+   Compiling integer-sqrt v0.1.5
+   Compiling thiserror v2.0.21
+   Compiling serde_json v1.0.154
+   Compiling pathfinding v4.16.0
+   Compiling regex v1.13.1
+   Compiling fancy-regex v0.19.2
+   Compiling bstr v1.13.1
+   Compiling serde_spanned v0.6.9
+   Compiling toml_datetime v0.6.11
+   Compiling tiktoken-rs v0.12.1
+   Compiling toml_edit v0.22.27
+   Compiling toml v0.8.23
+   Compiling mdkernel-core v0.1.0 (<scratchpad>/offpair/A/repo/core)
+    Finished `release` profile [optimized] target(s) in 5.98s
+     Running tests/conformance.rs (target/release/deps/conformance-4e20d020b240194e)
+
+running 1 test
+test conformance_levels_1_and_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.92s
+
+MDK_FIXTURES="<scratchpad>/offpair/A/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/A/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
+   Compiling mdkernel-index v0.1.0 (<scratchpad>/offpair/A/repo/index)
+    Finished `release` profile [optimized] target(s) in 0.86s
+     Running tests/conformance_c3.rs (target/release/deps/conformance_c3-5590f3983f06ca17)
+
+running 1 test
+test conformance_level_3 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.67s
+
+conformance: level 3, 34/34 (reports/conformance.json)
+[verify 02:43:41] RUN=20261017T024341Z-632f29e
+[verify 02:43:41] holdout (P1-A A-2) and THETA_SPLIT grid (A-7)
+cd research && uv run --frozen python -m eval.run_holdout --run 20261017T024341Z-632f29e
+{
+ "H1-H1": 0.9935400516795866,
+ "H1-H2": 0.0,
+ "H1-H3": 0.9793814432989691,
+ "H1-H4": 1.0
+}
+cd research && uv run --frozen python -m eval.run_split_grid --run 20261017T024341Z-632f29e
+theta_split=0.45 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9857 H1-H4=1.0000 obj=3.985714
+theta_split=0.55 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9857 H1-H4=1.0000 obj=3.985714
+theta_split=0.65 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9857 H1-H4=1.0000 obj=3.985714
+theta_split=0.75 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9821 H1-H4=1.0000 obj=3.982079
+theta_split=0.85 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9784 H1-H4=1.0000 obj=3.978417
+A-7 distinct objective values = 3
+[verify 02:44:10] regress (v2 + v3 phases vs v3-final; holdout + split grid vs P1-A; holdout-split)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-h1s-tune eval-h1s eval-h1r RUN=20261017T024341Z-632f29e
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.run_h1s --phase tune --run 20261017T024341Z-632f29e
+theta=0.50 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.50 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.50 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.55 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.55 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.55 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.60 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.60 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.60 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.65 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.65 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.65 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.70 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.70 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.70 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+grid is flat; out-of-grid probe (0.95, 0.99) differs: {'theta': 0.95, 'theta_split': 0.99, 'H1-S1': 0.46296296296296297, 'H1-S2': 0.014423076923076924, 'H1-S3': 0.9619047619047619, 'H1-S4': 1.0}
+selected THETA=0.60 THETA_SPLIT=0.70
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.run_h1s --phase test --run 20261017T024341Z-632f29e
+{
+ "H1-S1": 1.0,
+ "H1-S2": 0.037953795379537955,
+ "H1-S3": 0.961082910321489,
+ "H1-S4": 1.0
+}
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.run_h1r --run 20261017T024341Z-632f29e
+{
+ "H1-R1": 0.9998433399913838,
+ "H1-R2": 0.9786619917835387,
+ "touched_retention": 0.7785793562708102,
+ "loss_categories": {
+  "dup_content": 8,
+  "hunk_adjacent": 0,
+  "type_change": 0,
+  "other": 0
+ }
+}
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-h1s-v3 RUN=20261017T024341Z-632f29e PHASE=tune
+cd research && uv run --frozen python -m eval.run_h1s_v3 --phase tune --run 20261017T024341Z-632f29e 
+theta=0.50 split=0.55 H1-H1=0.9928 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9860
+theta=0.50 split=0.65 H1-H1=0.9928 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9860
+theta=0.50 split=0.75 H1-H1=0.9928 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9860
+theta=0.55 split=0.55 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.55 split=0.65 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.55 split=0.75 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.60 split=0.55 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.60 split=0.65 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.60 split=0.75 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.65 split=0.55 H1-H1=0.9855 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9787
+theta=0.65 split=0.65 H1-H1=0.9855 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9787
+theta=0.65 split=0.75 H1-H1=0.9855 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9787
+theta=0.70 split=0.55 H1-H1=0.9565 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9497
+theta=0.70 split=0.65 H1-H1=0.9565 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9497
+theta=0.70 split=0.75 H1-H1=0.9565 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9497
+H1-G=4 selected THETA_V3=0.50 THETA_SPLIT_V3=0.65
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-h1s-v3 RUN=20261017T024341Z-632f29e PHASE=test
+cd research && uv run --frozen python -m eval.run_h1s_v3 --phase test --run 20261017T024341Z-632f29e 
+{
+ "H1-S1": 1.0,
+ "H1-S2": 0.0,
+ "H1-S3": 1.0,
+ "H1-S4": 1.0,
+ "H1-H1": 0.9882451721242653,
+ "H1-H2": 0.0,
+ "H1-H3": 0.9967213114754099,
+ "H1-H4": 1.0,
+ "H1-G": 4
+}
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-h1r-v3 eval-h3 eval-h4 eval-h4-v2repro RUN=20261017T024341Z-632f29e
+cd research && uv run --frozen python -m eval.run_h1r_v3 --run 20261017T024341Z-632f29e
+{
+ "H1-R1": 0.9998433399913838,
+ "H1-R2": 0.9817254568635784,
+ "touched_retention": 0.8105808361080281,
+ "loss_categories": {
+  "dup_content": 8,
+  "hunk_adjacent": 0,
+  "type_change": 0,
+  "other": 0
+ }
+}
+cd research && uv run --frozen python -m eval.run_h3_v3 --run 20261017T024341Z-632f29e
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 49822.78it/s]
+hit@1 0.810 hit@10 0.960
+{
+ "H3-1": {
+  "p50_ms": 16.30639602080919,
+  "p95_ms": 21.092451439471915,
+  "n": 200
+ },
+ "H3-2": {
+  "lost": 0,
+  "gained": 0
+ },
+ "log_equal": true
+}
+cd research && uv run --frozen python -m eval.run_h4_v3 --run 20261017T024341Z-632f29e
+{
+ "H4-1": {
+  "manifest_hash": "7335baebefba377c84574928dd4cc05c",
+  "rebuilt_hash": "7335baebefba377c84574928dd4cc05c",
+  "equal": true
+ },
+ "v2_log": {
+  "manifest_hash": "e6945bbc2da9c47376e017e815d7e51b",
+  "rebuilt_hash": "e6945bbc2da9c47376e017e815d7e51b",
+  "equal": true
+ }
+}
+cd research && uv run --frozen python -m eval.run_h4_v2repro --run 20261017T024341Z-632f29e
+{
+ "d3": true,
+ "h1s_fields": 35,
+ "h1s_equal": true
+}
+cd research && uv run --frozen python -m eval.compare_runs reports/runs/20261013T182004Z-f82dabd reports/runs/20261017T024341Z-632f29e --set v3 \
+	  --out reports/runs/20261017T024341Z-632f29e/regress_vs_v3final.json
+{
+ "H4-2_equal": true,
+ "differing_fields": {},
+ "excluded_latency_paths": {
+  "h2.json": [
+   "H2-3",
+   "latency_ms"
+  ],
+  "h3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ],
+  "h3_v3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ]
+ },
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json"
+ ],
+ "max_relative_difference": 0.0,
+ "n_fields": 1577,
+ "per_file": {
+  "h1r.json": 0.0,
+  "h1r_v3.json": 0.0,
+  "h1s.json": 0.0,
+  "h1s_tuning.json": 0.0,
+  "h1s_v3.json": 0.0,
+  "h1s_v3_tuning.json": 0.0,
+  "h3_v3.json": 0.0,
+  "h4_v2repro.json": 0.0,
+  "h4_v3.json": 0.0
+ },
+ "run_a": "reports/runs/20261013T182004Z-f82dabd",
+ "run_b": "reports/runs/20261017T024341Z-632f29e"
+}
+regress: RUN=20261017T024341Z-632f29e equal to v3-final 20261013T182004Z-f82dabd (research/reports/runs/20261017T024341Z-632f29e/regress_vs_v3final.json)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make research/reports/runs/20261017T024341Z-632f29e/holdout.json research/reports/runs/20261017T024341Z-632f29e/split_grid.json \
+	  research/reports/runs/20261017T024341Z-632f29e/holdout_split.json RUN=20261017T024341Z-632f29e
+make[1]: `research/reports/runs/20261017T024341Z-632f29e/holdout.json' is up to date.
+make[1]: `research/reports/runs/20261017T024341Z-632f29e/split_grid.json' is up to date.
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-holdout-split RUN=20261017T024341Z-632f29e
+cd research && uv run --frozen python -m eval.run_holdout_split --run 20261017T024341Z-632f29e
+{
+ "codes": {
+  "H1-H1": 0.9928741092636579,
+  "H1-H2": 0.0,
+  "H1-H3": 0.9972222222222222,
+  "H1-H4": 1.0
+ },
+ "b9": {
+  "H1-H1": {
+   "value": 0.9928741092636579,
+   "threshold": ">= 0.9",
+   "pass": true
+  },
+  "H1-H2": {
+   "value": 0.0,
+   "threshold": "<= 0.03",
+   "pass": true
+  },
+  "H1-H3": {
+   "value": 0.9972222222222222,
+   "threshold": ">= 0.7",
+   "pass": true
+  }
+ }
+}
+cd research && uv run --frozen python -m eval.compare_p1a ../reports/rounds/P1-A/runs/20261013T221822Z-27d8ae8 reports/runs/20261017T024341Z-632f29e \
+	  --out reports/runs/20261017T024341Z-632f29e/regress_vs_p1a.json >/dev/null
+regress: RUN=20261017T024341Z-632f29e P1-A set equal to the P1-A official RUN (research/reports/runs/20261017T024341Z-632f29e/regress_vs_p1a.json)
+[verify 02:50:14] A-1 / A-5 / A-6 into the RUN (level-1 view)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make conformance
+rm -f reports/conformance.json
+MDK_FIXTURES="<scratchpad>/offpair/A/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/A/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/conformance.rs (target/release/deps/conformance-4e20d020b240194e)
+
+running 1 test
+test conformance_levels_1_and_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.86s
+
+MDK_FIXTURES="<scratchpad>/offpair/A/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/A/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/conformance_c3.rs (target/release/deps/conformance_c3-5590f3983f06ca17)
+
+running 1 test
+test conformance_level_3 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.50s
+
+conformance: level 3, 34/34 (reports/conformance.json)
+jq '.tests |= map(select(.level == 1)) | .total = 17 | .passed = ([.tests[] | select(.result == "pass")] | length)' \
+	  reports/conformance.json >reports/conformance_l1.json
+{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/20261017T024341Z-632f29e/check_deps.log 2>&1 \
+	  || { cat research/reports/runs/20261017T024341Z-632f29e/check_deps.log >&2; exit 1; }
+cd research && uv run --frozen python -m eval.run_p1a_checks --run 20261017T024341Z-632f29e --conformance ../reports/conformance_l1.json \
+	  --deps-log reports/runs/20261017T024341Z-632f29e/check_deps.log
+{
+ "A-5": {
+  "events_hash": {
+   "v2": "8914f9b418ae360d49c85c951050f432",
+   "v3": "808a41f21a43e121d7d688fee9f5bc24"
+  },
+  "expected": {
+   "v2": "8914f9b418ae360d49c85c951050f432",
+   "v3": "808a41f21a43e121d7d688fee9f5bc24"
+  },
+  "equal": {
+   "v2": true,
+   "v3": true
+  }
+ }
+}
+A-1 17/17; A-6 ok=True
+[verify 02:50:33] governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make conformance
+rm -f reports/conformance.json
+MDK_FIXTURES="<scratchpad>/offpair/A/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/A/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running tests/conformance.rs (target/release/deps/conformance-4e20d020b240194e)
+
+running 1 test
+test conformance_levels_1_and_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.86s
+
+MDK_FIXTURES="<scratchpad>/offpair/A/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/A/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/conformance_c3.rs (target/release/deps/conformance_c3-5590f3983f06ca17)
+
+running 1 test
+test conformance_level_3 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.97s
+
+conformance: level 3, 34/34 (reports/conformance.json)
+cp reports/conformance.json research/reports/runs/20261017T024341Z-632f29e/conformance_full.json
+jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
+	  reports/conformance.json >research/reports/runs/20261017T024341Z-632f29e/conformance.json
+{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/20261017T024341Z-632f29e/check_deps.log 2>&1 \
+	  || { cat research/reports/runs/20261017T024341Z-632f29e/check_deps.log >&2; exit 1; }
+cargo build --release -q -p mdkernel-server --bin mdk
+bash scripts/check_v3_compat.sh research/reports/runs/20261017T024341Z-632f29e/v3_compat.json \
+	  research/reports/runs/20261017T024341Z-632f29e/v3_compat_mixed.json >/dev/null
+check_v3_compat: OK (12 documents)
+check_v3_compat: OK (mixed-author vaults 9/9)
+bash scripts/test_policy_bounds.sh target/release/mdk research/reports/runs/20261017T024341Z-632f29e/policy_bounds.json
+ok   B6-1 retention < 24h (exit 1: error: policy /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-bounds.XXXXXX.wIb3dFgRlW/vault/.mdkernel/policy.toml rejected: journal.retention_hours = 23: )
+ok   B6-2 idle_ms < 0 (exit 1: error: policy /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-bounds.XXXXXX.wIb3dFgRlW/vault/.mdkernel/policy.toml rejected: version_trigger.idle_ms = -1: )
+ok   B6-3 min_sim_change > 1 (exit 1: error: policy /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-bounds.XXXXXX.wIb3dFgRlW/vault/.mdkernel/policy.toml rejected: version_trigger.min_sim_change)
+ok   B6-4 unknown promotion (exit 1: error: policy /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-bounds.XXXXXX.wIb3dFgRlW/vault/.mdkernel/policy.toml rejected: unknown promotion policy "impl)
+ok   B6-5 promotion without a hook (no recipe: deny) (exit 1: error: Promote of bdd98921faa777f9e027ce9e7043bf00 denied by policy deny v1: policy deny refuses every layer transition )
+ok   B6-6 Promoted without actor (exit 1: error: actor id is empty )
+test_policy_bounds: OK (6 cases, all errors, no fallback)
+rm -rf research/reports/runs/20261017T024341Z-632f29e/governance
+bash scripts/governance_scenario.sh target/release/mdk research/reports/runs/20261017T024341Z-632f29e/governance
+governance scenario: {"events_hash":"2b0dc8e88f8d56ee4c6be6356d4c0fee","traces":4,"checkpoints":4}
+cd research && uv run --frozen python -m eval.run_p1b_checks --run 20261017T024341Z-632f29e --seeds 20261014 7
+{"level_claimed": 2, "B-1": "8/8", "B-2": "17/17", "B-3_equal": true, "B-5": true, "B-6_cases": 6, "B-10": true}
+[verify 02:51:15] P1-B.1 checks (B1-1..B1-6 recorded again; C-11 input)
+cargo test -p mdkernel-core --release --test compat_v3final --test trace_id_v101 -- --test-threads=1 \
+	  >research/reports/runs/20261017T024341Z-632f29e/p1b1_tests.log 2>&1 \
+	  || { cat research/reports/runs/20261017T024341Z-632f29e/p1b1_tests.log >&2; exit 1; }
+cd research && uv run --frozen python -m eval.compare_p1b1 ../reports/rounds/P1-B/runs/20261014T135400Z-7735a07 reports/runs/20261017T024341Z-632f29e \
+	  --out reports/runs/20261017T024341Z-632f29e/regress_vs_p1b.json >/dev/null
+cd research && uv run --frozen python -m eval.run_p1b1_checks --run 20261017T024341Z-632f29e
+{"B1-1": true, "B1-2": true, "B1-4": true, "B1-5": true, "B1-3": false, "B1-6": true}
+[verify 02:51:17] P1-C checks (C-1..C-13; D3 determinism vault under <scratchpad>/offpair/A/p1c_work)
+cargo run -q --release -p mdkernel-index --bin mdk-index -- models verify >research/reports/runs/20261017T024341Z-632f29e/models_verify.json
+/Applications/Xcode.app/Contents/Developer/usr/bin/make conformance
+rm -f reports/conformance.json
+MDK_FIXTURES="<scratchpad>/offpair/A/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/A/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running tests/conformance.rs (target/release/deps/conformance-4e20d020b240194e)
+
+running 1 test
+test conformance_levels_1_and_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.83s
+
+MDK_FIXTURES="<scratchpad>/offpair/A/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/A/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/conformance_c3.rs (target/release/deps/conformance_c3-5590f3983f06ca17)
+
+running 1 test
+test conformance_level_3 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.54s
+
+conformance: level 3, 34/34 (reports/conformance.json)
+cp reports/conformance.json research/reports/runs/20261017T024341Z-632f29e/conformance_p1d1.json
+jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	  reports/conformance.json >research/reports/runs/20261017T024341Z-632f29e/conformance_p1c1.json
+jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	  reports/conformance.json >research/reports/runs/20261017T024341Z-632f29e/conformance_full.json
+cargo test -p mdkernel-core --release --test compat_v3final kc01 -- --test-threads=1 \
+	  >research/reports/runs/20261017T024341Z-632f29e/c13_tests.log 2>&1 \
+	  || { cat research/reports/runs/20261017T024341Z-632f29e/c13_tests.log >&2; exit 1; }
+MDK_C7_OUT="<scratchpad>/offpair/A/repo/research/reports/runs/20261017T024341Z-632f29e/c7_property.json" \
+	  cargo test -q -p mdkernel-index --release --test governance c7_property -- --test-threads=1
+
+running 1 test
+.
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 15.06s
+
+MDK_C10_OUT="<scratchpad>/offpair/A/repo/research/reports/runs/20261017T024341Z-632f29e/c10_embedding.json" \
+	  cargo test -q -p mdkernel-index --release --test embed c10 -- --test-threads=1
+
+running 1 test
+.
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.41s
+
+MDK_C8_OUT="<scratchpad>/offpair/A/repo/research/reports/runs/20261017T024341Z-632f29e/c8_latency.json" \
+	  cargo test -q -p mdkernel-index --release --test hot c8 -- --test-threads=1
+
+running 1 test
+.
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 16.30s
+
+/Applications/Xcode.app/Contents/Developer/usr/bin/make c3-quality RUN=20261017T024341Z-632f29e
+cd research && uv run --frozen python -m eval.run_c3_quality --run 20261017T024341Z-632f29e
+C-3 hybrid/single: nDCG@10 0.6769 (v2 0.6740, Δ +0.0029)
+C-3 hybrid/multi: nDCG@10 0.4800 (v2 0.4936, Δ -0.0136)
+C-3 FAIL (|Δ| ≤ 0.01)
+rc=0; cd research && uv run --frozen python -m eval.compare_p1c regress ../reports/rounds/P1-B.1/runs/20261014T212243Z-226b511 reports/runs/20261017T024341Z-632f29e \
+	  --out reports/runs/20261017T024341Z-632f29e/regress_vs_p1b1.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+regress FAILED: differing ['p1b1_checks.json:criteria›B1-3›pass', 'p1b1_checks.json:criteria›B1-3›spec_version']
+cd research && uv run --frozen python -m eval.run_p1c_checks --run 20261017T024341Z-632f29e --work "<scratchpad>/offpair/A/p1c_work/20261017T024341Z-632f29e"
+C-1 pass; C-2 pass; C-3 FAIL; C-4 pass; C-5 pass; C-7 pass; C-9 pass; C-10 pass; C-11 FAIL; C-12 pass; C-13 pass
+[verify 02:59:21] P1-C deliberate corruptions (model manifest, embedder_id, fixtures)
+tamper P1-C: 6/6 corruptions rejected
+[verify 02:59:41] P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make c1-variant RUN=20261017T024341Z-632f29e
+cd research && uv run --frozen python -m eval.run_c1_variant --run 20261017T024341Z-632f29e
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 42575.47it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+C1-1 hybrid/structural/single: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 hybrid/structural/multi: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 flat/structural/single: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 flat/structural/multi: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 pass (|Δ| ≤ 0.001)
+mkdir -p research/reports/runs/20261017T024341Z-632f29e/p1c1
+MDK_P1C1_OUT="<scratchpad>/offpair/A/repo/research/reports/runs/20261017T024341Z-632f29e/p1c1" \
+	  cargo test -q -p mdkernel-index --release --test p1c1 -- --test-threads=1
+
+running 4 tests
+....
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 44.19s
+
+bash scripts/test_p1c1.sh research/reports/runs/20261017T024341Z-632f29e/p1c1_cli.json \
+	  >research/reports/runs/20261017T024341Z-632f29e/p1c1_cli.log 2>&1 \
+	  || { cat research/reports/runs/20261017T024341Z-632f29e/p1c1_cli.log >&2; exit 1; }
+rc=0; cd research && uv run --frozen python -m eval.compare_p1c1 regress ../reports/rounds/P1-C/runs/20261015T014417Z-9aa326b reports/runs/20261017T024341Z-632f29e \
+	  --out reports/runs/20261017T024341Z-632f29e/regress_vs_p1c.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+cd research && uv run --frozen python -m eval.run_p1c1_checks --run 20261017T024341Z-632f29e
+C1-1 pass; C1-2 pass; C1-3 pass; C1-4 pass; C1-5 pass; C1-6 pass; C1-7 FAIL; C1-8 pass; C1-9 pass
+p1c1: 45/45 cases as expected
+[verify 03:00:45] P1-D checks (D-1..D-11: Inspector, MCP e2e, HTTP/service, watch, scene, tamper; D-9 vs P1-C.1)
+rm -rf research/reports/runs/20261017T024341Z-632f29e/p1d
+mkdir -p research/reports/runs/20261017T024341Z-632f29e/p1d
+bash scripts/mcp_inspector.sh research/reports/runs/20261017T024341Z-632f29e/p1d/inspector >research/reports/runs/20261017T024341Z-632f29e/p1d/inspector.log 2>&1 \
+	  || echo "p1d-checks: mcp_inspector.sh exit $? (recorded)" >&2
+bash scripts/mcp_e2e.sh research/reports/runs/20261017T024341Z-632f29e/p1d/mcp_e2e >research/reports/runs/20261017T024341Z-632f29e/p1d/mcp_e2e.log 2>&1 \
+	  || echo "p1d-checks: mcp_e2e.sh exit $? (recorded)" >&2
+p1d-checks: mcp_e2e.sh exit 1 (recorded)
+bash scripts/http_e2e.sh research/reports/runs/20261017T024341Z-632f29e/p1d/http >research/reports/runs/20261017T024341Z-632f29e/p1d/http_e2e.log 2>&1 \
+	  || echo "p1d-checks: http_e2e.sh exit $? (recorded)" >&2
+p1d-checks: http_e2e.sh exit 1 (recorded)
+MDK_D10_OUT="<scratchpad>/offpair/A/repo/research/reports/runs/20261017T024341Z-632f29e/p1d/d10.json" MDK_SIGTERM_OUT="<scratchpad>/offpair/A/repo/research/reports/runs/20261017T024341Z-632f29e/p1d/sigterm.json" \
+	  cargo test -q -p mdkernel-server --release --test serve_watch -- --test-threads=1 >research/reports/runs/20261017T024341Z-632f29e/p1d/serve_watch.log 2>&1 \
+	  || echo "p1d-checks: serve_watch exit $? (recorded)" >&2
+bash scripts/scene_agent.sh research/reports/runs/20261017T024341Z-632f29e/p1d/scene >research/reports/runs/20261017T024341Z-632f29e/p1d/scene.log 2>&1 \
+	  || echo "p1d-checks: scene_agent.sh exit $? (recorded)" >&2
+bash scripts/test_tamper_p1d.sh research/reports/runs/20261017T024341Z-632f29e/p1d/inspector/tools_list.json research/reports/runs/20261017T024341Z-632f29e/p1d/tamper_p1d.json >research/reports/runs/20261017T024341Z-632f29e/p1d/tamper_p1d.log 2>&1 \
+	  || echo "p1d-checks: test_tamper_p1d.sh exit $? (recorded)" >&2
+rc=0; cd research && uv run --frozen python -m eval.compare_p1d regress ../reports/rounds/P1-C.1/runs/20261015T094412Z-b9f7622 reports/runs/20261017T024341Z-632f29e \
+	  --out reports/runs/20261017T024341Z-632f29e/regress_vs_p1c1.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+regress FAILED: differing ['p1b1_checks.json:criteria›B1-3›spec_version', 'p1b_checks.json:fixtures_manifest_hash', 'p1c1_checks.json:C1-6›lexical›dl', 'p1c1_checks.json:C1-6›rejected_cases', 'p1c1_checks.json:C1-7›pass', 'p1c1_checks.json:C1-7›spec_version', 'p1c_checks.json:C-1›spec_version', 'p1c_index.json:index_files_build›manifest·json', 'p1c_index.json:index_files_compact›manifest·json', 'p1c_index.json:index_files_final›manifest·json']
+cd research && uv run --frozen python -m eval.run_p1d_checks --run 20261017T024341Z-632f29e
+D-1 pass; D-2 FAIL; D-3 pass; D-4 pass; D-5 pass; D-6 pass; D-7 FAIL; D-8 pass; D-9 FAIL; D-10 pass; D-11 pass; scene pass; tamper pass
+[verify 03:02:09] P1-D.1 checks (D1-1..D1-13: criteria tests, p1d-final vaults, contract, tamper; D1-12 vs P1-D)
+rm -rf research/reports/runs/20261017T024341Z-632f29e/p1d1
+mkdir -p research/reports/runs/20261017T024341Z-632f29e/p1d1
+bash scripts/test_p1d1.sh research/reports/runs/20261017T024341Z-632f29e/p1d1 >research/reports/runs/20261017T024341Z-632f29e/p1d1/test_p1d1.log 2>&1 \
+	  || { tail -40 research/reports/runs/20261017T024341Z-632f29e/p1d1/test_p1d1.log >&2; exit 1; }
+bash scripts/test_tamper_p1d1.sh research/reports/runs/20261017T024341Z-632f29e/p1d1/tamper_p1d1.json >research/reports/runs/20261017T024341Z-632f29e/p1d1/tamper_p1d1.log 2>&1 \
+	  || echo "p1d1-checks: test_tamper_p1d1.sh exit $? (recorded)" >&2
+rc=0; cd research && uv run --frozen python -m eval.compare_p1d1 regress ../reports/rounds/P1-D/runs/20261015T210419Z-a6b52fe reports/runs/20261017T024341Z-632f29e \
+	  --out reports/runs/20261017T024341Z-632f29e/regress_vs_p1d.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+cd research && uv run --frozen python -m eval.run_p1d1_checks --run 20261017T024341Z-632f29e
+D1-1 pass; D1-2 pass; D1-3 pass; D1-4 pass; D1-5 pass; D1-6 pass; D1-7 pass; D1-8 pass; D1-9 pass; D1-10 pass; D1-11 pass; D1-12 pass; D1-13 pass; tamper pass
+[verify 03:04:28] P1-E checks (E-1..E-10, E-12..E-16: E0 tests, scene, plugin e2e, client, local release, tamper, field audit; E-9 vs P1-D.1)
+rm -rf research/reports/runs/20261017T024341Z-632f29e/p1e
+mkdir -p research/reports/runs/20261017T024341Z-632f29e/p1e/e0
+MDK_P1E_OUT="<scratchpad>/offpair/A/repo/research/reports/runs/20261017T024341Z-632f29e/p1e/e0" cargo test -q -p mdkernel-server --release --test p1e_e0 -- --test-threads=1 \
+	  >research/reports/runs/20261017T024341Z-632f29e/p1e/e0.log 2>&1 || echo "p1e-checks: p1e_e0 exit $? (recorded)" >&2
+bash scripts/scene.sh research/reports/runs/20261017T024341Z-632f29e/p1e/scene >research/reports/runs/20261017T024341Z-632f29e/p1e/scene.log 2>&1 || echo "p1e-checks: scene.sh exit $? (recorded)" >&2
+bash scripts/plugin_e2e.sh research/reports/runs/20261017T024341Z-632f29e/p1e/plugin_e2e >research/reports/runs/20261017T024341Z-632f29e/p1e/plugin_e2e.log 2>&1 || echo "p1e-checks: plugin_e2e.sh exit $? (recorded)" >&2
+bash scripts/client_checks.sh research/reports/runs/20261017T024341Z-632f29e/p1e/client.json >research/reports/runs/20261017T024341Z-632f29e/p1e/client.log 2>&1 || echo "p1e-checks: client_checks.sh exit $? (recorded)" >&2
+bash scripts/release_local.sh research/reports/runs/20261017T024341Z-632f29e/p1e/release >research/reports/runs/20261017T024341Z-632f29e/p1e/release.log 2>&1 || echo "p1e-checks: release_local.sh exit $? (recorded)" >&2
+bash scripts/test_tamper_p1e.sh research/reports/runs/20261017T024341Z-632f29e/p1e/tamper_p1e.json >research/reports/runs/20261017T024341Z-632f29e/p1e/tamper_p1e.log 2>&1 || echo "p1e-checks: test_tamper_p1e.sh exit $? (recorded)" >&2
+bash scripts/check_compare_fields.sh --out research/reports/runs/20261017T024341Z-632f29e/p1e/check_compare_fields.json >/dev/null || echo "p1e-checks: check_compare_fields exit $? (recorded)" >&2
+check_compare_fields: OK (9 comparators, 85 declared fields, 16 file constants)
+rc=0; cd research && uv run --frozen python -m eval.compare_p1e regress ../reports/rounds/P1-D.1/runs/20261016T124520Z-1527365 reports/runs/20261017T024341Z-632f29e \
+	  --out reports/runs/20261017T024341Z-632f29e/regress_vs_p1d1.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+cd research && uv run --frozen python -m eval.run_p1e_checks --run 20261017T024341Z-632f29e
+E-1 pass; E-2 pass; E-3 pass; E-4 pass; E-5 pass; E-6 pass; E-7 FAIL; E-9 pass; E-10 pass; E-12 pass; E-13 pass; E-14 pass; E-15 pass; E-16 pass; tamper pass
+[verify 03:05:41] deliberate corruptions (B-7, B-8 and the P1-A cases)
+test_tamper: OK (12 corruptions detected)
+[verify 03:06:43] chain finished in 1551 s
+[verify 03:06:43] clone /Users/arkns/Works/mdkernel -> <scratchpad>/offpair/B/repo
+[verify 03:06:45] commit 632f29ec77e5c077c674f092fc8b069c5bfc1292
+[verify 03:06:45] setup
+[verify 03:07:25] models (fetch + manifest check)
+[verify 03:07:36] datasets (d2 d3 d1 d1k4 d1h d1ho d1sh d1hs, manifests verified)
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.datasets.git_history 
+data/MANIFEST.d2.json verified
+D2: 300 commits, 836 pairs
+cd research && uv run --frozen python -m eval.d3_v3 
+data/MANIFEST.d3.json verified: events_hash=e6945bbc2da9c47376e017e815d7e51b events_hash_v3=7335baebefba377c84574928dd4cc05c
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.datasets.synthetic_edits 
+data/MANIFEST.d1.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v2 --set d1k4 
+data/MANIFEST.d1k4.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v2 --set d1h 
+data/MANIFEST.d1h.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v3 --set holdout 
+data/MANIFEST.d1ho.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v3 --set split_hard 
+data/MANIFEST.d1sh.json verified
+cd research && uv run --frozen python -m eval.datasets.synthetic_edits_v4 
+data/MANIFEST.d1hs.json verified
+[verify 03:08:34] freeze-check (v2), freeze-check-v3, check_frozen
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.freeze_check
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11383.75it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+freeze-check OK (d489a0ed44b15d3aeb272e16cdd4a5af)
+cd research && uv run --frozen python -m eval.freeze_check_v3
+freeze-check-v3 OK (d138cddcde1d0978a020a6fe8df2f610)
+check_frozen: research/eval/** — 29 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/tests/fixtures/freeze_fixture/** — 18 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/tests/fixtures/freeze_fixture_v3/** — 17 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/data/MANIFEST.*.json — 5 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/data/d4/** — 3 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/data/splits/** — 1 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/reports/runs/20261013T154851Z-f133d0b/** — 12 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/reports/runs/20261013T182004Z-f82dabd/** — 11 files unchanged since 540783b (P1-A/A4:)
+check_frozen: spec/fixtures/** — P1-A/A3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance.rs — P1-A/A3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance/eval.rs — 1 files unchanged since e8fd5df (P1-A/A3:)
+check_frozen: scripts/gen_fixtures.sh — 1 files unchanged since e8fd5df (P1-A/A3:)
+check_frozen: scripts/fixture-gen/** — 2 files unchanged since e8fd5df (P1-A/A3:)
+check_frozen: scripts/test_freeze_indep.sh — 1 files unchanged since 540783b (P1-A/A4:)
+check_frozen: research/eval/datasets/synthetic_edits_v3.py — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/eval/run_holdout.py — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/eval/run_split_grid.py — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/data/MANIFEST.d1ho.json — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/data/MANIFEST.d1sh.json — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+check_frozen: research/eval/compare_p1a.py — 1 files unchanged since 7c30c30 (P1-A/A6:)
+check_frozen: research/eval/run_p1a_checks.py — 1 files unchanged since 7c30c30 (P1-A/A6:)
+check_frozen: scripts/test_tamper.sh — P1-A/A6: superseded by re-freeze P1-B/B0:
+check_frozen: research/eval/report_p1a.py — 1 files unchanged since 27d8ae8 (P1-A/A7-pre:)
+check_frozen: scripts/verify.sh — P1-A/A6: superseded by re-freeze P1-E/E7-dev:
+check_frozen: scripts/check_frozen.sh — P1-A/A6: superseded by re-freeze P1-B.1/B1.0:
+check_frozen: table append-only since 3f2be39 (research/FROZEN.md row, P1-B/B0:)
+check_frozen: scripts/check_frozen.sh — P1-B/B0: superseded by re-freeze P1-B.1/B1.0:
+check_frozen: core/tests/conformance.rs — P1-B/B0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/test_tamper.sh — 1 files unchanged since 3f2be39 (P1-B/B0:)
+check_frozen: scripts/check_frozen.sh — P1-B/B0-fix: superseded by re-freeze P1-B.1/B1.0:
+check_frozen: core/tests/conformance.rs — P1-B/B7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: spec/fixtures/** — P1-B/B7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance/eval_c2.rs — P1-B/B7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance_c2_gen.rs — P1-B/B7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/gen_fixtures_c2.sh — 1 files unchanged since 44b9624 (P1-B/B7:)
+check_frozen: research/eval/datasets/synthetic_edits_v4.py — 1 files unchanged since df19545 (P1-B/B8-pre:)
+check_frozen: research/data/MANIFEST.d1hs.json — 1 files unchanged since df19545 (P1-B/B8-pre:)
+check_frozen: research/eval/run_holdout_split.py — 1 files unchanged since df19545 (P1-B/B8-pre:)
+check_frozen: scripts/verify.sh — P1-B/B9-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: research/eval/run_p1b_checks.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+check_frozen: research/eval/compare_p1b.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+check_frozen: research/eval/report_p1b.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+check_frozen: scripts/governance_scenario.sh — P1-B/B9-pre: superseded by re-freeze P1-D.1/D1.7-pre:
+check_frozen: scripts/test_policy_bounds.sh — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+check_frozen: scripts/check_v3_compat.sh — P1-B/B9-pre: superseded by re-freeze P1-D/D0:
+check_frozen: scripts/verify.sh — P1-B/B9-pre2: superseded by re-freeze P1-E/E7-dev:
+check_frozen: scripts/check_frozen.sh — 1 files unchanged since 7bf9b11 (P1-B.1/B1.0:)
+check_frozen: spec/fixtures/** — P1-B.1/B1.2: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance.rs — P1-B.1/B1.2: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/check_v3_compat.sh — P1-B.1/B1.3: superseded by re-freeze P1-D/D0:
+check_frozen: scripts/gen_v3final_mixed.sh — 1 files unchanged since e1e2fc7 (P1-B.1/B1.3:)
+check_frozen: scripts/v3final-mixed-gen/** — 3 files unchanged since e1e2fc7 (P1-B.1/B1.3:)
+check_frozen: core/tests/fixtures/v3_final_mixed/** — 110 files unchanged since e1e2fc7 (P1-B.1/B1.3:)
+check_frozen: research/eval/compare_p1b1.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+check_frozen: research/eval/run_p1b1_checks.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+check_frozen: research/eval/report_p1b1.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+check_frozen: spec/fixtures/** — P1-C/C0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance.rs — P1-C/C0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance/eval_c2.rs — P1-C/C0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: core/tests/conformance_c2_gen.rs — P1-C/C0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: research/eval/gen_embed_ref.py — 1 files unchanged since 9cbbb6c (P1-C/C1:)
+check_frozen: research/data/embed_ref.json — 1 files unchanged since 9cbbb6c (P1-C/C1:)
+check_frozen: research/eval/gen_tok_ref.py — 1 files unchanged since 9340729 (P1-C/C2:)
+check_frozen: research/data/tok_ref.json — 1 files unchanged since 9340729 (P1-C/C2:)
+check_frozen: spec/fixtures/** — P1-C/C7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance_c3.rs — P1-C/C7: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance/eval_c3.rs — P1-C/C7: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: index/tests/conformance_c3_gen.rs — P1-C/C7: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: scripts/gen_fixtures_c3.sh — 1 files unchanged since b4f0e75 (P1-C/C7:)
+check_frozen: spec/fixtures/** — P1-C/C7-fix: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance_c3.rs — P1-C/C7-fix: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: research/eval/run_c3_quality.py — 1 files unchanged since c4b55e5 (P1-C/C8:)
+check_frozen: scripts/verify.sh — P1-C/C9-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: research/eval/run_p1c_checks.py — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: research/eval/compare_p1c.py — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: research/eval/report_p1c.py — P1-C/C9-pre: superseded by re-freeze P1-C/C9-fix:
+check_frozen: scripts/test_tamper_p1c.sh — P1-C/C9-pre: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/governance.rs — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: index/tests/embed.rs — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: index/tests/hot.rs — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: core/tests/compat_v3final.rs — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+check_frozen: research/eval/report_p1c.py — 1 files unchanged since 3a0dc23 (P1-C/C9-fix:)
+check_frozen: core/tests/conformance.rs — P1-C.1/C1.0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: research/eval/bm25_lucene.py — 1 files unchanged since b4c2ee0 (P1-C.1/C1.1:)
+check_frozen: research/eval/run_c1_variant.py — 1 files unchanged since b4c2ee0 (P1-C.1/C1.1:)
+check_frozen: spec/fixtures/** — P1-C.1/C1.3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance/eval_c3.rs — P1-C.1/C1.3: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: index/tests/conformance_c3.rs — P1-C.1/C1.3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance_c3_gen.rs — P1-C.1/C1.3: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: scripts/verify.sh — P1-C.1/C1.4-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: scripts/test_tamper_p1c.sh — P1-C.1/C1.4-pre: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/test_p1c1.sh — P1-C.1/C1.4-pre: superseded by re-freeze P1-D.1/D1.7-pre:
+check_frozen: index/tests/p1c1.rs — P1-C.1/C1.4-pre: superseded by re-freeze P1-D.1/D1.3:
+check_frozen: research/eval/compare_p1c1.py — P1-C.1/C1.4-pre: superseded by re-freeze P1-C.1/C1.4-fix:
+check_frozen: research/eval/run_p1c1_checks.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+check_frozen: research/eval/gen_quality_ref.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+check_frozen: research/data/quality_ref_rust.json — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+check_frozen: research/eval/report_p1c1.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+check_frozen: research/eval/compare_p1c1.py — 1 files unchanged since bac9b2c (P1-C.1/C1.4-fix:)
+check_frozen: scripts/check_v3_compat.sh — 1 files unchanged since bf172a9 (P1-D/D0:)
+check_frozen: scripts/test_p1c1.sh — P1-D/D0: superseded by re-freeze P1-D.1/D1.7-pre:
+check_frozen: scripts/test_tamper_p1c.sh — P1-D/D0: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: scripts/verify.sh — P1-D/D7-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: research/eval/compare_p1d.py — P1-D/D7-pre: superseded by re-freeze P1-D.1/D1.7-pre:
+check_frozen: research/eval/run_p1d_checks.py — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: research/eval/report_p1d.py — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/mcp_e2e.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/mcp_inspector.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/http_e2e.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/scene_agent.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: scripts/test_tamper_p1d.sh — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: server/tests/serve_watch.rs — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: server/tests/mcp_schemas.rs — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: server/examples/mcp_client.rs — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+check_frozen: index/tests/p1c1.rs — 1 files unchanged since 3db7984 (P1-D.1/D1.3:)
+check_frozen: spec/fixtures/** — P1-D.1/D1.3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance/eval_c3.rs — 1 files unchanged since 3db7984 (P1-D.1/D1.3:)
+check_frozen: index/tests/conformance_c3.rs — P1-D.1/D1.3: superseded by re-freeze P1-D.1/D1.4:
+check_frozen: index/tests/conformance_c3_gen.rs — 1 files unchanged since 3db7984 (P1-D.1/D1.3:)
+check_frozen: spec/fixtures/** — 151 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: core/tests/conformance/eval_c2.rs — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: core/tests/conformance_c2_gen.rs — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: core/tests/conformance.rs — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: index/tests/conformance_c3.rs — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: scripts/test_tamper_p1c.sh — 1 files unchanged since bfe683a (P1-D.1/D1.4:)
+check_frozen: scripts/verify.sh — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E7-dev:
+check_frozen: research/eval/compare_p1d1.py — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E0:
+check_frozen: research/eval/run_p1d1_checks.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: research/eval/report_p1d1.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/test_p1d1.sh — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/test_tamper_p1d1.sh — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/contract_check.sh — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E0:
+check_frozen: server/tests/p1d1_criteria.rs — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E0:
+check_frozen: server/tests/contract.rs — P1-D.1/D1.7-pre: superseded by re-freeze P1-E/E0:
+check_frozen: server/examples/mcp_pipeline.rs — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/governance_scenario.sh — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: scripts/test_p1c1.sh — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: research/eval/compare_p1d.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+check_frozen: research/eval/compare_p1d1.py — P1-D.1/D1.7-fix: superseded by re-freeze P1-E/E0:
+check_frozen: server/tests/p1d1_criteria.rs — 1 files unchanged since cee73fc (P1-E/E0:)
+check_frozen: research/eval/compare_p1d1.py — 1 files unchanged since cee73fc (P1-E/E0:)
+check_frozen: scripts/contract_check.sh — 1 files unchanged since cee73fc (P1-E/E0:)
+check_frozen: server/tests/contract.rs — 1 files unchanged since cee73fc (P1-E/E0:)
+check_frozen: research/eval/check_compare_fields.py — P1-E/E0: superseded by re-freeze P1-E/E0-fix2:
+check_frozen: scripts/check_compare_fields.sh — P1-E/E0: superseded by re-freeze P1-E/E0-fix2:
+check_frozen: research/eval/check_compare_fields.py — 1 files unchanged since 5ade7f8 (P1-E/E0-fix2:)
+check_frozen: scripts/check_compare_fields.sh — 1 files unchanged since 5ade7f8 (P1-E/E0-fix2:)
+check_frozen: scripts/verify.sh — 1 files unchanged since 16b141a (P1-E/E7-dev:)
+check_frozen: research/eval/compare_p1e.py — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: research/eval/run_p1e_checks.py — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: research/eval/DETERMINISTIC_FIELDS.md — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/scene.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/plugin_e2e.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: clients/obsidian/e2e/** — 3 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/client_checks.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/release_local.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/conformance_equiv.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: scripts/test_tamper_p1e.sh — 1 files unchanged since 632f29e (P1-E/E7-pre:)
+check_frozen: table append-only since 63a4004 (docs/rounds/P1-B.1/progress/ROUND_START)
+check_frozen: table append-only since 983c62d (docs/rounds/P1-B/progress/ROUND_START)
+check_frozen: table append-only since 00f29bc (docs/rounds/P1-C.1/progress/ROUND_START)
+check_frozen: table append-only since 7053760 (docs/rounds/P1-C/progress/ROUND_START)
+check_frozen: table append-only since e8827f8 (docs/rounds/P1-D.1/progress/ROUND_START)
+check_frozen: table append-only since 2e2c4ea (docs/rounds/P1-D/progress/ROUND_START)
+check_frozen: table append-only since 11e29b0 (docs/rounds/P1-E/progress/ROUND_START)
+check_frozen: OK
+[verify 03:09:14] conformance (level 3)
+rm -f reports/conformance.json
+MDK_FIXTURES="<scratchpad>/offpair/B/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/B/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+   Compiling serde_core v1.0.229
+   Compiling serde v1.0.229
+   Compiling aho-corasick v1.1.5
+   Compiling num-traits v0.2.19
+   Compiling syn v2.0.119
+   Compiling syn v3.0.9
+   Compiling bitflags v2.13.2
+   Compiling pulldown-cmark v0.13.4
+   Compiling deprecate-until v1.0.0
+   Compiling regex-automata v0.4.18
+   Compiling integer-sqrt v0.1.5
+   Compiling serde_derive v1.0.229
+   Compiling thiserror-impl v2.0.21
+   Compiling thiserror v2.0.21
+   Compiling serde_json v1.0.154
+   Compiling pathfinding v4.16.0
+   Compiling bstr v1.13.1
+   Compiling regex v1.13.1
+   Compiling fancy-regex v0.19.2
+   Compiling toml_datetime v0.6.11
+   Compiling serde_spanned v0.6.9
+   Compiling tiktoken-rs v0.12.1
+   Compiling toml_edit v0.22.27
+   Compiling toml v0.8.23
+   Compiling mdkernel-core v0.1.0 (<scratchpad>/offpair/B/repo/core)
+    Finished `release` profile [optimized] target(s) in 5.97s
+     Running tests/conformance.rs (target/release/deps/conformance-4e20d020b240194e)
+
+running 1 test
+test conformance_levels_1_and_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.91s
+
+MDK_FIXTURES="<scratchpad>/offpair/B/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/B/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
+   Compiling mdkernel-index v0.1.0 (<scratchpad>/offpair/B/repo/index)
+    Finished `release` profile [optimized] target(s) in 0.87s
+     Running tests/conformance_c3.rs (target/release/deps/conformance_c3-5590f3983f06ca17)
+
+running 1 test
+test conformance_level_3 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.74s
+
+conformance: level 3, 34/34 (reports/conformance.json)
+[verify 03:09:29] RUN=20261017T030929Z-632f29e
+[verify 03:09:29] holdout (P1-A A-2) and THETA_SPLIT grid (A-7)
+cd research && uv run --frozen python -m eval.run_holdout --run 20261017T030929Z-632f29e
+{
+ "H1-H1": 0.9935400516795866,
+ "H1-H2": 0.0,
+ "H1-H3": 0.9793814432989691,
+ "H1-H4": 1.0
+}
+cd research && uv run --frozen python -m eval.run_split_grid --run 20261017T030929Z-632f29e
+theta_split=0.45 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9857 H1-H4=1.0000 obj=3.985714
+theta_split=0.55 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9857 H1-H4=1.0000 obj=3.985714
+theta_split=0.65 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9857 H1-H4=1.0000 obj=3.985714
+theta_split=0.75 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9821 H1-H4=1.0000 obj=3.982079
+theta_split=0.85 H1-H1=1.0000 H1-H2=0.0000 H1-H3=0.9784 H1-H4=1.0000 obj=3.978417
+A-7 distinct objective values = 3
+[verify 03:09:58] regress (v2 + v3 phases vs v3-final; holdout + split grid vs P1-A; holdout-split)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-h1s-tune eval-h1s eval-h1r RUN=20261017T030929Z-632f29e
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.run_h1s --phase tune --run 20261017T030929Z-632f29e
+theta=0.50 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.50 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.50 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.55 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.55 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.55 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.60 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.60 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.60 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.65 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.65 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.65 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.70 split=0.60 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.70 split=0.70 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+theta=0.70 split=0.80 S1=0.9963 S2=0.0337 S3=0.9668 S4=1.0000 obj=3.9295
+grid is flat; out-of-grid probe (0.95, 0.99) differs: {'theta': 0.95, 'theta_split': 0.99, 'H1-S1': 0.46296296296296297, 'H1-S2': 0.014423076923076924, 'H1-S3': 0.9619047619047619, 'H1-S4': 1.0}
+selected THETA=0.60 THETA_SPLIT=0.70
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.run_h1s --phase test --run 20261017T030929Z-632f29e
+{
+ "H1-S1": 1.0,
+ "H1-S2": 0.037953795379537955,
+ "H1-S3": 0.961082910321489,
+ "H1-S4": 1.0
+}
+cd research && MDK_MATCHER=v2 uv run --frozen python -m eval.run_h1r --run 20261017T030929Z-632f29e
+{
+ "H1-R1": 0.9998433399913838,
+ "H1-R2": 0.9786619917835387,
+ "touched_retention": 0.7785793562708102,
+ "loss_categories": {
+  "dup_content": 8,
+  "hunk_adjacent": 0,
+  "type_change": 0,
+  "other": 0
+ }
+}
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-h1s-v3 RUN=20261017T030929Z-632f29e PHASE=tune
+cd research && uv run --frozen python -m eval.run_h1s_v3 --phase tune --run 20261017T030929Z-632f29e 
+theta=0.50 split=0.55 H1-H1=0.9928 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9860
+theta=0.50 split=0.65 H1-H1=0.9928 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9860
+theta=0.50 split=0.75 H1-H1=0.9928 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9860
+theta=0.55 split=0.55 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.55 split=0.65 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.55 split=0.75 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.60 split=0.55 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.60 split=0.65 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.60 split=0.75 H1-H1=0.9879 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9811
+theta=0.65 split=0.55 H1-H1=0.9855 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9787
+theta=0.65 split=0.65 H1-H1=0.9855 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9787
+theta=0.65 split=0.75 H1-H1=0.9855 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9787
+theta=0.70 split=0.55 H1-H1=0.9565 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9497
+theta=0.70 split=0.65 H1-H1=0.9565 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9497
+theta=0.70 split=0.75 H1-H1=0.9565 H1-H2=0.0000 H1-H3=0.9932 H1-H4=1.0000 obj=3.9497
+H1-G=4 selected THETA_V3=0.50 THETA_SPLIT_V3=0.65
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-h1s-v3 RUN=20261017T030929Z-632f29e PHASE=test
+cd research && uv run --frozen python -m eval.run_h1s_v3 --phase test --run 20261017T030929Z-632f29e 
+{
+ "H1-S1": 1.0,
+ "H1-S2": 0.0,
+ "H1-S3": 1.0,
+ "H1-S4": 1.0,
+ "H1-H1": 0.9882451721242653,
+ "H1-H2": 0.0,
+ "H1-H3": 0.9967213114754099,
+ "H1-H4": 1.0,
+ "H1-G": 4
+}
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-h1r-v3 eval-h3 eval-h4 eval-h4-v2repro RUN=20261017T030929Z-632f29e
+cd research && uv run --frozen python -m eval.run_h1r_v3 --run 20261017T030929Z-632f29e
+{
+ "H1-R1": 0.9998433399913838,
+ "H1-R2": 0.9817254568635784,
+ "touched_retention": 0.8105808361080281,
+ "loss_categories": {
+  "dup_content": 8,
+  "hunk_adjacent": 0,
+  "type_change": 0,
+  "other": 0
+ }
+}
+cd research && uv run --frozen python -m eval.run_h3_v3 --run 20261017T030929Z-632f29e
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 64779.32it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+hit@1 0.810 hit@10 0.960
+{
+ "H3-1": {
+  "p50_ms": 16.159854509169236,
+  "p95_ms": 21.49672769883182,
+  "n": 200
+ },
+ "H3-2": {
+  "lost": 0,
+  "gained": 0
+ },
+ "log_equal": true
+}
+cd research && uv run --frozen python -m eval.run_h4_v3 --run 20261017T030929Z-632f29e
+{
+ "H4-1": {
+  "manifest_hash": "7335baebefba377c84574928dd4cc05c",
+  "rebuilt_hash": "7335baebefba377c84574928dd4cc05c",
+  "equal": true
+ },
+ "v2_log": {
+  "manifest_hash": "e6945bbc2da9c47376e017e815d7e51b",
+  "rebuilt_hash": "e6945bbc2da9c47376e017e815d7e51b",
+  "equal": true
+ }
+}
+cd research && uv run --frozen python -m eval.run_h4_v2repro --run 20261017T030929Z-632f29e
+{
+ "d3": true,
+ "h1s_fields": 35,
+ "h1s_equal": true
+}
+cd research && uv run --frozen python -m eval.compare_runs reports/runs/20261013T182004Z-f82dabd reports/runs/20261017T030929Z-632f29e --set v3 \
+	  --out reports/runs/20261017T030929Z-632f29e/regress_vs_v3final.json
+{
+ "H4-2_equal": true,
+ "differing_fields": {},
+ "excluded_latency_paths": {
+  "h2.json": [
+   "H2-3",
+   "latency_ms"
+  ],
+  "h3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ],
+  "h3_v3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ]
+ },
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json"
+ ],
+ "max_relative_difference": 0.0,
+ "n_fields": 1577,
+ "per_file": {
+  "h1r.json": 0.0,
+  "h1r_v3.json": 0.0,
+  "h1s.json": 0.0,
+  "h1s_tuning.json": 0.0,
+  "h1s_v3.json": 0.0,
+  "h1s_v3_tuning.json": 0.0,
+  "h3_v3.json": 0.0,
+  "h4_v2repro.json": 0.0,
+  "h4_v3.json": 0.0
+ },
+ "run_a": "reports/runs/20261013T182004Z-f82dabd",
+ "run_b": "reports/runs/20261017T030929Z-632f29e"
+}
+regress: RUN=20261017T030929Z-632f29e equal to v3-final 20261013T182004Z-f82dabd (research/reports/runs/20261017T030929Z-632f29e/regress_vs_v3final.json)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make research/reports/runs/20261017T030929Z-632f29e/holdout.json research/reports/runs/20261017T030929Z-632f29e/split_grid.json \
+	  research/reports/runs/20261017T030929Z-632f29e/holdout_split.json RUN=20261017T030929Z-632f29e
+make[1]: `research/reports/runs/20261017T030929Z-632f29e/holdout.json' is up to date.
+make[1]: `research/reports/runs/20261017T030929Z-632f29e/split_grid.json' is up to date.
+/Applications/Xcode.app/Contents/Developer/usr/bin/make eval-holdout-split RUN=20261017T030929Z-632f29e
+cd research && uv run --frozen python -m eval.run_holdout_split --run 20261017T030929Z-632f29e
+{
+ "codes": {
+  "H1-H1": 0.9928741092636579,
+  "H1-H2": 0.0,
+  "H1-H3": 0.9972222222222222,
+  "H1-H4": 1.0
+ },
+ "b9": {
+  "H1-H1": {
+   "value": 0.9928741092636579,
+   "threshold": ">= 0.9",
+   "pass": true
+  },
+  "H1-H2": {
+   "value": 0.0,
+   "threshold": "<= 0.03",
+   "pass": true
+  },
+  "H1-H3": {
+   "value": 0.9972222222222222,
+   "threshold": ">= 0.7",
+   "pass": true
+  }
+ }
+}
+cd research && uv run --frozen python -m eval.compare_p1a ../reports/rounds/P1-A/runs/20261013T221822Z-27d8ae8 reports/runs/20261017T030929Z-632f29e \
+	  --out reports/runs/20261017T030929Z-632f29e/regress_vs_p1a.json >/dev/null
+regress: RUN=20261017T030929Z-632f29e P1-A set equal to the P1-A official RUN (research/reports/runs/20261017T030929Z-632f29e/regress_vs_p1a.json)
+[verify 03:16:00] A-1 / A-5 / A-6 into the RUN (level-1 view)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make conformance
+rm -f reports/conformance.json
+MDK_FIXTURES="<scratchpad>/offpair/B/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/B/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/conformance.rs (target/release/deps/conformance-4e20d020b240194e)
+
+running 1 test
+test conformance_levels_1_and_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.87s
+
+MDK_FIXTURES="<scratchpad>/offpair/B/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/B/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running tests/conformance_c3.rs (target/release/deps/conformance_c3-5590f3983f06ca17)
+
+running 1 test
+test conformance_level_3 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.07s
+
+conformance: level 3, 34/34 (reports/conformance.json)
+jq '.tests |= map(select(.level == 1)) | .total = 17 | .passed = ([.tests[] | select(.result == "pass")] | length)' \
+	  reports/conformance.json >reports/conformance_l1.json
+{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/20261017T030929Z-632f29e/check_deps.log 2>&1 \
+	  || { cat research/reports/runs/20261017T030929Z-632f29e/check_deps.log >&2; exit 1; }
+cd research && uv run --frozen python -m eval.run_p1a_checks --run 20261017T030929Z-632f29e --conformance ../reports/conformance_l1.json \
+	  --deps-log reports/runs/20261017T030929Z-632f29e/check_deps.log
+{
+ "A-5": {
+  "events_hash": {
+   "v2": "8914f9b418ae360d49c85c951050f432",
+   "v3": "808a41f21a43e121d7d688fee9f5bc24"
+  },
+  "expected": {
+   "v2": "8914f9b418ae360d49c85c951050f432",
+   "v3": "808a41f21a43e121d7d688fee9f5bc24"
+  },
+  "equal": {
+   "v2": true,
+   "v3": true
+  }
+ }
+}
+A-1 17/17; A-6 ok=True
+[verify 03:16:20] governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make conformance
+rm -f reports/conformance.json
+MDK_FIXTURES="<scratchpad>/offpair/B/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/B/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.04s
+     Running tests/conformance.rs (target/release/deps/conformance-4e20d020b240194e)
+
+running 1 test
+test conformance_levels_1_and_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.88s
+
+MDK_FIXTURES="<scratchpad>/offpair/B/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/B/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/conformance_c3.rs (target/release/deps/conformance_c3-5590f3983f06ca17)
+
+running 1 test
+test conformance_level_3 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.96s
+
+conformance: level 3, 34/34 (reports/conformance.json)
+cp reports/conformance.json research/reports/runs/20261017T030929Z-632f29e/conformance_full.json
+jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
+	  reports/conformance.json >research/reports/runs/20261017T030929Z-632f29e/conformance.json
+{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/20261017T030929Z-632f29e/check_deps.log 2>&1 \
+	  || { cat research/reports/runs/20261017T030929Z-632f29e/check_deps.log >&2; exit 1; }
+cargo build --release -q -p mdkernel-server --bin mdk
+bash scripts/check_v3_compat.sh research/reports/runs/20261017T030929Z-632f29e/v3_compat.json \
+	  research/reports/runs/20261017T030929Z-632f29e/v3_compat_mixed.json >/dev/null
+check_v3_compat: OK (12 documents)
+check_v3_compat: OK (mixed-author vaults 9/9)
+bash scripts/test_policy_bounds.sh target/release/mdk research/reports/runs/20261017T030929Z-632f29e/policy_bounds.json
+ok   B6-1 retention < 24h (exit 1: error: policy /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-bounds.XXXXXX.GDtstQkPtt/vault/.mdkernel/policy.toml rejected: journal.retention_hours = 23: )
+ok   B6-2 idle_ms < 0 (exit 1: error: policy /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-bounds.XXXXXX.GDtstQkPtt/vault/.mdkernel/policy.toml rejected: version_trigger.idle_ms = -1: )
+ok   B6-3 min_sim_change > 1 (exit 1: error: policy /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-bounds.XXXXXX.GDtstQkPtt/vault/.mdkernel/policy.toml rejected: version_trigger.min_sim_change)
+ok   B6-4 unknown promotion (exit 1: error: policy /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/mdk-bounds.XXXXXX.GDtstQkPtt/vault/.mdkernel/policy.toml rejected: unknown promotion policy "impl)
+ok   B6-5 promotion without a hook (no recipe: deny) (exit 1: error: Promote of bdd98921faa777f9e027ce9e7043bf00 denied by policy deny v1: policy deny refuses every layer transition )
+ok   B6-6 Promoted without actor (exit 1: error: actor id is empty )
+test_policy_bounds: OK (6 cases, all errors, no fallback)
+rm -rf research/reports/runs/20261017T030929Z-632f29e/governance
+bash scripts/governance_scenario.sh target/release/mdk research/reports/runs/20261017T030929Z-632f29e/governance
+governance scenario: {"events_hash":"2b0dc8e88f8d56ee4c6be6356d4c0fee","traces":4,"checkpoints":4}
+cd research && uv run --frozen python -m eval.run_p1b_checks --run 20261017T030929Z-632f29e --seeds 20261014 7
+{"level_claimed": 2, "B-1": "8/8", "B-2": "17/17", "B-3_equal": true, "B-5": true, "B-6_cases": 6, "B-10": true}
+[verify 03:17:01] P1-B.1 checks (B1-1..B1-6 recorded again; C-11 input)
+cargo test -p mdkernel-core --release --test compat_v3final --test trace_id_v101 -- --test-threads=1 \
+	  >research/reports/runs/20261017T030929Z-632f29e/p1b1_tests.log 2>&1 \
+	  || { cat research/reports/runs/20261017T030929Z-632f29e/p1b1_tests.log >&2; exit 1; }
+cd research && uv run --frozen python -m eval.compare_p1b1 ../reports/rounds/P1-B/runs/20261014T135400Z-7735a07 reports/runs/20261017T030929Z-632f29e \
+	  --out reports/runs/20261017T030929Z-632f29e/regress_vs_p1b.json >/dev/null
+cd research && uv run --frozen python -m eval.run_p1b1_checks --run 20261017T030929Z-632f29e
+{"B1-1": true, "B1-2": true, "B1-4": true, "B1-5": true, "B1-3": false, "B1-6": true}
+[verify 03:17:03] P1-C checks (C-1..C-13; D3 determinism vault under <scratchpad>/offpair/B/p1c_work)
+cargo run -q --release -p mdkernel-index --bin mdk-index -- models verify >research/reports/runs/20261017T030929Z-632f29e/models_verify.json
+/Applications/Xcode.app/Contents/Developer/usr/bin/make conformance
+rm -f reports/conformance.json
+MDK_FIXTURES="<scratchpad>/offpair/B/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/B/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running tests/conformance.rs (target/release/deps/conformance-4e20d020b240194e)
+
+running 1 test
+test conformance_levels_1_and_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s
+
+MDK_FIXTURES="<scratchpad>/offpair/B/repo/spec/fixtures" MDK_CONFORMANCE_REPORT="<scratchpad>/offpair/B/repo/reports/conformance.json" \
+	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/conformance_c3.rs (target/release/deps/conformance_c3-5590f3983f06ca17)
+
+running 1 test
+test conformance_level_3 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.89s
+
+conformance: level 3, 34/34 (reports/conformance.json)
+cp reports/conformance.json research/reports/runs/20261017T030929Z-632f29e/conformance_p1d1.json
+jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	  reports/conformance.json >research/reports/runs/20261017T030929Z-632f29e/conformance_p1c1.json
+jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	  reports/conformance.json >research/reports/runs/20261017T030929Z-632f29e/conformance_full.json
+cargo test -p mdkernel-core --release --test compat_v3final kc01 -- --test-threads=1 \
+	  >research/reports/runs/20261017T030929Z-632f29e/c13_tests.log 2>&1 \
+	  || { cat research/reports/runs/20261017T030929Z-632f29e/c13_tests.log >&2; exit 1; }
+MDK_C7_OUT="<scratchpad>/offpair/B/repo/research/reports/runs/20261017T030929Z-632f29e/c7_property.json" \
+	  cargo test -q -p mdkernel-index --release --test governance c7_property -- --test-threads=1
+
+running 1 test
+.
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 14.71s
+
+MDK_C10_OUT="<scratchpad>/offpair/B/repo/research/reports/runs/20261017T030929Z-632f29e/c10_embedding.json" \
+	  cargo test -q -p mdkernel-index --release --test embed c10 -- --test-threads=1
+
+running 1 test
+.
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.40s
+
+MDK_C8_OUT="<scratchpad>/offpair/B/repo/research/reports/runs/20261017T030929Z-632f29e/c8_latency.json" \
+	  cargo test -q -p mdkernel-index --release --test hot c8 -- --test-threads=1
+
+running 1 test
+.
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 17.41s
+
+/Applications/Xcode.app/Contents/Developer/usr/bin/make c3-quality RUN=20261017T030929Z-632f29e
+cd research && uv run --frozen python -m eval.run_c3_quality --run 20261017T030929Z-632f29e
+C-3 hybrid/single: nDCG@10 0.6769 (v2 0.6740, Δ +0.0029)
+C-3 hybrid/multi: nDCG@10 0.4800 (v2 0.4936, Δ -0.0136)
+C-3 FAIL (|Δ| ≤ 0.01)
+rc=0; cd research && uv run --frozen python -m eval.compare_p1c regress ../reports/rounds/P1-B.1/runs/20261014T212243Z-226b511 reports/runs/20261017T030929Z-632f29e \
+	  --out reports/runs/20261017T030929Z-632f29e/regress_vs_p1b1.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+regress FAILED: differing ['p1b1_checks.json:criteria›B1-3›pass', 'p1b1_checks.json:criteria›B1-3›spec_version']
+cd research && uv run --frozen python -m eval.run_p1c_checks --run 20261017T030929Z-632f29e --work "<scratchpad>/offpair/B/p1c_work/20261017T030929Z-632f29e"
+C-1 pass; C-2 pass; C-3 FAIL; C-4 pass; C-5 pass; C-7 pass; C-9 pass; C-10 pass; C-11 FAIL; C-12 pass; C-13 pass
+[verify 03:40:08] P1-C deliberate corruptions (model manifest, embedder_id, fixtures)
+tamper P1-C: 6/6 corruptions rejected
+[verify 03:40:28] P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)
+/Applications/Xcode.app/Contents/Developer/usr/bin/make c1-variant RUN=20261017T030929Z-632f29e
+cd research && uv run --frozen python -m eval.run_c1_variant --run 20261017T030929Z-632f29e
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 33604.02it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+C1-1 hybrid/structural/single: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 hybrid/structural/multi: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 flat/structural/single: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 flat/structural/multi: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 pass (|Δ| ≤ 0.001)
+mkdir -p research/reports/runs/20261017T030929Z-632f29e/p1c1
+MDK_P1C1_OUT="<scratchpad>/offpair/B/repo/research/reports/runs/20261017T030929Z-632f29e/p1c1" \
+	  cargo test -q -p mdkernel-index --release --test p1c1 -- --test-threads=1
+
+running 4 tests
+....
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 44.47s
+
+bash scripts/test_p1c1.sh research/reports/runs/20261017T030929Z-632f29e/p1c1_cli.json \
+	  >research/reports/runs/20261017T030929Z-632f29e/p1c1_cli.log 2>&1 \
+	  || { cat research/reports/runs/20261017T030929Z-632f29e/p1c1_cli.log >&2; exit 1; }
+rc=0; cd research && uv run --frozen python -m eval.compare_p1c1 regress ../reports/rounds/P1-C/runs/20261015T014417Z-9aa326b reports/runs/20261017T030929Z-632f29e \
+	  --out reports/runs/20261017T030929Z-632f29e/regress_vs_p1c.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+cd research && uv run --frozen python -m eval.run_p1c1_checks --run 20261017T030929Z-632f29e
+C1-1 pass; C1-2 pass; C1-3 pass; C1-4 pass; C1-5 pass; C1-6 pass; C1-7 FAIL; C1-8 pass; C1-9 pass
+p1c1: 45/45 cases as expected
+[verify 03:41:31] P1-D checks (D-1..D-11: Inspector, MCP e2e, HTTP/service, watch, scene, tamper; D-9 vs P1-C.1)
+rm -rf research/reports/runs/20261017T030929Z-632f29e/p1d
+mkdir -p research/reports/runs/20261017T030929Z-632f29e/p1d
+bash scripts/mcp_inspector.sh research/reports/runs/20261017T030929Z-632f29e/p1d/inspector >research/reports/runs/20261017T030929Z-632f29e/p1d/inspector.log 2>&1 \
+	  || echo "p1d-checks: mcp_inspector.sh exit $? (recorded)" >&2
+bash scripts/mcp_e2e.sh research/reports/runs/20261017T030929Z-632f29e/p1d/mcp_e2e >research/reports/runs/20261017T030929Z-632f29e/p1d/mcp_e2e.log 2>&1 \
+	  || echo "p1d-checks: mcp_e2e.sh exit $? (recorded)" >&2
+p1d-checks: mcp_e2e.sh exit 1 (recorded)
+bash scripts/http_e2e.sh research/reports/runs/20261017T030929Z-632f29e/p1d/http >research/reports/runs/20261017T030929Z-632f29e/p1d/http_e2e.log 2>&1 \
+	  || echo "p1d-checks: http_e2e.sh exit $? (recorded)" >&2
+p1d-checks: http_e2e.sh exit 1 (recorded)
+MDK_D10_OUT="<scratchpad>/offpair/B/repo/research/reports/runs/20261017T030929Z-632f29e/p1d/d10.json" MDK_SIGTERM_OUT="<scratchpad>/offpair/B/repo/research/reports/runs/20261017T030929Z-632f29e/p1d/sigterm.json" \
+	  cargo test -q -p mdkernel-server --release --test serve_watch -- --test-threads=1 >research/reports/runs/20261017T030929Z-632f29e/p1d/serve_watch.log 2>&1 \
+	  || echo "p1d-checks: serve_watch exit $? (recorded)" >&2
+bash scripts/scene_agent.sh research/reports/runs/20261017T030929Z-632f29e/p1d/scene >research/reports/runs/20261017T030929Z-632f29e/p1d/scene.log 2>&1 \
+	  || echo "p1d-checks: scene_agent.sh exit $? (recorded)" >&2
+bash scripts/test_tamper_p1d.sh research/reports/runs/20261017T030929Z-632f29e/p1d/inspector/tools_list.json research/reports/runs/20261017T030929Z-632f29e/p1d/tamper_p1d.json >research/reports/runs/20261017T030929Z-632f29e/p1d/tamper_p1d.log 2>&1 \
+	  || echo "p1d-checks: test_tamper_p1d.sh exit $? (recorded)" >&2
+rc=0; cd research && uv run --frozen python -m eval.compare_p1d regress ../reports/rounds/P1-C.1/runs/20261015T094412Z-b9f7622 reports/runs/20261017T030929Z-632f29e \
+	  --out reports/runs/20261017T030929Z-632f29e/regress_vs_p1c1.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+regress FAILED: differing ['p1b1_checks.json:criteria›B1-3›spec_version', 'p1b_checks.json:fixtures_manifest_hash', 'p1c1_checks.json:C1-6›lexical›dl', 'p1c1_checks.json:C1-6›rejected_cases', 'p1c1_checks.json:C1-7›pass', 'p1c1_checks.json:C1-7›spec_version', 'p1c_checks.json:C-1›spec_version', 'p1c_index.json:index_files_build›manifest·json', 'p1c_index.json:index_files_compact›manifest·json', 'p1c_index.json:index_files_final›manifest·json']
+cd research && uv run --frozen python -m eval.run_p1d_checks --run 20261017T030929Z-632f29e
+D-1 pass; D-2 FAIL; D-3 pass; D-4 pass; D-5 pass; D-6 pass; D-7 FAIL; D-8 pass; D-9 FAIL; D-10 pass; D-11 pass; scene pass; tamper pass
+[verify 03:42:56] P1-D.1 checks (D1-1..D1-13: criteria tests, p1d-final vaults, contract, tamper; D1-12 vs P1-D)
+rm -rf research/reports/runs/20261017T030929Z-632f29e/p1d1
+mkdir -p research/reports/runs/20261017T030929Z-632f29e/p1d1
+bash scripts/test_p1d1.sh research/reports/runs/20261017T030929Z-632f29e/p1d1 >research/reports/runs/20261017T030929Z-632f29e/p1d1/test_p1d1.log 2>&1 \
+	  || { tail -40 research/reports/runs/20261017T030929Z-632f29e/p1d1/test_p1d1.log >&2; exit 1; }
+bash scripts/test_tamper_p1d1.sh research/reports/runs/20261017T030929Z-632f29e/p1d1/tamper_p1d1.json >research/reports/runs/20261017T030929Z-632f29e/p1d1/tamper_p1d1.log 2>&1 \
+	  || echo "p1d1-checks: test_tamper_p1d1.sh exit $? (recorded)" >&2
+rc=0; cd research && uv run --frozen python -m eval.compare_p1d1 regress ../reports/rounds/P1-D/runs/20261015T210419Z-a6b52fe reports/runs/20261017T030929Z-632f29e \
+	  --out reports/runs/20261017T030929Z-632f29e/regress_vs_p1d.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+cd research && uv run --frozen python -m eval.run_p1d1_checks --run 20261017T030929Z-632f29e
+D1-1 pass; D1-2 pass; D1-3 pass; D1-4 pass; D1-5 pass; D1-6 pass; D1-7 pass; D1-8 pass; D1-9 pass; D1-10 pass; D1-11 pass; D1-12 pass; D1-13 pass; tamper pass
+[verify 03:45:17] P1-E checks (E-1..E-10, E-12..E-16: E0 tests, scene, plugin e2e, client, local release, tamper, field audit; E-9 vs P1-D.1)
+rm -rf research/reports/runs/20261017T030929Z-632f29e/p1e
+mkdir -p research/reports/runs/20261017T030929Z-632f29e/p1e/e0
+MDK_P1E_OUT="<scratchpad>/offpair/B/repo/research/reports/runs/20261017T030929Z-632f29e/p1e/e0" cargo test -q -p mdkernel-server --release --test p1e_e0 -- --test-threads=1 \
+	  >research/reports/runs/20261017T030929Z-632f29e/p1e/e0.log 2>&1 || echo "p1e-checks: p1e_e0 exit $? (recorded)" >&2
+bash scripts/scene.sh research/reports/runs/20261017T030929Z-632f29e/p1e/scene >research/reports/runs/20261017T030929Z-632f29e/p1e/scene.log 2>&1 || echo "p1e-checks: scene.sh exit $? (recorded)" >&2
+bash scripts/plugin_e2e.sh research/reports/runs/20261017T030929Z-632f29e/p1e/plugin_e2e >research/reports/runs/20261017T030929Z-632f29e/p1e/plugin_e2e.log 2>&1 || echo "p1e-checks: plugin_e2e.sh exit $? (recorded)" >&2
+bash scripts/client_checks.sh research/reports/runs/20261017T030929Z-632f29e/p1e/client.json >research/reports/runs/20261017T030929Z-632f29e/p1e/client.log 2>&1 || echo "p1e-checks: client_checks.sh exit $? (recorded)" >&2
+bash scripts/release_local.sh research/reports/runs/20261017T030929Z-632f29e/p1e/release >research/reports/runs/20261017T030929Z-632f29e/p1e/release.log 2>&1 || echo "p1e-checks: release_local.sh exit $? (recorded)" >&2
+bash scripts/test_tamper_p1e.sh research/reports/runs/20261017T030929Z-632f29e/p1e/tamper_p1e.json >research/reports/runs/20261017T030929Z-632f29e/p1e/tamper_p1e.log 2>&1 || echo "p1e-checks: test_tamper_p1e.sh exit $? (recorded)" >&2
+bash scripts/check_compare_fields.sh --out research/reports/runs/20261017T030929Z-632f29e/p1e/check_compare_fields.json >/dev/null || echo "p1e-checks: check_compare_fields exit $? (recorded)" >&2
+check_compare_fields: OK (9 comparators, 85 declared fields, 16 file constants)
+rc=0; cd research && uv run --frozen python -m eval.compare_p1e regress ../reports/rounds/P1-D.1/runs/20261016T124520Z-1527365 reports/runs/20261017T030929Z-632f29e \
+	  --out reports/runs/20261017T030929Z-632f29e/regress_vs_p1d1.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+cd research && uv run --frozen python -m eval.run_p1e_checks --run 20261017T030929Z-632f29e
+E-1 pass; E-2 pass; E-3 pass; E-4 pass; E-5 pass; E-6 pass; E-7 FAIL; E-9 pass; E-10 pass; E-12 pass; E-13 pass; E-14 pass; E-15 pass; E-16 pass; tamper pass
+[verify 03:46:29] deliberate corruptions (B-7, B-8 and the P1-A cases)
+test_tamper: OK (12 corruptions detected)
+[verify 03:47:32] chain finished in 2449 s
+[verify 03:47:32] compare (P1-E) <scratchpad>/offpair/A/repo/research/reports/runs/20261017T024341Z-632f29e <scratchpad>/offpair/B/repo/research/reports/runs/20261017T030929Z-632f29e
+{
+ "bytes": {
+  "governance/vault/.mdkernel/checkpoints/": {
+   "equal": true,
+   "files": 4
+  },
+  "governance/vault/.mdkernel/events.jsonl": {
+   "blake3": "2b0dc8e88f8d56ee4c6be6356d4c0fee",
+   "equal": true
+  },
+  "governance/vault/.mdkernel/traces.jsonl": {
+   "blake3": "4e0906770480e03802021d9dfb2a67a5",
+   "equal": true
+  },
+  "p1d/inspector/tools_list.json": {
+   "blake3": "4a430a2f114b3888fdcf91e467b7f07b",
+   "bytes": 10791,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/cli_promote.jsonl": {
+   "blake3": "343094e8f7255147a905c40d6bb88062",
+   "bytes": 1714,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/transcript.jsonl": {
+   "blake3": "6cf4172805cfe07f6f1e2844e311ec25",
+   "bytes": 11271827,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/transcript_b.jsonl": {
+   "blake3": "d6f53123f5b1a7ff366e757aea14366f",
+   "bytes": 13526,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/.mdkernel/events.jsonl": {
+   "blake3": "453c8685fd05e0161d7b07a5eff36f0d",
+   "bytes": 42898,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/.mdkernel/proposals.jsonl": {
+   "blake3": "93795dcd89eed407ad0ea02533330082",
+   "bytes": 637,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/.mdkernel/traces.jsonl": {
+   "blake3": "d04f86889aacdf47aa1edf5e15323903",
+   "bytes": 156679,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/agent/plan.md": {
+   "blake3": "bb7a57f8d1071b59435bf4a8b70e0ac7",
+   "bytes": 46,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/espresso.md": {
+   "blake3": "4d7568de2512522ac296843deb0658e7",
+   "bytes": 458,
+   "equal": true
+  },
+  "p1d/scene/scene.json": {
+   "blake3": "faa842022a9f726594d24b2e8a1d3053",
+   "bytes": 2563,
+   "equal": true
+  },
+  "p1d1/d1_13.json": {
+   "blake3": "d8db26f0ecb65c51097bf5c10d39654c",
+   "bytes": 4451,
+   "equal": true
+  },
+  "p1d1/d1_3.json": {
+   "blake3": "23dcb35ba3805fc1f8d59f0f7b2023b2",
+   "bytes": 606,
+   "equal": true
+  },
+  "p1d1/d1_8.json": {
+   "blake3": "9ed036898854d28c498656679e490b04",
+   "bytes": 3705,
+   "equal": true
+  },
+  "p1e/plugin_e2e/access_log.json": {
+   "blake3": "97bf9258323e95b861a20de39b0b7ef2",
+   "bytes": 3529,
+   "equal": true
+  },
+  "p1e/plugin_e2e/events.jsonl": {
+   "blake3": "ff38df38348eaacaad282c2fe6f457ff",
+   "bytes": 39790,
+   "equal": true
+  },
+  "p1e/plugin_e2e/plugin_e2e.json": {
+   "blake3": "129efce69da429e6ea4454fdfe130a75",
+   "bytes": 4046,
+   "equal": true
+  },
+  "p1e/plugin_e2e/proposals.jsonl": {
+   "blake3": "f57191232551d54e3f6c2291a9b1ac34",
+   "bytes": 219,
+   "equal": true
+  },
+  "p1e/plugin_e2e/traces.jsonl": {
+   "blake3": "5818f4ea4344f4c40931058e170f0de7",
+   "bytes": 8446,
+   "equal": true
+  },
+  "p1e/scene/events.jsonl": {
+   "blake3": "fce71a34188d1679270cfc5ab079d10f",
+   "bytes": 39794,
+   "equal": true
+  },
+  "p1e/scene/proposals.jsonl": {
+   "blake3": "f33b9aa3c575e075cdb973bd943aa38f",
+   "bytes": 223,
+   "equal": true
+  },
+  "p1e/scene/scene.json": {
+   "blake3": "1f87a33852766af7209e2852c446e81b",
+   "bytes": 4193,
+   "equal": true
+  },
+  "p1e/scene/traces.jsonl": {
+   "blake3": "4d6129a7db24c86828097d638d3835df",
+   "bytes": 8386,
+   "equal": true
+  }
+ },
+ "bytes_equal": true,
+ "differing_fields": {},
+ "equal": true,
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json",
+  "c1_variant.json",
+  "p1c1_checks.json",
+  "p1d_checks.json",
+  "p1d/inspector/inspector.json",
+  "p1d/mcp_e2e/mcp_e2e.json",
+  "p1d/http/http_e2e.json",
+  "p1d/scene/scene.json",
+  "p1d/tamper_p1d.json",
+  "p1d/d10.json",
+  "p1d/sigterm.json",
+  "p1d1_checks.json",
+  "conformance_p1d1.json",
+  "p1d1/p1d1.json",
+  "p1d1/d1_1.json",
+  "p1d1/d1_2.json",
+  "p1d1/d1_3.json",
+  "p1d1/d1_4.json",
+  "p1d1/d1_5.json",
+  "p1d1/d1_6.json",
+  "p1d1/d1_7.json",
+  "p1d1/d1_8.json",
+  "p1d1/d1_9.json",
+  "p1d1/d1_11.json",
+  "p1d1/d1_13.json",
+  "p1d1/v3_compat.json",
+  "p1d1/v3_compat_mixed.json",
+  "p1d1/tamper_p1d1.json",
+  "p1e_checks.json",
+  "p1e/e0/e14.json",
+  "p1e/e0/e15.json",
+  "p1e/scene/scene.json",
+  "p1e/plugin_e2e/plugin_e2e.json",
+  "p1e/plugin_e2e/access_log.json",
+  "p1e/client.json",
+  "p1e/release/release_local.json",
+  "p1e/release/conformance_mdk.json",
+  "p1e/release/conformance_equiv.json",
+  "p1e/tamper_p1e.json",
+  "p1e/check_compare_fields.json"
+ ],
+ "informational_fields": {
+  "p1d1/d1_5.json": [
+   "responses_a_vs_b_equal",
+   "responses_pipelined_vs_lockstep_equal"
+  ]
+ },
+ "n_fields": 101958,
+ "run_a": "<scratchpad>/offpair/A/repo/research/reports/runs/20261017T024341Z-632f29e",
+ "run_b": "<scratchpad>/offpair/B/repo/research/reports/runs/20261017T030929Z-632f29e"
+}
+[verify 03:47:33] P1-D.1 set and P1-E results equal; scene and plugin e2e vault logs, access log byte-equal

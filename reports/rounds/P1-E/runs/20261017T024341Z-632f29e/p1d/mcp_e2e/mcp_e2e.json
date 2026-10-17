@@ -1,0 +1,403 @@
+{
+  "tools": [
+    "status",
+    "search",
+    "read_block",
+    "history",
+    "blame",
+    "propose",
+    "promote",
+    "checkpoint",
+    "checkpoints",
+    "trace"
+  ],
+  "per_tool": {
+    "blame": {
+      "checks": 5,
+      "passed": 5
+    },
+    "checkpoint": {
+      "checks": 4,
+      "passed": 4
+    },
+    "checkpoints": {
+      "checks": 2,
+      "passed": 2
+    },
+    "handshake": {
+      "checks": 2,
+      "passed": 2
+    },
+    "history": {
+      "checks": 3,
+      "passed": 3
+    },
+    "promote": {
+      "checks": 8,
+      "passed": 8
+    },
+    "propose": {
+      "checks": 17,
+      "passed": 12
+    },
+    "read_block": {
+      "checks": 5,
+      "passed": 5
+    },
+    "search": {
+      "checks": 8,
+      "passed": 8
+    },
+    "status": {
+      "checks": 4,
+      "passed": 3
+    },
+    "trace": {
+      "checks": 8,
+      "passed": 8
+    }
+  },
+  "tools_passed": 8,
+  "tools_total": 10,
+  "handshake_pass": true,
+  "runs_equal": true,
+  "d5": {
+    "calls": 200,
+    "traces_file_lines": 207,
+    "mcp_consumer_traces": 206,
+    "pass": true
+  },
+  "checks": [
+    {
+      "tool": "handshake",
+      "check": "initialize names server mdk, tools capability",
+      "pass": true
+    },
+    {
+      "tool": "handshake",
+      "check": "tools/list has every tool of this round",
+      "pass": true
+    },
+    {
+      "tool": "status",
+      "check": "valid call",
+      "pass": true
+    },
+    {
+      "tool": "status",
+      "check": "versions, level, relative vault path",
+      "pass": false
+    },
+    {
+      "tool": "status",
+      "check": "last checkpoint t1, default policy human_only, index built at start",
+      "pass": true
+    },
+    {
+      "tool": "status",
+      "check": "unknown argument is an error",
+      "pass": true
+    },
+    {
+      "tool": "history",
+      "check": "valid call",
+      "pass": true
+    },
+    {
+      "tool": "history",
+      "check": "lineage, layer, events",
+      "pass": true
+    },
+    {
+      "tool": "history",
+      "check": "unknown lineage is an error",
+      "pass": true
+    },
+    {
+      "tool": "blame",
+      "check": "valid call (head)",
+      "pass": true
+    },
+    {
+      "tool": "blame",
+      "check": "every block: lineage, version, layer, author",
+      "pass": true
+    },
+    {
+      "tool": "blame",
+      "check": "agent document as of t1: proposal blocks",
+      "pass": true
+    },
+    {
+      "tool": "blame",
+      "check": "document absent at t0 is an error",
+      "pass": true
+    },
+    {
+      "tool": "blame",
+      "check": "missing doc_path is an error",
+      "pass": true
+    },
+    {
+      "tool": "checkpoints",
+      "check": "valid call",
+      "pass": true
+    },
+    {
+      "tool": "checkpoints",
+      "check": "t0 then t1, with event offsets",
+      "pass": true
+    },
+    {
+      "tool": "trace",
+      "check": "valid call",
+      "pass": true
+    },
+    {
+      "tool": "trace",
+      "check": "the CLI read's trace",
+      "pass": true
+    },
+    {
+      "tool": "trace",
+      "check": "consumer filter",
+      "pass": true
+    },
+    {
+      "tool": "trace",
+      "check": "since_seq past the end: empty",
+      "pass": true
+    },
+    {
+      "tool": "trace",
+      "check": "negative since_seq is an error",
+      "pass": true
+    },
+    {
+      "tool": "search",
+      "check": "valid call (hybrid default)",
+      "pass": true
+    },
+    {
+      "tool": "search",
+      "check": "canonical hits only, agent document absent, trace by mcp-e2e/1.0",
+      "pass": true
+    },
+    {
+      "tool": "search",
+      "check": "JSON-equal to the CLI twin (mdk search --consumer mcp-e2e/1.0, same state)",
+      "pass": true
+    },
+    {
+      "tool": "search",
+      "check": "text content byte-equal to the CLI stdout",
+      "pass": true
+    },
+    {
+      "tool": "search",
+      "check": "include_proposal: canonical prefix unchanged, agent proposal labelled after it",
+      "pass": true
+    },
+    {
+      "tool": "search",
+      "check": "whitespace-only query is an error",
+      "pass": true
+    },
+    {
+      "tool": "search",
+      "check": "unknown mode is an error",
+      "pass": true
+    },
+    {
+      "tool": "search",
+      "check": "k = 0 is an error",
+      "pass": true
+    },
+    {
+      "tool": "read_block",
+      "check": "valid call",
+      "pass": true
+    },
+    {
+      "tool": "read_block",
+      "check": "block version, canonical, human provenance, trace by mcp-e2e/1.0",
+      "pass": true
+    },
+    {
+      "tool": "read_block",
+      "check": "lineage of another document is an error",
+      "pass": true
+    },
+    {
+      "tool": "read_block",
+      "check": "document absent at t0 is an error",
+      "pass": true
+    },
+    {
+      "tool": "read_block",
+      "check": "agent block: proposal, agent provenance",
+      "pass": true
+    },
+    {
+      "tool": "trace",
+      "check": "consumer filter: the 4 MCP traces, at_seq 1..4, failed calls recorded nothing",
+      "pass": true
+    },
+    {
+      "tool": "trace",
+      "check": "D-5: 200 calls → 200 traces, consumer mcp-e2e/1.0",
+      "pass": true
+    },
+    {
+      "tool": "trace",
+      "check": "D-5 traces.jsonl: 207 lines = 1 CLI + 206 by mcp-e2e/1.0 (4 + 200 + 2 later searches), every load call ok",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "create: ok, every block proposal by Agent (source mcp-e2e/1.0)",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "D-3 search by default does not find the proposal",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "D-3 search with include_proposal finds it, labelled proposal",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "create over an existing document is refused",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "append: human blocks stay canonical, the added block is proposal",
+      "pass": false
+    },
+    {
+      "tool": "propose",
+      "check": "replace_section on a heading the document lacks is refused (filter.md)",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "D-11 ../ path refused",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "D-11 path outside the vault refused",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "D-11 content over 10 MB refused (max_propose_bytes)",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "D-11 replace_section with a missing heading refused",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "hidden path (.mdkernel/) refused",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "replace_section without heading refused",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "replace_section Recipe: ok",
+      "pass": false
+    },
+    {
+      "tool": "propose",
+      "check": "after the edits: Recipe body is the agent's, other blocks keep their human provenance",
+      "pass": false
+    },
+    {
+      "tool": "propose",
+      "check": "D-3 file is the agent's text only (no lineage|version_id|mdkernel); refused proposals wrote no file",
+      "pass": true
+    },
+    {
+      "tool": "propose",
+      "check": "espresso.md: text before ## Recipe unchanged, agent text present, appended line last, no ids",
+      "pass": false
+    },
+    {
+      "tool": "propose",
+      "check": "events.jsonl: only the proposed documents' agent block events (+ layer/checkpoint events); proposals.jsonl 4 reasons",
+      "pass": false
+    },
+    {
+      "tool": "checkpoint",
+      "check": "named checkpoint d6",
+      "pass": true
+    },
+    {
+      "tool": "checkpoint",
+      "check": "same state again: explicit error naming the existing checkpoint (one checkpoint per state)",
+      "pass": true
+    },
+    {
+      "tool": "promote",
+      "check": "D-4 MCP promote → decision denied, policy human_only (a response, not an error), layer proposal",
+      "pass": true
+    },
+    {
+      "tool": "promote",
+      "check": "unknown lineage is an error",
+      "pass": true
+    },
+    {
+      "tool": "promote",
+      "check": "missing reason is an error",
+      "pass": true
+    },
+    {
+      "tool": "promote",
+      "check": "the denied request wrote no event (history: no Promoted, still proposal)",
+      "pass": true
+    },
+    {
+      "tool": "promote",
+      "check": "D-4 CLI promote --actor human:alice → Promoted (4 lineages)",
+      "pass": true
+    },
+    {
+      "tool": "promote",
+      "check": "D-4 after the human promotion, default search finds the block (canonical)",
+      "pass": true
+    },
+    {
+      "tool": "promote",
+      "check": "history: Promoted by human:alice",
+      "pass": true
+    },
+    {
+      "tool": "promote",
+      "check": "a later agent request is still denied",
+      "pass": true
+    },
+    {
+      "tool": "checkpoint",
+      "check": "D-6 search --at d6 gives the old state (checkpoint d6, no agent/d6.md)",
+      "pass": true
+    },
+    {
+      "tool": "checkpoint",
+      "check": "D-6 search gives the new state (agent/d6.md, canonical)",
+      "pass": true
+    }
+  ],
+  "pass": false
+}
