@@ -1301,7 +1301,7 @@ dependencies = [
 
 [[package]]
 name = "mdkernel-bindings"
-version = "0.2.0"
+version = "0.1.0"
 dependencies = [
  "anyhow",
  "mdkernel-core",
@@ -1313,7 +1313,7 @@ dependencies = [
 
 [[package]]
 name = "mdkernel-core"
-version = "0.2.0"
+version = "0.1.0"
 dependencies = [
  "anyhow",
  "blake3",
@@ -1330,7 +1330,7 @@ dependencies = [
 
 [[package]]
 name = "mdkernel-index"
-version = "0.2.0"
+version = "0.1.0"
 dependencies = [
  "anyhow",
  "blake3",
@@ -1346,10 +1346,11 @@ dependencies = [
 
 [[package]]
 name = "mdkernel-server"
-version = "0.2.0"
+version = "0.1.0"
 dependencies = [
  "anyhow",
  "axum",
+ "blake3",
  "clap",
  "getrandom 0.3.4",
  "jsonschema",

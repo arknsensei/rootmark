@@ -1,0 +1,71 @@
+# The mdk release binaries (GOAL P1-E E-7; docs/RELEASE.md): each target is
+# built on its own runner, then checked on that runner — `mdk --version`,
+# `mdk --spec-version` and `mdk conformance` (Levels 1–3 on the fixtures
+# embedded in the binary; 34/34 required) — and uploaded as an artifact.
+# Runs only by hand (workflow_dispatch) or on a v* tag; it publishes no
+# release by itself (a human does, docs/RELEASE.md).
+name: release
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+jobs:
+  binary:
+    name: mdk ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: x86_64-unknown-linux-gnu, os: ubuntu-24.04, archive: tar.gz }
+          - { target: aarch64-apple-darwin, os: macos-14, archive: tar.gz }
+          # ort =2.0.0-rc.13 ships no prebuilt onnxruntime for Intel macOS:
+          # this job is expected to fail until that is decided (K-E5-T)
+          - { target: x86_64-apple-darwin, os: macos-13, archive: tar.gz }
+          - { target: x86_64-pc-windows-msvc, os: windows-latest, archive: zip }
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.92.0
+        with:
+          targets: ${{ matrix.target }}
+      - uses: actions/cache@v4
+        with:
+          path: models/minilm-l6-v2
+          key: models-${{ hashFiles('models/MANIFEST.json') }}
+      - name: embedder model (pinned, checked)
+        run: bash scripts/fetch_model.sh
+      - name: build
+        run: cargo build --release --locked --target ${{ matrix.target }} -p mdkernel-server --bin mdk
+      - name: check
+        env:
+          MDK_MODELS: ${{ github.workspace }}/models
+        run: |
+          set -euo pipefail
+          bin=target/${{ matrix.target }}/release/mdk
+          [ -f "$bin" ] || bin="$bin.exe"
+          ver="$(sed -n 's/^version = "\(.*\)"$/\1/p' Cargo.toml | head -1)"
+          spec="$(sed -n 's/^pub const SPEC_VERSION: &str = "\(.*\)";$/\1/p' server/src/tools.rs)"
+          test "$("$bin" --version | tr -d '\r')" = "mdk $ver"
+          test "$("$bin" --spec-version | tr -d '\r')" = "$spec"
+          "$bin" conformance --report conformance-${{ matrix.target }}.json >/dev/null
+          jq -e '.level_claimed == 3 and .passed == 34 and .total == 34' conformance-${{ matrix.target }}.json
+      - name: package
+        run: |
+          set -euo pipefail
+          ver="$(sed -n 's/^version = "\(.*\)"$/\1/p' Cargo.toml | head -1)"
+          d="mdk-$ver-${{ matrix.target }}"
+          mkdir -p "$d/models"
+          cp target/${{ matrix.target }}/release/mdk* "$d/" 2>/dev/null || true
+          rm -f "$d"/*.d "$d"/*.pdb
+          cp LICENSE README.md "$d/"; cp models/MANIFEST.json scripts/fetch_model.sh "$d/models/"
+          if [ "${{ matrix.archive }}" = zip ]; then 7z a "$d.zip" "$d" >/dev/null; else tar -czf "$d.tar.gz" "$d"; fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mdk-${{ matrix.target }}
+          path: |
+            mdk-*-${{ matrix.target }}.*
+            conformance-${{ matrix.target }}.json

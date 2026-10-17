@@ -1,6 +1,6 @@
 [package]
 name = "mdkernel-index"
-version = "0.2.0"
+version = "0.1.0"
 edition = "2021"
 description = "Derived indexes over mdkernel-core (spec §9): tantivy lexical, exact cosine vectors, ONNX MiniLM embedder, RRF hybrid, checkpoint-scoped queries, hot tier."
 

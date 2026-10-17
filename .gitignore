@@ -43,3 +43,4 @@ node_modules/
 # embedder model files (scripts/fetch_model.sh; pinned by models/MANIFEST.json)
 /models/*
 !/models/MANIFEST.json
+dist/

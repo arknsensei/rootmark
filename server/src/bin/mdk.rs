@@ -17,8 +17,11 @@ use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
 
 #[derive(Parser)]
-#[command(name = "mdk", about = "mdkernel CLI")]
+#[command(name = "mdk", about = "mdkernel CLI", version)]
 struct Cli {
+    /// Print the spec version this mdk implements (spec/SPEC.md) and exit
+    #[arg(long)]
+    spec_version: bool,
     /// Indent JSON output
     #[arg(long, global = true)]
     pretty: bool,
@@ -27,11 +30,26 @@ struct Cli {
     #[arg(long, global = true, value_parser = ["v2", "v3"])]
     matcher: Option<String>,
     #[command(subcommand)]
-    cmd: Cmd,
+    cmd: Option<Cmd>,
 }
 
 #[derive(Subcommand)]
 enum Cmd {
+    /// Run the conformance suite (spec/CONFORMANCE.md, Levels 1–3) on the
+    /// fixtures embedded in this binary; prints the report, exit 1 unless
+    /// level 3 with every test passing
+    Conformance {
+        /// another fixture tree (default: the embedded spec/fixtures)
+        #[arg(long)]
+        fixtures: Option<PathBuf>,
+        /// the embedder model directory (MANIFEST.json + model; default
+        /// $MDK_MODELS, else the build tree's models/)
+        #[arg(long)]
+        models: Option<PathBuf>,
+        /// also write the report to this file
+        #[arg(long)]
+        report: Option<PathBuf>,
+    },
     /// Ingest files; doc_path is the file path relative to the vault root
     Ingest { vault: PathBuf, files: Vec<PathBuf> },
     /// Ingest every *.md under dir in byte-wise path order; doc_path is relative to dir
@@ -309,6 +327,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
     let m = matcher.unwrap_or(MatcherVersion::V3);
     Ok(match cmd {
         Cmd::Serve(_) => bail!("mdk serve is not a JSON command"),
+        Cmd::Conformance { .. } => bail!("mdk conformance is handled in main"),
         Cmd::Index(c) => mdkindex::cli::run(mdkindex::cli::Cmd::Index(c), matcher)?,
         Cmd::Search(a) => mdkindex::cli::run(mdkindex::cli::Cmd::Search(a), matcher)?,
         Cmd::Ingest { vault, files } => {
@@ -521,7 +540,49 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
 
 fn main() {
     let cli = Cli::parse();
-    if let Cmd::Serve(a) = cli.cmd {
+    if cli.spec_version {
+        println!("{}", mdkserver::tools::SPEC_VERSION);
+        return;
+    }
+    let Some(cmd) = cli.cmd else {
+        eprintln!("error: a subcommand is required (mdk --help)");
+        std::process::exit(2);
+    };
+    if let Cmd::Conformance {
+        fixtures,
+        models,
+        report,
+    } = cmd
+    {
+        let res = mdkserver::conformance::command(fixtures, models).and_then(|r| {
+            let mut text = serde_json::to_string_pretty(&r)?;
+            text.push('\n');
+            if let Some(p) = &report {
+                std::fs::write(p, &text)
+                    .map_err(|e| anyhow::anyhow!("write {}: {e}", p.display()))?;
+            }
+            Ok((r, text))
+        });
+        match res {
+            Ok((r, text)) => {
+                print!("{text}");
+                let ok = r["level_claimed"] == 3 && r["passed"] == mdkserver::conformance::TOTAL;
+                eprintln!(
+                    "mdk conformance: level {}, {}/{} (spec {})",
+                    r["level_claimed"],
+                    r["passed"],
+                    r["total"],
+                    r["spec_version"].as_str().unwrap_or("")
+                );
+                std::process::exit(if ok { 0 } else { 1 });
+            }
+            Err(e) => {
+                eprintln!("error: {e:#}");
+                std::process::exit(1);
+            }
+        }
+    }
+    if let Cmd::Serve(a) = cmd {
         // serve prints no JSON: --pretty would be silently ignored
         let res = if cli.pretty {
             Err(anyhow::anyhow!("mdk serve: --pretty does not apply"))
@@ -551,7 +612,7 @@ fn main() {
     let res = name
         .map(|n| MatcherVersion::parse(&n))
         .transpose()
-        .and_then(|m| run(cli.cmd, m));
+        .and_then(|m| run(cmd, m));
     match res {
         Ok(v) => {
             let s = if cli.pretty {

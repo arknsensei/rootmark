@@ -1,0 +1,91 @@
+{
+  "items": [
+    {
+      "id": "R1",
+      "item": "one version 0.1.0",
+      "ok": true,
+      "detail": "0.1.0 0.1.0 0.1.0 0.1.0 0.1.0 0.1.0"
+    },
+    {
+      "id": "R2",
+      "item": "spec version 1.0.3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R3",
+      "item": "mdk --version / --spec-version",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R4",
+      "item": "release binaries pass mdk conformance 34/34",
+      "ok": false,
+      "detail": "aarch64-apple-darwin: ok; x86_64-apple-darwin: not built; x86_64-pc-windows-msvc: not built; x86_64-unknown-linux-gnu: ok"
+    },
+    {
+      "id": "R5",
+      "item": "mdk conformance = make conformance",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R6",
+      "item": "archives and SHA256SUMS",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R7",
+      "item": "Python wheel (module mdkernel_core)",
+      "ok": true,
+      "detail": "mdkernel_bindings-0.1.0-cp311-abi3-macosx_11_0_arm64.whl"
+    },
+    {
+      "id": "R8",
+      "item": "Obsidian package",
+      "ok": true,
+      "detail": "files: main.js manifest.json styles.css ; main.js    40701 B"
+    },
+    {
+      "id": "R9",
+      "item": "spec publication dist/spec-1.0.3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R10",
+      "item": "LICENSE Apache-2.0",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R11",
+      "item": "CHANGELOG, THREAT_MODEL, RELEASE",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R12",
+      "item": "cargo-binstall metadata, Homebrew draft",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R13",
+      "item": "CI cross build, four targets",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R14",
+      "item": "no v0.1.0 tag (set by a human after verification)",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "passed": 13,
+  "total": 14,
+  "pass": false
+}

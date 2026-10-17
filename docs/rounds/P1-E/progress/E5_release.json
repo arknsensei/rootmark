@@ -1,0 +1,48 @@
+{
+  "version": "0.1.0",
+  "spec_version": "1.0.3",
+  "targets": [
+    {
+      "target": "aarch64-apple-darwin",
+      "built": true,
+      "version": "mdk 0.1.0",
+      "spec_version": "1.0.3",
+      "conformance": {
+        "level_claimed": 3,
+        "passed": 34,
+        "total": 34,
+        "fixtures_manifest": "ok"
+      },
+      "conformance_exit": 0,
+      "ok": true
+    },
+    {
+      "target": "x86_64-apple-darwin",
+      "built": false,
+      "reason": "error: ort-sys@2.0.0-rc.13: no prebuilt binaries available for target x86_64-apple-darwin",
+      "ok": false
+    },
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "built": false,
+      "reason": "no MSVC toolchain or Windows host here; built and checked by .github/workflows/release.yml (windows-latest)",
+      "ok": false
+    },
+    {
+      "target": "x86_64-unknown-linux-gnu",
+      "built": true,
+      "version": "mdk 0.1.0",
+      "spec_version": "1.0.3",
+      "conformance": {
+        "level_claimed": 3,
+        "passed": 34,
+        "total": 34,
+        "fixtures_manifest": "ok"
+      },
+      "conformance_exit": 0,
+      "ok": true
+    }
+  ],
+  "built": 2,
+  "ok": 2
+}
