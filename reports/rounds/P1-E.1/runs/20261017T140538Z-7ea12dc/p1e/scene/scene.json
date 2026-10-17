@@ -1,0 +1,201 @@
+{
+  "scene": "P1-E first product scene (agent over MCP, human over HTTP)",
+  "agent": "scene-agent/1.0",
+  "human": "human:editor",
+  "md_changed_per_step": [
+    [],
+    [],
+    [
+      "agent/scene.md"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "e3_md_changes_only_at_propose": true,
+  "steps": [
+    {
+      "step": 1,
+      "actor": "human+agent",
+      "tool": "status",
+      "shows": {
+        "spec_version": "1.0.3",
+        "promotion": "human_only",
+        "edit": "append_only",
+        "human_id": "editor",
+        "mcp_spec_version": "1.0.3"
+      },
+      "pass": true
+    },
+    {
+      "step": 2,
+      "actor": "human",
+      "tool": "checkpoint",
+      "args": "name before",
+      "shows": {
+        "name": "before",
+        "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+        "event_seq": 109
+      },
+      "pass": true
+    },
+    {
+      "step": 3,
+      "actor": "agent",
+      "tool": "propose",
+      "args": "agent/scene.md",
+      "shows": {
+        "blocks": [
+          {
+            "layer": "proposal",
+            "author_kind": "Agent",
+            "source": "scene-agent/1.0"
+          },
+          {
+            "layer": "proposal",
+            "author_kind": "Agent",
+            "source": "scene-agent/1.0"
+          }
+        ],
+        "md_changed": [
+          "agent/scene.md"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 4,
+      "actor": "human",
+      "tool": "blame",
+      "args": "agent/scene.md",
+      "shows": {
+        "blocks": [
+          {
+            "layer": "proposal",
+            "author_kind": "Agent",
+            "source": "scene-agent/1.0"
+          },
+          {
+            "layer": "proposal",
+            "author_kind": "Agent",
+            "source": "scene-agent/1.0"
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 5,
+      "actor": "human",
+      "tool": "search",
+      "args": "default",
+      "shows": {
+        "hits_on_doc": 0
+      },
+      "pass": true
+    },
+    {
+      "step": 6,
+      "actor": "human",
+      "tool": "promote",
+      "args": "each block, with a reason; one without",
+      "shows": {
+        "decisions": [
+          "promoted",
+          "promoted"
+        ],
+        "actors": [
+          {
+            "id": "editor",
+            "kind": "human"
+          },
+          {
+            "id": "editor",
+            "kind": "human"
+          }
+        ],
+        "reasons": [
+          "approved in the scene",
+          "approved in the scene"
+        ],
+        "without_reason": {
+          "status": 400,
+          "code": "invalid_arguments",
+          "events_written": 0
+        }
+      },
+      "pass": true
+    },
+    {
+      "step": 7,
+      "actor": "human",
+      "tool": "search",
+      "args": "default, after the promotion",
+      "shows": {
+        "hits_on_doc": [
+          {
+            "layer": "canonical"
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 8,
+      "actor": "human",
+      "tool": "trace",
+      "shows": {
+        "traces": 2,
+        "step7_trace_is_last": true,
+        "returned_from_doc": 2
+      },
+      "pass": true
+    },
+    {
+      "step": 9,
+      "actor": "human",
+      "tool": "search+blame",
+      "args": "at before",
+      "shows": {
+        "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+        "same_as_step_2": true,
+        "hits_on_doc": 0,
+        "doc_blame_then": "not_found",
+        "espresso_then_equals_now": true
+      },
+      "pass": true
+    },
+    {
+      "step": 10,
+      "actor": "agent",
+      "tool": "propose",
+      "args": "replace_section Recipe; heading-less append",
+      "shows": {
+        "replace_section": "denied",
+        "append": "policy_violation",
+        "hint": "start the appended text with a heading",
+        "events_written": 0
+      },
+      "pass": true
+    },
+    {
+      "step": 11,
+      "actor": "human",
+      "tool": "blame+search",
+      "args": "espresso.md, after the denied attempt",
+      "shows": {
+        "blame_unchanged": true,
+        "search_unchanged": true
+      },
+      "pass": true
+    }
+  ],
+  "passed": 11,
+  "total": 11,
+  "pass": true
+}

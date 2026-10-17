@@ -1,0 +1,25 @@
+{
+  "auto_rebuild_false": {
+    "blame_status": 200,
+    "code": "index_stale",
+    "events_unchanged": true,
+    "index_format_after": "mdkernel-index/2",
+    "message": "index format \"mdkernel-index/2\" != \"mdkernel-index/3\" (rebuild it with `mdk index build`)",
+    "start_log_says_stale": true,
+    "status": 503
+  },
+  "auto_rebuild_true": {
+    "first_hit_doc": "safety.md",
+    "hits": 3,
+    "index_format_after": "mdkernel-index/3",
+    "start_log_says_rebuilt": true,
+    "status": 200
+  },
+  "cases": 2,
+  "criterion": "E-14",
+  "missing_index_kernel": {
+    "code": "index_stale"
+  },
+  "pass": true,
+  "passed": 2
+}

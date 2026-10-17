@@ -1,0 +1,46 @@
+{
+  "version": "0.1.0",
+  "spec_version": "1.0.3",
+  "commit": "7ea12dc6543b5d0cc1fc6257aec4095735ff1543",
+  "worktree_dirty": false,
+  "required_targets": [
+    "aarch64-apple-darwin"
+  ],
+  "targets": [
+    {
+      "target": "aarch64-apple-darwin",
+      "required": true,
+      "built": true,
+      "sha256": "1c5d2dffb2301687b578296b3e9c607e7616b4678aa118a82f7b649ecb6453c7",
+      "version": "mdk 0.1.0",
+      "spec_version": "1.0.3",
+      "conformance": {
+        "level_claimed": 3,
+        "passed": 34,
+        "total": 34,
+        "fixtures_manifest": "ok"
+      },
+      "conformance_exit": 0,
+      "ok": true
+    },
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "required": false,
+      "built": false,
+      "skipped": true,
+      "reason": "no MSVC toolchain or Windows host here; built and checked by .github/workflows/release.yml (windows-latest)",
+      "ok": false
+    },
+    {
+      "target": "x86_64-unknown-linux-gnu",
+      "required": false,
+      "built": false,
+      "skipped": true,
+      "reason": "not attempted here (MDK_RELEASE_LINUX=0); built and checked by .github/workflows/release.yml",
+      "ok": false
+    }
+  ],
+  "built": 1,
+  "ok": 1,
+  "required_ok": true
+}

@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"actor\":{\"id\":\"inspector-cli/2.9.0\",\"kind\":\"agent\"},\"decision\":\"denied\",\"layer\":\"canonical\",\"lineage_id\":\"74ecb4d582f0ffede4479a044f078542\",\"policy\":\"human_only\",\"policy_version\":\"1\",\"reason\":\"policy human_only: actor \\\"inspector-cli/2.9.0\\\" is not human\"}"
+    }
+  ],
+  "structuredContent": {
+    "actor": {
+      "id": "inspector-cli/2.9.0",
+      "kind": "agent"
+    },
+    "decision": "denied",
+    "layer": "canonical",
+    "lineage_id": "74ecb4d582f0ffede4479a044f078542",
+    "policy": "human_only",
+    "policy_version": "1",
+    "reason": "policy human_only: actor \"inspector-cli/2.9.0\" is not human"
+  },
+  "isError": false
+}

@@ -1,0 +1,28 @@
+{
+  "criterion": "D1-7",
+  "http_promote": {
+    "actor": {
+      "id": "editor-ada",
+      "kind": "human"
+    },
+    "decision": "promoted",
+    "pass": true,
+    "promoted_in_events_jsonl": true,
+    "status": 200
+  },
+  "http_without_human_id": {
+    "code": "denied",
+    "pass": true,
+    "status": 403
+  },
+  "mcp_promote": {
+    "actor": {
+      "id": "d1-7/1.0",
+      "kind": "agent"
+    },
+    "decision": "denied",
+    "pass": true
+  },
+  "pass": true,
+  "passed": 3
+}
