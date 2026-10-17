@@ -128,6 +128,8 @@ export default class MdkernelPlugin extends Plugin {
         if (v instanceof MarkdownView) {
           v.editor.setCursor({ line: at.line, ch: 0 });
           v.editor.scrollIntoView({ from: { line: at.line, ch: 0 }, to: { line: at.line, ch: 0 } }, true);
+        } else {
+          new Notice(`mdkernel: opened ${path}; not a Markdown editor, block line ${String(at.line + 1)}`);
         }
       } else {
         new Notice(`mdkernel: opened ${path}; block position unknown — ${at.reason}`, 8000);
