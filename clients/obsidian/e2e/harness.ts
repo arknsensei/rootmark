@@ -42,20 +42,44 @@ export async function serve(mdk: string, vault: string, httpPort: number, client
       fail(new Error(`mdk serve exited (${String(c)}) before listening:\n${err}`));
     });
   });
-  const waiting = new Map<number, (r: Record<string, unknown>) => void>();
+  const waiting = new Map<number, { ok: (r: Record<string, unknown>) => void; fail: (e: Error) => void }>();
+  let exited: number | null | undefined;
+  child.on("exit", (code) => {
+    exited = code;
+    for (const w of waiting.values()) w.fail(new Error(`mdk serve exited (${String(code)}) with a call pending:\n${err.slice(-800)}`));
+    waiting.clear();
+  });
   createInterface({ input: child.stdout }).on("line", (line) => {
     const m = JSON.parse(line) as { id?: number; result?: Record<string, unknown>; error?: unknown };
     if (typeof m.id === "number" && waiting.has(m.id)) {
       const w = waiting.get(m.id);
       waiting.delete(m.id);
-      w?.(m.result ?? { jsonrpc_error: m.error });
+      w?.ok(m.result ?? { jsonrpc_error: m.error });
     }
   });
   let next = 1;
+  // every call fails (never hangs): on the server's exit, or after 120 s
   const rpc = (method: string, params: unknown): Promise<Record<string, unknown>> =>
-    new Promise((ok) => {
+    new Promise((ok, fail) => {
+      if (exited !== undefined) {
+        fail(new Error(`mdk serve has exited (${String(exited)}):\n${err.slice(-800)}`));
+        return;
+      }
       const id = next++;
-      waiting.set(id, ok);
+      const timer = setTimeout(() => {
+        waiting.delete(id);
+        fail(new Error(`MCP ${method} got no answer in 120 s:\n${err.slice(-800)}`));
+      }, 120_000);
+      waiting.set(id, {
+        ok: (r) => {
+          clearTimeout(timer);
+          ok(r);
+        },
+        fail: (e) => {
+          clearTimeout(timer);
+          fail(e);
+        },
+      });
       child.stdin.write(JSON.stringify({ jsonrpc: "2.0", id, method, params }) + "\n");
     });
   await rpc("initialize", { protocolVersion: "2025-06-18", capabilities: {}, clientInfo });
@@ -66,8 +90,18 @@ export async function serve(mdk: string, vault: string, httpPort: number, client
     stderr: () => err,
     stop: () =>
       new Promise((ok) => {
-        child.on("exit", (code) => { ok(code); });
-        child.stdin.end(); // end of the MCP stream stops the service
+        if (exited !== undefined) {
+          ok(exited);
+          return;
+        }
+        // end of the MCP stream stops the service; killed if it does not
+        // stop within 60 s (a non-zero exit, reported, never a hang)
+        const timer = setTimeout(() => child.kill("SIGKILL"), 60_000);
+        child.on("exit", (code) => {
+          clearTimeout(timer);
+          ok(code);
+        });
+        child.stdin.end();
       }),
   };
 }

@@ -119,7 +119,11 @@ try {
   // Markdown write outside the propose step); never set in a real run
   const tamper = process.env["MDK_E2E_TAMPER"] ?? "";
   if (tamper === "offcontract") {
-    await fetch(`http://127.0.0.1:${String(proxyPort)}/v1/demote`, {
+    // the off-contract path comes from the tamper script: no such literal in
+    // clients/ (check_deps.sh rejects non-contract paths in client sources)
+    const path = process.env["MDK_E2E_TAMPER_PATH"];
+    if (path === undefined) throw new Error("MDK_E2E_TAMPER=offcontract needs MDK_E2E_TAMPER_PATH");
+    await fetch(`http://127.0.0.1:${String(proxyPort)}${path}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${st.settings.token}`, "X-Consumer": CONSUMER },
       body: "{}",
@@ -185,11 +189,13 @@ try {
   snap();
   const e10a = (structured(r10a)["error"] ?? {}) as { code?: string };
   const e10b = (structured(r10b)["error"] ?? {}) as { code?: string; message?: string; hint?: string };
-  // what the plugin would show a user for such an error: the hint included
+  // the agent's error never reaches the plugin; this only checks that the
+  // plugin's error formatter (`describeError`, used by every notice) would
+  // show the hint of such an error (contract §3)
   const shown = describeError(new MdkError("policy_violation", e10b.message ?? "", 422, e10b.hint ?? null));
   steps.push({
     step: 10, actor: "agent", command: "MCP propose replace_section + heading-less append",
-    shows: { replace_section: e10a.code, append: e10b.code, hint: e10b.hint, plugin_shows_hint: shown.includes("start the appended text with a heading") },
+    shows: { replace_section: e10a.code, append: e10b.code, hint: e10b.hint, describe_error_shows_hint: shown.includes("start the appended text with a heading") },
     pass: e10a.code === "denied" && e10b.code === "policy_violation" && e10b.hint === "start the appended text with a heading"
       && readFileSync(join(vault, ".mdkernel/events.jsonl"), "utf8") === ev10 && shown.includes("start the appended text with a heading"),
   });

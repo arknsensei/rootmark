@@ -96,7 +96,7 @@ jq '.tools[0].inputSchema.required = ["ghost"]' "$tl" >"$work/t2.json"
 add client-types "generator: required field without a property refused" rejected "$(run gen "$work/t2.json")"
 
 # ---- plugin-e2e (E4, E-3/E-4): the harness must catch what it measures
-pe() { MDK_E2E_TAMPER="$1" bash scripts/plugin_e2e.sh "$work/pe_$1"; }
+pe() { MDK_E2E_TAMPER="$1" MDK_E2E_TAMPER_PATH="/v1/demote" bash scripts/plugin_e2e.sh "$work/pe_$1"; }
 add plugin-e2e "untouched harness" accepted "$(run pe none)"
 add plugin-e2e "a request outside the contract (POST /v1/demote) as the plugin" rejected "$(run pe offcontract)" \
   "$(jq -c '{outside: .e4_access_log.outside_contract, as_expected: (.e4_access_log.outside_contract == 1)}' "$work/pe_offcontract/plugin_e2e.json")"

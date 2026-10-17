@@ -142,7 +142,7 @@
         "replace_section": "denied",
         "append": "policy_violation",
         "hint": "start the appended text with a heading",
-        "plugin_shows_hint": true
+        "describe_error_shows_hint": true
       },
       "pass": true
     },
