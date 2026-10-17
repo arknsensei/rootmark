@@ -155,6 +155,16 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/check_compare_fields.py` | `P1-E/E0-fix2:` | yeniden dondurma P1-E/F5: `--runs` kipinde `compare_p1d.CONFORMANCE` pair kümesi dışında |
 | `scripts/check_compare_fields.sh` | `P1-E/E0-fix2:` | yeniden dondurma P1-E/F6: seçenekler yol olarak çözülmez |
 | `scripts/verify.sh` | `P1-E/E7-dev:` | yeniden dondurma P1-E/F7: P1-E zinciri (`p1e-checks`), `pair` → `compare_p1e pair`, `compare-p1e` alt komutu |
+| `research/eval/compare_p1e.py` | `P1-E/E7-pre:` | E-8 (pair: P1-D.1 kümesi + P1-E dosyaları + baytlar) ve E-9 (regress: P1-D.1 resmi RUN, karar gereği hariçler ölçümden önce) karşılaştırıcısı |
+| `research/eval/run_p1e_checks.py` | `P1-E/E7-pre:` | E-1..E-10, E-12..E-16 RUN kaydı (`p1e_checks.json`) |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P1-E/E7-pre:` | K-E0.2 bildirimi (P1-E satırlarıyla) |
+| `scripts/scene.sh` | `P1-E/E7-pre:` | E-1/E-3/E-5/E-6 sahne betiği (11 adım) |
+| `scripts/plugin_e2e.sh` | `P1-E/E7-pre:` | E-2..E-6 eklenti e2e sarmalayıcısı |
+| `clients/obsidian/e2e/**` | `P1-E/E7-pre:` | eklenti e2e harness'i (komut katmanı, kayıt tutan vekil, md sha256) |
+| `scripts/client_checks.sh` | `P1-E/E7-pre:` | E-10 istemci kapıları |
+| `scripts/release_local.sh` | `P1-E/E7-pre:` | E-7 zincir yarısı (yerel ikili, `mdk conformance`) |
+| `scripts/conformance_equiv.sh` | `P1-E/E7-pre:` | `mdk conformance` ↔ `make conformance` eşdeğerliği |
+| `scripts/test_tamper_p1e.sh` | `P1-E/E7-pre:` | P1-E kasıtlı bozmaları |
 <!-- /frozen-table -->
 
 ## Notlar

@@ -120,6 +120,17 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_runs` | hepsi | `h3_v3.json` | `latency/rows/*/ms` | duvar-saati | satır başına gecikme (v3 H3) |
 | `compare_runs` | hepsi | `h3_v3.json` | `summary/p50` | duvar-saati | gecikme yüzdeliği (v3 H3) |
 | `compare_runs` | hepsi | `h3_v3.json` | `summary/p95` | duvar-saati | gecikme yüzdeliği (v3 H3) |
+| `compare_p1e` | regress | `p1d1/d1_13.json` | `codes` | karar | K-E0.3: contract §3 and error.rs gain index_stale: 11 codes, the sorted lists shift |
+| `compare_p1e` | regress | `p1d1/d1_13.json` | `http` | karar | F3 (ADDENDUM Ş4): contract_check.sh's new HTTP step: endpoints, codes, transport rules |
+| `compare_p1e` | regress | `p1d1/d1_3.json` | `outcomes/append:denied` | karar | K-E0.4: a refused heading-less append is policy_violation, no longer denied |
+| `compare_p1e` | regress | `p1d1/d1_3.json` | `outcomes/append:policy_violation` | karar | K-E0.4: the same outcomes, counted under the new code |
+| `compare_p1e` | regress | `p1d1/d1_5.json` | `propose_denied` | karar | K-E0.4: the 8 heading-less appends of D1-5 answer policy_violation (8 → 0 denied) |
+| `compare_p1e` | regress | `p1d1/d1_5.json` | `write_responses` | karar | K-E0.2 (F1): new field: count of compared responses |
+| `compare_p1e` | regress | `p1d1/d1_5.json` | `write_responses_a_vs_b_equal` | karar | K-E0.2 (F1): new field: writing and trace-writing responses, pipelined A vs B |
+| `compare_p1e` | regress | `p1d1/d1_5.json` | `write_responses_pipelined_vs_lockstep_equal` | karar | K-E0.2 (F1): new field: writing and trace-writing responses, pipelined vs lock-step |
+| `compare_p1e` | regress | `p1d1_checks.json` | `D1-13/codes` | karar | K-E0.3: the D1-13 record counts 11 codes |
+| `compare_p1e` | regress | `p1d1_checks.json` | `D1-3/outcomes/append:denied` | karar | K-E0.4: the D1-3 record of the outcomes above |
+| `compare_p1e` | regress | `p1d1_checks.json` | `D1-3/outcomes/append:policy_violation` | karar | K-E0.4: the D1-3 record of the outcomes above |
 <!-- /fields-table -->
 
 ## Dosya tablosu

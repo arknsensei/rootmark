@@ -36,7 +36,10 @@ fn walk(base: &Path, dir: &Path, out: &mut Vec<(String, PathBuf)>) {
 }
 
 fn main() {
-    let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("../spec/fixtures");
+    // the manifest directory of this build (read at run time: a build
+    // script compiled once may run for another copy of the sources)
+    let manifest = std::env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR");
+    let root = Path::new(&manifest).join("../spec/fixtures");
     let root = root.canonicalize().expect("spec/fixtures");
     println!("cargo:rerun-if-changed={}", root.display());
     let mut files = Vec::new();

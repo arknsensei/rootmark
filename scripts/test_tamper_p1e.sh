@@ -44,7 +44,7 @@ add contract-http "untouched contract and server" accepted "$(run bash scripts/c
 # the tool runs); built into its own target directory
 src="$work/src"
 mkdir -p "$src"
-git ls-files -z -- Cargo.toml Cargo.lock rust-toolchain.toml core index server bindings \
+git ls-files -z -- Cargo.toml Cargo.lock rust-toolchain.toml core index server bindings spec \
   | tar --null -T - -cf - | tar -x -C "$src"
 perl -0pi -e 's{(    // arrival: a writing call takes its place in the writer queue now\n)}{    if tool == "checkpoints" {\n        return err(StatusCode::NOT_FOUND, Code::NotFound, "route removed (deliberate test)");\n    }\n$1}' \
   "$src/server/src/http.rs"

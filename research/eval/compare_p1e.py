@@ -78,7 +78,71 @@ CONFORMANCE = "conformance_p1d1.json"
 # P1-D.1 official RUN → this RUN: subtrees whose difference a P1-E decision
 # causes, `(file, path prefix, decision, why)`; written from the
 # development RUN before the official RUN (E7 record; precedent K-C1.6)
-EXCLUDED: list[tuple[str, tuple, str, str]] = []
+# development RUN 20261017T015439Z-16b141a (E7 record): 129 differing
+# leaves, every one under a prefix below; the conformance report equal
+EXCLUDED: list[tuple[str, tuple, str, str]] = [
+    (
+        "p1d1/d1_13.json",
+        ("codes",),
+        "K-E0.3",
+        "contract §3 and error.rs gain index_stale: 11 codes, the sorted lists shift",
+    ),
+    (
+        "p1d1/d1_13.json",
+        ("http",),
+        "F3 (ADDENDUM Ş4)",
+        "contract_check.sh's new HTTP step: endpoints, codes, transport rules",
+    ),
+    (
+        "p1d1/d1_3.json",
+        ("outcomes", "append:denied"),
+        "K-E0.4",
+        "a refused heading-less append is policy_violation, no longer denied",
+    ),
+    (
+        "p1d1/d1_3.json",
+        ("outcomes", "append:policy_violation"),
+        "K-E0.4",
+        "the same outcomes, counted under the new code",
+    ),
+    (
+        "p1d1/d1_5.json",
+        ("propose_denied",),
+        "K-E0.4",
+        "the 8 heading-less appends of D1-5 answer policy_violation (8 → 0 denied)",
+    ),
+    (
+        "p1d1/d1_5.json",
+        ("write_responses",),
+        "K-E0.2 (F1)",
+        "new field: count of compared responses",
+    ),
+    (
+        "p1d1/d1_5.json",
+        ("write_responses_a_vs_b_equal",),
+        "K-E0.2 (F1)",
+        "new field: writing and trace-writing responses, pipelined A vs B",
+    ),
+    (
+        "p1d1/d1_5.json",
+        ("write_responses_pipelined_vs_lockstep_equal",),
+        "K-E0.2 (F1)",
+        "new field: writing and trace-writing responses, pipelined vs lock-step",
+    ),
+    ("p1d1_checks.json", ("D1-13", "codes"), "K-E0.3", "the D1-13 record counts 11 codes"),
+    (
+        "p1d1_checks.json",
+        ("D1-3", "outcomes", "append:denied"),
+        "K-E0.4",
+        "the D1-3 record of the outcomes above",
+    ),
+    (
+        "p1d1_checks.json",
+        ("D1-3", "outcomes", "append:policy_violation"),
+        "K-E0.4",
+        "the D1-3 record of the outcomes above",
+    ),
+]
 
 
 def _match(pats: list[tuple], path: tuple) -> bool:

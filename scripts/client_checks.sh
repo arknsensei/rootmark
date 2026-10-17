@@ -9,6 +9,8 @@
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 out="${1:?usage: client_checks.sh <out.json>}"
+mkdir -p "$(dirname "$out")"
+out="$(cd "$(dirname "$out")" && pwd)/$(basename "$out")"
 cd "$root/clients/obsidian"
 log="$(mktemp -t mdk-client.XXXXXX)"; trap 'rm -f "$log" vitest.json' EXIT
 npm ci --no-audit --no-fund >"$log" 2>&1 || { cat "$log" >&2; exit 1; }
