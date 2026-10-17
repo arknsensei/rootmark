@@ -37,3 +37,15 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** K-E0.2 — her karşılaştırıcının karşılaştırmadığı her alan sınıfı ve gerekçesiyle bildirilir.
 - **Önce/sonra:** F5'in ölçümü; `check_compare_fields` `unmatched` 0.
 - **Gözden geçirici onayı:** E1.5.review.md.
+
+## F7 · E1.5 · `research/eval/historical.py` — boşalan kap yalnız bildirilen içerikle
+- **Ne:** `differing`: bir tarafta boş kap (`{}`/`[]`, E1.4 tur 2'den beri yaprak), öbür tarafta aynı yolun altında yapraklar varsa ve **hepsi** bildirilen değişikliklerin altındaysa, kabın kendisi fark sayılmaz; içinde bildirilmemiş tek bir yaprak bile varsa fark kalır (+13 satır). Test `test_emptied_container_only_with_declared_content` (referansta boş, RUN'da dolu kap: yalnız bildirilen içerik kabul, fazladan bir yaprak sayılır).
+- **Neden:** geliştirme RUN'ında (`20261017T132817Z-b77f291`) D1-12 ve E-9'un referanstaki `differing_fields: {}`'i, bu RUN'da yalnız K-E1.2'nin bildirilen yapraklarını taşıyordu; boş kap kuralı (E1.4 gözden geçirmesi bulgu 5) bunu yeni FAIL sayıyordu. Düzeltme kuralı daraltmaz: bildirilmemiş içerik yine sayılır.
+- **Önce/sonra:** P1-E resmi RUN'ı: önce ve sonra 8 tarihsel, sayılan 0 (aynı satırlar). Geliştirme RUN'ı (yeni `EXCLUDED` ile): önce sayılan 2 (D1-12, E-9: `…/differing_fields`), sonra 0, tarihsel 10. pytest 12/12.
+- **Gözden geçirici onayı:** E1.5.review.md.
+
+## F8 · E1.5 · `research/eval/DETERMINISTIC_FIELDS.md` — `compare_p1e1` `regress` satırları
+- **Ne:** alan tablosuna 29 `karar` satırı (`compare_p1e1.EXCLUDED`'ın birebir kopyası). Var olan satırlar değişmedi.
+- **Neden:** K-E0.2; E1-6'nın hariçleri geliştirme RUN'ından resmi RUN'dan önce yazıldı (E1.5.md).
+- **Önce/sonra:** `check_compare_fields` `unmatched` 0 (115 alan).
+- **Gözden geçirici onayı:** E1.5.review.md.

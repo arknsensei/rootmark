@@ -178,6 +178,17 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/verify.sh` | `P1-E.1/E1.5-dev:` | yeniden dondurma P1-E.1/F4: P1-E.1 zinciri (`p1e1-checks`), `pair` → `compare_p1e1 pair`, `compare-p1e1` alt komutu |
 | `research/eval/check_compare_fields.py` | `P1-E.1/E1.5-dev:` | yeniden dondurma P1-E.1/F5: `compare_p1e1` bildirimi |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P1-E.1/E1.5-dev:` | yeniden dondurma P1-E.1/F6: `compare_p1e1` bölümü, `ortam` satırı, dosya sabitleri |
+| `research/eval/historical.py` | `P1-E.1/E1.5-pre:` | yeniden dondurma P1-E.1/F7: boşalan kap yalnız bildirilen içerikle; davranışı `compare_p1e1.EXCLUDED`'a bağlı |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P1-E.1/E1.5-pre:` | yeniden dondurma P1-E.1/F8: `compare_p1e1` `regress` satırları |
+| `research/eval/compare_p1e1.py` | `P1-E.1/E1.5-pre:` | E1-7 (pair: P1-E kümesi + P1-E.1 dosyaları + baytlar) ve E1-6 (regress: P1-E resmi RUN, karar gereği hariçler resmi RUN'dan önce) karşılaştırıcısı |
+| `research/eval/run_p1e1_checks.py` | `P1-E.1/E1.5-pre:` | E1-1..E1-6, E1-8, E1-9 RUN kaydı (`p1e1_checks.json`) |
+| `research/eval/report_p1e1.py` | `P1-E.1/E1.5-pre:` | P1-E.1 rapor üreticisi ve karar kuralı (resmi RUN'dan önce) |
+| `clients/obsidian/e2e/real/**` | `P1-E.1/E1.5-pre:` | gerçek Obsidian e2e harness'i (E1-3, E1-9; K-E1.3) |
+| `scripts/plugin_e2e_real.sh` | `P1-E.1/E1.5-pre:` | gerçek Obsidian e2e sarmalayıcısı (Obsidian yoksa "atlandı" kaydı) |
+| `scripts/test_tamper_p1e1_e2e.sh` | `P1-E.1/E1.5-pre:` | gerçek e2e kasıtlı vakaları |
+| `scripts/release.sh` | `P1-E.1/E1.5-pre:` | yayım paketi (zincirde E1-3..E1-5 kaynağı) |
+| `scripts/release_target.sh` | `P1-E.1/E1.5-pre:` | hedef kaydı (yerel ve CI aynı) |
+| `scripts/release_check.sh` | `P1-E.1/E1.5-pre:` | E1-4 kontrol listesi betiği (R1–R15, R4a) |
 <!-- /frozen-table -->
 
 ## Notlar

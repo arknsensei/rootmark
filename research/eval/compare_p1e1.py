@@ -78,8 +78,207 @@ CONFORMANCE = E.CONFORMANCE
 
 # P1-E official RUN → this RUN: subtrees whose difference a P1-E.1 decision
 # causes, `(file, path prefix, decision, why)`; written from the development
-# RUN before the official RUN (E1.5 record; precedent K-C1.6, compare_p1e)
-EXCLUDED: list[tuple[str, tuple, str, str]] = []
+# RUN before the official RUN (E1.5 record; precedent K-C1.6, compare_p1e);
+# development RUN 20261017T132817Z-b77f291 (E1.5 record): 76 differing
+# leaves, every one under a row below (narrowest subtree or leaf, below a
+# criterion where the file has criteria, no wildcard; E1.4 constraints); the
+# conformance report equal
+EXCLUDED: list[tuple[str, tuple, str, str]] = [
+    (
+        "p1d/mcp_e2e/mcp_e2e.json",
+        ("checks", "4", "pass"),
+        "K-E1.2",
+        'P1-D\'s MCP e2e status check expects the old `index == "present"` string; status.index is an object',
+    ),
+    (
+        "p1d/mcp_e2e/mcp_e2e.json",
+        ("per_tool", "status", "passed"),
+        "K-E1.2",
+        "the same status check, counted (3 → 2 of 4)",
+    ),
+    (
+        "p1d_checks.json",
+        ("D-2", "per_tool", "status", "passed"),
+        "K-E1.2",
+        "D-2's record of the status check above (D-2 already failed, historical)",
+    ),
+    (
+        "p1d1/d1_13.json",
+        ("http", "status_index"),
+        "F2 (E1-8)",
+        "contract_check.sh's new status step: status in the four index states",
+    ),
+    (
+        "p1d1/d1_13.json",
+        ("http", "status_index_fields"),
+        "F2 (E1-8)",
+        "the index fields the status step reads from the contract's §2 row",
+    ),
+    (
+        "p1d1_checks.json",
+        ("D1-12", "pass"),
+        "K-E1.2",
+        "D1-12 regresses against P1-D and sees the status check above",
+    ),
+    (
+        "p1d1_checks.json",
+        ("D1-12", "regress_vs_p1d", "equal"),
+        "K-E1.2",
+        "the same, its comparison result",
+    ),
+    (
+        "p1d1_checks.json",
+        ("D1-12", "regress_vs_p1d", "differing_fields", "p1d/mcp_e2e/mcp_e2e.json:checks›4›pass"),
+        "K-E1.2",
+        "the one leaf D1-12 sees: the status check above",
+    ),
+    (
+        "p1e_checks.json",
+        ("E-9", "pass"),
+        "K-E1.2",
+        "E-9 regresses against P1-D.1 and sees the status check above",
+    ),
+    (
+        "p1e_checks.json",
+        ("E-9", "regress_vs_p1d1", "equal"),
+        "K-E1.2",
+        "the same, its comparison result",
+    ),
+    (
+        "p1e_checks.json",
+        ("E-9", "regress_vs_p1d1", "differing_fields", "p1d/mcp_e2e/mcp_e2e.json:checks›4›pass"),
+        "K-E1.2",
+        "a leaf E-9 sees: the status check above or its records",
+    ),
+    (
+        "p1e_checks.json",
+        (
+            "E-9",
+            "regress_vs_p1d1",
+            "differing_fields",
+            "p1d/mcp_e2e/mcp_e2e.json:per_tool›status›passed",
+        ),
+        "K-E1.2",
+        "a leaf E-9 sees: the status check above or its records",
+    ),
+    (
+        "p1e_checks.json",
+        ("E-9", "regress_vs_p1d1", "differing_fields", "p1d1_checks.json:D1-12›pass"),
+        "K-E1.2",
+        "a leaf E-9 sees: the status check above or its records",
+    ),
+    (
+        "p1e_checks.json",
+        (
+            "E-9",
+            "regress_vs_p1d1",
+            "differing_fields",
+            "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›4›pass",
+        ),
+        "K-E1.2",
+        "a leaf E-9 sees: the status check above or its records",
+    ),
+    (
+        "p1e_checks.json",
+        (
+            "E-9",
+            "regress_vs_p1d1",
+            "differing_fields",
+            "p1d1_checks.json:D1-12›regress_vs_p1d›equal",
+        ),
+        "K-E1.2",
+        "a leaf E-9 sees: the status check above or its records",
+    ),
+    (
+        "p1e_checks.json",
+        (
+            "E-9",
+            "regress_vs_p1d1",
+            "differing_fields",
+            "p1d_checks.json:D-2›per_tool›status›passed",
+        ),
+        "K-E1.2",
+        "a leaf E-9 sees: the status check above or its records",
+    ),
+    (
+        "p1e_checks.json",
+        ("E-9", "regress_vs_p1d1", "excluded_differences", "p1d1/d1_13.json:http", "leaves"),
+        "F2 (E1-8)",
+        "E-9's count of excluded d1_13 http leaves grows by the status step",
+    ),
+    (
+        "p1e/check_compare_fields.json",
+        ("fields_declared",),
+        "F5, F6",
+        "the field audit sees the new comparator compare_p1e1 (its module, rows and file constants)",
+    ),
+    (
+        "p1e/check_compare_fields.json",
+        ("fields_in_code",),
+        "F5, F6",
+        "the field audit sees the new comparator compare_p1e1 (its module, rows and file constants)",
+    ),
+    (
+        "p1e/check_compare_fields.json",
+        ("file_constants",),
+        "F5, F6",
+        "the field audit sees the new comparator compare_p1e1 (its module, rows and file constants)",
+    ),
+    (
+        "p1e/check_compare_fields.json",
+        ("modules",),
+        "F5, F6",
+        "the field audit sees the new comparator compare_p1e1 (its module, rows and file constants)",
+    ),
+    (
+        "p1e/client.json",
+        ("bundle_bytes",),
+        "K-E1.2 (E1.2)",
+        "main.js carries the index notice of the connection status",
+    ),
+    (
+        "p1e/client.json",
+        ("vitest", "files"),
+        "K-E1.2 (E1.2)",
+        "the client's index-notice unit tests (97 → 100)",
+    ),
+    (
+        "p1e/client.json",
+        ("vitest", "tests"),
+        "K-E1.2 (E1.2)",
+        "the client's index-notice unit tests (97 → 100)",
+    ),
+    (
+        "p1e/client.json",
+        ("vitest", "passed"),
+        "K-E1.2 (E1.2)",
+        "the client's index-notice unit tests (97 → 100)",
+    ),
+    (
+        "p1e_checks.json",
+        ("E-10", "bundle_bytes"),
+        "K-E1.2 (E1.2)",
+        "main.js carries the index notice of the connection status",
+    ),
+    (
+        "p1e_checks.json",
+        ("E-10", "vitest", "files"),
+        "K-E1.2 (E1.2)",
+        "the client's index-notice unit tests (97 → 100)",
+    ),
+    (
+        "p1e_checks.json",
+        ("E-10", "vitest", "tests"),
+        "K-E1.2 (E1.2)",
+        "the client's index-notice unit tests (97 → 100)",
+    ),
+    (
+        "p1e_checks.json",
+        ("E-10", "vitest", "passed"),
+        "K-E1.2 (E1.2)",
+        "the client's index-notice unit tests (97 → 100)",
+    ),
+]
 
 
 def _match(pats: list[tuple], path: tuple) -> bool:

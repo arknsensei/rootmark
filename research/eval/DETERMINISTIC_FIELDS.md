@@ -135,6 +135,35 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p1e` | regress | `p1d1_checks.json` | `D1-3/outcomes/append:denied` | karar | K-E0.4: the D1-3 record of the outcomes above |
 | `compare_p1e` | regress | `p1d1_checks.json` | `D1-3/outcomes/append:policy_violation` | karar | K-E0.4: the D1-3 record of the outcomes above |
 | `compare_p1e1` | hepsi | `p1e1/release/release.json` | `targets/*/sha256` | ortam | yayım ikilisinin sha256'sı: aynı commit, başka klon dizini (P1-E.1/F6) |
+| `compare_p1e1` | regress | `p1d/mcp_e2e/mcp_e2e.json` | `checks/4/pass` | karar | K-E1.2: P1-D's MCP e2e status check expects the old `index == "present"` string; status.index is an object |
+| `compare_p1e1` | regress | `p1d/mcp_e2e/mcp_e2e.json` | `per_tool/status/passed` | karar | K-E1.2: the same status check, counted (3 → 2 of 4) |
+| `compare_p1e1` | regress | `p1d_checks.json` | `D-2/per_tool/status/passed` | karar | K-E1.2: D-2's record of the status check above (D-2 already failed, historical) |
+| `compare_p1e1` | regress | `p1d1/d1_13.json` | `http/status_index` | karar | F2 (E1-8): contract_check.sh's new status step: status in the four index states |
+| `compare_p1e1` | regress | `p1d1/d1_13.json` | `http/status_index_fields` | karar | F2 (E1-8): the index fields the status step reads from the contract's §2 row |
+| `compare_p1e1` | regress | `p1d1_checks.json` | `D1-12/pass` | karar | K-E1.2: D1-12 regresses against P1-D and sees the status check above |
+| `compare_p1e1` | regress | `p1d1_checks.json` | `D1-12/regress_vs_p1d/equal` | karar | K-E1.2: the same, its comparison result |
+| `compare_p1e1` | regress | `p1d1_checks.json` | `D1-12/regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass` | karar | K-E1.2: the one leaf D1-12 sees: the status check above |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-9/pass` | karar | K-E1.2: E-9 regresses against P1-D.1 and sees the status check above |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1/equal` | karar | K-E1.2: the same, its comparison result |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass` | karar | K-E1.2: a leaf E-9 sees: the status check above or its records |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:per_tool›status›passed` | karar | K-E1.2: a leaf E-9 sees: the status check above or its records |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›pass` | karar | K-E1.2: a leaf E-9 sees: the status check above or its records |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›4›pass` | karar | K-E1.2: a leaf E-9 sees: the status check above or its records |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›equal` | karar | K-E1.2: a leaf E-9 sees: the status check above or its records |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1/differing_fields/p1d_checks.json:D-2›per_tool›status›passed` | karar | K-E1.2: a leaf E-9 sees: the status check above or its records |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1/excluded_differences/p1d1/d1_13.json:http/leaves` | karar | F2 (E1-8): E-9's count of excluded d1_13 http leaves grows by the status step |
+| `compare_p1e1` | regress | `p1e/check_compare_fields.json` | `fields_declared` | karar | F5, F6: the field audit sees the new comparator compare_p1e1 (its module, rows and file constants) |
+| `compare_p1e1` | regress | `p1e/check_compare_fields.json` | `fields_in_code` | karar | F5, F6: the field audit sees the new comparator compare_p1e1 (its module, rows and file constants) |
+| `compare_p1e1` | regress | `p1e/check_compare_fields.json` | `file_constants` | karar | F5, F6: the field audit sees the new comparator compare_p1e1 (its module, rows and file constants) |
+| `compare_p1e1` | regress | `p1e/check_compare_fields.json` | `modules` | karar | F5, F6: the field audit sees the new comparator compare_p1e1 (its module, rows and file constants) |
+| `compare_p1e1` | regress | `p1e/client.json` | `bundle_bytes` | karar | K-E1.2 (E1.2): main.js carries the index notice of the connection status |
+| `compare_p1e1` | regress | `p1e/client.json` | `vitest/files` | karar | K-E1.2 (E1.2): the client's index-notice unit tests (97 → 100) |
+| `compare_p1e1` | regress | `p1e/client.json` | `vitest/tests` | karar | K-E1.2 (E1.2): the client's index-notice unit tests (97 → 100) |
+| `compare_p1e1` | regress | `p1e/client.json` | `vitest/passed` | karar | K-E1.2 (E1.2): the client's index-notice unit tests (97 → 100) |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-10/bundle_bytes` | karar | K-E1.2 (E1.2): main.js carries the index notice of the connection status |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-10/vitest/files` | karar | K-E1.2 (E1.2): the client's index-notice unit tests (97 → 100) |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-10/vitest/tests` | karar | K-E1.2 (E1.2): the client's index-notice unit tests (97 → 100) |
+| `compare_p1e1` | regress | `p1e_checks.json` | `E-10/vitest/passed` | karar | K-E1.2 (E1.2): the client's index-notice unit tests (97 → 100) |
 <!-- /fields-table -->
 
 ## Dosya tablosu

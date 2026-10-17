@@ -122,3 +122,18 @@ def test_empty_container_is_not_absent(tmp_path):
     ref = _run(tmp_path, "ref", {"p1x_checks.json": {"X-1": {"pass": False}}})
     run = _run(tmp_path, "run", {"p1x_checks.json": {"X-1": {"pass": False, "d": {}}}})
     assert historical.classify(run, _listing(ref, [ENTRY]))["counted_fails"] == 1
+
+
+def test_emptied_container_only_with_declared_content(tmp_path, monkeypatch):
+    ref = _run(tmp_path, "ref", {"p1x_checks.json": {"X-1": {"pass": True, "d": {}}}})
+    run = _run(tmp_path, "run", {"p1x_checks.json": {"X-1": {"pass": False, "d": {"k": 1}}}})
+    excl = [
+        ("p1x_checks.json", ("X-1", "pass"), "K", "w"),
+        ("p1x_checks.json", ("X-1", "d", "k"), "K", "w"),
+    ]
+    monkeypatch.setattr(compare_p1e1, "EXCLUDED", excl)
+    assert historical.classify(run, _listing(ref, []))["counted_fails"] == 0
+    run2 = _run(
+        tmp_path, "run2", {"p1x_checks.json": {"X-1": {"pass": False, "d": {"k": 1, "j": 2}}}}
+    )
+    assert historical.classify(run2, _listing(ref, []))["counted_fails"] == 1

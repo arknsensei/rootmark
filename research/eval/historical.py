@@ -68,11 +68,27 @@ def differing(a: dict, b: dict, allowed: list[str]) -> list[str]:
     allowed path prefixes."""
     la = {"/".join(p): v for p, v in leaves(a)}
     lb = {"/".join(p): v for p, v in leaves(b)}
+
+    def ok(p: str) -> bool:
+        return any(p == q or p.startswith(q + "/") for q in allowed)
+
+    def emptied(p: str, here: dict, there: dict) -> bool:
+        # an empty container on one side whose content on the other side is
+        # all under declared changes (F7): the container itself is not a
+        # difference; any undeclared leaf inside still is
+        inside = [k for k in there if k.startswith(p + "/")]
+        return (
+            str(here.get(p, "")).endswith(":empty")
+            and p not in there
+            and bool(inside)
+            and all(ok(k) for k in inside)
+        )
+
     out = []
     for p in sorted(set(la) | set(lb)):
         if la.get(p, ("absent",)) == lb.get(p, ("absent",)):
             continue
-        if any(p == q or p.startswith(q + "/") for q in allowed):
+        if ok(p) or emptied(p, la, lb) or emptied(p, lb, la):
             continue
         out.append(p)
     return out
