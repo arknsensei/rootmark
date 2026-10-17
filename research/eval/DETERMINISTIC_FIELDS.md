@@ -39,6 +39,9 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 ### `compare_p1d1`
 `pair`: `compare_p1d.pair` + `P1D1_FILES` alan alan + `P1D1_BYTES`; hariç: duvar saati ve ortam (`P1D1_TIMING`), sözleşmenin belirlenimsiz bıraktığı iki D1-5 alanı (`P1D1_INFO`, P1-E/E0 F2; yazan ve iz yazan çağrıların yanıtları `write_responses_a_vs_b_equal` ve `write_responses_pipelined_vs_lockstep_equal` ile karşılaştırılır, F1). `regress`: P1-D resmi RUN'ı, `EXCLUDED` (D1-12'nin 29 karar satırı).
 
+### `compare_p1e`
+`pair`: `compare_p1d1.pair` + `P1E_FILES` alan alan + `P1E_BYTES` (sahnenin ve eklenti e2e'sinin vault günlükleri, eklentinin HTTP erişim günlüğü, iki sonuç kaydı) bayt bayt; P1-E dosyalarında duvar saati ya da sözleşmece belirlenimsiz alan yok (`P1E_TIMING`, `P1E_INFO` boş). `regress`: P1-D.1 resmi RUN'ı, `EXCLUDED` (P1-E kararlarının satırları, resmi RUN'dan önce yazıldı) ve uyumluluk raporu test kimliğiyle.
+
 ## Alan tablosu
 <!-- fields-table -->
 | Araç | Kip | Dosya | Yol kalıbı | Sınıf | Gerekçe |
@@ -137,4 +140,6 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p1d.CONFORMANCE` | `conformance_p1c1.json` |
 | `compare_p1d1.P1D1_FILES` | `p1d1_checks.json`, `conformance_p1d1.json`, `p1d1/p1d1.json`, `p1d1/d1_1.json`, `p1d1/d1_2.json`, `p1d1/d1_3.json`, `p1d1/d1_4.json`, `p1d1/d1_5.json`, `p1d1/d1_6.json`, `p1d1/d1_7.json`, `p1d1/d1_8.json`, `p1d1/d1_9.json`, `p1d1/d1_11.json`, `p1d1/d1_13.json`, `p1d1/v3_compat.json`, `p1d1/v3_compat_mixed.json`, `p1d1/tamper_p1d1.json` |
 | `compare_p1d1.P1D1_BYTES` | `p1d1/d1_3.json`, `p1d1/d1_8.json`, `p1d1/d1_13.json` |
+| `compare_p1e.P1E_FILES` | `p1e_checks.json`, `p1e/e0/e14.json`, `p1e/e0/e15.json`, `p1e/scene/scene.json`, `p1e/plugin_e2e/plugin_e2e.json`, `p1e/plugin_e2e/access_log.json`, `p1e/client.json`, `p1e/release/release_local.json`, `p1e/release/conformance_mdk.json`, `p1e/release/conformance_equiv.json`, `p1e/tamper_p1e.json`, `p1e/check_compare_fields.json` |
+| `compare_p1e.P1E_BYTES` | `p1e/scene/scene.json`, `p1e/scene/events.jsonl`, `p1e/scene/traces.jsonl`, `p1e/scene/proposals.jsonl`, `p1e/plugin_e2e/plugin_e2e.json`, `p1e/plugin_e2e/access_log.json`, `p1e/plugin_e2e/events.jsonl`, `p1e/plugin_e2e/traces.jsonl`, `p1e/plugin_e2e/proposals.jsonl` |
 <!-- /files-table -->

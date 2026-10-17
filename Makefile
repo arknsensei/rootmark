@@ -22,7 +22,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps check-compare-fields check-client-types conformance regress verify models c3-quality p1c-checks report-p1c \
-        c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1
+        c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e
 
 setup: setup-py build
 
@@ -471,6 +471,41 @@ p1d1-checks: require-run
 report-p1d1:
 	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
 	$(PY) -m eval.report_p1d1 --run-dir "$(abspath $(RUN_DIR))"
+
+# P1-E criteria into the RUN (GOAL E-1..E-10, ADDENDUM E-12..E-16; TASKS
+# E7), under research/reports/runs/<RUN>/p1e/: the E0 tests (E-14, E-15,
+# MDK_P1E_OUT), the scene (E-1, E-3, E-5, E-6), the plugin e2e (E-2..E-6),
+# the client gates (E-10), the local release binary (E-7, chain half), the
+# P1-E deliberate corruptions, the deterministic-field audit (E-13), then
+# E-9 (eval.compare_p1e regress against the P1-D.1 official RUN; exit 3
+# recorded, not fatal) and run_p1e_checks → p1e_checks.json. Needs
+# p1d1-checks in the same RUN. A criterion that fails is recorded, not
+# fatal (its JSON must exist); a missing result fails.
+P1D1_REF_RUN := ../reports/rounds/P1-D.1/runs/20261016T124520Z-1527365
+P1E_DIR = research/reports/runs/$(RUN)/p1e
+p1e-checks: require-run
+	rm -rf $(P1E_DIR)
+	mkdir -p $(P1E_DIR)/e0
+	MDK_P1E_OUT="$(CURDIR)/$(P1E_DIR)/e0" cargo test -q -p mdkernel-server --release --test p1e_e0 -- --test-threads=1 \
+	  >$(P1E_DIR)/e0.log 2>&1 || echo "p1e-checks: p1e_e0 exit $$? (recorded)" >&2
+	@test -f $(P1E_DIR)/e0/e14.json && test -f $(P1E_DIR)/e0/e15.json || { tail -40 $(P1E_DIR)/e0.log >&2; exit 1; }
+	bash scripts/scene.sh $(P1E_DIR)/scene >$(P1E_DIR)/scene.log 2>&1 || echo "p1e-checks: scene.sh exit $$? (recorded)" >&2
+	@test -f $(P1E_DIR)/scene/scene.json || { tail -40 $(P1E_DIR)/scene.log >&2; exit 1; }
+	bash scripts/plugin_e2e.sh $(P1E_DIR)/plugin_e2e >$(P1E_DIR)/plugin_e2e.log 2>&1 || echo "p1e-checks: plugin_e2e.sh exit $$? (recorded)" >&2
+	@test -f $(P1E_DIR)/plugin_e2e/plugin_e2e.json || { tail -40 $(P1E_DIR)/plugin_e2e.log >&2; exit 1; }
+	bash scripts/client_checks.sh $(P1E_DIR)/client.json >$(P1E_DIR)/client.log 2>&1 || echo "p1e-checks: client_checks.sh exit $$? (recorded)" >&2
+	@test -f $(P1E_DIR)/client.json || { tail -40 $(P1E_DIR)/client.log >&2; exit 1; }
+	bash scripts/release_local.sh $(P1E_DIR)/release >$(P1E_DIR)/release.log 2>&1 || echo "p1e-checks: release_local.sh exit $$? (recorded)" >&2
+	@test -f $(P1E_DIR)/release/release_local.json || { tail -40 $(P1E_DIR)/release.log >&2; exit 1; }
+	bash scripts/test_tamper_p1e.sh $(P1E_DIR)/tamper_p1e.json >$(P1E_DIR)/tamper_p1e.log 2>&1 || echo "p1e-checks: test_tamper_p1e.sh exit $$? (recorded)" >&2
+	@test -f $(P1E_DIR)/tamper_p1e.json || { tail -40 $(P1E_DIR)/tamper_p1e.log >&2; exit 1; }
+	bash scripts/check_compare_fields.sh --out $(P1E_DIR)/check_compare_fields.json >/dev/null || echo "p1e-checks: check_compare_fields exit $$? (recorded)" >&2
+	@test -f $(P1E_DIR)/check_compare_fields.json || exit 1
+	@# exit 3 (a difference) is recorded, not fatal; a missing file/field (1) fails
+	rc=0; $(PY) -m eval.compare_p1e regress $(P1D1_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p1d1.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	$(PY) -m eval.run_p1e_checks --run $(RUN)
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:

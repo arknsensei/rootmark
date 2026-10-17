@@ -41,3 +41,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** eski koşul `--runs`'ı `dirname`'e veriyordu (macOS'ta "illegal option" uyarısı, çıktıyı kirletiyor); öncelik belirsizdi.
 - **Önce/sonra:** argümansız çağrı ve `--runs A B --out f` çağrısı aynı JSON'u üretir; uyarı yok.
 - **Gözden geçirici onayı:** E0.review.md (3. tur).
+
+## F7 · E7 · `scripts/verify.sh` — P1-E zinciri
+- **Ne:** üç değişiklik, P1-D.1 F12 emsaliyle aynı biçim: başlık yorumuna P1-E paragrafı; `chain`'de `make p1d1-checks`'ten sonra `make p1e-checks RUN=$run` (2 satır); `pair`'in son satırı `compare_p1d1` → `compare_p1e` (P1-D.1 kümesi bunun içinde, aynen `compare_p1d1.pair`); yeni `compare_p1e` işlevi, `compare-p1e` alt komutu ve kullanım iletisi. Önceki zincir adımları, sırası ve `compare`…`compare-p1d1` aynen.
+- **Neden:** TASKS E7 ("`verify.sh`: conformance → regress (P1-D.1) → scene → plugin e2e → release build → pair compare"); E-8'in çift koşturması P1-E ölçümlerini iki bağımsız klonda koşturmalı.
+- **Önce/sonra bit eşitliği:** önceki adımlar değişmeden koşar; P1-D.1 çift kümesinin bütün alanları ve baytları `compare_p1e pair` içinde `compare_p1d1.pair` ile karşılaştırılır (geliştirme ve resmi çift kaydı E7.md).
+- **Gözden geçirici onayı:** E7.review.md.

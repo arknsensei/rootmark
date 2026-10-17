@@ -154,6 +154,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/check_compare_fields.sh` | `P1-E/E0:` | K-E0.2 denetleyicisinin sarmalayıcısı (`make check-compare-fields`) |
 | `research/eval/check_compare_fields.py` | `P1-E/E0-fix2:` | yeniden dondurma P1-E/F5: `--runs` kipinde `compare_p1d.CONFORMANCE` pair kümesi dışında |
 | `scripts/check_compare_fields.sh` | `P1-E/E0-fix2:` | yeniden dondurma P1-E/F6: seçenekler yol olarak çözülmez |
+| `scripts/verify.sh` | `P1-E/E7-dev:` | yeniden dondurma P1-E/F7: P1-E zinciri (`p1e-checks`), `pair` → `compare_p1e pair`, `compare-p1e` alt komutu |
 <!-- /frozen-table -->
 
 ## Notlar
