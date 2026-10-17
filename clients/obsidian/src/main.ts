@@ -11,8 +11,7 @@ import { CheckpointsView, CHECKPOINTS_VIEW } from "./ui/checkpoints-view";
 import { TracesView, TRACES_VIEW } from "./ui/traces-view";
 import { obsidianTransport } from "./obsidian-transport";
 
-/** `X-Consumer` of the plugin: the trace label of its reads (contract §1). */
-export const CONSUMER = "mdkernel-obsidian/0.1.0";
+import { CONSUMER } from "./consumer";
 
 /** The mdkernel plugin (P1-E). Talks to a running `mdk serve` over the HTTP
  * contract only; without one it stays passive and says why (it never

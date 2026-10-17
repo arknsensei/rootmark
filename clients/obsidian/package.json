@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsc --noEmit && node esbuild.config.mjs",
     "test": "vitest run",
-    "lint": "tsc --noEmit && eslint ."
+    "lint": "tsc --noEmit && eslint .",
+    "e2e": "node e2e/build.mjs && node e2e/.build/run.mjs"
   },
   "devDependencies": {
     "@codemirror/state": "6.5.0",

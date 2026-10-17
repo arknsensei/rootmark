@@ -10,7 +10,10 @@
 #     excluded field's row, with a row the code does not exclude, or with a
 #     pair exclusion relabelled `regress`/`karar` → check_compare_fields fails;
 #   client-types (E1): a generated contract.gen.ts with a tool outside the
-#     contract → scripts/gen_client_types.sh --check fails.
+#     contract → scripts/gen_client_types.sh --check fails;
+#   plugin-e2e (E4): the harness sending a request outside the contract
+#     (E-4) or writing a Markdown file outside the propose step (E-3) →
+#     scripts/plugin_e2e.sh fails.
 # Writes <out.json>: {cases, rejected, rejected_total, controls_ok,
 # controls_total, pass}; exit 1 unless pass.
 #
@@ -91,6 +94,14 @@ jq '.tools[0].inputSchema.oneOf = [{required: ["x"]}]' "$tl" >"$work/t1.json"
 add client-types "generator: top-level oneOf refused" rejected "$(run gen "$work/t1.json")"
 jq '.tools[0].inputSchema.required = ["ghost"]' "$tl" >"$work/t2.json"
 add client-types "generator: required field without a property refused" rejected "$(run gen "$work/t2.json")"
+
+# ---- plugin-e2e (E4, E-3/E-4): the harness must catch what it measures
+pe() { MDK_E2E_TAMPER="$1" bash scripts/plugin_e2e.sh "$work/pe_$1"; }
+add plugin-e2e "untouched harness" accepted "$(run pe none)"
+add plugin-e2e "a request outside the contract (POST /v1/demote) as the plugin" rejected "$(run pe offcontract)" \
+  "$(jq -c '{outside: .e4_access_log.outside_contract, as_expected: (.e4_access_log.outside_contract == 1)}' "$work/pe_offcontract/plugin_e2e.json")"
+add plugin-e2e "a Markdown write outside the propose step" rejected "$(run pe mdwrite)" \
+  "$(jq -c '{e3: .e3_md_changes_only_at_propose, as_expected: (.e3_md_changes_only_at_propose == false)}' "$work/pe_mdwrite/plugin_e2e.json")"
 
 printf '%s\n' "${cases[@]}" | jq -s '{cases: .,
   rejected: ([.[] | select(.expected == "rejected" and .as_expected)] | length),
