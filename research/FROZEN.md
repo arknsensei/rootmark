@@ -166,6 +166,12 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/conformance_equiv.sh` | `P1-E/E7-pre:` | `mdk conformance` ↔ `make conformance` eşdeğerliği |
 | `scripts/test_tamper_p1e.sh` | `P1-E/E7-pre:` | P1-E kasıtlı bozmaları |
 | `research/eval/report_p1e.py` | `P1-E/E8:` | P1-E rapor üreteci ve karar kuralı (resmi RUN sonrasında yazıldı; TASKS E8 sırası) |
+| `server/tests/contract.rs` | `P1-E.1/E1.1:` | yeniden dondurma P1-E.1/F1: `internal` tetikleyicisi manifest'le uyuşmayan indeks dosyası, okunamayan manifest `index_stale` (K-E1.2) |
+| `scripts/contract_check.sh` | `P1-E.1/E1.1:` | yeniden dondurma P1-E.1/F2: `status` dört indeks durumunda 200 ve `index {…}` alanları, 503 yalnız indeks çağrılarında (E1-8); `internal` tetikleyicisi |
+| `scripts/gen_old_index.sh` | `P1-E.1/E1.1:` | E1-1 eski indeks fixture üreteci (`p1d-final` ikilisi) |
+| `server/tests/fixtures/index_v2/**` | `P1-E.1/E1.1:` | `p1d-final` `mdk`'nin yazdığı `mdkernel-index/2` indeksli vault (E1-1) |
+| `server/tests/p1e1_status.rs` | `P1-E.1/E1.1:` | E1-1, E1-2 ölçümleri (`MDK_P1E1_OUT`) |
+| `scripts/test_tamper_p1e1.sh` | `P1-E.1/E1.1:` | P1-E.1 kasıtlı bozmaları (contract-status, old-index) |
 <!-- /frozen-table -->
 
 ## Notlar

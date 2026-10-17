@@ -25,7 +25,12 @@ export const SAMPLES: Record<ToolName, unknown> = {
   },
   "status": {
     "embedder": "minilm-l6-v2/e73168f9",
-    "index": "present",
+    "index": {
+      "auto_rebuild": true,
+      "expected_format": "mdkernel-index/3",
+      "format": "mdkernel-index/3",
+      "state": "ok"
+    },
     "last_checkpoint": {
       "checkpoint_id": "5e6669bbb36cd9558eff3bd83cfe1e45",
       "docs": {

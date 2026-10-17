@@ -251,7 +251,7 @@ pub fn run(o: ServeOptions) -> Result<()> {
             r.records, r.snapshots, r.embedder_id
         )),
         IndexAtStart::Damaged(why) => log(format!(
-            "index damaged ({why}); left as it is: index tools answer internal"
+            "index damaged ({why}); left as it is (never rebuilt over): index tools answer index_stale until `mdk index build`"
         )),
         IndexAtStart::Stale(why) => log(format!(
             "index stale ({why}); [index] auto_rebuild = false: searches answer index_stale until `mdk index build`"

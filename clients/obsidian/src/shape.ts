@@ -87,7 +87,7 @@ export const RESULT: { readonly [T in Exclude<ToolName, "promote">]: Spec } = {
     mdk_version: "string",
     level_claimed: "integer",
     embedder: "string|null",
-    index: "string",
+    index: { state: "string", format: "string|null", expected_format: "string", auto_rebuild: "boolean" },
     policy: { promotion: "string", edit: "string" },
     server_policy: { server: "object", index: "object", identity: { human_id: "string|null" } },
   },

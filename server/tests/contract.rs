@@ -24,12 +24,16 @@ fn vault(name: &str) -> PathBuf {
 }
 
 /// §3 `internal`: a failure of the vault or its index, not of the call —
-/// here a damaged index manifest — is `internal` (HTTP 500), never a silent
-/// empty result; the call writes no trace.
+/// here an index file that does not match its manifest — is `internal`
+/// (HTTP 500), never a silent empty result; the call writes no trace. (An
+/// unreadable manifest is `index_stale` since K-E1.2.)
 #[test]
 fn a_damaged_index_is_internal() {
     let v = vault("internal");
-    std::fs::write(v.join(".mdkernel/index/manifest.json"), "{ not json").unwrap();
+    let r = v.join(".mdkernel/index/records.jsonl");
+    let mut recs = std::fs::read(&r).unwrap();
+    recs.extend_from_slice(b"\n");
+    std::fs::write(&r, recs).unwrap();
     let k = Kernel::open(&v).unwrap();
     let e = k
         .call(
@@ -186,6 +190,14 @@ fn every_code_from_a_real_call() {
     let fresh = std::fs::read_to_string(&m).unwrap();
     std::fs::write(&m, fresh.replace("mdkernel-index/3", "mdkernel-index/2")).unwrap();
     expect_code(&k, "search", json!({"query": "espresso"}), Code::IndexStale);
+    // K-E1.2: an unreadable manifest is index_stale too (only a rebuild recovers it)
     std::fs::write(v.join(".mdkernel/index/manifest.json"), "{ not json").unwrap();
+    expect_code(&k, "search", json!({"query": "espresso"}), Code::IndexStale);
+    // an index file that does not match its manifest is damage: internal
+    std::fs::write(&m, &fresh).unwrap();
+    let r = v.join(".mdkernel/index/records.jsonl");
+    let mut recs = std::fs::read(&r).unwrap();
+    recs.extend_from_slice(b"\n");
+    std::fs::write(&r, recs).unwrap();
     expect_code(&k, "search", json!({"query": "espresso"}), Code::Internal);
 }

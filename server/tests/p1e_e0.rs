@@ -205,21 +205,38 @@ fn e14_stale_index_answers_index_stale_or_is_rebuilt() {
     assert_eq!(res["pass"], true, "{res:#}");
 }
 
-/// A damaged index manifest is damage, not staleness: `mdk serve` starts as
-/// in P1-D.1 (the index is neither rebuilt nor touched) and `search`
-/// answers 500 `internal` (contract §3; E0 review 1).
+/// A damaged index manifest: `mdk serve` starts as in P1-D.1 (the index is
+/// neither rebuilt nor touched); since K-E1.2 (GOAL P1-E.1 E1-2) `search`
+/// answers 503 `index_stale` — only a rebuild recovers it — where P1-E/E0
+/// answered 500 `internal` (contract §3).
 #[test]
-fn damaged_manifest_still_serves_and_search_is_internal() {
+fn damaged_manifest_still_serves_and_search_is_index_stale() {
     for (name, extra) in [("dmg-on", ""), ("dmg-off", "auto_rebuild = false\n")] {
         let v = vault(name, extra);
         let m = v.join(".mdkernel/index/manifest.json");
         std::fs::write(&m, "{ not json").unwrap();
         let s = serve_http(&v);
         let (st, body) = http(&s, "search", &json!({"query": "extinguisher"}));
-        assert_eq!(st, 500, "{name}: {body}");
-        assert_eq!(body["error"]["code"], "internal", "{name}");
+        assert_eq!(st, 503, "{name}: {body}");
+        assert_eq!(body["error"]["code"], "index_stale", "{name}");
+        // propose in a vault with an index needs it too (K-E1.2); nothing written
+        let ev = std::fs::read(v.join(".mdkernel/events.jsonl")).unwrap();
+        let (st, body) = http(
+            &s,
+            "propose",
+            &json!({"doc_path": "safety.md", "mode": "append", "content": "## Note\n\nA human note.", "reason": "dmg"}),
+        );
+        assert_eq!(st, 503, "{name}: propose {body}");
+        assert_eq!(body["error"]["code"], "index_stale", "{name}");
+        assert_eq!(
+            std::fs::read(v.join(".mdkernel/events.jsonl")).unwrap(),
+            ev,
+            "{name}"
+        );
         assert!(
-            s.start_log.iter().any(|l| l.contains("index damaged")),
+            s.start_log
+                .iter()
+                .any(|l| l.contains("index damaged") && l.contains("index_stale")),
             "{name}: {:?}",
             s.start_log
         );

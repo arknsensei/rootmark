@@ -18,6 +18,16 @@
 #      transport rules (no token → 401 `denied`, unknown path → 404
 #      `not_found`, GET of a tool → 405 `invalid_arguments`). A contract
 #      code with no HTTP trigger here is missing (`http-code:<code>`).
+#      (P1-E.1/E1.1, K-E1.2, E1-8) `status` does not depend on the index:
+#      with the index `ok`, `stale` (format aged), `damaged` (manifest not
+#      JSON) and `missing` (index removed), `GET` and `POST /v1/status`
+#      answer 200 with `index.state` of that name and every field the
+#      contract's §2 `status` row lists under `index {…}`, while `search`
+#      answers 503 `index_stale` in the three non-`ok` states (the 503
+#      exception covers index calls, not `status`; `http.status_index`,
+#      `missing` entries `http-status-index:<state>`). `internal` is now
+#      triggered by an index file that does not match its manifest (an
+#      unreadable manifest is `index_stale`, K-E1.2).
 # Prints and writes (<out.json>, optional) {tools, codes, http, missing,
 # pass}; exit 1 if anything is missing or differs.
 #
@@ -183,10 +193,14 @@ code_req() {
     policy_violation) req POST /v1/propose '{"doc_path":"a.md","mode":"append","content":"x","reason":"r"}' ;;
     index_stale)
       m="$hv/.mdkernel/index/manifest.json"
+      # the current index, for `internal` and the status step below
+      rm -rf "$work/index.bak" && cp -R "$hv/.mdkernel/index" "$work/index.bak"
       jq -c '.format = "mdkernel-index/2"' "$m" >"$work/m" && cp "$work/m" "$m"
       req POST /v1/search '{"query":"espresso"}' ;;
     internal)
-      printf '{ not json' >"$hv/.mdkernel/index/manifest.json"
+      # an index file that does not match its manifest (blake3)
+      rm -rf "$hv/.mdkernel/index" && cp -R "$work/index.bak" "$hv/.mdkernel/index"
+      printf '\n' >>"$hv/.mdkernel/index/records.jsonl"
       req POST /v1/search '{"query":"espresso"}' ;;
     *) echo "" ;;
   esac
@@ -203,6 +217,46 @@ while read -r c st; do
   http_codes="$(echo "$http_codes" | jq -c --arg c "$c" --argjson want "$st" --argjson got "$got" --arg gc "$gcode" --argjson ok "$ok" \
     '. + [{code: $c, contract_status: $want, status: $got, error_code: $gc, ok: $ok}]')"
 done <<<"$order"
+# status in every index state (K-E1.2, E1-8): the `index {…}` fields of the
+# contract's §2 `status` row
+index_fields="$(sed -n '/^## 2\. /,/^## 3\. /p' "$contract" | grep -E '^\| `status` \|' | grep -oE 'index \{[^}]*\}' | head -1 \
+  | sed -E 's/^index \{//; s/\}$//' | tr ',' '\n' | tr -d ' ' | grep -v '^$' | jq -R . | jq -sc .)"
+[ "$index_fields" != "[]" ] || missing+=("contract:status.index fields (no \`index {…}\` in the §2 status row)")
+status_index="[]"
+index_state_check() { # <state>: status GET/POST 200 with that state; search 503 unless ok
+  local want="$1" g p sr ok=true sst scode
+  g="$(req GET /v1/status '')"; p="$(req POST /v1/status '{}')"
+  for r in "$g" "$p"; do
+    [ "${r%% *}" = 200 ] || ok=false
+    echo "${r#* }" | jq -e --arg s "$want" \
+      '(has("error") | not) and (.index | type == "object") and .index.state == $s' >/dev/null 2>&1 || ok=false
+    echo "${r#* }" | jq -e --argjson f "$index_fields" '.index as $i | all($f[]; . as $k | $i | has($k))' >/dev/null 2>&1 || ok=false
+  done
+  sr="$(req POST /v1/search '{"query":"espresso"}')"
+  sst="${sr%% *}"; scode="$(echo "${sr#* }" | jq -r '.error.code // empty')"
+  if [ "$want" = ok ]; then
+    [ "$sst" = 200 ] || ok=false
+  else
+    { [ "$sst" = 503 ] && [ "$scode" = index_stale ]; } || ok=false
+  fi
+  $ok || missing+=("http-status-index:$want")
+  status_index="$(echo "$status_index" | jq -c --arg s "$want" --argjson gs "${g%% *}" --argjson ps "${p%% *}" \
+    --argjson gi "$(echo "${g#* }" | jq -c '.index // null')" --argjson ss "$sst" --arg sc "$scode" --argjson ok "$ok" \
+    '. + [{state: $s, status_get: $gs, status_post: $ps, index: $gi, search_status: $ss, search_code: $sc, ok: $ok}]')"
+}
+if [ -d "$work/index.bak" ]; then
+  rm -rf "$hv/.mdkernel/index" && cp -R "$work/index.bak" "$hv/.mdkernel/index"
+  index_state_check ok
+  m="$hv/.mdkernel/index/manifest.json"
+  jq -c '.format = "mdkernel-index/2"' "$m" >"$work/m" && cp "$work/m" "$m"
+  index_state_check stale
+  printf '{ not json' >"$m"
+  index_state_check damaged
+  rm -rf "$hv/.mdkernel/index"
+  index_state_check missing
+else
+  missing+=("http-status-index:no index to vary (index_stale step did not run)")
+fi
 # §1/§3 transport rules
 transport="[]"
 add_transport() { # <case> <want status> <want code> <response>
@@ -218,10 +272,11 @@ add_transport "unknown path" 404 not_found "$(req POST /v1/nope '{}')"
 add_transport "GET of a tool" 405 invalid_arguments "$(req GET /v1/search '')"
 kill "$serve_pid" 2>/dev/null || true
 wait "$serve_pid" 2>/dev/null || true
-http_pass="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson t "$transport" \
-  '($e | length) > 0 and ($c | length) > 0 and all($e[]; .ok) and all($c[]; .ok) and all($t[]; .ok)')"
-http_json="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson t "$transport" --argjson p "$http_pass" \
-  '{endpoints: $e, codes: $c, transport: $t, pass: $p}')"
+http_pass="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson t "$transport" --argjson si "$status_index" \
+  '($e | length) > 0 and ($c | length) > 0 and ($si | length) == 4 and all($e[]; .ok) and all($c[]; .ok) and all($t[]; .ok) and all($si[]; .ok)')"
+http_json="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson t "$transport" --argjson si "$status_index" \
+  --argjson f "$index_fields" --argjson p "$http_pass" \
+  '{endpoints: $e, codes: $c, transport: $t, status_index: $si, status_index_fields: $f, pass: $p}')"
 
 tools_equal=false; [ "$contract_tools" = "$server_tools" ] && tools_equal=true
 codes_equal=false; [ "$contract_codes" = "$server_codes" ] && codes_equal=true

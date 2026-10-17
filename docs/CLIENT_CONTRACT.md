@@ -1,6 +1,6 @@
-# mdk istemci sözleşmesi (P1-D.1, K-D1.5; P1-E/E0 K-E0.3, K-E0.4)
+# mdk istemci sözleşmesi (P1-D.1, K-D1.5; P1-E/E0 K-E0.3, K-E0.4; P1-E.1 K-E1.2)
 
-Durum: P1-E/E0. Bu belge P1-E istemcisinin (ve her MCP/HTTP istemcisinin) `mdk serve`'e bağımlılığının **tamamıdır**. Burada yazmayan bir davranışa istemci güvenmez. Sözleşmedeki her araç ve her hata kodu en az bir testle, her §1 ucu ve §3 durum satırı gerçek bir HTTP çağrısıyla eşleşir (`scripts/contract_check.sh`). Spec kavramları için `spec/SPEC.md`, güvenlik modeli için `docs/SECURITY.md`.
+Durum: P1-E.1/E1.1. Bu belge P1-E istemcisinin (ve her MCP/HTTP istemcisinin) `mdk serve`'e bağımlılığının **tamamıdır**. Burada yazmayan bir davranışa istemci güvenmez. Sözleşmedeki her araç ve her hata kodu en az bir testle, her §1 ucu ve §3 durum satırı gerçek bir HTTP çağrısıyla eşleşir (`scripts/contract_check.sh`). Spec kavramları için `spec/SPEC.md`, güvenlik modeli için `docs/SECURITY.md`.
 
 ## 1. Taşımalar ve kanal → aktör (K-D1.3)
 | Taşıma | Başlatma | Kimlik | Aktör |
@@ -18,7 +18,7 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
 
 | Araç | Yazar mı | Argümanlar | Başarılı yanıt (ana alanlar) |
 |---|---|---|---|
-| `status` | hayır | — | `vault, spec_version, mdk_version, level_claimed, embedder, index, last_checkpoint, policy {promotion, edit, …}, server_policy {server, index, identity}` |
+| `status` | hayır | — | `vault, spec_version, mdk_version, level_claimed, embedder, index {state, format, expected_format, auto_rebuild}, last_checkpoint, policy {promotion, edit, …}, server_policy {server, index, identity}` |
 | `search` | iz | `query` (boş/yalnız boşluk değil), `k` 1–1000 (10), `mode` `hybrid`\|`lexical`\|`flat` (`hybrid`), `at` (checkpoint kimliği ya da adı; yoksa güncel durumun checkpoint'i), `include_proposal` (false) | `checkpoint_id, mode, include_proposal, query_hash, trace_id, hits[{doc_path, chunk_id, lineage_ids, layer, score}]` |
 | `read_block` | iz | `doc_path`, `lineage_id`, `at` | `checkpoint_id, block {doc_path, block {version_id, lineage_id, block_type, text, heading_path, parents, provenance, layer}, inactive}, trace` |
 | `history` | hayır | `lineage_id` | `lineage_id, layer, events[]` (silme/değiştirme olaylarında `meta.actor {kind, id}`, `meta.source`; 1.0.3) |
@@ -76,7 +76,8 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
 - Hit (`search.hits[]`): `doc_path`, `chunk_id` (dize), `lineage_ids` (dize dizisi), `layer`, `score` (sayı).
 - İz (`trace.traces[]`, `read_block.trace`): `trace_id`, `checkpoint_id`, `consumer`, `query_hash` (dize), `at_seq` (tamsayı), `returned[{doc_path, lineage_id, version_id}]`.
 - Checkpoint (`checkpoint`, `checkpoints[]`, `status.last_checkpoint`): `checkpoint_id` (dize), `name` (dize ya da `null`), `event_seq` (tamsayı), `docs` (nesne: `doc_path` → snapshot kimliği). `status.last_checkpoint` checkpoint yoksa `null`.
-- `status`: `spec_version`, `mdk_version` (dize), `level_claimed` (tamsayı), `embedder` (dize ya da `null`), `index` (dize), `policy.promotion`, `policy.edit` (dize), `server_policy.identity.human_id` (dize ya da `null`).
+- `status`: `spec_version`, `mdk_version` (dize), `level_claimed` (tamsayı), `embedder` (dize ya da `null`: diskteki indeks manifest'inin `embedder_id`'si; manifest yok ya da okunamıyorsa `null`), `index` (nesne, K-E1.2), `policy.promotion`, `policy.edit` (dize), `server_policy.identity.human_id` (dize ya da `null`).
+- `status.index` (K-E1.2; P1-E/E0'daki `"absent"`/`"present"` dizesinin yerine): `state` (dize: `ok` — manifest bu uygulamanın biçiminde ve sözcüksel kaydında; `stale` — manifest okunur ama başka biçimde ya da sözcüksel kayıtta, eski bir `mdk`'nin indeksi; `missing` — indeks dizini ya da manifest yok; `damaged` — manifest okunamıyor ya da çözülemiyor), `format` (dize ya da `null`: diskteki manifest'in `format`'ı), `expected_format` (dize: bu `mdk`'nin biçimi), `auto_rebuild` (boole: vault politikasının `[index] auto_rebuild`'i). `status` yalnız manifest'i okur: dosyaları manifest'le uyuşmayan bir indeks `ok` görünür ve indeks isteyen çağrılarda `internal` döner (§3). `stale`, `missing` ve `damaged`'da indeks isteyen çağrılar `index_stale` döner; yeniden kurma yolu `mdk index build <vault>` (ya da `stale`/`missing`'de `auto_rebuild = true` ile `mdk serve`'i yeniden başlatmak; `damaged` manifest'in üstüne kendiliğinden kurulmaz).
 
 ## 3. Hata kodları (K-D1.5)
 Başarısız bir araç çağrısı şu biçimlerde döner:
@@ -97,12 +98,12 @@ Başarısız bir araç çağrısı şu biçimlerde döner:
 | `too_large` | 413 | `content` `[server] max_propose_bytes`'ı aşıyor ya da HTTP gövdesi sınırı aşıyor. |
 | `heading_not_found` | 422 | `replace_section` başlığı belgede yok ya da birden fazla. |
 | `policy_violation` | 422 | Vault'un `policy.toml`'u geçersiz; ya da ajanın insan bloklarına `append`'i kendi başlığıyla başlamadığı için `append_only` altında reddedildi (K-E0.4; `hint` taşır). |
-| `index_stale` | 503 | Vault'un indeksi eksik ya da başka bir biçimde (eski `mdk`'nin yazdığı indeks): yeniden kurulmalı (`mdk index build`, ya da `[index] auto_rebuild = true` ile `mdk serve`'i yeniden başlatmak; K-E0.3). Kurtarılabilir bir durumdur, `internal` değildir. |
-| `internal` | 500 | Sunucu ya da vault hatası (ör. bozuk indeks dosyası). Raporlanması gereken bir hatadır, sessiz başarı değildir. |
+| `index_stale` | 503 | Vault'un indeksi eksik, başka bir biçimde (eski `mdk`'nin yazdığı indeks) ya da manifest'i okunamıyor (K-E1.2): yeniden kurulmalı (`mdk index build`, ya da eksik/eski biçimde `[index] auto_rebuild = true` ile `mdk serve`'i yeniden başlatmak; K-E0.3). Kurtarılabilir bir durumdur, `internal` değildir. Yalnız indeks isteyen çağrılar döner; `status` hiçbir indeks durumunda dönmez. |
+| `internal` | 500 | Sunucu ya da vault hatası (ör. manifest'le uyuşmayan indeks dosyası). Raporlanması gereken bir hatadır, sessiz başarı değildir. |
 
 İstisnalar:
 - MCP'de bilinmeyen araç bir JSON-RPC hatasıdır (`-32602`). HTTP'de 404 `not_found`'dur.
-- `mdk serve` başlarken indeks yoksa kurar; başka biçimdeyse `[index] auto_rebuild = true` (varsayılan) ile yeniden kurar. `auto_rebuild = false` ise indeksi olduğu gibi bırakır, stderr'e yazar ve indeks isteyen çağrılar (`search`, indeks taşıyan vault'ta `propose`) `index_stale` döner. Salt okunur çağrılar (`status`, `blame`, `history`, …) indekssiz de çalışır (K-E0.3).
+- `mdk serve` başlarken indeks yoksa kurar; başka biçimdeyse `[index] auto_rebuild = true` (varsayılan) ile yeniden kurar. `auto_rebuild = false` ise indeksi olduğu gibi bırakır, stderr'e yazar ve indeks isteyen çağrılar (`search`, indeks taşıyan vault'ta `propose`) `index_stale` döner. Okunamayan manifest'i (`damaged`) hiçbir ayarda kendiliğinden yeniden kurmaz; indeks isteyen çağrılar yine `index_stale` döner. Salt okunur çağrılar (`blame`, `history`, `checkpoints`, `trace`, …) indekssiz de çalışır (K-E0.3); `status` her indeks durumunda 200 döner ve durumu `index.state`'te bildirir (K-E1.2).
 - Politikanın `promote` reddi her kanalda yanıttır, hata değildir (§2.4).
 
 ## 4. Olaylar, köken ve ajan yönergesi
@@ -124,4 +125,4 @@ Başarısız bir araç çağrısı şu biçimlerde döner:
 - Salt okunur çağrılar (`status`, `history`, `blame`, `checkpoints`, `trace`) birbirleriyle paralel çalışır, bir yazar çalışırken bekler. Bir okuma, kendinden önce gönderilmiş ama henüz işlenmemiş bir yazmayı görmeyebilir. Bir yazmanın sonucunu görmek isteyen istemci onun yanıtını bekler.
 
 ## 6. Sürüm
-`status.spec_version` (spec sürümü, `docs/SPEC_EDITS_CRITERION.md`) ve `status.mdk_version`. Bu sözleşme P1-D.1'in davranışı ve P1-E/E0'ın iki eki (K-E0.3 `index_stale`, K-E0.4 `hint` ve ajan yönergesi) birliktedir. Değişiklikleri bir karar kaydıyla (`docs/DECISIONS.md`) ve bu belgenin güncellenmesiyle olur.
+`status.spec_version` (spec sürümü, `docs/SPEC_EDITS_CRITERION.md`) ve `status.mdk_version`. Bu sözleşme P1-D.1'in davranışı, P1-E/E0'ın iki eki (K-E0.3 `index_stale`, K-E0.4 `hint` ve ajan yönergesi) ve P1-E.1'in `status` eki (K-E1.2: `status.index` nesnesi, `status` indeksten bağımsız, okunamayan manifest `index_stale`) birliktedir. Değişiklikleri bir karar kaydıyla (`docs/DECISIONS.md`) ve bu belgenin güncellenmesiyle olur.

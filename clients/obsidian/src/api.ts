@@ -34,13 +34,23 @@ export interface Checkpoint {
   name: string | null;
 }
 
+/** `status.index` (docs/CLIENT_CONTRACT.md §2, K-E1.2). */
+export interface IndexStatus {
+  /** ok | stale | missing | damaged */
+  state: string;
+  format: string | null;
+  expected_format: string;
+  auto_rebuild: boolean;
+}
+
 export interface StatusResult {
   vault: string;
   spec_version: string;
   mdk_version: string;
   level_claimed: number;
   embedder: string | null;
-  index: string;
+  /** the vault's index (K-E1.2): `status` answers whatever its state */
+  index: IndexStatus;
   last_checkpoint: Checkpoint | null;
   policy: { promotion: string; edit: string } & Record<string, unknown>;
   server_policy: {

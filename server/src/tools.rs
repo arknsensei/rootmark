@@ -297,8 +297,8 @@ pub enum IndexAtStart {
     /// it is stale (the reason) and `auto_rebuild = false`: left as it is
     Stale(String),
     /// its manifest cannot be read (the error): left as it is, never
-    /// rebuilt over; the index's tools answer `internal` (damage, not
-    /// staleness)
+    /// rebuilt over (damage, not staleness); the index's tools answer
+    /// `index_stale` until `mdk index build` (K-E1.2)
     Damaged(String),
 }
 
@@ -531,7 +531,8 @@ impl Kernel {
             let stale = match missing {
                 true => None,
                 // a damaged manifest is not staleness: the service starts as
-                // before (P1-D.1) and the index's tools answer `internal`
+                // before (P1-D.1), nothing is rebuilt over it, and the
+                // index's tools answer `index_stale` (K-E1.2)
                 false => match store::staleness(&v) {
                     Ok(None) => return Ok(IndexAtStart::Current),
                     Ok(Some(s)) => Some(s),
@@ -647,6 +648,7 @@ impl Kernel {
                 if let Some(at) = &x.at {
                     checkpoint_at(&v, at)?;
                 }
+                index_readable(&v)?;
                 let e = self.embedder()?;
                 let s = Store::open(&v, e.as_ref())?;
                 let mut se = Searcher::new(&s, e.as_ref(), consumer)?;
@@ -910,6 +912,7 @@ impl Kernel {
         // the index, when the vault has one (the server always does; the
         // CLI may run before `mdk index build`)
         let e = if store::index_dir(&v).join("manifest.json").exists() {
+            index_readable(&v)?;
             Some(self.embedder()?)
         } else {
             None
@@ -1145,29 +1148,86 @@ impl Kernel {
     fn status(&self) -> Result<Value> {
         let v = open_vault(&self.vault)?;
         let (policy, cfg) = self.policy()?;
-        let manifest = mdkindex::store::index_dir(&v).join("manifest.json");
-        let embedder = if manifest.exists() {
-            let m: mdkindex::store::Manifest = serde_json::from_slice(
-                &std::fs::read(&manifest)
-                    .with_context(|| format!("read {}", manifest.display()))?,
-            )
-            .with_context(|| format!("{} is not an index manifest", manifest.display()))?;
-            Value::String(m.embedder_id)
-        } else {
-            Value::Null
-        };
+        // the index never fails `status` (K-E1.2): its state is a field
+        let ix = index_state(&v);
         Ok(json!({
             "vault": self.vault.display().to_string(),
             "spec_version": SPEC_VERSION,
             "mdk_version": MDK_VERSION,
             "level_claimed": LEVEL_CLAIMED,
-            "embedder": embedder,
-            "index": if embedder.is_null() { "absent" } else { "present" },
+            "embedder": ix.embedder,
+            "index": {
+                "state": ix.state,
+                "format": ix.format,
+                "expected_format": store::FORMAT,
+                "auto_rebuild": cfg.auto_rebuild,
+            },
             "last_checkpoint": v.checkpoints().last(),
             "policy": policy.to_json(),
             "server_policy": cfg.to_json(),
         }))
     }
+}
+
+/// The vault's index as `status` reports it (K-E1.2), from `manifest.json`
+/// alone: `ok` (this format and lexical record), `stale` (another format or
+/// lexical record: an older `mdk`'s index), `missing` (no manifest),
+/// `damaged` (the manifest cannot be read or decoded; `damage` says why).
+/// `stale` and `missing` are `index_stale` (K-E0.3).
+struct IndexState {
+    state: &'static str,
+    /// `format` of the manifest on disk
+    format: Option<String>,
+    /// `embedder_id` of the manifest on disk (not of a damaged one)
+    embedder: Option<String>,
+    damage: Option<String>,
+}
+
+fn index_state(v: &Vault) -> IndexState {
+    let p = store::index_dir(v).join("manifest.json");
+    let mut ix = IndexState {
+        state: "missing",
+        format: None,
+        embedder: None,
+        damage: None,
+    };
+    if !p.is_file() {
+        return ix;
+    }
+    let raw = std::fs::read(&p)
+        .with_context(|| format!("read {}", p.display()))
+        .and_then(|b| {
+            serde_json::from_slice::<Value>(&b)
+                .with_context(|| format!("{} is not JSON", p.display()))
+        });
+    if let Ok(raw) = &raw {
+        ix.format = raw["format"].as_str().map(str::to_string);
+    }
+    match raw.and_then(|raw| store::staleness(v).map(|s| (raw, s))) {
+        Ok((raw, s)) => {
+            ix.state = if s.is_some() { "stale" } else { "ok" };
+            ix.embedder = raw["embedder_id"].as_str().map(str::to_string);
+        }
+        Err(e) => {
+            ix.state = "damaged";
+            ix.damage = Some(format!("{e:#}"));
+        }
+    }
+    ix
+}
+
+/// A call that needs the index refuses a damaged manifest as `index_stale`
+/// (K-E1.2, GOAL P1-E.1 E1-2): only a rebuild (`mdk index build`) recovers
+/// it. Any other damage of the index files stays `internal`.
+fn index_readable(v: &Vault) -> Result<()> {
+    let ix = index_state(v);
+    if let Some(why) = ix.damage {
+        bail_code!(
+            Code::IndexStale,
+            "index damaged ({why}); rebuild it with `mdk index build`"
+        );
+    }
+    Ok(())
 }
 
 /// The blocks of the section `replace_section` would replace in `old` (the
