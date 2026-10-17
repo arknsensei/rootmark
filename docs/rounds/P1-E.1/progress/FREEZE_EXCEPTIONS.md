@@ -19,3 +19,21 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** GOAL P1-E.1 K-E1.4, E1.4: "eski kaydedicilerin birikmiş FAIL'leri … `verify.sh` özetinde sayılmaz". Bugüne kadar zincirde FAIL'ler yalnız ayrı kayıtlarda görünüyordu; özet her FAIL'i ya kararıyla "tarihsel" ya da sayılan FAIL olarak yazar.
 - **Önce/sonra bit eşitliği:** özet yalnız stderr'e yazar; RUN dizinine dosya eklemez, hiçbir kayıt değişmez — `pair`'in karşılaştırdığı yapıtlar önce ve sonra aynı. `bash -n` temiz. P1-E resmi RUN'ı üzerinde `eval.historical`: 8 tarihsel FAIL (B1-3, C1-7, C-3, C-11, D-2, D-7, D-9, E-7), sayılan 0.
 - **Gözden geçirici onayı:** E1.4.review.md.
+
+## F4 · E1.5 · `scripts/verify.sh` — P1-E.1 zinciri ve `pair` → `compare_p1e1`
+- **Ne:** P1-E F7 emsaliyle aynı biçim: başlık yorumuna P1-E.1 paragrafı; `chain`'de `make p1e-checks`'ten sonra `make p1e1-checks RUN=$run` (2 satır); `pair`'in son satırı `compare_p1e` → `compare_p1e1` (P1-E kümesi bunun içinde, aynen `compare_p1e.pair`); yeni `compare_p1e1` işlevi, `compare-p1e1` alt komutu, kullanım iletisi. Önceki adımlar, sıraları, F3 özeti ve `compare`…`compare-p1e` aynen.
+- **Neden:** GOAL P1-E.1 E1.5 ("`verify.sh` genişletme"); E1-7'nin çift koşturması P1-E.1 ölçümlerini iki bağımsız klonda koşturmalı.
+- **Önce/sonra bit eşitliği:** önceki adımlar değişmeden koşar; P1-E çift kümesinin bütün alanları ve baytları `compare_p1e1 pair` içinde `compare_p1e.pair` ile karşılaştırılır (resmi çift kaydı E1.5.md). `bash -n` temiz.
+- **Gözden geçirici onayı:** E1.5.review.md.
+
+## F5 · E1.5 · `research/eval/check_compare_fields.py` — `compare_p1e1`'in bildirimi
+- **Ne:** `in_code`'un döngüsüne `("compare_p1e1", "P1E1")` (zaman/bilgi tabloları ve `EXCLUDED`), dosya sabitlerine `compare_p1e1: [P1E1_FILES, P1E1_BYTES]`, `check_runs`'ın bayt listesi dışlamasına `P1E1_BYTES`. Denetim kuralları, bildirim çözümleyici, diğer modüller aynen (+7/−2 satır, biçimleyici satır kırması dahil).
+- **Neden:** denetleyici `compare_*.py`'yi kendiliğinden bulur ama her modülün sabitlerini adıyla okur; yeni karşılaştırıcı bildirilmeden eşlenemez (K-E0.2: her karşılaştırıcının her hariç tutması bildirilir).
+- **Önce/sonra:** `compare_p1e1` varken eski denetleyici + eski bildirim: `unmatched` 1 (`modules_without_section: [compare_p1e1]`); eski denetleyici + yeni bildirim: 3 (bildirilen satır ve iki dosya sabiti kodda görünmüyor); yeni denetleyici + yeni bildirim: **0** (86 alan, 18 dosya sabiti). Önceki modüllerin satırları ve sabitleri iki tarafta aynı.
+- **Gözden geçirici onayı:** E1.5.review.md.
+
+## F6 · E1.5 · `research/eval/DETERMINISTIC_FIELDS.md` — `compare_p1e1` bölümü ve satırları
+- **Ne:** `### compare_p1e1` bölümü; alan tablosuna bir `ortam` satırı (`p1e1/release/release.json` `targets/*/sha256`: yayım ikilisinin hash'i klon dizinine bağlı olabilir); dosya tablosuna `compare_p1e1.P1E1_FILES`, `P1E1_BYTES`. Var olan satırlar değişmedi (yalnız ekleme). `regress` (`karar`) satırları E1.5-pre'de geliştirme RUN'ından yazılır.
+- **Neden:** K-E0.2 — her karşılaştırıcının karşılaştırmadığı her alan sınıfı ve gerekçesiyle bildirilir.
+- **Önce/sonra:** F5'in ölçümü; `check_compare_fields` `unmatched` 0.
+- **Gözden geçirici onayı:** E1.5.review.md.

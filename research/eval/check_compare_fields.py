@@ -131,7 +131,11 @@ def in_code() -> dict:
     rows |= _keyed("compare_p1c", "regress", mods["compare_p1c"].REGRESS_ALLOWED)
     rows.update(("compare_p1c1", "regress", f, _pat(p)) for f, p in mods["compare_p1c1"].ALLOWED)
     latency("compare_p1d", mods["compare_p1d"].P1D_LATENCY)
-    for name, prefix in (("compare_p1d1", "P1D1"), ("compare_p1e", "P1E")):
+    for name, prefix in (
+        ("compare_p1d1", "P1D1"),
+        ("compare_p1e", "P1E"),
+        ("compare_p1e1", "P1E1"),
+    ):
         if name in mods:
             m = mods[name]
             latency(name, getattr(m, f"{prefix}_TIMING"))
@@ -147,6 +151,7 @@ def in_code() -> dict:
         "compare_p1d": ["P1D_FILES", "P1D_BYTES", "CONFORMANCE"],
         "compare_p1d1": ["P1D1_FILES", "P1D1_BYTES"],
         "compare_p1e": ["P1E_FILES", "P1E_BYTES"],
+        "compare_p1e1": ["P1E1_FILES", "P1E1_BYTES"],
     }
     for mod, names in consts.items():
         if mod not in mods:
@@ -218,7 +223,7 @@ def check_runs(decl: dict, runs: list[Path]) -> dict:
             f
             for k, v in decl["files"].items()
             if k.split(".")[1]
-            not in ("BYTE_FILES", "BYTE_DIRS", "P1D_BYTES", "P1D1_BYTES", "P1E_BYTES")
+            not in ("BYTE_FILES", "BYTE_DIRS", "P1D_BYTES", "P1D1_BYTES", "P1E_BYTES", "P1E1_BYTES")
             and k != "compare_p1c.REGRESS_FILES"
             # regress only, compared by test id (`compare_p1d.regress`)
             and k != "compare_p1d.CONFORMANCE"

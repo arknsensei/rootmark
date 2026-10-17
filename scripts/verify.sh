@@ -49,6 +49,18 @@
 # scene's and the plugin e2e's vault logs, the plugin's access log);
 # `compare-p1d1` is kept unchanged and `compare-p1e` is new.
 #
+# P1-E.1 (re-freeze P1-E.1/F3 summary, F4 chain and pair): after the P1-E checks the chain records `make
+# p1e1-checks` (E1-1..E1-9: the status tests on the p1d-final `/2` index, the
+# contract check's status step, the deliberate cases, the release package of
+# the commit with the real-Obsidian e2e — recorded as skipped without an
+# Obsidian binary — and its checklist, E1-6 against the P1-E official RUN,
+# the historical FAIL labels → p1e1_checks.json, p1e1/historical.json) and
+# ends with a summary of every recorder's FAILs (K-E1.4: historical ones
+# shown with their decisions, not counted; the summary never changes the
+# exit code — criteria are recorded, not fatal); `pair` compares A ↔ B with
+# `eval.compare_p1e1 pair` (the P1-E pair set plus the P1-E.1 files and
+# artefacts); `compare-p1e` is kept unchanged and `compare-p1e1` is new.
+#
 #   scripts/verify.sh chain <source-repo> <workdir>
 #       clone <source-repo> into <workdir>/repo, `make setup`, rebuild and
 #       verify every research dataset against its committed manifest (d1hs
@@ -143,6 +155,8 @@ chain() {
   make p1d1-checks RUN="$run"
   log "P1-E checks (E-1..E-10, E-12..E-16: E0 tests, scene, plugin e2e, client, local release, tamper, field audit; E-9 vs P1-D.1)"
   make p1e-checks RUN="$run"
+  log "P1-E.1 checks (E1-1..E1-9: status on the /2 index, contract status step, tamper, release package + real Obsidian e2e, E1-6 vs P1-E)"
+  make p1e1-checks RUN="$run"
   log "deliberate corruptions (B-7, B-8 and the P1-A cases)"
   bash scripts/test_tamper.sh "research/reports/runs/$run" >"research/reports/runs/$run/tamper.log" 2>&1 \
     || { cat "research/reports/runs/$run/tamper.log" >&2; exit 1; }
@@ -186,7 +200,7 @@ pair() {
     fi
   done
   cat "$res_a" "$res_b"
-  compare_p1e "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+  compare_p1e1 "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
 }
 
 compare() {
@@ -267,6 +281,19 @@ compare_p1e() {
   log "P1-D.1 set and P1-E results equal; scene and plugin e2e vault logs, access log byte-equal"
 }
 
+compare_p1e1() {
+  local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
+  log "compare (P1-E.1) $dir_a $dir_b"
+  local rc=0
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p1e1 pair "$dir_a" "$dir_b" \
+    ${out:+--out "$out"}) >&2 || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "error: run comparison failed (compare_p1e1 pair exit $rc)" >&2
+    exit "$rc"
+  fi
+  log "P1-E set and P1-E.1 results equal; real-Obsidian e2e record and access log byte-equal"
+}
+
 compare_p1b() {
   local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
   log "compare $dir_a $dir_b"
@@ -290,6 +317,7 @@ case "${1:-}" in
   compare-p1d) compare_p1d "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p1d1) compare_p1d1 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p1e) compare_p1e "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
+  compare-p1e1) compare_p1e1 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t mdk-verify.XXXXXX)"
@@ -297,7 +325,7 @@ case "${1:-}" in
     pair "$src" "$base/A" "$base/B"
     ;;
   *)
-    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e <repo> <runA> <runB> [out]]" >&2
+    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1 <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac

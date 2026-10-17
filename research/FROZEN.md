@@ -175,6 +175,9 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/verify.sh` | `P1-E.1/E1.4:` | yeniden dondurma P1-E.1/F3: zincir sonunda K-E1.4 FAIL özeti |
 | `research/eval/historical.py` | `P1-E.1/E1.4:` | K-E1.4 tarihsel FAIL sınıflandırıcısı |
 | `research/eval/historical_fails.json` | `P1-E.1/E1.4:` | K-E1.4 tarihsel FAIL listesi (referans P1-E resmi RUN) |
+| `scripts/verify.sh` | `P1-E.1/E1.5-dev:` | yeniden dondurma P1-E.1/F4: P1-E.1 zinciri (`p1e1-checks`), `pair` → `compare_p1e1 pair`, `compare-p1e1` alt komutu |
+| `research/eval/check_compare_fields.py` | `P1-E.1/E1.5-dev:` | yeniden dondurma P1-E.1/F5: `compare_p1e1` bildirimi |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P1-E.1/E1.5-dev:` | yeniden dondurma P1-E.1/F6: `compare_p1e1` bölümü, `ortam` satırı, dosya sabitleri |
 <!-- /frozen-table -->
 
 ## Notlar

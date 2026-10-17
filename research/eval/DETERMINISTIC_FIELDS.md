@@ -42,6 +42,9 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 ### `compare_p1e`
 `pair`: `compare_p1d1.pair` + `P1E_FILES` alan alan + `P1E_BYTES` (sahnenin ve eklenti e2e'sinin vault günlükleri, eklentinin HTTP erişim günlüğü, iki sonuç kaydı) bayt bayt; P1-E dosyalarında duvar saati ya da sözleşmece belirlenimsiz alan yok (`P1E_TIMING`, `P1E_INFO` boş). `regress`: P1-D.1 resmi RUN'ı, `EXCLUDED` (P1-E kararlarının satırları, resmi RUN'dan önce yazıldı) ve uyumluluk raporu test kimliğiyle.
 
+### `compare_p1e1`
+`pair`: `compare_p1e.pair` + `P1E1_FILES` alan alan + `P1E1_BYTES` (gerçek Obsidian e2e kaydı ve erişim günlüğü) bayt bayt; hariç: yayım ikilisinin `sha256`'sı (`P1E1_INFO`, ortam: derleme dizinine bağlı olabilir; RELEASE.md insan adımı 3 makineler arası hash'i yalnız kaydeder). `regress`: P1-E resmi RUN'ı, `EXCLUDED` (P1-E.1 kararlarının satırları, resmi RUN'dan önce yazıldı) ve uyumluluk raporu test kimliğiyle.
+
 ## Alan tablosu
 <!-- fields-table -->
 | Araç | Kip | Dosya | Yol kalıbı | Sınıf | Gerekçe |
@@ -131,6 +134,7 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p1e` | regress | `p1d1_checks.json` | `D1-13/codes` | karar | K-E0.3: the D1-13 record counts 11 codes |
 | `compare_p1e` | regress | `p1d1_checks.json` | `D1-3/outcomes/append:denied` | karar | K-E0.4: the D1-3 record of the outcomes above |
 | `compare_p1e` | regress | `p1d1_checks.json` | `D1-3/outcomes/append:policy_violation` | karar | K-E0.4: the D1-3 record of the outcomes above |
+| `compare_p1e1` | hepsi | `p1e1/release/release.json` | `targets/*/sha256` | ortam | yayım ikilisinin sha256'sı: aynı commit, başka klon dizini (P1-E.1/F6) |
 <!-- /fields-table -->
 
 ## Dosya tablosu
@@ -153,4 +157,6 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p1d1.P1D1_BYTES` | `p1d1/d1_3.json`, `p1d1/d1_8.json`, `p1d1/d1_13.json` |
 | `compare_p1e.P1E_FILES` | `p1e_checks.json`, `p1e/e0/e14.json`, `p1e/e0/e15.json`, `p1e/scene/scene.json`, `p1e/plugin_e2e/plugin_e2e.json`, `p1e/plugin_e2e/access_log.json`, `p1e/client.json`, `p1e/release/release_local.json`, `p1e/release/conformance_mdk.json`, `p1e/release/conformance_equiv.json`, `p1e/tamper_p1e.json`, `p1e/check_compare_fields.json` |
 | `compare_p1e.P1E_BYTES` | `p1e/scene/scene.json`, `p1e/scene/events.jsonl`, `p1e/scene/traces.jsonl`, `p1e/scene/proposals.jsonl`, `p1e/plugin_e2e/plugin_e2e.json`, `p1e/plugin_e2e/access_log.json`, `p1e/plugin_e2e/events.jsonl`, `p1e/plugin_e2e/traces.jsonl`, `p1e/plugin_e2e/proposals.jsonl` |
+| `compare_p1e1.P1E1_FILES` | `p1e1_checks.json`, `p1e1/status/e1_1.json`, `p1e1/status/e1_2.json`, `p1e1/contract.json`, `p1e1/tamper_p1e1.json`, `p1e1/tamper_p1e1_e2e.json`, `p1e1/release/release.json`, `p1e1/release/release_check.json`, `p1e1/release/plugin_e2e_real.json`, `p1e1/release/access_log_real.json`, `p1e1/historical.json`, `p1e1/check_compare_fields.json` |
+| `compare_p1e1.P1E1_BYTES` | `p1e1/release/plugin_e2e_real.json`, `p1e1/release/access_log_real.json` |
 <!-- /files-table -->

@@ -22,7 +22,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps check-compare-fields check-client-types conformance regress verify models c3-quality p1c-checks report-p1c \
-        c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e
+        c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e p1e1-checks report-p1e1
 
 setup: setup-py build
 
@@ -506,6 +506,52 @@ p1e-checks: require-run
 	  --out reports/runs/$(RUN)/regress_vs_p1d1.json >/dev/null || rc=$$?; \
 	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
 	$(PY) -m eval.run_p1e_checks --run $(RUN)
+
+# P1-E.1 (GOAL P1-E.1 E1-1..E1-9; TASKS E1.5): the status tests on the
+# p1d-final `/2` index fixture (E1-1, E1-2), the contract check with its
+# status step (E1-8), the deliberate cases, the release package of this
+# commit with the real-Obsidian e2e (E1-3, E1-9) and its checklist (E1-4,
+# E1-5; Linux not attempted, the package outside the RUN), E1-6 against the
+# P1-E official RUN, then p1e1_checks.json and the historical FAIL labels of
+# every recorder (K-E1.4) → research/reports/runs/<RUN>/p1e1/
+P1E_REF_RUN := ../reports/rounds/P1-E/runs/20261017T024341Z-632f29e
+P1E1_DIR = research/reports/runs/$(RUN)/p1e1
+P1E1_DIST ?= $(CURDIR)/target/p1e1-dist
+p1e1-checks: require-run
+	rm -rf $(P1E1_DIR)
+	mkdir -p $(P1E1_DIR)/status $(P1E1_DIR)/release
+	MDK_P1E1_OUT="$(CURDIR)/$(P1E1_DIR)/status" cargo test -q -p mdkernel-server --release --test p1e1_status -- --test-threads=1 \
+	  >$(P1E1_DIR)/status.log 2>&1 || echo "p1e1-checks: p1e1_status exit $$? (recorded)" >&2
+	@test -f $(P1E1_DIR)/status/e1_1.json && test -f $(P1E1_DIR)/status/e1_2.json || { tail -40 $(P1E1_DIR)/status.log >&2; exit 1; }
+	bash scripts/contract_check.sh $(P1E1_DIR)/contract.json >$(P1E1_DIR)/contract.log 2>&1 || echo "p1e1-checks: contract_check.sh exit $$? (recorded)" >&2
+	@test -f $(P1E1_DIR)/contract.json || { tail -40 $(P1E1_DIR)/contract.log >&2; exit 1; }
+	bash scripts/test_tamper_p1e1.sh $(P1E1_DIR)/tamper_p1e1.json >$(P1E1_DIR)/tamper_p1e1.log 2>&1 || echo "p1e1-checks: test_tamper_p1e1.sh exit $$? (recorded)" >&2
+	@test -f $(P1E1_DIR)/tamper_p1e1.json || { tail -40 $(P1E1_DIR)/tamper_p1e1.log >&2; exit 1; }
+	MDK_RELEASE_LINUX=0 bash scripts/release.sh $(P1E1_DIST) >$(P1E1_DIR)/release.log 2>&1 || echo "p1e1-checks: release.sh exit $$? (recorded)" >&2
+	@test -f $(P1E1_DIST)/release.json && test -f $(P1E1_DIST)/plugin_e2e_real/plugin_e2e_real.json || { tail -40 $(P1E1_DIR)/release.log >&2; exit 1; }
+	bash scripts/release_check.sh $(P1E1_DIST) >$(P1E1_DIR)/release_check.log 2>&1 || echo "p1e1-checks: release_check.sh exit $$? (recorded)" >&2
+	@test -f $(P1E1_DIST)/release_check.json || { tail -40 $(P1E1_DIR)/release_check.log >&2; exit 1; }
+	cp $(P1E1_DIST)/release.json $(P1E1_DIST)/release_check.json $(P1E1_DIR)/release/
+	cp $(P1E1_DIST)/plugin_e2e_real/plugin_e2e_real.json $(P1E1_DIR)/release/plugin_e2e_real.json
+	@if [ -f $(P1E1_DIST)/plugin_e2e_real/access_log.json ]; then cp $(P1E1_DIST)/plugin_e2e_real/access_log.json $(P1E1_DIR)/release/access_log_real.json; \
+	  else echo '[]' >$(P1E1_DIR)/release/access_log_real.json; fi
+	bash scripts/test_tamper_p1e1_e2e.sh $(P1E1_DIR)/tamper_p1e1_e2e.json >$(P1E1_DIR)/tamper_p1e1_e2e.log 2>&1 || echo "p1e1-checks: test_tamper_p1e1_e2e.sh exit $$? (recorded)" >&2
+	@test -f $(P1E1_DIR)/tamper_p1e1_e2e.json || { tail -40 $(P1E1_DIR)/tamper_p1e1_e2e.log >&2; exit 1; }
+	bash scripts/check_compare_fields.sh --out $(P1E1_DIR)/check_compare_fields.json >/dev/null || echo "p1e1-checks: check_compare_fields exit $$? (recorded)" >&2
+	@test -f $(P1E1_DIR)/check_compare_fields.json || exit 1
+	@# exit 3 (a difference) is recorded, not fatal; a missing file/field (1) fails
+	rc=0; $(PY) -m eval.compare_p1e1 regress $(P1E_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p1e.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	$(PY) -m eval.run_p1e1_checks --run $(RUN)
+	rc=0; $(PY) -m eval.historical --run-dir reports/runs/$(RUN) --out reports/runs/$(RUN)/p1e1/historical.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+
+# P1-E.1 round report from one RUN directory: <RUN_DIR>/FINAL.md and
+# reports/rounds/P1-E.1/FINAL.md
+report-p1e1:
+	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
+	$(PY) -m eval.report_p1e1 --run-dir "$(abspath $(RUN_DIR))"
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:
