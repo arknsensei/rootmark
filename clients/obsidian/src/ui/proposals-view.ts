@@ -1,10 +1,11 @@
 // The proposal view: every `proposal` block of the vault (document,
 // section, source, log offset), Promote over HTTP with a required reason;
 // Demote shown disabled — not in the contract (K-E2-T).
-import { ItemView, Notice, Setting, TFile, type WorkspaceLeaf } from "obsidian";
+import { ItemView, Notice, Setting, type WorkspaceLeaf } from "obsidian";
 import { describeError } from "../api";
 import { DEMOTE_UNAVAILABLE, promoteAll, promoteSummary, type ProposalRow } from "../commands";
 import type MdkernelPlugin from "../main";
+import { openDoc } from "./open";
 import { askReason } from "./reason-modal";
 
 export const PROPOSALS_VIEW = "mdkernel-proposals";
@@ -68,23 +69,12 @@ export class ProposalsView extends ItemView {
       const doc = tr.createEl("td").createEl("a", { text: r.doc_path, href: "#" });
       doc.addEventListener("click", (ev) => {
         ev.preventDefault();
-        this.openDoc(r.doc_path);
+        openDoc(this.app, r.doc_path);
       });
       tr.createEl("td", { text: r.section ?? "—" });
       tr.createEl("td", { text: r.source === "" ? "—" : r.source });
       tr.createEl("td", { text: String(r.seq_created) });
     }
-  }
-
-  /** Opens an existing note only: a path that is gone is an error, never a
-   * new note (the plugin writes no file). */
-  private openDoc(path: string): void {
-    const f = this.app.vault.getAbstractFileByPath(path);
-    if (!(f instanceof TFile)) {
-      new Notice(`mdkernel: ${path} is not in the vault (moved or deleted)`);
-      return;
-    }
-    void this.app.workspace.getLeaf(false).openFile(f);
   }
 
   private async promoteSelected(): Promise<void> {

@@ -1,4 +1,4 @@
-import { MarkdownView, Notice, Plugin, TFile } from "obsidian";
+import { MarkdownView, Notice, Plugin, type TFile } from "obsidian";
 import { connect, describeError, type ConnectionState, type MdkClient } from "./api";
 import { align, editorBlocks } from "./align";
 import { blameOf, historyOf, listProposals, type ProposalRow } from "./commands";
@@ -6,6 +6,9 @@ import { gutterMarks } from "./view";
 import { blameGutter, setMarks } from "./ui/gutter";
 import { HistoryModal } from "./ui/history-modal";
 import { ProposalsView, PROPOSALS_VIEW } from "./ui/proposals-view";
+import { SearchView, SEARCH_VIEW } from "./ui/search-view";
+import { CheckpointsView, CHECKPOINTS_VIEW } from "./ui/checkpoints-view";
+import { TracesView, TRACES_VIEW } from "./ui/traces-view";
 import { obsidianTransport } from "./obsidian-transport";
 
 /** `X-Consumer` of the plugin: the trace label of its reads (contract §1). */
@@ -22,8 +25,14 @@ export default class MdkernelPlugin extends Plugin {
     this.statusEl = this.addStatusBarItem();
     this.registerEditorExtension(blameGutter((lineage) => void this.showHistory(lineage)));
     this.registerView(PROPOSALS_VIEW, (leaf) => new ProposalsView(leaf, this));
+    this.registerView(SEARCH_VIEW, (leaf) => new SearchView(leaf, this));
+    this.registerView(CHECKPOINTS_VIEW, (leaf) => new CheckpointsView(leaf, this));
+    this.registerView(TRACES_VIEW, (leaf) => new TracesView(leaf, this));
     this.addCommand({ id: "reconnect", name: "Reconnect to mdk serve", callback: () => void this.reconnect() });
-    this.addCommand({ id: "proposals", name: "Show proposal blocks", callback: () => void this.openProposals() });
+    this.addCommand({ id: "proposals", name: "Show proposal blocks", callback: () => void this.openView(PROPOSALS_VIEW) });
+    this.addCommand({ id: "search", name: "Search", callback: () => void this.openView(SEARCH_VIEW) });
+    this.addCommand({ id: "checkpoints", name: "Checkpoints", callback: () => void this.openView(CHECKPOINTS_VIEW) });
+    this.addCommand({ id: "traces", name: "Traces", callback: () => void this.openView(TRACES_VIEW) });
     this.addCommand({ id: "blame", name: "Refresh blame of the active note", callback: () => void this.refreshBlame() });
     this.registerEvent(this.app.workspace.on("active-leaf-change", () => void this.refreshBlame()));
     this.registerEvent(this.app.metadataCache.on("changed", () => void this.refreshBlame()));
@@ -125,11 +134,11 @@ export default class MdkernelPlugin extends Plugin {
     );
   }
 
-  async openProposals(): Promise<void> {
-    const existing = this.app.workspace.getLeavesOfType(PROPOSALS_VIEW)[0];
+  async openView(type: string): Promise<void> {
+    const existing = this.app.workspace.getLeavesOfType(type)[0];
     const leaf = existing ?? this.app.workspace.getRightLeaf(false);
     if (!leaf) return;
-    await leaf.setViewState({ type: PROPOSALS_VIEW, active: true });
+    await leaf.setViewState({ type, active: true });
     void this.app.workspace.revealLeaf(leaf);
   }
 }

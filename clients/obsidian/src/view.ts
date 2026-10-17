@@ -49,3 +49,13 @@ export function historyLine(e: LogEvent): string {
   const actor = actorOf(m);
   return `#${String(e.seq)} ${e.kind} · ${actor}${extra.length ? " · " + extra.join(" · ") : ""}`;
 }
+
+/** The read-only past view of a note (checkpoint panel): its blocks as of
+ * `at`, one line each. */
+export function pastView(doc: string, at: string, blocks: readonly BlameBlock[] | null): string {
+  if (blocks === null) return `${doc} had no snapshot at checkpoint ${at}`;
+  return [
+    `${doc} at ${at} (read only)`,
+    ...blocks.map((b, i) => `${String(i + 1).padStart(3)} ${b.layer.padEnd(9)} ${b.author_kind.padEnd(6)} ${b.source === "" ? "—" : b.source} · ${b.lineage_id.slice(0, 8)}`),
+  ].join("\n");
+}

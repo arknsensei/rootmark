@@ -5,7 +5,16 @@
 // Nothing here writes a vault file: the only writes are the contract's
 // HTTP tools (`promote`, `checkpoint`; the plugin never proposes).
 
-import { MdkError, type BlameBlock, type HistoryResult, type MdkClient, type PromoteResult } from "./api";
+import {
+  MdkError,
+  type BlameBlock,
+  type Checkpoint,
+  type HistoryResult,
+  type Hit,
+  type MdkClient,
+  type PromoteResult,
+  type Returned,
+} from "./api";
 
 /** A proposal block of the vault (proposal view). */
 export interface ProposalRow {
@@ -139,4 +148,78 @@ export function actorOf(meta: Record<string, unknown>): string {
     if (typeof kind === "string" && typeof id === "string") return `${kind}:${id}`;
   }
   return "actor not recorded";
+}
+
+// ---- E3: search, checkpoints, traces ---------------------------------------
+
+export interface SearchView {
+  checkpoint_id: string;
+  trace_id: string;
+  /** canonical hits, in the server's order (never re-ranked here) */
+  canonical: Hit[];
+  /** proposal hits (only with include_proposal), after the canonical ones
+   * on the server and shown apart (contract §2.2) */
+  proposal: Hit[];
+}
+
+/** `search` as the panel shows it: the server's order kept, the layers
+ * split for display. A hit of another layer is `bad_response` (derived is
+ * never returned, §2.2). */
+export async function runSearch(
+  client: MdkClient,
+  query: string,
+  opts: { mode?: "hybrid" | "lexical" | "flat"; k?: number; include_proposal?: boolean; at?: string } = {},
+): Promise<SearchView> {
+  const r = await client.call("search", { query, ...opts });
+  const bad = r.hits.find((h) => h.layer !== "canonical" && h.layer !== "proposal");
+  if (bad !== undefined) throw new MdkError("bad_response", `search returned a ${bad.layer} hit (contract §2.2)`, 200);
+  const firstProposal = r.hits.findIndex((h) => h.layer === "proposal");
+  if (firstProposal >= 0 && r.hits.slice(firstProposal).some((h) => h.layer === "canonical")) {
+    throw new MdkError("bad_response", "search: a canonical hit after a proposal hit (contract §2.2)", 200);
+  }
+  return {
+    checkpoint_id: r.checkpoint_id,
+    trace_id: r.trace_id,
+    canonical: r.hits.filter((h) => h.layer === "canonical"),
+    proposal: r.hits.filter((h) => h.layer === "proposal"),
+  };
+}
+
+/** Checkpoints in creation order (§2.3). */
+export async function listCheckpoints(client: MdkClient): Promise<Checkpoint[]> {
+  return (await client.call("checkpoints", {})).checkpoints;
+}
+
+/** Names the current state's checkpoint (or creates it named; §2.3). */
+export async function nameCheckpoint(client: MdkClient, name: string): Promise<Checkpoint> {
+  return client.call("checkpoint", { name });
+}
+
+/** The read-only past view of a note: its blame at a checkpoint; `null`
+ * when the note had no snapshot then. */
+export async function blameAt(client: MdkClient, doc: string, at: string): Promise<BlameBlock[] | null> {
+  return blameOf(client, doc, at);
+}
+
+export interface TraceRow {
+  trace_id: string;
+  at_seq: number;
+  consumer: string;
+  checkpoint_id: string;
+  /** what the answer rested on: one jump target per returned block */
+  returned: Returned[];
+}
+
+/** The latest `limit` traces (newest first), optionally of one consumer. */
+export async function recentTraces(client: MdkClient, opts: { consumer?: string; limit?: number } = {}): Promise<TraceRow[]> {
+  const r = await client.call("trace", opts.consumer === undefined ? {} : { consumer: opts.consumer });
+  const rows = r.traces.map((t) => ({
+    trace_id: t.trace_id,
+    at_seq: t.at_seq,
+    consumer: t.consumer,
+    checkpoint_id: t.checkpoint_id,
+    returned: t.returned,
+  }));
+  rows.sort((a, b) => b.at_seq - a.at_seq);
+  return rows.slice(0, opts.limit ?? 50);
 }
