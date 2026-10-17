@@ -1,6 +1,6 @@
 # mdkernel — Mimari Modeli
 
-Sürüm 1.2 · 2026-10-17 · Durum: **§4.1 ve spec §1–6 DONDURULDU (v3 geçti, bağımsız doğrulandı); §4.1 yeni primitifler kanıtlı (P1-B, P1-D.1; spec §7, §8, §11 Validated); §4.2 sözcüksel/vektör/hibrit/sıcak katman kanıtlı (P1-C, P1-C.1; spec §9 Validated), graf/varlık/öğrenilen durum araştırma; §4.3 MCP/HTTP/CLI kanıtlı (P1-D, P1-D.1); §4.4 istemci eklentisi P1-E'de ölçüldü (doğrulama bekliyor); §4.5 faz 2 taslak.** 1.2: yalnız kanıt durumu (K-E6.1).
+Sürüm 1.2.1 · 2026-10-17 · Durum: **§4.1 ve spec §1–6 DONDURULDU (v3 geçti, bağımsız doğrulandı); §4.1 yeni primitifler kanıtlı (P1-B, P1-D.1; spec §7, §8, §11 Validated); §4.2 sözcüksel/vektör/hibrit/sıcak katman kanıtlı (P1-C, P1-C.1; spec §9 Validated), graf/varlık/öğrenilen durum araştırma; §4.3 MCP/HTTP/CLI kanıtlı (P1-D, P1-D.1); §4.4 istemci eklentisi P1-E'de ölçüldü (bağımsız doğrulama "şu koşullarla güvenilir", koşul P1-E.1'de); §4.5 faz 2 taslak.** 1.2: yalnız kanıt durumu (K-E6.1); 1.2.1: P1-E doğrulaması ve e2e tanımı (K-E1.1, K-E1.3).
 
 Bu belge tartışmaz, karar verir. Gerekçeler kısa tutulmuştur; her kararın kanıt durumu §9'daki tabloda, karar listesi §10'dadır.
 
@@ -46,7 +46,7 @@ L0  Markdown dosyaları      (tek gerçek kaynak; Obsidian/git uyumlu)
 - **Nesne deposu:** içerik-adresli; aynı kimlik farklı içerik → hata.
 - **Soy eşleyici:** diff ile kimlik çıkarımı; kesin eşleşme → bağlam çapası → bölme/birleştirme → benzerlik → artık kontrolü. v3'te birleştirme simetrisi eklenir (K4).
 - **Chunk:** türev; bloklara referans verir, bloklar chunk'ı bilmez; strateji değişimi soy kaybetmez. Kanıt: H3-2.
-- **Yeni primitifler (çekirdek fazı; kanıtlı: P1-B C2, bağımsız doğrulandı; P1-D.1 D1-1..D1-13, "şu koşullarla güvenilir", koşulları P1-E/E0'da kapatıldı, bağımsız teyit P1-E doğrulamasında):**
+- **Yeni primitifler (çekirdek fazı; kanıtlı: P1-B C2, bağımsız doğrulandı; P1-D.1 D1-1..D1-13, "şu koşullarla güvenilir", koşulları P1-E/E0'da kapatıldı, P1-E doğrulamasında teyit edildi (V0)):**
   - *Köken* zaten blokta; **katman** alanı eklenir: `layer ∈ {canonical, proposal, derived}`; ajan yazımı varsayılan `proposal`.
   - *Terfi* olayı: `proposal → canonical`, tetikleyen ilkeyi (insan, politika plugin'i) ve gerekçeyi taşır; ContextNest'in yayın kapısının blok düzeyi karşılığı.
   - *Kontrol noktası:* vault genelinde `(doc_path → snapshot_id)` haritası + olay günlüğü ofseti; adlandırılabilir; geçmiş-noktası sorgu bu kimlikle yapılır.
@@ -119,13 +119,13 @@ Hook noktaları: `on_block_event`, `on_version_trigger`, `on_promotion_request`,
 | Graf sıralama sinyali | **Desteklenmedi** | v2 H2-1/4/5 kaldı |
 | Varlık grafı | **Araştırma** | — |
 | Akış durumu / patika | **Araştırma** | — |
-| Katman, terfi, kontrol noktası, tüketim izi | **Kanıtlı** | P1-B B-1..B-10 (C1+C2 25/25, bağımsız doğrulandı; C2 bugün 10/10); P1-D.1 D1-1..D1-13 (adlandırma, aktörlü olaylar; doğrulama "şu koşullarla güvenilir", koşullar P1-E/E0'da kapatıldı, teyit bekliyor); spec §7/§8/§11 Validated |
+| Katman, terfi, kontrol noktası, tüketim izi | **Kanıtlı** | P1-B B-1..B-10 (C1+C2 25/25, bağımsız doğrulandı; C2 bugün 10/10); P1-D.1 D1-1..D1-13 (adlandırma, aktörlü olaylar; doğrulama "şu koşullarla güvenilir", koşullar P1-E/E0'da kapatıldı, P1-E doğrulamasında teyit edildi (V0)); spec §7/§8/§11 Validated |
 | Ham günlük / sürüm tetikleyici sınırları | **Kanıtlı** | P1-B B-6 (politika sınırları), C2 |
 | Sözcüksel (Rust BM25) + kesin vektör + hibrit, kontrol noktasında sorgu | **Kanıtlı** | P1-C/P1-C.1: C3 7/7, Rust kalite referansı 618 değer Δ 0, prototip hattı varyant değişimiyle Δ 0; spec §9 Validated |
 | Sıcak katman (yazma→aranabilir) | **Kanıtlı** | P1-C C-8 p95 32.2 ms (< 100 ms) |
-| Servis yüzeyi (MCP, HTTP, CLI), ajan yazımı yönetişimi | **Kanıtlı** | P1-D D-1..D-11 ("şu koşullarla güvenilir", koşullar P1-D.1'de kapandı); P1-D.1 (`append_only`, kanal → aktör, tek yazar kuyruğu, kararlı hata kodları; "şu koşullarla güvenilir", koşullar P1-E/E0'da kapatıldı, teyit bekliyor) |
-| İstemci eklentisi (Obsidian) ve ürün sahnesi uçtan uca | **Ölçüldü, doğrulama bekliyor** | P1-E E-1/E-2 11/11 (geliştirme koşturmaları; Obsidian arayüzü başsız koşmadı, komut katmanı ölçüldü); resmi RUN ve bağımsız doğrulama P1-E/E8 sonrası |
-| Yayım ikilileri (4 platform) | **Kısmen** | P1-E E-7 2/4: macOS arm64 ve Linux x86_64 34/34; Intel macOS derlenemedi (sabitlenmiş `ort`'ta hazır onnxruntime yok); Windows ölçülmedi (CI tetiklenmedi); karar kuralı gereği yayım ertelendi (K-E5-T) |
+| Servis yüzeyi (MCP, HTTP, CLI), ajan yazımı yönetişimi | **Kanıtlı** | P1-D D-1..D-11 ("şu koşullarla güvenilir", koşullar P1-D.1'de kapandı); P1-D.1 (`append_only`, kanal → aktör, tek yazar kuyruğu, kararlı hata kodları; "şu koşullarla güvenilir", koşullar P1-E/E0'da kapatıldı, P1-E doğrulamasında teyit edildi (V0)) |
+| İstemci eklentisi (Obsidian) ve ürün sahnesi uçtan uca | **Kanıtlı, koşullu** | P1-E E-1/E-2 11/11 (resmi RUN `20261017T024341Z-632f29e`; E-2 eklentinin komut katmanıyla ölçüldü); bağımsız doğrulama "şu koşullarla güvenilir": sahne ve eklenti gerçek Obsidian arayüzünde, ayrı bir örnekte (`--user-data-dir`, CDP) 11/11 koşturuldu — Obsidian'ın başsız kipi yok, ama arayüz betikle sürülebilir; gerçek arayüz e2e'si P1-E.1'den itibaren resmi kapı (K-E1.3); koşul (`status` sözleşme ihlali) P1-E.1'de |
+| Yayım ikilisi (0.1.0: macOS arm64) | **Kısmen** | P1-E E-7 2/4: macOS arm64 ve Linux x86_64 34/34; Intel macOS derlenemedi (sabitlenmiş `ort`'ta hazır onnxruntime yok); Windows ölçülmedi (CI tetiklenmedi); karar kuralı gereği yayım ertelendi (K-E5-T). K-E1.1: 0.1.0 hedefi yalnız `aarch64-apple-darwin`, Linux/Windows CI bilgi, Intel macOS hedef değil |
 | Öğrenilen ağırlıklar / adaptör | **Tasarlandı** | — |
 | Sync, tenant | **Faz 2** | — |
 
