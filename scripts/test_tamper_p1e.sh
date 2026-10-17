@@ -8,7 +8,9 @@
 #     copy whose §3 row gives `index_stale` another status → fails;
 #   compare-fields (E0, E-13; K-E0.2): a declaration copy without one
 #     excluded field's row, with a row the code does not exclude, or with a
-#     pair exclusion relabelled `regress`/`karar` → check_compare_fields fails.
+#     pair exclusion relabelled `regress`/`karar` → check_compare_fields fails;
+#   client-types (E1): a generated contract.gen.ts with a tool outside the
+#     contract → scripts/gen_client_types.sh --check fails.
 # Writes <out.json>: {cases, rejected, rejected_total, controls_ok,
 # controls_total, pass}; exit 1 unless pass.
 #
@@ -70,6 +72,14 @@ add compare-fields "an excluded field's row removed (undeclared exclusion in cod
 add compare-fields "a row the code does not exclude added" rejected "$(MDK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
 sed 's#^\(| `compare_p1d1` | \)hepsi\( | `p1d1/d1_5.json` | `elapsed_ms_lockstep` | \)duvar-saati#\1regress\2karar#' research/eval/DETERMINISTIC_FIELDS.md >"$d"
 add compare-fields "a pair exclusion relabelled as a decision" rejected "$(MDK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
+
+# ---- client-types (E1): the generated contract types drift from the contract
+g="$work/contract.gen.ts"
+cp clients/obsidian/src/contract.gen.ts "$g"
+add client-types "untouched generated types" accepted "$(MDK_CLIENT_TYPES="$g" run bash scripts/gen_client_types.sh --check)"
+sed 's/"trace"\] as const/"trace","demote"] as const/' clients/obsidian/src/contract.gen.ts >"$g"
+cmp -s "$g" clients/obsidian/src/contract.gen.ts && { echo "test_tamper_p1e: TOOLS line not found" >&2; exit 1; }
+add client-types "a tool outside the contract added to the generated types" rejected "$(MDK_CLIENT_TYPES="$g" run bash scripts/gen_client_types.sh --check)"
 
 printf '%s\n' "${cases[@]}" | jq -s '{cases: .,
   rejected: ([.[] | select(.expected == "rejected" and .as_expected)] | length),
