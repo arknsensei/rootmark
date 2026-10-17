@@ -1,0 +1,13 @@
+# Dependencies adopted before the age rule was checked in CI (GH-0 G2;
+# ASSUMPTIONS GH-0 G2-1): pinned less than 14 days after publication and kept,
+# because changing a pin changes the builds and the frozen research numbers.
+# Every new pin follows the rule. Format: <ecosystem> <name> <version> <decision>
+cargo pyo3 0.29.3 GH-0/G2-1
+cargo serde_json 1.0.154 GH-0/G2-1
+pypi anthropic 1.13.0 GH-0/G2-1
+pypi blake3 1.0.11 GH-0/G2-1
+pypi lancedb 0.40.0 GH-0/G2-1
+pypi numpy 2.5.4 GH-0/G2-1
+pypi pyarrow 26.0.0 GH-0/G2-1
+pypi ruff 0.17.0 GH-0/G2-1
+pypi torch 2.14.1 GH-0/G2-1

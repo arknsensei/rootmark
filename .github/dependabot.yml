@@ -1,0 +1,28 @@
+# Security updates only (GOAL GH-0 G2): version updates are switched off
+# (`open-pull-requests-limit: 0`) because every dependency is pinned on
+# purpose (exact versions, at least 14 days old: scripts/check_dep_age.sh).
+# Dependabot security updates are enabled in the repository settings (GH-0
+# G3); a security fix younger than 14 days needs an entry with a decision in
+# scripts/dep_age_exceptions.txt.
+version: 2
+updates:
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+  - package-ecosystem: npm
+    directory: /clients/obsidian
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+  - package-ecosystem: uv
+    directory: /research
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
