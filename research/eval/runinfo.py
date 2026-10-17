@@ -15,7 +15,7 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval.datasets.common import DATA, ROOT, SEED, dump_json, file_blake3
 
@@ -76,7 +76,7 @@ def record_phase(run_id: str, phase: str, params: dict, outputs: list[str]) -> N
         "worktree_clean": worktree_clean(),
         "data_manifests": data_manifests(),
         "versions": _versions(),
-        "matcher_defaults": list(mdkernel_core.matcher_defaults()),
+        "matcher_defaults": list(rootmark_core.matcher_defaults()),
         "params": params,
         "outputs": outputs,
     }

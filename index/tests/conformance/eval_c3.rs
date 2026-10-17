@@ -39,13 +39,13 @@
 //! rankings equals that label's ranking.
 
 use anyhow::{anyhow, bail, Context, Result};
-use mdkcore::{
+use rootmarkcore::{
     Actor, ActorKind, AppendOnly, AuthorKind, BlockType, Decision, EditMode, EditPolicy,
     EditRequest, HumanOnly, Layer, MatcherVersion, Provenance, TransitionKind, Vault,
 };
-use mdkindex::embed::OnnxMiniLm;
-use mdkindex::search::{Mode, Searcher};
-use mdkindex::store::{self, Store};
+use rootmarkindex::embed::OnnxMiniLm;
+use rootmarkindex::search::{Mode, Searcher};
+use rootmarkindex::store::{self, Store};
 use serde_json::{json, Value};
 use std::collections::BTreeMap;
 use std::fs;
@@ -67,7 +67,8 @@ struct Scratch(PathBuf);
 impl Scratch {
     fn new(tag: &str) -> Result<Scratch> {
         let n = SCRATCH.fetch_add(1, Ordering::SeqCst);
-        let d = std::env::temp_dir().join(format!("mdk-conf3-{}-{n}-{tag}", std::process::id()));
+        let d =
+            std::env::temp_dir().join(format!("rootmark-conf3-{}-{n}-{tag}", std::process::id()));
         if d.exists() {
             fs::remove_dir_all(&d)?;
         }
@@ -285,7 +286,7 @@ pub fn evaluate_c3(dir: &Path) -> Result<Value> {
                 }
                 "view" => {
                     let st = Store::open(&v, e)?;
-                    let view = mdkindex::search::View::new(&v, &st, s(op, "at")?)?;
+                    let view = rootmarkindex::search::View::new(&v, &st, s(op, "at")?)?;
                     let mut n: BTreeMap<&str, usize> = BTreeMap::new();
                     for (_, l) in &view.entries {
                         *n.entry(layer_name(*l)).or_insert(0) += 1;
@@ -318,7 +319,8 @@ pub fn evaluate_c3(dir: &Path) -> Result<Value> {
                                 .iter()
                                 .position(|b| {
                                     b.block_type == BlockType::Heading
-                                        && mdkcore::parse::heading_title(&b.normalized_text) == h
+                                        && rootmarkcore::parse::heading_title(&b.normalized_text)
+                                            == h
                                 })
                                 .with_context(|| format!("no heading {h:?}"))?;
                             let level = blocks[at].heading_level;

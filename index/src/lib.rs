@@ -1,4 +1,4 @@
-//! mdkernel-index — derived indexes over `mdkernel-core` (spec §9, GOAL P1-C).
+//! rootmark-index — derived indexes over `rootmark-core` (spec §9, GOAL P1-C).
 //!
 //! Every index is derived: it can be dropped and rebuilt from the vault, and
 //! for the same checkpoint, query and index configuration it returns

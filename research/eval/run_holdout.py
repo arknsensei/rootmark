@@ -13,7 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics_v3 as M3
 from eval import runinfo
@@ -59,7 +59,7 @@ def disjointness() -> dict:
 def run(run_id: str) -> dict:
     m = verify_holdout()
     dis = disjointness()
-    theta, theta_split = mdkernel_core.matcher_defaults(MATCHER)
+    theta, theta_split = rootmark_core.matcher_defaults(MATCHER)
     ids = [d["id"] for d in json.loads((s3.HOLDOUT_DIR / "docs.json").read_text())]
     recs = [r for i in ids for r in doc_records(s3.HOLDOUT_DIR / "docs" / i, theta, theta_split)]
     agg = M3.aggregate(recs, "hard")

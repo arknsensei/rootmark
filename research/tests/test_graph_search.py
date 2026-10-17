@@ -4,15 +4,15 @@ PPR restart mass on seeds only, hier restricted to the top-20 documents."""
 import shutil
 from pathlib import Path
 
-import mdkernel_core as mk
 import networkx as nx
 import numpy as np
 import pytest
+import rootmark_core as mk
 
-from mdkernel import embed as E
-from mdkernel import graph as G
-from mdkernel import graph_search as GS
-from mdkernel import index as I
+from rootmark import embed as E
+from rootmark import graph as G
+from rootmark import graph_search as GS
+from rootmark import index as I
 
 MINI = Path(__file__).resolve().parents[2] / "spec" / "fixtures" / "mini_vault"
 

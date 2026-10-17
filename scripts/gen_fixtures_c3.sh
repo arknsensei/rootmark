@@ -11,7 +11,7 @@
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-(cd "$here" && MDK_FIXTURES="$here/spec/fixtures" \
-  cargo test -p mdkernel-index --release -q --test conformance_c3_gen -- --ignored --nocapture)
+(cd "$here" && ROOTMARK_FIXTURES="$here/spec/fixtures" \
+  cargo test -p rootmark-index --release -q --test conformance_c3_gen -- --ignored --nocapture)
 bash "$here/scripts/gen_fixtures.sh"
 echo "C3 fixtures written from the current index; MANIFEST.json from scripts/gen_fixtures.sh"

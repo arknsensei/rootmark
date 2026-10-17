@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 # P1-D.1 criteria (GOAL D1-1..D1-9, D1-11, D1-13; TASKS D1.6) into <out-dir>:
-#   1. server/tests/p1d1_criteria.rs with MDK_P1D1_OUT=<out-dir> →
+#   1. server/tests/p1d1_criteria.rs with ROOTMARK_P1D1_OUT=<out-dir> →
 #      d1_1.json … d1_9.json (each written before its threshold is asserted;
 #      a failing criterion is recorded, a missing file fails this script);
 #   2. D1-11 old vaults: the `p1d-final` tree (git archive) runs its own P1-D
 #      agent scene (MDK_SCENE_KEEP=1) and MCP e2e (agent replace_section with
 #      deletions written without an actor); every document of both vaults
 #      replays to the same snapshot_id under the p1d-final `mdk` and the
-#      current one, `events_hash` and the events.jsonl bytes are unchanged
-#      after the current `mdk` opened them (replay, blame, history, checkpoint
-#      list, events-hash), and the v3-final vaults pass
+#      current `rootmark` (after `rootmark migrate --rename-store`: the old
+#      vaults keep their metadata under .mdkernel/, K-GH.1), `events_hash` and
+#      the events.jsonl bytes are unchanged after the current `rootmark`
+#      opened them (replay, blame, history, checkpoint list, events-hash), and
+#      the v3-final vaults pass
 #      scripts/check_v3_compat.sh → d1_11.json, v3_compat*.json;
 #   3. D1-13: scripts/contract_check.sh → d1_13.json;
 #   4. p1d1.json: every criterion's `pass`.
@@ -24,16 +26,18 @@ here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 out="${1:?usage: test_p1d1.sh <out-dir>}"
 mkdir -p "$out"
 out="$(cd "$out" && pwd)"
-work="$(mktemp -d -t mdk-p1d1.XXXXXX)"
+work="$(mktemp -d -t rootmark-p1d1.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
-export MDK_MODELS="${MDK_MODELS:-$here/models}"
+export ROOTMARK_MODELS="${ROOTMARK_MODELS:-${MDK_MODELS:-$here/models}}"
+# the p1d-final binary reads the model directory under its own name
+export MDK_MODELS="$ROOTMARK_MODELS"
 
 cd "$here"
-cargo build -q --release -p mdkernel-server --bin mdk --example mcp_pipeline
-new="$here/target/release/mdk"
+cargo build -q --release -p rootmark-server --bin rootmark --example mcp_pipeline
+new="$here/target/release/rootmark"
 
 # 1. D1-1..D1-9
-MDK_P1D1_OUT="$out" cargo test -q --release -p mdkernel-server --test p1d1_criteria -- --test-threads=1 \
+ROOTMARK_P1D1_OUT="$out" cargo test -q --release -p rootmark-server --test p1d1_criteria -- --test-threads=1 \
   >"$out/p1d1_criteria.log" 2>&1 || echo "test_p1d1: p1d1_criteria exit $? (recorded)" >&2
 for n in 1 2 3 4 5 6 7 8 9; do
   [ -f "$out/d1_$n.json" ] || { tail -40 "$out/p1d1_criteria.log" >&2; echo "test_p1d1: d1_$n.json missing" >&2; exit 1; }
@@ -57,17 +61,26 @@ vaults=()
 results=()
 for entry in "${vaults[@]}"; do
   name="${entry%%:*}"; v="${entry#*:}"
+  # the p1d-final binary reads the vault as it wrote it (.mdkernel/) …
   log="$v/.mdkernel/events.jsonl"
   bytes_before="$(shasum -a 256 "$log" | cut -d' ' -f1)"
   h_old="$("$old" events-hash "$v" | jq -r .events_hash)"
-  docs=0; equal=0; blame_ok=0
+  jq -r 'select(.kind == "SnapshotCommitted") | .doc_path' "$log" | sort -u >"$work/docs_$name"
+  : >"$work/old_ids_$name"
   while IFS= read -r doc; do
+    "$old" replay "$v" "$doc" | jq -r .snapshot_id >>"$work/old_ids_$name"
+  done <"$work/docs_$name"
+  # … and the current one after renaming it to .rootmark/ (K-GH.1)
+  "$new" migrate --rename-store "$v" >"$work/migrate_$name.json" \
+    || { echo "test_p1d1: rootmark migrate --rename-store failed on the $name vault" >&2; exit 1; }
+  log="$v/.rootmark/events.jsonl"
+  docs=0; equal=0; blame_ok=0
+  while IFS= read -r doc && IFS= read -r a <&3; do
     docs=$((docs + 1))
-    a="$("$old" replay "$v" "$doc" | jq -r .snapshot_id)"
     b="$("$new" replay "$v" "$doc" | jq -r .snapshot_id)"
     [ -n "$a" ] && [ "$a" = "$b" ] && equal=$((equal + 1))
     "$new" blame "$v" "$doc" >/dev/null 2>&1 && blame_ok=$((blame_ok + 1))
-  done < <(jq -r 'select(.kind == "SnapshotCommitted") | .doc_path' "$log" | sort -u)
+  done <"$work/docs_$name" 3<"$work/old_ids_$name"
   # an agent deletion written before K-D1.2 reads without an actor
   dels="$(jq -c 'select(.kind == "BlockDeleted")' "$log" | wc -l | tr -d ' ')"
   del_l="$(jq -r 'select(.kind == "BlockDeleted") | .lineage_ids[0]' "$log" | head -1)"

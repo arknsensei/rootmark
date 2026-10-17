@@ -7,7 +7,7 @@
 //! A promotion without a hook does not compile (C2-03):
 //!
 //! ```compile_fail
-//! # use mdkcore::{Actor, ActorKind, Layer, TransitionKind, Vault};
+//! # use rootmarkcore::{Actor, ActorKind, Layer, TransitionKind, Vault};
 //! # fn f(v: &mut Vault, l: &str) -> anyhow::Result<()> {
 //! let actor = Actor::new(ActorKind::Human, "alice")?;
 //! let req = v.request(TransitionKind::Promote, l, Layer::Canonical, actor, "ok")?;
@@ -18,7 +18,7 @@
 //! The same call with a hook compiles:
 //!
 //! ```
-//! # use mdkcore::{Actor, ActorKind, HumanOnly, Layer, TransitionKind, Vault};
+//! # use rootmarkcore::{Actor, ActorKind, HumanOnly, Layer, TransitionKind, Vault};
 //! # fn f(v: &mut Vault, l: &str) -> anyhow::Result<()> {
 //! let actor = Actor::new(ActorKind::Human, "alice")?;
 //! let req = v.request(TransitionKind::Promote, l, Layer::Canonical, actor, "ok")?;

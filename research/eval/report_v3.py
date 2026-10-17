@@ -337,7 +337,7 @@ def build(run: str) -> str:
     v2h = v2r["H4-V2"]
     fe = FREEZE_EXCEPTIONS.read_text(encoding="utf-8").strip()
     lines = [
-        "# mdkernel-v3 — Nihai Rapor",
+        "# rootmark-v3 — Nihai Rapor",
         "",
         (
             f"RUN: {run} · Commit: {', '.join(s[:12] for s in shas)} ({dirty}) · Rust {any_phase['versions']['rust']} · "

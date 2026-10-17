@@ -1,4 +1,4 @@
-//! Policy recipe `.mdkernel/policy.toml` (PACKAGES: phase-1 policy plugins
+//! Policy recipe `.rootmark/policy.toml` (PACKAGES: phase-1 policy plugins
 //! are declarative recipes with parameters inside the kernel bounds).
 //!
 //! ```toml
@@ -188,11 +188,12 @@ impl Policy {
     }
 
     pub fn path(vault_root: &Path) -> PathBuf {
-        vault_root.join(".mdkernel").join("policy.toml")
+        crate::meta::path(vault_root).join("policy.toml")
     }
 
-    /// `<vault>/.mdkernel/policy.toml`, or the built-in recipe if absent.
+    /// `<vault>/.rootmark/policy.toml`, or the built-in recipe if absent.
     pub fn load(vault_root: &Path) -> Result<Policy> {
+        crate::meta::check(vault_root)?;
         let p = Self::path(vault_root);
         // only a path that is absent altogether means "no recipe"; a broken
         // link or unreadable entry is an error (B6 review)

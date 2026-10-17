@@ -21,7 +21,7 @@ import json
 import tempfile
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import runinfo
 from eval.compare_runs import leaves
@@ -59,7 +59,7 @@ def h1s_condition() -> dict:
     ref = json.loads(git("show", f"{REF_TAG}:{REF_PATH}", cwd=ROOT))
     with matcher_env(MATCHER):
         run_h1s.verify_d1()
-        theta, theta_split = mdkernel_core.matcher_defaults(MATCHER)
+        theta, theta_split = rootmark_core.matcher_defaults(MATCHER)
         m = run_h1s.evaluate(run_h1s.splits()["test"], None, None)
     # compared as written to disk (JSON), exactly like the reference file
     got = json.loads(dump_json({"split": "test", "theta": theta, "theta_split": theta_split, **m}))

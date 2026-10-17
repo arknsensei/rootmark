@@ -1300,72 +1300,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "mdkernel-bindings"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "mdkernel-core",
- "mdkernel-index",
- "pyo3",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "mdkernel-core"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "blake3",
- "pathfinding",
- "pulldown-cmark",
- "regex",
- "serde",
- "serde_json",
- "strsim",
- "tiktoken-rs",
- "toml",
- "unicode-normalization",
-]
-
-[[package]]
-name = "mdkernel-index"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "blake3",
- "clap",
- "mdkernel-core",
- "ndarray",
- "ort",
- "serde",
- "serde_json",
- "tantivy",
- "tokenizers",
-]
-
-[[package]]
-name = "mdkernel-server"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "axum",
- "blake3",
- "clap",
- "getrandom 0.3.4",
- "jsonschema",
- "mdkernel-core",
- "mdkernel-index",
- "notify",
- "rmcp",
- "schemars",
- "serde",
- "serde_json",
- "tokio",
- "toml",
-]
-
-[[package]]
 name = "measure_time"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2044,6 +1978,72 @@ dependencies = [
  "quote",
  "serde_json",
  "syn 3.0.9",
+]
+
+[[package]]
+name = "rootmark-bindings"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "pyo3",
+ "rootmark-core",
+ "rootmark-index",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "rootmark-core"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "blake3",
+ "pathfinding",
+ "pulldown-cmark",
+ "regex",
+ "serde",
+ "serde_json",
+ "strsim",
+ "tiktoken-rs",
+ "toml",
+ "unicode-normalization",
+]
+
+[[package]]
+name = "rootmark-index"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "blake3",
+ "clap",
+ "ndarray",
+ "ort",
+ "rootmark-core",
+ "serde",
+ "serde_json",
+ "tantivy",
+ "tokenizers",
+]
+
+[[package]]
+name = "rootmark-server"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "axum",
+ "blake3",
+ "clap",
+ "getrandom 0.3.4",
+ "jsonschema",
+ "notify",
+ "rmcp",
+ "rootmark-core",
+ "rootmark-index",
+ "schemars",
+ "serde",
+ "serde_json",
+ "tokio",
+ "toml",
 ]
 
 [[package]]

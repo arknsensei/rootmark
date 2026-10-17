@@ -68,7 +68,7 @@ def rows(d: Path) -> list[dict]:
         },
         {
             "id": "E-2",
-            "what": "Plugin e2e aynı 11 adım (komut katmanı gerçek `mdk serve`'e karşı; Obsidian başsız koşmadı, ASSUMPTIONS E4-1)",
+            "what": "Plugin e2e aynı 11 adım (komut katmanı gerçek `rootmark serve`'e karşı; Obsidian başsız koşmadı, ASSUMPTIONS E4-1)",
             "value": c["E-2"]["steps"],
             "threshold": "11/11",
             "pass": c["E-2"]["pass"],
@@ -108,7 +108,7 @@ def rows(d: Path) -> list[dict]:
         },
         {
             "id": "E-7",
-            "what": "4 platform ikilisi derlenir, `--version`/`--spec-version` doğru, her birinde `mdk conformance` 34/34",
+            "what": "4 platform ikilisi derlenir, `--version`/`--spec-version` doğru, her birinde `rootmark conformance` 34/34",
             "value": f"{e7['four_targets']['ok']} ({'; '.join(f'{k}: {v}' for k, v in e7['four_targets']['targets'].items())}); zincirin yerel hedefi {e7['chain_local_target']['target']} {e7['chain_local_target']['conformance']['passed']}/34, `make conformance`'a eşit {e7['chain_local_target']['equal_to_make_conformance']}",
             "threshold": "4/4",
             "pass": c["E-7"]["pass"],
@@ -209,7 +209,7 @@ def decide(r: list[dict], ad: list[dict]) -> tuple[str, list[str]]:
         return (
             "E-1..E-10 geçti"
             + cond
-            + ' → E-11 de geçerse **Faz 1 tamamlandı**: `mdk 0.1.0` etiketi (insan, docs/RELEASE.md), spec §7–§11 "Validated" teyit, NORTH_STAR güncellenir, faz 2 planlaması başlar.',
+            + ' → E-11 de geçerse **Faz 1 tamamlandı**: `rootmark 0.1.0` etiketi (insan, docs/RELEASE.md), spec §7–§11 "Validated" teyit, NORTH_STAR güncellenir, faz 2 planlaması başlar.',
             failed,
         )
     if any(f in GOVERNANCE for f in failed):
@@ -218,7 +218,7 @@ def decide(r: list[dict], ad: list[dict]) -> tuple[str, list[str]]:
         return (
             "Yalnız E-7 kaldı"
             + cond
-            + " → **yayım ertelenir, faz 2 planlaması başlar** (K-E5-T). `mdk 0.1.0` etiketi atılmaz.",
+            + " → **yayım ertelenir, faz 2 planlaması başlar** (K-E5-T). `rootmark 0.1.0` etiketi atılmaz.",
             failed,
         )
     if failed == ["E-2"] and "E-1" not in failed:

@@ -8,7 +8,7 @@
 //! `spec/fixtures/MANIFEST.json` lists the blake3 of every fixture file and a
 //! mismatch fails the run before any case is evaluated.
 //!
-//! `make conformance` sets `MDK_CONFORMANCE_REPORT` to write
+//! `make conformance` sets `ROOTMARK_CONFORMANCE_REPORT` to write
 //! `reports/conformance.json`: one entry per test with pass/fail and the
 //! blake3 of the actual and expected output, plus the absolute fixture root
 //! and the blake3 of its `MANIFEST.json`.
@@ -21,7 +21,7 @@
 //! with an intact manifest.
 //!
 //! The fixture root is resolved at run time, never compiled in (P1-A verifier
-//! recommendation Ö2): `MDK_FIXTURES` (`make conformance` passes
+//! recommendation Ö2): `ROOTMARK_FIXTURES` (`make conformance` passes
 //! `$(CURDIR)/spec/fixtures`), else `<cwd>/../spec/fixtures` — cargo runs
 //! tests in `core/`. A test binary moved with its `target/` therefore reads
 //! the fixtures of the tree it runs in.
@@ -49,8 +49,8 @@ const LEVEL2: [&str; 10] = [
 /// `(absolute fixture root, how it was resolved)`; a root without
 /// `MANIFEST.json` is an error, not a fallback.
 fn fixtures() -> (PathBuf, &'static str) {
-    let (root, source) = match std::env::var_os("MDK_FIXTURES") {
-        Some(p) if !p.is_empty() => (PathBuf::from(p), "MDK_FIXTURES"),
+    let (root, source) = match std::env::var_os("ROOTMARK_FIXTURES") {
+        Some(p) if !p.is_empty() => (PathBuf::from(p), "ROOTMARK_FIXTURES"),
         _ => (
             std::env::current_dir()
                 .expect("current directory")
@@ -202,7 +202,7 @@ fn conformance_levels_1_and_2() {
         "total": LEVEL1.len() + LEVEL2.len(),
         "tests": entries,
     });
-    if let Ok(path) = std::env::var("MDK_CONFORMANCE_REPORT") {
+    if let Ok(path) = std::env::var("ROOTMARK_CONFORMANCE_REPORT") {
         let path = PathBuf::from(path);
         if let Some(d) = path.parent() {
             fs::create_dir_all(d).unwrap();

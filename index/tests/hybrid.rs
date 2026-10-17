@@ -4,10 +4,10 @@
 //! error. Needs the model files (`make models`).
 
 use anyhow::Result;
-use mdkcore::{Layer, MatcherVersion, Vault};
-use mdkindex::embed::{Embedder, OnnxMiniLm};
-use mdkindex::search::{self, Hit, Scored, View};
-use mdkindex::store::{self, Store};
+use rootmarkcore::{Layer, MatcherVersion, Vault};
+use rootmarkindex::embed::{Embedder, OnnxMiniLm};
+use rootmarkindex::search::{self, Hit, Scored, View};
+use rootmarkindex::store::{self, Store};
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
@@ -24,7 +24,7 @@ fn here(rel: &str) -> PathBuf {
 fn tmp(name: &str) -> PathBuf {
     static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let n = N.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-    let d = std::env::temp_dir().join(format!("mdk-c3-{}-{n}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-c3-{}-{n}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d

@@ -3,13 +3,13 @@
 //! change results at an older checkpoint, and every search writes one trace
 //! whose `trace_id` follows K-B1.2 (computed here independently).
 
-use mdkcore::{
+use rootmarkcore::{
     Actor, ActorKind, AuthorKind, HumanOnly, Layer, MatcherVersion, Provenance, TransitionKind,
     Vault,
 };
-use mdkindex::embed::OnnxMiniLm;
-use mdkindex::search::{self, Mode, Searcher, View, PROPOSAL_WEIGHT};
-use mdkindex::store::{self, Store};
+use rootmarkindex::embed::OnnxMiniLm;
+use rootmarkindex::search::{self, Mode, Searcher, View, PROPOSAL_WEIGHT};
+use rootmarkindex::store::{self, Store};
 use std::collections::BTreeSet;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -27,7 +27,7 @@ fn here(rel: &str) -> PathBuf {
 fn tmp(name: &str) -> PathBuf {
     static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let n = N.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-    let d = std::env::temp_dir().join(format!("mdk-c4-{}-{n}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-c4-{}-{n}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -127,7 +127,7 @@ fn queries(v: &Vault, s: &Store, cp: &str, n: usize, seed: u64) -> Vec<String> {
     let words: Vec<String> = view
         .entries
         .iter()
-        .flat_map(|&(i, _)| mdkindex::tokenize::tokens(&s.records[i].text))
+        .flat_map(|&(i, _)| rootmarkindex::tokenize::tokens(&s.records[i].text))
         .collect::<BTreeSet<_>>()
         .into_iter()
         .collect();
@@ -216,7 +216,7 @@ fn c7_property_1000_queries() {
         }
     }
     eprintln!("c7: {} queries x 2 settings, {seen_proposal} proposal hits returned with include_proposal; layers {:?}", qs.len(), [counts(Layer::Canonical), counts(Layer::Proposal), counts(Layer::Derived)]);
-    if let Ok(p) = std::env::var("MDK_C7_OUT") {
+    if let Ok(p) = std::env::var("ROOTMARK_C7_OUT") {
         let out = serde_json::json!({
             "queries": qs.len(),
             "modes": ["flat", "lexical", "hybrid"],

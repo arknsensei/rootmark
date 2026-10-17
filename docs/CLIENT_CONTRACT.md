@@ -1,17 +1,17 @@
-# mdk istemci sözleşmesi (P1-D.1, K-D1.5; P1-E/E0 K-E0.3, K-E0.4; P1-E.1 K-E1.2)
+# rootmark istemci sözleşmesi (P1-D.1, K-D1.5; P1-E/E0 K-E0.3, K-E0.4; P1-E.1 K-E1.2)
 
-Durum: P1-E.1/E1.1. Bu belge P1-E istemcisinin (ve her MCP/HTTP istemcisinin) `mdk serve`'e bağımlılığının **tamamıdır**. Burada yazmayan bir davranışa istemci güvenmez. Sözleşmedeki her araç ve her hata kodu en az bir testle, her §1 ucu ve §3 durum satırı gerçek bir HTTP çağrısıyla eşleşir (`scripts/contract_check.sh`). Spec kavramları için `spec/SPEC.md`, güvenlik modeli için `docs/SECURITY.md`.
+Durum: P1-E.1/E1.1. Bu belge P1-E istemcisinin (ve her MCP/HTTP istemcisinin) `rootmark serve`'e bağımlılığının **tamamıdır**. Burada yazmayan bir davranışa istemci güvenmez. Sözleşmedeki her araç ve her hata kodu en az bir testle, her §1 ucu ve §3 durum satırı gerçek bir HTTP çağrısıyla eşleşir (`scripts/contract_check.sh`). Spec kavramları için `spec/SPEC.md`, güvenlik modeli için `docs/SECURITY.md`.
 
 ## 1. Taşımalar ve kanal → aktör (K-D1.3)
 | Taşıma | Başlatma | Kimlik | Aktör |
 |---|---|---|---|
-| MCP stdio | `mdk serve --vault <v> --mcp stdio` | `initialize.params.clientInfo` → tüketici `<name>/<version>` (boşsa iz yazan araçlar, `propose` ve `promote` `invalid_arguments` ile reddeder) | daima `agent:<tüketici>` |
-| HTTP | `mdk serve --vault <v> --http 127.0.0.1:<port>` (`:0` serbest port; gerçek port stderr'de `mdk serve: http listening on 127.0.0.1:<port>`) | `Authorization: Bearer <.mdkernel/server.token>` (zorunlu), `X-Consumer: <etiket>` (zorunlu, boş olamaz) | daima `human:<policy.toml [identity] human_id>` |
+| MCP stdio | `rootmark serve --vault <v> --mcp stdio` | `initialize.params.clientInfo` → tüketici `<name>/<version>` (boşsa iz yazan araçlar, `propose` ve `promote` `invalid_arguments` ile reddeder) | daima `agent:<tüketici>` |
+| HTTP | `rootmark serve --vault <v> --http 127.0.0.1:<port>` (`:0` serbest port; gerçek port stderr'de `rootmark serve: http listening on 127.0.0.1:<port>`) | `Authorization: Bearer <.rootmark/server.token>` (zorunlu), `X-Consumer: <etiket>` (zorunlu, boş olamaz) | daima `human:<policy.toml [identity] human_id>` |
 
 - `X-Consumer` yalnız iz etiketidir (`traces.jsonl` `consumer`) ve `propose`'un köken `source`'udur. Aktör türünü **değiştiremez**.
 - HTTP'de **yazma uçları** (`propose`, `promote`, `checkpoint`) `[identity] human_id` ister. Yoksa 403 `denied` döner. Okuma ve iz yazan okuma (`search`, `read_block`) `human_id` olmadan çalışır.
 - HTTP yalnız `127.0.0.1`'dedir. Uçlar: `POST /v1/<araç>` (gövde = araç argümanları, JSON nesnesi; boş gövde `{}`) ve `GET /v1/status`. Gövde sınırı `[server] max_propose_bytes + 1 MiB`'dır (üstü 413 `too_large`).
-- **Tek süreç:** MCP ve HTTP aynı vault için tek bir `mdk serve` sürecinde birlikte açılmalıdır: `mdk serve --vault <v> --mcp stdio --http 127.0.0.1:<port>`. §5'teki sıra garantisi yalnız bir süreç içindir. Aynı vault'a ikinci bir `mdk serve` ya da CLI yazımı sıralanmaz ve kilitlenmez (`docs/SECURITY.md`).
+- **Tek süreç:** MCP ve HTTP aynı vault için tek bir `rootmark serve` sürecinde birlikte açılmalıdır: `rootmark serve --vault <v> --mcp stdio --http 127.0.0.1:<port>`. §5'teki sıra garantisi yalnız bir süreç içindir. Aynı vault'a ikinci bir `rootmark serve` ya da CLI yazımı sıralanmaz ve kilitlenmez (`docs/SECURITY.md`).
 
 ## 2. Araçlar
 Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProperties: false`). Bilinmeyen alan `invalid_arguments` döner. Yazan araçlar ve iz yazan araçlar vault başına tek FIFO kuyruğundan geçer (§5).
@@ -77,7 +77,7 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
 - İz (`trace.traces[]`, `read_block.trace`): `trace_id`, `checkpoint_id`, `consumer`, `query_hash` (dize), `at_seq` (tamsayı), `returned[{doc_path, lineage_id, version_id}]`.
 - Checkpoint (`checkpoint`, `checkpoints[]`, `status.last_checkpoint`): `checkpoint_id` (dize), `name` (dize ya da `null`), `event_seq` (tamsayı), `docs` (nesne: `doc_path` → snapshot kimliği). `status.last_checkpoint` checkpoint yoksa `null`.
 - `status`: `spec_version`, `mdk_version` (dize), `level_claimed` (tamsayı), `embedder` (dize ya da `null`: diskteki indeks manifest'inin `embedder_id`'si; manifest yok ya da okunamıyorsa `null`), `index` (nesne, K-E1.2), `policy.promotion`, `policy.edit` (dize), `server_policy.identity.human_id` (dize ya da `null`).
-- `status.index` (K-E1.2; P1-E/E0'daki `"absent"`/`"present"` dizesinin yerine): `state` (dize: `ok` — manifest bu uygulamanın biçiminde ve sözcüksel kaydında; `stale` — manifest okunur ama başka biçimde ya da sözcüksel kayıtta, eski bir `mdk`'nin indeksi; `missing` — indeks dizini ya da manifest yok; `damaged` — manifest okunamıyor ya da çözülemiyor), `format` (dize ya da `null`: diskteki manifest'in `format`'ı), `expected_format` (dize: bu `mdk`'nin biçimi), `auto_rebuild` (boole: vault politikasının `[index] auto_rebuild`'i). `status` yalnız manifest'i okur: dosyaları manifest'le uyuşmayan bir indeks `ok` görünür ve indeks isteyen çağrılarda `internal` döner (§3). `stale`, `missing` ve `damaged`'da indeks isteyen çağrılar `index_stale` döner; yeniden kurma yolu `mdk index build <vault>` (ya da `stale`/`missing`'de `auto_rebuild = true` ile `mdk serve`'i yeniden başlatmak; `damaged` manifest'in üstüne kendiliğinden kurulmaz).
+- `status.index` (K-E1.2; P1-E/E0'daki `"absent"`/`"present"` dizesinin yerine): `state` (dize: `ok` — manifest bu uygulamanın biçiminde ve sözcüksel kaydında; `stale` — manifest okunur ama başka biçimde ya da sözcüksel kayıtta, eski bir `rootmark`'ın indeksi; `missing` — indeks dizini ya da manifest yok; `damaged` — manifest okunamıyor ya da çözülemiyor), `format` (dize ya da `null`: diskteki manifest'in `format`'ı), `expected_format` (dize: bu `rootmark`'ın biçimi), `auto_rebuild` (boole: vault politikasının `[index] auto_rebuild`'i). `status` yalnız manifest'i okur: dosyaları manifest'le uyuşmayan bir indeks `ok` görünür ve indeks isteyen çağrılarda `internal` döner (§3). `stale`, `missing` ve `damaged`'da indeks isteyen çağrılar `index_stale` döner; yeniden kurma yolu `rootmark index build <vault>` (ya da `stale`/`missing`'de `auto_rebuild = true` ile `rootmark serve`'i yeniden başlatmak; `damaged` manifest'in üstüne kendiliğinden kurulmaz).
 
 ## 3. Hata kodları (K-D1.5)
 Başarısız bir araç çağrısı şu biçimlerde döner:
@@ -91,19 +91,19 @@ Başarısız bir araç çağrısı şu biçimlerde döner:
 |---|---|---|
 | `invalid_arguments` | 400 | Şemaya ya da kurala uymayan argüman (tip, bilinmeyen alan, `k` aralığı, kip, `.md` olmayan ad, boş `reason`, `heading` kullanımı, tüketici kimliği yok). HTTP'de `X-Consumer` eksik/boş, gövde JSON nesnesi değil ve yanlış yöntem (405) de bu koddur. |
 | `empty_query` | 400 | Boş ya da yalnız boşluk sorgusu. |
-| `path_outside_vault` | 400 | Vault ya da belgeleri dışına çıkan yol: `..`, mutlak, gizli bileşen (`.mdkernel/`), sembolik bağ. |
+| `path_outside_vault` | 400 | Vault ya da belgeleri dışına çıkan yol: `..`, mutlak, gizli bileşen (`.rootmark/`), sembolik bağ. |
 | `denied` | 403 | Politika ya da kanal reddi: `append_only` düzenleme politikası, `human_id`'siz HTTP yazımı. 401 (token eksik/yanlış) da `denied` kodunu taşır. |
 | `not_found` | 404 | Bilinmeyen soy, belge, checkpoint, araç ya da HTTP yolu. `append`/`replace_section` için var olmayan belge. |
 | `exists` | 409 | Yaratılacak şey var: `create` ile var olan belge; `doc_path`'i yalnız harf ya da Unicode biçimiyle var olan bir belgeden ayrılan yol; alınmış checkpoint adı; adlı durum için başka bir ad ya da adsız istek. |
 | `too_large` | 413 | `content` `[server] max_propose_bytes`'ı aşıyor ya da HTTP gövdesi sınırı aşıyor. |
 | `heading_not_found` | 422 | `replace_section` başlığı belgede yok ya da birden fazla. |
 | `policy_violation` | 422 | Vault'un `policy.toml`'u geçersiz; ya da ajanın insan bloklarına `append`'i kendi başlığıyla başlamadığı için `append_only` altında reddedildi (K-E0.4; `hint` taşır). |
-| `index_stale` | 503 | Vault'un indeksi eksik, başka bir biçimde (eski `mdk`'nin yazdığı indeks) ya da manifest'i okunamıyor (K-E1.2): yeniden kurulmalı (`mdk index build`, ya da eksik/eski biçimde `[index] auto_rebuild = true` ile `mdk serve`'i yeniden başlatmak; K-E0.3). Kurtarılabilir bir durumdur, `internal` değildir. Yalnız indeks isteyen çağrılar döner; `status` hiçbir indeks durumunda dönmez. |
+| `index_stale` | 503 | Vault'un indeksi eksik, başka bir biçimde (eski bir sürümün yazdığı indeks) ya da manifest'i okunamıyor (K-E1.2): yeniden kurulmalı (`rootmark index build`, ya da eksik/eski biçimde `[index] auto_rebuild = true` ile `rootmark serve`'i yeniden başlatmak; K-E0.3). Kurtarılabilir bir durumdur, `internal` değildir. Yalnız indeks isteyen çağrılar döner; `status` hiçbir indeks durumunda dönmez. |
 | `internal` | 500 | Sunucu ya da vault hatası (ör. manifest'le uyuşmayan indeks dosyası). Raporlanması gereken bir hatadır, sessiz başarı değildir. |
 
 İstisnalar:
 - MCP'de bilinmeyen araç bir JSON-RPC hatasıdır (`-32602`). HTTP'de 404 `not_found`'dur.
-- `mdk serve` başlarken indeks yoksa kurar; başka biçimdeyse `[index] auto_rebuild = true` (varsayılan) ile yeniden kurar. `auto_rebuild = false` ise indeksi olduğu gibi bırakır, stderr'e yazar ve indeks isteyen çağrılar (`search`, indeks taşıyan vault'ta `propose`) `index_stale` döner. Okunamayan manifest'i (`damaged`) hiçbir ayarda kendiliğinden yeniden kurmaz; indeks isteyen çağrılar yine `index_stale` döner. Salt okunur çağrılar (`blame`, `history`, `checkpoints`, `trace`, …) indekssiz de çalışır (K-E0.3); `status` her indeks durumunda 200 döner ve durumu `index.state`'te bildirir (K-E1.2).
+- `rootmark serve` başlarken indeks yoksa kurar; başka biçimdeyse `[index] auto_rebuild = true` (varsayılan) ile yeniden kurar. `auto_rebuild = false` ise indeksi olduğu gibi bırakır, stderr'e yazar ve indeks isteyen çağrılar (`search`, indeks taşıyan vault'ta `propose`) `index_stale` döner. Okunamayan manifest'i (`damaged`) hiçbir ayarda kendiliğinden yeniden kurmaz; indeks isteyen çağrılar yine `index_stale` döner. Salt okunur çağrılar (`blame`, `history`, `checkpoints`, `trace`, …) indekssiz de çalışır (K-E0.3); `status` her indeks durumunda 200 döner ve durumu `index.state`'te bildirir (K-E1.2).
 - Politikanın `promote` reddi her kanalda yanıttır, hata değildir (§2.4).
 
 ## 4. Olaylar, köken ve ajan yönergesi
@@ -116,10 +116,10 @@ Başarısız bir araç çağrısı şu biçimlerde döner:
 
 ### 4.2 Olaylar ve köken (spec §4.3, K-D1.2)
 - `history` çıktısındaki silme ve değiştirme olayları (`BlockDeleted`, `BlockUpdated`, `BlockMoved`, `BlockSplit`, `BlockMerged`) sunucu üzerinden yazıldıysa `meta.actor {kind, id}` ve `meta.source` taşır. Aktör kanaldan gelir: `agent:<istemci>`, `human:<human_id>`; izleyicinin aldığı dış düzenlemeler için `human:<human_id>` ya da `human:unidentified`.
-- 1.0.3 öncesi yazılmış olaylar ve `mdk ingest`/`ingest-dir` (düşük düzey çekirdek yolu) aktör taşımaz. İstemci bunu "aktör kaydedilmemiş" olarak gösterir, aktör uydurmaz.
+- 1.0.3 öncesi yazılmış olaylar ve `rootmark ingest`/`ingest-dir` (düşük düzey çekirdek yolu) aktör taşımaz. İstemci bunu "aktör kaydedilmemiş" olarak gösterir, aktör uydurmaz.
 
 ## 5. Sıra ve determinizm (K-D1.4, spec §10)
-- Yazan ve iz yazan çağrılar (`search`, `read_block`, `propose`, `promote`, `checkpoint`; ayrıca izleyici ve sıkıştırma) vault başına tek FIFO kuyruğunda, **geliş sırasıyla**, tek tek işlenir. Kuyruk tek `mdk serve` sürecinindir (§1). MCP'de geliş sırası isteğin stdio'dan okunduğu sıradır. HTTP'de isteğin kabul edildiği andır. MCP ve HTTP aynı kuyruğu paylaşır.
+- Yazan ve iz yazan çağrılar (`search`, `read_block`, `propose`, `promote`, `checkpoint`; ayrıca izleyici ve sıkıştırma) vault başına tek FIFO kuyruğunda, **geliş sırasıyla**, tek tek işlenir. Kuyruk tek `rootmark serve` sürecinindir (§1). MCP'de geliş sırası isteğin stdio'dan okunduğu sıradır. HTTP'de isteğin kabul edildiği andır. MCP ve HTTP aynı kuyruğu paylaşır.
 - Boru hatlı bir istemci (yanıt beklemeden gönderen), aynı istek dizisiyle kilit adımlı bir istemciyle aynı `events.jsonl`, `traces.jsonl` ve md dosyalarını üretir. Yanıtlar sırasız gelebilir; istemci onları `id` ile eşler.
 - İptal edilen bir çağrı (`notifications/cancelled`) yine geliş yerinde koşar. İptal bir yazmayı ne geri alır ne de taşır.
 - Salt okunur çağrılar (`status`, `history`, `blame`, `checkpoints`, `trace`) birbirleriyle paralel çalışır, bir yazar çalışırken bekler. Bir okuma, kendinden önce gönderilmiş ama henüz işlenmemiş bir yazmayı görmeyebilir. Bir yazmanın sonucunu görmek isteyen istemci onun yanıtını bekler.

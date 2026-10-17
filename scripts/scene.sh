@@ -6,12 +6,12 @@
 #   scripts/scene.sh [<out-dir>]      (default reports/rounds/P1-E/scene)
 #
 # Vault: spec/fixtures/mini_vault copied and ingested in a fresh temporary
-# directory; the first `mdk serve` writes the default policy (human_only,
+# directory; the first `rootmark serve` writes the default policy (human_only,
 # append_only), to which `[identity] human_id = "editor"` is added. One
 # server process at a time (never two on the vault, contract §1): each
-# agent session is its own `mdk serve --mcp stdio` (server/examples/
+# agent session is its own `rootmark serve --mcp stdio` (server/examples/
 # mcp_client.rs, client `scene-agent/1.0`), each human step block one
-# `mdk serve --http 127.0.0.1:0` (X-Consumer `scene-human`).
+# `rootmark serve --http 127.0.0.1:0` (X-Consumer `scene-human`).
 # Steps:
 #    1. status            HTTP and MCP: spec version, policies, the human
 #    2. checkpoint        HTTP {name: "before"}: the state before the agent
@@ -34,7 +34,7 @@
 # change only at the propose step). <out-dir>/scene.json holds one record
 # per step and `pass` (no time stamp, token or absolute path: two runs are
 # byte-equal); <out-dir>/events.jsonl, traces.jsonl, proposals.jsonl are the
-# vault's logs (E-8). Exit 1 unless every step passes. MDK_SCENE_KEEP=1
+# vault's logs (E-8). Exit 1 unless every step passes. ROOTMARK_SCENE_KEEP=1
 # keeps the vault in <out-dir>/scene_vault.
 set -euo pipefail
 
@@ -43,10 +43,10 @@ out="${1:-$root/reports/rounds/P1-E/scene}"
 mkdir -p "$out"
 out="$(cd "$out" && pwd)"
 cd "$root"
-cargo build -q --release -p mdkernel-server --bin mdk --example mcp_client
-mdk="$root/target/release/mdk"
+cargo build -q --release -p rootmark-server --bin rootmark --example mcp_client
+rootmark="$root/target/release/rootmark"
 client="$root/target/release/examples/mcp_client"
-work="$(mktemp -d -t mdk-scene-e.XXXXXX)"
+work="$(mktemp -d -t rootmark-scene-e.XXXXXX)"
 serve_pid=""
 cleanup() {
   rc=$?
@@ -58,7 +58,7 @@ trap cleanup EXIT
 cd "$work"
 mkdir vault rec
 cp "$root"/spec/fixtures/mini_vault/*.md vault/
-"$mdk" ingest-dir vault vault >/dev/null
+"$rootmark" ingest-dir vault vault >/dev/null
 
 INIT='{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"scene-agent","version":"1.0"}}}
 {"jsonrpc":"2.0","method":"notifications/initialized"}'
@@ -68,24 +68,24 @@ call() { printf '{"jsonrpc":"2.0","id":%d,"method":"tools/call","params":{"name"
 agent() { # agent <name> <calls…>: one MCP session → rec/<name>.jsonl
   local n="$1"; shift
   { printf '%s\n' "$INIT"; for c in "$@"; do printf '%s\n' "$c"; done; } >"$n.in"
-  "$client" "$n.in" "rec/$n.jsonl" -- "$mdk" serve --vault vault --mcp stdio 2>>serve.err
+  "$client" "$n.in" "rec/$n.jsonl" -- "$rootmark" serve --vault vault --mcp stdio 2>>serve.err
 }
 res() { jq -c --argjson id "$2" 'select(.request.id == $id) | .response.result' "rec/$1.jsonl"; }
 
 http_up() {
   : >http.err
-  "$mdk" serve --vault vault --http 127.0.0.1:0 </dev/null >/dev/null 2>http.err &
+  "$rootmark" serve --vault vault --http 127.0.0.1:0 </dev/null >/dev/null 2>http.err &
   serve_pid=$!
   port=""
   for _ in $(seq 1 600); do
-    port="$(sed -n 's/^mdk serve: http listening on 127\.0\.0\.1:\([0-9]*\)$/\1/p' http.err)"
+    port="$(sed -n 's/^rootmark serve: http listening on 127\.0\.0\.1:\([0-9]*\)$/\1/p' http.err)"
     [ -n "$port" ] && break
     kill -0 "$serve_pid" 2>/dev/null || break
     sleep 0.1
   done
   cat http.err >>serve.err
-  [ -n "$port" ] || { echo "scene: mdk serve --http did not start" >&2; exit 1; }
-  token="$(tr -d '[:space:]' <vault/.mdkernel/server.token)"
+  [ -n "$port" ] || { echo "scene: rootmark serve --http did not start" >&2; exit 1; }
+  token="$(tr -d '[:space:]' <vault/.rootmark/server.token)"
 }
 http_down() {
   kill "$serve_pid" 2>/dev/null || true
@@ -102,7 +102,7 @@ h() {
 }
 hget() { jq -c "$2" "rec/$1.json"; }
 md_sha() { # md_sha <step>: {path: sha256} of every Markdown file → rec/md_<step>.json
-  (cd vault && find . -name '*.md' -not -path './.mdkernel/*' | sed 's#^\./##' | LC_ALL=C sort | while read -r f; do
+  (cd vault && find . -name '*.md' -not -path './.rootmark/*' | sed 's#^\./##' | LC_ALL=C sort | while read -r f; do
     printf '%s\t%s\n' "$f" "$(shasum -a 256 "$f" | cut -d' ' -f1)"; done) |
     jq -R -s 'split("\n") | map(select(. != "") | split("\t") | {(.[0]): .[1]}) | add // {}' >"rec/md_$1.json"
 }
@@ -111,9 +111,9 @@ md_sha 0
 # 1. status (the agent's first session writes the default policy)
 c1="$(call 2 status '{}')"
 agent s1 "$c1"
-sed -i.bak 's/^# \[identity\]$/[identity]/; s/^# human_id = .*$/human_id = "editor"/' vault/.mdkernel/policy.toml
-rm -f vault/.mdkernel/policy.toml.bak
-grep -q '^human_id = "editor"$' vault/.mdkernel/policy.toml || { echo "scene: could not set [identity] human_id" >&2; exit 1; }
+sed -i.bak 's/^# \[identity\]$/[identity]/; s/^# human_id = .*$/human_id = "editor"/' vault/.rootmark/policy.toml
+rm -f vault/.rootmark/policy.toml.bak
+grep -q '^human_id = "editor"$' vault/.rootmark/policy.toml || { echo "scene: could not set [identity] human_id" >&2; exit 1; }
 http_up
 h st1 status '{}'
 md_sha 1
@@ -136,9 +136,9 @@ md_sha 4
 h se5 search '{"query":"kalimba","mode":"lexical"}'
 md_sha 5
 # 6. promote, each block, with a reason; one without
-ev_before6="$(wc -l <vault/.mdkernel/events.jsonl | tr -d ' ')"
+ev_before6="$(wc -l <vault/.rootmark/events.jsonl | tr -d ' ')"
 h pr6_noreason promote "{\"lineage_id\":\"$(echo "$lineages" | head -1)\",\"reason\":\"\"}"
-ev_noreason6="$(wc -l <vault/.mdkernel/events.jsonl | tr -d ' ')"
+ev_noreason6="$(wc -l <vault/.rootmark/events.jsonl | tr -d ' ')"
 i=0
 for l in $lineages; do
   i=$((i + 1))
@@ -162,12 +162,12 @@ md_sha 9
 h bl10_before blame '{"doc_path":"espresso.md"}'
 h se10_before search '{"query":"espresso recipe","mode":"lexical"}'
 http_down
-ev_before10="$(wc -l <vault/.mdkernel/events.jsonl | tr -d ' ')"
+ev_before10="$(wc -l <vault/.rootmark/events.jsonl | tr -d ' ')"
 # 10. the agent tries to change canonical content
 c10a="$(call 2 propose '{"doc_path":"espresso.md","mode":"replace_section","heading":"Recipe","content":"Agents rewrite the recipe.","reason":"scene: change canonical"}')"
 c10b="$(call 3 propose '{"doc_path":"espresso.md","mode":"append","content":"An agent line without a heading.","reason":"scene: heading-less append"}')"
 agent s10 "$c10a" "$c10b"
-ev_after10="$(wc -l <vault/.mdkernel/events.jsonl | tr -d ' ')"
+ev_after10="$(wc -l <vault/.rootmark/events.jsonl | tr -d ' ')"
 md_sha 10
 # 11. unchanged
 http_up
@@ -260,8 +260,8 @@ jq -n --arg doc "$DOC" \
      e3_md_changes_only_at_propose: ([range(0; 11) | select($md[.] != [])] == [2]),
      steps: $steps, passed: ([$steps[] | select(.pass)] | length), total: ($steps | length)}
   | .pass = (.passed == .total and .e3_md_changes_only_at_propose)' >"$out/scene.json"
-cp vault/.mdkernel/events.jsonl vault/.mdkernel/traces.jsonl vault/.mdkernel/proposals.jsonl "$out/"
-if [ "${MDK_SCENE_KEEP:-0}" = 1 ]; then rm -rf "$out/scene_vault"; cp -R "$work/vault" "$out/scene_vault"; fi
+cp vault/.rootmark/events.jsonl vault/.rootmark/traces.jsonl vault/.rootmark/proposals.jsonl "$out/"
+if [ "${ROOTMARK_SCENE_KEEP:-0}" = 1 ]; then rm -rf "$out/scene_vault"; cp -R "$work/vault" "$out/scene_vault"; fi
 jq -r '.steps[] | "scene: \(if .pass then "ok  " else "FAIL" end) \(.step) \(.actor) \(.tool)"' "$out/scene.json"
 jq -r '"scene: \(.passed)/\(.total); E-3 Markdown changed only at the propose step: \(.e3_md_changes_only_at_propose)"' "$out/scene.json"
 jq -e .pass "$out/scene.json" >/dev/null

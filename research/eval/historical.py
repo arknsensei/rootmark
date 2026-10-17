@@ -38,6 +38,7 @@ import sys
 from pathlib import Path
 
 from eval import compare_p1e1
+from eval.compare_runs import renamed
 from eval.datasets.common import ROOT, die
 
 LIST = Path(__file__).with_name("historical_fails.json")
@@ -54,13 +55,16 @@ def leaves(x, path: tuple = ()):  # (path tuple, value) of every leaf
     if isinstance(x, (dict, list)) and not x:
         yield path, type(x).__name__ + ":empty"  # an empty container is not an absent value
     elif isinstance(x, dict):
+        if len({renamed(k) for k in x}) != len(x):  # never drop a key silently
+            raise ValueError(f"{'/'.join(path)}: keys equal after the rename (K-GH.1)")
         for k in sorted(x):
-            yield from leaves(x[k], path + (k,))
+            yield from leaves(x[k], path + (renamed(k),))
     elif isinstance(x, list):
         for i, v in enumerate(x):
             yield from leaves(v, path + (str(i),))
     else:
-        yield path, x
+        # names modulo the project rename (K-GH.1, GH-0/F3)
+        yield path, renamed(x) if isinstance(x, str) else x
 
 
 def differing(a: dict, b: dict, allowed: list[str]) -> list[str]:

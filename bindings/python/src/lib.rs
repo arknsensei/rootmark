@@ -1,11 +1,11 @@
-//! Python module `mdkernel_core`: the SPEC §7 surface. Values cross the
+//! Python module `rootmark_core`: the SPEC §7 surface. Values cross the
 //! boundary as JSON (serde → `json.loads`), so Python sees plain dict/list.
 //! Core `Err` → `RuntimeError`.
 
-use mdkcore::chunk::{chunk, count_tokens as core_count_tokens, Strategy};
-use mdkcore::{AuthorKind, MatchParams, MatcherVersion, Provenance};
 use pyo3::exceptions::PyRuntimeError;
 use pyo3::prelude::*;
+use rootmarkcore::chunk::{chunk, count_tokens as core_count_tokens, Strategy};
+use rootmarkcore::{AuthorKind, MatchParams, MatcherVersion, Provenance};
 use serde::Serialize;
 
 fn err(e: anyhow::Error) -> PyErr {
@@ -33,19 +33,19 @@ fn author(kind: &str) -> PyResult<AuthorKind> {
 
 #[pyfunction]
 fn parse_document(py: Python<'_>, text: &str, doc_path: &str) -> PyResult<Py<PyAny>> {
-    let r = mdkcore::parse_document(text, doc_path).map_err(err)?;
+    let r = rootmarkcore::parse_document(text, doc_path).map_err(err)?;
     to_py(py, &r)
 }
 
 #[pyfunction]
 #[pyo3(signature = (text, is_code=false))]
 fn normalize(text: &str, is_code: bool) -> String {
-    mdkcore::normalize(text, is_code)
+    rootmarkcore::normalize(text, is_code)
 }
 
 #[pyfunction]
 fn extract_wikilinks(py: Python<'_>, text: &str) -> PyResult<Py<PyAny>> {
-    to_py(py, &mdkcore::extract_wikilinks(text))
+    to_py(py, &rootmarkcore::extract_wikilinks(text))
 }
 
 #[pyfunction]
@@ -55,22 +55,22 @@ fn count_tokens(text: &str) -> u32 {
 
 #[pyfunction]
 fn version_id(block_type: &str, normalized_text: &str) -> PyResult<String> {
-    let bt: mdkcore::BlockType =
+    let bt: rootmarkcore::BlockType =
         serde_json::from_value(serde_json::Value::String(block_type.into()))
             .map_err(|e| PyRuntimeError::new_err(e.to_string()))?;
-    Ok(mdkcore::version_id(bt, normalized_text))
+    Ok(rootmarkcore::version_id(bt, normalized_text))
 }
 
 #[pyfunction]
 fn lineage_formula(doc_path: &str, version_id: &str, k: usize) -> String {
-    mdkcore::lineage::lineage_formula(doc_path, version_id, k)
+    rootmarkcore::lineage::lineage_formula(doc_path, version_id, k)
 }
 
-/// Matcher version: explicit argument, else `$MDK_MATCHER`, else "v3"
+/// Matcher version: explicit argument, else `$ROOTMARK_MATCHER`, else "v3"
 /// (SPEC_DELTA §7). The environment variable lets frozen v2 code, which never
 /// passes a matcher, run under v2 unchanged.
 fn matcher_of(matcher: Option<&str>) -> PyResult<MatcherVersion> {
-    let env = std::env::var("MDK_MATCHER").ok();
+    let env = std::env::var("ROOTMARK_MATCHER").ok();
     let name = matcher.or(env.as_deref()).unwrap_or("v3");
     MatcherVersion::parse(name).map_err(err)
 }
@@ -85,7 +85,7 @@ fn matcher_defaults(matcher: Option<&str>) -> PyResult<(f64, f64)> {
 
 #[pyclass(unsendable)]
 struct Vault {
-    inner: mdkcore::Vault,
+    inner: rootmarkcore::Vault,
     matcher: MatcherVersion,
 }
 
@@ -106,7 +106,7 @@ impl Vault {
             theta_split: theta_split.unwrap_or(d.theta_split),
         };
         Ok(Vault {
-            inner: mdkcore::Vault::open_with(root, p).map_err(err)?,
+            inner: rootmarkcore::Vault::open_with(root, p).map_err(err)?,
             matcher: m,
         })
     }
@@ -205,8 +205,8 @@ impl Vault {
         author_kind: &str,
         source: &str,
     ) -> PyResult<Py<PyAny>> {
-        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
-        let mut store = mdkindex::store::Store::open(&self.inner, &e).map_err(err)?;
+        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let mut store = rootmarkindex::store::Store::open(&self.inner, &e).map_err(err)?;
         let prov = Provenance {
             author_kind: author(author_kind)?,
             source: source.to_string(),
@@ -219,14 +219,17 @@ impl Vault {
 
     /// `index compact` (P1-C): the hot tier moved into a new cold index.
     fn index_compact(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
-        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
-        to_py(py, &mdkindex::store::compact(&self.inner, &e).map_err(err)?)
+        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        to_py(
+            py,
+            &rootmarkindex::store::compact(&self.inner, &e).map_err(err)?,
+        )
     }
 
     /// `index status` (P1-C).
     fn index_status(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
-        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
-        let store = mdkindex::store::Store::open(&self.inner, &e).map_err(err)?;
+        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let store = rootmarkindex::store::Store::open(&self.inner, &e).map_err(err)?;
         to_py(py, &store.status(&self.inner).map_err(err)?)
     }
 
@@ -237,11 +240,14 @@ impl Vault {
         to_py(py, &self.inner.checkpoint(name).map_err(err)?)
     }
 
-    /// `index build` (P1-C): `<root>/.mdkernel/index/` from every head and
+    /// `index build` (P1-C): `<root>/.rootmark/index/` from every head and
     /// checkpoint snapshot, with the manifest-verified ONNX embedder.
     fn index_build(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
-        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
-        to_py(py, &mdkindex::store::build(&self.inner, &e).map_err(err)?)
+        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        to_py(
+            py,
+            &rootmarkindex::store::build(&self.inner, &e).map_err(err)?,
+        )
     }
 
     /// `search` (P1-C) for every query, in order, as of checkpoint `at`
@@ -264,12 +270,12 @@ impl Vault {
         // every query first: an empty one is refused before anything is
         // opened or written (spec §9, K-C1.5)
         for q in &queries {
-            mdkindex::search::check_query(q).map_err(err)?;
+            rootmarkindex::search::check_query(q).map_err(err)?;
         }
-        let e = mdkindex::OnnxMiniLm::load_default().map_err(err)?;
-        let store = mdkindex::store::Store::open(&self.inner, &e).map_err(err)?;
-        let mode = mdkindex::search::Mode::parse(mode).map_err(err)?;
-        let mut se = mdkindex::search::Searcher::new(&store, &e, consumer).map_err(err)?;
+        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let store = rootmarkindex::store::Store::open(&self.inner, &e).map_err(err)?;
+        let mode = rootmarkindex::search::Mode::parse(mode).map_err(err)?;
+        let mut se = rootmarkindex::search::Searcher::new(&store, &e, consumer).map_err(err)?;
         let mut out = Vec::with_capacity(queries.len());
         for q in &queries {
             out.push(
@@ -282,7 +288,7 @@ impl Vault {
 }
 
 #[pymodule]
-fn mdkernel_core(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn rootmark_core(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(parse_document, m)?)?;
     m.add_function(wrap_pyfunction!(normalize, m)?)?;
     m.add_function(wrap_pyfunction!(extract_wikilinks, m)?)?;

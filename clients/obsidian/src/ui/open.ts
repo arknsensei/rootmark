@@ -5,7 +5,7 @@ import { Notice, TFile, type App } from "obsidian";
 export function openDoc(app: App, path: string): void {
   const f = app.vault.getAbstractFileByPath(path);
   if (!(f instanceof TFile)) {
-    new Notice(`mdkernel: ${path} is not in the vault (moved or deleted)`);
+    new Notice(`rootmark: ${path} is not in the vault (moved or deleted)`);
     return;
   }
   void app.workspace.getLeaf(false).openFile(f);

@@ -1,14 +1,14 @@
 //! P1-A/A2: the moved core reproduces the v3-final core byte for byte.
 //!
 //! `fixtures/v3_final/mini_vault_edit.{v2,v3}.events.jsonl` were written by
-//! the `mdk` binary built from `git archive v3-final core` (prototype sha
+//! the `rootmark` binary built from `git archive v3-final core` (prototype sha
 //! 71c244e, docs/rounds/P1-A/progress/SOURCE.md):
-//!   mdk --matcher <m> ingest-dir V spec/fixtures/mini_vault
-//!   mdk --matcher <m> ingest-dir V core/tests/fixtures/v3_final/edit
+//!   rootmark --matcher <m> ingest-dir V spec/fixtures/mini_vault
+//!   rootmark --matcher <m> ingest-dir V core/tests/fixtures/v3_final/edit
 //! The second pass moves, splits, updates and deletes blocks, so both
 //! matcher paths are exercised, not only first ingest.
 
-use mdkcore::{AuthorKind, Layer, MatcherVersion, Provenance, Vault};
+use rootmarkcore::{AuthorKind, Layer, MatcherVersion, Provenance, Vault};
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -17,7 +17,7 @@ fn here(rel: &str) -> PathBuf {
 }
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-compat-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-compat-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -32,7 +32,7 @@ fn run(m: MatcherVersion, name: &str) -> (String, Vec<u8>) {
     let first = v.events_hash().unwrap();
     v.ingest_dir(&here("tests/fixtures/v3_final/edit"), m)
         .unwrap();
-    let bytes = fs::read(root.join(".mdkernel/events.jsonl")).unwrap();
+    let bytes = fs::read(root.join(".rootmark/events.jsonl")).unwrap();
     fs::remove_dir_all(&root).unwrap();
     (first, bytes)
 }
@@ -94,7 +94,7 @@ fn default_layer_by_author_kind_and_not_logged() {
     let blocks = v.snapshot_blocks(&r.snapshot).unwrap();
     assert!(blocks.iter().all(|b| b.layer == Layer::Canonical));
     // no layer in the log in P1-A (A-5: events.jsonl format unchanged)
-    let log = fs::read_to_string(root.join(".mdkernel/events.jsonl")).unwrap();
+    let log = fs::read_to_string(root.join(".rootmark/events.jsonl")).unwrap();
     assert!(!log.contains("layer") && !log.contains("canonical") && !log.contains("proposal"));
     fs::remove_dir_all(&root).unwrap();
 }

@@ -412,7 +412,7 @@ def build(run: str) -> str:
     )
     fe = (PROGRESS / "FREEZE_EXCEPTIONS.md").read_text(encoding="utf-8").strip()
     lines = [
-        "# mdkernel-v2 — Nihai Rapor",
+        "# rootmark-v2 — Nihai Rapor",
         "",
         (
             f"RUN: {run} · Commit: {', '.join(s[:12] for s in shas)} ({dirty}) · Rust {any_phase['versions']['rust']} · "

@@ -6,7 +6,7 @@
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-scratch="$(mktemp -d -t mdk-check-deps.XXXXXX)"
+scratch="$(mktemp -d -t rootmark-check-deps.XXXXXX)"
 trap 'rm -rf "$scratch"' EXIT
 
 fresh() { # fresh <name> → path of a new copy of the workspace (no target/, no data)
@@ -41,19 +41,19 @@ add_dep() { # add_dep <manifest> <line>  (appended to [dependencies])
 d="$(fresh clean)"; expect pass "$d" "unmodified workspace"
 
 d="$(fresh core-index)"
-add_dep "$d/core/Cargo.toml" 'mdkernel-index = { path = "../index" }'
+add_dep "$d/core/Cargo.toml" 'rootmark-index = { path = "../index" }'
 expect fail "$d" "core depends on index"
 
 d="$(fresh index-server)"
-add_dep "$d/index/Cargo.toml" 'mdkernel-server = { path = "../server" }'
+add_dep "$d/index/Cargo.toml" 'rootmark-server = { path = "../server" }'
 expect fail "$d" "index depends on server"
 
 d="$(fresh core-dev-server)"
-printf '\n[dev-dependencies]\nmdkernel-server = { path = "../server" }\n' >>"$d/core/Cargo.toml"
+printf '\n[dev-dependencies]\nrootmark-server = { path = "../server" }\n' >>"$d/core/Cargo.toml"
 expect fail "$d" "core dev-depends on server"
 
 d="$(fresh core-table-form)"
-printf '\n[dependencies.mdkernel-server]\npath = "../server"\n' >>"$d/core/Cargo.toml"
+printf '\n[dependencies.rootmark-server]\npath = "../server"\n' >>"$d/core/Cargo.toml"
 expect fail "$d" "core depends on server (table form)"
 
 d="$(fresh research-import)"

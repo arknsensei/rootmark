@@ -3,12 +3,12 @@
 #
 #   scripts/mcp_inspector.sh <out-dir> [<tools-list.json>]
 #
-# 1. Vault: spec/fixtures/mini_vault (`mdk ingest-dir`), checkpoint `t0`,
-#    one CLI read (one trace). Server: `mdk serve --vault vault --mcp stdio`
+# 1. Vault: spec/fixtures/mini_vault (`rootmark ingest-dir`), checkpoint `t0`,
+#    one CLI read (one trace). Server: `rootmark serve --vault vault --mcp stdio`
 #    from an Inspector config file (cwd = <out-dir>).
 # 2. `@modelcontextprotocol/inspector@2.9.0 --cli … --method tools/list` →
 #    <out-dir>/tools_list.json (the list a client sees).
-# 3. `server/tests/mcp_schemas.rs` checks that list (MDK_TOOLS_LIST): every
+# 3. `server/tests/mcp_schemas.rs` checks that list (ROOTMARK_TOOLS_LIST): every
 #    inputSchema valid against the JSON Schema 2020-12 meta-schema, an
 #    object schema rejecting unknown arguments, same tools and schemas as
 #    the server → <out-dir>/schemas.json.
@@ -29,18 +29,18 @@ given="${2:-}"
 mkdir -p "$out"
 out="$(cd "$out" && pwd)"
 cd "$root"
-cargo build -q --release -p mdkernel-server --bin mdk
-mdk="$root/target/release/mdk"
+cargo build -q --release -p rootmark-server --bin rootmark
+rootmark="$root/target/release/rootmark"
 
 [ ! -e "$out/vault" ] || { echo "mcp_inspector: $out/vault exists" >&2; exit 1; }
-"$mdk" ingest-dir "$out/vault" spec/fixtures/mini_vault >/dev/null
-"$mdk" checkpoint create "$out/vault" --name t0 >/dev/null
-lineage="$("$mdk" blame "$out/vault" espresso.md | jq -r '.blocks[0].lineage_id')"
-"$mdk" read "$out/vault" --at t0 --consumer cli-prep "$lineage" >/dev/null
-jq -n --arg mdk "$mdk" \
-  '{mcpServers: {mdk: {command: $mdk, args: ["serve", "--vault", "vault", "--mcp", "stdio"]}}}' \
+"$rootmark" ingest-dir "$out/vault" spec/fixtures/mini_vault >/dev/null
+"$rootmark" checkpoint create "$out/vault" --name t0 >/dev/null
+lineage="$("$rootmark" blame "$out/vault" espresso.md | jq -r '.blocks[0].lineage_id')"
+"$rootmark" read "$out/vault" --at t0 --consumer cli-prep "$lineage" >/dev/null
+jq -n --arg rootmark "$rootmark" \
+  '{mcpServers: {rootmark: {command: $rootmark, args: ["serve", "--vault", "vault", "--mcp", "stdio"]}}}' \
   >"$out/inspector_config.json"
-insp() { npx -y "$INSPECTOR" --cli --config "$out/inspector_config.json" --server mdk --cwd "$out" "$@"; }
+insp() { npx -y "$INSPECTOR" --cli --config "$out/inspector_config.json" --server rootmark --cwd "$out" "$@"; }
 
 if [ -z "$given" ]; then
   insp --method tools/list >"$out/tools_list.json"
@@ -50,8 +50,8 @@ else
 fi
 
 schema_ok=true
-MDK_TOOLS_LIST="$list" MDK_SCHEMA_OUT="$out/schemas.json" \
-  cargo test -q --release -p mdkernel-server --test mcp_schemas >"$out/schemas.log" 2>&1 || schema_ok=false
+ROOTMARK_TOOLS_LIST="$list" ROOTMARK_SCHEMA_OUT="$out/schemas.json" \
+  cargo test -q --release -p rootmark-server --test mcp_schemas >"$out/schemas.log" 2>&1 || schema_ok=false
 [ -f "$out/schemas.json" ] || { cat "$out/schemas.log" >&2; echo "mcp_inspector: no schemas.json" >&2; exit 1; }
 
 # one Inspector call per tool, arguments as key=value (typed by the Inspector)

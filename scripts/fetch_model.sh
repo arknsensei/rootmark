@@ -8,7 +8,7 @@
 # pinned `revision`; a file already present is kept only if its sha256
 # matches the manifest. A download is checked against the manifest's size and
 # sha256 before it is moved into place; any mismatch is an error and nothing
-# is overwritten. The blake3 check is `mdk-index models verify` (Rust), the
+# is overwritten. The blake3 check is `rootmark-index models verify` (Rust), the
 # next step of `make models`.
 set -euo pipefail
 
@@ -24,7 +24,7 @@ repo="$(jq -er .source "$manifest")"
 rev="$(jq -er .revision "$manifest")"
 dest="$root/models/$name"
 mkdir -p "$dest"
-tmp="$(mktemp -d -t mdk-model.XXXXXX)"
+tmp="$(mktemp -d -t rootmark-model.XXXXXX)"
 trap 'rm -rf "$tmp"' EXIT
 
 n=0

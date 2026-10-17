@@ -1,4 +1,4 @@
-//! `mdk conformance` (P1-E/E5; GOAL E-7): the conformance suite of
+//! `rootmark conformance` (P1-E/E5; GOAL E-7): the conformance suite of
 //! spec/CONFORMANCE.md, Levels 1–3, run by the binary itself on the
 //! fixtures embedded at build time (build.rs) — or on a fixture tree given
 //! with `--fixtures`. It is the `make conformance` equivalent of a release
@@ -10,7 +10,7 @@
 //! conformance_c3.rs`; `server/tests/conformance_cli.rs` checks that both
 //! reports agree test by test).
 //!
-//! Level 3 needs the embedder model files (`--models`, else `MDK_MODELS`,
+//! Level 3 needs the embedder model files (`--models`, else `ROOTMARK_MODELS`,
 //! else the build tree's `models/`; `make models`).
 
 #[allow(dead_code)] // `case_dirs` is the fixture generator's
@@ -181,7 +181,7 @@ pub fn run(root: &Path, source: &str) -> Result<Value> {
     };
     Ok(json!({
         "spec_version": SPEC_VERSION,
-        "mdk_version": crate::tools::MDK_VERSION,
+        "mdk_version": crate::tools::ROOTMARK_VERSION,
         "level_claimed": level,
         "fixtures_root_source": source,
         "fixtures_manifest_hash": manifest_hash,
@@ -201,7 +201,7 @@ fn scratch_dir() -> Result<PathBuf> {
     let mut r = [0u8; 16];
     getrandom::fill(&mut r).map_err(|e| anyhow::anyhow!("random scratch name: {e}"))?;
     let name: String = r.iter().map(|b| format!("{b:02x}")).collect();
-    let dir = std::env::temp_dir().join(format!("mdk-conformance-{name}"));
+    let dir = std::env::temp_dir().join(format!("rootmark-conformance-{name}"));
     let mut b = fs::DirBuilder::new();
     #[cfg(unix)]
     {
@@ -213,14 +213,14 @@ fn scratch_dir() -> Result<PathBuf> {
     Ok(dir)
 }
 
-/// `mdk conformance`: the embedded fixtures (extracted into a scratch
+/// `rootmark conformance`: the embedded fixtures (extracted into a scratch
 /// directory) or `fixtures`; `models` sets the embedder files for Level 3.
 pub fn command(fixtures: Option<PathBuf>, models: Option<PathBuf>) -> Result<Value> {
     if let Some(m) = models {
         let m = fs::canonicalize(&m).with_context(|| format!("--models {}", m.display()))?;
-        // read by the embedder loader (`mdkindex::models::models_root`);
+        // read by the embedder loader (`rootmarkindex::models::models_root`);
         // set before any thread starts
-        std::env::set_var("MDK_MODELS", m);
+        std::env::set_var("ROOTMARK_MODELS", m);
     }
     match fixtures {
         Some(f) => {

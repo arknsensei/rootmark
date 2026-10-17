@@ -8,7 +8,7 @@ RUN:
 - E-1, E-3, E-5, E-6: `p1e/scene/scene.json` (`scripts/scene.sh`).
 - E-2, E-3, E-4, E-5, E-6: `p1e/plugin_e2e/plugin_e2e.json`
   (`scripts/plugin_e2e.sh`, the plugin's command layer against a real
-  `mdk serve`, recording proxy).
+  `rootmark serve`, recording proxy).
 - E-7: the chain's local target `p1e/release/release_local.json`
   (`scripts/release_local.sh`) and the four-target release record of the
   commit (`docs/rounds/P1-E/progress/E5_release.json`, `scripts/release.sh`;

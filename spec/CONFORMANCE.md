@@ -1,4 +1,4 @@
-# mdkernel Conformance Tests v1.0
+# rootmark Conformance Tests v1.0
 
 Each test has a fixture under `spec/fixtures/` (added in Phase 1 round A) and an expected output. A conforming implementation passes every test of its claimed level. Tests are the executable form of SPEC.md; where they disagree, SPEC.md wins and the test is fixed via the decision record.
 

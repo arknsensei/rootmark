@@ -1,14 +1,14 @@
 //! P1-B/B1: layers (spec §7) — defaults by `author_kind` (C2-01), layer
 //! transitions as events and replay (C2-08), opening v3-final vaults (B-5).
 
-use mdkcore::{AuthorKind, EventKind, Layer, MatcherVersion, Provenance, Vault};
+use rootmarkcore::{AuthorKind, EventKind, Layer, MatcherVersion, Provenance, Vault};
 use std::fs;
 use std::path::{Path, PathBuf};
 
 const M: MatcherVersion = MatcherVersion::V3;
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-layers-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-layers-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -172,7 +172,7 @@ fn c2_08_tampered_layer_event_fails_replay() {
     v.ingest("doc.md", &edited, prov(AuthorKind::Agent), M)
         .unwrap();
     drop(v);
-    let p = root.join(".mdkernel/events.jsonl");
+    let p = root.join(".rootmark/events.jsonl");
     let log = fs::read_to_string(&p).unwrap();
     assert!(log.contains(r#""to":"proposal""#));
     fs::write(&p, log.replace(r#""to":"proposal""#, r#""to":"derived""#)).unwrap();
@@ -189,12 +189,12 @@ fn c2_08_tampered_layer_event_fails_replay() {
 fn b5_v3_final_logs_open_unchanged() {
     for (m, name) in [(MatcherVersion::V3, "v3"), (MatcherVersion::V2, "v2")] {
         let root = tmp(&format!("b5-{name}"));
-        fs::create_dir_all(root.join(".mdkernel")).unwrap();
+        fs::create_dir_all(root.join(".rootmark")).unwrap();
         let src = here(&format!(
             "tests/fixtures/v3_final/mini_vault_edit.{name}.events.jsonl"
         ));
         let bytes = fs::read(&src).unwrap();
-        fs::write(root.join(".mdkernel/events.jsonl"), &bytes).unwrap();
+        fs::write(root.join(".rootmark/events.jsonl"), &bytes).unwrap();
         let old = Vault::open(&root).unwrap();
         let fresh_root = tmp(&format!("b5-{name}-fresh"));
         let mut fresh = Vault::open(&fresh_root).unwrap();
@@ -216,7 +216,7 @@ fn b5_v3_final_logs_open_unchanged() {
         assert_eq!(old.events_hash().unwrap(), fresh.events_hash().unwrap());
         drop(old);
         assert_eq!(
-            fs::read(root.join(".mdkernel/events.jsonl")).unwrap(),
+            fs::read(root.join(".rootmark/events.jsonl")).unwrap(),
             bytes
         );
         fs::remove_dir_all(&root).unwrap();

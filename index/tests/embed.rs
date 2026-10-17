@@ -3,8 +3,8 @@
 //! `research/eval/gen_embed_ref.py`), bit-level determinism, batch ≡ single,
 //! and the model manifest check. Needs the model files (`make models`).
 
-use mdkindex::embed::{Embedder, OnnxMiniLm, DIM};
-use mdkindex::models;
+use rootmarkindex::embed::{Embedder, OnnxMiniLm, DIM};
+use rootmarkindex::models;
 use serde_json::Value;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -43,7 +43,7 @@ fn embedder_id_is_derived_from_the_manifest() {
 }
 
 /// GOAL C-10: cosine ≥ 0.999 for each of the 50 reference chunks. With
-/// `MDK_C10_OUT` the per-chunk cosines are written as JSON (C9 report).
+/// `ROOTMARK_C10_OUT` the per-chunk cosines are written as JSON (C9 report).
 #[test]
 fn c10_onnx_matches_the_prototype_embeddings() {
     let r = reference();
@@ -68,7 +68,7 @@ fn c10_onnx_matches_the_prototype_embeddings() {
             "doc_path": c["doc_path"], "chunk_id": c["chunk_id"], "cosine": cos,
         }));
     }
-    if let Ok(p) = std::env::var("MDK_C10_OUT") {
+    if let Ok(p) = std::env::var("ROOTMARK_C10_OUT") {
         let out = serde_json::json!({
             "threshold": 0.999, "n": rows.len(), "min_cosine": min,
             "pass": min >= 0.999, "embedder_id": embedder().id(), "chunks": rows,
@@ -136,7 +136,8 @@ fn vectors_are_unit_length_and_count_is_tracked() {
 fn copy_models(name: &str) -> PathBuf {
     let src = models::models_root();
     let m = models::read_manifest(&src).unwrap();
-    let dst = std::env::temp_dir().join(format!("mdk-c1-models-{}-{name}", std::process::id()));
+    let dst =
+        std::env::temp_dir().join(format!("rootmark-c1-models-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&dst);
     fs::create_dir_all(&dst).unwrap();
     fs::copy(src.join("MANIFEST.json"), dst.join("MANIFEST.json")).unwrap();

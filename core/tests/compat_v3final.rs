@@ -5,7 +5,7 @@
 //! `scripts/gen_v3final_mixed.sh` (v3-final public API, `Vault::ingest` with
 //! `Provenance { author_kind, .. }`; scenarios in
 //! `scripts/v3final-mixed-gen/scenarios.json`): `store/` is the vault's
-//! `.mdkernel/` directory and `expected.json` what v3-final itself reports
+//! `.rootmark/` directory and `expected.json` what v3-final itself reports
 //! (replay snapshot_ids, events_hash). Every scenario is opened from a copy:
 //! replay gives v3-final's snapshot_ids, `events.jsonl` is unchanged, and
 //! `blame` gives the layer the rule derives — a drop the log does not record
@@ -13,7 +13,7 @@
 //!
 //! B1-2: a log carrying layer information still needs every `LayerChanged`.
 
-use mdkcore::{AuthorKind, Event, Layer, LayerSource, MatcherVersion, Provenance, Vault};
+use rootmarkcore::{AuthorKind, Event, Layer, LayerSource, MatcherVersion, Provenance, Vault};
 use serde_json::Value;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -26,7 +26,7 @@ fn tmp(name: &str) -> PathBuf {
     // unique per call: tests run in parallel and may open the same scenario
     static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let n = N.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-    let d = std::env::temp_dir().join(format!("mdk-b11-{}-{n}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-b11-{}-{n}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -75,8 +75,8 @@ fn check(name: &str, want: &[(&str, Vec<Row>)]) -> PathBuf {
     let exp: Value =
         serde_json::from_str(&fs::read_to_string(fx.join("expected.json")).unwrap()).unwrap();
     let root = tmp(name);
-    copy_tree(&fx.join("store"), &root.join(".mdkernel"));
-    let log = root.join(".mdkernel/events.jsonl");
+    copy_tree(&fx.join("store"), &root.join(".rootmark"));
+    let log = root.join(".rootmark/events.jsonl");
     let before = fs::read(&log).unwrap();
     assert!(!String::from_utf8_lossy(&before).contains("\"layer\""));
 
@@ -221,7 +221,7 @@ fn mixed_four_document_vault() {
             ),
         ],
     );
-    let log = fs::read_to_string(root.join(".mdkernel/events.jsonl")).unwrap();
+    let log = fs::read_to_string(root.join(".rootmark/events.jsonl")).unwrap();
     assert!(
         log.contains("\"BlockSplit\""),
         "the scenario exercises a split"
@@ -257,7 +257,7 @@ fn current_core_continues_a_v3_final_vault() {
     assert!(r
         .events
         .iter()
-        .any(|e| e.kind == mdkcore::EventKind::LayerChanged));
+        .any(|e| e.kind == rootmarkcore::EventKind::LayerChanged));
     let v = Vault::open(&root).unwrap();
     let rows = |d: &str| -> Vec<Row> {
         v.blame(d, None)
@@ -274,7 +274,7 @@ fn current_core_continues_a_v3_final_vault() {
 // ---- B1-2: logs carrying layer information
 
 fn read_log(root: &Path) -> Vec<Event> {
-    fs::read_to_string(root.join(".mdkernel/events.jsonl"))
+    fs::read_to_string(root.join(".rootmark/events.jsonl"))
         .unwrap()
         .lines()
         .map(|l| serde_json::from_str(l).unwrap())
@@ -291,7 +291,7 @@ fn drop_event(root: &Path, i: usize) {
         out.push_str(&serde_json::to_string(&e).unwrap());
         out.push('\n');
     }
-    fs::write(root.join(".mdkernel/events.jsonl"), out).unwrap();
+    fs::write(root.join(".rootmark/events.jsonl"), out).unwrap();
 }
 
 fn human_doc_edited_by_agent(name: &str, checkpoint_first: bool) -> PathBuf {
@@ -324,7 +324,7 @@ fn human_doc_edited_by_agent(name: &str, checkpoint_first: bool) -> PathBuf {
 fn layer_changed_at(root: &Path) -> usize {
     let evs = read_log(root);
     let ix: Vec<usize> = (0..evs.len())
-        .filter(|&i| evs[i].kind == mdkcore::EventKind::LayerChanged)
+        .filter(|&i| evs[i].kind == rootmarkcore::EventKind::LayerChanged)
         .collect();
     assert_eq!(ix.len(), 1);
     ix[0]
@@ -334,7 +334,7 @@ fn layer_changed_at(root: &Path) -> usize {
 fn deleted_layer_changed_line_is_an_error() {
     let root = human_doc_edited_by_agent("b12-line", false);
     let i = layer_changed_at(&root);
-    let p = root.join(".mdkernel/events.jsonl");
+    let p = root.join(".rootmark/events.jsonl");
     let text = fs::read_to_string(&p).unwrap();
     let kept: Vec<&str> = text
         .lines()
@@ -380,7 +380,7 @@ fn missing_second_layer_changed_is_an_error() {
     let evs = read_log(&root);
     let last = (0..evs.len())
         .rev()
-        .find(|&i| evs[i].kind == mdkcore::EventKind::LayerChanged)
+        .find(|&i| evs[i].kind == rootmarkcore::EventKind::LayerChanged)
         .unwrap();
     drop_event(&root, last);
     let e = Vault::open(&root).err().expect("open must fail");
@@ -431,7 +431,7 @@ fn first_of_two_layer_changed_removed_reads_as_derived_prefix() {
     drop(v);
     let evs = read_log(&root);
     let first = (0..evs.len())
-        .find(|&i| evs[i].kind == mdkcore::EventKind::LayerChanged)
+        .find(|&i| evs[i].kind == rootmarkcore::EventKind::LayerChanged)
         .unwrap();
     drop_event(&root, first);
     let v = Vault::open(&root).unwrap();
@@ -476,14 +476,14 @@ fn two_drops_in_one_snapshot(name: &str, first: AuthorKind) -> PathBuf {
     drop(v);
     let evs = read_log(&root);
     let lc: Vec<usize> = (0..evs.len())
-        .filter(|&i| evs[i].kind == mdkcore::EventKind::LayerChanged)
+        .filter(|&i| evs[i].kind == rootmarkcore::EventKind::LayerChanged)
         .collect();
     assert_eq!(lc.len(), 2, "{name}: two drops");
     let snap = (lc[1]..evs.len())
-        .find(|&i| evs[i].kind == mdkcore::EventKind::SnapshotCommitted)
+        .find(|&i| evs[i].kind == rootmarkcore::EventKind::SnapshotCommitted)
         .unwrap();
     assert!(
-        (lc[0]..snap).all(|i| evs[i].kind != mdkcore::EventKind::SnapshotCommitted),
+        (lc[0]..snap).all(|i| evs[i].kind != rootmarkcore::EventKind::SnapshotCommitted),
         "{name}: both drops belong to the same snapshot"
     );
     root
@@ -492,7 +492,7 @@ fn two_drops_in_one_snapshot(name: &str, first: AuthorKind) -> PathBuf {
 fn first_layer_changed(root: &Path) -> usize {
     let evs = read_log(root);
     (0..evs.len())
-        .find(|&i| evs[i].kind == mdkcore::EventKind::LayerChanged)
+        .find(|&i| evs[i].kind == rootmarkcore::EventKind::LayerChanged)
         .unwrap()
 }
 

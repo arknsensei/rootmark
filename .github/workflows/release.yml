@@ -1,4 +1,4 @@
-# The mdk release binaries (K-E1.1; GOAL P1-E.1 E1-5; docs/RELEASE.md R4,
+# The rootmark release binaries (K-E1.1; GOAL P1-E.1 E1-5; docs/RELEASE.md R4,
 # R13). Started by a human only (workflow_dispatch): it builds, checks and
 # keeps artefacts, and publishes, tags and releases nothing (the v0.1.0 tag
 # and the GitHub release are human steps, docs/RELEASE.md).
@@ -7,7 +7,7 @@
 # x86_64-unknown-linux-gnu and x86_64-pc-windows-msvc are CI information
 # (continue-on-error): built, checked and kept when they can be, recorded as
 # skipped when not; never a release criterion. Intel macOS is not a
-# target. Each job runs `mdk --version`, `--spec-version` and `mdk
+# target. Each job runs `rootmark --version`, `--spec-version` and `rootmark
 # conformance` (Levels 1–3 on the embedded fixtures; 34/34) through
 # scripts/release_target.sh — the same record as scripts/release.sh writes
 # locally — and the last job assembles dist/release.json from every record.
@@ -17,7 +17,7 @@ on:
 
 jobs:
   binary:
-    name: mdk ${{ matrix.target }}
+    name: rootmark ${{ matrix.target }}
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ !matrix.required }}
     strategy:
@@ -42,14 +42,14 @@ jobs:
       - name: embedder model (pinned, checked)
         run: bash scripts/fetch_model.sh
       - name: build
-        run: cargo build --release --locked --target ${{ matrix.target }} -p mdkernel-server --bin mdk
-      - name: check (version, spec version, mdk conformance 34/34)
+        run: cargo build --release --locked --target ${{ matrix.target }} -p rootmark-server --bin rootmark
+      - name: check (version, spec version, rootmark conformance 34/34)
         env:
-          MDK_MODELS: ${{ github.workspace }}/models
+          ROOTMARK_MODELS: ${{ github.workspace }}/models
         run: |
           set -euo pipefail
           mkdir -p dist/bin
-          bin=target/${{ matrix.target }}/release/mdk
+          bin=target/${{ matrix.target }}/release/rootmark
           [ -f "$bin" ] || bin="$bin.exe"
           bash scripts/release_target.sh check ${{ matrix.target }} ${{ matrix.required }} dist/bin/${{ matrix.target }}.json "$bin"
           jq -e .ok dist/bin/${{ matrix.target }}.json
@@ -57,19 +57,19 @@ jobs:
         run: |
           set -euo pipefail
           ver="$(sed -n 's/^version = "\(.*\)"$/\1/p' Cargo.toml | head -1)"
-          d="mdk-$ver-${{ matrix.target }}"
+          d="rootmark-$ver-${{ matrix.target }}"
           mkdir -p "$d/models"
-          cp target/${{ matrix.target }}/release/mdk* "$d/" 2>/dev/null || true
+          cp target/${{ matrix.target }}/release/rootmark* "$d/" 2>/dev/null || true
           rm -f "$d"/*.d "$d"/*.pdb
           cp LICENSE README.md "$d/"; cp models/MANIFEST.json scripts/fetch_model.sh "$d/models/"
           if [ "${{ matrix.archive }}" = zip ]; then 7z a "$d.zip" "$d" >/dev/null; else tar -czf "$d.tar.gz" "$d"; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: mdk-${{ matrix.target }}
+          name: rootmark-${{ matrix.target }}
           if-no-files-found: ignore
           path: |
-            mdk-*-${{ matrix.target }}.*
+            rootmark-*-${{ matrix.target }}.*
             dist/bin/${{ matrix.target }}.json
 
   record:
@@ -91,7 +91,7 @@ jobs:
             # the record sits under dist/bin/ in the artefact, or at its root
             # when the job stopped before packaging (upload-artifact keeps
             # paths relative to the files' common ancestor)
-            rec="$(find "artefacts/mdk-$target" -name "$target.json" -type f -print -quit 2>/dev/null || true)"
+            rec="$(find "artefacts/rootmark-$target" -name "$target.json" -type f -print -quit 2>/dev/null || true)"
             if [ -n "$rec" ]; then cp "$rec" "dist/bin/$target.json"
             else bash scripts/release_target.sh skipped "$target" "$req" "dist/bin/$target.json" "no record: the job failed before its check or did not run"; fi
           done

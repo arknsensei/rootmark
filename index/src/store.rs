@@ -1,4 +1,4 @@
-//! The on-disk index of a vault, `<vault>/.mdkernel/index/` (GOAL P1-C):
+//! The on-disk index of a vault, `<vault>/.rootmark/index/` (GOAL P1-C):
 //!
 //! - `manifest.json` — format, counts, the lexical scoring record
 //!   (`lexical.{variant, idf, k1, b, tokenizer, dl}`, K-C1.1, K-D1.7), embedder, blake3
@@ -15,7 +15,7 @@
 //!
 //! A build covers every document head and every snapshot named by a
 //! checkpoint (`record::build_snapshots`), writes into
-//! `.mdkernel/index.build/` and replaces the index by renaming it. Every
+//! `.rootmark/index.build/` and replaces the index by renaming it. Every
 //! file is a function of the vault and the embedder: no time, no path, no
 //! randomness. A rebuild reuses the vector of a record the previous index
 //! already holds under the same `embedder_id` (embedding is deterministic,
@@ -26,7 +26,7 @@ use crate::lexical::{self, Lexical};
 use crate::record::{build_snapshots, snapshot_records, ChunkRecord, SnapshotChunks};
 use crate::vectors::{self, VectorMeta};
 use anyhow::{bail, Context, Result};
-use mdkcore::Vault;
+use rootmarkcore::Vault;
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, HashMap};
 use std::fs;
@@ -34,7 +34,10 @@ use std::path::{Path, PathBuf};
 
 /// `/2` (P1-C.1): the lexical scoring record replaced the `/1` fields
 /// `tokenizer`, `bm25_k1`, `bm25_b`. `/3` (P1-D.1, K-D1.7): the record
-/// declares the document length (`lexical.dl`).
+/// declares the document length (`lexical.dl`). A data identifier written
+/// into every manifest and compared when an index is opened: it kept its
+/// value through the rename (K-GH.1, GH-0 ASSUMPTIONS G0-2), so the index
+/// bytes did not change and a migrated vault's index is read as it is.
 pub const FORMAT: &str = "mdkernel-index/3";
 /// BM25 parameters: tantivy's defaults (GOAL P1-C "BM25 varsayılan
 /// parametreler"); the variant is declared in the manifest (K-C1.1).
@@ -178,7 +181,7 @@ struct Loaded {
 
 /// The index is missing, of another format or of another lexical record:
 /// nothing in it is wrong, it is only not this implementation's, and a
-/// rebuild (`mdk index build`) makes it current (K-E0.3). The message is the
+/// rebuild (`rootmark index build`) makes it current (K-E0.3). The message is the
 /// reason. Every other failure of `load` (a file that does not match the
 /// manifest, broken order, misaligned vectors) is damage, not staleness.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -211,7 +214,7 @@ fn manifest_of(dir: &Path) -> Result<Manifest> {
     let stale = |m: String| anyhow::Error::new(IndexStale(m));
     if !dir.join("manifest.json").is_file() {
         return Err(stale(format!(
-            "no index at {} (run `mdk index build`)",
+            "no index at {} (run `rootmark index build`)",
             dir.display()
         )));
     }
@@ -220,7 +223,7 @@ fn manifest_of(dir: &Path) -> Result<Manifest> {
     let raw: serde_json::Value = serde_json::from_str(&text).context("index manifest.json")?;
     if raw["format"] != FORMAT {
         return Err(stale(format!(
-            "index format {} != {FORMAT:?} (rebuild it with `mdk index build`)",
+            "index format {} != {FORMAT:?} (rebuild it with `rootmark index build`)",
             raw["format"]
         )));
     }
@@ -376,7 +379,7 @@ fn write_cold(
     write_pretty(&tmp.join("manifest.json"), &manifest)
 }
 
-/// Replaces `<vault>/.mdkernel/index/` (hot tier included) by `tmp`.
+/// Replaces `<vault>/.rootmark/index/` (hot tier included) by `tmp`.
 fn install(vault: &Vault, tmp: &Path) -> Result<()> {
     let dir = index_dir(vault);
     if dir.exists() {
@@ -386,7 +389,7 @@ fn install(vault: &Vault, tmp: &Path) -> Result<()> {
     Ok(())
 }
 
-/// Rebuilds `<vault>/.mdkernel/index/` from the vault (the hot tier is
+/// Rebuilds `<vault>/.rootmark/index/` from the vault (the hot tier is
 /// dropped: every head and checkpoint snapshot is in the new cold index).
 pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
     let (records, snaps) = collect(vault)?;
@@ -552,7 +555,7 @@ impl Store {
         let mut all_snaps = snaps;
         let mut hot_snapshots = 0;
         if let Some(hot) = load_hot(&dir, &manifest)
-            .context("hot tier invalid (rebuild with `mdk index build`)")?
+            .context("hot tier invalid (rebuild with `rootmark index build`)")?
         {
             hot_snapshots = hot.snaps.len();
             records.extend(hot.records);
@@ -652,7 +655,7 @@ impl Store {
             .map(Vec::as_slice)
             .with_context(|| {
                 format!(
-                    "snapshot {snapshot_id} of {doc_path} is not indexed (run `mdk index build` or `mdk index watch`)"
+                    "snapshot {snapshot_id} of {doc_path} is not indexed (run `rootmark index build` or `rootmark index watch`)"
                 )
             })
     }
@@ -672,9 +675,11 @@ impl Store {
         embedder: &dyn Embedder,
         doc_path: &str,
         text: &str,
-        prov: mdkcore::Provenance,
+        prov: rootmarkcore::Provenance,
     ) -> Result<WatchReport> {
-        let matcher = vault.matcher_lock().unwrap_or(mdkcore::MatcherVersion::V3);
+        let matcher = vault
+            .matcher_lock()
+            .unwrap_or(rootmarkcore::MatcherVersion::V3);
         self.watch_with(vault, embedder, doc_path, text, prov, matcher)
     }
 
@@ -686,11 +691,11 @@ impl Store {
         embedder: &dyn Embedder,
         doc_path: &str,
         text: &str,
-        prov: mdkcore::Provenance,
-        matcher: mdkcore::MatcherVersion,
+        prov: rootmarkcore::Provenance,
+        matcher: rootmarkcore::MatcherVersion,
     ) -> Result<WatchReport> {
         if self.poisoned {
-            bail!("an earlier hot append failed; reopen the index (`mdk index build` repairs it)");
+            bail!("an earlier hot append failed; reopen the index (`rootmark index build` repairs it)");
         }
         if embedder.id() != self.manifest.embedder_id {
             bail!(
@@ -710,7 +715,7 @@ impl Store {
         &mut self,
         vault: &mut Vault,
         embedder: &dyn Embedder,
-        plan: mdkcore::IngestPlan,
+        plan: rootmarkcore::IngestPlan,
     ) -> Result<WatchReport> {
         self.check_watch(embedder)?;
         let doc_path = plan.doc_path.clone();
@@ -720,7 +725,7 @@ impl Store {
 
     fn check_watch(&self, embedder: &dyn Embedder) -> Result<()> {
         if self.poisoned {
-            bail!("an earlier hot append failed; reopen the index (`mdk index build` repairs it)");
+            bail!("an earlier hot append failed; reopen the index (`rootmark index build` repairs it)");
         }
         if embedder.id() != self.manifest.embedder_id {
             bail!(

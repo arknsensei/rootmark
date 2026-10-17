@@ -11,8 +11,8 @@ import random
 from collections import Counter
 from pathlib import Path
 
-import mdkernel_core as mk
 import pytest
+import rootmark_core as mk
 
 from eval import truth as T
 from eval.datasets import synthetic_edits as se

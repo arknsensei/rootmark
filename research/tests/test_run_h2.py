@@ -7,7 +7,7 @@ from typing import ClassVar
 import pytest
 
 from eval import run_h2 as R
-from mdkernel import graph_search as GS
+from rootmark import graph_search as GS
 
 
 def test_select_alpha_rule():

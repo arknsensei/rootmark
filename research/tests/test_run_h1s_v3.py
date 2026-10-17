@@ -2,8 +2,8 @@
 
 import json
 
-import mdkernel_core as mk
 import pytest
+import rootmark_core as mk
 
 from eval import run_h1s_v3 as R
 from eval import runinfo

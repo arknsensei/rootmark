@@ -1,4 +1,4 @@
-//! D-1 (GOAL P1-D): the tool schemas a client sees. `MDK_TOOLS_LIST` is the
+//! D-1 (GOAL P1-D): the tool schemas a client sees. `ROOTMARK_TOOLS_LIST` is the
 //! `tools/list` result printed by the official MCP Inspector
 //! (`scripts/mcp_inspector.sh`); without it the server's own `tools::specs`
 //! are checked (unit run). Per tool: name and description present; the
@@ -6,9 +6,9 @@
 //! MCP default dialect) and compiles; it is an object schema that rejects
 //! unknown properties, and every `required` name is a property. The Inspector
 //! list must name exactly the server's tools, with the server's schemas.
-//! `MDK_SCHEMA_OUT` receives the per-tool result as JSON.
+//! `ROOTMARK_SCHEMA_OUT` receives the per-tool result as JSON.
 
-use mdkserver::tools;
+use rootmarkserver::tools;
 use serde_json::{json, Value};
 
 fn check(tool: &Value) -> Result<(), String> {
@@ -57,10 +57,11 @@ fn tool_schemas_are_valid() {
         .into_iter()
         .map(|s| json!({"name": s.name, "description": s.description, "inputSchema": s.input_schema}))
         .collect();
-    let (source, listed) = match std::env::var("MDK_TOOLS_LIST") {
+    let (source, listed) = match std::env::var("ROOTMARK_TOOLS_LIST") {
         Ok(p) if !p.is_empty() => {
-            let v: Value = serde_json::from_slice(&std::fs::read(&p).expect("read MDK_TOOLS_LIST"))
-                .expect("MDK_TOOLS_LIST is JSON");
+            let v: Value =
+                serde_json::from_slice(&std::fs::read(&p).expect("read ROOTMARK_TOOLS_LIST"))
+                    .expect("ROOTMARK_TOOLS_LIST is JSON");
             (p, v["tools"].as_array().expect("tools array").clone())
         }
         _ => ("tools::specs".to_string(), own.clone()),
@@ -105,10 +106,10 @@ fn tool_schemas_are_valid() {
         "per_tool": per,
         "pass": errors.is_empty(),
     });
-    if let Ok(p) = std::env::var("MDK_SCHEMA_OUT") {
+    if let Ok(p) = std::env::var("ROOTMARK_SCHEMA_OUT") {
         if !p.is_empty() {
             std::fs::write(&p, serde_json::to_string_pretty(&report).unwrap() + "\n")
-                .expect("write MDK_SCHEMA_OUT");
+                .expect("write ROOTMARK_SCHEMA_OUT");
         }
     }
     assert!(errors.is_empty(), "schema errors: {errors:#?}");

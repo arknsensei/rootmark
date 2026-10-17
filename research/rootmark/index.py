@@ -12,12 +12,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import lancedb
-import mdkernel_core
 import numpy as np
 import pyarrow as pa
+import rootmark_core
 from rank_bm25 import BM25Okapi
 
-from mdkernel import embed as E
+from rootmark import embed as E
 
 TOKEN_RE = re.compile(r"[a-z0-9]+")
 
@@ -30,7 +30,7 @@ def bm25_tokens(text: str) -> list[str]:
     return TOKEN_RE.findall(text.lower())
 
 
-def collect_chunks(vault: mdkernel_core.Vault, strategy: str) -> list[dict]:
+def collect_chunks(vault: rootmark_core.Vault, strategy: str) -> list[dict]:
     """All chunks of all documents in `doc_path` order, with `key` added."""
     out = []
     seen = set()
@@ -92,7 +92,7 @@ def table_name(strategy: str) -> str:
     return f"chunks_{strategy}"
 
 
-def build(vault: mdkernel_core.Vault, strategy: str, db_dir: Path) -> Index:
+def build(vault: rootmark_core.Vault, strategy: str, db_dir: Path) -> Index:
     chunks = collect_chunks(vault, strategy)
     if not chunks:
         raise RuntimeError("no chunks to index")

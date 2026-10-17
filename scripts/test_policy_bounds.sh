@@ -4,17 +4,17 @@
 # scratch vault; the output of every failing command is searched for the word
 # "default" (case-insensitive) and for any JSON on stdout.
 #
-#   scripts/test_policy_bounds.sh <mdk> [<out.json>]
+#   scripts/test_policy_bounds.sh <rootmark> [<out.json>]
 set -euo pipefail
 
-mdk="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+rootmark="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
 out="${2:-}"
-scratch="$(mktemp -d -t mdk-bounds.XXXXXX)"
+scratch="$(mktemp -d -t rootmark-bounds.XXXXXX)"
 trap 'rm -rf "$scratch"' EXIT
 v="$scratch/vault"
-mkdir -p "$v/.mdkernel"
+mkdir -p "$v/.rootmark"
 printf '# D\n\nAgent text for the bound cases.\n' >"$scratch/d.md"
-"$mdk" propose "$v" d.md "$scratch/d.md" --source agent >"$scratch/p.json"
+"$rootmark" propose "$v" d.md "$scratch/d.md" --source agent >"$scratch/p.json"
 l="$(jq -r '.layers[1].lineage_id' "$scratch/p.json")"
 good='promotion = "human_only"
 
@@ -46,23 +46,23 @@ case_fail() { # case_fail <id> <label> <pattern> <command...>
     '. + [{id: $id, case: $l, exit: $rc, error_matches: $e, stdout_empty: true, default_word: false}]' <<<"$results")"
   n=$((n + 1))
 }
-policy() { printf '%s' "$1" >"$v/.mdkernel/policy.toml"; }
-promote=("$mdk" promote "$v" "$l" --actor human:alice --reason ok)
+policy() { printf '%s' "$1" >"$v/.rootmark/policy.toml"; }
+promote=("$rootmark" promote "$v" "$l" --actor human:alice --reason ok)
 
 policy "${good/retention_hours = 24/retention_hours = 23}"
-case_fail B6-1 "retention < 24h" "kernel minimum is 24" "$mdk" policy show "$v"
+case_fail B6-1 "retention < 24h" "kernel minimum is 24" "$rootmark" policy show "$v"
 policy "${good/idle_ms = 1000/idle_ms = -1}"
-case_fail B6-2 "idle_ms < 0" "idle_ms = -1: must be >= 0" "$mdk" journal prune "$v" --now-ms 0
+case_fail B6-2 "idle_ms < 0" "idle_ms = -1: must be >= 0" "$rootmark" journal prune "$v" --now-ms 0
 policy "${good/min_sim_change = 0.2/min_sim_change = 1.5}"
-case_fail B6-3 "min_sim_change > 1" "must lie in \[0, 1\]" "$mdk" policy show "$v"
+case_fail B6-3 "min_sim_change > 1" "must lie in \[0, 1\]" "$rootmark" policy show "$v"
 policy "${good/human_only/implicit}"
 case_fail B6-4 "unknown promotion" "unknown promotion policy" "${promote[@]}"
-rm "$v/.mdkernel/policy.toml"
+rm "$v/.rootmark/policy.toml"
 case_fail B6-5 "promotion without a hook (no recipe: deny)" "denied by policy deny" "${promote[@]}"
 policy "$good"
-case_fail B6-6 "Promoted without actor" "actor id is empty" "$mdk" promote "$v" "$l" --actor human: --reason ok
+case_fail B6-6 "Promoted without actor" "actor id is empty" "$rootmark" promote "$v" "$l" --actor human: --reason ok
 # the vault holds no transition after all six
-if grep -q '"Promoted"' "$v/.mdkernel/events.jsonl"; then
+if grep -q '"Promoted"' "$v/.rootmark/events.jsonl"; then
   echo "FAIL: a Promoted event was written" >&2; exit 1
 fi
 # and the valid recipe works

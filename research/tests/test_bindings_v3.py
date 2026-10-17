@@ -1,16 +1,16 @@
 """Python binding, matcher v3 surface (SPEC_DELTA §7): `matcher=` argument,
-`MDK_MATCHER` default, per-vault version lock, mini_vault hashes equal to the CLI."""
+`ROOTMARK_MATCHER` default, per-vault version lock, mini_vault hashes equal to the CLI."""
 
 import json
 import subprocess
 from pathlib import Path
 
-import mdkernel_core as mk
 import pytest
+import rootmark_core as mk
 
 ROOT = Path(__file__).resolve().parents[1]
 MINI = ROOT.parent / "spec" / "fixtures" / "mini_vault"
-MDK = ROOT.parent / "target" / "release" / "mdk"
+ROOTMARK = ROOT.parent / "target" / "release" / "rootmark"
 V2_MINI_HASH = "8914f9b418ae360d49c85c951050f432"
 
 A = (
@@ -26,7 +26,7 @@ def doc(*ps):
 
 def cli_hash(tmp, matcher):
     out = subprocess.run(
-        [str(MDK), "--matcher", matcher, "ingest-dir", str(tmp), str(MINI)],
+        [str(ROOTMARK), "--matcher", matcher, "ingest-dir", str(tmp), str(MINI)],
         capture_output=True,
         text=True,
         check=True,
@@ -35,9 +35,9 @@ def cli_hash(tmp, matcher):
 
 
 def test_default_is_v3_and_env_and_argument(tmp_path, monkeypatch):
-    monkeypatch.delenv("MDK_MATCHER", raising=False)
+    monkeypatch.delenv("ROOTMARK_MATCHER", raising=False)
     assert mk.Vault(str(tmp_path / "a")).matcher() == "v3"
-    monkeypatch.setenv("MDK_MATCHER", "v2")
+    monkeypatch.setenv("ROOTMARK_MATCHER", "v2")
     assert mk.Vault(str(tmp_path / "b")).matcher() == "v2"
     assert mk.Vault(str(tmp_path / "c"), matcher="v3").matcher() == "v3"
     assert mk.matcher_defaults() == mk.matcher_defaults("v2")

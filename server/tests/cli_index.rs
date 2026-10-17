@@ -1,6 +1,6 @@
-//! P1-C/C6 (TASKS C6): `mdk index build/status/compact/watch` and `mdk
-//! search` end to end through the `mdk` binary (moved to `server` in
-//! P1-D/D0; it links `mdkindex::cli`, no `mdk-index` process). JSON output,
+//! P1-C/C6 (TASKS C6): `rootmark index build/status/compact/watch` and `rootmark
+//! search` end to end through the `rootmark` binary (moved to `server` in
+//! P1-D/D0; it links `rootmarkindex::cli`, no `rootmark-index` process). JSON output,
 //! `--at` an old checkpoint, `--include-proposal` labelled, `--mode`, one
 //! trace per search. Needs the model files (`make models`).
 
@@ -13,8 +13,8 @@ fn here(rel: &str) -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join(rel)
 }
 
-fn mdk(args: &[&str]) -> (i32, Value, String) {
-    let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
+fn rootmark(args: &[&str]) -> (i32, Value, String) {
+    let out = Command::new(env!("CARGO_BIN_EXE_rootmark"))
         .args(args)
         .output()
         .unwrap();
@@ -28,13 +28,13 @@ fn mdk(args: &[&str]) -> (i32, Value, String) {
 }
 
 fn ok(args: &[&str]) -> Value {
-    let (code, v, err) = mdk(args);
-    assert_eq!(code, 0, "mdk {args:?}: {err}");
+    let (code, v, err) = rootmark(args);
+    assert_eq!(code, 0, "rootmark {args:?}: {err}");
     v
 }
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-c6-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-c6-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -76,7 +76,7 @@ fn index_and_search_end_to_end() {
     let b = ok(&["index", "build", vs]);
     assert!(b["records"].as_u64().unwrap() > 0);
     assert_eq!(b["embedded"], b["records"]);
-    let (code, _, err) = mdk(&["index", "build", vs, "--embedder", "bge-large"]);
+    let (code, _, err) = rootmark(&["index", "build", vs, "--embedder", "bge-large"]);
     assert_ne!(code, 0);
     assert!(err.contains("unknown embedder"), "{err}");
 
@@ -125,9 +125,9 @@ fn index_and_search_end_to_end() {
             "{m}: labelled and last"
         );
     }
-    let (code, _, _) = mdk(&["search", vs, "x", "--mode", "graph"]);
+    let (code, _, _) = rootmark(&["search", vs, "x", "--mode", "graph"]);
     assert_ne!(code, 0);
-    let (code, _, err) = mdk(&["search", vs, "x", "--at", "no-such"]);
+    let (code, _, err) = rootmark(&["search", vs, "x", "--at", "no-such"]);
     assert_ne!(code, 0);
     assert!(err.contains("no checkpoint"), "{err}");
 
@@ -169,7 +169,7 @@ fn index_and_search_end_to_end() {
         .unwrap_or_else(|| traces["traces"].as_array().unwrap().len());
     assert_eq!(n, 1 + 6 + 1 + 1 + 1 + 1, "{traces}");
     // --pretty is passed through (indented output)
-    let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
+    let out = Command::new(env!("CARGO_BIN_EXE_rootmark"))
         .args(["--pretty", "index", "status", vs])
         .output()
         .unwrap();
@@ -179,11 +179,11 @@ fn index_and_search_end_to_end() {
     for m in [&["--matcher", "v3"][..], &["--matcher=v3"][..]] {
         let mut a: Vec<&str> = m.to_vec();
         a.extend(["search", vs, "espresso", "--at", "t0", "--mode", "lexical"]);
-        let (code, _, err) = mdk(&a);
+        let (code, _, err) = rootmark(&a);
         assert_eq!(code, 0, "{a:?}: {err}");
     }
-    // `mdk help search` lists the search flags
-    let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
+    // `rootmark help search` lists the search flags
+    let out = Command::new(env!("CARGO_BIN_EXE_rootmark"))
         .args(["help", "search"])
         .output()
         .unwrap();
@@ -192,22 +192,22 @@ fn index_and_search_end_to_end() {
     fs::remove_dir_all(root).unwrap();
 }
 
-/// P1-D/D0: `mdk` no longer runs `mdk-index` (K-C6.1's run-time link is
-/// gone): `$MDK_INDEX_BIN` is ignored, and a failing search reports its own
+/// P1-D/D0: `rootmark` no longer runs `rootmark-index` (K-C6.1's run-time link is
+/// gone): `$ROOTMARK_INDEX_BIN` is ignored, and a failing search reports its own
 /// error (exit 1), not a missing binary.
 #[test]
-fn mdk_index_binary_is_not_used() {
-    let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
+fn rootmark_index_binary_is_not_used() {
+    let out = Command::new(env!("CARGO_BIN_EXE_rootmark"))
         .args(["search", "/nonexistent", "q"])
-        .env("MDK_INDEX_BIN", "/nonexistent/mdk-index")
+        .env("ROOTMARK_INDEX_BIN", "/nonexistent/rootmark-index")
         .output()
         .unwrap();
     assert_eq!(out.status.code(), Some(1));
     let err = String::from_utf8_lossy(&out.stderr);
-    assert!(!err.contains("mdk-index"), "{err}");
+    assert!(!err.contains("rootmark-index"), "{err}");
 }
 
-/// `$MDK_MATCHER` / `--matcher` reach `index watch` as they reach `mdk
+/// `$ROOTMARK_MATCHER` / `--matcher` reach `index watch` as they reach `rootmark
 /// ingest` (C6 review fix): an empty vault watched with v2 is locked to v2;
 /// a vault locked to v3 refuses an explicit v2.
 #[test]
@@ -219,9 +219,9 @@ fn watch_uses_the_matcher_like_ingest() {
     // an index of an empty vault, then a watched document under v2
     ok(&["index", "build", vs]);
     fs::write(vault.join("a.md"), "# A\n\nFirst text about espresso.\n").unwrap();
-    let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
+    let out = Command::new(env!("CARGO_BIN_EXE_rootmark"))
         .args(["index", "watch", vs, "a.md"])
-        .env("MDK_MATCHER", "v2")
+        .env("ROOTMARK_MATCHER", "v2")
         .output()
         .unwrap();
     assert!(
@@ -229,7 +229,7 @@ fn watch_uses_the_matcher_like_ingest() {
         "{}",
         String::from_utf8_lossy(&out.stderr)
     );
-    let log = fs::read_to_string(vault.join(".mdkernel/events.jsonl")).unwrap();
+    let log = fs::read_to_string(vault.join(".rootmark/events.jsonl")).unwrap();
     assert!(log.contains("\"matcher_version\":\"v2\""), "{log}");
     // the vault is now v2: an explicit v3 is refused, the lock is used otherwise
     fs::write(
@@ -237,7 +237,7 @@ fn watch_uses_the_matcher_like_ingest() {
         "# A\n\nFirst text about espresso, edited.\n",
     )
     .unwrap();
-    let (code, _, err) = mdk(&["--matcher", "v3", "index", "watch", vs, "a.md"]);
+    let (code, _, err) = rootmark(&["--matcher", "v3", "index", "watch", vs, "a.md"]);
     assert_ne!(code, 0);
     assert!(err.to_lowercase().contains("matcher"), "{err}");
     ok(&["index", "watch", vs, "a.md"]);

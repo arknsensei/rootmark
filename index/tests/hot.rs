@@ -4,10 +4,10 @@
 //! write→searchable latency over 200 documents with seeded edits.
 //! Needs the model files (`make models`).
 
-use mdkcore::{MatcherVersion, Provenance, Vault};
-use mdkindex::embed::{Embedder, OnnxMiniLm};
-use mdkindex::search::{Mode, Searcher, View};
-use mdkindex::store::{self, Store};
+use rootmarkcore::{MatcherVersion, Provenance, Vault};
+use rootmarkindex::embed::{Embedder, OnnxMiniLm};
+use rootmarkindex::search::{Mode, Searcher, View};
+use rootmarkindex::store::{self, Store};
 use std::fs;
 use std::path::PathBuf;
 use std::sync::OnceLock;
@@ -21,7 +21,7 @@ fn embedder() -> &'static OnnxMiniLm {
 fn tmp(name: &str) -> PathBuf {
     static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let n = N.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-    let d = std::env::temp_dir().join(format!("mdk-c5-{}-{n}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-c5-{}-{n}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -232,7 +232,12 @@ fn hot_tier_problems_are_errors() {
     fs::remove_dir_all(root).unwrap();
 }
 
-fn rankings(v: &mut Vault, s: &Store, qs: &[String], at: &str) -> Vec<Vec<mdkindex::search::Hit>> {
+fn rankings(
+    v: &mut Vault,
+    s: &Store,
+    qs: &[String],
+    at: &str,
+) -> Vec<Vec<rootmarkindex::search::Hit>> {
     let mut se = Searcher::new(s, embedder(), "c9").unwrap();
     qs.iter()
         .enumerate()
@@ -306,7 +311,7 @@ fn percentile(sorted: &[f64], p: f64) -> f64 {
 /// GOAL C-8: write → searchable in the hot tier, 200 documents, 200 seeded
 /// edits; the model is loaded before timing. Each sample is one `watch`
 /// (ingest, chunk, embed the changed chunks, append); after each the edit's
-/// marker is found at the head. p50/p95 are written to `MDK_C8_OUT` (the
+/// marker is found at the head. p50/p95 are written to `ROOTMARK_C8_OUT` (the
 /// round report judges the threshold; the number depends on the machine).
 #[test]
 fn c8_write_to_searchable_latency() {
@@ -357,7 +362,7 @@ fn c8_write_to_searchable_latency() {
         "threads": 1,
     });
     eprintln!("C-8: {out}");
-    if let Ok(p) = std::env::var("MDK_C8_OUT") {
+    if let Ok(p) = std::env::var("ROOTMARK_C8_OUT") {
         fs::write(p, serde_json::to_string_pretty(&out).unwrap() + "\n").unwrap();
     }
     assert!(embedded.iter().all(|&n| n <= 1), "one paragraph per edit");

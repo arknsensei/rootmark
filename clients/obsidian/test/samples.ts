@@ -1,4 +1,4 @@
-// Real answers of `mdk serve` (P1-E/E1 probe of every tool over HTTP),
+// Real answers of `rootmark serve` (P1-E/E1 probe of every tool over HTTP),
 // local paths replaced: the contract tests' fake server returns them.
 import type { ToolName } from "../src/api";
 
@@ -49,7 +49,7 @@ export const SAMPLES: Record<ToolName, unknown> = {
       },
       "promotion": "human_only",
       "promotion_version": "1",
-      "source": "/vault/.mdkernel/policy.toml",
+      "source": "/vault/.rootmark/policy.toml",
       "version_trigger": {
         "idle_ms": 60000,
         "min_sim_change": 0.15

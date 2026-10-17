@@ -16,7 +16,7 @@ import argparse
 import json
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics_v3 as M3
 from eval import runinfo
@@ -95,7 +95,7 @@ def run(run_id: str) -> dict:
     ids = [d["id"] for d in json.loads((s3.SPLIT_HARD_DIR / "docs.json").read_text())]
     sub = substring_check(ids)
     vs = variants(ids)
-    theta, compiled_split = mdkernel_core.matcher_defaults(MATCHER)
+    theta, compiled_split = rootmark_core.matcher_defaults(MATCHER)
     grid = []
     for ts in THETA_SPLITS:
         recs = [r for i in ids for r in doc_records(s3.SPLIT_HARD_DIR / "docs" / i, theta, ts)]

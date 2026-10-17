@@ -5,7 +5,7 @@ import json
 import subprocess
 from pathlib import Path
 
-import mdkernel_core as mk
+import rootmark_core as mk
 
 from eval import d3_v3, run_h1r_v3, run_h4_v2repro
 
@@ -54,7 +54,7 @@ def test_v2_reference_values():
 
 
 def test_matcher_env_restores(monkeypatch):
-    monkeypatch.delenv("MDK_MATCHER", raising=False)
+    monkeypatch.delenv("ROOTMARK_MATCHER", raising=False)
     with d3_v3.matcher_env("v2"):
         assert mk.matcher_defaults() == mk.matcher_defaults("v2")
     assert mk.matcher_defaults() == mk.matcher_defaults("v3")

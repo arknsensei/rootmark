@@ -2,7 +2,7 @@
 //! (K-D1.1), checkpoint naming (K-D1.6) and the `[edit]`/`[identity]`
 //! recipe tables.
 
-use mdkcore::{
+use rootmarkcore::{
     Actor, ActorKind, AppendOnly, AuthorKind, Decision, Edit, EditMode, EditPolicy, EditRequest,
     EventKind, Layer, MatcherVersion, Policy, PolicySource, Provenance, Unrestricted, Vault,
 };
@@ -12,7 +12,7 @@ use std::path::{Path, PathBuf};
 const M: MatcherVersion = MatcherVersion::V3;
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-p1d1-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-p1d1-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -114,7 +114,7 @@ fn unattributed_ingest_writes_no_actor() {
         )
         .unwrap();
     }
-    let log = fs::read_to_string(a.join(".mdkernel/events.jsonl")).unwrap();
+    let log = fs::read_to_string(a.join(".rootmark/events.jsonl")).unwrap();
     assert!(!log.contains("\"actor\""), "{log}");
     assert_eq!(
         Vault::open(&a).unwrap().events_hash().unwrap(),
@@ -128,7 +128,7 @@ fn malformed_actor_is_rejected_on_open() {
     let mut v = human_vault(&root);
     v.ingest_by("safety.md", "# Safety\n", agent_prov(), M, &agent())
         .unwrap();
-    let p = root.join(".mdkernel/events.jsonl");
+    let p = root.join(".rootmark/events.jsonl");
     let log = fs::read_to_string(&p).unwrap();
     for (from, to) in [
         ("\"id\":\"claude-code/1.0\"", "\"id\":\"  \""),
@@ -233,7 +233,7 @@ fn checkpoint_naming() {
         v2.find_checkpoint("before-agent").unwrap().checkpoint_id,
         unnamed.checkpoint_id
     );
-    let kinds: Vec<EventKind> = mdkcore::events::read_events(&v2.events_path())
+    let kinds: Vec<EventKind> = rootmarkcore::events::read_events(&v2.events_path())
         .unwrap()
         .iter()
         .map(|e| e.kind)
@@ -262,7 +262,7 @@ fn tampered_checkpoint_name_is_rejected() {
     let mut v = human_vault(&root);
     v.head_checkpoint().unwrap();
     v.checkpoint(Some("one")).unwrap();
-    let p = root.join(".mdkernel/events.jsonl");
+    let p = root.join(".rootmark/events.jsonl");
     let log = fs::read_to_string(&p).unwrap();
     let n = log.lines().count() as u64;
     let named: serde_json::Value = serde_json::from_str(log.lines().last().unwrap()).unwrap();

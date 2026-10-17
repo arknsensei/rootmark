@@ -1,6 +1,6 @@
-//! `mdk serve` (GOAL P1-D "Servis"): one process, one vault.
+//! `rootmark serve` (GOAL P1-D "Servis"): one process, one vault.
 //!
-//! Start: the vault must open; without `.mdkernel/policy.toml` the default
+//! Start: the vault must open; without `.rootmark/policy.toml` the default
 //! recipe (`config::default_recipe`, promotion `human_only`) is written; the
 //! policy and its `[server]`/`[index]` tables must be valid; without an
 //! index one is built, and an index of another format is rebuilt unless
@@ -9,21 +9,21 @@
 //! - `--mcp stdio`: MCP over stdin/stdout (`crate::mcp`); the end of stdin
 //!   ends the service;
 //! - `--http 127.0.0.1:PORT`: the HTTP API (`crate::http`), token in
-//!   `.mdkernel/server.token`;
+//!   `.rootmark/server.token`;
 //! - `--watch`: Markdown files changed under the vault (outside
-//!   `.mdkernel/`) are ingested as human content and indexed into the hot
+//!   `.rootmark/`) are ingested as human content and indexed into the hot
 //!   tier (`Kernel::watch_doc`);
 //! - always: the hot tier is compacted every `[index] compact_every_s`.
 //!
 //! SIGTERM or SIGINT (or the end of the MCP stream) stops the service: the
 //! HTTP server and the watcher stop, the hot tier is compacted, and the
 //! process exits 0 — or 1 if that final compaction fails. Progress lines go
-//! to stderr (`mdk serve: …`); stdout carries only MCP.
+//! to stderr (`rootmark serve: …`); stdout carries only MCP.
 
 use crate::config::{self, ServerConfig};
 use crate::tools::{IndexAtStart, Kernel};
 use anyhow::{bail, Context, Result};
-use mdkcore::{MatcherVersion, Policy, PolicySource};
+use rootmarkcore::{MatcherVersion, Policy, PolicySource};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Duration;
@@ -37,13 +37,14 @@ pub struct ServeOptions {
 }
 
 fn log(msg: impl AsRef<str>) {
-    eprintln!("mdk serve: {}", msg.as_ref());
+    eprintln!("rootmark serve: {}", msg.as_ref());
 }
 
 /// The vault's policy and server settings. Without `policy.toml` the
 /// default recipe is used and returned for writing (`true`); nothing is
 /// written here, so a start that fails later leaves the vault untouched.
 fn policy_of(vault: &Path) -> Result<(Policy, ServerConfig, bool)> {
+    rootmarkcore::meta::check(vault)?;
     let p = Policy::path(vault);
     let missing = std::fs::symlink_metadata(&p).is_err();
     let policy = if missing {
@@ -58,7 +59,7 @@ fn policy_of(vault: &Path) -> Result<(Policy, ServerConfig, bool)> {
 
 fn write_default_policy(vault: &Path) -> Result<()> {
     let p = Policy::path(vault);
-    std::fs::create_dir_all(vault.join(".mdkernel"))?;
+    std::fs::create_dir_all(rootmarkcore::meta::path(vault))?;
     std::fs::write(&p, config::default_recipe())
         .with_context(|| format!("write {}", p.display()))?;
     log(format!(
@@ -70,8 +71,8 @@ fn write_default_policy(vault: &Path) -> Result<()> {
 
 /// Vault-relative `/` path of a changed file, if it is a Markdown document
 /// of the vault: a `.md` file none of whose path components is hidden
-/// (starts with `.`, so `.mdkernel/`, `.obsidian/`, `.x.md` are skipped) —
-/// the rule of `mdkcore::files::markdown_files`, which `ingest-dir` uses.
+/// (starts with `.`, so `.rootmark/`, `.obsidian/`, `.x.md` are skipped) —
+/// the rule of `rootmarkcore::files::markdown_files`, which `ingest-dir` uses.
 fn watched_doc(root: &Path, p: &Path) -> Option<String> {
     let rel = p.strip_prefix(root).ok()?;
     let mut parts = Vec::new();
@@ -99,7 +100,7 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
     let mut w = notify::recommended_watcher(tx).context("start the file watcher")?;
     w.watch(&root, RecursiveMode::Recursive)
         .with_context(|| format!("watch {}", root.display()))?;
-    // the documents an event names (none for `.mdkernel/` writes, hidden
+    // the documents an event names (none for `.rootmark/` writes, hidden
     // or non-Markdown paths, and access events)
     let docs_of = move |ev: notify::Result<notify::Event>, root: &Path| -> Vec<String> {
         match ev {
@@ -121,7 +122,7 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
             let mut docs: std::collections::BTreeSet<String> =
                 docs_of(first, &root).into_iter().collect();
             if docs.is_empty() {
-                continue; // the server's own writes under .mdkernel/ etc.
+                continue; // the server's own writes under .rootmark/ etc.
             }
             // gather the rest of the batch: until 50 ms pass without an
             // event naming a document, and at most 250 ms in all, so a
@@ -154,7 +155,7 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
                     ));
                     continue;
                 }
-                match kernel.watch_doc(&d, "mdk-serve-watch") {
+                match kernel.watch_doc(&d, "rootmark-serve-watch") {
                     Ok(r) if r.events == 0 && r.embedded == 0 => {}
                     Ok(r) => log(format!(
                         "watch: {d} ingested ({} events, {} chunks embedded, snapshot {})",
@@ -228,7 +229,7 @@ impl Signals {
 
 pub fn run(o: ServeOptions) -> Result<()> {
     if !o.mcp_stdio && o.http.is_none() && !o.watch {
-        bail!("mdk serve: nothing to serve (--mcp stdio, --http 127.0.0.1:PORT, --watch)");
+        bail!("rootmark serve: nothing to serve (--mcp stdio, --http 127.0.0.1:PORT, --watch)");
     }
     let kernel = Arc::new(Kernel::open_with(&o.vault, o.matcher)?);
     let (_policy, cfg, write_policy) = policy_of(&o.vault)?;
@@ -251,10 +252,10 @@ pub fn run(o: ServeOptions) -> Result<()> {
             r.records, r.snapshots, r.embedder_id
         )),
         IndexAtStart::Damaged(why) => log(format!(
-            "index damaged ({why}); left as it is (never rebuilt over): index tools answer index_stale until `mdk index build`"
+            "index damaged ({why}); left as it is (never rebuilt over): index tools answer index_stale until `rootmark index build`"
         )),
         IndexAtStart::Stale(why) => log(format!(
-            "index stale ({why}); [index] auto_rebuild = false: searches answer index_stale until `mdk index build`"
+            "index stale ({why}); [index] auto_rebuild = false: searches answer index_stale until `rootmark index build`"
         )),
     }
     let rt = tokio::runtime::Builder::new_multi_thread()

@@ -45,7 +45,7 @@ from eval.datasets.common import dump_json
 
 HERE = Path(__file__).resolve().parent
 # another declaration file (deliberate tests: scripts/test_tamper_p1e.sh)
-DOC = Path(os.environ.get("MDK_DETERMINISTIC_FIELDS", HERE / "DETERMINISTIC_FIELDS.md"))
+DOC = Path(os.environ.get("ROOTMARK_DETERMINISTIC_FIELDS", HERE / "DETERMINISTIC_FIELDS.md"))
 CLASSES = {"duvar-saati", "bilgi", "ortam", "karar"}
 PAIR_SAFE = {"duvar-saati", "bilgi", "ortam"}
 MODES = {"pair", "regress", "hepsi"}

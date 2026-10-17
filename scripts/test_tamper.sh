@@ -13,7 +13,7 @@ set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 run_dir="$(cd "${1:?usage: test_tamper.sh <run-dir>}" && pwd)"
 [ -f "$run_dir/manifest.json" ] || { echo "error: $run_dir is not a RUN directory" >&2; exit 2; }
-scratch="$(mktemp -d -t mdk-tamper.XXXXXX)"
+scratch="$(mktemp -d -t rootmark-tamper.XXXXXX)"
 trap 'rm -rf "$scratch"' EXIT
 py="$here/research/.venv/bin/python"
 fake_run="20261013T000000Z-0000000"

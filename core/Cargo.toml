@@ -1,10 +1,10 @@
 [package]
-name = "mdkernel-core"
+name = "rootmark-core"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "mdkcore"
+name = "rootmarkcore"
 path = "src/lib.rs"
 
 [dependencies]

@@ -13,7 +13,7 @@
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-scratch="$(mktemp -d -t mdk-freeze-indep.XXXXXX)"
+scratch="$(mktemp -d -t rootmark-freeze-indep.XXXXXX)"
 trap 'rm -rf "$scratch"' EXIT
 log() { printf '[freeze-indep] %s\n' "$*" >&2; }
 
@@ -21,7 +21,13 @@ copy="$scratch/repo"
 mkdir -p "$copy"
 (cd "$here" && git ls-files -co --exclude-standard -z | xargs -0 tar -cf -) | tar -xf - -C "$copy"
 # git metadata for runinfo-free checkers is not needed; v3-final checker comes from history
-git -C "$here" show v3-final:eval/freeze_check.py >"$copy/research/eval/freeze_check_v3final.py"
+# its imports under the current module names (K-GH.1; GH-0/F2), nothing else
+git -C "$here" show v3-final:eval/freeze_check.py \
+  | sed -e 's/^import mdkernel_core$/import rootmark_core as mdkernel_core/' \
+    -e 's/^\( *\)from mdkernel import /\1from rootmark import /' \
+    -e 's/^\( *\)from mdkernel\./\1from rootmark./' >"$copy/research/eval/freeze_check_v3final.py"
+grep -q '^import rootmark_core as mdkernel_core$' "$copy/research/eval/freeze_check_v3final.py" \
+  || { echo "error: the v3-final checker's module import was not found" >&2; exit 1; }
 
 lin="$copy/core/src/lineage.rs"
 for c in THETA THETA_SPLIT THETA_V3 THETA_SPLIT_V3; do
@@ -37,24 +43,24 @@ grep -E '^pub const THETA' "$lin" >&2
 
 log "build modified core + extension in the copy"
 export CARGO_TARGET_DIR="$scratch/target"
-(cd "$copy" && cargo build --release -q -p mdkernel-bindings)
+(cd "$copy" && cargo build --release -q -p rootmark-bindings)
 (cd "$copy/research" && uv sync --frozen -q && uv run --frozen maturin develop --release --quiet)
 
 py() { (cd "$copy/research" && uv run --frozen python "$@"); }
 
 log "control 1: compiled defaults changed"
-got="$(py -c 'import mdkernel_core as m; print(m.matcher_defaults("v2"), m.matcher_defaults("v3"))')"
+got="$(py -c 'import rootmark_core as m; print(m.matcher_defaults("v2"), m.matcher_defaults("v3"))')"
 [ "$got" = "(0.91, 0.92) (0.93, 0.94)" ] || { echo "error: constants not in effect: $got" >&2; exit 1; }
 
 log "control 2: the v3-final checker (compiled defaults) must fail"
-if (cd "$copy/research" && MDK_MATCHER=v2 uv run --frozen python -m eval.freeze_check_v3final) >"$scratch/old.log" 2>&1; then
+if (cd "$copy/research" && ROOTMARK_MATCHER=v2 uv run --frozen python -m eval.freeze_check_v3final) >"$scratch/old.log" 2>&1; then
   echo "error: v3-final freeze_check passed with changed constants; the test has no power" >&2
   exit 1
 fi
 grep -q "FAILED" "$scratch/old.log" || { tail -5 "$scratch/old.log" >&2; echo "error: v3-final checker failed for another reason" >&2; exit 1; }
 
 log "freeze checkers with changed constants"
-out2="$(cd "$copy/research" && MDK_MATCHER=v2 uv run --frozen python -m eval.freeze_check 2>/dev/null | tail -1)"
+out2="$(cd "$copy/research" && ROOTMARK_MATCHER=v2 uv run --frozen python -m eval.freeze_check 2>/dev/null | tail -1)"
 out3="$(cd "$copy/research" && uv run --frozen python -m eval.freeze_check_v3 2>/dev/null | tail -1)"
 echo "$out2" >&2
 echo "$out3" >&2

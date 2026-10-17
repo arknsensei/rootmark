@@ -6,15 +6,15 @@ import random
 import subprocess
 from pathlib import Path
 
-import mdkernel_core as mk
 import pytest
+import rootmark_core as mk
 import tiktoken
 
 from eval.datasets.common import SEED
 
 ROOT = Path(__file__).resolve().parents[1]
 MINI = ROOT.parent / "spec" / "fixtures" / "mini_vault"
-MDK = ROOT.parent / "target" / "release" / "mdk"
+ROOTMARK = ROOT.parent / "target" / "release" / "rootmark"
 
 P1 = "The roaster controls heat, airflow and time for every batch of green coffee."
 P2 = "Cupping is the standard tasting protocol that we use to evaluate each lot."
@@ -88,7 +88,7 @@ def test_python_and_cli_events_hash_equal(tmp_path):
     v = mk.Vault(str(tmp_path / "py"))
     v.ingest_dir(str(MINI))
     out = subprocess.run(
-        [str(MDK), "ingest-dir", str(tmp_path / "cli"), str(MINI)],
+        [str(ROOTMARK), "ingest-dir", str(tmp_path / "cli"), str(MINI)],
         capture_output=True,
         text=True,
         check=True,

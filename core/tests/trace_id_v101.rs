@@ -2,12 +2,12 @@
 //! `"\n"` separators; `query_hash` must be 32 lowercase hex and `consumer`
 //! must not contain `"\n"`, in `record_trace` and when `traces.jsonl` is read.
 
-use mdkcore::{hash32, trace_id, MatcherVersion, Provenance, Vault};
+use rootmarkcore::{hash32, trace_id, MatcherVersion, Provenance, Vault};
 use std::fs;
 use std::path::PathBuf;
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-b12-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-b12-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -62,7 +62,7 @@ fn invalid_inputs_are_refused() {
     assert!(v
         .record_trace(&cid, "c", &qh.to_uppercase(), Vec::new())
         .is_err());
-    assert!(!root.join(".mdkernel/traces.jsonl").exists());
+    assert!(!root.join(".rootmark/traces.jsonl").exists());
     let t = v.record_trace(&cid, "c", &qh, Vec::new()).unwrap();
     assert_eq!(t.trace_id, trace_id(&cid, "c", &qh, 0));
     fs::remove_dir_all(&root).unwrap();
@@ -99,7 +99,7 @@ fn invalid_trace_lines_are_refused_on_open() {
     let qh = hash32("q");
     v.record_trace(&cid, "c", &qh, Vec::new()).unwrap();
     drop(v);
-    let p = root.join(".mdkernel/traces.jsonl");
+    let p = root.join(".rootmark/traces.jsonl");
     let line = fs::read_to_string(&p).unwrap();
     // a 31-hex query_hash with a trace_id recomputed by the formula
     let bad = line.replace(&qh, &qh[..31]).replace(

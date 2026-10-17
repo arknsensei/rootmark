@@ -26,7 +26,7 @@
 use crate::store::{Store, BM25_B, BM25_K1};
 use crate::tokenize::tokens;
 use anyhow::{bail, Context, Result};
-use mdkcore::{Checkpoint, Layer, Vault};
+use rootmarkcore::{Checkpoint, Layer, Vault};
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, HashMap, HashSet};
 
@@ -452,7 +452,7 @@ pub struct SearchResult {
 
 /// `query_hash = H(query)` (spec §3 hash: blake3, 32 lowercase hex).
 pub fn query_hash(query: &str) -> String {
-    mdkcore::hash32(query)
+    rootmarkcore::hash32(query)
 }
 
 /// Searches with one store and embedder for one consumer; views are cached
@@ -470,7 +470,7 @@ impl<'a> Searcher<'a> {
         embedder: &'a dyn crate::embed::Embedder,
         consumer: &str,
     ) -> Result<Searcher<'a>> {
-        mdkcore::check_trace_input(consumer, &query_hash(""))?;
+        rootmarkcore::check_trace_input(consumer, &query_hash(""))?;
         if consumer.trim().is_empty() {
             bail!("a search requires a consumer");
         }
@@ -536,7 +536,7 @@ impl<'a> Searcher<'a> {
             .iter()
             .flat_map(|(i, _)| {
                 let r = &self.store.records[*i];
-                r.blocks.iter().map(|b| mdkcore::TraceEntry {
+                r.blocks.iter().map(|b| rootmarkcore::TraceEntry {
                     doc_path: r.doc_path.clone(),
                     lineage_id: b.lineage_id.clone(),
                     version_id: b.version_id.clone(),

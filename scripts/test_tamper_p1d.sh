@@ -13,7 +13,7 @@
 #    is not a JSON Schema type, a schema differing from the server's — must
 #    fail `server/tests/mcp_schemas.rs`; the untouched list passes.
 # 2. token: a token file with mode 644, a token file that is not 64 hex
-#    characters → `mdk serve --http` refuses to start; on a running server a
+#    characters → `rootmark serve --http` refuses to start; on a running server a
 #    wrong token, another vault's token, a token without "Bearer " → 401;
 #    the right token → 200 (control).
 # 3. X-Consumer: missing, empty, whitespace → 400 (right token).
@@ -28,11 +28,11 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 list="$(cd "$(dirname "${1:?usage: test_tamper_p1d.sh <tools_list.json> <out.json>}")" && pwd)/$(basename "$1")"
 out="${2:?usage: test_tamper_p1d.sh <tools_list.json> <out.json>}"
 cd "$root"
-cargo build -q --release -p mdkernel-server --bin mdk --example mcp_client
-cargo test -q --release -p mdkernel-server --test mcp_schemas --no-run 2>/dev/null
-mdk="$root/target/release/mdk"
+cargo build -q --release -p rootmark-server --bin rootmark --example mcp_client
+cargo test -q --release -p rootmark-server --test mcp_schemas --no-run 2>/dev/null
+rootmark="$root/target/release/rootmark"
 client="$root/target/release/examples/mcp_client"
-work="$(mktemp -d -t mdk-tamper-p1d.XXXXXX)"
+work="$(mktemp -d -t rootmark-tamper-p1d.XXXXXX)"
 pid=""
 trap '[ -z "$pid" ] || kill "$pid" 2>/dev/null || true; rm -rf "$work"' EXIT
 
@@ -46,13 +46,13 @@ record() { # record <group> <case> <expected: rejected|accepted> <true|false>
 # 1. schemas
 schema_case() { # schema_case <label> <jq filter on the list>
   jq "$2" "$list" >"$work/list.json"
-  if MDK_TOOLS_LIST="$work/list.json" cargo test -q --release -p mdkernel-server --test mcp_schemas >/dev/null 2>&1; then
+  if ROOTMARK_TOOLS_LIST="$work/list.json" cargo test -q --release -p rootmark-server --test mcp_schemas >/dev/null 2>&1; then
     record schema "$1" rejected false
   else
     record schema "$1" rejected true
   fi
 }
-if MDK_TOOLS_LIST="$list" cargo test -q --release -p mdkernel-server --test mcp_schemas >/dev/null 2>&1; then
+if ROOTMARK_TOOLS_LIST="$list" cargo test -q --release -p rootmark-server --test mcp_schemas >/dev/null 2>&1; then
   record schema "untouched Inspector list (control)" accepted true
 else
   record schema "untouched Inspector list (control)" accepted false
@@ -68,9 +68,9 @@ schema_case "schema differs from the server's" '(.tools[] | select(.name == "sea
 v="$work/vault"
 mkdir "$v"
 cp "$root"/spec/fixtures/mini_vault/*.md "$v/"
-"$mdk" ingest-dir "$v" "$v" >/dev/null
+"$rootmark" ingest-dir "$v" "$v" >/dev/null
 start() {
-  "$mdk" serve --vault "$v" --http 127.0.0.1:0 2>"$work/serve.err" &
+  "$rootmark" serve --vault "$v" --http 127.0.0.1:0 2>"$work/serve.err" &
   pid=$!
   for _ in $(seq 1 600); do
     if grep -q "http listening on" "$work/serve.err" 2>/dev/null; then
@@ -88,15 +88,15 @@ code() { curl -s -o /dev/null -w '%{http_code}' "$@"; }
 # 2. token
 start
 stop
-tokf="$v/.mdkernel/server.token"
+tokf="$v/.rootmark/server.token"
 tok="$(tr -d '\n' <"$tokf")"
 cp "$tokf" "$work/token.good"
 chmod 644 "$tokf"
-rc=0; "$mdk" serve --vault "$v" --http 127.0.0.1:0 2>"$work/t1.err" || rc=$?
+rc=0; "$rootmark" serve --vault "$v" --http 127.0.0.1:0 2>"$work/t1.err" || rc=$?
 record token "token file mode 644 → start refused" rejected "$( [ "$rc" != 0 ] && grep -q "must be 600" "$work/t1.err" && echo true || echo false)"
 chmod 600 "$tokf"
 printf 'not-a-token\n' >"$tokf"
-rc=0; "$mdk" serve --vault "$v" --http 127.0.0.1:0 2>"$work/t2.err" || rc=$?
+rc=0; "$rootmark" serve --vault "$v" --http 127.0.0.1:0 2>"$work/t2.err" || rc=$?
 record token "token file not 64 hex → start refused" rejected "$( [ "$rc" != 0 ] && grep -q "is not a token" "$work/t2.err" && echo true || echo false)"
 cp "$work/token.good" "$tokf"
 chmod 600 "$tokf"
@@ -132,7 +132,7 @@ stop
   echo '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"propose","arguments":{"doc_path":"tamper/ok.md","content":"control","reason":"t"}}}'
 } >"$work/d11.jsonl"
 before="$(shasum -a 256 "$v/espresso.md" | cut -d' ' -f1)"
-"$client" "$work/d11.jsonl" "$work/d11_t.jsonl" -- "$mdk" serve --vault "$v" --mcp stdio 2>>"$work/serve.err"
+"$client" "$work/d11.jsonl" "$work/d11_t.jsonl" -- "$rootmark" serve --vault "$v" --mcp stdio 2>>"$work/serve.err"
 err() { jq -e --argjson id "$1" 'select(.request.id == $id) | .response.result.isError == true' "$work/d11_t.jsonl" >/dev/null && echo true || echo false; }
 e2="$(err 2)"; [ ! -e "$work/escape.md" ] || e2=false
 record d-11 "propose ../escape.md → error, nothing written" rejected "$e2"

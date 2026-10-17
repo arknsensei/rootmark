@@ -1,4 +1,4 @@
-// A fake `mdk serve` HTTP endpoint for contract tests: records every
+// A fake `rootmark serve` HTTP endpoint for contract tests: records every
 // request and answers with whatever the test queues (default 200 `{}`).
 import { createServer, type IncomingMessage, type Server } from "node:http";
 import type { AddressInfo } from "node:net";

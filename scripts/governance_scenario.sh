@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
 # Deterministic governance scenario (P1-B GOAL B-4; VERIFY V1): drives every
-# governance command of `mdk` on a fresh vault built from the mini_vault
+# governance command of `rootmark` on a fresh vault built from the mini_vault
 # fixture and leaves the artefacts the pair comparison checks byte for byte.
 #
-#   scripts/governance_scenario.sh <mdk> <out-dir>
+#   scripts/governance_scenario.sh <rootmark> <out-dir>
 #
-# <out-dir>/vault/.mdkernel/{events.jsonl, traces.jsonl, checkpoints/},
+# <out-dir>/vault/.rootmark/{events.jsonl, traces.jsonl, checkpoints/},
 # <out-dir>/governance.json (summary: hashes, layers, checkpoints, traces).
 # Every time is given explicitly (--now-ms); nothing depends on the clock,
 # the machine or the directory (doc paths are vault-relative).
 set -euo pipefail
 
-mdk="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
-out="${2:?usage: governance_scenario.sh <mdk> <out-dir>}"
+rootmark="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+out="${2:?usage: governance_scenario.sh <rootmark> <out-dir>}"
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 mkdir -p "$out"
 out="$(cd "$out" && pwd)"
 [ ! -e "$out/vault" ] || { echo "error: $out/vault exists" >&2; exit 1; }
 v="$out/vault"
-mkdir -p "$v/.mdkernel"
-cat >"$v/.mdkernel/policy.toml" <<'TOML'
+mkdir -p "$v/.rootmark"
+cat >"$v/.rootmark/policy.toml" <<'TOML'
 promotion = "human_only"
 
 [version_trigger]
@@ -33,7 +33,7 @@ retention_hours = 24
 policy = "unrestricted"
 TOML
 
-j() { "$mdk" "$@"; }
+j() { "$rootmark" "$@"; }
 
 # human corpus
 cp -R "$here/spec/fixtures/mini_vault/." "$v/"
@@ -53,7 +53,7 @@ The agent suggests logging grinder settings next to each roast batch.
 The agent suggests a weekly backflush with detergent for the group heads.
 MD
 j propose "$v" agents/notes.md "$work/agent-note.md" --source claude-code >"$work/propose1.json"
-# P1-D.1/F13: since K-D1.1 `mdk propose` never overwrites a document; the
+# P1-D.1/F13: since K-D1.1 `rootmark propose` never overwrites a document; the
 # edit is the appended paragraph it always was (the fixture has no "clean,
 # sweet cups"), proposed with `--mode append`, which the agent edit of a
 # human section needs `[edit] policy = "unrestricted"` for (above)
@@ -101,7 +101,7 @@ again="$(j checkpoint create "$v" --name final | jq -r .checkpoint_id)"
 [ "$again" = "$cp3" ] || { echo "error: checkpoint not deterministic" >&2; exit 1; }
 
 b3() { python3 -c 'import sys,hashlib;print(hashlib.sha256(open(sys.argv[1],"rb").read()).hexdigest())' "$1"; }
-m="$v/.mdkernel"
+m="$v/.rootmark"
 layers="$(j blame "$v" agents/notes.md | jq -c '[.blocks[] | {layer, inactive, seq_created, seq_last}]')"
 layers_then="$(j blame "$v" agents/notes.md --at proposed | jq -c '[.blocks[] | {layer, inactive}]')"
 jq -n \

@@ -189,6 +189,85 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/release.sh` | `P1-E.1/E1.5-pre:` | yayım paketi (zincirde E1-3..E1-5 kaynağı) |
 | `scripts/release_target.sh` | `P1-E.1/E1.5-pre:` | hedef kaydı (yerel ve CI aynı) |
 | `scripts/release_check.sh` | `P1-E.1/E1.5-pre:` | E1-4 kontrol listesi betiği (R1–R15, R4a) |
+| `research/eval/**` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2, GH-0/F3: ad `rootmark` (K-GH.1), tarihsel girdiler göçle, karşılaştırma ad modulo |
+| `core/tests/conformance.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `core/tests/conformance/eval.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/gen_fixtures.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `scripts/fixture-gen/**` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `scripts/test_freeze_indep.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `research/eval/datasets/synthetic_edits_v3.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/run_holdout.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/run_split_grid.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/run_p1a_checks.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/test_tamper.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/verify.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `core/tests/conformance/eval_c2.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `core/tests/conformance_c2_gen.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/gen_fixtures_c2.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/run_holdout_split.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/compare_p1b.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/governance_scenario.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/test_policy_bounds.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/check_v3_compat.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `scripts/gen_v3final_mixed.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/v3final-mixed-gen/**` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `research/eval/compare_p1b1.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `research/eval/gen_embed_ref.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/gen_tok_ref.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `index/tests/conformance_c3.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `index/tests/conformance/eval_c3.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `index/tests/conformance_c3_gen.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/gen_fixtures_c3.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/run_c3_quality.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/run_p1c_checks.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/test_tamper_p1c.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `index/tests/governance.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `index/tests/embed.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `index/tests/hot.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `core/tests/compat_v3final.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/bm25_lucene.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/run_c1_variant.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/test_p1c1.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `index/tests/p1c1.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/compare_p1d.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F3: ad `rootmark` (K-GH.1), karşılaştırma ad modulo |
+| `research/eval/run_p1d_checks.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/report_p1d.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/mcp_e2e.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/mcp_inspector.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/http_e2e.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/scene_agent.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/test_tamper_p1d.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `server/tests/serve_watch.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `server/tests/mcp_schemas.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/compare_p1d1.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/test_p1d1.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `scripts/test_tamper_p1d1.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/contract_check.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski derlemenin başlama satırı |
+| `server/tests/p1d1_criteria.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `server/tests/contract.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/check_compare_fields.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/compare_p1e.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/run_p1e_checks.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/scene.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/plugin_e2e.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `clients/obsidian/e2e/**` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `scripts/client_checks.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/release_local.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/conformance_equiv.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/test_tamper_p1e.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/report_p1e.py` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/gen_old_index.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `server/tests/p1e1_status.rs` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `scripts/test_tamper_p1e1.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `clients/obsidian/e2e/real/**` | `GH-0/G0:` | yeniden dondurma GH-0/F1, GH-0/F2: ad `rootmark` (K-GH.1), eski adla yazılmış tarihsel girdiler göçle |
+| `scripts/plugin_e2e_real.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/test_tamper_p1e1_e2e.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/release.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/release_target.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `scripts/release_check.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
+| `research/eval/compare_p1c1.py` | `GH-0/G0:` | yeniden dondurma GH-0/F3: tarihsel RUN'ın dosya adları `resolve` ile |
+| `research/eval/historical.py` | `GH-0/G0:` | yeniden dondurma GH-0/F3: kayıt ↔ referans ad modulo |
 <!-- /frozen-table -->
 
 ## Notlar

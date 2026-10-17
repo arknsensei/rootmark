@@ -3,10 +3,10 @@
 import { ItemView, Setting, type WorkspaceLeaf } from "obsidian";
 import { describeError, type Hit } from "../api";
 import { runSearch } from "../commands";
-import type MdkernelPlugin from "../main";
+import type RootmarkPlugin from "../main";
 import { openDoc } from "./open";
 
-export const SEARCH_VIEW = "mdkernel-search";
+export const SEARCH_VIEW = "rootmark-search";
 
 export class SearchView extends ItemView {
   private query = "";
@@ -15,14 +15,14 @@ export class SearchView extends ItemView {
   private includeProposal = false;
   private at = "";
 
-  constructor(leaf: WorkspaceLeaf, private readonly plugin: MdkernelPlugin) {
+  constructor(leaf: WorkspaceLeaf, private readonly plugin: RootmarkPlugin) {
     super(leaf);
   }
   override getViewType(): string {
     return SEARCH_VIEW;
   }
   override getDisplayText(): string {
-    return "mdkernel search";
+    return "rootmark search";
   }
   override getIcon(): string {
     return "search";
@@ -69,7 +69,7 @@ export class SearchView extends ItemView {
     const out = createDiv();
     const client = this.plugin.client();
     if (client === null) {
-      out.createEl("p", { text: `mdk serve not connected: ${this.plugin.offlineReason()}` });
+      out.createEl("p", { text: `rootmark serve not connected: ${this.plugin.offlineReason()}` });
       this.render(out);
       return;
     }
@@ -80,14 +80,14 @@ export class SearchView extends ItemView {
         include_proposal: this.includeProposal,
         ...(this.at.trim() === "" ? {} : { at: this.at.trim() }),
       });
-      out.createEl("p", { cls: "mdk-meta", text: `checkpoint ${r.checkpoint_id.slice(0, 8)} · trace ${r.trace_id.slice(0, 8)}` });
-      this.hits(out, r.canonical, "mdk-hit-canonical");
+      out.createEl("p", { cls: "rootmark-meta", text: `checkpoint ${r.checkpoint_id.slice(0, 8)} · trace ${r.trace_id.slice(0, 8)}` });
+      this.hits(out, r.canonical, "rootmark-hit-canonical");
       if (this.includeProposal) {
         out.createEl("h4", { text: `Proposals (not approved) · ${String(r.proposal.length)}` });
-        this.hits(out, r.proposal, "mdk-hit-proposal");
+        this.hits(out, r.proposal, "rootmark-hit-proposal");
       }
     } catch (e) {
-      out.createEl("p", { cls: "mdk-error", text: describeError(e) });
+      out.createEl("p", { cls: "rootmark-error", text: describeError(e) });
     }
     this.render(out);
   }

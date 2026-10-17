@@ -1,7 +1,7 @@
 //! Writes `expected.json` for every conformance case and `MANIFEST.json`
 //! (scripts/gen_fixtures.sh). Built against the v3-final core only.
 //!
-//!     mdk-fixture-gen <spec/fixtures> <v3-final sha>
+//!     rootmark-fixture-gen <spec/fixtures> <v3-final sha>
 
 #[path = "eval.rs"]
 mod eval;
@@ -14,7 +14,7 @@ use std::path::PathBuf;
 fn main() -> Result<()> {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 3 {
-        bail!("usage: mdk-fixture-gen <fixtures-dir> <v3-final-sha>");
+        bail!("usage: rootmark-fixture-gen <fixtures-dir> <v3-final-sha>");
     }
     let root = PathBuf::from(&args[1]);
     let cases = eval::case_dirs(&root)?;

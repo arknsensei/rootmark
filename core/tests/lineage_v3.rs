@@ -2,15 +2,15 @@
 //! ratio, merge-direction residual check, per-vault version lock, and V2
 //! byte-equality with v2-final.
 
-use mdkcore::lineage::{THETA_SPLIT_V3, THETA_V3};
-use mdkcore::{EventKind, IngestResult, MatchParams, MatcherVersion, Provenance, Vault};
+use rootmarkcore::lineage::{THETA_SPLIT_V3, THETA_V3};
+use rootmarkcore::{EventKind, IngestResult, MatchParams, MatcherVersion, Provenance, Vault};
 use std::path::{Path, PathBuf};
 
 const V2: MatcherVersion = MatcherVersion::V2;
 const V3: MatcherVersion = MatcherVersion::V3;
 
 fn tmp(name: &str) -> PathBuf {
-    let p = std::env::temp_dir().join(format!("mdk-lin3-{name}-{}", std::process::id()));
+    let p = std::env::temp_dir().join(format!("rootmark-lin3-{name}-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&p);
     std::fs::create_dir_all(&p).unwrap();
     p
@@ -49,7 +49,7 @@ fn versions(v: &Vault) -> Vec<String> {
         .collect()
 }
 
-fn block_events(r: &IngestResult) -> Vec<&mdkcore::Event> {
+fn block_events(r: &IngestResult) -> Vec<&rootmarkcore::Event> {
     r.events
         .iter()
         .filter(|e| e.kind != EventKind::SnapshotCommitted)
@@ -245,7 +245,7 @@ fn no_step3(name: &str) -> Vault {
 
 const A_EDIT: &str = "The roaster controls heat, airflow and drum speed for every batch of green coffee, and the operator records each change into the roast log so that the next batch can be compared.";
 
-fn merged_residual(r: &IngestResult) -> &mdkcore::Event {
+fn merged_residual(r: &IngestResult) -> &rootmarkcore::Event {
     let evs = block_events(r);
     assert_eq!(
         evs.len(),

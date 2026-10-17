@@ -7,13 +7,13 @@
 #   scripts/check_v3_compat.sh [<out.json> [<mixed-out.json>]]
 #
 # Builds `git archive v3-final core` (like scripts/gen_fixtures.sh) into a
-# temp dir; the current `mdk` is `target/release/mdk` of this tree (built here).
+# temp dir; the current `rootmark` is `target/release/rootmark` of this tree (built here).
 #
 # P1-B.1 (GOAL B1-1, K-B1.1; freeze exception P1-B.1/F4): then the
 # mixed-author scenarios of scripts/v3final-mixed-gen/scenarios.json are
 # written afresh with the v3-final **library** API (scripts/gen_v3final_mixed.sh
 # into a temp dir; the committed fixtures are not used) and each opens with the
-# current `mdk`: every document's `replay` snapshot_id equals v3-final's,
+# current `rootmark`: every document's `replay` snapshot_id equals v3-final's,
 # `events_hash` and the events.jsonl bytes do not change, and `blame` gives
 # every block's [author_kind, layer, layer_source] as `expect_blame` states.
 # The result goes to <mixed-out.json> (stdout and <out.json> keep the P1-B
@@ -24,20 +24,24 @@ here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 out="${1:-}"
 mixed_out="${2:-}"
 sha="$(git -C "$here" rev-parse --verify 'v3-final^{commit}')"
-work="$(mktemp -d -t mdk-v3compat.XXXXXX)"
+work="$(mktemp -d -t rootmark-v3compat.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
 
 git -C "$here" archive "$sha" Cargo.lock rust-toolchain.toml .cargo core | tar -xf - -C "$work"
 printf '[workspace]\nresolver = "2"\nmembers = ["core"]\n' >"$work/Cargo.toml"
+# the v3-final tree keeps its names: crate mdkernel-core, binary mdk (K-GH.1)
 (cd "$work" && cargo build --offline --release -q -p mdkernel-core --bin mdk)
 old="$work/target/release/mdk"
-(cd "$here" && cargo build --release -q -p mdkernel-server --bin mdk)
-new="$here/target/release/mdk"
+(cd "$here" && cargo build --release -q -p rootmark-server --bin rootmark)
+new="$here/target/release/rootmark"
 
 vault="$work/vault"
 mkdir -p "$vault"
 "$old" ingest-dir "$vault" "$here/spec/fixtures/mini_vault" >"$work/ingest.json"
 "$old" ingest-dir "$vault" "$here/core/tests/fixtures/v3_final/edit" >>"$work/ingest.json"
+# the v3-final binary keeps the store under .mdkernel/; the current one reads
+# the same files through .rootmark (K-GH.1; GH-0/F2)
+ln -s .mdkernel "$vault/.rootmark"
 log="$vault/.mdkernel/events.jsonl"
 before_bytes="$(shasum -a 256 "$log" | cut -d' ' -f1)"
 old_hash="$("$old" events-hash "$vault" | jq -r .events_hash)"
@@ -91,6 +95,7 @@ while IFS= read -r name; do
   mv_="$work/mv-$name"
   mkdir -p "$mv_"
   cp -R "$gen/$name/store" "$mv_/.mdkernel"
+  ln -s .mdkernel "$mv_/.rootmark"
   mlog="$mv_/.mdkernel/events.jsonl"
   mb="$(shasum -a 256 "$mlog" | cut -d' ' -f1)"
   mh_old="$("$old" events-hash "$mv_" | jq -r .events_hash)"

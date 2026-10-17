@@ -2,7 +2,7 @@
 # D1-13 (GOAL P1-D.1; TASKS D1.5): docs/CLIENT_CONTRACT.md against the server
 # and the tests.
 #   1. the tools of the contract (§2 table, first column) are exactly the
-#      tools a live `mdk serve --mcp stdio` lists (`tools/list`);
+#      tools a live `rootmark serve --mcp stdio` lists (`tools/list`);
 #   2. the error codes of the contract (§3 table) are exactly
 #      `server/src/error.rs` `Code::as_str`, with the same HTTP status
 #      (`Code::http_status`);
@@ -11,7 +11,7 @@
 #      (`call_tool(&k, "<tool>", …)`), the code by a real call expecting it
 #      (`expect_code(&k, …, Code::<Variant>);`); comments do not count;
 #   4. (P1-E/E0, K-E0.2 Ö3/Ş4) over real HTTP against a live
-#      `mdk serve --http 127.0.0.1:0`: every §1 endpoint (`POST /v1/<tool>`
+#      `rootmark serve --http 127.0.0.1:0`: every §1 endpoint (`POST /v1/<tool>`
 #      for each §2 tool, `GET /v1/status`) answers 200 with a JSON object
 #      and no error; every §3 code is triggered by a real request and
 #      answers the status of its §3 row with that `error.code`; the §1/§3
@@ -31,26 +31,26 @@
 # Prints and writes (<out.json>, optional) {tools, codes, http, missing,
 # pass}; exit 1 if anything is missing or differs.
 #
-#   scripts/contract_check.sh [<out.json>]   (MDK_CONTRACT: another contract
-#   file; MDK_BIN: another `mdk` binary to serve, e.g. a deliberately broken
+#   scripts/contract_check.sh [<out.json>]   (ROOTMARK_CONTRACT: another contract
+#   file; ROOTMARK_BIN: another `rootmark` binary to serve, e.g. a deliberately broken
 #   build — `scripts/test_tamper_p1e.sh`)
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 out="${1:-}"
-contract="${MDK_CONTRACT:-$here/docs/CLIENT_CONTRACT.md}"
-work="$(mktemp -d -t mdk-contract.XXXXXX)"
+contract="${ROOTMARK_CONTRACT:-$here/docs/CLIENT_CONTRACT.md}"
+work="$(mktemp -d -t rootmark-contract.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
 
-(cd "$here" && cargo build -q --release -p mdkernel-server --bin mdk --example mcp_pipeline)
-mdk="${MDK_BIN:-$here/target/release/mdk}"
+(cd "$here" && cargo build -q --release -p rootmark-server --bin rootmark --example mcp_pipeline)
+rootmark="${ROOTMARK_BIN:-$here/target/release/rootmark}"
 pipe="$here/target/release/examples/mcp_pipeline"
 
 # 1. tools: contract §2 rows `| \`name\` | …` between "## 2." and "## 3."
 contract_tools="$(sed -n '/^## 2\. /,/^## 3\. /p' "$contract" | grep -E '^\| `[a-z_]+` \|' | sed -E 's/^\| `([a-z_]+)`.*/\1/' | sort)"
 mkdir -p "$work/vault"
 printf '# A\n\nText.\n' >"$work/vault/a.md"
-"$mdk" ingest-dir "$work/vault" "$work/vault" >/dev/null
+"$rootmark" ingest-dir "$work/vault" "$work/vault" >/dev/null
 cat >"$work/list.jsonl" <<'J'
 {"jsonrpc":"2.0","id":0,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"contract-check","version":"1.0"}}}
 {"jsonrpc":"2.0","method":"notifications/initialized"}
@@ -58,7 +58,7 @@ cat >"$work/list.jsonl" <<'J'
 J
 # pipelined: the server completes the initialize handshake before it reads
 # tools/list
-"$pipe" "$work/list.jsonl" "$work/list.out" -- "$mdk" serve --vault "$work/vault" --mcp stdio 2>"$work/serve.err"
+"$pipe" "$work/list.jsonl" "$work/list.out" -- "$rootmark" serve --vault "$work/vault" --mcp stdio 2>"$work/serve.err"
 server_tools="$(jq -r 'select(.request.id == 1) | .response.result.tools[].name' "$work/list.out" | sort)"
 
 # 2. codes: contract §3 rows `| \`code\` | <status> |`; error.rs mappings
@@ -97,8 +97,8 @@ done <<<"$contract_codes"
 hv="$work/http_vault"
 mkdir -p "$hv"
 printf '# A\n\nSome text about espresso.\n' >"$hv/a.md"
-"$mdk" ingest-dir "$hv" "$hv" >/dev/null
-cat >"$hv/.mdkernel/policy.toml" <<'T'
+"$rootmark" ingest-dir "$hv" "$hv" >/dev/null
+cat >"$hv/.rootmark/policy.toml" <<'T'
 [promotion]
 policy = "human_only"
 
@@ -121,22 +121,23 @@ auto_rebuild = false
 [identity]
 human_id = "contract-http"
 T
-"$mdk" serve --vault "$hv" --http 127.0.0.1:0 </dev/null >/dev/null 2>"$work/http.err" &
+"$rootmark" serve --vault "$hv" --http 127.0.0.1:0 </dev/null >/dev/null 2>"$work/http.err" &
 serve_pid=$!
 trap 'kill "$serve_pid" 2>/dev/null || true; rm -rf "$work"' EXIT
 port=""
 for _ in $(seq 1 600); do
-  port="$(sed -n 's/^mdk serve: http listening on 127\.0\.0\.1:\([0-9]*\)$/\1/p' "$work/http.err")"
+  # any binary name: ROOTMARK_BIN may be an older build (`mdk serve: …`, K-GH.1)
+  port="$(sed -n 's/^[a-z]* serve: http listening on 127\.0\.0\.1:\([0-9]*\)$/\1/p' "$work/http.err")"
   [ -n "$port" ] && break
   kill -0 "$serve_pid" 2>/dev/null || break
   sleep 0.1
 done
 if [ -z "$port" ]; then
   cat "$work/http.err" >&2
-  echo "contract_check: mdk serve --http did not start" >&2
+  echo "contract_check: rootmark serve --http did not start" >&2
   exit 1
 fi
-token="$(tr -d '[:space:]' <"$hv/.mdkernel/server.token")"
+token="$(tr -d '[:space:]' <"$hv/.rootmark/server.token")"
 # req <method> <path> <body> [token] → "<status> <compact JSON body>"
 req() {
   local t="${4-$token}" st
@@ -192,15 +193,15 @@ code_req() {
     heading_not_found) req POST /v1/propose '{"doc_path":"a.md","mode":"replace_section","heading":"Nope","content":"x","reason":"r"}' ;;
     policy_violation) req POST /v1/propose '{"doc_path":"a.md","mode":"append","content":"x","reason":"r"}' ;;
     index_stale)
-      m="$hv/.mdkernel/index/manifest.json"
+      m="$hv/.rootmark/index/manifest.json"
       # the current index, for `internal` and the status step below
-      rm -rf "$work/index.bak" && cp -R "$hv/.mdkernel/index" "$work/index.bak"
+      rm -rf "$work/index.bak" && cp -R "$hv/.rootmark/index" "$work/index.bak"
       jq -c '.format = "mdkernel-index/2"' "$m" >"$work/m" && cp "$work/m" "$m"
       req POST /v1/search '{"query":"espresso"}' ;;
     internal)
       # an index file that does not match its manifest (blake3)
-      rm -rf "$hv/.mdkernel/index" && cp -R "$work/index.bak" "$hv/.mdkernel/index"
-      printf '\n' >>"$hv/.mdkernel/index/records.jsonl"
+      rm -rf "$hv/.rootmark/index" && cp -R "$work/index.bak" "$hv/.rootmark/index"
+      printf '\n' >>"$hv/.rootmark/index/records.jsonl"
       req POST /v1/search '{"query":"espresso"}' ;;
     *) echo "" ;;
   esac
@@ -245,14 +246,14 @@ index_state_check() { # <state>: status GET/POST 200 with that state; search 503
     '. + [{state: $s, status_get: $gs, status_post: $ps, index: $gi, search_status: $ss, search_code: $sc, ok: $ok}]')"
 }
 if [ -d "$work/index.bak" ]; then
-  rm -rf "$hv/.mdkernel/index" && cp -R "$work/index.bak" "$hv/.mdkernel/index"
+  rm -rf "$hv/.rootmark/index" && cp -R "$work/index.bak" "$hv/.rootmark/index"
   index_state_check ok
-  m="$hv/.mdkernel/index/manifest.json"
+  m="$hv/.rootmark/index/manifest.json"
   jq -c '.format = "mdkernel-index/2"' "$m" >"$work/m" && cp "$work/m" "$m"
   index_state_check stale
   printf '{ not json' >"$m"
   index_state_check damaged
-  rm -rf "$hv/.mdkernel/index"
+  rm -rf "$hv/.rootmark/index"
   index_state_check missing
 else
   missing+=("http-status-index:no index to vary (index_stale step did not run)")

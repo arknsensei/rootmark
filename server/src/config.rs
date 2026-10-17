@@ -1,6 +1,6 @@
 //! The server's part of the policy recipe (GOAL P1-D "Politika ve kimlik"):
-//! `[server]` and `[index]` of `.mdkernel/policy.toml`, kept as written by
-//! the kernel (`mdkcore::Policy::{server, index}`) and validated here.
+//! `[server]` and `[index]` of `.rootmark/policy.toml`, kept as written by
+//! the kernel (`rootmarkcore::Policy::{server, index}`) and validated here.
 //!
 //! ```toml
 //! [promotion]
@@ -29,7 +29,7 @@
 //! never clamped (ARCHITECTURE §4.4, K21-T).
 
 use anyhow::{bail, Result};
-use mdkcore::Policy;
+use rootmarkcore::Policy;
 use serde_json::{json, Value};
 
 pub const DEFAULT_TOKEN_ROTATE_DAYS: u32 = 30;
@@ -43,7 +43,7 @@ pub struct ServerConfig {
     pub token_rotate_days: u32,
     pub max_propose_bytes: u64,
     pub compact_every_s: u64,
-    /// `[index] auto_rebuild` (K-E0.3): `mdk serve` rebuilds an index of
+    /// `[index] auto_rebuild` (K-E0.3): `rootmark serve` rebuilds an index of
     /// another format at start; without it, searches answer `index_stale`
     pub auto_rebuild: bool,
     /// `[identity] human_id` (K-D1.3)
@@ -142,13 +142,13 @@ impl ServerConfig {
     }
 }
 
-/// The recipe `mdk serve` writes into a vault that has none (GOAL P1-D:
+/// The recipe `rootmark serve` writes into a vault that has none (GOAL P1-D:
 /// the phase-1 default promotion policy is human approval only, K12/K16).
 /// The trigger and journal values are the kernel's built-in ones.
 pub fn default_recipe() -> String {
     let b = Policy::builtin();
     format!(
-        "# written by `mdk serve` (no policy.toml was present)\n\
+        "# written by `rootmark serve` (no policy.toml was present)\n\
          [promotion]\n\
          policy = \"human_only\"\n\
          \n\

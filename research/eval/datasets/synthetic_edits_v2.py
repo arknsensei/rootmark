@@ -30,7 +30,7 @@ import shutil
 from itertools import pairwise
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval.datasets import synthetic_edits as se
 from eval.datasets.common import (
@@ -81,7 +81,7 @@ HARD_MIN_PROSE = 2
 
 def norm_len(b: se.Blk) -> int:
     """Characters of the block's normalised text (what the matcher measures)."""
-    drafts, _ = mdkernel_core.parse_document(b.text + "\n", "x.md")
+    drafts, _ = rootmark_core.parse_document(b.text + "\n", "x.md")
     if len(drafts) != 1:
         raise ValueError("block does not parse to one block")
     return len(drafts[0]["normalized_text"])

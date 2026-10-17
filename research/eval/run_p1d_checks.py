@@ -38,7 +38,7 @@ from eval.datasets.common import die
 GOAL_TOOLS = 9
 E2E_CHECKS = {
     "D-3": [
-        "D-3 file is the agent's text only (no lineage|version_id|mdkernel); refused proposals wrote no file",
+        "D-3 file is the agent's text only (no lineage|version_id|rootmark); refused proposals wrote no file",
         "create: ok, every block proposal by Agent (source mcp-e2e/1.0)",
         "D-3 search by default does not find the proposal",
         "D-3 search with include_proposal finds it, labelled proposal",

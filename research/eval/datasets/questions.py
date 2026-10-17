@@ -19,7 +19,7 @@ import random
 import re
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import truth as T
 from eval.datasets.common import DATA, ROOT, SEED, die, dump_json
@@ -183,7 +183,7 @@ def make_question(gen: Generator, kind: str, passages: list[dict]) -> tuple[str 
 
 
 def generate(limit_single: int, limit_multi: int) -> None:
-    vault = mdkernel_core.Vault(str(D3))
+    vault = rootmark_core.Vault(str(D3))
     if not vault.doc_paths():
         raise RuntimeError("data/d3 is empty; run `make d3` first")
     singles, pairs = candidates(vault)
@@ -248,7 +248,7 @@ def load() -> dict[str, list[dict]]:
 
 def check() -> None:
     """No-API consistency check of the committed question set (used by tests and verify)."""
-    vault = mdkernel_core.Vault(str(D3))
+    vault = rootmark_core.Vault(str(D3))
     qs = load()
     splits = json.loads(SPLITS.read_text())
     ids = [q["id"] for k in qs for q in qs[k]]

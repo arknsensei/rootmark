@@ -15,12 +15,12 @@ import json
 import pickle
 import shutil
 
-import mdkernel_core
+import rootmark_core
 
 from eval.datasets.common import DATA, die, dump_json
-from mdkernel import embed as E
-from mdkernel import graph as G
-from mdkernel import index as I
+from rootmark import embed as E
+from rootmark import graph as G
+from rootmark import index as I
 
 D3 = DATA / "d3"
 CACHE = DATA / "d3_index"
@@ -44,11 +44,11 @@ def _stamp(vault, strategy: str) -> dict:
     }
 
 
-def load_or_build(strategy: str, vault: mdkernel_core.Vault | None = None):
+def load_or_build(strategy: str, vault: rootmark_core.Vault | None = None):
     """Returns (vault, index, graph)."""
     if strategy not in STRATEGIES:
         raise ValueError(strategy)
-    vault = vault or mdkernel_core.Vault(str(D3))
+    vault = vault or rootmark_core.Vault(str(D3))
     if not vault.doc_paths():
         raise RuntimeError("data/d3 is empty; run `make d3` first")
     d = CACHE / strategy

@@ -10,7 +10,7 @@
 //!   independently (canonical-only BM25 statistics, cosine, RRF) with score
 //!   × 0.5
 //! - C1-4: searching (every mode, both settings), `Store::open` and
-//!   `status` leave `.mdkernel/index/` byte-identical, no file added (no
+//!   `status` leave `.rootmark/index/` byte-identical, no file added (no
 //!   `.tantivy-meta.lock`)
 //! - C1-5: empty / whitespace-only queries are `Err` in every entry point;
 //!   no trace line, no checkpoint, `events.jsonl` unchanged
@@ -19,16 +19,16 @@
 //!   removing or changing any of them makes opening the index (`status`) an
 //!   error
 //!
-//! With `MDK_P1C1_OUT=<dir>` each test writes `<dir>/c1_<n>.json`.
+//! With `ROOTMARK_P1C1_OUT=<dir>` each test writes `<dir>/c1_<n>.json`.
 
-use mdkcore::{
+use rootmarkcore::{
     Actor, ActorKind, AuthorKind, HumanOnly, Layer, MatcherVersion, Provenance, TransitionKind,
     Vault,
 };
-use mdkindex::embed::{Embedder, OnnxMiniLm};
-use mdkindex::search::{self, Hit, Mode, Searcher, View, PROPOSAL_WEIGHT};
-use mdkindex::store::{self, Store};
-use mdkindex::tokenize::tokens;
+use rootmarkindex::embed::{Embedder, OnnxMiniLm};
+use rootmarkindex::search::{self, Hit, Mode, Searcher, View, PROPOSAL_WEIGHT};
+use rootmarkindex::store::{self, Store};
+use rootmarkindex::tokenize::tokens;
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::fs;
@@ -51,14 +51,14 @@ fn here(rel: &str) -> PathBuf {
 fn tmp(name: &str) -> PathBuf {
     static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let n = N.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-    let d = std::env::temp_dir().join(format!("mdk-c11-{}-{n}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-c11-{}-{n}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
 }
 
 fn out(name: &str, v: Value) {
-    if let Ok(d) = std::env::var("MDK_P1C1_OUT") {
+    if let Ok(d) = std::env::var("ROOTMARK_P1C1_OUT") {
         let p = Path::new(&d).join(format!("{name}.json"));
         fs::write(&p, serde_json::to_string_pretty(&v).unwrap() + "\n").unwrap();
     }

@@ -1,4 +1,4 @@
-// Pieces of the plugin e2e harness (TASKS E4): one `mdk serve` process with
+// Pieces of the plugin e2e harness (TASKS E4): one `rootmark serve` process with
 // MCP stdio (the agent) and HTTP (the plugin), a recording proxy between the
 // plugin and the server (E-4: the HTTP access log), and a Markdown sha256
 // snapshot (E-3). Node only; nothing here is part of the plugin bundle.
@@ -26,10 +26,10 @@ export interface Served {
   stderr(): string;
 }
 
-/** `mdk serve --vault <v> --mcp stdio --http 127.0.0.1:<port>`, the MCP
+/** `rootmark serve --vault <v> --mcp stdio --http 127.0.0.1:<port>`, the MCP
  * handshake done as `clientInfo` (contract §1: one process for both). */
-export async function serve(mdk: string, vault: string, httpPort: number, clientInfo: { name: string; version: string }): Promise<Served> {
-  const child: ChildProcessWithoutNullStreams = spawn(mdk, ["serve", "--vault", vault, "--mcp", "stdio", "--http", `127.0.0.1:${String(httpPort)}`], {
+export async function serve(rootmark: string, vault: string, httpPort: number, clientInfo: { name: string; version: string }): Promise<Served> {
+  const child: ChildProcessWithoutNullStreams = spawn(rootmark, ["serve", "--vault", vault, "--mcp", "stdio", "--http", `127.0.0.1:${String(httpPort)}`], {
     stdio: ["pipe", "pipe", "pipe"],
   });
   let err = "";
@@ -39,14 +39,14 @@ export async function serve(mdk: string, vault: string, httpPort: number, client
       if (err.includes(`http listening on 127.0.0.1:${String(httpPort)}`)) ok();
     });
     child.on("exit", (c) => {
-      fail(new Error(`mdk serve exited (${String(c)}) before listening:\n${err}`));
+      fail(new Error(`rootmark serve exited (${String(c)}) before listening:\n${err}`));
     });
   });
   const waiting = new Map<number, { ok: (r: Record<string, unknown>) => void; fail: (e: Error) => void }>();
   let exited: number | null | undefined;
   child.on("exit", (code) => {
     exited = code;
-    for (const w of waiting.values()) w.fail(new Error(`mdk serve exited (${String(code)}) with a call pending:\n${err.slice(-800)}`));
+    for (const w of waiting.values()) w.fail(new Error(`rootmark serve exited (${String(code)}) with a call pending:\n${err.slice(-800)}`));
     waiting.clear();
   });
   createInterface({ input: child.stdout }).on("line", (line) => {
@@ -62,7 +62,7 @@ export async function serve(mdk: string, vault: string, httpPort: number, client
   const rpc = (method: string, params: unknown): Promise<Record<string, unknown>> =>
     new Promise((ok, fail) => {
       if (exited !== undefined) {
-        fail(new Error(`mdk serve has exited (${String(exited)}):\n${err.slice(-800)}`));
+        fail(new Error(`rootmark serve has exited (${String(exited)}):\n${err.slice(-800)}`));
         return;
       }
       const id = next++;
@@ -142,7 +142,7 @@ export async function recordingProxy(listenPort: number, targetPort: number): Pr
   return { log, close: () => new Promise<void>((ok) => server.close(() => { ok(); })) };
 }
 
-/** {path: sha256} of every Markdown file of the vault (outside .mdkernel). */
+/** {path: sha256} of every Markdown file of the vault (outside .rootmark). */
 export function mdSha(vault: string): Record<string, string> {
   const out: Record<string, string> = {};
   const walk = (d: string): void => {

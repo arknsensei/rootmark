@@ -42,7 +42,7 @@ impl Mode {
 
 /// A document path `propose` may write: vault-relative, `/`-separated, a
 /// `.md` file, no empty, `.` or `..` component, nothing absolute, no
-/// backslash, and no hidden component (`.mdkernel/`, `.obsidian/`, `.x.md`:
+/// backslash, and no hidden component (`.rootmark/`, `.obsidian/`, `.x.md`:
 /// the documents `ingest-dir` and the watcher never see). Symbolic links
 /// are refused by `paths::doc_file`. A path that leaves the vault or its
 /// documents is `path_outside_vault`; one that is not a `.md` name,
@@ -276,7 +276,7 @@ mod tests {
             "a/../x.md",
             "./a.md",
             "a//b.md",
-            ".mdkernel/x.md",
+            ".rootmark/x.md",
             "a/.hidden/x.md",
             ".x.md",
             "a.txt",

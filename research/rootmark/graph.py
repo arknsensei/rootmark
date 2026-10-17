@@ -17,7 +17,7 @@ from pathlib import Path, PurePosixPath
 import networkx as nx
 import numpy as np
 
-from mdkernel.index import Index
+from rootmark.index import Index
 
 W_WIKILINK = 1.0
 W_CONSECUTIVE = 0.5

@@ -3,10 +3,10 @@
 //! state held in memory equals the state rebuilt by replaying the log
 //! (`Vault::open`), and every refused request left the log untouched.
 //!
-//! `MDK_FUZZ_SEED` (u64, default 20261014) and `MDK_FUZZ_STEPS` (default
-//! 1000) select the sequence; `MDK_FUZZ_OUT` receives a JSON summary.
+//! `ROOTMARK_FUZZ_SEED` (u64, default 20261014) and `ROOTMARK_FUZZ_STEPS` (default
+//! 1000) select the sequence; `ROOTMARK_FUZZ_OUT` receives a JSON summary.
 
-use mdkcore::{
+use rootmarkcore::{
     Actor, ActorKind, AuthorKind, Deny, HumanOnly, Layer, MatcherVersion, Provenance,
     TransitionKind, Vault,
 };
@@ -148,10 +148,10 @@ fn env_u64(k: &str, d: u64) -> u64 {
 
 #[test]
 fn b10_layer_state_equals_replay() {
-    let seed = env_u64("MDK_FUZZ_SEED", 20261014);
-    let steps = env_u64("MDK_FUZZ_STEPS", 1000);
+    let seed = env_u64("ROOTMARK_FUZZ_SEED", 20261014);
+    let steps = env_u64("ROOTMARK_FUZZ_STEPS", 1000);
     let root: PathBuf =
-        std::env::temp_dir().join(format!("mdk-fuzz-{}-{seed}", std::process::id()));
+        std::env::temp_dir().join(format!("rootmark-fuzz-{}-{seed}", std::process::id()));
     let _ = fs::remove_dir_all(&root);
     let mut v = Vault::open(&root).unwrap();
     let mut r = Rng(seed);
@@ -300,7 +300,7 @@ fn b10_layer_state_equals_replay() {
         "replay_equal": true,
     });
     println!("{summary}");
-    if let Ok(p) = std::env::var("MDK_FUZZ_OUT") {
+    if let Ok(p) = std::env::var("ROOTMARK_FUZZ_OUT") {
         fs::write(p, format!("{summary}\n")).unwrap();
     }
     fs::remove_dir_all(&root).unwrap();

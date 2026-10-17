@@ -18,7 +18,7 @@ import tempfile
 from contextlib import contextmanager
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval.datasets import vault as d3
 from eval.datasets.common import ROOT, die, dump_json, load_manifest
@@ -29,15 +29,15 @@ V3_FIELD = "events_hash_v3"
 @contextmanager
 def matcher_env(name: str):
     """Default matcher for code that never passes one (the frozen v2 builders)."""
-    old = os.environ.get("MDK_MATCHER")
-    os.environ["MDK_MATCHER"] = name
+    old = os.environ.get("ROOTMARK_MATCHER")
+    os.environ["ROOTMARK_MATCHER"] = name
     try:
         yield
     finally:
         if old is None:
-            del os.environ["MDK_MATCHER"]
+            del os.environ["ROOTMARK_MATCHER"]
         else:
-            os.environ["MDK_MATCHER"] = old
+            os.environ["ROOTMARK_MATCHER"] = old
 
 
 def build_v2() -> dict:
@@ -46,9 +46,9 @@ def build_v2() -> dict:
         return d3.build()
 
 
-def ingest_docs(root: Path, matcher: str, docs: Path = d3.DOCS) -> mdkernel_core.Vault:
+def ingest_docs(root: Path, matcher: str, docs: Path = d3.DOCS) -> rootmark_core.Vault:
     """Fresh vault at `root` holding every D3 document, ingested with `matcher`."""
-    v = mdkernel_core.Vault(str(root), matcher=matcher)
+    v = rootmark_core.Vault(str(root), matcher=matcher)
     if v.doc_paths():
         raise RuntimeError(f"{root} is not empty")
     v.ingest_dir(str(docs))

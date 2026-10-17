@@ -10,7 +10,7 @@ export class HistoryModal extends Modal {
 
   override onOpen(): void {
     this.titleEl.setText(`Lineage ${this.h.lineage_id.slice(0, 8)} · ${this.h.layer}`);
-    const ul = this.contentEl.createEl("ul", { cls: "mdk-history" });
+    const ul = this.contentEl.createEl("ul", { cls: "rootmark-history" });
     for (const e of this.h.events) ul.createEl("li", { text: historyLine(e) });
   }
 

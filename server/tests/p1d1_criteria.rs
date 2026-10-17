@@ -1,5 +1,5 @@
 //! P1-D.1 criteria D1-1..D1-9 (GOAL; TASKS D1.6). With
-//! `MDK_P1D1_OUT=<dir>` each test writes `<dir>/d1_<n>.json` **before** it
+//! `ROOTMARK_P1D1_OUT=<dir>` each test writes `<dir>/d1_<n>.json` **before** it
 //! asserts its threshold, so a failing criterion is recorded, not lost
 //! (`scripts/test_p1d1.sh` collects them). Needs the model files.
 //!
@@ -21,8 +21,8 @@
 //!   expected code (24)
 //! - D1-9: naming the unnamed checkpoint; a taken name → `exists`
 
-use mdkserver::error::code_of;
-use mdkserver::tools::{Caller, Kernel};
+use rootmarkserver::error::code_of;
+use rootmarkserver::tools::{Caller, Kernel};
 use serde_json::{json, Value};
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::TcpStream;
@@ -30,12 +30,12 @@ use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
 use std::time::{Duration, Instant};
 
-fn mdk() -> &'static str {
-    env!("CARGO_BIN_EXE_mdk")
+fn rootmark() -> &'static str {
+    env!("CARGO_BIN_EXE_rootmark")
 }
 
 fn out(name: &str, v: &Value) {
-    if let Ok(d) = std::env::var("MDK_P1D1_OUT") {
+    if let Ok(d) = std::env::var("ROOTMARK_P1D1_OUT") {
         let p = Path::new(&d).join(format!("{name}.json"));
         std::fs::write(&p, serde_json::to_string_pretty(v).unwrap() + "\n").unwrap();
     }
@@ -43,7 +43,7 @@ fn out(name: &str, v: &Value) {
 
 /// mini_vault (human content) ingested and indexed; `extra` documents too.
 fn vault(name: &str, extra: &[(&str, &str)]) -> PathBuf {
-    let root = std::env::temp_dir().join(format!("mdk-p1d1c-{}-{name}", std::process::id()));
+    let root = std::env::temp_dir().join(format!("rootmark-p1d1c-{}-{name}", std::process::id()));
     let _ = std::fs::remove_dir_all(&root);
     let v = root.join("vault");
     std::fs::create_dir_all(&v).unwrap();
@@ -57,7 +57,7 @@ fn vault(name: &str, extra: &[(&str, &str)]) -> PathBuf {
     for (doc, text) in extra {
         std::fs::write(v.join(doc), text).unwrap();
     }
-    let st = Command::new(mdk())
+    let st = Command::new(rootmark())
         .args(["ingest-dir", v.to_str().unwrap(), v.to_str().unwrap()])
         .output()
         .unwrap();
@@ -67,12 +67,12 @@ fn vault(name: &str, extra: &[(&str, &str)]) -> PathBuf {
 }
 
 fn recipe(v: &Path, edit: &str, human_id: Option<&str>) {
-    let mut r = mdkserver::config::default_recipe()
+    let mut r = rootmarkserver::config::default_recipe()
         .replace("policy = \"append_only\"", &format!("policy = \"{edit}\""));
     if let Some(h) = human_id {
         r.push_str(&format!("\n[identity]\nhuman_id = \"{h}\"\n"));
     }
-    std::fs::write(v.join(".mdkernel/policy.toml"), r).unwrap();
+    std::fs::write(v.join(".rootmark/policy.toml"), r).unwrap();
 }
 
 fn read(v: &Path, rel: &str) -> Vec<u8> {
@@ -80,7 +80,7 @@ fn read(v: &Path, rel: &str) -> Vec<u8> {
 }
 
 fn md_files(v: &Path) -> Vec<(String, Vec<u8>)> {
-    let mut o: Vec<(String, Vec<u8>)> = mdkcore::files::markdown_files(v)
+    let mut o: Vec<(String, Vec<u8>)> = rootmarkcore::files::markdown_files(v)
         .unwrap()
         .into_iter()
         .map(|(d, p)| (d, std::fs::read(p).unwrap()))
@@ -120,9 +120,9 @@ fn d1_1_and_d1_2_replace_section_under_append_only() {
         .iter()
         .map(|b| b["layer"].clone())
         .collect();
-    let ev0 = read(&v, ".mdkernel/events.jsonl");
+    let ev0 = read(&v, ".rootmark/events.jsonl");
     let md0 = md_files(&v);
-    let pr0 = read(&v, ".mdkernel/proposals.jsonl");
+    let pr0 = read(&v, ".rootmark/proposals.jsonl");
     // (case, heading, content, what the targeted section holds)
     let cases = [
         (
@@ -177,9 +177,9 @@ fn d1_1_and_d1_2_replace_section_under_append_only() {
                             "code": code, "reason": why}),
         );
     }
-    let unchanged = read(&v, ".mdkernel/events.jsonl") == ev0
+    let unchanged = read(&v, ".rootmark/events.jsonl") == ev0
         && md_files(&v) == md0
-        && read(&v, ".mdkernel/proposals.jsonl") == pr0;
+        && read(&v, ".rootmark/proposals.jsonl") == pr0;
     let denied = results.iter().filter(|r| r["code"] == "denied").count();
     let d11 = json!({"criterion": "D1-1", "water_layers_after_setup": water,
                      "cases": results, "denied": denied,
@@ -417,8 +417,8 @@ fn d1_3_canonical_invariance_under_500_agent_writes() {
         "proposal_docs_created": agent_docs.len(),
         "empty_canonical_results_before": empty_before,
         "proposal_hits_after_50_lexical_queries_with_include_proposal": proposal_hits,
-        "before_hash": mdkcore::hash32(&serde_json::to_string(&before).unwrap()),
-        "after_hash": mdkcore::hash32(&serde_json::to_string(&after).unwrap()),
+        "before_hash": rootmarkcore::hash32(&serde_json::to_string(&before).unwrap()),
+        "after_hash": rootmarkcore::hash32(&serde_json::to_string(&after).unwrap()),
         "pass": diffs.is_empty() && before.len() == 600 && accepted > 0 && proposal_hits > 0});
     out("d1_3", &res);
     assert_eq!(res["pass"], true, "{res}");
@@ -439,7 +439,7 @@ fn d1_4_unrestricted_deletion_names_the_agent() {
             agent(),
         )
         .unwrap();
-    let events: Vec<Value> = String::from_utf8(read(&v, ".mdkernel/events.jsonl"))
+    let events: Vec<Value> = String::from_utf8(read(&v, ".rootmark/events.jsonl"))
         .unwrap()
         .lines()
         .map(|l| serde_json::from_str(l).unwrap())
@@ -475,7 +475,7 @@ fn init_msgs(name: &str) -> Vec<Value> {
 }
 
 fn spawn_mcp(v: &Path) -> Child {
-    Command::new(mdk())
+    Command::new(rootmark())
         .args(["serve", "--vault", v.to_str().unwrap(), "--mcp", "stdio"])
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
@@ -593,7 +593,7 @@ fn d1_5_pipelined_calls_give_identical_logs() {
         for f in files {
             m.insert(
                 f.into(),
-                json!(read(x, &format!(".mdkernel/{f}")) == read(y, &format!(".mdkernel/{f}"))),
+                json!(read(x, &format!(".rootmark/{f}")) == read(y, &format!(".rootmark/{f}"))),
             );
         }
         m.insert("md_files".into(), json!(md_files(x) == md_files(y)));
@@ -624,15 +624,15 @@ fn d1_5_pipelined_calls_give_identical_logs() {
         .filter(|r| r["result"]["structuredContent"]["error"]["code"] == "denied")
         .count();
     let res = json!({"criterion": "D1-5", "calls": calls.len(), "propose": proposes.len(),
-        "propose_denied": denied, "traces": String::from_utf8(read(&a, ".mdkernel/traces.jsonl")).unwrap().lines().count(),
+        "propose_denied": denied, "traces": String::from_utf8(read(&a, ".rootmark/traces.jsonl")).unwrap().lines().count(),
         "pipelined_a_vs_b": ab, "pipelined_vs_lockstep": ac,
         "responses_a_vs_b_equal": ra == rb, "responses_pipelined_vs_lockstep_equal": ra == rc,
         "write_responses": writes(&ra).len(),
         "write_responses_a_vs_b_equal": writes(&ra) == writes(&rb),
         "write_responses_pipelined_vs_lockstep_equal": writes(&ra) == writes(&rc),
         "elapsed_ms_pipelined": ta, "elapsed_ms_lockstep": tc,
-        "events_hash32": mdkcore::hash32(&String::from_utf8(read(&a, ".mdkernel/events.jsonl")).unwrap()),
-        "traces_hash32": mdkcore::hash32(&String::from_utf8(read(&a, ".mdkernel/traces.jsonl")).unwrap()),
+        "events_hash32": rootmarkcore::hash32(&String::from_utf8(read(&a, ".rootmark/events.jsonl")).unwrap()),
+        "traces_hash32": rootmarkcore::hash32(&String::from_utf8(read(&a, ".rootmark/traces.jsonl")).unwrap()),
         "pass": all_true(&ab) && proposes.len() == 40});
     out("d1_5", &res);
     assert_eq!(res["pass"], true, "{res}");
@@ -660,8 +660,8 @@ fn d1_6_read_only_calls_run_in_parallel() {
             _ => call("blame", json!({"doc_path": docs[(i * 7) % docs.len()]})),
         });
     }
-    let ev0 = read(&v, ".mdkernel/events.jsonl");
-    let tr0 = read(&v, ".mdkernel/traces.jsonl");
+    let ev0 = read(&v, ".rootmark/events.jsonl");
+    let tr0 = read(&v, ".rootmark/traces.jsonl");
     let (serial, ts) = mcp_run(&v, "d1-6", &calls, false);
     let (piped, tp) = mcp_run(&v, "d1-6", &calls, true);
     let correct = serial
@@ -670,7 +670,7 @@ fn d1_6_read_only_calls_run_in_parallel() {
         .filter(|(a, b)| a == b && a["result"]["isError"] != true)
         .count();
     let unchanged =
-        read(&v, ".mdkernel/events.jsonl") == ev0 && read(&v, ".mdkernel/traces.jsonl") == tr0;
+        read(&v, ".rootmark/events.jsonl") == ev0 && read(&v, ".rootmark/traces.jsonl") == tr0;
     let res = json!({"criterion": "D1-6", "calls": calls.len(), "correct": correct,
         "log_and_traces_unchanged": unchanged,
         "elapsed_ms_serial": ts, "elapsed_ms_pipelined": tp, "ratio": tp / ts,
@@ -696,7 +696,7 @@ impl Drop for Served {
 }
 
 fn serve_http(v: &Path) -> Served {
-    let mut child = Command::new(mdk())
+    let mut child = Command::new(rootmark())
         .args([
             "serve",
             "--vault",
@@ -714,12 +714,12 @@ fn serve_http(v: &Path) -> Served {
     let port = loop {
         assert!(start.elapsed() < Duration::from_secs(120));
         let l = lines.next().expect("serve exited").unwrap();
-        if let Some(p) = l.strip_prefix("mdk serve: http listening on 127.0.0.1:") {
+        if let Some(p) = l.strip_prefix("rootmark serve: http listening on 127.0.0.1:") {
             break p.trim().parse().unwrap();
         }
     };
     std::thread::spawn(move || for _ in lines {});
-    let token = std::fs::read_to_string(v.join(".mdkernel/server.token"))
+    let token = std::fs::read_to_string(v.join(".rootmark/server.token"))
         .unwrap()
         .trim()
         .to_string();
@@ -761,7 +761,7 @@ fn d1_7_channel_decides_the_actor() {
     let lineage = p["blocks"][1]["lineage_id"].as_str().unwrap().to_string();
     drop(k);
     // MCP promote: denied, no event
-    let ev0 = read(&v, ".mdkernel/events.jsonl");
+    let ev0 = read(&v, ".rootmark/events.jsonl");
     let (r, _) = mcp_run(
         &v,
         "d1-7",
@@ -774,7 +774,7 @@ fn d1_7_channel_decides_the_actor() {
     let mcp = &r[0]["result"]["structuredContent"];
     let mcp_ok = mcp["decision"] == "denied"
         && mcp["actor"]["kind"] == "agent"
-        && read(&v, ".mdkernel/events.jsonl") == ev0;
+        && read(&v, ".rootmark/events.jsonl") == ev0;
     // HTTP without human_id: write → 403
     let s = serve_http(&v);
     let (st, b) = http(
@@ -790,7 +790,7 @@ fn d1_7_channel_decides_the_actor() {
         "promote",
         &json!({"lineage_id": lineage, "reason": "human approves"}).to_string(),
     );
-    let promoted_in_log = String::from_utf8(read(&v, ".mdkernel/events.jsonl"))
+    let promoted_in_log = String::from_utf8(read(&v, ".rootmark/events.jsonl"))
         .unwrap()
         .lines()
         .map(|l| serde_json::from_str::<Value>(l).unwrap())
@@ -877,7 +877,7 @@ fn d1_8_error_codes_mcp_and_http() {
         (
             "V3 absolute path outside the vault",
             "propose",
-            json!({"doc_path": "/tmp/mdk-escape.md", "content": "x", "reason": "r"}),
+            json!({"doc_path": "/tmp/rootmark-escape.md", "content": "x", "reason": "r"}),
             "path_outside_vault",
         ),
         (
@@ -899,14 +899,14 @@ fn d1_8_error_codes_mcp_and_http() {
             "exists",
         ),
         (
-            "V3 .mdkernel/evil.md",
+            "V3 .rootmark/evil.md",
             "propose",
-            json!({"doc_path": ".mdkernel/evil.md", "content": "x", "reason": "r"}),
+            json!({"doc_path": ".rootmark/evil.md", "content": "x", "reason": "r"}),
             "path_outside_vault",
         ),
     ];
     assert_eq!(cases.len(), 12);
-    let ev0 = read(&v, ".mdkernel/events.jsonl");
+    let ev0 = read(&v, ".rootmark/events.jsonl");
     let calls: Vec<Value> = cases
         .iter()
         .map(|(_, t, a, _)| call(t, a.clone()))
@@ -934,7 +934,7 @@ fn d1_8_error_codes_mcp_and_http() {
     }
     drop(s);
     let unchanged =
-        read(&v, ".mdkernel/events.jsonl") == ev0 && !Path::new("/tmp/mdk-escape.md").exists();
+        read(&v, ".rootmark/events.jsonl") == ev0 && !Path::new("/tmp/rootmark-escape.md").exists();
     let res = json!({"criterion": "D1-8", "cases": rows, "passed": passed, "of": 24,
         "events_unchanged": unchanged, "pass": passed == 24 && unchanged});
     out("d1_8", &res);

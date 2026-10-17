@@ -1,4 +1,4 @@
-//! P1-B/B6: end-to-end tests of every governance command of the `mdk`
+//! P1-B/B6: end-to-end tests of every governance command of the `rootmark`
 //! binary, `blame --at`, and the six B-6 policy-bound cases (each an error,
 //! none a silent fallback: the word "default" never appears in the output).
 
@@ -8,15 +8,15 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-cli-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-cli-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
 }
 
 /// (exit ok, stdout JSON or Null, stderr)
-fn mdk(args: &[&str]) -> (bool, Value, String) {
-    let out = Command::new(env!("CARGO_BIN_EXE_mdk"))
+fn rootmark(args: &[&str]) -> (bool, Value, String) {
+    let out = Command::new(env!("CARGO_BIN_EXE_rootmark"))
         .args(args)
         .output()
         .unwrap();
@@ -27,26 +27,26 @@ fn mdk(args: &[&str]) -> (bool, Value, String) {
 }
 
 fn ok(args: &[&str]) -> Value {
-    let (s, v, e) = mdk(args);
-    assert!(s, "mdk {args:?} failed: {e}");
+    let (s, v, e) = rootmark(args);
+    assert!(s, "rootmark {args:?} failed: {e}");
     v
 }
 
 /// fails, with `pat` in stderr and no fallback wording anywhere
 fn fails(args: &[&str], pat: &str) -> String {
-    let (s, v, e) = mdk(args);
-    assert!(!s, "mdk {args:?} succeeded: {v}");
-    assert!(e.contains(pat), "mdk {args:?}: no {pat:?} in {e}");
+    let (s, v, e) = rootmark(args);
+    assert!(!s, "rootmark {args:?} succeeded: {v}");
+    assert!(e.contains(pat), "rootmark {args:?}: no {pat:?} in {e}");
     assert!(
         !e.to_lowercase().contains("default") && v.is_null(),
-        "mdk {args:?}: fallback wording or output: {e} {v}"
+        "rootmark {args:?}: fallback wording or output: {e} {v}"
     );
     e
 }
 
 fn write_policy(vault: &Path, text: &str) {
-    fs::create_dir_all(vault.join(".mdkernel")).unwrap();
-    fs::write(vault.join(".mdkernel/policy.toml"), text).unwrap();
+    fs::create_dir_all(vault.join(".rootmark")).unwrap();
+    fs::write(vault.join(".rootmark/policy.toml"), text).unwrap();
 }
 
 const GOOD: &str = "promotion = \"human_only\"\n\n[version_trigger]\nidle_ms = 1000\nmin_sim_change = 0.2\n\n[journal]\nretention_hours = 24\n";
@@ -368,14 +368,14 @@ fn b6_six_bound_cases() {
     }
 
     // hook'suz terfi: no recipe → built-in deny; an explicit deny recipe
-    fs::remove_file(vault.join(".mdkernel/policy.toml")).unwrap();
+    fs::remove_file(vault.join(".rootmark/policy.toml")).unwrap();
     fails(&promote, "denied by policy deny");
     write_policy(&vault, &GOOD.replace("human_only", "deny"));
     fails(&promote, "denied by policy deny");
 
     // actor'sız Promoted: no --actor, an empty one, one without a kind
     write_policy(&vault, GOOD);
-    let (s, _, e) = mdk(&["promote", vs, &l, "--reason", "ok"]);
+    let (s, _, e) = rootmark(&["promote", vs, &l, "--reason", "ok"]);
     assert!(!s && e.contains("--actor"), "{e}");
     fails(
         &["promote", vs, &l, "--actor", "human:", "--reason", "ok"],
@@ -390,7 +390,7 @@ fn b6_six_bound_cases() {
         "requires a reason",
     );
     // the log holds no transition after all of this
-    let log = fs::read_to_string(vault.join(".mdkernel/events.jsonl")).unwrap();
+    let log = fs::read_to_string(vault.join(".rootmark/events.jsonl")).unwrap();
     assert!(!log.contains("Promoted"));
     // and the good recipe works
     ok(&promote);
@@ -450,15 +450,15 @@ fn doc_paths_cannot_escape_through_symlinks() {
 fn broken_policy_link_and_tick_path() {
     let root = tmp("brokenlink");
     let vault = root.join("vault");
-    fs::create_dir_all(vault.join(".mdkernel")).unwrap();
+    fs::create_dir_all(vault.join(".rootmark")).unwrap();
     let vs = vault.to_str().unwrap();
     std::os::unix::fs::symlink(
         root.join("nowhere.toml"),
-        vault.join(".mdkernel/policy.toml"),
+        vault.join(".rootmark/policy.toml"),
     )
     .unwrap();
     fails(&["policy", "show", vs], "policy");
-    fs::remove_file(vault.join(".mdkernel/policy.toml")).unwrap();
+    fs::remove_file(vault.join(".rootmark/policy.toml")).unwrap();
     fails(
         &[
             "journal", "tick", vs, "../x.md", "--now-ms", "1", "--author", "human", "--source", "e",

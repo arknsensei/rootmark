@@ -140,11 +140,11 @@ fn tool_list() -> Vec<Tool> {
 impl ServerHandler for McpServer {
     fn get_info(&self) -> ServerConfig {
         let mut info = ServerConfig::new(ServerCapabilities::builder().enable_tools().build());
-        info.server_info = Implementation::new("mdk", tools::MDK_VERSION);
+        info.server_info = Implementation::new("rootmark", tools::ROOTMARK_VERSION);
         info.instructions = Some(format!(
-            "mdkernel {} (spec {}): block-level lineage, provenance, layers, checkpoints and \
+            "rootmark {} (spec {}): block-level lineage, provenance, layers, checkpoints and \
              consumption traces over the Markdown vault {}.",
-            tools::MDK_VERSION,
+            tools::ROOTMARK_VERSION,
             tools::SPEC_VERSION,
             self.kernel.vault().display()
         ));

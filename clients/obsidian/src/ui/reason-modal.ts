@@ -8,7 +8,7 @@ export function askReason(app: App, title: string): Promise<string | null> {
     const m = new Modal(app);
     m.titleEl.setText(title);
     let reason = "";
-    const area = m.contentEl.createEl("textarea", { cls: "mdk-reason", attr: { rows: "3", placeholder: "Reason (required)" } });
+    const area = m.contentEl.createEl("textarea", { cls: "rootmark-reason", attr: { rows: "3", placeholder: "Reason (required)" } });
     const s = new Setting(m.contentEl);
     s.addButton((b) => {
       b.setButtonText("Promote").setCta().setDisabled(true).onClick(() => {

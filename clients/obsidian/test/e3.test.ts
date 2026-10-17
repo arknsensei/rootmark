@@ -3,7 +3,7 @@
 // checkpoints (list, naming, read-only past view), traces (newest first,
 // jump targets).
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { MdkClient, type Hit } from "../src/api";
+import { RootmarkClient, type Hit } from "../src/api";
 import { blameAt, listCheckpoints, nameCheckpoint, recentTraces, runSearch } from "../src/commands";
 import { blockLine } from "../src/align";
 import { indexNotice, pastView } from "../src/view";
@@ -11,10 +11,10 @@ import { fetchTransport, startFake, type Fake } from "./fake-server";
 import { SAMPLES } from "./samples";
 
 let fake: Fake;
-let client: MdkClient;
+let client: RootmarkClient;
 beforeEach(async () => {
   fake = await startFake();
-  client = new MdkClient({ baseUrl: fake.url, token: "a".repeat(64), consumer: "mdkernel-obsidian/0.1.0" }, fetchTransport);
+  client = new RootmarkClient({ baseUrl: fake.url, token: "a".repeat(64), consumer: "rootmark-obsidian/0.1.0" }, fetchTransport);
 });
 afterEach(async () => {
   await fake.close();
@@ -180,14 +180,14 @@ describe("index state in the connection status (K-E1.2)", () => {
     expect(n?.label).toBe("index stale");
     expect(n?.detail).toContain("mdkernel-index/2");
     expect(n?.detail).toContain("mdkernel-index/3");
-    expect(n?.detail).toContain("mdk index build");
+    expect(n?.detail).toContain("rootmark index build");
     expect(n?.detail).toContain("auto_rebuild = true");
   });
   it("index_notice_missing_and_damaged", () => {
-    expect(indexNotice(ix("missing", true))?.detail).toContain("restart `mdk serve`");
+    expect(indexNotice(ix("missing", true))?.detail).toContain("restart `rootmark serve`");
     const d = indexNotice(ix("damaged"));
     expect(d?.label).toBe("index damaged");
     expect(d?.detail).toContain("never rebuilt automatically");
-    expect(d?.detail).toContain("mdk index build");
+    expect(d?.detail).toContain("rootmark index build");
   });
 });

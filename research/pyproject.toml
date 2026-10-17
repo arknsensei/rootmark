@@ -3,7 +3,7 @@ requires = ["maturin>=1.7,<2"]
 build-backend = "maturin"
 
 [project]
-name = "mdkernel"
+name = "rootmark"
 version = "0.2.0"
 requires-python = ">=3.12,<3.13"
 dependencies = [
@@ -26,7 +26,7 @@ dev = ["pytest==9.1.1", "ruff==0.17.0", "maturin==1.15.0"]
 
 [tool.maturin]
 manifest-path = "../bindings/python/Cargo.toml"
-module-name = "mdkernel_core"
+module-name = "rootmark_core"
 features = ["pyo3/extension-module"]
 
 [tool.uv]

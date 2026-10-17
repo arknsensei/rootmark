@@ -19,7 +19,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics as M
 from eval import truth as T
@@ -37,9 +37,9 @@ EDIT_STEPS = 3
 MAX_EDIT_RUNS = 60
 
 
-def _vault(root) -> mdkernel_core.Vault:
+def _vault(root) -> rootmark_core.Vault:
     p = json.loads(PARAMS_FILE.read_text(encoding="utf-8"))
-    return mdkernel_core.Vault(str(root), p["theta"], p["theta_split"], matcher=p["matcher"])
+    return rootmark_core.Vault(str(root), p["theta"], p["theta_split"], matcher=p["matcher"])
 
 
 def _sets_to_lists(rec: dict) -> dict:
@@ -118,7 +118,7 @@ def check_h1r(tmp: Path) -> dict:
         raise RuntimeError("h1r_pair.json hunks differ from parse_hunks(git diff)")
     old = (FIX / pair["old"]).read_bytes().decode("utf-8")
     new = (FIX / pair["new"]).read_bytes().decode("utf-8")
-    drafts, _ = mdkernel_core.parse_document(old, pair["path"])
+    drafts, _ = rootmark_core.parse_document(old, pair["path"])
     v = _vault(tmp / "h1r")
     v.ingest(pair["path"], old)
     old_blocks = v.snapshot_blocks(pair["path"])
@@ -139,8 +139,8 @@ def check_h1r(tmp: Path) -> dict:
 
 
 def check_h2(tmp: Path) -> dict:
-    from mdkernel import index as I
-    from mdkernel.retrieval import Retriever
+    from rootmark import index as I
+    from rootmark.retrieval import Retriever
 
     vault_root = tmp / "h2"
     shutil.copytree(FIX / "vault", vault_root / "docs")

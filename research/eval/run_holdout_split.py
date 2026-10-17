@@ -14,7 +14,7 @@ from __future__ import annotations
 import argparse
 import json
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics_v3 as M3
 from eval import runinfo
@@ -60,7 +60,7 @@ def run(run_id: str) -> dict:
         raise RuntimeError(f"d1hs has {len(sources)} sources, expected {s4.N_DOCS}")
     _, texts = s4.book_texts()
     dis = s4.disjointness(sources, texts)
-    theta, theta_split = mdkernel_core.matcher_defaults(MATCHER)
+    theta, theta_split = rootmark_core.matcher_defaults(MATCHER)
     ids = [d["id"] for d in json.loads((s4.OUT / "docs.json").read_text())]
     recs = [r for i in ids for r in doc_records(s4.OUT / "docs" / i, theta, theta_split)]
     agg = M3.aggregate(recs, "hard")

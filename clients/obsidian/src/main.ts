@@ -1,5 +1,5 @@
 import { MarkdownView, Notice, Plugin, TFile } from "obsidian";
-import { connect, describeError, type ConnectionState, type MdkClient } from "./api";
+import { connect, describeError, type ConnectionState, type RootmarkClient } from "./api";
 import { align, blockLine, editorBlocks } from "./align";
 import { blameOf, historyOf, listProposals, type ProposalRow } from "./commands";
 import { gutterMarks, indexNotice } from "./view";
@@ -13,10 +13,10 @@ import { obsidianTransport } from "./obsidian-transport";
 
 import { CONSUMER } from "./consumer";
 
-/** The mdkernel plugin (P1-E). Talks to a running `mdk serve` over the HTTP
+/** The rootmark plugin (P1-E). Talks to a running `rootmark serve` over the HTTP
  * contract only; without one it stays passive and says why (it never
  * starts a server) and it never writes a vault file. */
-export default class MdkernelPlugin extends Plugin {
+export default class RootmarkPlugin extends Plugin {
   state: ConnectionState = { kind: "offline", reason: "not connected yet" };
   /** the index line of the connection status (K-E1.2); null when `ok` */
   private indexDetail: string | null = null;
@@ -29,7 +29,7 @@ export default class MdkernelPlugin extends Plugin {
     this.registerView(SEARCH_VIEW, (leaf) => new SearchView(leaf, this));
     this.registerView(CHECKPOINTS_VIEW, (leaf) => new CheckpointsView(leaf, this));
     this.registerView(TRACES_VIEW, (leaf) => new TracesView(leaf, this));
-    this.addCommand({ id: "reconnect", name: "Reconnect to mdk serve", callback: () => void this.reconnect() });
+    this.addCommand({ id: "reconnect", name: "Reconnect to rootmark serve", callback: () => void this.reconnect() });
     this.addCommand({ id: "proposals", name: "Show proposal blocks", callback: () => void this.openView(PROPOSALS_VIEW) });
     this.addCommand({ id: "search", name: "Search", callback: () => void this.openView(SEARCH_VIEW) });
     this.addCommand({ id: "checkpoints", name: "Checkpoints", callback: () => void this.openView(CHECKPOINTS_VIEW) });
@@ -40,7 +40,7 @@ export default class MdkernelPlugin extends Plugin {
     await this.reconnect();
   }
 
-  client(): MdkClient | null {
+  client(): RootmarkClient | null {
     return this.state.kind === "online" ? this.state.client : null;
   }
 
@@ -62,12 +62,12 @@ export default class MdkernelPlugin extends Plugin {
     this.indexDetail = ix?.detail ?? null;
     this.statusEl?.setText(
       this.state.kind === "online"
-        ? `mdk ${this.state.status.mdk_version} · ${this.state.settings.humanId === null ? "no human_id" : `human:${this.state.settings.humanId}`}${ix === null ? "" : ` · ${ix.label}`}`
-        : "mdk: offline",
+        ? `rootmark ${this.state.status.mdk_version} · ${this.state.settings.humanId === null ? "no human_id" : `human:${this.state.settings.humanId}`}${ix === null ? "" : ` · ${ix.label}`}`
+        : "rootmark: offline",
     );
-    this.statusEl?.setAttr("title", this.state.kind === "offline" ? this.state.reason : ix === null ? "mdk serve connected" : ix.detail);
-    this.statusEl?.toggleClass("mdk-index-warning", ix !== null);
-    if (ix !== null) new Notice(`mdkernel: ${ix.detail}`, 15000);
+    this.statusEl?.setAttr("title", this.state.kind === "offline" ? this.state.reason : ix === null ? "rootmark serve connected" : ix.detail);
+    this.statusEl?.toggleClass("rootmark-index-warning", ix !== null);
+    if (ix !== null) new Notice(`rootmark: ${ix.detail}`, 15000);
     if (online) await this.refreshBlame();
   }
 
@@ -103,7 +103,7 @@ export default class MdkernelPlugin extends Plugin {
       const blocks = await blameOf(client, view.file.path);
       if (blocks === null) {
         cm.dispatch({ effects: setMarks.of([]) });
-        this.gutterHint(`${view.file.path} is not in the mdk log: no blame`);
+        this.gutterHint(`${view.file.path} is not in the rootmark log: no blame`);
         return;
       }
       const al = align(blocks, this.rangesOf(view.file));
@@ -111,7 +111,7 @@ export default class MdkernelPlugin extends Plugin {
       this.gutterHint(al.aligned ? `blame: ${String(blocks.length)} blocks aligned` : al.reason);
     } catch (e) {
       this.gutterHint(`blame failed: ${describeError(e)}`);
-      new Notice(`mdkernel blame: ${describeError(e)}`);
+      new Notice(`rootmark blame: ${describeError(e)}`);
     }
   }
 
@@ -121,7 +121,7 @@ export default class MdkernelPlugin extends Plugin {
   async openAtBlock(path: string, lineage: string): Promise<void> {
     const f = this.app.vault.getAbstractFileByPath(path);
     if (!(f instanceof TFile)) {
-      new Notice(`mdkernel: ${path} is not in the vault (moved or deleted)`);
+      new Notice(`rootmark: ${path} is not in the vault (moved or deleted)`);
       return;
     }
     const leaf = this.app.workspace.getLeaf(false);
@@ -130,20 +130,20 @@ export default class MdkernelPlugin extends Plugin {
     if (client === null) return;
     try {
       const blocks = await blameOf(client, path);
-      const at = blocks === null ? { reason: `${path} is not in the mdk log` } : blockLine(blocks, this.rangesOf(f), lineage);
+      const at = blocks === null ? { reason: `${path} is not in the rootmark log` } : blockLine(blocks, this.rangesOf(f), lineage);
       if ("line" in at) {
         const v = leaf.view;
         if (v instanceof MarkdownView) {
           v.editor.setCursor({ line: at.line, ch: 0 });
           v.editor.scrollIntoView({ from: { line: at.line, ch: 0 }, to: { line: at.line, ch: 0 } }, true);
         } else {
-          new Notice(`mdkernel: opened ${path}; not a Markdown editor, block line ${String(at.line + 1)}`);
+          new Notice(`rootmark: opened ${path}; not a Markdown editor, block line ${String(at.line + 1)}`);
         }
       } else {
-        new Notice(`mdkernel: opened ${path}; block position unknown — ${at.reason}`, 8000);
+        new Notice(`rootmark: opened ${path}; block position unknown — ${at.reason}`, 8000);
       }
     } catch (e) {
-      new Notice(`mdkernel: ${describeError(e)}`);
+      new Notice(`rootmark: ${describeError(e)}`);
     }
   }
 
@@ -153,7 +153,7 @@ export default class MdkernelPlugin extends Plugin {
     try {
       new HistoryModal(this.app, await historyOf(client, lineage)).open();
     } catch (e) {
-      new Notice(`mdkernel history: ${describeError(e)}`);
+      new Notice(`rootmark history: ${describeError(e)}`);
     }
   }
 

@@ -1,8 +1,8 @@
 //! P1-B/B3: checkpoints (spec §3, §8) — id formula and write-once file
 //! (C2-05), queries as of a checkpoint ignore later events (C2-06).
 
-use mdkcore::store::write_immutable;
-use mdkcore::{
+use rootmarkcore::store::write_immutable;
+use rootmarkcore::{
     checkpoint_id, hash32, Actor, ActorKind, AuthorKind, EventKind, HumanOnly, Layer,
     MatcherVersion, Provenance, TransitionKind, Vault,
 };
@@ -13,7 +13,7 @@ use std::path::PathBuf;
 const M: MatcherVersion = MatcherVersion::V3;
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-cp-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-cp-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -65,11 +65,11 @@ fn c2_05_checkpoint_id_formula_and_write_once() {
     assert_eq!(cp.checkpoint_id, manual);
     assert_eq!(cp.checkpoint_id, checkpoint_id(&docs, n_events));
     // file and event
-    let file = root.join(format!(".mdkernel/checkpoints/{}.json", cp.checkpoint_id));
+    let file = root.join(format!(".rootmark/checkpoints/{}.json", cp.checkpoint_id));
     let bytes = fs::read(&file).unwrap();
     assert_eq!(bytes, serde_json::to_vec(&cp).unwrap());
     let last = fs::read_to_string(v.events_path()).unwrap();
-    let ev: mdkcore::Event = serde_json::from_str(last.lines().last().unwrap()).unwrap();
+    let ev: rootmarkcore::Event = serde_json::from_str(last.lines().last().unwrap()).unwrap();
     assert_eq!(ev.kind, EventKind::CheckpointCreated);
     assert_eq!(ev.meta["checkpoint_id"], cp.checkpoint_id.as_str());
     // deterministic: the same state gives the same id, and nothing is written again
@@ -195,7 +195,7 @@ fn checkpoint_name_checks() {
         .checkpoint(Some(&"a".repeat(32)))
         .is_err_and(|e| e.to_string().contains("form of a checkpoint id")));
     drop(v);
-    let p = root.join(".mdkernel/events.jsonl");
+    let p = root.join(".rootmark/events.jsonl");
     let log = fs::read_to_string(&p).unwrap();
     fs::write(&p, log.replace(r#""name":"n1""#, r#""name":5"#)).unwrap();
     let e = format!("{:#}", Vault::open(&root).err().expect("bad name type"));
@@ -209,14 +209,14 @@ fn checkpoint_name_checks() {
 /// (named or not) and creates an unnamed one only when the state has none.
 #[test]
 fn head_checkpoint_reuses_or_creates() {
-    let root = std::env::temp_dir().join(format!("mdk-headcp-{}", std::process::id()));
+    let root = std::env::temp_dir().join(format!("rootmark-headcp-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&root);
-    let mut v = mdkcore::Vault::open(&root).unwrap();
+    let mut v = rootmarkcore::Vault::open(&root).unwrap();
     v.ingest(
         "a.md",
         "# A\n\nText.\n",
-        mdkcore::Provenance::default(),
-        mdkcore::MatcherVersion::V3,
+        rootmarkcore::Provenance::default(),
+        rootmarkcore::MatcherVersion::V3,
     )
     .unwrap();
     let named = v.checkpoint(Some("t0")).unwrap();
@@ -236,8 +236,8 @@ fn head_checkpoint_reuses_or_creates() {
     v.ingest(
         "a.md",
         "# A\n\nText, edited.\n",
-        mdkcore::Provenance::default(),
-        mdkcore::MatcherVersion::V3,
+        rootmarkcore::Provenance::default(),
+        rootmarkcore::MatcherVersion::V3,
     )
     .unwrap();
     let fresh = v.head_checkpoint().unwrap();

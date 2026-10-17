@@ -5,7 +5,7 @@
 //! chunk_id)`, then `record_id`) and committed once as a single segment (an
 //! intermediate segment is an error, see `write_with_budget`); the fast field `ord` is the record's position in
 //! `records.jsonl`. Text is indexed with term frequencies only, through
-//! `MdkTokenizer` (`crate::tokenize`).
+//! `RootmarkTokenizer` (`crate::tokenize`).
 //!
 //! Byte-identical directories (GOAL C-6): segment contents are a function of
 //! the documents, but tantivy names the segment with a random UUID and lists
@@ -27,7 +27,7 @@
 //! place, so a reader needs no lock against a writer).
 
 use crate::record::ChunkRecord;
-use crate::tokenize::{MdkTokenizer, TOKENIZER_NAME};
+use crate::tokenize::{RootmarkTokenizer, TOKENIZER_NAME};
 use anyhow::{bail, Context, Result};
 use std::fs;
 use std::io;
@@ -74,7 +74,7 @@ fn schema() -> (Schema, Field, Field) {
 fn register(index: &Index) {
     index.tokenizers().register(
         TOKENIZER_NAME,
-        tantivy::tokenizer::TextAnalyzer::from(MdkTokenizer),
+        tantivy::tokenizer::TextAnalyzer::from(RootmarkTokenizer),
     );
 }
 

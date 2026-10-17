@@ -1,12 +1,16 @@
 //! Lexical tokenization (GOAL P1-C "Sözcüksel"): lower-case, then the maximal
 //! runs of `[a-z0-9]` — the prototype's `re.findall(r"[a-z0-9]+",
-//! text.lower())` (`research/mdkernel/index.py`), checked against it by
+//! text.lower())` (`research/rootmark/index.py`), checked against it by
 //! `index/tests/lexical.rs` (`research/data/tok_ref.json`). The same function
-//! feeds tantivy (`MdkTokenizer`), the query and the hot tier.
+//! feeds tantivy (`RootmarkTokenizer`), the query and the hot tier.
 
 use tantivy::tokenizer::{Token, TokenStream, Tokenizer};
 
-/// Registered name of `MdkTokenizer` in the tantivy index.
+/// Registered name of `RootmarkTokenizer` in the tantivy index. A data
+/// identifier written into every index (manifest `lexical.tokenizer`,
+/// tantivy `meta.json`) and compared when one is opened: it kept its value
+/// through the rename (K-GH.1, GH-0 ASSUMPTIONS G0-2), so a migrated index
+/// is read as it is.
 pub const TOKENIZER_NAME: &str = "mdk_lower_alnum";
 
 pub fn tokens(text: &str) -> Vec<String> {
@@ -26,17 +30,17 @@ pub fn tokens(text: &str) -> Vec<String> {
 }
 
 #[derive(Clone, Default)]
-pub struct MdkTokenizer;
+pub struct RootmarkTokenizer;
 
-pub struct MdkTokenStream {
+pub struct RootmarkTokenStream {
     tokens: Vec<Token>,
     next: usize,
 }
 
-impl Tokenizer for MdkTokenizer {
-    type TokenStream<'a> = MdkTokenStream;
+impl Tokenizer for RootmarkTokenizer {
+    type TokenStream<'a> = RootmarkTokenStream;
 
-    fn token_stream<'a>(&'a mut self, text: &'a str) -> MdkTokenStream {
+    fn token_stream<'a>(&'a mut self, text: &'a str) -> RootmarkTokenStream {
         // offsets are not used (no positions, no highlighting)
         let tokens = tokens(text)
             .into_iter()
@@ -49,11 +53,11 @@ impl Tokenizer for MdkTokenizer {
                 position_length: 1,
             })
             .collect();
-        MdkTokenStream { tokens, next: 0 }
+        RootmarkTokenStream { tokens, next: 0 }
     }
 }
 
-impl TokenStream for MdkTokenStream {
+impl TokenStream for RootmarkTokenStream {
     fn advance(&mut self) -> bool {
         self.next += 1;
         self.next <= self.tokens.len()

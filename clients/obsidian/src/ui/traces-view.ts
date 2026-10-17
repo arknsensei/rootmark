@@ -4,19 +4,19 @@
 import { ItemView, type WorkspaceLeaf } from "obsidian";
 import { describeError } from "../api";
 import { recentTraces } from "../commands";
-import type MdkernelPlugin from "../main";
+import type RootmarkPlugin from "../main";
 
-export const TRACES_VIEW = "mdkernel-traces";
+export const TRACES_VIEW = "rootmark-traces";
 
 export class TracesView extends ItemView {
-  constructor(leaf: WorkspaceLeaf, private readonly plugin: MdkernelPlugin) {
+  constructor(leaf: WorkspaceLeaf, private readonly plugin: RootmarkPlugin) {
     super(leaf);
   }
   override getViewType(): string {
     return TRACES_VIEW;
   }
   override getDisplayText(): string {
-    return "mdkernel traces";
+    return "rootmark traces";
   }
   override getIcon(): string {
     return "list-tree";
@@ -30,7 +30,7 @@ export class TracesView extends ItemView {
     c.empty();
     const client = this.plugin.client();
     if (client === null) {
-      c.createEl("p", { text: `mdk serve not connected: ${this.plugin.offlineReason()}` });
+      c.createEl("p", { text: `rootmark serve not connected: ${this.plugin.offlineReason()}` });
       return;
     }
     const btn = c.createEl("button", { text: "Refresh" });
@@ -51,7 +51,7 @@ export class TracesView extends ItemView {
         }
       }
     } catch (e) {
-      c.createEl("p", { cls: "mdk-error", text: describeError(e) });
+      c.createEl("p", { cls: "rootmark-error", text: describeError(e) });
     }
   }
 }

@@ -31,7 +31,7 @@ pub enum Code {
     /// (K-E0.4; the error carries a `hint`)
     PolicyViolation,
     /// the vault's index is missing or of another format: rebuild it
-    /// (`mdk index build`, or `mdk serve` with `[index] auto_rebuild`;
+    /// (`rootmark index build`, or `rootmark serve` with `[index] auto_rebuild`;
     /// K-E0.3)
     IndexStale,
     /// anything else: a failure of the server or the vault
@@ -134,13 +134,13 @@ pub fn recode(code: Code, e: anyhow::Error) -> anyhow::Error {
 }
 
 /// The code under `e`: its `Coded` root, or `index_stale` for a stale
-/// index anywhere below (`mdkindex::store::IndexStale`, K-E0.3).
+/// index anywhere below (`rootmarkindex::store::IndexStale`, K-E0.3).
 fn code_in(e: &anyhow::Error) -> Option<Code> {
     e.chain()
         .find_map(|c| c.downcast_ref::<Coded>().map(|c| c.code))
         .or_else(|| {
             e.chain()
-                .any(|c| c.is::<mdkindex::store::IndexStale>())
+                .any(|c| c.is::<rootmarkindex::store::IndexStale>())
                 .then_some(Code::IndexStale)
         })
 }
@@ -198,7 +198,8 @@ mod tests {
         let r: anyhow::Result<()> = Err(coded(Code::TooLarge, "big")).code(Code::Internal);
         assert_eq!(code_of(&r.unwrap_err()), Code::TooLarge);
         // a stale index under any context is index_stale
-        let e = anyhow::Error::new(mdkindex::store::IndexStale("old".into())).context("search");
+        let e =
+            anyhow::Error::new(rootmarkindex::store::IndexStale("old".into())).context("search");
         assert_eq!(code_of(&e), Code::IndexStale);
         let names: Vec<&str> = Code::ALL.iter().map(|c| c.as_str()).collect();
         assert_eq!(names.len(), 11);

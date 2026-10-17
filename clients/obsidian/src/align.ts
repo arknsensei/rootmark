@@ -83,7 +83,7 @@ export function align<T>(blame: readonly T[], ranges: readonly BlockRange[]): Al
   if (blame.length !== ranges.length) {
     return {
       aligned: false,
-      reason: `mdk has ${String(blame.length)} blocks, the editor ${String(ranges.length)}: not aligned (is the note saved and ingested?)`,
+      reason: `rootmark has ${String(blame.length)} blocks, the editor ${String(ranges.length)}: not aligned (is the note saved and ingested?)`,
     };
   }
   return { aligned: true, pairs: blame.map((block, i) => ({ block, range: ranges[i] as BlockRange })) };

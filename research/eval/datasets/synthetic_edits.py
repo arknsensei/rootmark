@@ -20,7 +20,7 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval.datasets.common import (
     DATA,
@@ -71,7 +71,7 @@ class Blk:
 
 
 def parse_blocks(text: str) -> tuple[list[Blk], str | None]:
-    drafts, fm = mdkernel_core.parse_document(text, "x.md")
+    drafts, fm = rootmark_core.parse_document(text, "x.md")
     return [Blk(d["block_type"], d["text"], d["version_id"]) for d in drafts], fm
 
 

@@ -12,7 +12,7 @@ import argparse
 import json
 import tempfile
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics_v3 as M3
 from eval import runinfo
@@ -37,9 +37,9 @@ def verify_d2() -> dict:
 def pair_record(pair: dict) -> dict:
     old = (D2 / "blobs" / pair["old"]).read_bytes().decode("utf-8")
     new = (D2 / "blobs" / pair["new"]).read_bytes().decode("utf-8")
-    drafts, _ = mdkernel_core.parse_document(old, pair["path"])
+    drafts, _ = rootmark_core.parse_document(old, pair["path"])
     with tempfile.TemporaryDirectory() as tmp:
-        v = mdkernel_core.Vault(tmp, matcher=MATCHER)
+        v = rootmark_core.Vault(tmp, matcher=MATCHER)
         v.ingest(pair["path"], old, "Human", pair["commit"])
         old_blocks = v.snapshot_blocks(pair["path"])
         if [b["version_id"] for b in old_blocks] != [d["version_id"] for d in drafts]:
@@ -75,7 +75,7 @@ def main(argv: list[str] | None = None) -> None:
     runinfo.record_phase(
         a.run,
         "h1r_v3",
-        {"matcher": MATCHER, "theta": mdkernel_core.matcher_defaults(MATCHER)[0]},
+        {"matcher": MATCHER, "theta": rootmark_core.matcher_defaults(MATCHER)[0]},
         ["h1r_v3.json"],
     )
     print(

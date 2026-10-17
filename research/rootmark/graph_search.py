@@ -12,9 +12,9 @@ import networkx as nx
 import numpy as np
 import scipy.sparse as sp
 
-from mdkernel import embed as E
-from mdkernel.index import bm25_tokens
-from mdkernel.retrieval import CANDIDATES, Retriever, _ranked, rrf
+from rootmark import embed as E
+from rootmark.index import bm25_tokens
+from rootmark.retrieval import CANDIDATES, Retriever, _ranked, rrf
 
 ALPHA_DEFAULT = 0.9  # set by `eval/run_h2.py --phase tune`; test phase checks equality
 SEEDS = 5

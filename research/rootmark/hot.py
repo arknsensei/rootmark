@@ -11,8 +11,8 @@ import numpy as np
 import pyarrow as pa
 from rank_bm25 import BM25Okapi
 
-from mdkernel import embed as E
-from mdkernel.index import Index, bm25_tokens, schema
+from rootmark import embed as E
+from rootmark.index import Index, bm25_tokens, schema
 
 
 class HotLayer:

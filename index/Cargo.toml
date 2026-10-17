@@ -1,20 +1,20 @@
 [package]
-name = "mdkernel-index"
+name = "rootmark-index"
 version = "0.1.0"
 edition = "2021"
-description = "Derived indexes over mdkernel-core (spec §9): tantivy lexical, exact cosine vectors, ONNX MiniLM embedder, RRF hybrid, checkpoint-scoped queries, hot tier."
+description = "Derived indexes over rootmark-core (spec §9): tantivy lexical, exact cosine vectors, ONNX MiniLM embedder, RRF hybrid, checkpoint-scoped queries, hot tier."
 
 [lib]
-name = "mdkindex"
+name = "rootmarkindex"
 path = "src/lib.rs"
 
 [[bin]]
-name = "mdk-index"
-path = "src/bin/mdk-index.rs"
+name = "rootmark-index"
+path = "src/bin/rootmark-index.rs"
 
 [dependencies]
 anyhow = "1.0.104"
-mdkernel-core = { path = "../core" }
+rootmark-core = { path = "../core" }
 blake3 = { version = "1.8.7", features = ["pure"] }
 clap = { version = "4.6.7", features = ["derive"] }
 ndarray = "=0.17.2"

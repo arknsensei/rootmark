@@ -1,8 +1,8 @@
 //! Raw journal and version triggers (spec §11).
 //!
-//! Every save of a document is appended to `.mdkernel/journal/<doc_hash>.jsonl`
+//! Every save of a document is appended to `.rootmark/journal/<doc_hash>.jsonl`
 //! (`doc_hash = H(doc_path)`) as `(seq, at_ms, content_hash, bytes_len)`; the
-//! bytes are kept content-addressed under `.mdkernel/journal/blobs/`. A
+//! bytes are kept content-addressed under `.rootmark/journal/blobs/`. A
 //! version (an ingest) is created only when a `VersionTrigger` says so, and
 //! always from the latest journal content. Kernel bounds:
 //! - minimum journal retention 24 h (`JournalRetention::new`);

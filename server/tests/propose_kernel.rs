@@ -8,12 +8,12 @@
 //!
 //! Needs the model files (`make models`).
 
-use mdkserver::tools::{Caller, Kernel};
+use rootmarkserver::tools::{Caller, Kernel};
 use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
 
 fn vault(name: &str) -> PathBuf {
-    let root = std::env::temp_dir().join(format!("mdk-propose-{}-{name}", std::process::id()));
+    let root = std::env::temp_dir().join(format!("rootmark-propose-{}-{name}", std::process::id()));
     let _ = std::fs::remove_dir_all(&root);
     let v = root.join("vault");
     std::fs::create_dir_all(&v).unwrap();
@@ -24,7 +24,7 @@ fn vault(name: &str) -> PathBuf {
             std::fs::copy(&p, v.join(p.file_name().unwrap())).unwrap();
         }
     }
-    let st = std::process::Command::new(env!("CARGO_BIN_EXE_mdk"))
+    let st = std::process::Command::new(env!("CARGO_BIN_EXE_rootmark"))
         .args(["ingest-dir", v.to_str().unwrap(), v.to_str().unwrap()])
         .output()
         .unwrap();
@@ -50,8 +50,8 @@ fn external_human_edit_is_not_credited_to_the_agent() {
     // (it would join their chunk); this test is about the sync, so the
     // vault allows it explicitly
     std::fs::write(
-        v.join(".mdkernel/policy.toml"),
-        mdkserver::config::default_recipe()
+        v.join(".rootmark/policy.toml"),
+        rootmarkserver::config::default_recipe()
             .replace("policy = \"append_only\"", "policy = \"unrestricted\""),
     )
     .unwrap();
@@ -88,7 +88,7 @@ fn failed_ingest_leaves_the_file_unchanged() {
     let v = vault("fail");
     Kernel::open(&v).unwrap().ensure_index().unwrap();
     // the vault is locked to matcher v3: an ingest under v2 is refused
-    let k = Kernel::open_with(&v, Some(mdkcore::MatcherVersion::V2)).unwrap();
+    let k = Kernel::open_with(&v, Some(rootmarkcore::MatcherVersion::V2)).unwrap();
     let p = v.join("filter.md");
     let before = std::fs::read(&p).unwrap();
     let e = k
@@ -115,7 +115,7 @@ fn failed_ingest_leaves_the_file_unchanged() {
     assert!(format!("{e:#}").contains("locked to matcher"), "{e:#}");
     assert!(!v.join("newdir/new.md").exists());
     assert!(!v.join("newdir").exists());
-    assert!(!v.join(".mdkernel/proposals.jsonl").exists());
+    assert!(!v.join(".rootmark/proposals.jsonl").exists());
     std::fs::remove_dir_all(v.parent().unwrap()).unwrap();
 }
 
@@ -125,8 +125,8 @@ fn size_limit_from_policy() {
     let k = Kernel::open(&v).unwrap();
     k.ensure_index().unwrap();
     std::fs::write(
-        v.join(".mdkernel/policy.toml"),
-        mdkserver::config::default_recipe()
+        v.join(".rootmark/policy.toml"),
+        rootmarkserver::config::default_recipe()
             .replace("max_propose_bytes = 1048576", "max_propose_bytes = 16"),
     )
     .unwrap();
@@ -180,7 +180,7 @@ fn other_spellings_of_existing_names_are_refused() {
     assert!(p("cafe\u{301}.md", "append", "agent text").is_err());
     assert_eq!(std::fs::read(v.join("caf\u{e9}.md")).unwrap(), before);
     // the log names no foreign spelling
-    let log = std::fs::read_to_string(v.join(".mdkernel/events.jsonl")).unwrap();
+    let log = std::fs::read_to_string(v.join(".rootmark/events.jsonl")).unwrap();
     for bad in ["\"ESPRESSO.md\"", "\"SUB/b.md\"", "cafe\u{301}.md"] {
         assert!(!log.contains(bad), "{bad} in the log");
     }
@@ -196,7 +196,7 @@ fn planted_temporary_symlink_is_not_followed() {
     let k = Kernel::open(&v).unwrap();
     k.ensure_index().unwrap();
     let outside = v.parent().unwrap().join("outside.txt");
-    std::os::unix::fs::symlink(&outside, v.join(".evil.md.mdk-propose.tmp")).unwrap();
+    std::os::unix::fs::symlink(&outside, v.join(".evil.md.rootmark-propose.tmp")).unwrap();
     k.call(
         "propose",
         &json!({"doc_path": "evil.md", "content": "agent text", "reason": "symlink"}),
@@ -210,6 +210,6 @@ fn planted_temporary_symlink_is_not_followed() {
         std::fs::read_to_string(v.join("evil.md")).unwrap(),
         "agent text\n"
     );
-    assert!(std::fs::symlink_metadata(v.join(".evil.md.mdk-propose.tmp")).is_err());
+    assert!(std::fs::symlink_metadata(v.join(".evil.md.rootmark-propose.tmp")).is_err());
     std::fs::remove_dir_all(v.parent().unwrap()).unwrap();
 }

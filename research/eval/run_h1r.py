@@ -11,7 +11,7 @@ import argparse
 import json
 import tempfile
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics, runinfo
 from eval.datasets.common import DATA, die, file_blake3, load_manifest
@@ -34,9 +34,9 @@ def verify_d2() -> dict:
 def pair_record(pair: dict) -> dict:
     old = (D2 / "blobs" / pair["old"]).read_bytes().decode("utf-8")
     new = (D2 / "blobs" / pair["new"]).read_bytes().decode("utf-8")
-    drafts, _ = mdkernel_core.parse_document(old, pair["path"])
+    drafts, _ = rootmark_core.parse_document(old, pair["path"])
     with tempfile.TemporaryDirectory() as tmp:
-        v = mdkernel_core.Vault(tmp)
+        v = rootmark_core.Vault(tmp)
         v.ingest(pair["path"], old, "Human", pair["commit"])
         old_blocks = v.snapshot_blocks(pair["path"])
         if [b["version_id"] for b in old_blocks] != [d["version_id"] for d in drafts]:
@@ -68,7 +68,7 @@ def main(argv: list[str] | None = None) -> None:
         **metrics.h1r_aggregate(records, pairs),
     }
     runinfo.write_json(a.run, "h1r.json", out)
-    runinfo.record_phase(a.run, "h1r", {"theta": mdkernel_core.matcher_defaults()[0]}, ["h1r.json"])
+    runinfo.record_phase(a.run, "h1r", {"theta": rootmark_core.matcher_defaults()[0]}, ["h1r.json"])
     print(
         json.dumps(
             {k: out[k] for k in ("H1-R1", "H1-R2", "touched_retention", "loss_categories")},

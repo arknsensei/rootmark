@@ -1,5 +1,5 @@
 """Lucene/tantivy BM25 (K-C1.1; P1-C.1/C1.1), in Python, over the prototype's
-tokens (`mdkernel.index.bm25_tokens`), for the C1-1 evidence (K-C1.2).
+tokens (`rootmark.index.bm25_tokens`), for the C1-1 evidence (K-C1.2).
 
 The variant the Rust index records in its manifest (`lexical.*`):
 

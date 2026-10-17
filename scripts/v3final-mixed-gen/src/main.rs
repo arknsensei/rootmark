@@ -2,7 +2,7 @@
 //! **v3-final** core library (P1-B.1 TASKS B1.1; GOAL B1-1): every scenario of
 //! `scenarios.json` is ingested step by step through the v3-final public API
 //! (`Vault::ingest(doc, text, Provenance { author_kind, source }, V3)`), the
-//! vault's store is copied to `<scenario>/store/` (the `.mdkernel/` directory,
+//! vault's store is copied to `<scenario>/store/` (the `.mdkernel/` directory the v3-final library writes,
 //! renamed so that it is committed and never opened in place), and
 //! `<scenario>/expected.json` records what v3-final itself reports: every
 //! document's `replay` snapshot_id and the `events_hash` of `events.jsonl`.
@@ -10,10 +10,10 @@
 //! Built and run by scripts/gen_v3final_mixed.sh next to
 //! `git archive v3-final core`; never part of this repository's workspace.
 //!
-//!   mdk-v3final-mixed-gen <scenarios.json> <out-dir> <v3-final-sha>
+//!   rootmark-v3final-mixed-gen <scenarios.json> <out-dir> <v3-final-sha>
 
 use anyhow::{bail, Context, Result};
-use mdkcore::{AuthorKind, MatcherVersion, Provenance, Vault};
+use rootmarkcore::{AuthorKind, MatcherVersion, Provenance, Vault};
 use serde_json::{json, Value};
 use std::collections::BTreeMap;
 use std::fs;
@@ -53,7 +53,7 @@ fn copy_tree(from: &Path, to: &Path) -> Result<()> {
 fn main() -> Result<()> {
     let args: Vec<String> = std::env::args().collect();
     if args.len() != 4 {
-        bail!("usage: mdk-v3final-mixed-gen <scenarios.json> <out-dir> <v3-final-sha>");
+        bail!("usage: rootmark-v3final-mixed-gen <scenarios.json> <out-dir> <v3-final-sha>");
     }
     let spec: Value = serde_json::from_str(&fs::read_to_string(&args[1])?)?;
     let out = Path::new(&args[2]);
@@ -103,6 +103,7 @@ fn main() -> Result<()> {
             "events_hash": v.events_hash()?,
             "replay_snapshot_ids": docs,
         });
+        // the v3-final library writes its store under the pre-rename name (K-GH.1)
         copy_tree(&work.join(".mdkernel"), &dir.join("store"))?;
         fs::write(
             dir.join("expected.json"),

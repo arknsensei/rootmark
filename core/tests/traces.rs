@@ -1,14 +1,16 @@
 //! P1-B/B4: consumption traces (spec §8, C2-07) — every `read_blocks` call
-//! appends one line to `.mdkernel/traces.jsonl`; `trace_id` formula.
+//! appends one line to `.rootmark/traces.jsonl`; `trace_id` formula.
 
-use mdkcore::{hash32, trace_id, AuthorKind, Layer, MatcherVersion, Provenance, TraceEntry, Vault};
+use rootmarkcore::{
+    hash32, trace_id, AuthorKind, Layer, MatcherVersion, Provenance, TraceEntry, Vault,
+};
 use std::fs;
 use std::path::PathBuf;
 
 const M: MatcherVersion = MatcherVersion::V3;
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-trace-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-trace-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -39,7 +41,7 @@ fn c2_07_trace_per_read_and_id_formula() {
     let notes = v.snapshot("notes.md").unwrap().unwrap();
     let draft = v.snapshot("agent.md").unwrap().unwrap();
     let refs = vec![notes.blocks[2].0.clone(), draft.blocks[1].0.clone()];
-    assert!(!root.join(".mdkernel/traces.jsonl").exists());
+    assert!(!root.join(".rootmark/traces.jsonl").exists());
 
     let (blocks, t0) = v.read_blocks(&refs, "claude-code", "t0").unwrap();
     assert_eq!(blocks.len(), 2);
@@ -71,7 +73,7 @@ fn c2_07_trace_per_read_and_id_formula() {
         draft.blocks[1].0,
         draft.blocks[1].1
     );
-    let traces = root.join(".mdkernel/traces.jsonl");
+    let traces = root.join(".rootmark/traces.jsonl");
     assert_eq!(fs::read_to_string(&traces).unwrap(), want);
     assert_eq!(t0.trace_id, tid);
     assert_eq!(
@@ -153,7 +155,7 @@ fn derived_is_never_returned() {
     let l = v.snapshot("sum.md").unwrap().unwrap().blocks[1].0.clone();
     let e = format!("{:#}", v.read_blocks(&[l], "c", &cid).unwrap_err());
     assert!(e.contains("derived"), "{e}");
-    assert!(!root.join(".mdkernel/traces.jsonl").exists());
+    assert!(!root.join(".rootmark/traces.jsonl").exists());
     fs::remove_dir_all(&root).unwrap();
 }
 
@@ -176,7 +178,7 @@ fn record_trace_checks_returned() {
     assert!(v
         .record_trace(&cp.checkpoint_id, "c", "q", vec![bad])
         .is_err_and(|e| e.to_string().contains("not live")));
-    assert!(!root.join(".mdkernel/traces.jsonl").exists());
+    assert!(!root.join(".rootmark/traces.jsonl").exists());
     // spec 1.0.1 §8 (K-B1.2): query_hash is 32 lowercase hex ("q" is now refused)
     v.record_trace(&cp.checkpoint_id, "c", &hash32("q"), vec![good])
         .unwrap();

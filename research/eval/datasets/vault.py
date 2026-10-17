@@ -2,7 +2,7 @@
 
 Clones `dendronhq/dendron-site` at a fixed rev, copies every `vault/**/*.md`
 into `data/d3/docs/`, ingests them in byte-wise `doc_path` order into a fresh
-`data/d3/.mdkernel`, checks the acceptance bar and compares everything with
+`data/d3/.rootmark`, checks the acceptance bar and compares everything with
 `data/MANIFEST.d3.json` (written only with `--write-manifest`).
 
     python -m eval.datasets.vault [--write-manifest]
@@ -14,7 +14,7 @@ import argparse
 import shutil
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval.datasets.common import (
     DATA,
@@ -55,7 +55,7 @@ def build(src_root: Path = SRC, d3: Path = D3) -> dict:
         dest = docs_dir / p.relative_to(src)
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(p, dest)
-    vault = mdkernel_core.Vault(str(d3))
+    vault = rootmark_core.Vault(str(d3))
     ingested = vault.ingest_dir(str(docs_dir))
     docs = {r["doc_path"]: file_blake3(docs_dir / r["doc_path"]) for r in ingested}
     n_chunks = 0

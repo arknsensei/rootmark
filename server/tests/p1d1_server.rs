@@ -8,8 +8,8 @@
 //!
 //! Needs the model files (`make models`).
 
-use mdkserver::error::{code_of, Code};
-use mdkserver::tools::{Caller, Kernel};
+use rootmarkserver::error::{code_of, Code};
+use rootmarkserver::tools::{Caller, Kernel};
 use serde_json::{json, Value};
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::TcpStream;
@@ -17,13 +17,13 @@ use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
 use std::time::{Duration, Instant};
 
-fn mdk() -> &'static str {
-    env!("CARGO_BIN_EXE_mdk")
+fn rootmark() -> &'static str {
+    env!("CARGO_BIN_EXE_rootmark")
 }
 
 /// mini_vault copied and ingested (human content), index built.
 fn vault(name: &str) -> PathBuf {
-    let root = std::env::temp_dir().join(format!("mdk-p1d1s-{}-{name}", std::process::id()));
+    let root = std::env::temp_dir().join(format!("rootmark-p1d1s-{}-{name}", std::process::id()));
     let _ = std::fs::remove_dir_all(&root);
     let v = root.join("vault");
     std::fs::create_dir_all(&v).unwrap();
@@ -34,7 +34,7 @@ fn vault(name: &str) -> PathBuf {
             std::fs::copy(&p, v.join(p.file_name().unwrap())).unwrap();
         }
     }
-    let st = Command::new(mdk())
+    let st = Command::new(rootmark())
         .args(["ingest-dir", v.to_str().unwrap(), v.to_str().unwrap()])
         .output()
         .unwrap();
@@ -45,8 +45,8 @@ fn vault(name: &str) -> PathBuf {
 
 fn policy(v: &Path, extra: &str) {
     std::fs::write(
-        v.join(".mdkernel/policy.toml"),
-        format!("{}{extra}", mdkserver::config::default_recipe()),
+        v.join(".rootmark/policy.toml"),
+        format!("{}{extra}", rootmarkserver::config::default_recipe()),
     )
     .unwrap();
 }
@@ -56,11 +56,11 @@ fn agent() -> Caller<'static> {
 }
 
 fn log_of(v: &Path) -> String {
-    std::fs::read_to_string(v.join(".mdkernel/events.jsonl")).unwrap()
+    std::fs::read_to_string(v.join(".rootmark/events.jsonl")).unwrap()
 }
 
 fn files_of(v: &Path) -> Vec<(String, Vec<u8>)> {
-    let mut out: Vec<(String, Vec<u8>)> = mdkcore::files::markdown_files(v)
+    let mut out: Vec<(String, Vec<u8>)> = rootmarkcore::files::markdown_files(v)
         .unwrap()
         .into_iter()
         .map(|(d, p)| (d, std::fs::read(p).unwrap()))
@@ -83,7 +83,7 @@ fn append_only_refuses_every_canonical_replace_and_allows_proposal_sections() {
     std::fs::write(v.join("safety.md"), SAFETY).unwrap();
     let k = Kernel::open(&v).unwrap();
     // the human document is ingested as human content (the watcher's rule)
-    k.watch_doc("safety.md", "mdk-serve-watch").unwrap();
+    k.watch_doc("safety.md", "rootmark-serve-watch").unwrap();
     let before_log = log_of(&v);
     let before_files = files_of(&v);
     // D1-1: six replace_section requests that touch canonical blocks
@@ -157,11 +157,11 @@ fn unrestricted_deletion_names_the_actor() {
     let v = vault("unrestricted");
     std::fs::write(v.join("safety.md"), SAFETY).unwrap();
     let k = Kernel::open(&v).unwrap();
-    k.watch_doc("safety.md", "mdk-serve-watch").unwrap();
+    k.watch_doc("safety.md", "rootmark-serve-watch").unwrap();
     policy(&v, "");
-    let recipe = std::fs::read_to_string(v.join(".mdkernel/policy.toml")).unwrap();
+    let recipe = std::fs::read_to_string(v.join(".rootmark/policy.toml")).unwrap();
     std::fs::write(
-        v.join(".mdkernel/policy.toml"),
+        v.join(".rootmark/policy.toml"),
         recipe.replace("policy = \"append_only\"", "policy = \"unrestricted\""),
     )
     .unwrap();
@@ -200,14 +200,14 @@ fn watched_edits_are_attributed_to_the_vault_human() {
     // drop the last paragraph
     let cut = text.trim_end().rfind("\n\n").unwrap();
     std::fs::write(&p, &text[..cut + 1]).unwrap();
-    k.watch_doc("espresso.md", "mdk-serve-watch").unwrap();
+    k.watch_doc("espresso.md", "rootmark-serve-watch").unwrap();
     let del: Value = log_of(&v)
         .lines()
         .map(|l| serde_json::from_str::<Value>(l).unwrap())
         .find(|e| e["kind"] == "BlockDeleted")
         .unwrap();
     assert_eq!(del["meta"]["actor"], json!({"kind": "human", "id": "ada"}));
-    assert_eq!(del["meta"]["source"], "mdk-serve-watch");
+    assert_eq!(del["meta"]["source"], "rootmark-serve-watch");
 }
 
 #[test]
@@ -303,8 +303,8 @@ fn error_codes_through_the_kernel() {
         assert_eq!(code_of(&e), want, "{tool} {a}: {e:#}");
     }
     assert_eq!(log_of(&v), before);
-    assert!(!v.join(".mdkernel/traces.jsonl").exists());
-    std::fs::write(v.join(".mdkernel/policy.toml"), "promotion = 7\n").unwrap();
+    assert!(!v.join(".rootmark/traces.jsonl").exists());
+    std::fs::write(v.join(".rootmark/policy.toml"), "promotion = 7\n").unwrap();
     let e = k.call("status", &json!({}), agent()).unwrap_err();
     assert_eq!(code_of(&e), Code::PolicyViolation, "{e:#}");
 }
@@ -358,7 +358,7 @@ fn cli_propose_goes_through_the_edit_policy() {
     let v = vault("cli");
     let draft = v.parent().unwrap().join("d.md");
     std::fs::write(&draft, "Replaced by an agent.\n").unwrap();
-    let out = Command::new(mdk())
+    let out = Command::new(rootmark())
         .args([
             "propose",
             v.to_str().unwrap(),
@@ -374,7 +374,7 @@ fn cli_propose_goes_through_the_edit_policy() {
     assert!(!out.status.success());
     let err = String::from_utf8_lossy(&out.stderr);
     assert!(err.contains("denied by edit policy append_only"), "{err}");
-    let out = Command::new(mdk())
+    let out = Command::new(rootmark())
         .args([
             "propose",
             v.to_str().unwrap(),
@@ -411,7 +411,7 @@ impl Drop for Served {
 }
 
 fn serve_http(v: &Path) -> Served {
-    let mut child = Command::new(mdk())
+    let mut child = Command::new(rootmark())
         .args([
             "serve",
             "--vault",
@@ -433,12 +433,12 @@ fn serve_http(v: &Path) -> Served {
             "serve did not start"
         );
         let l = lines.next().expect("serve exited").unwrap();
-        if let Some(p) = l.strip_prefix("mdk serve: http listening on 127.0.0.1:") {
+        if let Some(p) = l.strip_prefix("rootmark serve: http listening on 127.0.0.1:") {
             break p.trim().parse().unwrap();
         }
     };
     std::thread::spawn(move || for _ in lines {});
-    let token = std::fs::read_to_string(v.join(".mdkernel/server.token"))
+    let token = std::fs::read_to_string(v.join(".rootmark/server.token"))
         .unwrap()
         .trim()
         .to_string();
@@ -492,9 +492,9 @@ fn http_is_the_human_channel() {
     let (st, _) = http(&s, "search", &json!({"query": "espresso"}), "obsidian");
     assert_eq!(st, 200);
     // with it: HTTP promote is the human's and is allowed (HumanOnly)
-    let recipe = std::fs::read_to_string(v.join(".mdkernel/policy.toml")).unwrap();
+    let recipe = std::fs::read_to_string(v.join(".rootmark/policy.toml")).unwrap();
     std::fs::write(
-        v.join(".mdkernel/policy.toml"),
+        v.join(".rootmark/policy.toml"),
         format!("{recipe}\n[identity]\nhuman_id = \"ada\"\n"),
     )
     .unwrap();
@@ -545,7 +545,7 @@ fn http_is_the_human_channel() {
 
 /// Sends every message at once (no waiting), then reads the responses.
 fn mcp_pipelined(v: &Path, calls: &[Value]) -> Vec<Value> {
-    let mut child = Command::new(mdk())
+    let mut child = Command::new(rootmark())
         .args(["serve", "--vault", v.to_str().unwrap(), "--mcp", "stdio"])
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
@@ -605,8 +605,8 @@ fn pipelined_calls_give_the_same_log() {
     assert_eq!(ra[1..], rb[1..]); // the initialize reply names the vault path
     for name in ["events.jsonl", "traces.jsonl", "proposals.jsonl"] {
         assert_eq!(
-            std::fs::read(a.join(".mdkernel").join(name)).unwrap(),
-            std::fs::read(b.join(".mdkernel").join(name)).unwrap(),
+            std::fs::read(a.join(".rootmark").join(name)).unwrap(),
+            std::fs::read(b.join(".rootmark").join(name)).unwrap(),
             "{name}"
         );
     }
@@ -616,7 +616,7 @@ fn pipelined_calls_give_the_same_log() {
     let (i4, i8) = (p0.find("Note 4").unwrap(), p0.find("Note 8").unwrap());
     assert!(i4 < i8);
     // the traces are in the order the searches were sent
-    let traces = std::fs::read_to_string(a.join(".mdkernel/traces.jsonl")).unwrap();
+    let traces = std::fs::read_to_string(a.join(".rootmark/traces.jsonl")).unwrap();
     assert_eq!(traces.lines().count(), 12);
     // tool errors carry a code in structuredContent
     let h = &ra[3];
@@ -630,7 +630,7 @@ fn pipelined_calls_give_the_same_log() {
 /// D1.2 review: a cancelled call still runs (the SDK does not abort it) and
 /// keeps its arrival place, so cancellations change nothing in the log.
 fn mcp_with_cancels(v: &Path, n: usize, cancel: bool) {
-    let mut child = Command::new(mdk())
+    let mut child = Command::new(rootmark())
         .args(["serve", "--vault", v.to_str().unwrap(), "--mcp", "stdio"])
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
@@ -701,7 +701,7 @@ fn failed_commit_restores_the_file() {
     use std::os::unix::fs::PermissionsExt;
     let v = vault("restore");
     let k = Kernel::open(&v).unwrap();
-    let objects = v.join(".mdkernel/objects");
+    let objects = v.join(".rootmark/objects");
     let mode = std::fs::metadata(&objects).unwrap().permissions().mode();
     std::fs::set_permissions(&objects, std::fs::Permissions::from_mode(0o555)).unwrap();
     let before = log_of(&v);
@@ -714,13 +714,13 @@ fn failed_commit_restores_the_file() {
     assert!(format!("{e:#}").contains("the file was restored"), "{e:#}");
     assert!(!v.join("newdir").exists());
     assert_eq!(log_of(&v), before);
-    assert!(!v.join(".mdkernel/proposals.jsonl").exists());
+    assert!(!v.join(".rootmark/proposals.jsonl").exists());
 }
 
 /// Sends `msgs` at once and returns the responses to `want` ids (all of
 /// them, or panics after 60 s).
 fn mcp_raw(v: &Path, msgs: &[Value], want: &[u64]) -> Vec<Value> {
-    let mut child = Command::new(mdk())
+    let mut child = Command::new(rootmark())
         .args(["serve", "--vault", v.to_str().unwrap(), "--mcp", "stdio"])
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())

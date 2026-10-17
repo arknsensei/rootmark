@@ -1,4 +1,4 @@
-# mdkernel — Kuzey Yıldızı
+# rootmark — Kuzey Yıldızı
 
 Bu dosya projenin tek sayfalık sabit noktasıdır. Her `/goal` turu, her yeni sohbet, her belge önce bunu okur. Değişmesi için açık bir karar kaydı gerekir (`docs/DECISIONS.md`).
 
@@ -10,7 +10,7 @@ Bir ajan bilgi tabanına yazdığında, her bloğun kim tarafından, ne zaman, h
 
 ## Biz neyiz, ne değiliz
 - **Değiliz:** vektör veritabanı, ajan hafıza API'si, not uygulaması, ekip wiki'si, LLM çerçevesi.
-- **Biziz:** markdown üzerinde çalışan, bağımsız dağıtılan bir çekirdek (`mdk`) ve onu konuşan istemciler. Obsidian, VS Code, CLI, MCP istemcileri eşit statüdedir; çekirdek hiçbirini bilmez. Tek uyumluluk sözü: düz markdown + wikilink.
+- **Biziz:** markdown üzerinde çalışan, bağımsız dağıtılan bir çekirdek (`rootmark`) ve onu konuşan istemciler. Obsidian, VS Code, CLI, MCP istemcileri eşit statüdedir; çekirdek hiçbirini bilmez. Tek uyumluluk sözü: düz markdown + wikilink.
 - **Spesifikasyon yayımlanır** (`spec/`), ContextNest'in kavram setiyle uyumlu ve onun doküman düzeyinde bıraktığı yönetişimi blok düzeyine indirir.
 
 ## Kim için (öncelik sırasıyla)
@@ -41,7 +41,7 @@ Her madde bir turun önceden kayıtlı kriteriyle ölçüldü (rapor: `reports/r
 - **Deterministik türev indeks:** Rust BM25 (manifest'te bildirilen varyant) + kesin kosinüs + hibrit RRF, kontrol noktasında sorgu, yazma→aranabilir p95 32 ms; kalite referansı 618 değerde Δ 0; spec §9 Validated, C3 7/7 (P1-C, P1-C.1, P1-D.1).
 - **Ajan yazımı canonical içeriği değiştiremez:** `append_only` varsayılan; silme/değiştirme olayları aktör taşır; MCP ajan, HTTP insan kanalı; tek yazar kuyruğuyla boru hatlı istemci aynı günlüğü üretir (P1-D, P1-D.1).
 - **Ürün sahnesi uçtan uca (P1-E):** ajan MCP ile önerir, insan HTTP ile (Obsidian istemcisinin komut katmanı) blame'de görür, terfi ettirir, arama bulur, iz cevabın bloklarını gösterir, kontrol noktasına dönülür, ajanın canonical değiştirme denemesi reddedilir; 11/11, iki koşturmada bayt eşit. Obsidian'ın başsız kipi yok; bağımsız doğrulama aynı 11 adımı gerçek Obsidian arayüzünde, ayrı bir örnekte (kendi `--user-data-dir`'i, CDP) koşturdu: 11/11. P1-E.1'den itibaren "plugin e2e" bu gerçek arayüz harness'idir (K-E1.3).
-- **Desteklenmeyen / açık:** wikilink grafının sıralama katkısı (araştırma kolu); `mdk 0.1.0` yayım ikilileri **E-7 2/4**: macOS arm64 ve Linux x86_64 34/34, Intel macOS derlenemedi (sabitlenmiş `ort`'ta hazır onnxruntime yok), Windows ölçülmedi (CI tetiklenmedi) — karar kuralı gereği yayım ertelendi (K-E5-T); K-E1.1 ile 0.1.0'ın hedefi yalnız `aarch64-apple-darwin`, Linux/Windows CI bilgi; istemcide Demote (sözleşmede yok, K-E2-T).
+- **Desteklenmeyen / açık:** wikilink grafının sıralama katkısı (araştırma kolu); `rootmark 0.1.0` yayım ikilileri **E-7 2/4**: macOS arm64 ve Linux x86_64 34/34, Intel macOS derlenemedi (sabitlenmiş `ort`'ta hazır onnxruntime yok), Windows ölçülmedi (CI tetiklenmedi) — karar kuralı gereği yayım ertelendi (K-E5-T); K-E1.1 ile 0.1.0'ın hedefi yalnız `aarch64-apple-darwin`, Linux/Windows CI bilgi; istemcide Demote (sözleşmede yok, K-E2-T).
 
 ## Kaynak sırası
 `NORTH_STAR.md` → `spec/` → `docs/ARCHITECTURE.md` → `docs/PACKAGES.md` → `docs/ROADMAP.md` → `docs/DEV_PROCESS.md` → aktif turun yönergesi. Çelişkide üstteki kazanır.

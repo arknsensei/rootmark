@@ -1,6 +1,7 @@
 //! P1-E.1/E1.1 (K-E1.2): `status` does not depend on the index.
-//! - E1-1: a real `mdkernel-index/2` index (written by the `p1d-final` `mdk`,
-//!   `server/tests/fixtures/index_v2`, `scripts/gen_old_index.sh`) with
+//! - E1-1: a real `/2` index (written by the `p1d-final` binary,
+//!   `server/tests/fixtures/index_v2`, `scripts/gen_old_index.sh`; opened
+//!   after `rootmark migrate --rename-store`, K-GH.1) with
 //!   `[index] auto_rebuild = false`: `status` over HTTP GET, HTTP POST and
 //!   MCP answers 200 with `index.state = "stale"`; `search` 503
 //!   `index_stale`; `blame`, `checkpoints`, `trace` 200. With
@@ -8,7 +9,7 @@
 //! - E1-2: an unreadable manifest (broken JSON): `status` 200 with
 //!   `index.state = "damaged"`; `search` 503 (2 cases).
 //!
-//! Each criterion writes its record to `$MDK_P1E1_OUT/<name>.json` when set
+//! Each criterion writes its record to `$ROOTMARK_P1E1_OUT/<name>.json` when set
 //! (before its threshold is asserted). Needs the model files (`make models`).
 
 use serde_json::{json, Value};
@@ -18,15 +19,15 @@ use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
 use std::time::{Duration, Instant};
 
-fn mdk() -> &'static str {
-    env!("CARGO_BIN_EXE_mdk")
+fn rootmark() -> &'static str {
+    env!("CARGO_BIN_EXE_rootmark")
 }
 
 /// A copy of the old-index fixture vault with the default policy recipe
 /// (`extra` in its `[index]` table) and a human id.
 fn old_vault(name: &str, extra: &str) -> PathBuf {
     let src = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/index_v2/vault");
-    let root = std::env::temp_dir().join(format!("mdk-p1e1-{}-{name}", std::process::id()));
+    let root = std::env::temp_dir().join(format!("rootmark-p1e1-{}-{name}", std::process::id()));
     let _ = std::fs::remove_dir_all(&root);
     std::fs::create_dir_all(&root).unwrap();
     let st = Command::new("cp")
@@ -35,11 +36,18 @@ fn old_vault(name: &str, extra: &str) -> PathBuf {
         .unwrap();
     assert!(st.success());
     let v = root.join("vault");
+    // the fixture keeps its pre-rename metadata directory (K-GH.1)
+    let m = Command::new(rootmark())
+        .args(["migrate", "--rename-store", v.to_str().unwrap()])
+        .output()
+        .unwrap();
+    assert!(m.status.success(), "{}", String::from_utf8_lossy(&m.stderr));
     std::fs::write(
-        v.join(".mdkernel/policy.toml"),
+        v.join(".rootmark/policy.toml"),
         format!(
             "{}\n[identity]\nhuman_id = \"ada\"\n",
-            mdkserver::config::default_recipe().replace("[index]\n", &format!("[index]\n{extra}"))
+            rootmarkserver::config::default_recipe()
+                .replace("[index]\n", &format!("[index]\n{extra}"))
         ),
     )
     .unwrap();
@@ -47,7 +55,7 @@ fn old_vault(name: &str, extra: &str) -> PathBuf {
 }
 
 fn out(name: &str, v: &Value) {
-    if let Ok(d) = std::env::var("MDK_P1E1_OUT") {
+    if let Ok(d) = std::env::var("ROOTMARK_P1E1_OUT") {
         std::fs::create_dir_all(&d).unwrap();
         std::fs::write(
             Path::new(&d).join(format!("{name}.json")),
@@ -58,14 +66,14 @@ fn out(name: &str, v: &Value) {
 }
 
 fn index_format(v: &Path) -> Value {
-    let p = v.join(".mdkernel/index/manifest.json");
+    let p = v.join(".rootmark/index/manifest.json");
     match serde_json::from_str::<Value>(&std::fs::read_to_string(p).unwrap()) {
         Ok(m) => m["format"].clone(),
         Err(_) => Value::Null,
     }
 }
 
-/// One `mdk serve --mcp stdio --http 127.0.0.1:0` process (the contract §1
+/// One `rootmark serve --mcp stdio --http 127.0.0.1:0` process (the contract §1
 /// form): HTTP for the human, MCP over stdio for the agent.
 struct Served {
     child: Child,
@@ -85,7 +93,7 @@ impl Drop for Served {
 }
 
 fn serve(v: &Path) -> Served {
-    let mut child = Command::new(mdk())
+    let mut child = Command::new(rootmark())
         .args([
             "serve",
             "--vault",
@@ -110,13 +118,13 @@ fn serve(v: &Path) -> Served {
             "serve did not start"
         );
         let l = lines.next().expect("serve exited").unwrap();
-        if let Some(p) = l.strip_prefix("mdk serve: http listening on 127.0.0.1:") {
+        if let Some(p) = l.strip_prefix("rootmark serve: http listening on 127.0.0.1:") {
             break p.trim().parse().unwrap();
         }
         start_log.push(l);
     };
     std::thread::spawn(move || for _ in lines {});
-    let token = std::fs::read_to_string(v.join(".mdkernel/server.token"))
+    let token = std::fs::read_to_string(v.join(".rootmark/server.token"))
         .unwrap()
         .trim()
         .to_string();
@@ -226,7 +234,7 @@ fn e1_1_real_old_index_status_and_reads() {
     // auto_rebuild = false: the p1d-final index stays as it is
     let v = old_vault("e11-off", "auto_rebuild = false\n");
     assert_eq!(index_format(&v), "mdkernel-index/2", "fixture");
-    let ev0 = std::fs::read(v.join(".mdkernel/events.jsonl")).unwrap();
+    let ev0 = std::fs::read(v.join(".rootmark/events.jsonl")).unwrap();
     let (off, off_log) = {
         let mut s = serve(&v);
         (e1_1_calls(&mut s), s.start_log.clone())
@@ -260,7 +268,7 @@ fn e1_1_real_old_index_status_and_reads() {
         && idx["expected_format"] == "mdkernel-index/3"
         && idx["auto_rebuild"] == false;
     let untouched = index_format(&v) == "mdkernel-index/2"
-        && std::fs::read(v.join(".mdkernel/events.jsonl")).unwrap() == ev0;
+        && std::fs::read(v.join(".rootmark/events.jsonl")).unwrap() == ev0;
     // auto_rebuild = true (the default): rebuilt at start, everything 200
     let v = old_vault("e11-on", "");
     let (on, on_log) = {
@@ -285,7 +293,7 @@ fn e1_1_real_old_index_status_and_reads() {
     cases.insert("auto_rebuild=true: all 200".into(), json!(on_pass));
     let passed = cases.values().filter(|b| **b == json!(true)).count();
     let res = json!({"criterion": "E1-1",
-        "fixture": "server/tests/fixtures/index_v2 (p1d-final mdk, mdkernel-index/2)",
+        "fixture": "server/tests/fixtures/index_v2 (p1d-final binary, mdkernel-index/2; migrated)",
         "auto_rebuild_false": off, "auto_rebuild_false_start_log_says_stale":
             off_log.iter().any(|l| l.contains("index stale") && l.contains("auto_rebuild = false")),
         "auto_rebuild_false_index_fields_ok": fields_ok, "auto_rebuild_false_untouched": untouched,
@@ -306,7 +314,7 @@ fn e1_2_unreadable_manifest_status_damaged_search_503() {
         ("auto_rebuild_false", "auto_rebuild = false\n"),
     ] {
         let v = old_vault(&format!("e12-{name}"), extra);
-        let m = v.join(".mdkernel/index/manifest.json");
+        let m = v.join(".rootmark/index/manifest.json");
         std::fs::write(&m, "{ not json").unwrap();
         let mut s = serve(&v);
         let (st, status) = s.http("GET", "status", None);

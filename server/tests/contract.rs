@@ -2,19 +2,20 @@
 //! `scripts/contract_check.sh` requires every contract code in a test).
 //! Needs the model files.
 
-use mdkserver::error::{code_of, Code};
-use mdkserver::tools::{Caller, Kernel};
+use rootmarkserver::error::{code_of, Code};
+use rootmarkserver::tools::{Caller, Kernel};
 use serde_json::json;
 use std::path::PathBuf;
 use std::process::Command;
 
 fn vault(name: &str) -> PathBuf {
-    let root = std::env::temp_dir().join(format!("mdk-contract-{}-{name}", std::process::id()));
+    let root =
+        std::env::temp_dir().join(format!("rootmark-contract-{}-{name}", std::process::id()));
     let _ = std::fs::remove_dir_all(&root);
     let v = root.join("vault");
     std::fs::create_dir_all(&v).unwrap();
     std::fs::write(v.join("a.md"), "# A\n\nSome text about espresso.\n").unwrap();
-    let st = Command::new(env!("CARGO_BIN_EXE_mdk"))
+    let st = Command::new(env!("CARGO_BIN_EXE_rootmark"))
         .args(["ingest-dir", v.to_str().unwrap(), v.to_str().unwrap()])
         .output()
         .unwrap();
@@ -30,7 +31,7 @@ fn vault(name: &str) -> PathBuf {
 #[test]
 fn a_damaged_index_is_internal() {
     let v = vault("internal");
-    let r = v.join(".mdkernel/index/records.jsonl");
+    let r = v.join(".rootmark/index/records.jsonl");
     let mut recs = std::fs::read(&r).unwrap();
     recs.extend_from_slice(b"\n");
     std::fs::write(&r, recs).unwrap();
@@ -44,7 +45,7 @@ fn a_damaged_index_is_internal() {
         .unwrap_err();
     assert_eq!(code_of(&e), Code::Internal, "{e:#}");
     assert_eq!(Code::Internal.http_status(), 500);
-    let traces = v.join(".mdkernel/traces.jsonl");
+    let traces = v.join(".rootmark/traces.jsonl");
     assert!(!traces.exists() || std::fs::read_to_string(traces).unwrap().is_empty());
 }
 
@@ -91,7 +92,7 @@ fn every_tool_answers() {
     let v = vault("tools");
     let k = Kernel::open(&v).unwrap();
     let st = call_tool(&k, "status", json!({}));
-    assert_eq!(st["spec_version"], mdkserver::tools::SPEC_VERSION);
+    assert_eq!(st["spec_version"], rootmarkserver::tools::SPEC_VERSION);
     let s = call_tool(&k, "search", json!({"query": "espresso"}));
     let lineage = s["hits"][0]["lineage_ids"][0].clone();
     let rb = call_tool(
@@ -164,8 +165,8 @@ fn every_code_from_a_real_call() {
         Code::Denied,
     );
     std::fs::write(
-        v.join(".mdkernel/policy.toml"),
-        mdkserver::config::default_recipe()
+        v.join(".rootmark/policy.toml"),
+        rootmarkserver::config::default_recipe()
             .replace("max_propose_bytes = 1048576", "max_propose_bytes = 4"),
     )
     .unwrap();
@@ -175,9 +176,9 @@ fn every_code_from_a_real_call() {
         json!({"doc_path": "big.md", "content": "five!", "reason": "r"}),
         Code::TooLarge,
     );
-    std::fs::write(v.join(".mdkernel/policy.toml"), "promotion = 7\n").unwrap();
+    std::fs::write(v.join(".rootmark/policy.toml"), "promotion = 7\n").unwrap();
     expect_code(&k, "status", json!({}), Code::PolicyViolation);
-    std::fs::remove_file(v.join(".mdkernel/policy.toml")).unwrap();
+    std::fs::remove_file(v.join(".rootmark/policy.toml")).unwrap();
     // K-E0.4: an append to human blocks without a heading of its own
     expect_code(
         &k,
@@ -186,16 +187,16 @@ fn every_code_from_a_real_call() {
         Code::PolicyViolation,
     );
     // K-E0.3: an index of another format is stale, not internal
-    let m = v.join(".mdkernel/index/manifest.json");
+    let m = v.join(".rootmark/index/manifest.json");
     let fresh = std::fs::read_to_string(&m).unwrap();
     std::fs::write(&m, fresh.replace("mdkernel-index/3", "mdkernel-index/2")).unwrap();
     expect_code(&k, "search", json!({"query": "espresso"}), Code::IndexStale);
     // K-E1.2: an unreadable manifest is index_stale too (only a rebuild recovers it)
-    std::fs::write(v.join(".mdkernel/index/manifest.json"), "{ not json").unwrap();
+    std::fs::write(v.join(".rootmark/index/manifest.json"), "{ not json").unwrap();
     expect_code(&k, "search", json!({"query": "espresso"}), Code::IndexStale);
     // an index file that does not match its manifest is damage: internal
     std::fs::write(&m, &fresh).unwrap();
-    let r = v.join(".mdkernel/index/records.jsonl");
+    let r = v.join(".rootmark/index/records.jsonl");
     let mut recs = std::fs::read(&r).unwrap();
     recs.extend_from_slice(b"\n");
     std::fs::write(&r, recs).unwrap();

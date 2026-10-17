@@ -8,7 +8,7 @@ UVR := cd research && uv run --frozen
 PY := cd research && uv run --frozen python
 # v2 code paths (frozen eval, v2 runners) never pass a matcher: run them under
 # matcher v2 so they reproduce v2 behaviour exactly (prototype ASSUMPTIONS T21)
-PY2 := cd research && MDK_MATCHER=v2 uv run --frozen python
+PY2 := cd research && ROOTMARK_MATCHER=v2 uv run --frozen python
 # v3-final reference run (docs/rounds/P1-A/progress/SOURCE.md); A-3 compares against it
 V3_REF_RUN := 20261013T182004Z-f82dabd
 # P1-A official RUN (reports/rounds/P1-A/; GOAL P1-B B-3 compares against it)
@@ -27,16 +27,16 @@ TS_PKGS := $(wildcard clients/*/package.json)
 setup: setup-py build
 
 setup-py:
-	@# --inexact: keep the maturin-installed mdkernel_core (research is `package = false`)
+	@# --inexact: keep the maturin-installed rootmark_core (research is `package = false`)
 	cd research && uv sync --frozen --inexact
 
-# Rust workspace + the mdkernel_core extension into research/.venv
+# Rust workspace + the rootmark_core extension into research/.venv
 build:
 	cargo build --workspace --release
 	$(UVR) maturin develop --release --quiet
 	@# macOS ld can emit a misaligned LINKEDIT string pool that dyld rejects;
 	@# fail here, loudly, instead of at first use (prototype ASSUMPTIONS T5)
-	$(PY) -c "import mdkernel_core"
+	$(PY) -c "import rootmark_core"
 
 test: test-rust test-py test-ts
 
@@ -106,15 +106,15 @@ test-check-deps:
 # K-D1.2; spec 1.0.3), level_claimed 3; P1-C/C7). Fails unless 34/34 pass
 # (level_claimed 3) and
 # the frozen fixture manifest matches. The fixture root is this tree's,
-# resolved at run time (MDK_FIXTURES; P1-A verifier recommendation Ö2).
+# resolved at run time (ROOTMARK_FIXTURES; P1-A verifier recommendation Ö2).
 # Level 3 needs the model files (`make models`).
 conformance:
 	rm -f reports/conformance.json
-	MDK_FIXTURES="$(CURDIR)/spec/fixtures" MDK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
-	  cargo test -p mdkernel-core --release --test conformance -- --nocapture
+	ROOTMARK_FIXTURES="$(CURDIR)/spec/fixtures" ROOTMARK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
+	  cargo test -p rootmark-core --release --test conformance -- --nocapture
 	@test -f reports/conformance.json || { echo "error: reports/conformance.json not written" >&2; exit 1; }
-	MDK_FIXTURES="$(CURDIR)/spec/fixtures" MDK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
-	  cargo test -p mdkernel-index --release --test conformance_c3 -- --nocapture
+	ROOTMARK_FIXTURES="$(CURDIR)/spec/fixtures" ROOTMARK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
+	  cargo test -p rootmark-index --release --test conformance_c3 -- --nocapture
 	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 3 and .passed == .total and .total == 34 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string" and ([.tests[] | select(.level == 3)] | length) == 7' reports/conformance.json >/dev/null \
 	  || { echo "error: conformance level 3 not reached (reports/conformance.json)" >&2; exit 1; }
 	@echo "conformance: level $$(jq -r .level_claimed reports/conformance.json), $$(jq -r '"\(.passed)/\(.total)"' reports/conformance.json) (reports/conformance.json)"
@@ -236,15 +236,15 @@ p1b-checks: require-run
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
-	cargo build --release -q -p mdkernel-server --bin mdk
+	cargo build --release -q -p rootmark-server --bin rootmark
 	bash scripts/check_v3_compat.sh research/reports/runs/$(RUN)/v3_compat.json \
 	  research/reports/runs/$(RUN)/v3_compat_mixed.json >/dev/null
-	bash scripts/test_policy_bounds.sh target/release/mdk research/reports/runs/$(RUN)/policy_bounds.json
+	bash scripts/test_policy_bounds.sh target/release/rootmark research/reports/runs/$(RUN)/policy_bounds.json
 	@for s in $(FUZZ_SEEDS); do \
-	  MDK_FUZZ_SEED=$$s MDK_FUZZ_OUT="$(CURDIR)/research/reports/runs/$(RUN)/fuzz_$$s.json" \
-	    cargo test -p mdkernel-core --release -q --test layers_fuzz >/dev/null || exit 1; done
+	  ROOTMARK_FUZZ_SEED=$$s ROOTMARK_FUZZ_OUT="$(CURDIR)/research/reports/runs/$(RUN)/fuzz_$$s.json" \
+	    cargo test -p rootmark-core --release -q --test layers_fuzz >/dev/null || exit 1; done
 	rm -rf research/reports/runs/$(RUN)/governance
-	bash scripts/governance_scenario.sh target/release/mdk research/reports/runs/$(RUN)/governance
+	bash scripts/governance_scenario.sh target/release/rootmark research/reports/runs/$(RUN)/governance
 	$(PY) -m eval.run_p1b_checks --run $(RUN) --seeds $(FUZZ_SEEDS)
 
 # P1-B.1 checks into the RUN (GOAL B1-1..B1-6): the compat and trace_id tests
@@ -252,7 +252,7 @@ p1b-checks: require-run
 # Needs a RUN that `make p1b-checks` completed (conformance, v3_compat_mixed).
 P1B_REF_RUN := ../reports/rounds/P1-B/runs/20261014T135400Z-7735a07
 p1b1-checks: require-run
-	cargo test -p mdkernel-core --release --test compat_v3final --test trace_id_v101 -- --test-threads=1 \
+	cargo test -p rootmark-core --release --test compat_v3final --test trace_id_v101 -- --test-threads=1 \
 	  >research/reports/runs/$(RUN)/p1b1_tests.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/p1b1_tests.log >&2; exit 1; }
 	$(PY) -m eval.compare_p1b1 $(P1B_REF_RUN) reports/runs/$(RUN) \
@@ -307,7 +307,7 @@ regress: require-run
 # (size, blake3) by the Rust verifier; any mismatch fails.
 models:
 	bash scripts/fetch_model.sh
-	cargo run -q --release -p mdkernel-index --bin mdk-index -- models verify
+	cargo run -q --release -p rootmark-index --bin rootmark-index -- models verify
 
 # P1-C C-3 (TASKS C8): D3 copy → checkpoint → index build → D4 test split,
 # hybrid and flat (structural, k 10) vs the v2-final hybrid cells; writes
@@ -324,7 +324,7 @@ c3-quality: require-run
 P1B1_REF_RUN := ../reports/rounds/P1-B.1/runs/20261014T212243Z-226b511
 P1C_WORK ?= $(CURDIR)/research/reports/p1c_work
 p1c-checks: require-run
-	cargo run -q --release -p mdkernel-index --bin mdk-index -- models verify >research/reports/runs/$(RUN)/models_verify.json
+	cargo run -q --release -p rootmark-index --bin rootmark-index -- models verify >research/reports/runs/$(RUN)/models_verify.json
 	$(MAKE) conformance
 	@# since P1-C.1 the report holds C3-05 (K-C1.3, 31 entries, spec 1.0.2);
 	@# the frozen P1-C recorder reads the P1-C view of it (C1, C2, C3-01..04:
@@ -339,15 +339,15 @@ p1c-checks: require-run
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_p1c1.json
 	jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_full.json
-	cargo test -p mdkernel-core --release --test compat_v3final kc01 -- --test-threads=1 \
+	cargo test -p rootmark-core --release --test compat_v3final kc01 -- --test-threads=1 \
 	  >research/reports/runs/$(RUN)/c13_tests.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/c13_tests.log >&2; exit 1; }
-	MDK_C7_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c7_property.json" \
-	  cargo test -q -p mdkernel-index --release --test governance c7_property -- --test-threads=1
-	MDK_C10_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c10_embedding.json" \
-	  cargo test -q -p mdkernel-index --release --test embed c10 -- --test-threads=1
-	MDK_C8_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c8_latency.json" \
-	  cargo test -q -p mdkernel-index --release --test hot c8 -- --test-threads=1
+	ROOTMARK_C7_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c7_property.json" \
+	  cargo test -q -p rootmark-index --release --test governance c7_property -- --test-threads=1
+	ROOTMARK_C10_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c10_embedding.json" \
+	  cargo test -q -p rootmark-index --release --test embed c10 -- --test-threads=1
+	ROOTMARK_C8_OUT="$(CURDIR)/research/reports/runs/$(RUN)/c8_latency.json" \
+	  cargo test -q -p rootmark-index --release --test hot c8 -- --test-threads=1
 	$(MAKE) c3-quality RUN=$(RUN)
 	@# exit 3 (a difference) is recorded, not fatal, since P1-C.1: the spec
 	@# version 1.0.2 differs from the frozen B1-3 record by decision (K-C1.6);
@@ -381,8 +381,8 @@ P1C_REF_RUN := ../reports/rounds/P1-C/runs/20261015T014417Z-9aa326b
 p1c1-checks: require-run
 	$(MAKE) c1-variant RUN=$(RUN)
 	mkdir -p research/reports/runs/$(RUN)/p1c1
-	MDK_P1C1_OUT="$(CURDIR)/research/reports/runs/$(RUN)/p1c1" \
-	  cargo test -q -p mdkernel-index --release --test p1c1 -- --test-threads=1
+	ROOTMARK_P1C1_OUT="$(CURDIR)/research/reports/runs/$(RUN)/p1c1" \
+	  cargo test -q -p rootmark-index --release --test p1c1 -- --test-threads=1
 	bash scripts/test_p1c1.sh research/reports/runs/$(RUN)/p1c1_cli.json \
 	  >research/reports/runs/$(RUN)/p1c1_cli.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/p1c1_cli.log >&2; exit 1; }
@@ -419,8 +419,8 @@ p1d-checks: require-run
 	bash scripts/http_e2e.sh $(P1D_DIR)/http >$(P1D_DIR)/http_e2e.log 2>&1 \
 	  || echo "p1d-checks: http_e2e.sh exit $$? (recorded)" >&2
 	@test -f $(P1D_DIR)/http/http_e2e.json || { tail -40 $(P1D_DIR)/http_e2e.log >&2; exit 1; }
-	MDK_D10_OUT="$(CURDIR)/$(P1D_DIR)/d10.json" MDK_SIGTERM_OUT="$(CURDIR)/$(P1D_DIR)/sigterm.json" \
-	  cargo test -q -p mdkernel-server --release --test serve_watch -- --test-threads=1 >$(P1D_DIR)/serve_watch.log 2>&1 \
+	ROOTMARK_D10_OUT="$(CURDIR)/$(P1D_DIR)/d10.json" ROOTMARK_SIGTERM_OUT="$(CURDIR)/$(P1D_DIR)/sigterm.json" \
+	  cargo test -q -p rootmark-server --release --test serve_watch -- --test-threads=1 >$(P1D_DIR)/serve_watch.log 2>&1 \
 	  || echo "p1d-checks: serve_watch exit $$? (recorded)" >&2
 	@test -f $(P1D_DIR)/d10.json && test -f $(P1D_DIR)/sigterm.json || { tail -40 $(P1D_DIR)/serve_watch.log >&2; exit 1; }
 	bash scripts/scene_agent.sh $(P1D_DIR)/scene >$(P1D_DIR)/scene.log 2>&1 \
@@ -474,7 +474,7 @@ report-p1d1:
 
 # P1-E criteria into the RUN (GOAL E-1..E-10, ADDENDUM E-12..E-16; TASKS
 # E7), under research/reports/runs/<RUN>/p1e/: the E0 tests (E-14, E-15,
-# MDK_P1E_OUT), the scene (E-1, E-3, E-5, E-6), the plugin e2e (E-2..E-6),
+# ROOTMARK_P1E_OUT), the scene (E-1, E-3, E-5, E-6), the plugin e2e (E-2..E-6),
 # the client gates (E-10), the local release binary (E-7, chain half), the
 # P1-E deliberate corruptions, the deterministic-field audit (E-13), then
 # E-9 (eval.compare_p1e regress against the P1-D.1 official RUN; exit 3
@@ -486,7 +486,7 @@ P1E_DIR = research/reports/runs/$(RUN)/p1e
 p1e-checks: require-run
 	rm -rf $(P1E_DIR)
 	mkdir -p $(P1E_DIR)/e0
-	MDK_P1E_OUT="$(CURDIR)/$(P1E_DIR)/e0" cargo test -q -p mdkernel-server --release --test p1e_e0 -- --test-threads=1 \
+	ROOTMARK_P1E_OUT="$(CURDIR)/$(P1E_DIR)/e0" cargo test -q -p rootmark-server --release --test p1e_e0 -- --test-threads=1 \
 	  >$(P1E_DIR)/e0.log 2>&1 || echo "p1e-checks: p1e_e0 exit $$? (recorded)" >&2
 	@test -f $(P1E_DIR)/e0/e14.json && test -f $(P1E_DIR)/e0/e15.json || { tail -40 $(P1E_DIR)/e0.log >&2; exit 1; }
 	bash scripts/scene.sh $(P1E_DIR)/scene >$(P1E_DIR)/scene.log 2>&1 || echo "p1e-checks: scene.sh exit $$? (recorded)" >&2
@@ -520,14 +520,14 @@ P1E1_DIST ?= $(CURDIR)/target/p1e1-dist
 p1e1-checks: require-run
 	rm -rf $(P1E1_DIR)
 	mkdir -p $(P1E1_DIR)/status $(P1E1_DIR)/release
-	MDK_P1E1_OUT="$(CURDIR)/$(P1E1_DIR)/status" cargo test -q -p mdkernel-server --release --test p1e1_status -- --test-threads=1 \
+	ROOTMARK_P1E1_OUT="$(CURDIR)/$(P1E1_DIR)/status" cargo test -q -p rootmark-server --release --test p1e1_status -- --test-threads=1 \
 	  >$(P1E1_DIR)/status.log 2>&1 || echo "p1e1-checks: p1e1_status exit $$? (recorded)" >&2
 	@test -f $(P1E1_DIR)/status/e1_1.json && test -f $(P1E1_DIR)/status/e1_2.json || { tail -40 $(P1E1_DIR)/status.log >&2; exit 1; }
 	bash scripts/contract_check.sh $(P1E1_DIR)/contract.json >$(P1E1_DIR)/contract.log 2>&1 || echo "p1e1-checks: contract_check.sh exit $$? (recorded)" >&2
 	@test -f $(P1E1_DIR)/contract.json || { tail -40 $(P1E1_DIR)/contract.log >&2; exit 1; }
 	bash scripts/test_tamper_p1e1.sh $(P1E1_DIR)/tamper_p1e1.json >$(P1E1_DIR)/tamper_p1e1.log 2>&1 || echo "p1e1-checks: test_tamper_p1e1.sh exit $$? (recorded)" >&2
 	@test -f $(P1E1_DIR)/tamper_p1e1.json || { tail -40 $(P1E1_DIR)/tamper_p1e1.log >&2; exit 1; }
-	MDK_RELEASE_LINUX=0 bash scripts/release.sh $(P1E1_DIST) >$(P1E1_DIR)/release.log 2>&1 || echo "p1e1-checks: release.sh exit $$? (recorded)" >&2
+	ROOTMARK_RELEASE_LINUX=0 bash scripts/release.sh $(P1E1_DIST) >$(P1E1_DIR)/release.log 2>&1 || echo "p1e1-checks: release.sh exit $$? (recorded)" >&2
 	@test -f $(P1E1_DIST)/release.json && test -f $(P1E1_DIST)/plugin_e2e_real/plugin_e2e_real.json || { tail -40 $(P1E1_DIR)/release.log >&2; exit 1; }
 	bash scripts/release_check.sh $(P1E1_DIST) >$(P1E1_DIR)/release_check.log 2>&1 || echo "p1e1-checks: release_check.sh exit $$? (recorded)" >&2
 	@test -f $(P1E1_DIST)/release_check.json || { tail -40 $(P1E1_DIR)/release_check.log >&2; exit 1; }

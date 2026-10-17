@@ -1,7 +1,7 @@
-// Embeds spec/fixtures into the `mdk` binary for `mdk conformance` (P1-E/E5,
+// Embeds spec/fixtures into the `rootmark` binary for `rootmark conformance` (P1-E/E5,
 // GOAL E-7: every release binary runs the conformance suite on its own).
 // The list is the fixture tree as `spec/fixtures/MANIFEST.json` covers it
-// (every file but `.mdkernel/` and `.DS_Store`, MANIFEST.json included);
+// (every file but `.rootmark/` and `.DS_Store`, MANIFEST.json included);
 // the bytes are `include_bytes!`, so the binary holds exactly the frozen
 // fixtures it was built from (the run still checks them against the
 // manifest).
@@ -16,7 +16,7 @@ fn walk(base: &Path, dir: &Path, out: &mut Vec<(String, PathBuf)>) {
     entries.sort_by_key(|e| e.file_name());
     for e in entries {
         let name = e.file_name().to_string_lossy().to_string();
-        if name == ".mdkernel" || name == ".DS_Store" {
+        if name == ".rootmark" || name == ".DS_Store" {
             continue;
         }
         let p = e.path();

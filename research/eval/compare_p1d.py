@@ -58,9 +58,9 @@ P1D_BYTES = [
     E2E / "transcript.jsonl",
     E2E / "transcript_b.jsonl",
     E2E / "cli_promote.jsonl",
-    E2E / "vault" / ".mdkernel" / "events.jsonl",
-    E2E / "vault" / ".mdkernel" / "traces.jsonl",
-    E2E / "vault" / ".mdkernel" / "proposals.jsonl",
+    E2E / "vault" / ".rootmark" / "events.jsonl",
+    E2E / "vault" / ".rootmark" / "traces.jsonl",
+    E2E / "vault" / ".rootmark" / "proposals.jsonl",
     E2E / "vault" / "espresso.md",
     E2E / "vault" / "agent" / "plan.md",
     P1D / "scene" / "scene.json",
@@ -79,7 +79,7 @@ def _p1d_excluded(name: str, path: tuple) -> bool:
 
 
 def _load(d: Path, name: str):
-    p = d / name
+    p = C.resolve(d, name)  # a pre-rename RUN's names (K-GH.1, GH-0/F3)
     if not p.is_file():
         raise FileNotFoundError(f"{p} missing")
     return json.loads(p.read_text(encoding="utf-8"))

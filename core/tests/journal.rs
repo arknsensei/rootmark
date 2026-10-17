@@ -3,7 +3,7 @@
 //! idle and distance triggers on a seeded time sequence, retention pruning
 //! without events, unversioned content never indexable.
 
-use mdkcore::{
+use rootmarkcore::{
     IdleOrDistance, JournalRetention, MatcherVersion, Provenance, TriggerInput, Vault,
     VersionTrigger, MIN_RETENTION_HOURS,
 };
@@ -14,7 +14,7 @@ const M: MatcherVersion = MatcherVersion::V3;
 const HOUR: u64 = 3_600_000;
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-journal-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-journal-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -205,7 +205,7 @@ fn retention_pruning_below_and_above_and_no_events() {
         .unwrap()
         .unwrap();
     let log = fs::read(v.events_path()).unwrap();
-    let blobs = root.join(".mdkernel/journal/blobs");
+    let blobs = root.join(".rootmark/journal/blobs");
     assert_eq!(file_count(&blobs), 5);
 
     // all saves younger than 24 h: nothing pruned

@@ -6,7 +6,7 @@
 # the embedder model (`make models`); conformance is level 3 (30 tests);
 # after p1b-checks it records `make p1b1-checks` (P1-B.1 set, C-11 input)
 # and `make p1c-checks` (C-1..C-13 into p1c_checks.json; the D3
-# determinism vault in <workdir>/p1c_work/<RUN>/.mdkernel/index/) and runs
+# determinism vault in <workdir>/p1c_work/<RUN>/.rootmark/index/) and runs
 # the P1-C deliberate corruptions (`scripts/test_tamper_p1c.sh`); `pair`
 # compares A ↔ B with `eval.compare_p1c pair` (the P1-B set plus the P1-B.1
 # and P1-C files, the 200 rankings and every index file hash, the
@@ -41,8 +41,8 @@
 #
 # P1-E (re-freeze P1-E/F7): after the P1-D.1 checks the chain records `make
 # p1e-checks` (E-1..E-10 and E-12..E-16: the E0 tests, the 11-step scene,
-# the plugin e2e against a real `mdk serve`, the client gates, the local
-# release binary and `mdk conformance`, the P1-E deliberate corruptions, the
+# the plugin e2e against a real `rootmark serve`, the client gates, the local
+# release binary and `rootmark conformance`, the P1-E deliberate corruptions, the
 # deterministic-field audit, E-9 against the P1-D.1 official RUN →
 # p1e_checks.json); `pair` compares A ↔ B with `eval.compare_p1e pair` (the
 # P1-D.1 pair set plus the P1-E files and artefacts byte for byte: the
@@ -185,8 +185,8 @@ pair() {
   local src="$1" a="$2" b="$3"
   local self res_a res_b dir_a dir_b
   self="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
-  res_a="$(mktemp -t mdk-verify-a.XXXXXX)"
-  res_b="$(mktemp -t mdk-verify-b.XXXXXX)"
+  res_a="$(mktemp -t rootmark-verify-a.XXXXXX)"
+  res_b="$(mktemp -t rootmark-verify-b.XXXXXX)"
   # each chain is its own process: a failing step fails the whole pair
   # (errexit is not inherited inside $(...) on bash 3.2)
   bash "$self" chain "$src" "$a" >"$res_a"
@@ -320,7 +320,7 @@ case "${1:-}" in
   compare-p1e1) compare_p1e1 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
-    base="$(mktemp -d -t mdk-verify.XXXXXX)"
+    base="$(mktemp -d -t rootmark-verify.XXXXXX)"
     log "workdirs under $base"
     pair "$src" "$base/A" "$base/B"
     ;;

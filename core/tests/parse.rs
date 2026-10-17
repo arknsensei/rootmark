@@ -1,4 +1,4 @@
-use mdkcore::{extract_wikilinks, normalize, parse_document, version_id, BlockType, WikiLink};
+use rootmarkcore::{extract_wikilinks, normalize, parse_document, version_id, BlockType, WikiLink};
 use std::path::PathBuf;
 
 fn types(text: &str) -> Vec<BlockType> {
@@ -163,7 +163,7 @@ fn mini_vault_parses() {
 
 #[test]
 fn heading_titles_atx_and_setext() {
-    use mdkcore::parse::heading_title;
+    use rootmarkcore::parse::heading_title;
     assert_eq!(heading_title("## Stages ##"), "Stages");
     assert_eq!(heading_title("# C#"), "C#");
     assert_eq!(heading_title("Title ==="), "Title");

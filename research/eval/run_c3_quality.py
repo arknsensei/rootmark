@@ -2,7 +2,7 @@
 prototype v2-final `hybrid` numbers.
 
 D3 (the frozen v2 vault, `make d3`, verified against `MANIFEST.d3.json`) is
-copied into a temporary vault; through the binding (`mdkernel_core`): one
+copied into a temporary vault; through the binding (`rootmark_core`): one
 checkpoint, `index_build` (structural chunks, ONNX MiniLM), then every D4
 **test** question (`data/splits/d4.json`; single and multi) is searched at
 that checkpoint in the modes `hybrid` and `flat` (k = 10, proposals excluded;
@@ -26,7 +26,7 @@ import shutil
 import tempfile
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics as M
 from eval import runinfo
@@ -57,17 +57,17 @@ def reference_cells() -> dict:
 
 
 def copy_vault(dst: Path) -> None:
-    src = D3 / ".mdkernel"
+    src = D3 / ".rootmark"
     if not src.is_dir():
         raise RuntimeError("data/d3 is empty; run `make d3` first")
-    shutil.copytree(src, dst / ".mdkernel", ignore=shutil.ignore_patterns("index", "index.build"))
+    shutil.copytree(src, dst / ".rootmark", ignore=shutil.ignore_patterns("index", "index.build"))
 
 
 def evaluate(work: Path) -> dict:
-    d3 = mdkernel_core.Vault(str(D3))
+    d3 = rootmark_core.Vault(str(D3))
     verify_d3(d3)
     copy_vault(work)
-    vault = mdkernel_core.Vault(str(work))
+    vault = rootmark_core.Vault(str(work))
     if vault.events_hash() != d3.events_hash():
         raise RuntimeError("copied vault differs from data/d3")
     cp = vault.checkpoint(CHECKPOINT)
@@ -139,7 +139,7 @@ def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--run", required=True)
     a = ap.parse_args(argv)
-    with tempfile.TemporaryDirectory(prefix="mdk-c3q-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="rootmark-c3q-") as tmp:
         out = evaluate(Path(tmp))
     runinfo.write_json(a.run, "c3_quality.json", out)
     runinfo.record_phase(

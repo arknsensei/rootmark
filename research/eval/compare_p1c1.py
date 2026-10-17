@@ -57,7 +57,7 @@ def _allowed(name: str, path: tuple) -> str | None:
 
 
 def _load(d: Path, name: str):
-    p = d / name
+    p = C.resolve(d, name)  # a pre-rename RUN's names (K-GH.1, GH-0/F3)
     if not p.is_file():
         raise FileNotFoundError(f"{p} missing")
     return json.loads(p.read_text(encoding="utf-8"))

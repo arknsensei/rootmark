@@ -53,7 +53,7 @@ P1E_FILES = [
     "p1e/plugin_e2e/access_log.json",
     "p1e/client.json",
     "p1e/release/release_local.json",
-    "p1e/release/conformance_mdk.json",
+    "p1e/release/conformance_rootmark.json",
     "p1e/release/conformance_equiv.json",
     "p1e/tamper_p1e.json",
     "p1e/check_compare_fields.json",

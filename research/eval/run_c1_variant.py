@@ -3,8 +3,8 @@ difference between the Rust index and the prototype?
 
 The prototype pipeline is rerun on D3 (`make d3`) with the frozen pieces —
 structural chunks, `sentence-transformers` vectors and query embedding
-(`eval.build_index.load_or_build`, `mdkernel.embed`), tokens
-(`mdkernel.index.bm25_tokens`), RRF `1/(60 + rank)` of the top 50 of each
+(`eval.build_index.load_or_build`, `rootmark.embed`), tokens
+(`rootmark.index.bm25_tokens`), RRF `1/(60 + rank)` of the top 50 of each
 side, k 10, the D4 test split, the frozen H2 metrics — with two lexical
 scorers:
 
@@ -38,8 +38,8 @@ from eval import truth as T
 from eval.build_index import load_or_build
 from eval.datasets.common import ROOT, die
 from eval.run_h2 import TYPES, K, cell_means, expected_counts, load_split, verify_d3
-from mdkernel import embed as E
-from mdkernel.index import bm25_tokens
+from rootmark import embed as E
+from rootmark.index import bm25_tokens
 
 RUST_RUN = ROOT.parent / "reports" / "rounds" / "P1-C" / "runs" / "20261015T014417Z-9aa326b"
 V2_RUN = ROOT / "reports" / "runs" / "20261013T154851Z-f133d0b"

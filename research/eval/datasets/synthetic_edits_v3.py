@@ -31,7 +31,7 @@ from collections import Counter
 from itertools import pairwise
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval.datasets import synthetic_edits as se
 from eval.datasets import synthetic_edits_v2 as s2
@@ -125,7 +125,7 @@ def holdout_eligible(text: str) -> bool:
 
 
 def norm_text(b: se.Blk) -> str:
-    drafts, _ = mdkernel_core.parse_document(b.text + "\n", "x.md")
+    drafts, _ = rootmark_core.parse_document(b.text + "\n", "x.md")
     if len(drafts) != 1:
         raise ValueError("block does not parse to one block")
     return drafts[0]["normalized_text"]

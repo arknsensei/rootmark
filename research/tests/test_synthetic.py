@@ -5,8 +5,8 @@ import random
 import re
 from collections import Counter
 
-import mdkernel_core as mk
 import pytest
+import rootmark_core as mk
 
 from eval import truth as T
 from eval.datasets import synthetic_edits as se

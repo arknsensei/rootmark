@@ -1,12 +1,12 @@
-/* mdkernel: proposal blocks and hits are set apart from canonical ones */
-.mdk-gutter .mdk-mark { font-size: 0.75em; padding: 0 2px; border-radius: 3px; cursor: pointer; }
-.mdk-layer-canonical { color: var(--text-muted); }
-.mdk-layer-proposal { color: var(--text-on-accent); background: var(--color-orange); }
-.mdk-layer-derived { color: var(--text-faint); }
-.mdk-inactive { text-decoration: line-through; }
-.mdk-proposals td, .mdk-proposals th { padding: 2px 6px; text-align: left; }
-.mdk-hit-proposal { border-left: 3px solid var(--color-orange); padding-left: 4px; opacity: 0.85; }
-.mdk-reason { width: 100%; }
-.mdk-error { color: var(--text-error); }
-.mdk-history li { font-family: var(--font-monospace); font-size: 0.85em; }
-.mdk-index-warning { color: var(--text-warning); }
+/* rootmark: proposal blocks and hits are set apart from canonical ones */
+.rootmark-gutter .rootmark-mark { font-size: 0.75em; padding: 0 2px; border-radius: 3px; cursor: pointer; }
+.rootmark-layer-canonical { color: var(--text-muted); }
+.rootmark-layer-proposal { color: var(--text-on-accent); background: var(--color-orange); }
+.rootmark-layer-derived { color: var(--text-faint); }
+.rootmark-inactive { text-decoration: line-through; }
+.rootmark-proposals td, .rootmark-proposals th { padding: 2px 6px; text-align: left; }
+.rootmark-hit-proposal { border-left: 3px solid var(--color-orange); padding-left: 4px; opacity: 0.85; }
+.rootmark-reason { width: 100%; }
+.rootmark-error { color: var(--text-error); }
+.rootmark-history li { font-family: var(--font-monospace); font-size: 0.85em; }
+.rootmark-index-warning { color: var(--text-warning); }

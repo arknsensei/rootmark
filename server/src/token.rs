@@ -1,4 +1,4 @@
-//! The HTTP API token, `<vault>/.mdkernel/server.token` (GOAL P1-D "HTTP
+//! The HTTP API token, `<vault>/.rootmark/server.token` (GOAL P1-D "HTTP
 //! API"): 32 random bytes as 64 lowercase hex characters and a newline,
 //! created on the first start with mode 0600. A token file readable by group
 //! or others, or not 64 hex characters, is an error (not repaired). A token
@@ -12,7 +12,7 @@ use std::path::{Path, PathBuf};
 use std::time::{Duration, SystemTime};
 
 pub fn token_path(vault: &Path) -> PathBuf {
-    vault.join(".mdkernel").join("server.token")
+    rootmarkcore::meta::path(vault).join("server.token")
 }
 
 /// What `ensure` did.

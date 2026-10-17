@@ -2,7 +2,7 @@
 //! reason and policy_version (C2-02), no promotion without a hook decision
 //! (C2-03), demote/prune delete nothing (C2-04), B-6 promotion cases.
 
-use mdkcore::{
+use rootmarkcore::{
     Actor, ActorKind, AuthorKind, Deny, EventKind, HumanOnly, Layer, MatcherVersion, Provenance,
     TransitionKind, Vault,
 };
@@ -13,7 +13,7 @@ const M: MatcherVersion = MatcherVersion::V3;
 const DOC: &str = "# Plan\n\nAgent proposes to descale the machine every two weeks.\n\nAgent proposes a new grinder burr set for the bar.\n";
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-promo-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-promo-{}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -97,7 +97,7 @@ fn c2_02_promoted_carries_actor_reason_policy_version() {
     drop(v);
 
     // log: a Promoted line without actor / reason / policy_version fails replay
-    let log_path = root.join(".mdkernel/events.jsonl");
+    let log_path = root.join(".rootmark/events.jsonl");
     let log = fs::read_to_string(&log_path).unwrap();
     let line = log.lines().find(|l| l.contains("\"Promoted\"")).unwrap();
     for key in ["actor", "reason", "policy_version"] {
@@ -181,8 +181,8 @@ fn c2_03_no_promotion_without_hook_decision() {
 fn c2_04_demote_and_prune_delete_nothing() {
     let root = tmp("c204");
     let (mut v, ls) = proposal_vault(&root);
-    let objects = root.join(".mdkernel/objects");
-    let snapshots = root.join(".mdkernel/snapshots");
+    let objects = root.join(".rootmark/objects");
+    let snapshots = root.join(".rootmark/snapshots");
     let (n_obj, n_snap) = (file_count(&objects), file_count(&snapshots));
     let head = v.snapshot("plan.md").unwrap().unwrap();
 
@@ -292,7 +292,7 @@ fn replay_rechecks_builtin_policy_and_provenance() {
         .unwrap();
     v.promote(&req, &HumanOnly).unwrap();
     drop(v);
-    let log_path = root.join(".mdkernel/events.jsonl");
+    let log_path = root.join(".rootmark/events.jsonl");
     let log = fs::read_to_string(&log_path).unwrap();
     let as_agent = log.replace(
         r#""id":"alice","kind":"human""#,
@@ -334,7 +334,7 @@ fn commit_refuses_transition_events() {
         (EventKind::Promoted, "canonical"),
         (EventKind::Demoted, "derived"),
     ] {
-        let ev = mdkcore::Event {
+        let ev = rootmarkcore::Event {
             seq: 0,
             doc_path: "plan.md".into(),
             kind,

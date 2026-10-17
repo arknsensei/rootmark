@@ -1,4 +1,4 @@
-# mdkernel — Mimari Modeli
+# rootmark — Mimari Modeli
 
 Sürüm 1.2.1 · 2026-10-17 · Durum: **§4.1 ve spec §1–6 DONDURULDU (v3 geçti, bağımsız doğrulandı); §4.1 yeni primitifler kanıtlı (P1-B, P1-D.1; spec §7, §8, §11 Validated); §4.2 sözcüksel/vektör/hibrit/sıcak katman kanıtlı (P1-C, P1-C.1; spec §9 Validated), graf/varlık/öğrenilen durum araştırma; §4.3 MCP/HTTP/CLI kanıtlı (P1-D, P1-D.1); §4.4 istemci eklentisi P1-E'de ölçüldü (bağımsız doğrulama "şu koşullarla güvenilir", koşul P1-E.1'de); §4.5 faz 2 taslak.** 1.2: yalnız kanıt durumu (K-E6.1); 1.2.1: P1-E doğrulaması ve e2e tanımı (K-E1.1, K-E1.3).
 
@@ -13,7 +13,7 @@ Markdown dosyaları, insanların ve ajanların birlikte yazdığı canlı bilgin
 ## 2. Konumlandırma
 
 - **Değiliz:** Vektör veritabanı (Qdrant, pgvector), ajan hafıza API'si (Mem0, Zep, Letta), not uygulaması (Obsidian, Logseq), ekip wiki'si (Notion, Outline).
-- **Yakın kuzen:** ContextNest (2026) — "getirme yönetişim değildir" tezini ve doküman düzeyinde hash-zincirli sürüm, yayın kapısı, deterministik seçim, tüketim izi mekanizmalarını tanımlar. Blok düzeyinde atıf, çok kullanıcılı düzenleme ve yerleşik anlamsal getirme bizzat "gelecek iş" olarak bırakılmıştır. mdkernel tam bu üç boşluğu hedefler.
+- **Yakın kuzen:** ContextNest (2026) — "getirme yönetişim değildir" tezini ve doküman düzeyinde hash-zincirli sürüm, yayın kapısı, deterministik seçim, tüketim izi mekanizmalarını tanımlar. Blok düzeyinde atıf, çok kullanıcılı düzenleme ve yerleşik anlamsal getirme bizzat "gelecek iş" olarak bırakılmıştır. rootmark tam bu üç boşluğu hedefler.
 - **ContextNest ile ilişki (karar K1):** Kavram seti ve terimler benimsenir (tipli doküman, taslak/yayın, kontrol noktası, tüketim izi). Spesifikasyonun blok düzeyine indirgenmiş bir genişlemesi olarak konumlanılır; implementasyon paylaşılmaz. Uyumlu dışa aktarım (ContextNest vault üretimi) ileride bir plugin'dir.
 - **Hedef kullanıcı (öncelik sırası):** (1) ajan hafızasını md'de tutan geliştiriciler, (2) yönetişim kaygılı ekipler, (3) Obsidian güç kullanıcıları.
 - **İlk ürün sahnesi:** Ajan bir vault'a yazar; kullanıcı her bloğun kimin tarafından ne zaman değiştirildiğini görür; onaylanmamış ajan blokları aramaya girmez; dünkü hale blok düzeyinde dönülebilir; hepsi sıradan md dosyaları üstünde, Obsidian'da açılır halde.
@@ -64,7 +64,7 @@ L0  Markdown dosyaları      (tek gerçek kaynak; Obsidian/git uyumlu)
 
 ### 4.3 L3 — Servis yüzeyi
 - **MCP sunucusu:** `search`, `read_block`, `history`, `blame`, `propose`, `promote`, `checkpoint`, `trace` araçları. Mutasyon araçları terfi politikasına tabi.
-- **CLI (`mdk`):** aynı yüzey; doğrulama ve betikleme için.
+- **CLI (`rootmark`):** aynı yüzey; doğrulama ve betikleme için.
 - **Sürekli sorgu:** akış üzerinde durum tutan, niyet değişiminde yeniden getiren primitif. Sıcak katman kanıtlı; niyet/patika kısmı araştırma kolu.
 
 ### 4.4 L4 — Plugin sınıfları

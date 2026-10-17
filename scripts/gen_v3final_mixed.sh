@@ -15,7 +15,7 @@ set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 out="${1:-$here/core/tests/fixtures/v3_final_mixed}"
 sha="$(git -C "$here" rev-parse --verify 'v3-final^{commit}')"
-work="$(mktemp -d -t mdk-v3mixed.XXXXXX)"
+work="$(mktemp -d -t rootmark-v3mixed.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
 
 git -C "$here" archive "$sha" Cargo.lock rust-toolchain.toml .cargo core | tar -xf - -C "$work"
@@ -28,7 +28,7 @@ resolver = "2"
 members = ["core", "gen"]
 TOML
 # --offline: resolve the generator's dependencies from the v3-final lock only
-(cd "$work" && cargo build --offline --release -q -p mdk-v3final-mixed-gen)
+(cd "$work" && cargo build --offline --release -q -p rootmark-v3final-mixed-gen)
 mkdir -p "$out"
-"$work/target/release/mdk-v3final-mixed-gen" "$here/scripts/v3final-mixed-gen/scenarios.json" "$out" "$sha"
+"$work/target/release/rootmark-v3final-mixed-gen" "$here/scripts/v3final-mixed-gen/scenarios.json" "$out" "$sha"
 echo "v3_final_mixed fixtures written from v3-final core $sha into $out"

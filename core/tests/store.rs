@@ -1,11 +1,13 @@
-use mdkcore::store::{object_path, put_object};
-use mdkcore::{hash32, snapshot_id, version_id, BlockObject, BlockType, Event, EventKind, Vault};
 use regex::Regex;
+use rootmarkcore::store::{object_path, put_object};
+use rootmarkcore::{
+    hash32, snapshot_id, version_id, BlockObject, BlockType, Event, EventKind, Vault,
+};
 use serde_json::json;
 use std::path::PathBuf;
 
 fn tmp(name: &str) -> PathBuf {
-    let p = std::env::temp_dir().join(format!("mdk-store-{name}-{}", std::process::id()));
+    let p = std::env::temp_dir().join(format!("rootmark-store-{name}-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&p);
     std::fs::create_dir_all(&p).unwrap();
     p

@@ -10,16 +10,17 @@
 #       puts the vault at server/tests/fixtures/index_v2/vault/. With
 #       --check the vault is generated elsewhere and must equal the committed
 #       one byte for byte (exit 1 otherwise).
-# Needs the model files (`make models`, MDK_MODELS).
+# Needs the model files (`make models`, ROOTMARK_MODELS or MDK_MODELS).
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 dest="$here/server/tests/fixtures/index_v2/vault"
 check=false
 [ "${1:-}" = "--check" ] && check=true
-work="$(mktemp -d -t mdk-oldindex.XXXXXX)"
+work="$(mktemp -d -t rootmark-oldindex.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
-export MDK_MODELS="${MDK_MODELS:-$here/models}"
+# the p1d-final binary reads the model directory under its own name
+export MDK_MODELS="${MDK_MODELS:-${ROOTMARK_MODELS:-$here/models}}"
 
 old="${MDK_OLD:-}"
 if [ -z "$old" ]; then

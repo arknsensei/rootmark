@@ -31,7 +31,7 @@ RESULT_FILES_P1B = [
     "p1b_checks.json",
     "governance/governance.json",
 ]
-VAULT = Path("governance/vault/.mdkernel")
+VAULT = Path("governance/vault/.rootmark")
 BYTE_FILES = [VAULT / "events.jsonl", VAULT / "traces.jsonl"]
 BYTE_DIRS = [VAULT / "checkpoints"]
 

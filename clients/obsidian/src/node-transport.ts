@@ -1,6 +1,6 @@
 // The Node transport of the API client (tests, e2e harness): global fetch.
 // The plugin uses Obsidian's `requestUrl` instead (CORS-free); both send
-// exactly the request `MdkClient` builds.
+// exactly the request `RootmarkClient` builds.
 import type { Transport } from "./api";
 
 export const fetchTransport: Transport = async (req) => {

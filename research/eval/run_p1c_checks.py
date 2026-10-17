@@ -34,7 +34,7 @@ import re
 import shutil
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import runinfo
 from eval.datasets.common import die, file_blake3
@@ -64,7 +64,7 @@ def _load(d: Path, name: str):
 
 def index_files(vault: Path) -> dict[str, str]:
     """blake3 of every index file; the reader's empty lock file is not data."""
-    d = vault / ".mdkernel" / "index"
+    d = vault / ".rootmark" / "index"
     out = {
         p.relative_to(d).as_posix(): file_blake3(p)
         for p in sorted(d.rglob("*"))
@@ -93,13 +93,13 @@ def edit(text: str, i: int) -> str:
 
 
 def determinism(work: Path) -> tuple[dict, dict]:
-    d3 = mdkernel_core.Vault(str(D3))
+    d3 = rootmark_core.Vault(str(D3))
     verify_d3(d3)
     if work.exists():
         shutil.rmtree(work)
     work.mkdir(parents=True)
-    shutil.copytree(D3 / ".mdkernel", work / ".mdkernel", ignore=shutil.ignore_patterns("index*"))
-    v = mdkernel_core.Vault(str(work), matcher=d3.matcher_lock())
+    shutil.copytree(D3 / ".rootmark", work / ".rootmark", ignore=shutil.ignore_patterns("index*"))
+    v = rootmark_core.Vault(str(work), matcher=d3.matcher_lock())
     if v.events_hash() != d3.events_hash():
         raise RuntimeError("copied vault differs from data/d3")
     qs = sorted(load_split("test"), key=lambda q: q["id"])[:N_QUERIES]
@@ -116,7 +116,7 @@ def determinism(work: Path) -> tuple[dict, dict]:
     c4 = all(rankings(v, sub, "p1c") == first for _ in range(C4_REPEATS - 1))
     c4 = c4 and all(first[m] == r1[m][:C4_QUERIES] for m in MODES)
     # C-5: delete and rebuild from the same checkpoint
-    shutil.rmtree(work / ".mdkernel" / "index")
+    shutil.rmtree(work / ".rootmark" / "index")
     rebuild = v.index_build()
     r2 = rankings(v, queries, "p1c")
     files_rebuild = index_files(work)
@@ -169,10 +169,10 @@ def determinism(work: Path) -> tuple[dict, dict]:
         "events_hash": v.events_hash(),
         "traces": None,
     }
-    traces = (work / ".mdkernel" / "traces.jsonl").read_bytes()
+    traces = (work / ".rootmark" / "traces.jsonl").read_bytes()
     checks["traces"] = {
         "lines": traces.count(b"\n"),
-        "blake3": file_blake3(work / ".mdkernel" / "traces.jsonl"),
+        "blake3": file_blake3(work / ".rootmark" / "traces.jsonl"),
     }
     index = {
         "rankings_200": r1,

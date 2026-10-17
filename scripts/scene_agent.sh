@@ -5,7 +5,7 @@
 #   scripts/scene_agent.sh [<out-dir>]      (default reports/rounds/P1-D)
 #
 # Vault: a copy of spec/fixtures/mini_vault ingested in place, in a fresh
-# temporary directory; `mdk serve --vault vault --mcp stdio` (cwd = that
+# temporary directory; `rootmark serve --vault vault --mcp stdio` (cwd = that
 # directory) writes the default policy (human_only) and builds the index.
 # Steps, as an MCP client `scene-agent/1.0` (server/examples/mcp_client.rs):
 #   1. status
@@ -13,12 +13,12 @@
 #   3. search       default: the proposal is not found
 #   4. search       include_proposal: found, labelled proposal
 #   5. promote      denied (policy human_only), no event
-#   6. [CLI]        mdk promote --actor human:editor, every block of the document
+#   6. [CLI]        rootmark promote --actor human:editor, every block of the document
 #   7. search       default: found, canonical
 #   8. trace        the scene's consumption traces (consumer scene-agent/1.0)
 #   9. checkpoint   of the current state: the one the search of step 7 ran
 #                   at (a state has one checkpoint; spec §8 same state → same id)
-# The vault is kept in <out-dir>/scene_vault only if MDK_SCENE_KEEP=1.
+# The vault is kept in <out-dir>/scene_vault only if ROOTMARK_SCENE_KEEP=1.
 # <out-dir>/scene.json: one record per step (what it showed, pass) and
 # `pass`; it holds no time stamp, no token and no absolute path, so two runs
 # are byte-equal. Exit 1 unless every step passes.
@@ -29,16 +29,16 @@ out="${1:-$root/reports/rounds/P1-D}"
 mkdir -p "$out"
 out="$(cd "$out" && pwd)"
 cd "$root"
-cargo build -q --release -p mdkernel-server --bin mdk --example mcp_client
-mdk="$root/target/release/mdk"
+cargo build -q --release -p rootmark-server --bin rootmark --example mcp_client
+rootmark="$root/target/release/rootmark"
 client="$root/target/release/examples/mcp_client"
-work="$(mktemp -d -t mdk-scene.XXXXXX)"
+work="$(mktemp -d -t rootmark-scene.XXXXXX)"
 # on failure the server's stderr is shown before the temp dir goes
 trap 'rc=$?; if [ "$rc" != 0 ] && [ -s "$work/serve.err" ]; then echo "scene: server stderr:" >&2; cat "$work/serve.err" >&2; fi; rm -rf "$work"' EXIT
 cd "$work"
 mkdir vault
 cp "$root"/spec/fixtures/mini_vault/*.md vault/
-"$mdk" ingest-dir vault vault >/dev/null
+"$rootmark" ingest-dir vault vault >/dev/null
 
 INIT='{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"scene-agent","version":"1.0"}}}
 {"jsonrpc":"2.0","method":"notifications/initialized"}'
@@ -46,7 +46,7 @@ DOC="agent/scene.md"
 TEXT='# Grind notes\n\nAn agent recommends a coarser grind for the kalimba roast.\n'
 call() { printf '{"jsonrpc":"2.0","id":%d,"method":"tools/call","params":{"name":"%s","arguments":%s}}\n' "$1" "$2" "$3"; }
 serve() { # serve <session> <transcript>
-  "$client" "$1" "$2" -- "$mdk" serve --vault vault --mcp stdio 2>>serve.err
+  "$client" "$1" "$2" -- "$rootmark" serve --vault vault --mcp stdio 2>>serve.err
 }
 res() { jq -c --argjson id "$2" 'select(.request.id == $id) | .response.result' "$1"; }
 
@@ -67,14 +67,14 @@ para="$(res ta.jsonl 3 | jq -r '.structuredContent.blocks[-1].lineage_id')"
   echo "$INIT"
   call 2 promote "{\"lineage_id\":\"$para\",\"reason\":\"the agent asks for approval\"}"
 } >a2.jsonl
-n_events_before="$(wc -l <vault/.mdkernel/events.jsonl | tr -d ' ')"
+n_events_before="$(wc -l <vault/.rootmark/events.jsonl | tr -d ' ')"
 serve a2.jsonl ta2.jsonl
-n_events_after="$(wc -l <vault/.mdkernel/events.jsonl | tr -d ' ')"
+n_events_after="$(wc -l <vault/.rootmark/events.jsonl | tr -d ' ')"
 
 # the human approves through the CLI
 : >cli.jsonl
 for l in $lineages; do
-  "$mdk" promote vault "$l" --actor human:editor --reason "approved in the scene" >>cli.jsonl
+  "$rootmark" promote vault "$l" --actor human:editor --reason "approved in the scene" >>cli.jsonl
 done
 
 # session B: search, trace, checkpoint
@@ -87,7 +87,7 @@ done
 serve b.jsonl tb.jsonl
 
 plain=false
-if printf "$TEXT" | cmp -s - "vault/$DOC" && [ "$(grep -cE 'lineage|version_id|mdkernel' "vault/$DOC" || true)" = 0 ]; then plain=true; fi
+if printf "$TEXT" | cmp -s - "vault/$DOC" && [ "$(grep -cE 'lineage|version_id|rootmark' "vault/$DOC" || true)" = 0 ]; then plain=true; fi
 
 jq -n --slurpfile cli <(jq -c . cli.jsonl) \
   --argjson status "$(res ta.jsonl 2)" --argjson propose "$(res ta.jsonl 3)" \
@@ -138,7 +138,7 @@ jq -n --slurpfile cli <(jq -c . cli.jsonl) \
   | {scene: "P1-D agent side (NORTH_STAR first product scene)", consumer: "scene-agent/1.0",
      steps: $steps, passed: ([$steps[] | select(.pass)] | length), total: ($steps | length)}
   | .pass = (.passed == .total)' >"$out/scene.json"
-if [ "${MDK_SCENE_KEEP:-0}" = 1 ]; then rm -rf "$out/scene_vault"; cp -R "$work" "$out/scene_vault"; fi
+if [ "${ROOTMARK_SCENE_KEEP:-0}" = 1 ]; then rm -rf "$out/scene_vault"; cp -R "$work" "$out/scene_vault"; fi
 jq -r '.steps[] | "scene: \(if .pass then "ok  " else "FAIL" end) \(.step) \(.tool)"' "$out/scene.json"
 jq -r '"scene: \(.passed)/\(.total) (\(.consumer))"' "$out/scene.json"
 jq -e .pass "$out/scene.json" >/dev/null

@@ -1,5 +1,5 @@
 """research/ layout: Python here reaches the kernel only through the
-`mdkernel_core` extension module (docs/PACKAGES.md; scripts/check_deps.sh)."""
+`rootmark_core` extension module (docs/PACKAGES.md; scripts/check_deps.sh)."""
 
 from pathlib import Path
 

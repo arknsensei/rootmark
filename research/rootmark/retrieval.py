@@ -8,8 +8,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from mdkernel import embed as E
-from mdkernel.index import Index, bm25_tokens
+from rootmark import embed as E
+from rootmark.index import Index, bm25_tokens
 
 RRF_K = 60
 CANDIDATES = 50

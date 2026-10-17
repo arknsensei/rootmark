@@ -830,7 +830,7 @@ pub struct Vault {
 }
 
 impl Vault {
-    /// Opens (or initialises) `<root>/.mdkernel` and replays the log into memory.
+    /// Opens (or initialises) `<root>/.rootmark` and replays the log into memory.
     pub fn open(root: impl AsRef<Path>) -> Result<Vault> {
         Self::open_inner(root, None)
     }
@@ -842,7 +842,8 @@ impl Vault {
 
     fn open_inner(root: impl AsRef<Path>, params: Option<MatchParams>) -> Result<Vault> {
         let root = root.as_ref().to_path_buf();
-        let meta_dir = root.join(".mdkernel");
+        crate::meta::check(&root)?;
+        let meta_dir = crate::meta::path(&root);
         fs::create_dir_all(meta_dir.join("objects"))?;
         fs::create_dir_all(meta_dir.join("snapshots"))?;
         let events = read_events(&meta_dir.join("events.jsonl"))?;
@@ -1137,7 +1138,7 @@ impl Vault {
     /// `BlockUpdated`, `BlockMoved`, `BlockSplit`, `BlockMerged` and
     /// `BlockDeleted` it writes carries `meta.actor` (who caused the ingest)
     /// and `meta.source` (`prov.source`). Every write path of the server
-    /// (MCP, HTTP, watcher, `mdk propose`) ingests through this.
+    /// (MCP, HTTP, watcher, `rootmark propose`) ingests through this.
     pub fn ingest_by(
         &mut self,
         doc_path: &str,
@@ -1655,7 +1656,7 @@ impl Vault {
     /// (spec §8). `event_seq` is the log offset after the last
     /// non-checkpoint event, so calling this twice on the same state yields
     /// the same `checkpoint_id` and writes nothing the second time. The
-    /// file `.mdkernel/checkpoints/<cid>.json` is write-once. If this state
+    /// file `.rootmark/checkpoints/<cid>.json` is write-once. If this state
     /// already has an unnamed checkpoint and `name` is given, the checkpoint
     /// is named (`CheckpointNamed`, K-D1.6; same id); a state whose
     /// checkpoint has another name, or a name another checkpoint has, is an

@@ -1,8 +1,8 @@
 {
-  "name": "mdkernel-obsidian",
+  "name": "rootmark-obsidian",
   "version": "0.1.0",
   "private": true,
-  "description": "Obsidian client of mdk serve: blame, proposals, promote, search, checkpoints, traces over the HTTP contract (docs/CLIENT_CONTRACT.md)",
+  "description": "Obsidian client of rootmark serve: blame, proposals, promote, search, checkpoints, traces over the HTTP contract (docs/CLIENT_CONTRACT.md)",
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {

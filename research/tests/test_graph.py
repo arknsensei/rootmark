@@ -4,8 +4,8 @@ import networkx as nx
 import numpy as np
 import pytest
 
-from mdkernel import graph as G
-from mdkernel.index import Index
+from rootmark import graph as G
+from rootmark.index import Index
 
 
 def chunk(doc, cid, hp, links=(), text="t"):

@@ -5,7 +5,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { MdkClient, MdkError, type BlameBlock, type LogEvent } from "../src/api";
+import { RootmarkClient, RootmarkError, type BlameBlock, type LogEvent } from "../src/api";
 import { align, editorBlocks } from "../src/align";
 import { actorOf, blameOf, demote, DEMOTE_UNAVAILABLE, listProposals, promoteAll, promoteSummary } from "../src/commands";
 import { gutterMarks, historyLine } from "../src/view";
@@ -13,10 +13,10 @@ import { fetchTransport, startFake, type Fake } from "./fake-server";
 import { SAMPLES } from "./samples";
 
 let fake: Fake;
-let client: MdkClient;
+let client: RootmarkClient;
 beforeEach(async () => {
   fake = await startFake();
-  client = new MdkClient({ baseUrl: fake.url, token: "a".repeat(64), consumer: "mdkernel-obsidian/0.1.0" }, fetchTransport);
+  client = new RootmarkClient({ baseUrl: fake.url, token: "a".repeat(64), consumer: "rootmark-obsidian/0.1.0" }, fetchTransport);
 });
 afterEach(async () => {
   await fake.close();
@@ -66,7 +66,7 @@ describe("blame alignment (gutter)", () => {
     const al = align(blame, editorBlocks(sections, items, headings));
     const marks = gutterMarks(al);
     expect(marks.map((m) => [m.line, m.label])).toEqual([[3, "C"], [5, "C"], [8, "C"], [9, "P"], [12, "C"]]);
-    expect(marks[3]?.cls).toBe("mdk-layer-proposal");
+    expect(marks[3]?.cls).toBe("rootmark-layer-proposal");
     expect(marks[3]?.title).toBe("proposal · Agent · source: scene-agent/1.0 · created at seq 7, last event seq 9");
     expect(marks[0]?.title).toContain("source: —");
   });
@@ -74,7 +74,7 @@ describe("blame alignment (gutter)", () => {
   it("counts that disagree: no marks, a reason, never a guessed line", () => {
     const al = align([block("h", "canonical")], editorBlocks(sections, items, headings));
     expect(al.aligned).toBe(false);
-    expect(al.aligned ? "" : al.reason).toContain("mdk has 1 blocks, the editor 5");
+    expect(al.aligned ? "" : al.reason).toContain("rootmark has 1 blocks, the editor 5");
     expect(gutterMarks(al)).toEqual([]);
     expect(editorBlocks([{ type: "thematicBreak", start: 0, end: 0 }], [])).toEqual([]);
   });
@@ -148,7 +148,7 @@ describe("Promote over HTTP — E-5 against a fake server", () => {
     fake.reply(400, { error: { code: "invalid_arguments", message: "promote: reason must not be empty" } });
     const out = await promoteAll(client, ["l"], "");
     expect(fake.requests).toHaveLength(1);
-    expect(out[0]?.error).toBeInstanceOf(MdkError);
+    expect(out[0]?.error).toBeInstanceOf(RootmarkError);
     expect(out[0]?.error?.code).toBe("invalid_arguments");
     expect(out[0]?.error?.status).toBe(400);
     expect(promoteSummary(out)).toBe("0 promoted, 1 failed (invalid_arguments: promote: reason must not be empty)");

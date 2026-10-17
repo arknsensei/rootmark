@@ -11,9 +11,9 @@
 //! parameters (`case.json: matcher`); nothing reads compiled defaults.
 
 use anyhow::{anyhow, bail, Context, Result};
-use mdkcore::lineage::lineage_formula;
-use mdkcore::store::{self, BlockObject};
-use mdkcore::{
+use rootmarkcore::lineage::lineage_formula;
+use rootmarkcore::store::{self, BlockObject};
+use rootmarkcore::{
     chunk, extract_wikilinks, normalize, parse_document, version_id, AuthorKind, BlockType, Event,
     MatchParams, MatcherVersion, Provenance, Strategy, Vault,
 };
@@ -34,7 +34,8 @@ struct Scratch(PathBuf);
 impl Scratch {
     fn new(tag: &str) -> Result<Scratch> {
         let n = SCRATCH.fetch_add(1, Ordering::SeqCst);
-        let d = std::env::temp_dir().join(format!("mdk-conf-{}-{n}-{tag}", std::process::id()));
+        let d =
+            std::env::temp_dir().join(format!("rootmark-conf-{}-{n}-{tag}", std::process::id()));
         if d.exists() {
             fs::remove_dir_all(&d)?;
         }
@@ -108,7 +109,7 @@ fn kind_str(e: &Event) -> Result<String> {
 }
 
 fn events_bytes(root: &Path) -> Result<Vec<u8>> {
-    let p = root.join(".mdkernel").join("events.jsonl");
+    let p = root.join(".rootmark").join("events.jsonl");
     fs::read(&p).with_context(|| format!("read {}", p.display()))
 }
 
@@ -515,7 +516,7 @@ pub fn fixture_manifest(root: &Path) -> Result<BTreeMap<String, String>> {
         for e in entries {
             let p = e.path();
             let name = e.file_name().to_string_lossy().to_string();
-            if name == ".mdkernel" || name == ".DS_Store" {
+            if name == ".rootmark" || name == ".DS_Store" {
                 continue;
             }
             if e.file_type()?.is_dir() {

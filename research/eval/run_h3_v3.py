@@ -26,7 +26,7 @@ import tempfile
 import time
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics_v3 as M3
 from eval import runinfo
@@ -34,15 +34,15 @@ from eval.build_index import load_or_build
 from eval.d3_v3 import V3_FIELD, ingest_docs, verify_docs
 from eval.datasets.common import DATA, SEED, die, load_manifest
 from eval.run_h3 import N_EDITS, WARMUP, K, plan_edits
-from mdkernel import embed as E
-from mdkernel.hot import HotLayer
-from mdkernel.watcher import Watcher
+from rootmark import embed as E
+from rootmark.hot import HotLayer
+from rootmark.watcher import Watcher
 
 D3 = DATA / "d3"
 MATCHER = "v3"
 
 
-def build_v3(root: Path) -> mdkernel_core.Vault:
+def build_v3(root: Path) -> rootmark_core.Vault:
     """`root/docs` (copy of the D3 documents) + a fresh matcher-v3 vault at `root`."""
     m = load_manifest(DATA / "MANIFEST.d3.json")
     verify_docs(m)
@@ -55,7 +55,7 @@ def build_v3(root: Path) -> mdkernel_core.Vault:
     return v
 
 
-def check_same_lineages(v3: mdkernel_core.Vault, v2: mdkernel_core.Vault) -> int:
+def check_same_lineages(v3: rootmark_core.Vault, v2: rootmark_core.Vault) -> int:
     if v3.doc_paths() != v2.doc_paths():
         raise RuntimeError("v3 and v2 D3 vaults hold different documents")
     for d in v2.doc_paths():
@@ -64,7 +64,7 @@ def check_same_lineages(v3: mdkernel_core.Vault, v2: mdkernel_core.Vault) -> int
     return len(v2.doc_paths())
 
 
-def h3_latency(tmp: Path, v2_vault: mdkernel_core.Vault) -> dict:
+def h3_latency(tmp: Path, v2_vault: rootmark_core.Vault) -> dict:
     root = tmp / "lat"
     vault = build_v3(root)
     docs_dir = root / "docs"
@@ -122,7 +122,7 @@ def h3_rechunk(tmp: Path) -> dict:
     fixed = M3.M.lineage_loss(snap, per_strategy["fixed"])
     structural = M3.M.lineage_loss(snap, per_strategy["structural"])
     switch = M3.M.lineage_loss(per_strategy["fixed"], per_strategy["structural"])
-    after = mdkernel_core.Vault(str(root), matcher=MATCHER).events_hash()
+    after = rootmark_core.Vault(str(root), matcher=MATCHER).events_hash()
     return {
         "lineages": len(snap),
         "fixed_vs_snapshot": fixed,
@@ -140,7 +140,7 @@ def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--run", required=True)
     a = ap.parse_args(argv)
-    v2_vault = mdkernel_core.Vault(str(D3))
+    v2_vault = rootmark_core.Vault(str(D3))
     want = load_manifest(DATA / "MANIFEST.d3.json")["events_hash"]
     if v2_vault.events_hash() != want:
         raise RuntimeError(f"data/d3 events_hash {v2_vault.events_hash()} != manifest {want}")

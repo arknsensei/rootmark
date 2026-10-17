@@ -1,31 +1,31 @@
-//! `mdk` CLI (SPEC §7–§9, §11). Every command prints JSON; `--pretty` indents
-//! it. `mdk index …` and `mdk search …` are `mdkindex::cli` (linked, since
+//! `rootmark` CLI (SPEC §7–§9, §11). Every command prints JSON; `--pretty` indents
+//! it. `rootmark index …` and `rootmark search …` are `rootmarkindex::cli` (linked, since
 //! P1-D/D0 no second process; K-C6.1). Governance commands read
-//! `<vault>/.mdkernel/policy.toml` (built-in recipe without one) and fail on
+//! `<vault>/.rootmark/policy.toml` (built-in recipe without one) and fail on
 //! an invalid recipe. Moved from `core` to `server` in P1-D/D0.
 
 use anyhow::{bail, Context, Result};
 use clap::{Parser, Subcommand};
-use mdkcore::chunk::{chunk, Strategy};
-use mdkcore::files::rel_slash;
-use mdkcore::vault::IngestSummary;
-use mdkcore::{
+use rootmarkcore::chunk::{chunk, Strategy};
+use rootmarkcore::files::rel_slash;
+use rootmarkcore::vault::IngestSummary;
+use rootmarkcore::{
     Actor, AuthorKind, Layer, MatcherVersion, Policy, Provenance, TransitionKind, Vault,
 };
-use mdkserver::paths::doc_file;
+use rootmarkserver::paths::doc_file;
 use serde_json::{json, Value};
 use std::path::{Path, PathBuf};
 
 #[derive(Parser)]
-#[command(name = "mdk", about = "mdkernel CLI", version)]
+#[command(name = "rootmark", about = "rootmark CLI", version)]
 struct Cli {
-    /// Print the spec version this mdk implements (spec/SPEC.md) and exit
+    /// Print the spec version this rootmark implements (spec/SPEC.md) and exit
     #[arg(long)]
     spec_version: bool,
     /// Indent JSON output
     #[arg(long, global = true)]
     pretty: bool,
-    /// Lineage matcher version for ingest (v2|v3; default: $MDK_MATCHER, else v3).
+    /// Lineage matcher version for ingest (v2|v3; default: $ROOTMARK_MATCHER, else v3).
     /// A vault is locked to the version of its first event.
     #[arg(long, global = true, value_parser = ["v2", "v3"])]
     matcher: Option<String>,
@@ -43,7 +43,7 @@ enum Cmd {
         #[arg(long)]
         fixtures: Option<PathBuf>,
         /// the embedder model directory (MANIFEST.json + model; default
-        /// $MDK_MODELS, else the build tree's models/)
+        /// $ROOTMARK_MODELS, else the build tree's models/)
         #[arg(long)]
         models: Option<PathBuf>,
         /// also write the report to this file
@@ -58,6 +58,15 @@ enum Cmd {
     Replay { vault: PathBuf, doc: String },
     /// blake3 of events.jsonl
     EventsHash { vault: PathBuf },
+    /// Migrate a vault written before the rename to rootmark (K-GH.1):
+    /// `--rename-store` renames `<vault>/.mdkernel/` to `<vault>/.rootmark/`;
+    /// every file inside keeps its bytes (events, objects, index)
+    Migrate {
+        /// rename the metadata directory (the one migration there is)
+        #[arg(long)]
+        rename_store: bool,
+        vault: PathBuf,
+    },
     /// Chunks of the head snapshot of a document
     Chunk {
         vault: PathBuf,
@@ -88,8 +97,8 @@ enum Cmd {
         /// the section heading (replace_section only)
         #[arg(long)]
         heading: Option<String>,
-        /// why (recorded in .mdkernel/proposals.jsonl)
-        #[arg(long, default_value = "mdk propose (CLI)")]
+        /// why (recorded in .rootmark/proposals.jsonl)
+        #[arg(long, default_value = "rootmark propose (CLI)")]
         reason: String,
     },
     /// Promote a lineage proposal → canonical through the vault's promotion policy
@@ -159,9 +168,9 @@ enum Cmd {
     Policy(PolicyCmd),
     /// Index commands (spec §9)
     #[command(subcommand)]
-    Index(mdkindex::cli::IndexCmd),
+    Index(rootmarkindex::cli::IndexCmd),
     /// Ranked chunks as of a checkpoint; records one consumption trace
-    Search(mdkindex::cli::SearchArgs),
+    Search(rootmarkindex::cli::SearchArgs),
     /// Serve one vault (GOAL P1-D): MCP over stdio, local HTTP API, file
     /// watcher, hot-tier compaction; until SIGTERM/SIGINT or the end of the
     /// MCP stream. stdout carries only MCP; progress goes to stderr.
@@ -320,16 +329,16 @@ fn transition(
     Ok(json!({"event": ev, "layer": v.layer_of(lineage)?, "inactive": v.is_inactive(lineage)?}))
 }
 
-/// `matcher`: `--matcher`, else `$MDK_MATCHER`. Index commands pass it on
+/// `matcher`: `--matcher`, else `$ROOTMARK_MATCHER`. Index commands pass it on
 /// as given (`index watch` falls back to the vault's lock, like
-/// `mdk-index`); every other command defaults to v3.
+/// `rootmark-index`); every other command defaults to v3.
 fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
     let m = matcher.unwrap_or(MatcherVersion::V3);
     Ok(match cmd {
-        Cmd::Serve(_) => bail!("mdk serve is not a JSON command"),
-        Cmd::Conformance { .. } => bail!("mdk conformance is handled in main"),
-        Cmd::Index(c) => mdkindex::cli::run(mdkindex::cli::Cmd::Index(c), matcher)?,
-        Cmd::Search(a) => mdkindex::cli::run(mdkindex::cli::Cmd::Search(a), matcher)?,
+        Cmd::Serve(_) => bail!("rootmark serve is not a JSON command"),
+        Cmd::Conformance { .. } => bail!("rootmark conformance is handled in main"),
+        Cmd::Index(c) => rootmarkindex::cli::run(rootmarkindex::cli::Cmd::Index(c), matcher)?,
+        Cmd::Search(a) => rootmarkindex::cli::run(rootmarkindex::cli::Cmd::Search(a), matcher)?,
         Cmd::Ingest { vault, files } => {
             let mut v = Vault::open(&vault)?;
             let root = std::fs::canonicalize(&vault)?;
@@ -354,6 +363,20 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             }
         }
         Cmd::EventsHash { vault } => json!({"events_hash": Vault::open(&vault)?.events_hash()?}),
+        Cmd::Migrate {
+            rename_store,
+            vault,
+        } => {
+            if !rename_store {
+                bail!("rootmark migrate: nothing to do (the one migration is --rename-store)");
+            }
+            let (from, to) = rootmarkcore::meta::rename_store(&vault)?;
+            json!({
+                "vault": vault.display().to_string(),
+                "renamed": {"from": from.display().to_string(), "to": to.display().to_string()},
+                "events_hash": Vault::open(&vault)?.events_hash()?,
+            })
+        }
         Cmd::Chunk {
             vault,
             doc,
@@ -385,7 +408,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
         } => {
             let text = std::fs::read_to_string(&file)
                 .with_context(|| format!("read {}", file.display()))?;
-            let k = mdkserver::tools::Kernel::open_with(&vault, matcher)?;
+            let k = rootmarkserver::tools::Kernel::open_with(&vault, matcher)?;
             let mut args = json!({"doc_path": doc, "content": text, "reason": reason});
             if let Some(md) = mode {
                 args["mode"] = json!(md);
@@ -393,8 +416,8 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             if let Some(h) = heading {
                 args["heading"] = json!(h);
             }
-            let caller = mdkserver::tools::Caller {
-                channel: mdkserver::tools::Channel::Cli,
+            let caller = rootmarkserver::tools::Caller {
+                channel: rootmarkserver::tools::Channel::Cli,
                 consumer: Some(&source),
             };
             let mut out = k.call("propose", &args, caller)?;
@@ -541,11 +564,11 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
 fn main() {
     let cli = Cli::parse();
     if cli.spec_version {
-        println!("{}", mdkserver::tools::SPEC_VERSION);
+        println!("{}", rootmarkserver::tools::SPEC_VERSION);
         return;
     }
     let Some(cmd) = cli.cmd else {
-        eprintln!("error: a subcommand is required (mdk --help)");
+        eprintln!("error: a subcommand is required (rootmark --help)");
         std::process::exit(2);
     };
     if let Cmd::Conformance {
@@ -554,7 +577,7 @@ fn main() {
         report,
     } = cmd
     {
-        let res = mdkserver::conformance::command(fixtures, models).and_then(|r| {
+        let res = rootmarkserver::conformance::command(fixtures, models).and_then(|r| {
             let mut text = serde_json::to_string_pretty(&r)?;
             text.push('\n');
             if let Some(p) = &report {
@@ -566,9 +589,10 @@ fn main() {
         match res {
             Ok((r, text)) => {
                 print!("{text}");
-                let ok = r["level_claimed"] == 3 && r["passed"] == mdkserver::conformance::TOTAL;
+                let ok =
+                    r["level_claimed"] == 3 && r["passed"] == rootmarkserver::conformance::TOTAL;
                 eprintln!(
-                    "mdk conformance: level {}, {}/{} (spec {})",
+                    "rootmark conformance: level {}, {}/{} (spec {})",
                     r["level_claimed"],
                     r["passed"],
                     r["total"],
@@ -585,15 +609,15 @@ fn main() {
     if let Cmd::Serve(a) = cmd {
         // serve prints no JSON: --pretty would be silently ignored
         let res = if cli.pretty {
-            Err(anyhow::anyhow!("mdk serve: --pretty does not apply"))
+            Err(anyhow::anyhow!("rootmark serve: --pretty does not apply"))
         } else {
             cli.matcher
                 .clone()
-                .or_else(|| std::env::var("MDK_MATCHER").ok())
+                .or_else(|| std::env::var("ROOTMARK_MATCHER").ok())
                 .map(|n| MatcherVersion::parse(&n))
                 .transpose()
                 .and_then(|matcher| {
-                    mdkserver::serve::run(mdkserver::serve::ServeOptions {
+                    rootmarkserver::serve::run(rootmarkserver::serve::ServeOptions {
                         vault: a.vault,
                         mcp_stdio: a.mcp.is_some(),
                         http: a.http,
@@ -608,7 +632,9 @@ fn main() {
         }
         return;
     }
-    let name = cli.matcher.or_else(|| std::env::var("MDK_MATCHER").ok());
+    let name = cli
+        .matcher
+        .or_else(|| std::env::var("ROOTMARK_MATCHER").ok());
     let res = name
         .map(|n| MatcherVersion::parse(&n))
         .transpose()

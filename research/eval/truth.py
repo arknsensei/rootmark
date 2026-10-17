@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import re
 
-import mdkernel_core
+import rootmark_core
 
 HEX32 = re.compile(r"^[0-9a-f]{32}$")
 
@@ -25,7 +25,7 @@ def check_ref(ref: dict) -> None:
         raise TruthError(f"malformed truth reference: {ref!r}")
 
 
-def resolve(vault: mdkernel_core.Vault, ref: dict, doc_path: str | None = None) -> str:
+def resolve(vault: rootmark_core.Vault, ref: dict, doc_path: str | None = None) -> str:
     """lineage_id of `ref`; `doc_path` overrides/provides the document."""
     check_ref(ref)
     doc = doc_path if doc_path is not None else ref.get("doc_path")
@@ -38,6 +38,6 @@ def resolve(vault: mdkernel_core.Vault, ref: dict, doc_path: str | None = None) 
 
 
 def resolve_all(
-    vault: mdkernel_core.Vault, refs: list[dict], doc_path: str | None = None
+    vault: rootmark_core.Vault, refs: list[dict], doc_path: str | None = None
 ) -> list[str]:
     return [resolve(vault, r, doc_path) for r in refs]

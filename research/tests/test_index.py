@@ -3,15 +3,15 @@
 import shutil
 from pathlib import Path
 
-import mdkernel_core as mk
 import numpy as np
 import pytest
+import rootmark_core as mk
 
-from mdkernel import embed as E
-from mdkernel import index as I
-from mdkernel.hot import HotLayer
-from mdkernel.retrieval import Retriever, rrf
-from mdkernel.watcher import Watcher
+from rootmark import embed as E
+from rootmark import index as I
+from rootmark.hot import HotLayer
+from rootmark.retrieval import Retriever, rrf
+from rootmark.watcher import Watcher
 
 MINI = Path(__file__).resolve().parents[2] / "spec" / "fixtures" / "mini_vault"
 

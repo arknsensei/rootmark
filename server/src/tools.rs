@@ -3,7 +3,7 @@
 //! the caller (channel and consumer) and returns JSON, or an error with a
 //! stable code (`crate::error`, K-D1.5). Every tool opens the vault afresh
 //! (`Vault::open` replays the log), so a change made by another process —
-//! `mdk promote` from the command line — is seen by the next call. Writing
+//! `rootmark promote` from the command line — is seen by the next call. Writing
 //! calls (content, governance or a consumption trace) run one at a time in
 //! arrival order through the vault's writer queue; read-only calls run in
 //! parallel (`crate::queue`, K-D1.4). The channel fixes the actor (K-D1.3):
@@ -17,13 +17,13 @@ use crate::bail_code;
 use crate::error::{Code, CodeExt};
 use crate::queue::{Queue, Ticket};
 use anyhow::{bail, Context, Result};
-use mdkcore::{
+use rootmarkcore::{
     Actor, ActorKind, AuthorKind, Decision, EditMode, EditRequest, MatcherVersion, Policy,
     Provenance, Vault,
 };
-use mdkindex::search::{Mode, Searcher};
-use mdkindex::store::{self, Store};
-use mdkindex::OnnxMiniLm;
+use rootmarkindex::search::{Mode, Searcher};
+use rootmarkindex::store::{self, Store};
+use rootmarkindex::OnnxMiniLm;
 use serde::de::DeserializeOwned;
 use serde::Deserialize;
 use serde_json::{json, Value};
@@ -35,8 +35,8 @@ pub const SPEC_VERSION: &str = "1.0.3";
 /// Conformance level the reference implementation claims (spec §12;
 /// `make conformance`).
 pub const LEVEL_CLAIMED: u8 = 3;
-/// `mdk` version (one SemVer for every crate, PACKAGES).
-pub const MDK_VERSION: &str = env!("CARGO_PKG_VERSION");
+/// `rootmark` version (one SemVer for every crate, PACKAGES).
+pub const ROOTMARK_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// A tool: name, description in spec terms, JSON Schema of its arguments.
 #[derive(Debug, Clone)]
@@ -60,7 +60,7 @@ pub fn specs() -> Vec<ToolSpec> {
     vec![
         ToolSpec {
             name: "status",
-            description: "State of the served vault: its path, the spec and mdk versions, the \
+            description: "State of the served vault: its path, the spec and rootmark versions, the \
                 claimed conformance level (spec §12), the embedder of its index (spec §9), its \
                 last checkpoint (spec §8) and the active policy recipe (promotion policy, spec §7). \
                 Writes nothing.",
@@ -157,7 +157,7 @@ pub fn specs() -> Vec<ToolSpec> {
                 with a heading\"; `replace_section` is allowed only on a section made of \
                 proposals. Change and delete events name the actor (spec §4.3). Nothing but the \
                 agent's text is written to the file (no ids, no metadata). `reason` is recorded \
-                beside the vault (`.mdkernel/proposals.jsonl`). \
+                beside the vault (`.rootmark/proposals.jsonl`). \
                 The path must stay inside the vault (no `..`, no absolute path, no hidden \
                 directory) and the text may not exceed the server's `max_propose_bytes`.",
             input_schema: object_schema(
@@ -242,7 +242,7 @@ pub enum Channel {
     /// HTTP with the token: the human channel; the actor is
     /// `human:<[identity] human_id>`
     Http,
-    /// the `mdk` command line (`mdk propose`): the actor is `agent:<--source>`
+    /// the `rootmark` command line (`rootmark propose`): the actor is `agent:<--source>`
     Cli,
 }
 
@@ -285,7 +285,7 @@ pub fn needs_human_id(tool: &str) -> bool {
     matches!(tool, "propose" | "promote" | "checkpoint")
 }
 
-/// What `Kernel::ensure_index` found and did at the start of `mdk serve`.
+/// What `Kernel::ensure_index` found and did at the start of `rootmark serve`.
 #[derive(Debug)]
 pub enum IndexAtStart {
     /// the index is of this format and lexical record
@@ -298,16 +298,16 @@ pub enum IndexAtStart {
     Stale(String),
     /// its manifest cannot be read (the error): left as it is, never
     /// rebuilt over (damage, not staleness); the index's tools answer
-    /// `index_stale` until `mdk index build` (K-E1.2)
+    /// `index_stale` until `rootmark index build` (K-E1.2)
     Damaged(String),
 }
 
 /// The served vault and its writer queue.
 pub struct Kernel {
-    /// the vault path as given (`mdk serve --vault`); `status` reports it
+    /// the vault path as given (`rootmark serve --vault`); `status` reports it
     vault: PathBuf,
     /// `--matcher` for ingests the server makes (watcher, `propose`); `None`:
-    /// the vault's lock, else v3 (as `mdk index watch`)
+    /// the vault's lock, else v3 (as `rootmark index watch`)
     matcher: Option<MatcherVersion>,
     queue: Arc<Queue>,
     /// loaded on first use, then shared (ONNX session behind a mutex)
@@ -418,7 +418,7 @@ fn open_vault(vault: &Path) -> Result<Vault> {
 }
 
 /// A checkpoint `at` names (id or name); unknown → `not_found`.
-fn checkpoint_at(v: &Vault, at: &str) -> Result<mdkcore::Checkpoint> {
+fn checkpoint_at(v: &Vault, at: &str) -> Result<rootmarkcore::Checkpoint> {
     v.find_checkpoint(at).code(Code::NotFound)
 }
 
@@ -506,7 +506,7 @@ impl Kernel {
         Actor::new(ActorKind::Human, &id)
     }
 
-    /// Builds the index if the vault has none (`mdk index build`); `None`
+    /// Builds the index if the vault has none (`rootmark index build`); `None`
     /// if one exists. The served index must exist before searches and
     /// watched edits.
     pub fn ensure_index(&self) -> Result<Option<store::BuildReport>> {
@@ -520,7 +520,7 @@ impl Kernel {
         })
     }
 
-    /// `mdk serve`'s start: `ensure_index`, and an index of another format
+    /// `rootmark serve`'s start: `ensure_index`, and an index of another format
     /// is rebuilt when `auto_rebuild` (`[index] auto_rebuild`, K-E0.3); see
     /// `IndexAtStart`. A stale index left in place makes searches answer
     /// `index_stale`.
@@ -574,7 +574,7 @@ impl Kernel {
     }
 
     /// Moves the hot tier into the cold index if it holds anything
-    /// (`mdk index compact`); `None` when the hot tier is empty. Runs in the
+    /// (`rootmark index compact`); `None` when the hot tier is empty. Runs in the
     /// writer queue.
     pub fn compact(&self) -> Result<Option<store::CompactReport>> {
         self.ticket().run(|| {
@@ -634,9 +634,9 @@ impl Kernel {
             "search" => {
                 let x: SearchArgs = args(name, a)?;
                 // before anything is opened: an empty query records nothing (K-C1.5)
-                mdkindex::search::check_query(&x.query).code(Code::EmptyQuery)?;
+                rootmarkindex::search::check_query(&x.query).code(Code::EmptyQuery)?;
                 let consumer = need_consumer(name, consumer)?;
-                mdkcore::check_trace_input(consumer, &mdkcore::hash32(""))
+                rootmarkcore::check_trace_input(consumer, &rootmarkcore::hash32(""))
                     .code(Code::InvalidArguments)?;
                 let k = x.k.unwrap_or(10);
                 if !(1..=1000).contains(&k) {
@@ -667,7 +667,7 @@ impl Kernel {
                 non_empty(name, "doc_path", &x.doc_path)?;
                 non_empty(name, "lineage_id", &x.lineage_id)?;
                 let consumer = need_consumer(name, consumer)?;
-                mdkcore::check_trace_input(consumer, &mdkcore::hash32(""))
+                rootmarkcore::check_trace_input(consumer, &rootmarkcore::hash32(""))
                     .code(Code::InvalidArguments)?;
                 let mut v = open_vault(&self.vault)?;
                 let cp = match &x.at {
@@ -722,15 +722,15 @@ impl Kernel {
                 let from = v.layer_of(&x.lineage_id).code(Code::NotFound)?;
                 let req = v
                     .request(
-                        mdkcore::TransitionKind::Promote,
+                        rootmarkcore::TransitionKind::Promote,
                         &x.lineage_id,
-                        mdkcore::Layer::Canonical,
+                        rootmarkcore::Layer::Canonical,
                         actor.clone(),
                         &x.reason,
                     )
                     .code(Code::InvalidArguments)?;
                 match hook.decide(&req) {
-                    mdkcore::Decision::Deny(why) => Ok(json!({
+                    rootmarkcore::Decision::Deny(why) => Ok(json!({
                         "decision": "denied",
                         "policy": hook.name(),
                         "policy_version": hook.version(),
@@ -739,11 +739,11 @@ impl Kernel {
                         "layer": req.from,
                         "actor": actor,
                     })),
-                    mdkcore::Decision::Allow => {
+                    rootmarkcore::Decision::Allow => {
                         // an allowed request for a lineage that is not a
                         // live proposal is the caller's error (after the
                         // policy: an agent's request stays a denial)
-                        if from != mdkcore::Layer::Proposal {
+                        if from != rootmarkcore::Layer::Proposal {
                             bail_code!(
                                 Code::InvalidArguments,
                                 "promote: lineage {} is {}; only a proposal is promoted",
@@ -910,7 +910,7 @@ impl Kernel {
         crate::paths::exact_on_disk(&self.vault, &x.doc_path).code(Code::Exists)?;
         let mut v = open_vault(&self.vault)?;
         // the index, when the vault has one (the server always does; the
-        // CLI may run before `mdk index build`)
+        // CLI may run before `rootmark index build`)
         let e = if store::index_dir(&v).join("manifest.json").exists() {
             index_readable(&v)?;
             Some(self.embedder()?)
@@ -989,7 +989,7 @@ impl Kernel {
             Some(o) => {
                 let prov = Provenance {
                     author_kind: AuthorKind::Human,
-                    source: "mdk-serve-watch".to_string(),
+                    source: "rootmark-serve-watch".to_string(),
                 };
                 let plan =
                     v.plan_ingest(&x.doc_path, o, prov, m, None, Some(&self.watch_actor()?))?;
@@ -1153,7 +1153,7 @@ impl Kernel {
         Ok(json!({
             "vault": self.vault.display().to_string(),
             "spec_version": SPEC_VERSION,
-            "mdk_version": MDK_VERSION,
+            "mdk_version": ROOTMARK_VERSION,
             "level_claimed": LEVEL_CLAIMED,
             "embedder": ix.embedder,
             "index": {
@@ -1171,7 +1171,7 @@ impl Kernel {
 
 /// The vault's index as `status` reports it (K-E1.2), from `manifest.json`
 /// alone: `ok` (this format and lexical record), `stale` (another format or
-/// lexical record: an older `mdk`'s index), `missing` (no manifest),
+/// lexical record: an older `rootmark`'s index), `missing` (no manifest),
 /// `damaged` (the manifest cannot be read or decoded; `damage` says why).
 /// `stale` and `missing` are `index_stale` (K-E0.3).
 struct IndexState {
@@ -1217,14 +1217,14 @@ fn index_state(v: &Vault) -> IndexState {
 }
 
 /// A call that needs the index refuses a damaged manifest as `index_stale`
-/// (K-E1.2, GOAL P1-E.1 E1-2): only a rebuild (`mdk index build`) recovers
+/// (K-E1.2, GOAL P1-E.1 E1-2): only a rebuild (`rootmark index build`) recovers
 /// it. Any other damage of the index files stays `internal`.
 fn index_readable(v: &Vault) -> Result<()> {
     let ix = index_state(v);
     if let Some(why) = ix.damage {
         bail_code!(
             Code::IndexStale,
-            "index damaged ({why}); rebuild it with `mdk index build`"
+            "index damaged ({why}); rebuild it with `rootmark index build`"
         );
     }
     Ok(())
@@ -1239,9 +1239,9 @@ fn section_blocks(
     doc: &str,
     old: &str,
     heading: &str,
-) -> Result<Vec<(String, mdkcore::Layer)>> {
+) -> Result<Vec<(String, rootmarkcore::Layer)>> {
     let (at, end) = crate::propose::section_lines(old, heading)?;
-    let (drafts, _) = mdkcore::parse_document(old, doc)?;
+    let (drafts, _) = rootmarkcore::parse_document(old, doc)?;
     let head = v
         .snapshot(doc)?
         .with_context(|| format!("{doc}: no head snapshot"))?;

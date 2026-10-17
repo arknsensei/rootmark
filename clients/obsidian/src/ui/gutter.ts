@@ -13,7 +13,7 @@ class Mark extends GutterMarker {
   }
   override toDOM(): Node {
     const el = document.createElement("span");
-    el.className = `mdk-mark ${this.m.cls}`;
+    el.className = `rootmark-mark ${this.m.cls}`;
     el.textContent = this.m.label;
     el.title = this.m.title;
     return el;
@@ -35,7 +35,7 @@ export function blameGutter(onClick: (lineage: string) => void): Extension {
   return [
     marksField,
     gutter({
-      class: "mdk-gutter",
+      class: "rootmark-gutter",
       markers: (view: EditorView) => {
         const marks = view.state.field(marksField);
         const doc = view.state.doc;

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# P1-E/E5 (GOAL E-7): `mdk conformance` is the `make conformance`
+# P1-E/E5 (GOAL E-7): `rootmark conformance` is the `make conformance`
 # equivalent of a binary. Compares the two reports test by test — id, level,
 # result, actual and expected hash — and the manifest hash, level claimed,
 # passed and total. Exit 1 on any difference.
 #
-#   scripts/conformance_equiv.sh <make-report.json> <mdk-report.json> [<out.json>]
+#   scripts/conformance_equiv.sh <make-report.json> <rootmark-report.json> [<out.json>]
 set -euo pipefail
-a="${1:?make conformance report}"; b="${2:?mdk conformance report}"; out="${3:-}"
+a="${1:?make conformance report}"; b="${2:?rootmark conformance report}"; out="${3:-}"
 res="$(jq -n --slurpfile a "$a" --slurpfile b "$b" '
   def t: [.tests[] | {id, level, result, actual_hash, expected_hash}] | sort_by(.id);
   {tests_equal: (($a[0] | t) == ($b[0] | t)),

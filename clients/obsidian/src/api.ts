@@ -1,4 +1,4 @@
-// The client's only way to the kernel: the HTTP contract of `mdk serve`
+// The client's only way to the kernel: the HTTP contract of `rootmark serve`
 // (docs/CLIENT_CONTRACT.md §1–§3). Argument types and error codes are
 // generated from the contract (contract.gen.ts); the result types below
 // name the main fields of §2 and the inner fields of §2.5 — the ones the
@@ -214,7 +214,7 @@ export interface HttpResponse {
 /** Sends one request; rejects only when no HTTP answer arrived. */
 export type Transport = (req: HttpRequest) => Promise<HttpResponse>;
 
-/** Where `mdk serve` listens and who the client is (§1). */
+/** Where `rootmark serve` listens and who the client is (§1). */
 export interface Connection {
   /** `http://127.0.0.1:<port>` */
   baseUrl: string;
@@ -229,7 +229,7 @@ export interface Connection {
  * None is ever swallowed. */
 export type ClientErrorCode = ErrorCode | "not_configured" | "unreachable" | "bad_response";
 
-export class MdkError extends Error {
+export class RootmarkError extends Error {
   constructor(
     readonly code: ClientErrorCode,
     message: string,
@@ -238,7 +238,7 @@ export class MdkError extends Error {
     readonly hint: string | null = null,
   ) {
     super(message);
-    this.name = "MdkError";
+    this.name = "RootmarkError";
   }
 }
 
@@ -248,33 +248,33 @@ const isRecord = (v: unknown): v is Record<string, unknown> =>
 const isCode = (c: unknown): c is ErrorCode =>
   typeof c === "string" && Object.prototype.hasOwnProperty.call(ERROR_STATUS, c);
 
-/** The contract's answer → result or `MdkError` (§3: decide on `code`);
+/** The contract's answer → result or `RootmarkError` (§3: decide on `code`);
  * a result is checked against §2/§2.5 (`shape.ts`). */
 export function decode(tool: ToolName, res: HttpResponse): unknown {
   let body: unknown;
   try {
     body = JSON.parse(res.text);
   } catch {
-    throw new MdkError("bad_response", `${tool}: HTTP ${String(res.status)}, body is not JSON`, res.status);
+    throw new RootmarkError("bad_response", `${tool}: HTTP ${String(res.status)}, body is not JSON`, res.status);
   }
   if (res.status === 200) {
     if (!isRecord(body) || "error" in body) {
-      throw new MdkError("bad_response", `${tool}: HTTP 200 without a result object`, 200);
+      throw new RootmarkError("bad_response", `${tool}: HTTP 200 without a result object`, 200);
     }
     const bad = resultViolation(tool, body) ?? (tool === "status" ? lastCheckpointViolation(body) : null);
     if (bad !== null) {
-      throw new MdkError("bad_response", `answer outside the contract (§2.5): ${bad}`, 200);
+      throw new RootmarkError("bad_response", `answer outside the contract (§2.5): ${bad}`, 200);
     }
     return body;
   }
   const err = isRecord(body) && isRecord(body["error"]) ? body["error"] : null;
   const code = err?.["code"];
   if (err === null || !isCode(code)) {
-    throw new MdkError("bad_response", `${tool}: HTTP ${String(res.status)} without a contract error code`, res.status);
+    throw new RootmarkError("bad_response", `${tool}: HTTP ${String(res.status)} without a contract error code`, res.status);
   }
   const message = typeof err["message"] === "string" ? err["message"] : code;
   const hint = typeof err["hint"] === "string" ? err["hint"] : null;
-  throw new MdkError(code, message, res.status, hint);
+  throw new RootmarkError(code, message, res.status, hint);
 }
 
 type IsUnion<T, U = T> = T extends unknown ? ([U] extends [T] ? false : true) : never;
@@ -282,7 +282,7 @@ type IsUnion<T, U = T> = T extends unknown ? ([U] extends [T] ? false : true) : 
  * known at compile time, or an explicit union) nothing is assignable. */
 export type ArgsOf<T extends ToolName> = true extends IsUnion<T> ? never : NoInfer<ToolArgs[T]>;
 
-export class MdkClient {
+export class RootmarkClient {
   constructor(
     readonly conn: Connection,
     private readonly transport: Transport,
@@ -303,7 +303,7 @@ export class MdkClient {
     try {
       res = await this.transport(req);
     } catch (e) {
-      throw new MdkError("unreachable", `${tool}: mdk serve did not answer (${String(e)})`, null);
+      throw new RootmarkError("unreachable", `${tool}: rootmark serve did not answer (${String(e)})`, null);
     }
     return decode(tool, res);
   }
@@ -329,8 +329,8 @@ export interface VaultReader {
   exists(path: string): Promise<boolean>;
 }
 
-export const TOKEN_PATH = ".mdkernel/server.token";
-export const POLICY_PATH = ".mdkernel/policy.toml";
+export const TOKEN_PATH = ".rootmark/server.token";
+export const POLICY_PATH = ".rootmark/policy.toml";
 
 /** A TOML value as written: a basic ("…", with \\ and \" escapes) or
  * literal ('…') string, or a bare value up to a comment. */
@@ -384,35 +384,35 @@ export interface Settings {
  * `[server] http_port`. Missing → an error saying what is missing. */
 export async function readSettings(vault: VaultReader): Promise<Settings> {
   if (!(await vault.exists(POLICY_PATH))) {
-    throw new MdkError("not_configured", `${POLICY_PATH} not found: this vault is not served by mdk`, null);
+    throw new RootmarkError("not_configured", `${POLICY_PATH} not found: this vault is not served by rootmark`, null);
   }
   const policy = await vault.read(POLICY_PATH);
   const portText = tomlValue(policy, "server", "http_port");
   const port = portText === null ? NaN : Number(portText);
   if (!Number.isInteger(port) || port < 1 || port > 65535) {
-    throw new MdkError(
+    throw new RootmarkError(
       "not_configured",
-      `${POLICY_PATH} has no [server] http_port: set it and start \`mdk serve --vault <vault> --http 127.0.0.1\``,
+      `${POLICY_PATH} has no [server] http_port: set it and start \`rootmark serve --vault <vault> --http 127.0.0.1\``,
       null,
     );
   }
   if (!(await vault.exists(TOKEN_PATH))) {
-    throw new MdkError("not_configured", `${TOKEN_PATH} not found: start \`mdk serve --http\` once`, null);
+    throw new RootmarkError("not_configured", `${TOKEN_PATH} not found: start \`rootmark serve --http\` once`, null);
   }
   const token = (await vault.read(TOKEN_PATH)).trim();
   if (!/^[0-9a-f]{64}$/.test(token)) {
-    throw new MdkError("not_configured", `${TOKEN_PATH} is not a 64-hex token`, null);
+    throw new RootmarkError("not_configured", `${TOKEN_PATH} is not a 64-hex token`, null);
   }
   return { port, token, humanId: tomlValue(policy, "identity", "human_id") };
 }
 
 export type ConnectionState =
-  | { kind: "online"; client: MdkClient; status: StatusResult; settings: Settings }
+  | { kind: "online"; client: RootmarkClient; status: StatusResult; settings: Settings }
   /** passive: no server (or no settings); the plugin reports why and never
-   * starts one (GOAL P1-E "mdk serve yoksa plugin pasif") */
+   * starts one (GOAL P1-E "rootmark serve yoksa plugin pasif") */
   | { kind: "offline"; reason: string };
 
-/** Connects if `mdk serve` answers `GET /v1/status`; otherwise passive. */
+/** Connects if `rootmark serve` answers `GET /v1/status`; otherwise passive. */
 export async function connect(
   vault: VaultReader,
   transport: Transport,
@@ -424,7 +424,7 @@ export async function connect(
   } catch (e) {
     return { kind: "offline", reason: describeError(e) };
   }
-  const client = new MdkClient(
+  const client = new RootmarkClient(
     { baseUrl: `http://127.0.0.1:${String(settings.port)}`, token: settings.token, consumer },
     transport,
   );
@@ -439,7 +439,7 @@ export async function connect(
 /** A human-readable line for an error, with its hint (§3: the client shows
  * the hint to the user). */
 export function describeError(e: unknown): string {
-  if (e instanceof MdkError) {
+  if (e instanceof RootmarkError) {
     return e.hint === null ? `${e.code}: ${e.message}` : `${e.code}: ${e.message} — ${e.hint}`;
   }
   return e instanceof Error ? e.message : String(e);

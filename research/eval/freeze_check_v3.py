@@ -21,7 +21,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics_v3 as M3
 from eval import truth as T
@@ -72,7 +72,7 @@ def _dominant_index(step: dict) -> int | None:
 
 
 def _records(truth: dict, out_dir: Path, vault_dir: Path, params=PARAMS) -> list[dict]:
-    v = mdkernel_core.Vault(str(vault_dir), params[0], params[1], matcher=MATCHER)
+    v = rootmark_core.Vault(str(vault_dir), params[0], params[1], matcher=MATCHER)
     doc = truth["doc_path"]
     v.ingest(doc, (out_dir / truth["base_file"]).read_text(encoding="utf-8"), "Synthetic", "d1")
     records = []
@@ -172,8 +172,8 @@ def check_h1r(tmp: Path) -> dict:
     pair = json.loads((FIX / "h1r_pair.json").read_text())
     old = (FIX / pair["old"]).read_bytes().decode("utf-8")
     new = (FIX / pair["new"]).read_bytes().decode("utf-8")
-    drafts, _ = mdkernel_core.parse_document(old, pair["path"])
-    v = mdkernel_core.Vault(str(tmp / "h1r"), PARAMS[0], PARAMS[1], matcher=MATCHER)
+    drafts, _ = rootmark_core.parse_document(old, pair["path"])
+    v = rootmark_core.Vault(str(tmp / "h1r"), PARAMS[0], PARAMS[1], matcher=MATCHER)
     v.ingest(pair["path"], old)
     old_blocks = v.snapshot_blocks(pair["path"])
     for b, d in zip(old_blocks, drafts, strict=True):

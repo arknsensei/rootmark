@@ -1,9 +1,9 @@
-use mdkcore::lineage::{ctx_anchor, lineage_formula};
-use mdkcore::{parse_document, EventKind, MatchParams, MatcherVersion, Provenance, Vault};
+use rootmarkcore::lineage::{ctx_anchor, lineage_formula};
+use rootmarkcore::{parse_document, EventKind, MatchParams, MatcherVersion, Provenance, Vault};
 use std::path::PathBuf;
 
 fn tmp(name: &str) -> PathBuf {
-    let p = std::env::temp_dir().join(format!("mdk-lin-{name}-{}", std::process::id()));
+    let p = std::env::temp_dir().join(format!("rootmark-lin-{name}-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&p);
     std::fs::create_dir_all(&p).unwrap();
     p
@@ -13,7 +13,7 @@ fn vault(name: &str) -> Vault {
     Vault::open(tmp(name)).unwrap()
 }
 
-fn ingest(v: &mut Vault, text: &str) -> mdkcore::IngestResult {
+fn ingest(v: &mut Vault, text: &str) -> rootmarkcore::IngestResult {
     v.ingest("d.md", text, Provenance::default(), MatcherVersion::V2)
         .unwrap()
 }
@@ -28,7 +28,7 @@ fn lineages(v: &Vault) -> Vec<String> {
         .collect()
 }
 
-fn kinds(r: &mdkcore::IngestResult) -> Vec<EventKind> {
+fn kinds(r: &rootmarkcore::IngestResult) -> Vec<EventKind> {
     r.events
         .iter()
         .map(|e| e.kind)
@@ -198,7 +198,10 @@ fn duplicate_ordinal_when_contexts_change() {
 
 #[test]
 fn ctx_anchor_formula() {
-    assert_eq!(ctx_anchor(None, "v", Some("n")), mdkcore::hash32("\nv\nn"));
+    assert_eq!(
+        ctx_anchor(None, "v", Some("n")),
+        rootmarkcore::hash32("\nv\nn")
+    );
     assert_ne!(
         ctx_anchor(Some("a"), "v", None),
         ctx_anchor(None, "v", Some("a"))

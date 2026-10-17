@@ -53,4 +53,4 @@ Bu pakette yapılmayacaklar: <...>
 ```
 
 ## 8. Sürüm ve yayım
-Faz 1 sonunda `mdk 0.1.0`: uyumluluk Seviye 3 raporu, `make verify` çıktısı, değişiklik günlüğü, spec sürümü. Sonrası SemVer; spec kırıcı değişiklik → majör.
+Faz 1 sonunda `rootmark 0.1.0`: uyumluluk Seviye 3 raporu, `make verify` çıktısı, değişiklik günlüğü, spec sürümü. Sonrası SemVer; spec kırıcı değişiklik → majör.

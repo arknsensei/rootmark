@@ -1,4 +1,4 @@
-//! D-10 (GOAL P1-D; TASKS D2): `mdk serve --watch`. A copy of
+//! D-10 (GOAL P1-D; TASKS D2): `rootmark serve --watch`. A copy of
 //! spec/fixtures/mini_vault is served (`--http 127.0.0.1:0 --watch`); 20
 //! times a human paragraph with a new word is appended to a document from
 //! outside the server, and the time until the HTTP `search` (lexical, at
@@ -6,7 +6,7 @@
 //! word is measured (P1-D/D3; in D2 the HTTP `blame` stood in for it). The
 //! hit must be `canonical` and the new block's author `Human` (`blame`).
 //! Pass: p95 < 1000 ms.
-//! `MDK_D10_OUT` receives the latencies and the result. Then SIGTERM: the
+//! `ROOTMARK_D10_OUT` receives the latencies and the result. Then SIGTERM: the
 //! server compacts and exits 0. Needs the model files (`make models`).
 
 use serde_json::{json, Value};
@@ -16,12 +16,12 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::time::{Duration, Instant};
 
-fn mdk() -> &'static str {
-    env!("CARGO_BIN_EXE_mdk")
+fn rootmark() -> &'static str {
+    env!("CARGO_BIN_EXE_rootmark")
 }
 
 fn tmp(name: &str) -> PathBuf {
-    let d = std::env::temp_dir().join(format!("mdk-d10-{}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-d10-{}-{name}", std::process::id()));
     let _ = std::fs::remove_dir_all(&d);
     std::fs::create_dir_all(&d).unwrap();
     d
@@ -78,13 +78,13 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
         }
     }
     let vs = vault.to_str().unwrap();
-    let st = Command::new(mdk())
+    let st = Command::new(rootmark())
         .args(["ingest-dir", vs, vs])
         .output()
         .unwrap();
     assert!(st.status.success());
 
-    let mut child = Command::new(mdk())
+    let mut child = Command::new(rootmark())
         .args(["serve", "--vault", vs, "--http", "127.0.0.1:0", "--watch"])
         .stderr(Stdio::piped())
         .spawn()
@@ -97,7 +97,7 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
         log.push_str(&l);
         if let Some(p) = l
             .trim()
-            .strip_prefix("mdk serve: http listening on 127.0.0.1:")
+            .strip_prefix("rootmark serve: http listening on 127.0.0.1:")
         {
             break p.parse().unwrap();
         }
@@ -107,7 +107,7 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
         let mut l = String::new();
         assert!(err.read_line(&mut l).unwrap() > 0, "server exited: {log}");
         log.push_str(&l);
-        if l.contains("mdk serve: watching") {
+        if l.contains("rootmark serve: watching") {
             break;
         }
     }
@@ -116,7 +116,7 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
         let _ = err.read_to_string(&mut s);
         s
     });
-    let token = std::fs::read_to_string(vault.join(".mdkernel/server.token"))
+    let token = std::fs::read_to_string(vault.join(".rootmark/server.token"))
         .unwrap()
         .trim()
         .to_string();
@@ -187,7 +187,7 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
         "sigterm_compacted": tail.contains("compact (shutdown)"),
         "pass": p95v < 1000.0 && layers_ok && code.success() && tail.contains("compact (shutdown)"),
     });
-    if let Ok(p) = std::env::var("MDK_D10_OUT") {
+    if let Ok(p) = std::env::var("ROOTMARK_D10_OUT") {
         if !p.is_empty() {
             std::fs::write(&p, serde_json::to_string_pretty(&report).unwrap() + "\n").unwrap();
         }
@@ -226,20 +226,21 @@ fn sigterm_is_never_lost_during_timer_compaction() {
         std::fs::write(vault.join(format!("gen-{i:03}.md")), t).unwrap();
     }
     let vs = vault.to_str().unwrap();
-    assert!(Command::new(mdk())
+    assert!(Command::new(rootmark())
         .args(["ingest-dir", vs, vs])
         .output()
         .unwrap()
         .status
         .success());
-    std::fs::create_dir_all(vault.join(".mdkernel")).unwrap();
+    std::fs::create_dir_all(vault.join(".rootmark")).unwrap();
     std::fs::write(
-        vault.join(".mdkernel/policy.toml"),
-        mdkserver::config::default_recipe().replace("compact_every_s = 300", "compact_every_s = 1"),
+        vault.join(".rootmark/policy.toml"),
+        rootmarkserver::config::default_recipe()
+            .replace("compact_every_s = 300", "compact_every_s = 1"),
     )
     .unwrap();
     // index once (the first start builds it)
-    assert!(Command::new(mdk())
+    assert!(Command::new(rootmark())
         .args(["index", "build", vs])
         .output()
         .unwrap()
@@ -264,7 +265,7 @@ fn sigterm_is_never_lost_during_timer_compaction() {
     };
     let mut outcomes = Vec::new();
     for trial in 0..10u64 {
-        let mut child = Command::new(mdk())
+        let mut child = Command::new(rootmark())
             .args(["serve", "--vault", vs, "--watch"])
             .stderr(Stdio::piped())
             .spawn()
@@ -285,7 +286,7 @@ fn sigterm_is_never_lost_during_timer_compaction() {
             let l = rx
                 .recv_timeout(Duration::from_secs(60))
                 .expect("server start");
-            if l.contains("mdk serve: watching") {
+            if l.contains("rootmark serve: watching") {
                 break;
             }
         }
@@ -329,7 +330,7 @@ fn sigterm_is_never_lost_during_timer_compaction() {
         .map(|o| o["timer_compactions"].as_u64().unwrap())
         .sum::<u64>();
     let report = json!({"trials": outcomes, "timer_compactions": timer_ran, "pass": all_ok && timer_ran > 0});
-    if let Ok(p) = std::env::var("MDK_SIGTERM_OUT") {
+    if let Ok(p) = std::env::var("ROOTMARK_SIGTERM_OUT") {
         if !p.is_empty() {
             std::fs::write(&p, serde_json::to_string_pretty(&report).unwrap() + "\n").unwrap();
         }

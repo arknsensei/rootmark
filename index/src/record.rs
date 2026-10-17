@@ -6,10 +6,10 @@
 //! only). Within one snapshot `(doc_path, chunk_id)` is unique.
 
 use anyhow::{bail, Context, Result};
-use mdkcore::chunk::structural;
-use mdkcore::events::read_events;
-use mdkcore::vault::{Replayed, Snapshot};
-use mdkcore::{hash32, Block, EventKind, Vault};
+use rootmarkcore::chunk::structural;
+use rootmarkcore::events::read_events;
+use rootmarkcore::vault::{Replayed, Snapshot};
+use rootmarkcore::{hash32, Block, EventKind, Vault};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 

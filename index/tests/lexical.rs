@@ -3,11 +3,11 @@
 //! two places), ranking stable over 100 repeats, BM25 checked by hand, and
 //! the checkpoint restriction.
 
-use mdkcore::{MatcherVersion, Provenance, Vault};
-use mdkindex::embed::OnnxMiniLm;
-use mdkindex::search::{self, View};
-use mdkindex::store::{self, Store};
-use mdkindex::tokenize::{tokens, MdkTokenizer};
+use rootmarkcore::{MatcherVersion, Provenance, Vault};
+use rootmarkindex::embed::OnnxMiniLm;
+use rootmarkindex::search::{self, View};
+use rootmarkindex::store::{self, Store};
+use rootmarkindex::tokenize::{tokens, RootmarkTokenizer};
 use serde_json::Value;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -26,7 +26,7 @@ fn here(rel: &str) -> PathBuf {
 fn tmp(name: &str) -> PathBuf {
     static N: std::sync::atomic::AtomicUsize = std::sync::atomic::AtomicUsize::new(0);
     let n = N.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-    let d = std::env::temp_dir().join(format!("mdk-c2-{}-{n}-{name}", std::process::id()));
+    let d = std::env::temp_dir().join(format!("rootmark-c2-{}-{n}-{name}", std::process::id()));
     let _ = fs::remove_dir_all(&d);
     fs::create_dir_all(&d).unwrap();
     d
@@ -43,7 +43,7 @@ fn mini_vault(name: &str) -> PathBuf {
 }
 
 fn analyzer_tokens(text: &str) -> Vec<String> {
-    let mut a = TextAnalyzer::from(MdkTokenizer);
+    let mut a = TextAnalyzer::from(RootmarkTokenizer);
     let mut s = a.token_stream(text);
     let mut out = Vec::new();
     while s.advance() {
@@ -274,8 +274,8 @@ fn tampered_index_files_are_errors() {
 /// same records as one segment.
 #[test]
 fn intermediate_segments_are_an_error_and_the_sized_budget_avoids_them() {
-    use mdkindex::lexical;
-    use mdkindex::record::ChunkRecord;
+    use rootmarkindex::lexical;
+    use rootmarkindex::record::ChunkRecord;
     let word = |i: usize| format!("w{} ", i % 5000);
     let records: Vec<ChunkRecord> = (0..3000)
         .map(|i| {

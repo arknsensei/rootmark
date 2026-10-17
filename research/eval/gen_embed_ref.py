@@ -1,7 +1,7 @@
 """Embedding reference for the Rust ONNX embedder (P1-C TASKS C1, GOAL C-10).
 
 Writes `data/embed_ref.json`: 50 fixed D3 structural chunks and their vectors
-from the prototype embedder (`mdkernel.embed`: sentence-transformers
+from the prototype embedder (`rootmark.embed`: sentence-transformers
 `all-MiniLM-L6-v2` at the pinned revision, CPU, normalized). The Rust test
 `index/tests/embed.rs` requires cosine >= 0.999 for every chunk.
 
@@ -16,10 +16,10 @@ from __future__ import annotations
 
 import json
 
-import mdkernel_core
+import rootmark_core
 
 from eval.datasets.common import DATA, die, load_manifest
-from mdkernel import embed as E
+from rootmark import embed as E
 
 D3 = DATA / "d3"
 OUT = DATA / "embed_ref.json"
@@ -27,7 +27,7 @@ COUNT = 50
 
 
 def d3_chunks() -> tuple[str, list[dict]]:
-    vault = mdkernel_core.Vault(str(D3))
+    vault = rootmark_core.Vault(str(D3))
     want = load_manifest(DATA / "MANIFEST.d3.json")["events_hash"]
     if vault.events_hash() != want:
         raise RuntimeError(f"data/d3 events_hash {vault.events_hash()} != MANIFEST.d3.json {want}")

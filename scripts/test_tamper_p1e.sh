@@ -22,11 +22,11 @@ set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 out="${1:?usage: test_tamper_p1e.sh <out.json>}"
-work="$(mktemp -d -t mdk-tamper-p1e.XXXXXX)"
+work="$(mktemp -d -t rootmark-tamper-p1e.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
-export MDK_MODELS="${MDK_MODELS:-$here/models}"
+export ROOTMARK_MODELS="${ROOTMARK_MODELS:-$here/models}"
 cd "$here"
-cargo build -q --release -p mdkernel-server --bin mdk --example mcp_pipeline
+cargo build -q --release -p rootmark-server --bin rootmark --example mcp_pipeline
 cases=()
 add() { # add <group> <case> <expected rejected|accepted> <rc> [<detail JSON>]
   local got=accepted
@@ -50,8 +50,8 @@ perl -0pi -e 's{(    // arrival: a writing call takes its place in the writer qu
   "$src/server/src/http.rs"
 grep -q 'route removed (deliberate test)' "$src/server/src/http.rs" \
   || { echo "test_tamper_p1e: could not patch http.rs" >&2; exit 1; }
-(cd "$src" && CARGO_TARGET_DIR="$here/target/tamper-p1e" cargo build -q --release -p mdkernel-server --bin mdk)
-rc="$(MDK_BIN="$here/target/tamper-p1e/release/mdk" run bash scripts/contract_check.sh "$work/cc1.json")"
+(cd "$src" && CARGO_TARGET_DIR="$here/target/tamper-p1e" cargo build -q --release -p rootmark-server --bin rootmark)
+rc="$(ROOTMARK_BIN="$here/target/tamper-p1e/release/rootmark" run bash scripts/contract_check.sh "$work/cc1.json")"
 detail="$(jq -c '{tools_equal: .tools.equal, codes_equal: .codes.equal, http_pass: .http.pass,
   failed_endpoints: [.http.endpoints[] | select(.ok | not) | .endpoint],
   as_expected: (.tools.equal and .codes.equal and (.http.pass | not)
@@ -61,28 +61,28 @@ add contract-http "HTTP endpoint POST /v1/checkpoints removed (MCP still lists t
 c="$work/contract.md"
 sed 's/^| `index_stale` | 503 |/| `index_stale` | 500 |/' docs/CLIENT_CONTRACT.md >"$c"
 cmp -s "$c" docs/CLIENT_CONTRACT.md && { echo "test_tamper_p1e: index_stale row not found" >&2; exit 1; }
-add contract-http "status of index_stale changed to 500" rejected "$(MDK_CONTRACT="$c" run bash scripts/contract_check.sh)"
+add contract-http "status of index_stale changed to 500" rejected "$(ROOTMARK_CONTRACT="$c" run bash scripts/contract_check.sh)"
 
 # ---- compare-fields (E0, E-13; K-E0.2)
 d="$work/DETERMINISTIC_FIELDS.md"
 cp research/eval/DETERMINISTIC_FIELDS.md "$d"
-add compare-fields "untouched declaration" accepted "$(MDK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
+add compare-fields "untouched declaration" accepted "$(ROOTMARK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
 grep -v '^| `compare_p1d1` | hepsi | `p1d1/d1_5.json` | `responses_a_vs_b_equal`' research/eval/DETERMINISTIC_FIELDS.md >"$d"
 cmp -s "$d" research/eval/DETERMINISTIC_FIELDS.md && { echo "test_tamper_p1e: declaration row not found" >&2; exit 1; }
-add compare-fields "an excluded field's row removed (undeclared exclusion in code)" rejected "$(MDK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
+add compare-fields "an excluded field's row removed (undeclared exclusion in code)" rejected "$(ROOTMARK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
 { cat research/eval/DETERMINISTIC_FIELDS.md; } | sed 's#^| `compare_p1d1` | hepsi | `p1d1/d1_5.json` | `elapsed_ms_lockstep` | duvar-saati |#&#; /^<!-- \/fields-table -->/i\
 | `compare_p1d1` | hepsi | `p1d1/d1_5.json` | `write_responses_a_vs_b_equal` | bilgi | deliberate: a deterministic field declared nondeterministic |' >"$d"
-add compare-fields "a row the code does not exclude added" rejected "$(MDK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
+add compare-fields "a row the code does not exclude added" rejected "$(ROOTMARK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
 sed 's#^\(| `compare_p1d1` | \)hepsi\( | `p1d1/d1_5.json` | `elapsed_ms_lockstep` | \)duvar-saati#\1regress\2karar#' research/eval/DETERMINISTIC_FIELDS.md >"$d"
-add compare-fields "a pair exclusion relabelled as a decision" rejected "$(MDK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
+add compare-fields "a pair exclusion relabelled as a decision" rejected "$(ROOTMARK_DETERMINISTIC_FIELDS="$d" run bash scripts/check_compare_fields.sh)"
 
 # ---- client-types (E1): the generated contract types drift from the contract
 g="$work/contract.gen.ts"
 cp clients/obsidian/src/contract.gen.ts "$g"
-add client-types "untouched generated types" accepted "$(MDK_CLIENT_TYPES="$g" run bash scripts/gen_client_types.sh --check)"
+add client-types "untouched generated types" accepted "$(ROOTMARK_CLIENT_TYPES="$g" run bash scripts/gen_client_types.sh --check)"
 sed 's/"trace"\] as const/"trace","demote"] as const/' clients/obsidian/src/contract.gen.ts >"$g"
 cmp -s "$g" clients/obsidian/src/contract.gen.ts && { echo "test_tamper_p1e: TOOLS line not found" >&2; exit 1; }
-add client-types "a tool outside the contract added to the generated types" rejected "$(MDK_CLIENT_TYPES="$g" run bash scripts/gen_client_types.sh --check)"
+add client-types "a tool outside the contract added to the generated types" rejected "$(ROOTMARK_CLIENT_TYPES="$g" run bash scripts/gen_client_types.sh --check)"
 # the generator refuses schemas it cannot type (fed a copy of a live tools/list)
 tl="$work/tools.json"
 jq -n '{tools: [{name: "status", inputSchema: {type: "object", additionalProperties: false, properties: {}, required: []}}]}' >"$tl"
@@ -96,7 +96,7 @@ jq '.tools[0].inputSchema.required = ["ghost"]' "$tl" >"$work/t2.json"
 add client-types "generator: required field without a property refused" rejected "$(run gen "$work/t2.json")"
 
 # ---- plugin-e2e (E4, E-3/E-4): the harness must catch what it measures
-pe() { MDK_E2E_TAMPER="$1" MDK_E2E_TAMPER_PATH="/v1/demote" bash scripts/plugin_e2e.sh "$work/pe_$1"; }
+pe() { ROOTMARK_E2E_TAMPER="$1" ROOTMARK_E2E_TAMPER_PATH="/v1/demote" bash scripts/plugin_e2e.sh "$work/pe_$1"; }
 add plugin-e2e "untouched harness" accepted "$(run pe none)"
 add plugin-e2e "a request outside the contract (POST /v1/demote) as the plugin" rejected "$(run pe offcontract)" \
   "$(jq -c '{outside: .e4_access_log.outside_contract, as_expected: (.e4_access_log.outside_contract == 1)}' "$work/pe_offcontract/plugin_e2e.json")"

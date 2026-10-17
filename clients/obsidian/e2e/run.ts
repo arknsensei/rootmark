@@ -1,11 +1,11 @@
 // The plugin e2e (GOAL P1-E E-2, E-3, E-4, E-5, E-6; TASKS E4). Obsidian
 // cannot run headless here (ASSUMPTIONS E4-1), so the plugin's command layer
 // (src/commands.ts, src/api.ts — exactly what its panels call) is driven in
-// Node against a real `mdk serve`, through the plugin's own connection
+// Node against a real `rootmark serve`, through the plugin's own connection
 // (`connect`: policy.toml [server] http_port + server.token, read only).
 // The agent acts over MCP in the same server process (contract §1).
 //
-//   node e2e/.build/run.mjs --mdk <mdk> --vault-src <dir of .md> --out <dir>
+//   node e2e/.build/run.mjs --rootmark <rootmark> --vault-src <dir of .md> --out <dir>
 //
 // <out>/plugin_e2e.json: the 11 steps (shows, pass), the access log check
 // (E-4), the Markdown changes per step (E-3), the actor of the promotion
@@ -15,7 +15,7 @@ import { spawnSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { connect, describeError, MdkError, TOOLS, type BlameBlock, type VaultReader } from "../src/api";
+import { connect, describeError, RootmarkError, TOOLS, type BlameBlock, type VaultReader } from "../src/api";
 import { blameAt, blameOf, listProposals, nameCheckpoint, promoteAll, recentTraces, runSearch } from "../src/commands";
 import { CONSUMER } from "../src/consumer";
 import { fetchTransport } from "../src/node-transport";
@@ -27,7 +27,7 @@ const arg = (name: string): string => {
   if (v === undefined) throw new Error(`--${name} is required`);
   return v;
 };
-const mdk = arg("mdk");
+const rootmark = arg("rootmark");
 const src = arg("vault-src");
 const out = arg("out");
 mkdirSync(out, { recursive: true });
@@ -36,20 +36,20 @@ const DOC = "agent/scene.md";
 const TEXT = "# Grind notes\n\nAn agent recommends a coarser grind for the kalimba roast.\n";
 const AGENT = { name: "e2e-agent", version: "1.0" };
 
-const work = mkdtempSync(join(tmpdir(), "mdk-plugin-e2e-"));
+const work = mkdtempSync(join(tmpdir(), "rootmark-plugin-e2e-"));
 const vault = join(work, "vault");
 mkdirSync(vault);
 for (const f of readdirSync(src).filter((f) => f.endsWith(".md"))) copyFileSync(join(src, f), join(vault, f));
 const run = (args: string[], input = ""): void => {
-  const r = spawnSync(mdk, args, { input, encoding: "utf8" });
-  if (r.status !== 0) throw new Error(`mdk ${args.join(" ")}: exit ${String(r.status)}\n${r.stderr}`);
+  const r = spawnSync(rootmark, args, { input, encoding: "utf8" });
+  if (r.status !== 0) throw new Error(`rootmark ${args.join(" ")}: exit ${String(r.status)}\n${r.stderr}`);
 };
 run(["ingest-dir", vault, vault]);
-// the first `mdk serve` writes the default policy (human_only, append_only)
+// the first `rootmark serve` writes the default policy (human_only, append_only)
 run(["serve", "--vault", vault, "--mcp", "stdio"]);
 const proxyPort = await freePort();
 const serverPort = await freePort();
-const policyPath = join(vault, ".mdkernel/policy.toml");
+const policyPath = join(vault, ".rootmark/policy.toml");
 let policy = readFileSync(policyPath, "utf8");
 policy = policy.replace("[server]\n", `[server]\nhttp_port = ${String(proxyPort)}\n`);
 policy = policy.replace("# [identity]\n# human_id = \"<your id>\"\n", '[identity]\nhuman_id = "editor"\n');
@@ -65,7 +65,7 @@ const reader: VaultReader = {
 };
 const docs = (): string[] => Object.keys(mdSha(vault));
 
-const served = await serve(mdk, vault, serverPort, AGENT);
+const served = await serve(rootmark, vault, serverPort, AGENT);
 const proxy = await recordingProxy(proxyPort, serverPort);
 const shas = [mdSha(vault)];
 const snap = (): void => {
@@ -117,12 +117,12 @@ try {
   // deliberate tests (scripts/test_tamper_p1e.sh): the harness itself
   // breaks E-4 (a request outside the contract, as the plugin) or E-3 (a
   // Markdown write outside the propose step); never set in a real run
-  const tamper = process.env["MDK_E2E_TAMPER"] ?? "";
+  const tamper = process.env["ROOTMARK_E2E_TAMPER"] ?? "";
   if (tamper === "offcontract") {
     // the off-contract path comes from the tamper script: no such literal in
     // clients/ (check_deps.sh rejects non-contract paths in client sources)
-    const path = process.env["MDK_E2E_TAMPER_PATH"];
-    if (path === undefined) throw new Error("MDK_E2E_TAMPER=offcontract needs MDK_E2E_TAMPER_PATH");
+    const path = process.env["ROOTMARK_E2E_TAMPER_PATH"];
+    if (path === undefined) throw new Error("ROOTMARK_E2E_TAMPER=offcontract needs ROOTMARK_E2E_TAMPER_PATH");
     await fetch(`http://127.0.0.1:${String(proxyPort)}${path}`, {
       method: "POST",
       headers: { Authorization: `Bearer ${st.settings.token}`, "X-Consumer": CONSUMER },
@@ -142,7 +142,7 @@ try {
   snap();
   const nr = noReason[0]?.error ?? null;
   const e5Actor = promoted.every((o) => o.result?.decision === "promoted" && JSON.stringify(o.result.event.meta.actor) === JSON.stringify({ id: "editor", kind: "human" }));
-  const e5NoReason = nr instanceof MdkError && nr.status === 400 && nr.code === "invalid_arguments";
+  const e5NoReason = nr instanceof RootmarkError && nr.status === 400 && nr.code === "invalid_arguments";
   steps.push({
     step: 6, actor: "human", command: "promoteAll (reason) + promoteAll (no reason)",
     shows: {
@@ -183,7 +183,7 @@ try {
 
   // 10. the agent tries to change canonical content (MCP)
   const before10 = { blame: await blameOf(client, "espresso.md"), hits: (await runSearch(client, "espresso recipe", { mode: "lexical" })).canonical };
-  const ev10 = readFileSync(join(vault, ".mdkernel/events.jsonl"), "utf8");
+  const ev10 = readFileSync(join(vault, ".rootmark/events.jsonl"), "utf8");
   const r10a = await served.mcp("propose", { doc_path: "espresso.md", mode: "replace_section", heading: "Recipe", content: "Agents rewrite the recipe.", reason: "scene: change canonical" });
   const r10b = await served.mcp("propose", { doc_path: "espresso.md", mode: "append", content: "An agent line without a heading.", reason: "scene: heading-less append" });
   snap();
@@ -192,12 +192,12 @@ try {
   // the agent's error never reaches the plugin; this only checks that the
   // plugin's error formatter (`describeError`, used by every notice) would
   // show the hint of such an error (contract §3)
-  const shown = describeError(new MdkError("policy_violation", e10b.message ?? "", 422, e10b.hint ?? null));
+  const shown = describeError(new RootmarkError("policy_violation", e10b.message ?? "", 422, e10b.hint ?? null));
   steps.push({
     step: 10, actor: "agent", command: "MCP propose replace_section + heading-less append",
     shows: { replace_section: e10a.code, append: e10b.code, hint: e10b.hint, describe_error_shows_hint: shown.includes("start the appended text with a heading") },
     pass: e10a.code === "denied" && e10b.code === "policy_violation" && e10b.hint === "start the appended text with a heading"
-      && readFileSync(join(vault, ".mdkernel/events.jsonl"), "utf8") === ev10 && shown.includes("start the appended text with a heading"),
+      && readFileSync(join(vault, ".rootmark/events.jsonl"), "utf8") === ev10 && shown.includes("start the appended text with a heading"),
   });
 
   // 11. blame and search unchanged (E-6)
@@ -213,7 +213,7 @@ try {
 } finally {
   await proxy.close();
   const code = await served.stop();
-  if (code !== 0) steps.push({ step: steps.length + 1, actor: "-", command: "mdk serve exit", shows: { code, stderr_tail: served.stderr().slice(-400) }, pass: false });
+  if (code !== 0) steps.push({ step: steps.length + 1, actor: "-", command: "rootmark serve exit", shows: { code, stderr_tail: served.stderr().slice(-400) }, pass: false });
 }
 
 // E-3: Markdown changes per step (index i = step i+1)
@@ -232,7 +232,7 @@ const endpoints = new Set([...TOOLS.map((t) => `POST /v1/${t}`), "GET /v1/status
 const outside = proxy.log.filter((l) => !endpoints.has(`${l.method} ${l.path}`) || l.consumer !== CONSUMER);
 const used = [...new Set(proxy.log.map((l) => `${l.method} ${l.path}`))].sort();
 const result = {
-  harness: "plugin command layer in Node against a real mdk serve (Obsidian not headless; ASSUMPTIONS E4-1)",
+  harness: "plugin command layer in Node against a real rootmark serve (Obsidian not headless; ASSUMPTIONS E4-1)",
   consumer: CONSUMER,
   agent: `${AGENT.name}/${AGENT.version}`,
   steps,
@@ -246,8 +246,8 @@ const result = {
 const pass = result.passed === 11 && steps.length === 11 && result.e3_md_changes_only_at_propose && outside.length === 0;
 writeFileSync(join(out, "plugin_e2e.json"), JSON.stringify({ ...result, pass }, null, 2) + "\n");
 writeFileSync(join(out, "access_log.json"), JSON.stringify(proxy.log.map((l) => ({ method: l.method, path: l.path, consumer: l.consumer, status: l.status })), null, 2) + "\n");
-for (const f of ["events.jsonl", "traces.jsonl", "proposals.jsonl"]) copyFileSync(join(vault, ".mdkernel", f), join(out, f));
-if (process.env["MDK_E2E_KEEP"] !== "1") rmSync(work, { recursive: true, force: true });
+for (const f of ["events.jsonl", "traces.jsonl", "proposals.jsonl"]) copyFileSync(join(vault, ".rootmark", f), join(out, f));
+if (process.env["ROOTMARK_E2E_KEEP"] !== "1") rmSync(work, { recursive: true, force: true });
 for (const s of steps) console.log(`plugin-e2e: ${s.pass ? "ok  " : "FAIL"} ${String(s.step)} ${s.actor} ${s.command}`);
 console.log(`plugin-e2e: ${String(result.passed)}/11; E-3 ${String(result.e3_md_changes_only_at_propose)}; E-4 outside contract ${String(outside.length)} of ${String(proxy.log.length)} requests`);
 process.exit(pass ? 0 : 1);

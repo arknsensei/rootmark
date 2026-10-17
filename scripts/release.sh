@@ -7,15 +7,15 @@
 #   scripts/release.sh [<dist-dir>]        (default dist/)
 #
 # Produces:
-#   bin/mdk-<ver>-<target>.tar.gz   each target buildable here, with its
-#                                   check record bin/<target>.json (mdk
-#                                   --version, --spec-version, mdk
+#   bin/rootmark-<ver>-<target>.tar.gz   each target buildable here, with its
+#                                   check record bin/<target>.json (rootmark
+#                                   --version, --spec-version, rootmark
 #                                   conformance; or why it was not built)
-#   wheel/                          mdkernel_core wheel (maturin)
-#   obsidian/mdkernel-<ver>.zip     main.js, manifest.json, styles.css
+#   wheel/                          rootmark_core wheel (maturin)
+#   obsidian/rootmark-<ver>.zip     main.js, manifest.json, styles.css
 #   spec-<spec>/                    SPEC.md, CONFORMANCE.md, fixtures/,
 #                                   conformance.json (level 3), LICENSE
-#   homebrew/mdk.rb                 formula draft (macOS arm64 sha256)
+#   homebrew/rootmark.rb                 formula draft (macOS arm64 sha256)
 #   SHA256SUMS
 #   release.json                    every target's record
 #                                   (scripts/release_target.sh assemble)
@@ -42,33 +42,33 @@ models="$root/models"
 # one target's record (scripts/release_target.sh: the same as in CI)
 rt="$root/scripts/release_target.sh"
 pack() { # pack <target> <binary>
-  local t="$1" b="$2" d="$dist/bin/mdk-$ver-$1"
+  local t="$1" b="$2" d="$dist/bin/rootmark-$ver-$1"
   rm -rf "$d"; mkdir -p "$d/models"
-  cp "$b" "$d/mdk"; cp LICENSE README.md "$d/"; cp "$models/MANIFEST.json" "$d/models/"
+  cp "$b" "$d/rootmark"; cp LICENSE README.md "$d/"; cp "$models/MANIFEST.json" "$d/models/"
   cp scripts/fetch_model.sh "$d/models/fetch_model.sh"
-  (cd "$dist/bin" && tar -czf "mdk-$ver-$t.tar.gz" "mdk-$ver-$t" && rm -rf "mdk-$ver-$t")
+  (cd "$dist/bin" && tar -czf "rootmark-$ver-$t.tar.gz" "rootmark-$ver-$t" && rm -rf "rootmark-$ver-$t")
 }
 
 # ---- aarch64-apple-darwin (native): the one release target (K-E1.1)
-cargo build -q --release --locked -p mdkernel-server --bin mdk
-MDK_MODELS="$models" bash "$rt" check aarch64-apple-darwin true "$dist/bin/aarch64-apple-darwin.json" "$root/target/release/mdk"
-pack aarch64-apple-darwin "$root/target/release/mdk"
+cargo build -q --release --locked -p rootmark-server --bin rootmark
+ROOTMARK_MODELS="$models" bash "$rt" check aarch64-apple-darwin true "$dist/bin/aarch64-apple-darwin.json" "$root/target/release/rootmark"
+pack aarch64-apple-darwin "$root/target/release/rootmark"
 
 # ---- x86_64-unknown-linux-gnu (CI info, not a release criterion; K-E1.1):
 # cross-compiled in a named arm64 Debian trixie container (the prebuilt
 # onnxruntime needs glibc >= 2.38), run in a named amd64 container; only
-# containers this script starts are touched. MDK_RELEASE_LINUX=0 skips it.
+# containers this script starts are touched. ROOTMARK_RELEASE_LINUX=0 skips it.
 lt="$root/target/docker-linux-trixie"
-if [ "${MDK_RELEASE_LINUX:-1}" = 0 ]; then
-  bash "$rt" skipped x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" "not attempted here (MDK_RELEASE_LINUX=0); built and checked by .github/workflows/release.yml"
-elif command -v docker >/dev/null && docker run --rm --name "mdk-release-linux-build-$$" --platform linux/arm64 \
-    -v "$root":/src:ro -v "$lt":/target -v mdk-cargo-home-arm:/usr/local/cargo/registry \
+if [ "${ROOTMARK_RELEASE_LINUX:-1}" = 0 ]; then
+  bash "$rt" skipped x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" "not attempted here (ROOTMARK_RELEASE_LINUX=0); built and checked by .github/workflows/release.yml"
+elif command -v docker >/dev/null && docker run --rm --name "rootmark-release-linux-build-$$" --platform linux/arm64 \
+    -v "$root":/src:ro -v "$lt":/target -v rootmark-cargo-home-arm:/usr/local/cargo/registry \
     -v "$root/scripts/linux_cross_build.sh":/cross.sh:ro -w /src -e CARGO_TARGET_DIR=/target -e RUSTUP_TOOLCHAIN=1.92.0 \
     rust:1.92.0-trixie bash /cross.sh >"$dist/bin/x86_64-unknown-linux-gnu.log" 2>&1; then
-  lb="$lt/x86_64-unknown-linux-gnu/release/mdk"
+  lb="$lt/x86_64-unknown-linux-gnu/release/rootmark"
   bash "$rt" check x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" "$lb" \
-    docker run --rm --name "mdk-release-linux-run-$$" --platform linux/amd64 -v "$lb":/mdk:ro -v "$models":/models:ro \
-    -e MDK_MODELS=/models debian:trixie-slim /mdk
+    docker run --rm --name "rootmark-release-linux-run-$$" --platform linux/amd64 -v "$lb":/rootmark:ro -v "$models":/models:ro \
+    -e ROOTMARK_MODELS=/models debian:trixie-slim /rootmark
   pack x86_64-unknown-linux-gnu "$lb"
 else
   bash "$rt" skipped x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" \
@@ -84,10 +84,10 @@ bash "$rt" skipped x86_64-pc-windows-msvc false "$dist/bin/x86_64-pc-windows-msv
 
 # ---- Obsidian plugin package (community store submission: not done)
 (cd clients/obsidian && { [ -d node_modules ] || npm ci --no-audit --no-fund >/dev/null; } && npm run -s build)
-o="$dist/obsidian/mdkernel-$ver"
+o="$dist/obsidian/rootmark-$ver"
 mkdir -p "$o"
 cp clients/obsidian/main.js clients/obsidian/manifest.json clients/obsidian/styles.css "$o/"
-(cd "$dist/obsidian" && zip -qr "mdkernel-$ver.zip" "mdkernel-$ver")
+(cd "$dist/obsidian" && zip -qr "rootmark-$ver.zip" "rootmark-$ver")
 
 # ---- spec publication
 sd="$dist/spec-$spec"
@@ -95,12 +95,12 @@ mkdir -p "$sd"
 cp spec/SPEC.md spec/CONFORMANCE.md LICENSE "$sd/"
 cp -R spec/fixtures "$sd/fixtures"
 find "$sd/fixtures" -name '.DS_Store' -delete
-MDK_MODELS="$models" "$root/target/release/mdk" conformance --fixtures "$sd/fixtures" >"$sd/conformance.json"
+ROOTMARK_MODELS="$models" "$root/target/release/rootmark" conformance --fixtures "$sd/fixtures" >"$sd/conformance.json"
 
 # ---- Homebrew formula draft (macOS arm64 archive; the URL is filled at
 # publication, docs/RELEASE.md)
-sha_arm="$(shasum -a 256 "$dist/bin/mdk-$ver-aarch64-apple-darwin.tar.gz" | cut -d' ' -f1)"
-sed -e "s/@VERSION@/$ver/g" -e "s/@SHA256_AARCH64_APPLE_DARWIN@/$sha_arm/g" packaging/homebrew/mdk.rb.in >"$dist/homebrew/mdk.rb"
+sha_arm="$(shasum -a 256 "$dist/bin/rootmark-$ver-aarch64-apple-darwin.tar.gz" | cut -d' ' -f1)"
+sed -e "s/@VERSION@/$ver/g" -e "s/@SHA256_AARCH64_APPLE_DARWIN@/$sha_arm/g" packaging/homebrew/rootmark.rb.in >"$dist/homebrew/rootmark.rb"
 
 (cd "$dist" && find bin wheel obsidian homebrew "spec-$spec" -type f \( -name '*.tar.gz' -o -name '*.whl' -o -name '*.zip' -o -name '*.rb' -o -name 'conformance.json' \) | LC_ALL=C sort | xargs shasum -a 256 >SHA256SUMS)
 # ---- the real-Obsidian e2e of this tree's plugin (K-E1.3; docs/RELEASE.md

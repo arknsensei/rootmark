@@ -1,4 +1,4 @@
-# mdkernel Specification v1.0.3
+# rootmark Specification v1.0.3
 
 Status: **Frozen for §1–§6 (validated by prototype rounds v1–v3, Oct 2026); Validated for §7, §8, §11 (Phase 1 round P1-B, Oct 2026; conformance Level 2); Validated for §9 (Phase 1 rounds P1-C, P1-C.1, Oct 2026; conformance Level 3); Draft for §10 (to be validated in Phase 1).** Version 1.0.3 (Phase 1 round P1-D.1): §7 change and delete events carry their actor and source; §8 an unnamed checkpoint can be named (`CheckpointNamed`); §9 the length of a response with `proposal` results is bounded; informative notes on the edit policy (§7), the provenance of events (§4.2, §4.3) and the lexical document length (§9). Version 1.0.2 (Phase 1 round P1-C.1): §9 requested `proposal` results are ranked apart from, and appended after, unchanged `canonical` results; empty queries are rejected; lexical scoring is declared in the index manifest (informative). Version 1.0.1 (Phase 1 round P1-B.1): §7 undeclared `synthetic` → `canonical`; §8 `trace_id` with separators and input validation; §7/§8 serialization normative. §1–§6 are unchanged. License: Apache-2.0 (specification). Language: English, for publication; implementation directives are maintained in Turkish under `docs/`.
 
@@ -6,15 +6,15 @@ The key words MUST, MUST NOT, SHOULD, MAY are to be interpreted as in RFC 2119.
 
 ## 0. Scope and relationship to prior work
 
-mdkernel specifies a block-level lineage, provenance and governance layer over plain Markdown files. Markdown files are the single source of truth; every structure defined here is derived from them and can be rebuilt from them.
+rootmark specifies a block-level lineage, provenance and governance layer over plain Markdown files. Markdown files are the single source of truth; every structure defined here is derived from them and can be rebuilt from them.
 
-ContextNest (2026) specifies document-level governance for Markdown context (typed documents, hash-chained version history, checkpoints, publication gate, consumption traces). mdkernel adopts its vocabulary where meanings coincide and extends governance to the block level with lineage inferred from diffs, deterministic derived indexes and incremental indexing. mdkernel does not reuse ContextNest's implementation. A ContextNest-compatible export is a possible extension and is out of scope here.
+ContextNest (2026) specifies document-level governance for Markdown context (typed documents, hash-chained version history, checkpoints, publication gate, consumption traces). rootmark adopts its vocabulary where meanings coincide and extends governance to the block level with lineage inferred from diffs, deterministic derived indexes and incremental indexing. rootmark does not reuse ContextNest's implementation. A ContextNest-compatible export is a possible extension and is out of scope here.
 
 Non-goals: realtime multi-user editing (Phase 2), encrypted/zero-knowledge servers, corpora beyond ~10^5 documents, entity extraction and graph ranking (research).
 
 ## 1. Terminology
 
-- **Vault**: a directory tree of Markdown files plus a derived store under `<vault>/.mdkernel/`.
+- **Vault**: a directory tree of Markdown files plus a derived store under `<vault>/.rootmark/`.
 - **Document**: one Markdown file, addressed by `doc_path` (vault-relative, `/`-separated).
 - **Block**: the structural atom of Markdown (§2). Immutable, content-addressed.
 - **Version**: a concrete block content, identified by `version_id`.
@@ -54,10 +54,10 @@ All hashes are BLAKE3; identifiers are the first 32 hex characters. Timestamps M
 ## 4. Object store and event log
 
 ### 4.1 Object store
-`.mdkernel/objects/<vid[0:2]>/<vid>.json` (blocks), `.mdkernel/snapshots/<sid>.json`, `.mdkernel/checkpoints/<cid>.json`. Writing an existing identifier with different bytes MUST fail; identical bytes MUST be a no-op.
+`.rootmark/objects/<vid[0:2]>/<vid>.json` (blocks), `.rootmark/snapshots/<sid>.json`, `.rootmark/checkpoints/<cid>.json`. Writing an existing identifier with different bytes MUST fail; identical bytes MUST be a no-op.
 
 ### 4.2 Event log
-`.mdkernel/events.jsonl`, append-only. Each event carries `seq` (monotonic, vault-wide, no gaps), `doc_path`, `kind`, `lineage_ids`, `old_version_ids`, `new_version_ids`, `snapshot_id`, `meta`. Kinds: `BlockCreated`, `BlockUpdated`, `BlockMoved`, `BlockSplit`, `BlockMerged`, `BlockDeleted`, `SnapshotCommitted`, and (§7–§8) `LayerChanged`, `Promoted`, `Demoted`, `CheckpointCreated`.
+`.rootmark/events.jsonl`, append-only. Each event carries `seq` (monotonic, vault-wide, no gaps), `doc_path`, `kind`, `lineage_ids`, `old_version_ids`, `new_version_ids`, `snapshot_id`, `meta`. Kinds: `BlockCreated`, `BlockUpdated`, `BlockMoved`, `BlockSplit`, `BlockMerged`, `BlockDeleted`, `SnapshotCommitted`, and (§7–§8) `LayerChanged`, `Promoted`, `Demoted`, `CheckpointCreated`.
 
 Replaying the log MUST reconstruct every document's latest snapshot with an identical `snapshot_id`. The BLAKE3 hash of the whole log is the vault's determinism fingerprint (§10).
 
@@ -102,7 +102,7 @@ Every version has `layer ∈ {canonical, proposal, derived}`; layers MUST be ser
 
 - **Checkpoint**: `{checkpoint_id, name?, event_seq, docs: {doc_path: snapshot_id}}`. Immutable. Any query MAY be evaluated "as of" a checkpoint; the result MUST be identical for the same checkpoint and query (§10).
 - **Naming** (1.0.3): a checkpoint created without a name MAY be named once, later, by a vault-wide `CheckpointNamed` event with `meta.{checkpoint_id, name}`. Its `checkpoint_id`, `event_seq`, `docs` and stored object do not change. A name is unique in the vault and MUST NOT have the form of a checkpoint id; naming a named or unknown checkpoint, or giving a taken name, MUST be rejected (also on replay). `CheckpointNamed` is not a content event: it does not change the `event_seq` of a later checkpoint.
-- **Consumption trace**: `.mdkernel/traces.jsonl`, append-only: `{trace_id, checkpoint_id, consumer, query_hash, returned: [(doc_path, lineage_id, version_id)], at_seq}`; each `returned` entry MUST be serialized as an object with the keys `doc_path`, `lineage_id`, `version_id`. `trace_id = H(checkpoint_id + "\n" + consumer + "\n" + query_hash + "\n" + at_seq)`, where `at_seq` is written in decimal. `query_hash` MUST be exactly 32 lowercase hexadecimal characters and `consumer` MUST NOT contain `"\n"`; a trace violating either MUST be rejected. Traces answer "which block versions did this answer depend on".
+- **Consumption trace**: `.rootmark/traces.jsonl`, append-only: `{trace_id, checkpoint_id, consumer, query_hash, returned: [(doc_path, lineage_id, version_id)], at_seq}`; each `returned` entry MUST be serialized as an object with the keys `doc_path`, `lineage_id`, `version_id`. `trace_id = H(checkpoint_id + "\n" + consumer + "\n" + query_hash + "\n" + at_seq)`, where `at_seq` is written in decimal. `query_hash` MUST be exactly 32 lowercase hexadecimal characters and `consumer` MUST NOT contain `"\n"`; a trace violating either MUST be rejected. Traces answer "which block versions did this answer depend on".
 
 ## 9. Indexes and retrieval (Validated, P1-C.1)
 
@@ -130,4 +130,4 @@ Implementations SHOULD keep a prunable raw journal of every save (keystroke-leve
 - **Level 2 — Governance:** Level 1 + §7–§8 (layers, promotion, checkpoints, traces).
 - **Level 3 — Retrieval:** Level 2 + §9 (deterministic lexical and hybrid retrieval as of a checkpoint).
 
-Conformance tests are listed in `spec/CONFORMANCE.md`. The reference implementation is the `mdkernel` Rust workspace.
+Conformance tests are listed in `spec/CONFORMANCE.md`. The reference implementation is the `rootmark` Rust workspace.

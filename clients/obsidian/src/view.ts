@@ -11,7 +11,7 @@ export interface GutterMark {
   layer: string;
   /** one letter in the gutter: C canonical, P proposal, D derived */
   label: string;
-  /** CSS class: `mdk-layer-<layer>` */
+  /** CSS class: `rootmark-layer-<layer>` */
   cls: string;
   /** hover text: layer, author kind, source, last event */
   title: string;
@@ -24,7 +24,7 @@ export function gutterMarks(al: Alignment<BlameBlock>): GutterMark[] {
     lineage_id: b.lineage_id,
     layer: b.layer,
     label: b.layer === "canonical" ? "C" : b.layer === "proposal" ? "P" : "D",
-    cls: `mdk-layer-${b.layer}${b.inactive ? " mdk-inactive" : ""}`,
+    cls: `rootmark-layer-${b.layer}${b.inactive ? " rootmark-inactive" : ""}`,
     title: [
       b.layer + (b.layer_source === "derived" ? " (derived from the log)" : ""),
       b.author_kind,
@@ -66,16 +66,16 @@ export function pastView(doc: string, at: string, blocks: readonly BlameBlock[] 
  * to rebuild) for its tooltip and the notice. */
 export function indexNotice(ix: IndexStatus): { label: string; detail: string } | null {
   if (ix.state === "ok") return null;
-  const rebuild = "rebuild: run `mdk index build <vault>`";
+  const rebuild = "rebuild: run `rootmark index build <vault>`";
   const restart = ix.auto_rebuild
-    ? "or restart `mdk serve` ([index] auto_rebuild = true rebuilds it at start)"
-    : "or set [index] auto_rebuild = true in .mdkernel/policy.toml and restart `mdk serve`";
+    ? "or restart `rootmark serve` ([index] auto_rebuild = true rebuilds it at start)"
+    : "or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`";
   const unavailable = "search is unavailable (index_stale) until then; blame, history, checkpoints and traces work";
   switch (ix.state) {
     case "stale":
       return {
         label: "index stale",
-        detail: `index stale: format ${ix.format ?? "?"}, this mdk expects ${ix.expected_format}; ${unavailable}; ${rebuild}, ${restart}`,
+        detail: `index stale: format ${ix.format ?? "?"}, this rootmark expects ${ix.expected_format}; ${unavailable}; ${rebuild}, ${restart}`,
       };
     case "missing":
       return { label: "index missing", detail: `index missing: no index in the vault; ${unavailable}; ${rebuild}, ${restart}` };

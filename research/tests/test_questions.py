@@ -30,7 +30,7 @@ def test_prompts_are_fixed_english_strings():
 
 
 @pytest.mark.skipif(
-    not (Q.D3 / ".mdkernel" / "events.jsonl").exists() or not (Q.D4 / "single.jsonl").exists(),
+    not (Q.D3 / ".rootmark" / "events.jsonl").exists() or not (Q.D4 / "single.jsonl").exists(),
     reason="needs data/d3 (make d3) and data/d4",
 )
 def test_committed_question_set_resolves_completely():

@@ -1,24 +1,24 @@
-//! `mdk-index`: the index commands of the `mdk` CLI as a standalone binary
-//! (`mdk-index index …`, `mdk-index search …`, `mdk-index models verify`).
-//! The logic is `mdkindex::cli`; since P1-D the `mdk` binary (`server`)
+//! `rootmark-index`: the index commands of the `rootmark` CLI as a standalone binary
+//! (`rootmark-index index …`, `rootmark-index search …`, `rootmark-index models verify`).
+//! The logic is `rootmarkindex::cli`; since P1-D the `rootmark` binary (`server`)
 //! calls it directly. Every command prints JSON (`--pretty` indents it);
 //! any failure is a non-zero exit with the error on stderr.
 
 use clap::Parser;
-use mdkcore::MatcherVersion;
-use mdkindex::cli::{run, Cmd};
+use rootmarkcore::MatcherVersion;
+use rootmarkindex::cli::{run, Cmd};
 
 #[derive(Parser)]
 #[command(
-    name = "mdk-index",
-    about = "mdkernel index CLI (`mdk index …`, `mdk search …`)"
+    name = "rootmark-index",
+    about = "rootmark index CLI (`rootmark index …`, `rootmark search …`)"
 )]
 struct Cli {
     /// Indent JSON output
     #[arg(long, global = true)]
     pretty: bool,
     /// Lineage matcher version for `index watch` ingest (v2|v3; default:
-    /// $MDK_MATCHER, else the vault's lock, else v3) — as `mdk`
+    /// $ROOTMARK_MATCHER, else the vault's lock, else v3) — as `rootmark`
     #[arg(long, global = true, value_parser = ["v2", "v3"])]
     matcher: Option<String>,
     #[command(subcommand)]
@@ -27,11 +27,11 @@ struct Cli {
 
 fn main() {
     let cli = Cli::parse();
-    // as `mdk`: the flag, else $MDK_MATCHER (validated for every command)
+    // as `rootmark`: the flag, else $ROOTMARK_MATCHER (validated for every command)
     let matcher = cli
         .matcher
         .clone()
-        .or_else(|| std::env::var("MDK_MATCHER").ok())
+        .or_else(|| std::env::var("ROOTMARK_MATCHER").ok())
         .map(|m| MatcherVersion::parse(&m));
     let res = match matcher.transpose() {
         Ok(m) => run(cli.cmd, m),

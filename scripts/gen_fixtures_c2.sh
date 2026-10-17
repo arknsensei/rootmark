@@ -10,7 +10,7 @@
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-(cd "$here" && MDK_FIXTURES="$here/spec/fixtures" \
-  cargo test -p mdkernel-core --release -q --test conformance_c2_gen -- --ignored --nocapture)
+(cd "$here" && ROOTMARK_FIXTURES="$here/spec/fixtures" \
+  cargo test -p rootmark-core --release -q --test conformance_c2_gen -- --ignored --nocapture)
 bash "$here/scripts/gen_fixtures.sh"
 echo "C2 fixtures written from the current core; MANIFEST.json from scripts/gen_fixtures.sh"

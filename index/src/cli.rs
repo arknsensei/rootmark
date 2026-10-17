@@ -1,6 +1,6 @@
-//! The index commands of the `mdk` CLI (`mdk index …`, `mdk search …`;
-//! GOAL P1-C "CLI"), shared by the `mdk` binary of the `server` crate and
-//! this crate's `mdk-index` binary (P1-D/D0: `mdk` calls `run` directly, no
+//! The index commands of the `rootmark` CLI (`rootmark index …`, `rootmark search …`;
+//! GOAL P1-C "CLI"), shared by the `rootmark` binary of the `server` crate and
+//! this crate's `rootmark-index` binary (P1-D/D0: `rootmark` calls `run` directly, no
 //! longer through a second process; K-C6.1). Every command returns JSON; a
 //! failure is an `Err`.
 
@@ -11,7 +11,7 @@ use crate::store::{self, Store};
 use crate::OnnxMiniLm;
 use anyhow::{bail, Context, Result};
 use clap::{Args, Subcommand};
-use mdkcore::{AuthorKind, MatcherVersion, Provenance, Vault};
+use rootmarkcore::{AuthorKind, MatcherVersion, Provenance, Vault};
 use serde_json::json;
 use std::path::{Component, Path, PathBuf};
 
@@ -44,13 +44,13 @@ pub struct SearchArgs {
     #[arg(long)]
     pub include_proposal: bool,
     /// consumer recorded in the trace
-    #[arg(long, default_value = "mdk-cli")]
+    #[arg(long, default_value = "rootmark-cli")]
     pub consumer: String,
 }
 
 #[derive(Subcommand)]
 pub enum IndexCmd {
-    /// Rebuild <vault>/.mdkernel/index/ (every head and every checkpoint's
+    /// Rebuild <vault>/.rootmark/index/ (every head and every checkpoint's
     /// snapshots; the hot tier is dropped)
     Build {
         vault: PathBuf,

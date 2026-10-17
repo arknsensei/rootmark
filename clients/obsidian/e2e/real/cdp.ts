@@ -116,10 +116,10 @@ export async function launchObsidian(bin: string, dataDir: string, vault: string
   }
 }
 
-/** Helpers defined in the Obsidian window (`window.__mdk`): the plugin's
+/** Helpers defined in the Obsidian window (`window.__rootmark`): the plugin's
  * views are driven through their own DOM (inputs, buttons, modal), as a
  * person would. Every helper throws when its element is not there. */
-export const PAGE_HELPERS = `(window.__mdk = {
+export const PAGE_HELPERS = `(window.__rootmark = {
   view(type) {
     const el = document.querySelector('.workspace-leaf-content[data-type="' + type + '"] .view-content');
     if (!el) throw new Error('view ' + type + ' not open');
@@ -153,7 +153,7 @@ export const PAGE_HELPERS = `(window.__mdk = {
     return b;
   },
   statusBar() {
-    const it = [...document.querySelectorAll('.status-bar-item')].find((e) => (e.textContent ?? '').startsWith('mdk'));
+    const it = [...document.querySelectorAll('.status-bar-item')].find((e) => (e.textContent ?? '').startsWith('rootmark'));
     return it ? { text: it.textContent, title: it.getAttribute('title') } : null;
   },
   notices() {
@@ -162,7 +162,7 @@ export const PAGE_HELPERS = `(window.__mdk = {
   gutter() {
     const ed = app.workspace.activeLeaf?.view?.containerEl;
     if (!ed) return [];
-    return [...ed.querySelectorAll('.mdk-gutter .mdk-mark')].map((m) => ({ label: m.textContent, title: m.getAttribute('title'), cls: m.className }));
+    return [...ed.querySelectorAll('.rootmark-gutter .rootmark-mark')].map((m) => ({ label: m.textContent, title: m.getAttribute('title'), cls: m.className }));
   },
   async open(path) {
     const f = app.vault.getAbstractFileByPath(path);

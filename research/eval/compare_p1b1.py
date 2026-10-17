@@ -29,6 +29,17 @@ from pathlib import Path
 from eval import compare_runs as C
 from eval import metrics as M
 from eval.compare_p1b import RESULT_FILES_P1B, VAULT, _tree
+
+# the P1-B official RUN keeps its vault under the pre-rename directory
+# (K-GH.1; GH-0/F2): read there when the reference has no `.rootmark/`; the
+# compared RUN is always read at `VAULT`
+LEGACY_VAULT = Path("governance/vault/.mdkernel")
+
+
+def _ref_vault(run: Path) -> Path:
+    return VAULT if (run / VAULT).is_dir() or not (run / LEGACY_VAULT).is_dir() else LEGACY_VAULT
+
+
 from eval.datasets.common import dump_json, file_blake3
 
 
@@ -58,8 +69,9 @@ def main(argv: list[str] | None = None) -> None:
         res = C.compare(a.p1b_run, a.run, RESULT_FILES_P1B)
         allowed = allowed_fields(a.p1b_run) & allowed_fields(a.run)
         byte_files = {}
+        rv = _ref_vault(a.p1b_run)
         for f in (VAULT / "events.jsonl", VAULT / "traces.jsonl"):
-            pa, pb = a.p1b_run / f, a.run / f
+            pa, pb = a.p1b_run / rv / f.name, a.run / f
             for p in (pa, pb):
                 if not p.is_file():
                     raise FileNotFoundError(f"{p} missing")
@@ -70,9 +82,9 @@ def main(argv: list[str] | None = None) -> None:
                 "excluded": f.name == "traces.jsonl",
             }
         d = VAULT / "checkpoints"
-        ta, tb = _tree(a.p1b_run / d), _tree(a.run / d)
+        ta, tb = _tree(a.p1b_run / rv / d.name), _tree(a.run / d)
         if not ta:
-            raise FileNotFoundError(f"{a.p1b_run / d} is empty")
+            raise FileNotFoundError(f"{a.p1b_run / rv / d.name} is empty")
         byte_files[d.as_posix() + "/"] = {"files": len(ta), "equal": ta == tb, "excluded": False}
     except (FileNotFoundError, M.MetricError) as e:
         print(f"error: {e}", file=sys.stderr)

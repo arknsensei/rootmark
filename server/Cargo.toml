@@ -1,24 +1,24 @@
 [package]
-name = "mdkernel-server"
+name = "rootmark-server"
 version = "0.1.0"
 edition = "2021"
-description = "The mdk binary: CLI, MCP server (rmcp, stdio), local HTTP API (axum), file watcher, server policy (P1-D)."
+description = "The rootmark binary: CLI, MCP server (rmcp, stdio), local HTTP API (axum), file watcher, server policy (P1-D)."
 
 [lib]
-name = "mdkserver"
+name = "rootmarkserver"
 path = "src/lib.rs"
 
 [[bin]]
-name = "mdk"
-path = "src/bin/mdk.rs"
+name = "rootmark"
+path = "src/bin/rootmark.rs"
 
 # Direct dependencies are pinned exactly to releases at least 14 days old
 # at P1-D/D0 (2026-10-15; TASKS D0).
 # cargo-binstall (P1-E/E5): the release archives of scripts/release.sh /
 # .github/workflows/release.yml, one per target
 [package.metadata.binstall]
-pkg-url = "{ repo }/releases/download/v{ version }/mdk-{ version }-{ target }{ archive-suffix }"
-bin-dir = "mdk-{ version }-{ target }/{ bin }{ binary-ext }"
+pkg-url = "{ repo }/releases/download/v{ version }/rootmark-{ version }-{ target }{ archive-suffix }"
+bin-dir = "rootmark-{ version }-{ target }/{ bin }{ binary-ext }"
 pkg-fmt = "tgz"
 
 [package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
@@ -27,8 +27,8 @@ pkg-fmt = "zip"
 [dependencies]
 anyhow = "1.0.104"
 blake3 = { version = "1.8.7", features = ["pure"] }
-mdkernel-core = { path = "../core" }
-mdkernel-index = { path = "../index" }
+rootmark-core = { path = "../core" }
+rootmark-index = { path = "../index" }
 axum = { version = "=0.8.9", default-features = false, features = ["http1", "json", "tokio"] }
 clap = { version = "4.6.7", features = ["derive"] }
 notify = { version = "=8.2.0", default-features = false, features = ["macos_fsevent"] }

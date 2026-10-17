@@ -2,7 +2,7 @@
 
 `--phase tune`: ALPHA grid for `graph_hybrid` on the structural index, tuning
 questions only; writes `h2_tuning.json` (sensitivity curve, selection) and with
-`--apply` writes the selection into `mdkernel/graph_search.py::ALPHA_DEFAULT`.
+`--apply` writes the selection into `rootmark/graph_search.py::ALPHA_DEFAULT`.
 `--phase test`: refuses to run unless `ALPHA_DEFAULT` equals the tuning
 selection; then 5 strategies × 2 chunk strategies × {single, multi} on the test
 questions, latency, paired bootstrap; writes `h2.json`.
@@ -22,14 +22,14 @@ import json
 import re
 import time
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics as M
 from eval import runinfo
 from eval import truth as T
 from eval.build_index import load_or_build
 from eval.datasets.common import DATA, ROOT, SEED, die, load_manifest
-from mdkernel import graph_search as GS
+from rootmark import graph_search as GS
 
 ALPHAS = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 STRATEGIES = ["flat", "hybrid", "graph_flat", "graph_hybrid", "hier"]
@@ -41,7 +41,7 @@ BOOTSTRAP = 10_000
 D3 = DATA / "d3"
 D4 = DATA / "d4"
 SPLITS = DATA / "splits" / "d4.json"
-GRAPH_SEARCH = ROOT / "mdkernel" / "graph_search.py"
+GRAPH_SEARCH = ROOT / "rootmark" / "graph_search.py"
 
 
 def verify_d3(vault) -> None:
@@ -137,7 +137,7 @@ def apply_alpha(alpha: float) -> None:
 
 
 def phase_tune(run: str, apply: bool) -> None:
-    vault = mdkernel_core.Vault(str(D3))
+    vault = rootmark_core.Vault(str(D3))
     verify_d3(vault)
     qs = load_split("tune")
     groups = resolve_groups(vault, qs)
@@ -177,7 +177,7 @@ def phase_test(run: str) -> None:
         raise RuntimeError(
             f"ALPHA_DEFAULT {GS.ALPHA_DEFAULT} != tuning selection {tuning['selected_alpha']}"
         )
-    vault = mdkernel_core.Vault(str(D3))
+    vault = rootmark_core.Vault(str(D3))
     verify_d3(vault)
     qs = load_split("test")
     if set(tuning["tune_ids"]) & {q["id"] for q in qs}:

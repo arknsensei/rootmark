@@ -1,4 +1,4 @@
-//! mdkernel-core: block-level lineage, provenance and derived structures over
+//! rootmark-core: block-level lineage, provenance and derived structures over
 //! plain Markdown (spec/SPEC.md). Matcher v3 (default) and v2 (flag).
 
 pub mod chunk;
@@ -7,6 +7,7 @@ pub mod files;
 pub mod governance;
 pub mod journal;
 pub mod lineage;
+pub mod meta;
 pub mod model;
 pub mod normalize;
 pub mod parse;

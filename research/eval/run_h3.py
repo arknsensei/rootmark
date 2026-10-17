@@ -26,15 +26,15 @@ import tempfile
 import time
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics, runinfo
 from eval.build_index import load_or_build
 from eval.datasets import synthetic_edits as se
 from eval.datasets.common import DATA, SEED, die, load_manifest
-from mdkernel import embed as E
-from mdkernel.hot import HotLayer
-from mdkernel.watcher import Watcher
+from rootmark import embed as E
+from rootmark.hot import HotLayer
+from rootmark.watcher import Watcher
 
 D3 = DATA / "d3"
 N_EDITS = 200
@@ -54,7 +54,7 @@ SENT_RE = re.compile(r"(?<=[.!?])\s+")
 
 def query_sentence(text: str) -> str:
     """First sentence of ≥ 5 words of the edited block's new text (else the whole block)."""
-    flat = mdkernel_core.normalize(text)
+    flat = rootmark_core.normalize(text)
     for sent in SENT_RE.split(flat):
         if len(sent.split()) >= 5:
             return sent
@@ -95,8 +95,8 @@ def plan_edits(vault, docs_dir: Path, rng: random.Random) -> list[tuple[str, str
 def h3_latency(tmp: Path) -> dict:
     shutil.copytree(D3, tmp / "d3")
     docs_dir = tmp / "d3" / "docs"
-    vault = mdkernel_core.Vault(str(tmp / "d3"))
-    _, index, _ = load_or_build("structural", mdkernel_core.Vault(str(D3)))
+    vault = rootmark_core.Vault(str(tmp / "d3"))
+    _, index, _ = load_or_build("structural", rootmark_core.Vault(str(D3)))
     hot = HotLayer(index)
     w = Watcher(vault, hot, "structural", docs_dir)
     plans = plan_edits(vault, docs_dir, random.Random(f"{SEED}:h3"))
@@ -135,7 +135,7 @@ def h3_latency(tmp: Path) -> dict:
 
 
 def h3_rechunk() -> dict:
-    vault = mdkernel_core.Vault(str(D3))
+    vault = rootmark_core.Vault(str(D3))
     before = vault.events_hash()
     lost = gained = 0
     per_strategy = {}
@@ -154,7 +154,7 @@ def h3_rechunk() -> dict:
     switch = metrics.lineage_loss(per_strategy["fixed"], per_strategy["structural"])
     lost += switch["lost"]
     gained += switch["gained"]
-    after = mdkernel_core.Vault(str(D3)).events_hash()
+    after = rootmark_core.Vault(str(D3)).events_hash()
     return {
         "lineages": len(snap_total),
         "fixed_vs_snapshot": metrics.lineage_loss(snap_total, per_strategy["fixed"]),
@@ -172,7 +172,7 @@ def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--run", required=True)
     a = ap.parse_args(argv)
-    verify_d3(mdkernel_core.Vault(str(D3)))
+    verify_d3(rootmark_core.Vault(str(D3)))
     with tempfile.TemporaryDirectory() as t:
         lat = h3_latency(Path(t))
     rc = h3_rechunk()

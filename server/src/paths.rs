@@ -72,7 +72,7 @@ pub fn replace_file(path: &Path, bytes: &[u8]) -> Result<()> {
         .file_name()
         .and_then(|n| n.to_str())
         .context("file name is not UTF-8")?;
-    let tmp = dir.join(format!(".{name}.mdk-propose.tmp"));
+    let tmp = dir.join(format!(".{name}.rootmark-propose.tmp"));
     if std::fs::symlink_metadata(&tmp).is_ok() {
         std::fs::remove_file(&tmp).with_context(|| format!("remove {}", tmp.display()))?;
     }

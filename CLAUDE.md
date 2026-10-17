@@ -1,6 +1,6 @@
-# mdkernel — Kök Ajan Kuralları
+# rootmark — Kök Ajan Kuralları
 
-Bu depo `mdkernel` monoreposudur. Tek gerçek kaynak bu depodaki belgelerdir; dış sohbet geçmişi yoktur.
+Bu depo `rootmark` monoreposudur. Tek gerçek kaynak bu depodaki belgelerdir; dış sohbet geçmişi yoktur.
 
 ## Okuma sırası (her oturum)
 1. `NORTH_STAR.md`

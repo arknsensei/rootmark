@@ -1,9 +1,9 @@
-use mdkcore::chunk::{count_tokens, FIXED_OVERLAP, MAX_TOKENS};
-use mdkcore::{chunk, hash32, MatcherVersion, Provenance, Strategy, Vault};
+use rootmarkcore::chunk::{count_tokens, FIXED_OVERLAP, MAX_TOKENS};
+use rootmarkcore::{chunk, hash32, MatcherVersion, Provenance, Strategy, Vault};
 use std::path::PathBuf;
 
 fn tmp(name: &str) -> PathBuf {
-    let p = std::env::temp_dir().join(format!("mdk-chunk-{name}-{}", std::process::id()));
+    let p = std::env::temp_dir().join(format!("rootmark-chunk-{name}-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&p);
     std::fs::create_dir_all(&p).unwrap();
     p
@@ -13,7 +13,7 @@ fn mini_vault() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../spec/fixtures/mini_vault")
 }
 
-fn chunks_of(text: &str, strategy: Strategy, name: &str) -> (Vault, Vec<mdkcore::Chunk>) {
+fn chunks_of(text: &str, strategy: Strategy, name: &str) -> (Vault, Vec<rootmarkcore::Chunk>) {
     let mut v = Vault::open(tmp(name)).unwrap();
     let r = v
         .ingest("d.md", text, Provenance::default(), MatcherVersion::V2)
@@ -40,7 +40,7 @@ fn structural_never_crosses_a_heading() {
         // every non-heading block of a chunk shares the chunk's heading path
         for vid in &c.version_ids {
             let b = blocks.iter().find(|b| &b.version_id == vid).unwrap();
-            if b.block_type != mdkcore::BlockType::Heading {
+            if b.block_type != rootmarkcore::BlockType::Heading {
                 assert_eq!(b.heading_path, c.heading_path);
             }
         }

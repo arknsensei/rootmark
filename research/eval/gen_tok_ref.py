@@ -1,7 +1,7 @@
 """Tokenizer reference for the Rust lexical index (P1-C TASKS C2).
 
 Writes `data/tok_ref.json`: 200 fixed D3 structural chunks and their prototype
-BM25 tokens (`mdkernel.index.bm25_tokens`: `text.lower()`, then `[a-z0-9]+`).
+BM25 tokens (`rootmark.index.bm25_tokens`: `text.lower()`, then `[a-z0-9]+`).
 The Rust test `index/tests/lexical.rs` requires the same token list for every
 chunk, from the tokenizer function and from the tantivy analyzer.
 
@@ -19,7 +19,7 @@ import json
 
 from eval.datasets.common import DATA, die
 from eval.gen_embed_ref import d3_chunks, pick
-from mdkernel.index import bm25_tokens
+from rootmark.index import bm25_tokens
 
 OUT = DATA / "tok_ref.json"
 COUNT = 200
@@ -39,7 +39,7 @@ def main() -> None:
     events_hash, cs = d3_chunks()
     sel = pick(cs, COUNT)
     out = {
-        "tokenizer": "prototype mdkernel.index.bm25_tokens: text.lower(), re [a-z0-9]+",
+        "tokenizer": "prototype rootmark.index.bm25_tokens: text.lower(), re [a-z0-9]+",
         "d3_events_hash": events_hash,
         "strategy": "structural",
         "selection": f"(doc_path, chunk_id) order, picks i * n // {COUNT}, n = {len(cs)}",

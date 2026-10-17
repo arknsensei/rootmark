@@ -6,11 +6,11 @@
 //! and 2 and writes `reports/conformance.json`; it cannot run the index
 //! (`core` does not depend on `index`). This checker evaluates
 //! `spec/fixtures/C3-*/case.c3.json` with `conformance/eval_c3.rs` and, with
-//! `MDK_CONFORMANCE_REPORT`, extends that report: seven Level 3 entries,
+//! `ROOTMARK_CONFORMANCE_REPORT`, extends that report: seven Level 3 entries,
 //! `total` 27 + 7 (C2-10 since P1-D.1), `level_claimed` 3 when Levels 1–2 were claimed (2, intact
 //! fixture manifest — which also lists every C3 file) and every C3 case
 //! passes. Expected outputs are written by `scripts/gen_fixtures_c3.sh`.
-//! The fixture root is resolved at run time (`MDK_FIXTURES`, else
+//! The fixture root is resolved at run time (`ROOTMARK_FIXTURES`, else
 //! `<cwd>/../spec/fixtures`).
 
 #[allow(dead_code)] // `c3_case_dirs` is used by the fixture generator only
@@ -27,7 +27,7 @@ const LEVEL3: [&str; 7] = [
 const LOWER_TOTAL: u64 = 27;
 
 fn fixtures() -> PathBuf {
-    let root = match std::env::var_os("MDK_FIXTURES") {
+    let root = match std::env::var_os("ROOTMARK_FIXTURES") {
         Some(p) if !p.is_empty() => PathBuf::from(p),
         _ => std::env::current_dir().unwrap().join("../spec/fixtures"),
     };
@@ -101,7 +101,7 @@ fn conformance_level_3() {
         failures.extend(f);
         entries.push(e);
     }
-    if let Ok(path) = std::env::var("MDK_CONFORMANCE_REPORT") {
+    if let Ok(path) = std::env::var("ROOTMARK_CONFORMANCE_REPORT") {
         let path = PathBuf::from(path);
         let text = fs::read_to_string(&path).unwrap_or_else(|e| {
             panic!("{}: run the Level 1–2 checker first ({e})", path.display())

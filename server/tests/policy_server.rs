@@ -3,8 +3,8 @@
 //! unknown field, a wrong type or a value out of bounds is an error (never
 //! clamped); the P1-B forms are unchanged.
 
-use mdkcore::{Policy, PolicySource, Promotion};
-use mdkserver::config::{default_recipe, ServerConfig};
+use rootmarkcore::{Policy, PolicySource, Promotion};
+use rootmarkserver::config::{default_recipe, ServerConfig};
 
 const BASE: &str =
     "[version_trigger]\nidle_ms = 1000\nmin_sim_change = 0.2\n\n[journal]\nretention_hours = 24\n";

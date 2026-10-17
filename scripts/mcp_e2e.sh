@@ -3,19 +3,19 @@
 #
 #   scripts/mcp_e2e.sh <out-dir>
 #
-# Builds `mdk` and the lock-step driver (`server/examples/mcp_client.rs`),
+# Builds `rootmark` and the lock-step driver (`server/examples/mcp_client.rs`),
 # then runs the same session twice, in <out-dir>/run1 and <out-dir>/run2:
-#   1. vault: a copy of spec/fixtures/mini_vault ingested in place (`mdk
+#   1. vault: a copy of spec/fixtures/mini_vault ingested in place (`rootmark
 #      ingest-dir vault vault`), checkpoint `t0`,
-#      one agent document (`mdk propose`), one CLI read (one trace),
+#      one agent document (`rootmark propose`), one CLI read (one trace),
 #      checkpoint `t1` — all through the CLI, before the server starts;
-#   2. `mdk serve --vault vault --mcp stdio` (cwd = the run directory, so
+#   2. `rootmark serve --vault vault --mcp stdio` (cwd = the run directory, so
 #      the vault path is the same relative path in both runs; it writes the
 #      default policy recipe and builds the index at start), driven by
 #      `session.jsonl`: initialize (clientInfo mcp-e2e/1.0), tools/list,
 #      then for every tool its calls, valid and deliberately invalid;
 #   3. per tool, every check on its responses (jq) must hold; `search` is
-#      compared byte for byte with its CLI twin (`mdk search --consumer
+#      compared byte for byte with its CLI twin (`rootmark search --consumer
 #      mcp-e2e/1.0` on a copy of the vault taken before the session);
 #      D-5: 100 `search` + 100 `read_block` calls → exactly 200 more trace
 #      lines, consumer `mcp-e2e/1.0` (the clientInfo of the handshake).
@@ -30,8 +30,8 @@ out="${1:?usage: scripts/mcp_e2e.sh <out-dir>}"
 mkdir -p "$out"
 out="$(cd "$out" && pwd)"
 cd "$root"
-cargo build -q --release -p mdkernel-server --bin mdk --example mcp_client
-mdk="$root/target/release/mdk"
+cargo build -q --release -p rootmark-server --bin rootmark --example mcp_client
+rootmark="$root/target/release/rootmark"
 client="$root/target/release/examples/mcp_client"
 TOOLS="status search read_block history blame propose promote checkpoint checkpoints trace"
 
@@ -42,16 +42,16 @@ prepare() { # prepare <run-dir>: the vault, through the CLI
     cd "$d"
     mkdir vault
     cp "$root"/spec/fixtures/mini_vault/*.md vault/
-    "$mdk" ingest-dir vault vault >prep_ingest.json
-    "$mdk" checkpoint create vault --name t0 >prep_t0.json
+    "$rootmark" ingest-dir vault vault >prep_ingest.json
+    "$rootmark" checkpoint create vault --name t0 >prep_t0.json
     printf '# Agent notes\n\nAn agent suggests a finer espresso grind for light roasts.\n' >agent_note.md
-    "$mdk" propose vault agent/notes.md agent_note.md --source mcp-e2e-prep >prep_propose.json
+    "$rootmark" propose vault agent/notes.md agent_note.md --source mcp-e2e-prep >prep_propose.json
     rm agent_note.md
-    lineage="$("$mdk" blame vault espresso.md | jq -r '.blocks[0].lineage_id')"
-    "$mdk" read vault --at t0 --consumer cli-prep "$lineage" >prep_read.json
-    "$mdk" checkpoint create vault --name t1 >prep_t1.json
-    "$mdk" blame vault agent/notes.md | jq -r '.blocks[-1].lineage_id' >agent_lineage.txt
-    "$mdk" index build vault >prep_index.json
+    lineage="$("$rootmark" blame vault espresso.md | jq -r '.blocks[0].lineage_id')"
+    "$rootmark" read vault --at t0 --consumer cli-prep "$lineage" >prep_read.json
+    "$rootmark" checkpoint create vault --name t1 >prep_t1.json
+    "$rootmark" blame vault agent/notes.md | jq -r '.blocks[-1].lineage_id' >agent_lineage.txt
+    "$rootmark" index build vault >prep_index.json
     echo "$lineage" >lineage.txt
     # the same state for the CLI twin of the first MCP search (byte equality)
     cp -R vault vault_cli
@@ -104,11 +104,11 @@ session() { # session <lineage> <agent-lineage>: the JSON-RPC messages, one per 
   call propose '{"doc_path":"espresso.md","content":"An agent adds a note about xylophone grinders.","reason":"e2e append","mode":"append"}' # 231
   call propose '{"doc_path":"filter.md","content":"Agent text about quokka filters.","reason":"e2e section","mode":"replace_section","heading":"Equipment"}' # 232 no such heading in filter.md? (checked below)
   call propose '{"doc_path":"../escape.md","content":"x","reason":"escape"}' # 233
-  call propose '{"doc_path":"/tmp/mdk-e2e-outside.md","content":"x","reason":"outside"}' # 234
+  call propose '{"doc_path":"/tmp/rootmark-e2e-outside.md","content":"x","reason":"outside"}' # 234
   printf '{"jsonrpc":"2.0","id":235,"method":"tools/call","params":{"name":"propose","arguments":{"doc_path":"agent/big.md","reason":"too big","content":"%s"}}}\n' \
     "$(head -c 10500000 /dev/zero | tr '\0' 'a')"; id=235      # 235 > 10 MB
   call propose '{"doc_path":"espresso.md","content":"x","reason":"no heading","mode":"replace_section","heading":"No Such Heading"}' # 236
-  call propose '{"doc_path":".mdkernel/x.md","content":"x","reason":"hidden"}' # 237
+  call propose '{"doc_path":".rootmark/x.md","content":"x","reason":"hidden"}' # 237
   call propose '{"doc_path":"espresso.md","content":"x","reason":"no heading","mode":"replace_section"}' # 238
   call propose '{"doc_path":"espresso.md","content":"Agent recipe: 18 g in, 36 g out, about yuzu.","reason":"e2e section","mode":"replace_section","heading":"Recipe"}' # 239
   call blame '{"doc_path":"espresso.md"}'                    # 240
@@ -139,10 +139,10 @@ run() { # run <run-dir>
   local d="$1"
   prepare "$d"
   session "$(cat "$d/lineage.txt")" "$(cat "$d/agent_lineage.txt")" >"$d/session.jsonl"
-  (cd "$d" && "$client" session.jsonl transcript.jsonl -- "$mdk" serve --vault vault --mcp stdio 2>server.err)
-  cp "$d/vault/.mdkernel/traces.jsonl" "$d/traces_a.jsonl"
+  (cd "$d" && "$client" session.jsonl transcript.jsonl -- "$rootmark" serve --vault vault --mcp stdio 2>server.err)
+  cp "$d/vault/.rootmark/traces.jsonl" "$d/traces_a.jsonl"
   # the CLI twin of call 16, on the copy taken before the session
-  (cd "$d" && "$mdk" search vault_cli "espresso grind" --consumer mcp-e2e/1.0 >cli_search.json)
+  (cd "$d" && "$rootmark" search vault_cli "espresso grind" --consumer mcp-e2e/1.0 >cli_search.json)
   # D-4/D-6: a human promotes through the CLI, between the two sessions:
   # the prepared agent document and both blocks of the proposal of call 243
   (
@@ -150,12 +150,12 @@ run() { # run <run-dir>
     : >cli_promote.jsonl
     # every block of agent/notes.md: a chunk takes the lowest layer of its
     # blocks (spec §9), so the heading must be promoted with the paragraph
-    for l in $("$mdk" blame vault agent/notes.md | jq -r '.blocks[].lineage_id') $(jq -r 'select(.request.id == 243) | .response.result.structuredContent.blocks[].lineage_id' transcript.jsonl); do
-      "$mdk" promote vault "$l" --actor human:alice --reason "reviewed" >>cli_promote.jsonl
+    for l in $("$rootmark" blame vault agent/notes.md | jq -r '.blocks[].lineage_id') $(jq -r 'select(.request.id == 243) | .response.result.structuredContent.blocks[].lineage_id' transcript.jsonl); do
+      "$rootmark" promote vault "$l" --actor human:alice --reason "reviewed" >>cli_promote.jsonl
     done
   )
   session_b "$(cat "$d/agent_lineage.txt")" >"$d/session_b.jsonl"
-  (cd "$d" && "$client" session_b.jsonl transcript_b.jsonl -- "$mdk" serve --vault vault --mcp stdio 2>server_b.err)
+  (cd "$d" && "$client" session_b.jsonl transcript_b.jsonl -- "$rootmark" serve --vault vault --mcp stdio 2>server_b.err)
 }
 
 run "$out/run1"
@@ -182,8 +182,8 @@ lin="$(cat "$out/run1/lineage.txt")"
 ok_result='(.result.isError == false) and (.result.structuredContent | type == "object")'
 tool_err='.result.isError == true and (.result.content[0].text | startswith("error: "))'
 
-check handshake "initialize names server mdk, tools capability" \
-  '.result.serverInfo.name == "mdk" and (.result.capabilities.tools | type == "object")' 1
+check handshake "initialize names server rootmark, tools capability" \
+  '.result.serverInfo.name == "rootmark" and (.result.capabilities.tools | type == "object")' 1
 check handshake "tools/list has every tool of this round" \
   "[.result.tools[].name] == ($(printf '%s\n' $TOOLS | jq -R . | jq -sc .))" 2
 
@@ -222,7 +222,7 @@ alin="$(cat "$out/run1/agent_lineage.txt")"
 check search "valid call (hybrid default)" "$ok_result" 16
 check search "canonical hits only, agent document absent, trace by mcp-e2e/1.0" \
   '.result.structuredContent | (.hits | length) > 0 and all(.hits[]; .layer == "canonical" and .doc_path != "agent/notes.md") and .mode == "hybrid" and .include_proposal == false and (.trace_id | length) == 32' 16
-check search "JSON-equal to the CLI twin (mdk search --consumer mcp-e2e/1.0, same state)" \
+check search "JSON-equal to the CLI twin (rootmark search --consumer mcp-e2e/1.0, same state)" \
   ".result.structuredContent == $(jq -c . "$out/run1/cli_search.json")" 16
 # bytes, not only JSON values: the tool's text content is the CLI's stdout
 if cmp -s <(r 16 | jq -j '.result.content[0].text') <(tr -d '\n' <"$out/run1/cli_search.json"); then
@@ -276,7 +276,7 @@ check propose "D-11 ../ path refused" "$tool_err" 233
 check propose "D-11 path outside the vault refused" "$tool_err" 234
 check propose "D-11 content over 10 MB refused (max_propose_bytes)" "$tool_err and (.result.content[0].text | test(\"max_propose_bytes\"))" 235
 check propose "D-11 replace_section with a missing heading refused" "$tool_err and (.result.content[0].text | test(\"no heading\"))" 236
-check propose "hidden path (.mdkernel/) refused" "$tool_err" 237
+check propose "hidden path (.rootmark/) refused" "$tool_err" 237
 check propose "replace_section without heading refused" "$tool_err" 238
 check propose "replace_section Recipe: ok" "$ok_result" 239
 check propose "after the edits: Recipe body is the agent's, other blocks keep their human provenance" \
@@ -285,17 +285,17 @@ check propose "after the edits: Recipe body is the agent's, other blocks keep th
 v1="$out/run1/vault"
 pf=false
 if printf '# Plan\n\nThe agent plans a zephyr roast curve.\n' | cmp -s - "$v1/agent/plan.md" &&
-   [ "$(grep -cE 'lineage|version_id|mdkernel' "$v1/agent/plan.md" || true)" = 0 ] &&
-   [ ! -e "$v1/agent/big.md" ] && [ ! -e "$out/run1/escape.md" ] && [ ! -e /tmp/mdk-e2e-outside.md ] &&
-   [ ! -e "$v1/.mdkernel/x.md" ] && [ -z "$(find "$v1" -name '.*.mdk-propose.tmp')" ]; then pf=true; fi
-results+=("{\"tool\":\"propose\",\"check\":\"D-3 file is the agent's text only (no lineage|version_id|mdkernel); refused proposals wrote no file\",\"pass\":$pf}")
+   [ "$(grep -cE 'lineage|version_id|rootmark' "$v1/agent/plan.md" || true)" = 0 ] &&
+   [ ! -e "$v1/agent/big.md" ] && [ ! -e "$out/run1/escape.md" ] && [ ! -e /tmp/rootmark-e2e-outside.md ] &&
+   [ ! -e "$v1/.rootmark/x.md" ] && [ -z "$(find "$v1" -name '.*.rootmark-propose.tmp')" ]; then pf=true; fi
+results+=("{\"tool\":\"propose\",\"check\":\"D-3 file is the agent's text only (no lineage|version_id|rootmark); refused proposals wrote no file\",\"pass\":$pf}")
 echo "mcp_e2e: $( [ "$pf" = true ] && echo 'ok  ' || echo FAIL) [propose] D-3 plain file, refused proposals wrote nothing"
 pd=false
 expect="$(cat "$root/spec/fixtures/mini_vault/espresso.md"; printf '\nAn agent adds a note about xylophone grinders.\n')"
 if [ "$(sed -n '/^## Recipe/,$!p' "$out/run1/vault_cli/espresso.md")" = "$(sed -n '/^## Recipe/,$!p' "$v1/espresso.md")" ] &&
    grep -q '^Agent recipe: 18 g in, 36 g out, about yuzu.$' "$v1/espresso.md" &&
    [ "$(tail -n 1 "$v1/espresso.md")" = "An agent adds a note about xylophone grinders." ] &&
-   [ "$(grep -cE 'lineage|version_id|mdkernel' "$v1/espresso.md" || true)" = 0 ]; then pd=true; fi
+   [ "$(grep -cE 'lineage|version_id|rootmark' "$v1/espresso.md" || true)" = 0 ]; then pd=true; fi
 results+=("{\"tool\":\"propose\",\"check\":\"espresso.md: text before ## Recipe unchanged, agent text present, appended line last, no ids\",\"pass\":$pd}")
 echo "mcp_e2e: $( [ "$pd" = true ] && echo 'ok  ' || echo FAIL) [propose] espresso.md edits are the agent's text only"
 # events: every event after the session's start (checkpoints and the
@@ -303,11 +303,11 @@ echo "mcp_e2e: $( [ "$pd" = true ] && echo 'ok  ' || echo FAIL) [propose] espres
 # to a proposed document, and every event that creates a block version
 # carries the agent's provenance (SnapshotCommitted, BlockDeleted and
 # LayerChanged carry none)
-n_prep="$(wc -l <"$out/run1/vault_cli/.mdkernel/events.jsonl" | tr -d ' ')"
-bad_ev="$(tail -n +"$((n_prep + 1))" "$v1/.mdkernel/events.jsonl" | jq -c 'select(.kind != "CheckpointCreated") | select(.kind != "Promoted" or .meta.actor.kind != "human") | select(((.doc_path | IN("agent/plan.md", "espresso.md", "agent/d6.md")) and (if (.kind | IN("SnapshotCommitted", "BlockDeleted", "LayerChanged")) then true else (.meta.provenance.author_kind == "Agent" and .meta.provenance.source == "mcp-e2e/1.0") end)) | not)' | wc -l | tr -d ' ')"
-n_rec="$(wc -l <"$v1/.mdkernel/proposals.jsonl" | tr -d ' ')"
+n_prep="$(wc -l <"$out/run1/vault_cli/.rootmark/events.jsonl" | tr -d ' ')"
+bad_ev="$(tail -n +"$((n_prep + 1))" "$v1/.rootmark/events.jsonl" | jq -c 'select(.kind != "CheckpointCreated") | select(.kind != "Promoted" or .meta.actor.kind != "human") | select(((.doc_path | IN("agent/plan.md", "espresso.md", "agent/d6.md")) and (if (.kind | IN("SnapshotCommitted", "BlockDeleted", "LayerChanged")) then true else (.meta.provenance.author_kind == "Agent" and .meta.provenance.source == "mcp-e2e/1.0") end)) | not)' | wc -l | tr -d ' ')"
+n_rec="$(wc -l <"$v1/.rootmark/proposals.jsonl" | tr -d ' ')"
 pe=false
-if [ "$bad_ev" = 0 ] && [ "$n_rec" = 4 ] && jq -e -s 'map(.reason) == ["e2e create", "e2e append", "e2e section", "e2e d6"]' "$v1/.mdkernel/proposals.jsonl" >/dev/null; then pe=true; fi
+if [ "$bad_ev" = 0 ] && [ "$n_rec" = 4 ] && jq -e -s 'map(.reason) == ["e2e create", "e2e append", "e2e section", "e2e d6"]' "$v1/.rootmark/proposals.jsonl" >/dev/null; then pe=true; fi
 results+=("{\"tool\":\"propose\",\"check\":\"events.jsonl: only the proposed documents' agent block events (+ layer/checkpoint events); proposals.jsonl 4 reasons\",\"pass\":$pe}")
 echo "mcp_e2e: $( [ "$pe" = true ] && echo 'ok  ' || echo FAIL) [propose] events only for proposed documents ($bad_ev unexpected), $n_rec proposal records"
 
@@ -351,7 +351,7 @@ per_tool="$(printf '%s\n' "${results[@]}" | jq -sc 'group_by(.tool) | map({key: 
 
 # determinism: run1 ↔ run2
 same=true
-for f in transcript.jsonl transcript_b.jsonl cli_promote.jsonl vault/.mdkernel/events.jsonl vault/.mdkernel/traces.jsonl vault/.mdkernel/proposals.jsonl vault/espresso.md vault/agent/plan.md; do
+for f in transcript.jsonl transcript_b.jsonl cli_promote.jsonl vault/.rootmark/events.jsonl vault/.rootmark/traces.jsonl vault/.rootmark/proposals.jsonl vault/espresso.md vault/agent/plan.md; do
   if ! cmp -s "$out/run1/$f" "$out/run2/$f"; then
     echo "mcp_e2e: runs differ: $f" >&2
     same=false

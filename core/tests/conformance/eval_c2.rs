@@ -33,8 +33,8 @@
 //! recorded as `{"err": true}` only (messages may hold temp paths).
 
 use anyhow::{anyhow, bail, Context, Result};
-use mdkcore::store::write_immutable;
-use mdkcore::{
+use rootmarkcore::store::write_immutable;
+use rootmarkcore::{
     Actor, AuthorKind, Deny, HumanOnly, Layer, MatchParams, MatcherVersion, PromotionPolicy,
     Provenance, TransitionKind, Vault,
 };
@@ -51,7 +51,8 @@ struct Scratch(PathBuf);
 impl Scratch {
     fn new(tag: &str) -> Result<Scratch> {
         let n = SCRATCH.fetch_add(1, Ordering::SeqCst);
-        let d = std::env::temp_dir().join(format!("mdk-conf2-{}-{n}-{tag}", std::process::id()));
+        let d =
+            std::env::temp_dir().join(format!("rootmark-conf2-{}-{n}-{tag}", std::process::id()));
         if d.exists() {
             fs::remove_dir_all(&d)?;
         }
@@ -266,7 +267,7 @@ impl Run<'_> {
                 let cp = self.v()?.find_checkpoint(s(op, "at")?)?;
                 let p = self
                     .root
-                    .join(".mdkernel/checkpoints")
+                    .join(".rootmark/checkpoints")
                     .join(format!("{}.json", cp.checkpoint_id));
                 let same = fs::read(&p)?;
                 write_immutable(&p, &same)?;
@@ -292,7 +293,7 @@ impl Run<'_> {
                 json!({"blocks": blocks, "trace": trace})
             }
             "traces" => {
-                let p = self.root.join(".mdkernel/traces.jsonl");
+                let p = self.root.join(".rootmark/traces.jsonl");
                 json!(fs::read_to_string(&p).with_context(|| "traces.jsonl")?)
             }
             "layers" => {
@@ -315,11 +316,11 @@ impl Run<'_> {
                 serde_json::to_value(self.v()?.snapshot(&doc)?)?
             }
             "objects" => {
-                let md = self.root.join(".mdkernel");
+                let md = self.root.join(".rootmark");
                 json!({"objects": count(&md.join("objects"))?, "snapshots": count(&md.join("snapshots"))?})
             }
             "events" => {
-                let log = fs::read_to_string(self.root.join(".mdkernel/events.jsonl"))?;
+                let log = fs::read_to_string(self.root.join(".rootmark/events.jsonl"))?;
                 let kinds = log
                     .lines()
                     .map(|l| {
@@ -333,7 +334,7 @@ impl Run<'_> {
                 let kind = s(op, "kind")?;
                 let key = s(op, "remove_meta")?;
                 self.v = None;
-                let p = self.root.join(".mdkernel/events.jsonl");
+                let p = self.root.join(".rootmark/events.jsonl");
                 let log = fs::read_to_string(&p)?;
                 let mut lines: Vec<String> = log.lines().map(str::to_string).collect();
                 let i = lines
@@ -366,7 +367,7 @@ impl Run<'_> {
                 let kind = s(op, "kind")?;
                 let change = s(op, "change")?;
                 self.v = None;
-                let p = self.root.join(".mdkernel/events.jsonl");
+                let p = self.root.join(".rootmark/events.jsonl");
                 let log = fs::read_to_string(&p)?;
                 let mut lines: Vec<String> = log.lines().map(str::to_string).collect();
                 let i = lines
@@ -417,14 +418,14 @@ impl Run<'_> {
                 }
                 let value = s(op, "value")?;
                 self.v = None;
-                let p = self.root.join(".mdkernel/traces.jsonl");
+                let p = self.root.join(".rootmark/traces.jsonl");
                 let log = fs::read_to_string(&p).context("traces.jsonl")?;
                 let mut lines: Vec<String> = log.lines().map(str::to_string).collect();
                 let last = lines.last_mut().context("traces.jsonl is empty")?;
                 let mut t: Value = serde_json::from_str(last)?;
                 t[field] = json!(value);
                 let at_seq = t["at_seq"].as_u64().context("at_seq")?;
-                t["trace_id"] = json!(mdkcore::trace_id(
+                t["trace_id"] = json!(rootmarkcore::trace_id(
                     s(&t, "checkpoint_id")?,
                     s(&t, "consumer")?,
                     s(&t, "query_hash")?,

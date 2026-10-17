@@ -60,9 +60,9 @@ impl VerifiedModel {
     }
 }
 
-/// The models root: `$MDK_MODELS`, else this source tree's `models/`.
+/// The models root: `$ROOTMARK_MODELS`, else this source tree's `models/`.
 pub fn models_root() -> PathBuf {
-    match std::env::var_os("MDK_MODELS") {
+    match std::env::var_os("ROOTMARK_MODELS") {
         Some(p) if !p.is_empty() => PathBuf::from(p),
         _ => Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("..")

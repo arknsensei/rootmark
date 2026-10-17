@@ -15,8 +15,11 @@ P1B_RUN = Path(__file__).resolve().parents[2] / "reports/rounds/P1-B/runs/202610
 
 
 def _copy(tmp_path: Path) -> Path:
+    """A RUN equal to the P1-B official one, laid out as a current RUN: its
+    vault under `.rootmark/` (K-GH.1; the official RUN keeps `.mdkernel/`)."""
     dst = tmp_path / "run"
     shutil.copytree(P1B_RUN, dst)
+    (dst / "governance/vault/.mdkernel").rename(dst / "governance/vault/.rootmark")
     return dst
 
 
@@ -52,7 +55,7 @@ def test_excluded_fields_may_differ(tmp_path, capsys):
 
     _edit(run / "p1b_checks.json", c207)
     _edit(run / "governance/governance.json", lambda o: o.update(traces_sha256="2" * 64))
-    (run / "governance/vault/.mdkernel/traces.jsonl").write_text("changed\n")
+    (run / "governance/vault/.rootmark/traces.jsonl").write_text("changed\n")
     r = _run(run, capsys)
     assert r["code"] == 0, r
     assert len(r["res"]["differing_excluded"]) == 5
@@ -69,7 +72,7 @@ def test_other_differences_fail(tmp_path, capsys, what):
 
         _edit(run / "p1b_checks.json", other)
     elif what == "events":
-        p = run / "governance/vault/.mdkernel/events.jsonl"
+        p = run / "governance/vault/.rootmark/events.jsonl"
         p.write_bytes(p.read_bytes() + b"\n")
     else:
         _edit(run / "holdout_split.json", lambda o: o.update(extra_marker=1))

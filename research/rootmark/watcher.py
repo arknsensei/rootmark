@@ -6,14 +6,14 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
-from mdkernel.hot import HotLayer
-from mdkernel.index import key_of
+from rootmark.hot import HotLayer
+from rootmark.index import key_of
 
 
 class Watcher:
-    def __init__(self, vault: mdkernel_core.Vault, hot: HotLayer, strategy: str, docs_root: Path):
+    def __init__(self, vault: rootmark_core.Vault, hot: HotLayer, strategy: str, docs_root: Path):
         self.vault = vault
         self.hot = hot
         self.strategy = strategy

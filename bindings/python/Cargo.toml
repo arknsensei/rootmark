@@ -1,18 +1,18 @@
 [package]
-name = "mdkernel-bindings"
+name = "rootmark-bindings"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "mdkernel_core"
+name = "rootmark_core"
 crate-type = ["cdylib"]
 test = false
 doctest = false
 
 [dependencies]
 anyhow = "1.0.104"
-mdkernel-core = { path = "../../core" }
-mdkernel-index = { path = "../../index" }
+rootmark-core = { path = "../../core" }
+rootmark-index = { path = "../../index" }
 pyo3 = { version = "0.29.3", features = ["extension-module", "abi3-py311"] }
 serde = "1.0.229"
 serde_json = "1.0.154"

@@ -17,7 +17,7 @@ import json
 import tempfile
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import runinfo
 from eval.datasets.common import ROOT, die
@@ -32,7 +32,7 @@ def mini_hashes() -> dict:
     out = {}
     for m in ("v2", "v3"):
         with tempfile.TemporaryDirectory() as t:
-            v = mdkernel_core.Vault(t, matcher=m)
+            v = rootmark_core.Vault(t, matcher=m)
             v.ingest_dir(str(MINI))
             out[m] = v.events_hash()
     return out

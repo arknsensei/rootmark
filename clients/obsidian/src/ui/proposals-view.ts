@@ -4,17 +4,17 @@
 import { ItemView, Notice, Setting, type WorkspaceLeaf } from "obsidian";
 import { describeError } from "../api";
 import { DEMOTE_UNAVAILABLE, promoteAll, promoteSummary, type ProposalRow } from "../commands";
-import type MdkernelPlugin from "../main";
+import type RootmarkPlugin from "../main";
 import { openDoc } from "./open";
 import { askReason } from "./reason-modal";
 
-export const PROPOSALS_VIEW = "mdkernel-proposals";
+export const PROPOSALS_VIEW = "rootmark-proposals";
 
 export class ProposalsView extends ItemView {
   private rows: ProposalRow[] = [];
   private selected = new Set<string>();
 
-  constructor(leaf: WorkspaceLeaf, private readonly plugin: MdkernelPlugin) {
+  constructor(leaf: WorkspaceLeaf, private readonly plugin: RootmarkPlugin) {
     super(leaf);
   }
 
@@ -22,7 +22,7 @@ export class ProposalsView extends ItemView {
     return PROPOSALS_VIEW;
   }
   override getDisplayText(): string {
-    return "mdkernel proposals";
+    return "rootmark proposals";
   }
   override getIcon(): string {
     return "git-pull-request";
@@ -37,13 +37,13 @@ export class ProposalsView extends ItemView {
     c.empty();
     const client = this.plugin.client();
     if (client === null) {
-      c.createEl("p", { text: `mdk serve not connected: ${this.plugin.offlineReason()}` });
+      c.createEl("p", { text: `rootmark serve not connected: ${this.plugin.offlineReason()}` });
       return;
     }
     try {
       this.rows = await this.plugin.proposals();
     } catch (e) {
-      c.createEl("p", { cls: "mdk-error", text: describeError(e) });
+      c.createEl("p", { cls: "rootmark-error", text: describeError(e) });
       return;
     }
     const bar = new Setting(c).setName(`${String(this.rows.length)} proposal blocks`);
@@ -54,11 +54,11 @@ export class ProposalsView extends ItemView {
     );
     bar.addButton((b) => b.setButtonText("Demote").setDisabled(true).setTooltip(DEMOTE_UNAVAILABLE));
     bar.addButton((b) => b.setButtonText("Refresh").onClick(() => void this.refresh()));
-    const table = c.createEl("table", { cls: "mdk-proposals" });
+    const table = c.createEl("table", { cls: "rootmark-proposals" });
     const head = table.createEl("tr");
     for (const h of ["", "Document", "Section", "Source", "Seq"]) head.createEl("th", { text: h });
     for (const r of this.rows) {
-      const tr = table.createEl("tr", { cls: "mdk-layer-proposal" });
+      const tr = table.createEl("tr", { cls: "rootmark-layer-proposal" });
       const cb = tr.createEl("td").createEl("input", { type: "checkbox" });
       cb.checked = this.selected.has(r.lineage_id);
       cb.addEventListener("change", () => {
@@ -80,16 +80,16 @@ export class ProposalsView extends ItemView {
   private async promoteSelected(): Promise<void> {
     const client = this.plugin.client();
     if (client === null || this.selected.size === 0) {
-      new Notice(client === null ? "mdk serve not connected" : "Select proposal blocks first");
+      new Notice(client === null ? "rootmark serve not connected" : "Select proposal blocks first");
       return;
     }
     const reason = await askReason(this.app, `Promote ${String(this.selected.size)} block(s)`);
     if (reason === null) return;
     try {
       const outcomes = await promoteAll(client, [...this.selected], reason);
-      new Notice(`mdkernel: ${promoteSummary(outcomes)}`, 8000);
+      new Notice(`rootmark: ${promoteSummary(outcomes)}`, 8000);
     } catch (e) {
-      new Notice(`mdkernel promote: ${describeError(e)}`, 8000);
+      new Notice(`rootmark promote: ${describeError(e)}`, 8000);
     }
     this.selected = new Set();
     await this.refresh();

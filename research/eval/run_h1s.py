@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-import mdkernel_core
+import rootmark_core
 
 from eval import metrics, runinfo
 from eval import truth as T
@@ -55,7 +55,7 @@ def doc_records(doc_dir: Path, theta: float | None, theta_split: float | None) -
     doc = t["doc_path"]
     records = []
     with tempfile.TemporaryDirectory() as tmp:
-        v = mdkernel_core.Vault(tmp, theta, theta_split)
+        v = rootmark_core.Vault(tmp, theta, theta_split)
         v.ingest(doc, (doc_dir / t["base_file"]).read_text(encoding="utf-8"), "Synthetic", "d1")
         for s in t["steps"]:
             text = (doc_dir / s["file"]).read_text(encoding="utf-8")
@@ -164,7 +164,7 @@ def phase_test(run: str) -> None:
     verify_d1()
     tuning = runinfo.read_json(run, "h1s_tuning.json")
     sel = tuning["selected"]
-    compiled = mdkernel_core.matcher_defaults()
+    compiled = rootmark_core.matcher_defaults()
     if (round(compiled[0], 6), round(compiled[1], 6)) != (
         round(sel["theta"], 6),
         round(sel["theta_split"], 6),

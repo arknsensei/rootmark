@@ -4,6 +4,13 @@ Every JSON leaf of every result file is compared; the only exclusions are the
 wall-clock latency paths listed in `LATENCY_PATHS` (fixed here). A missing
 file, or a field present in one run but not the other, is an error.
 
+Names are compared modulo the project rename (K-GH.1, GH-0/F3): every string
+leaf and key passes through `renamed` (`mdkernel` → `rootmark`, the binary
+`mdk` → `rootmark`, the environment prefix `MDK_` → `ROOTMARK_`; the data
+identifiers `mdk_version`, `mdk_lower_alnum` and `mdkernel-index/<n>` kept), so a RUN recorded
+before the rename compares with one recorded after it. The same function is
+applied to both sides: two RUNs of the same code compare exactly as before.
+
     python -m eval.compare_runs <runs_dir_A>/<RUN_A> <runs_dir_B>/<RUN_B> [--set v2|v3] [--out path.json]
 
 Exit code: 0 when H4-2 holds (maximum relative difference 0), 3 when it does
@@ -14,11 +21,38 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
 from eval import metrics as M
 from eval.datasets.common import dump_json
+
+# K-GH.1 (GH-0/F3): the rename table of GH-0/F1, case-sensitive, in order;
+# `mdk` only at a token start
+_KEEP = ("mdk_version", "mdk_lower_alnum", "mdkernel-index/")
+_RENAME = [
+    (re.compile(r"mdkernel"), "rootmark"),
+    (re.compile(r"Mdkernel"), "Rootmark"),
+    (re.compile(r"MDKERNEL"), "ROOTMARK"),
+    (re.compile(r"(?<![A-Za-z0-9])mdk"), "rootmark"),
+    (re.compile(r"(?<![A-Za-z0-9])Mdk"), "Rootmark"),
+    (re.compile(r"(?<![A-Za-z0-9])MDK"), "ROOTMARK"),
+]
+
+
+def renamed(s: str) -> str:
+    """A string as it reads after the project rename (K-GH.1)."""
+    if "mdk" not in s.lower():
+        return s
+    for i, k in enumerate(_KEEP):
+        s = s.replace(k, f"\x00{i}\x00")
+    for rx, rep in _RENAME:
+        s = rx.sub(rep, s)
+    for i, k in enumerate(_KEEP):
+        s = s.replace(f"\x00{i}\x00", k)
+    return s
+
 
 RESULT_FILES = [
     "h1s_tuning.json",
@@ -75,14 +109,18 @@ def leaves(obj, prefix: tuple = ()) -> dict[tuple, object]:
     if isinstance(obj, dict):
         out = {}
         for k, v in obj.items():
-            out.update(leaves(v, prefix + (k,)))
+            sub = leaves(v, prefix + (renamed(k) if isinstance(k, str) else k,))
+            clash = set(sub) & set(out)
+            if clash:  # an old and a new name side by side: never drop one silently
+                raise M.MetricError(f"keys equal after the rename: {sorted(map(_key, clash))[:3]}")
+            out.update(sub)
         return out
     if isinstance(obj, list):
         out = {prefix + ("#len",): len(obj)}
         for i, v in enumerate(obj):
             out.update(leaves(v, prefix + (i,)))
         return out
-    return {prefix: obj}
+    return {prefix: renamed(obj) if isinstance(obj, str) else obj}
 
 
 def _key(path: tuple) -> str:
@@ -91,8 +129,27 @@ def _key(path: tuple) -> str:
     return "›".join(str(p).replace(".", "·") for p in path)
 
 
-def _load(run_dir: Path, name: str) -> dict:
+def resolve(run_dir: Path, name: str) -> Path:
+    """`run_dir / name`; in a RUN recorded before the rename (K-GH.1, GH-0/F3)
+    each missing path component is the one entry of its directory that reads
+    as it after `renamed` (`conformance_mdk.json`, `.mdkernel/`). Without
+    such an entry the path is returned unchanged (and is missing)."""
     p = run_dir / name
+    if p.exists():
+        return p
+    cur = run_dir
+    for part in Path(name).parts:
+        nxt = cur / part
+        if not nxt.exists() and cur.is_dir():
+            hits = [e for e in cur.iterdir() if renamed(e.name) == part]
+            if len(hits) == 1:
+                nxt = hits[0]
+        cur = nxt
+    return cur if cur.exists() else p
+
+
+def _load(run_dir: Path, name: str) -> dict:
+    p = resolve(run_dir, name)
     if not p.exists():
         raise FileNotFoundError(f"{p} missing")
     return json.loads(p.read_text())

@@ -12,20 +12,23 @@ set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 sha="$(git -C "$here" rev-parse --verify 'v3-final^{commit}')"
-work="$(mktemp -d -t mdk-fixture-gen.XXXXXX)"
+work="$(mktemp -d -t rootmark-fixture-gen.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
 
 git -C "$here" archive "$sha" Cargo.lock rust-toolchain.toml .cargo core | tar -xf - -C "$work"
 mkdir -p "$work/gen/src"
 cp "$here/scripts/fixture-gen/Cargo.toml.in" "$work/gen/Cargo.toml"
 cp "$here/scripts/fixture-gen/src/main.rs" "$work/gen/src/main.rs"
-cp "$here/core/tests/conformance/eval.rs" "$work/gen/src/eval.rs"
+# the v3-final core keeps its store under the pre-rename name (K-GH.1;
+# GH-0/F2): the shared evaluator reads it there in this build only
+sed 's/"\.rootmark"/".mdkernel"/g' "$here/core/tests/conformance/eval.rs" >"$work/gen/src/eval.rs"
+grep -q '"\.mdkernel"' "$work/gen/src/eval.rs" || { echo "gen_fixtures: no store directory literal in eval.rs" >&2; exit 1; }
 cat >"$work/Cargo.toml" <<TOML
 [workspace]
 resolver = "2"
 members = ["core", "gen"]
 TOML
 # --offline: resolve the generator's dependencies from the v3-final lock only
-(cd "$work" && cargo build --offline --release -q -p mdk-fixture-gen)
-"$work/target/release/mdk-fixture-gen" "$here/spec/fixtures" "$sha"
+(cd "$work" && cargo build --offline --release -q -p rootmark-fixture-gen)
+"$work/target/release/rootmark-fixture-gen" "$here/spec/fixtures" "$sha"
 echo "fixtures written from v3-final core $sha"

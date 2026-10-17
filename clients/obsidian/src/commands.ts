@@ -1,17 +1,17 @@
 // The plugin's command layer (TASKS E2–E4): what every panel does, as plain
 // functions over the contract client. No Obsidian import: the panels call
 // these, and the e2e harness (clients/obsidian/e2e/) calls the same
-// functions against a real `mdk serve` when Obsidian cannot run headless.
+// functions against a real `rootmark serve` when Obsidian cannot run headless.
 // Nothing here writes a vault file: the only writes are the contract's
 // HTTP tools (`promote`, `checkpoint`; the plugin never proposes).
 
 import {
-  MdkError,
+  RootmarkError,
   type BlameBlock,
   type Checkpoint,
   type HistoryResult,
   type Hit,
-  type MdkClient,
+  type RootmarkClient,
   type PromoteResult,
   type Returned,
 } from "./api";
@@ -33,17 +33,17 @@ export interface ProposalRow {
 
 /** `blame` of one document; `null` when the log does not know it (an
  * untracked file is not an error for the panel; every other error is). */
-export async function blameOf(client: MdkClient, doc: string, at?: string): Promise<BlameBlock[] | null> {
+export async function blameOf(client: RootmarkClient, doc: string, at?: string): Promise<BlameBlock[] | null> {
   try {
     const r = await client.call("blame", at === undefined ? { doc_path: doc } : { doc_path: doc, at });
     return r.blocks;
   } catch (e) {
-    if (e instanceof MdkError && e.code === "not_found") return null;
+    if (e instanceof RootmarkError && e.code === "not_found") return null;
     throw e;
   }
 }
 
-export async function historyOf(client: MdkClient, lineage: string): Promise<HistoryResult> {
+export async function historyOf(client: RootmarkClient, lineage: string): Promise<HistoryResult> {
   return client.call("history", { lineage_id: lineage });
 }
 
@@ -53,7 +53,7 @@ export async function historyOf(client: MdkClient, lineage: string): Promise<His
  * them (`align`), else null: then every section is unknown ("—"), never a
  * guess by position. */
 export async function listProposals(
-  client: MdkClient,
+  client: RootmarkClient,
   docs: readonly string[],
   sections: (doc: string, blocks: readonly BlameBlock[]) => readonly (string | null)[] | null = () => null,
 ): Promise<ProposalRow[]> {
@@ -82,7 +82,7 @@ export async function listProposals(
 export interface PromoteOutcome {
   lineage_id: string;
   result: PromoteResult | null;
-  error: MdkError | null;
+  error: RootmarkError | null;
 }
 
 /** Promote over HTTP — the human channel (K-D1.3; contract §2.4). The
@@ -91,7 +91,7 @@ export interface PromoteOutcome {
  * `invalid_arguments`, reported, never retried). A policy refusal is an
  * answer (`decision: "denied"`). One outcome per lineage, in order. */
 export async function promoteAll(
-  client: MdkClient,
+  client: RootmarkClient,
   lineages: readonly string[],
   reason: string,
 ): Promise<PromoteOutcome[]> {
@@ -100,7 +100,7 @@ export async function promoteAll(
     try {
       out.push({ lineage_id: l, result: await client.call("promote", { lineage_id: l, reason }), error: null });
     } catch (e) {
-      if (!(e instanceof MdkError)) throw e;
+      if (!(e instanceof RootmarkError)) throw e;
       out.push({ lineage_id: l, result: null, error: e });
     }
   }
@@ -108,13 +108,13 @@ export async function promoteAll(
 }
 
 /** Demote is in the GOAL's proposal view but not in the HTTP/MCP contract
- * (docs/CLIENT_CONTRACT.md §2 has no demote tool; only the CLI has `mdk
+ * (docs/CLIENT_CONTRACT.md §2 has no demote tool; only the CLI has `rootmark
  * demote`). The client relies on nothing the contract does not say, so it
  * is refused here, visibly, and the user is pointed to the CLI (decision
  * request K-E2-T; ASSUMPTIONS E2-1). */
 export const DEMOTE_UNAVAILABLE =
-  "Demote is not in mdk serve's contract (docs/CLIENT_CONTRACT.md §2; decision request K-E2-T). " +
-  "From a terminal: mdk demote <vault> <lineage> --actor human:<id> --reason <why>";
+  "Demote is not in rootmark serve's contract (docs/CLIENT_CONTRACT.md §2; decision request K-E2-T). " +
+  "From a terminal: rootmark demote <vault> <lineage> --actor human:<id> --reason <why>";
 
 export function demote(): never {
   throw new Error(DEMOTE_UNAVAILABLE);
@@ -166,7 +166,7 @@ export interface SearchView {
  * split for display. A hit of another layer is `bad_response` (derived is
  * never returned, §2.2). */
 export async function runSearch(
-  client: MdkClient,
+  client: RootmarkClient,
   query: string,
   opts: { mode?: "hybrid" | "lexical" | "flat"; k?: number; include_proposal?: boolean; at?: string } = {},
 ): Promise<SearchView> {
@@ -174,20 +174,20 @@ export async function runSearch(
   const k = opts.k ?? 10;
   const asked = opts.include_proposal === true;
   const bad = r.hits.find((h) => h.layer !== "canonical" && h.layer !== "proposal");
-  if (bad !== undefined) throw new MdkError("bad_response", `search returned a ${bad.layer} hit (contract §2.2)`, 200);
+  if (bad !== undefined) throw new RootmarkError("bad_response", `search returned a ${bad.layer} hit (contract §2.2)`, 200);
   const firstProposal = r.hits.findIndex((h) => h.layer === "proposal");
   if (firstProposal >= 0 && r.hits.slice(firstProposal).some((h) => h.layer === "canonical")) {
-    throw new MdkError("bad_response", "search: a canonical hit after a proposal hit (contract §2.2)", 200);
+    throw new RootmarkError("bad_response", "search: a canonical hit after a proposal hit (contract §2.2)", 200);
   }
   const canonical = r.hits.filter((h) => h.layer === "canonical");
   const proposal = r.hits.filter((h) => h.layer === "proposal");
   // a proposal is never shown unasked, and never hidden: an answer that
   // holds one without the flag is outside the contract (§2.2)
   if ((!asked || !r.include_proposal) && proposal.length > 0) {
-    throw new MdkError("bad_response", "search: proposal hits without include_proposal (contract §2.2)", 200);
+    throw new RootmarkError("bad_response", "search: proposal hits without include_proposal (contract §2.2)", 200);
   }
   if (canonical.length > k || proposal.length > k) {
-    throw new MdkError(
+    throw new RootmarkError(
       "bad_response",
       `search: ${String(canonical.length)} canonical / ${String(proposal.length)} proposal hits for k = ${String(k)} (contract §2.2: at most k per layer)`,
       200,
@@ -197,18 +197,18 @@ export async function runSearch(
 }
 
 /** Checkpoints in creation order (§2.3). */
-export async function listCheckpoints(client: MdkClient): Promise<Checkpoint[]> {
+export async function listCheckpoints(client: RootmarkClient): Promise<Checkpoint[]> {
   return (await client.call("checkpoints", {})).checkpoints;
 }
 
 /** Names the current state's checkpoint (or creates it named; §2.3). */
-export async function nameCheckpoint(client: MdkClient, name: string): Promise<Checkpoint> {
+export async function nameCheckpoint(client: RootmarkClient, name: string): Promise<Checkpoint> {
   return client.call("checkpoint", { name });
 }
 
 /** The read-only past view of a note: its blame at a checkpoint; `null`
  * when the note had no snapshot then. */
-export async function blameAt(client: MdkClient, doc: string, at: string): Promise<BlameBlock[] | null> {
+export async function blameAt(client: RootmarkClient, doc: string, at: string): Promise<BlameBlock[] | null> {
   return blameOf(client, doc, at);
 }
 
@@ -222,7 +222,7 @@ export interface TraceRow {
 }
 
 /** The latest `limit` traces (newest first), optionally of one consumer. */
-export async function recentTraces(client: MdkClient, opts: { consumer?: string; limit?: number } = {}): Promise<TraceRow[]> {
+export async function recentTraces(client: RootmarkClient, opts: { consumer?: string; limit?: number } = {}): Promise<TraceRow[]> {
   const r = await client.call("trace", opts.consumer === undefined ? {} : { consumer: opts.consumer });
   const rows = r.traces.map((t) => ({
     trace_id: t.trace_id,

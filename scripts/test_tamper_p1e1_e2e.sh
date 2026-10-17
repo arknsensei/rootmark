@@ -14,9 +14,9 @@ set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 out="${1:?usage: test_tamper_p1e1_e2e.sh <out.json>}"
-work="$(mktemp -d -t mdk-tamper-p1e1-e2e.XXXXXX)"
+work="$(mktemp -d -t rootmark-tamper-p1e1-e2e.XXXXXX)"
 trap 'rm -rf "$work"' EXIT
-export MDK_MODELS="${MDK_MODELS:-$here/models}"
+export ROOTMARK_MODELS="${ROOTMARK_MODELS:-$here/models}"
 cd "$here"
 cases=()
 add() { # add <group> <case> <expected rejected|accepted> <rc> [<detail JSON>]
@@ -28,11 +28,11 @@ add() { # add <group> <case> <expected rejected|accepted> <rc> [<detail JSON>]
 }
 run() { local rc=0; "$@" >/dev/null 2>&1 || rc=$?; echo "$rc"; }
 
-rc="$(MDK_OBSIDIAN=/nonexistent/Obsidian run bash scripts/plugin_e2e_real.sh "$work/skip")"
+rc="$(ROOTMARK_OBSIDIAN=/nonexistent/Obsidian run bash scripts/plugin_e2e_real.sh "$work/skip")"
 detail="$(jq -c '{skipped, pass, as_expected: (.skipped == true and .pass == null)}' "$work/skip/plugin_e2e_real.json")"
 add real-e2e "no Obsidian binary: skip reported, not a pass" accepted "$rc" "$detail"
 
-obs="${MDK_OBSIDIAN:-/Applications/Obsidian.app/Contents/MacOS/Obsidian}"
+obs="${ROOTMARK_OBSIDIAN:-/Applications/Obsidian.app/Contents/MacOS/Obsidian}"
 real=false
 if [ -x "$obs" ]; then
   real=true
@@ -43,7 +43,7 @@ if [ -x "$obs" ]; then
   # the status-bar label of a non-ok index removed from the bundle
   perl -pe 's/` \\xB7 \$\{ix\.label\}`/""/g' clients/obsidian/main.js >"$pd/main.js"
   cmp -s "$pd/main.js" clients/obsidian/main.js && { echo "test_tamper_p1e1_e2e: index label not found in main.js" >&2; exit 1; }
-  rc="$(MDK_E2E_PLUGIN_DIR="$pd" run bash scripts/plugin_e2e_real.sh "$work/tamper")"
+  rc="$(ROOTMARK_E2E_PLUGIN_DIR="$pd" run bash scripts/plugin_e2e_real.sh "$work/tamper")"
   detail="$(jq -c '{passed, e1_9: .e1_9_connection.pass,
     as_expected: (.passed == 11 and (.e1_9_connection.pass | not))}' "$work/tamper/plugin_e2e_real.json")"
   add real-e2e "plugin bundle without the index state in the status bar" rejected "$rc" "$detail"

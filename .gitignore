@@ -35,9 +35,9 @@ node_modules/
 /reports/conformance_l1.json
 
 # test scratch vaults
-**/fixtures/**/.mdkernel/
-# the P1-E.1 old-index fixture is a vault with its .mdkernel/ (scripts/gen_old_index.sh)
-!/server/tests/fixtures/index_v2/vault/.mdkernel/
+**/fixtures/**/.rootmark/
+# the P1-E.1 old-index fixture is a vault with its .rootmark/ (scripts/gen_old_index.sh)
+!/server/tests/fixtures/index_v2/vault/.rootmark/
 
 # macOS
 .DS_Store
