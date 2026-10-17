@@ -1,6 +1,6 @@
 # Yayım kontrol listesi (mdk 0.1.0; P1-E/E5)
 
-Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde kimlikleri R1…R14; betik her biri için `ok`/`FAIL` yazar, çıkış 0 yalnız hepsi geçerse). `scripts/release.sh` paketi `dist/`'e kurar; hiçbir şey yayımlamaz, etiket atmaz.
+Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde kimlikleri R1…R14 ve R4a; betik her biri için `ok`/`FAIL` yazar, çıkış 0 yalnız hepsi geçerse). `scripts/release.sh` paketi `dist/`'e kurar; hiçbir şey yayımlamaz, etiket atmaz.
 
 | # | Madde | Doğrulama (release_check.sh) |
 |---|---|---|
@@ -8,6 +8,7 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 | R2 | Spec sürümü CRITERION'ın güncel değeri | `server/src/tools.rs SPEC_VERSION` = `core/tests/conformance.rs` `spec_version` = `spec/SPEC.md` başlığındaki sürüm |
 | R3 | `mdk --version` / `--spec-version` doğru | yerel ikili `mdk 0.1.0` / spec sürümü |
 | R4 | Her yayım ikilisi kendi `mdk conformance`'ında 34/34 | `dist/release.json`: her hedefin kaydı `ok`; olmayan hedef nedeniyle listelenir (E-7) |
+| R4a | Paket güncel | `dist/release.json`: `version` = 0.1.0, `worktree_dirty` false, kaydedilen commit ile HEAD arasında paket girdileri aynı (`git diff --quiet <commit> HEAD -- Cargo.toml Cargo.lock core index server bindings clients/obsidian spec models/MANIFEST.json scripts/release.sh scripts/linux_cross_build.sh scripts/fetch_model.sh packaging LICENSE README.md`); yalnız kayıt (ör. `docs/rounds/`) commit'leri güncelliği bozmaz |
 | R5 | `mdk conformance` = `make conformance` | `scripts/conformance_equiv.sh` test-test eşit |
 | R6 | Arşivler ve SHA256SUMS | `dist/SHA256SUMS` her arşivi kapsar, `shasum -c` geçer |
 | R7 | Python wheel | `dist/wheel/*-0.1.0-*.whl` (dağıtım adı `mdkernel_bindings`) içinde `mdkernel_core` modülü |

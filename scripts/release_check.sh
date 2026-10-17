@@ -23,14 +23,22 @@ item R1 "one version $ver" "$( [ "$ver" = 0.1.0 ] && [ "$(echo "$vers" | sort -u
 item R2 "spec version $spec" "$( grep -q "\"spec_version\": \"$spec\"" core/tests/conformance.rs && head -1 spec/SPEC.md | grep -q "v$spec\$"; echo $?)"
 mdk="$root/target/release/mdk"
 item R3 "mdk --version / --spec-version" "$( [ "$("$mdk" --version 2>/dev/null)" = "mdk $ver" ] && [ "$("$mdk" --spec-version 2>/dev/null)" = "$spec" ]; echo $?)"
-head="$(git rev-parse HEAD)"
+# the package's inputs: a dist/ built at a commit whose inputs equal HEAD's,
+# from a clean tree, is fresh (later commits of records only are fine)
+INPUTS=(Cargo.toml Cargo.lock core index server bindings clients/obsidian spec models/MANIFEST.json
+  scripts/release.sh scripts/linux_cross_build.sh scripts/fetch_model.sh packaging LICENSE README.md)
 if [ -f "$dist/release.json" ]; then
-  # the package must be of this commit and version (a stale dist/ fails)
-  fresh="$(jq -r --arg h "$head" --arg v "$ver" 'if .commit == $h and .version == $v then "yes" else "no: dist/ of \(.commit // "?") version \(.version // "?")" end' "$dist/release.json")"
-  [ "$fresh" = yes ] || item R4 "release binaries of HEAD" 1 "$fresh"
-  item R4 "release binaries pass mdk conformance 34/34" "$( [ "$fresh" = yes ] && jq -e '.ok == 4' "$dist/release.json" >/dev/null; echo $?)" \
+  pc="$(jq -r '.commit // ""' "$dist/release.json")"
+  why=""
+  [ "$(jq -r '.version // ""' "$dist/release.json")" = "$ver" ] || why="version $(jq -r '.version // "?"' "$dist/release.json") != $ver"
+  [ "$(jq -r '.worktree_dirty' "$dist/release.json")" = false ] || why="${why:+$why; }built from a dirty work tree"
+  if [ -z "$pc" ] || ! git cat-file -e "$pc^{commit}" 2>/dev/null; then why="${why:+$why; }unknown commit ${pc:-none}"
+  elif ! git diff --quiet "$pc" HEAD -- "${INPUTS[@]}"; then why="${why:+$why; }inputs changed since ${pc:0:7}: $(git diff --name-only "$pc" HEAD -- "${INPUTS[@]}" | head -3 | tr '\n' ' ')"; fi
+  item R4a "release package fresh (inputs of ${pc:0:7} = HEAD, clean tree, version)" "$( [ -z "$why" ]; echo $?)" "$why"
+  item R4 "release binaries pass mdk conformance 34/34" "$(jq -e '.ok == 4' "$dist/release.json" >/dev/null; echo $?)" \
     "$(jq -r '[.targets[] | "\(.target): \(if .ok then "ok" elif .built then "built, check failed" else "not built" end)"] | join("; ")' "$dist/release.json")"
 else
+  item R4a "release package fresh" 1 "dist/release.json missing (scripts/release.sh)"
   item R4 "release binaries pass mdk conformance 34/34" 1 "dist/release.json missing (scripts/release.sh)"
 fi
 tmp="$(mktemp -d -t mdk-relcheck.XXXXXX)"; trap 'rm -rf "$tmp"' EXIT

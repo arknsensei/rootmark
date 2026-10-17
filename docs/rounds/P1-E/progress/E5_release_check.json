@@ -19,6 +19,12 @@
       "detail": ""
     },
     {
+      "id": "R4a",
+      "item": "release package fresh (inputs of 8a62d6e = HEAD, clean tree, version)",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "id": "R4",
       "item": "release binaries pass mdk conformance 34/34",
       "ok": false,
@@ -85,7 +91,7 @@
       "detail": ""
     }
   ],
-  "passed": 13,
-  "total": 14,
+  "passed": 14,
+  "total": 15,
   "pass": false
 }
