@@ -14,9 +14,3 @@ export const obsidianTransport: Transport = async (req) => {
   });
   return { status: res.status, text: res.text };
 };
-
-/** The vault's files, read-only (`DataAdapter.read`/`exists`). */
-export interface Adapter {
-  read(path: string): Promise<string>;
-  exists(path: string): Promise<boolean>;
-}

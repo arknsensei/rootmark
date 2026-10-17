@@ -72,8 +72,13 @@ export const ERROR_CODES = Object.keys(ERROR_STATUS) as ErrorCode[];
 for (const name of contractTools) {
   const t = tools.find((x) => x.name === name);
   const s = t.inputSchema;
+  const top = new Set(["type", "properties", "required", "additionalProperties", "description", "title", "$schema"]);
+  for (const k of Object.keys(s)) if (!top.has(k)) throw new Error(`${name}: unknown top-level schema key ${k}`);
   if (s.type !== "object" || s.additionalProperties !== false) throw new Error(`${name}: not a closed object schema`);
   const req = new Set(s.required ?? []);
+  for (const r of req) {
+    if (!Object.prototype.hasOwnProperty.call(s.properties ?? {}, r)) throw new Error(`${name}: required ${r} is not a property`);
+  }
   const props = Object.entries(s.properties ?? {});
   const doc = `\n/** \`${name}\` arguments (closed: an unknown field is \`invalid_arguments\`). */\n`;
   if (props.length === 0) {

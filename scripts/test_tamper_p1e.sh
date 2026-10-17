@@ -80,6 +80,17 @@ add client-types "untouched generated types" accepted "$(MDK_CLIENT_TYPES="$g" r
 sed 's/"trace"\] as const/"trace","demote"] as const/' clients/obsidian/src/contract.gen.ts >"$g"
 cmp -s "$g" clients/obsidian/src/contract.gen.ts && { echo "test_tamper_p1e: TOOLS line not found" >&2; exit 1; }
 add client-types "a tool outside the contract added to the generated types" rejected "$(MDK_CLIENT_TYPES="$g" run bash scripts/gen_client_types.sh --check)"
+# the generator refuses schemas it cannot type (fed a copy of a live tools/list)
+tl="$work/tools.json"
+jq -n '{tools: [{name: "status", inputSchema: {type: "object", additionalProperties: false, properties: {}, required: []}}]}' >"$tl"
+gen() { node clients/obsidian/scripts/gen-types.mjs "$1" "$work/contract_one.md"; }
+# a one-tool contract (status only) beside the schema copies
+{ echo; echo '## 2. Araçlar'; echo '| `status` | hayır | — | x |'; echo; echo '## 3. Kodlar'; echo '| `internal` | 500 | x |'; echo; echo '## 4. Son'; } >"$work/contract_one.md"
+add client-types "generator: one closed schema (control)" accepted "$(run gen "$tl")"
+jq '.tools[0].inputSchema.oneOf = [{required: ["x"]}]' "$tl" >"$work/t1.json"
+add client-types "generator: top-level oneOf refused" rejected "$(run gen "$work/t1.json")"
+jq '.tools[0].inputSchema.required = ["ghost"]' "$tl" >"$work/t2.json"
+add client-types "generator: required field without a property refused" rejected "$(run gen "$work/t2.json")"
 
 printf '%s\n' "${cases[@]}" | jq -s '{cases: .,
   rejected: ([.[] | select(.expected == "rejected" and .as_expected)] | length),

@@ -17,6 +17,7 @@ import {
   type VaultReader,
 } from "../src/api";
 import { fetchTransport, startFake, type Fake } from "./fake-server";
+import { SAMPLES } from "./samples";
 
 const TOKEN = "a".repeat(64);
 let fake: Fake;
@@ -46,7 +47,11 @@ const ARGS: { [T in ToolName]: ToolArgs[T] } = {
 
 describe("requests (contract §1)", () => {
   it.each(TOOLS.map((t) => [t]))("%s: POST /v1/<tool>, bearer token, X-Consumer, JSON body = arguments", async (tool) => {
-    await client.call(tool, ARGS[tool]);
+    // the loop's tool is a union: the dynamic call goes through an untyped
+    // view (statically each call is typed; see the compile-error test)
+    fake.reply(200, SAMPLES[tool]);
+    const dyn = client.call.bind(client) as unknown as (t: ToolName, a: unknown) => Promise<unknown>;
+    await dyn(tool, ARGS[tool]);
     expect(fake.requests).toHaveLength(1);
     const r = fake.requests[0];
     expect(r?.method).toBe("POST");
@@ -64,6 +69,7 @@ describe("requests (contract §1)", () => {
   });
 
   it("status() is GET /v1/status without a body", async () => {
+    fake.reply(200, SAMPLES.status);
     await client.status();
     const r = fake.requests[0];
     expect(r?.method).toBe("GET");
@@ -84,6 +90,11 @@ describe("requests (contract §1)", () => {
       void client.call("promote", { lineage_id: "x" });
       // @ts-expect-error mode outside the enum
       void client.call("search", { query: "x", mode: "fuzzy" });
+      const anyTool = TOOLS[0] as ToolName;
+      // @ts-expect-error a tool name not known at compile time takes no arguments
+      void client.call(anyTool, {});
+      // @ts-expect-error an explicit union cannot carry another tool's arguments
+      void client.call<"search" | "promote">("promote", { query: "x" });
     };
     expect(typeof typeOnly).toBe("function");
   });
@@ -119,7 +130,7 @@ describe("errors (contract §3)", () => {
 
   it("a promote refusal is an answer, not an error (§2.4)", async () => {
     fake.reply(200, { decision: "denied", lineage_id: "l", layer: "proposal", reason: "r", actor: { kind: "agent", id: "a/1" }, policy: "human_only", policy_version: "1" });
-    const r = await client.call("promote", ARGS.promote);
+    const r = await client.call("promote", { lineage_id: "0".repeat(32), reason: "approved" });
     expect(r.decision).toBe("denied");
   });
 });
@@ -130,8 +141,56 @@ const vaultOf = (files: Record<string, string>): VaultReader => ({
   exists: (p) => Promise.resolve(p in files),
 });
 
+describe("answers are checked against §2/§2.5 (no silent half-result)", () => {
+  it.each(TOOLS.map((t) => [t]))("%s: the real answer passes", async (tool) => {
+    fake.reply(200, SAMPLES[tool]);
+    const dyn = client.call.bind(client) as unknown as (t: ToolName, a: unknown) => Promise<unknown>;
+    await expect(dyn(tool, ARGS[tool])).resolves.toEqual(SAMPLES[tool]);
+  });
+
+  const broken: [ToolName, (o: Record<string, unknown>) => void, string][] = [
+    ["status", (o) => delete o["mdk_version"], "status.mdk_version: missing"],
+    ["status", (o) => (o["last_checkpoint"] = { checkpoint_id: 7 }), "status.last_checkpoint"],
+    ["search", (o) => ((((o["hits"] as Record<string, unknown>[])[0]) as Record<string, unknown>)["layer"] = "secret"), "not a layer"],
+    ["blame", (o) => ((((o["blocks"] as Record<string, unknown>[])[1]) as Record<string, unknown>)["seq_created"] = "1"), "seq_created: not an integer"],
+    ["history", (o) => ((((o["events"] as Record<string, unknown>[])[0]) as Record<string, unknown>)["lineage_ids"] = "x"), "not an array"],
+    ["promote", (o) => (o["decision"] = "maybe"), "neither promoted nor denied"],
+    ["trace", (o) => delete ((((o["traces"] as Record<string, unknown>[])[0]) as Record<string, unknown>)["returned"]), "returned: missing"],
+  ];
+  it.each(broken)("%s with a broken field → bad_response", async (tool, breakIt, why) => {
+    const o = structuredClone(SAMPLES[tool]) as Record<string, unknown>;
+    breakIt(o);
+    fake.reply(200, o);
+    const dyn = client.call.bind(client) as unknown as (t: ToolName, a: unknown) => Promise<unknown>;
+    const e = (await dyn(tool, ARGS[tool]).catch((x: unknown) => x)) as MdkError;
+    expect(e.code).toBe("bad_response");
+    expect(e.message).toContain(why);
+  });
+
+  it("a status without mdk_version keeps the plugin passive", async () => {
+    const o = structuredClone(SAMPLES.status) as Record<string, unknown>;
+    delete o["mdk_version"];
+    fake.reply(200, o);
+    const port = new URL(fake.url).port;
+    const st = await connect(
+      vaultOf({ ".mdkernel/policy.toml": `[server]\nhttp_port = ${port}\n`, ".mdkernel/server.token": TOKEN }),
+      fetchTransport,
+      "c",
+    );
+    expect(st.kind).toBe("offline");
+    expect(st.kind === "offline" ? st.reason : "").toMatch(/^bad_response/);
+  });
+});
+
 describe("connection (contract §1; GOAL: no server → passive)", () => {
   const policy = '[promotion]\npolicy = "human_only"\n\n[server]\nhttp_port = 7357 # the port\n\n[identity]\nhuman_id = "ada"\n';
+
+  it("TOML values: basic and literal strings, comments, array tables", () => {
+    const t = `[identity]\nhuman_id = "a # b"  # c\n[[server]]\nhttp_port = 1\n[server]\nhttp_port = 7357\n`;
+    expect(tomlValue(t, "identity", "human_id")).toBe("a # b");
+    expect(tomlValue(t, "server", "http_port")).toBe("7357");
+    expect(tomlValue("[identity]\nhuman_id = 'x\\y'\n", "identity", "human_id")).toBe("x\\y");
+  });
 
   it("reads [server] http_port, [identity] human_id and the token", async () => {
     const s = await readSettings(vaultOf({ ".mdkernel/policy.toml": policy, ".mdkernel/server.token": `${TOKEN}\n` }));
@@ -150,6 +209,7 @@ describe("connection (contract §1; GOAL: no server → passive)", () => {
       const st = await connect(vaultOf(files), fetchTransport, "c");
       expect(st.kind).toBe("offline");
       expect(st.kind === "offline" ? st.reason : "").toContain(why);
+      expect(st.kind === "offline" ? st.reason : "").toMatch(/^not_configured/);
     }
   });
 
@@ -165,7 +225,7 @@ describe("connection (contract §1; GOAL: no server → passive)", () => {
 
   it("a server that answers status: online", async () => {
     const port = Number(new URL(fake.url).port);
-    fake.reply(200, { vault: "/v", spec_version: "1.0.3", mdk_version: "0.2.0", level_claimed: 3 });
+    fake.reply(200, SAMPLES.status);
     const p = policy.replace("7357", String(port));
     const st = await connect(vaultOf({ ".mdkernel/policy.toml": p, ".mdkernel/server.token": TOKEN }), fetchTransport, "c");
     expect(st.kind).toBe("online");

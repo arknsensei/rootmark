@@ -1,9 +1,10 @@
 // The client's only way to the kernel: the HTTP contract of `mdk serve`
 // (docs/CLIENT_CONTRACT.md §1–§3). Argument types and error codes are
 // generated from the contract (contract.gen.ts); the result types below
-// name the contract's main fields (§2) and nothing the contract does not
-// promise. No Obsidian import here: the same client runs in the plugin
-// (transport: Obsidian `requestUrl`) and in Node (e2e harness: `fetch`).
+// name the main fields of §2 and the inner fields of §2.5 — the ones the
+// client relies on, each checked on every answer (`shape.ts`). No Obsidian
+// import here: the same client runs in the plugin (transport: Obsidian
+// `requestUrl`) and in Node (e2e harness: `fetch`).
 
 import {
   ERROR_STATUS,
@@ -12,15 +13,17 @@ import {
   type ToolArgs,
   type ToolName,
 } from "./contract.gen";
+import { lastCheckpointViolation, resultViolation } from "./shape";
 
 export { TOOLS, ERROR_STATUS };
 export type { ErrorCode, ToolArgs, ToolName };
 
 export type Layer = "canonical" | "proposal" | "derived";
-export type AuthorKind = "Human" | "Agent" | "Transcript" | "Synthetic";
-export type ActorKind = "human" | "agent" | "policy";
+/** §2.5: a string (`Human`, `Agent`, `Transcript`, `Synthetic`). */
+export type AuthorKind = string;
 export interface Actor {
-  kind: ActorKind;
+  /** `human`, `agent` or `policy` (§4.2) */
+  kind: string;
   id: string;
 }
 
@@ -210,10 +213,11 @@ export interface Connection {
   consumer: string;
 }
 
-/** Codes of the contract (§3), plus two of the client's own: the server
- * did not answer (`unreachable`) or answered outside the contract
- * (`bad_response`). Neither is ever swallowed. */
-export type ClientErrorCode = ErrorCode | "unreachable" | "bad_response";
+/** Codes of the contract (§3), plus three of the client's own: the vault
+ * lacks the connection settings (`not_configured`), the server did not
+ * answer (`unreachable`) or answered outside the contract (`bad_response`).
+ * None is ever swallowed. */
+export type ClientErrorCode = ErrorCode | "not_configured" | "unreachable" | "bad_response";
 
 export class MdkError extends Error {
   constructor(
@@ -234,8 +238,9 @@ const isRecord = (v: unknown): v is Record<string, unknown> =>
 const isCode = (c: unknown): c is ErrorCode =>
   typeof c === "string" && Object.prototype.hasOwnProperty.call(ERROR_STATUS, c);
 
-/** The contract's answer → result or `MdkError` (§3: decide on `code`). */
-export function decode(tool: string, res: HttpResponse): unknown {
+/** The contract's answer → result or `MdkError` (§3: decide on `code`);
+ * a result is checked against §2/§2.5 (`shape.ts`). */
+export function decode(tool: ToolName, res: HttpResponse): unknown {
   let body: unknown;
   try {
     body = JSON.parse(res.text);
@@ -245,6 +250,10 @@ export function decode(tool: string, res: HttpResponse): unknown {
   if (res.status === 200) {
     if (!isRecord(body) || "error" in body) {
       throw new MdkError("bad_response", `${tool}: HTTP 200 without a result object`, 200);
+    }
+    const bad = resultViolation(tool, body) ?? (tool === "status" ? lastCheckpointViolation(body) : null);
+    if (bad !== null) {
+      throw new MdkError("bad_response", `answer outside the contract (§2.5): ${bad}`, 200);
     }
     return body;
   }
@@ -257,6 +266,11 @@ export function decode(tool: string, res: HttpResponse): unknown {
   const hint = typeof err["hint"] === "string" ? err["hint"] : null;
   throw new MdkError(code, message, res.status, hint);
 }
+
+type IsUnion<T, U = T> = T extends unknown ? ([U] extends [T] ? false : true) : never;
+/** The arguments of exactly one tool: for a union of tools (a tool name not
+ * known at compile time, or an explicit union) nothing is assignable. */
+export type ArgsOf<T extends ToolName> = true extends IsUnion<T> ? never : NoInfer<ToolArgs[T]>;
 
 export class MdkClient {
   constructor(
@@ -285,8 +299,10 @@ export class MdkClient {
   }
 
   /** `POST /v1/<tool>` with the tool's arguments (§1). A tool outside the
-   * contract, or a wrong argument, does not compile. */
-  async call<T extends ToolName>(tool: T, args: NoInfer<ToolArgs[T]>): Promise<ToolResult[T]> {
+   * contract, or arguments that are not that tool's, do not compile; a
+   * tool name that is a union (not one known tool) takes no arguments at
+   * all (`ArgsOf`). */
+  async call<T extends ToolName>(tool: T, args: ArgsOf<T>): Promise<ToolResult[T]> {
     return (await this.send(tool, "POST", JSON.stringify(args))) as ToolResult[T];
   }
 
@@ -306,21 +322,41 @@ export interface VaultReader {
 export const TOKEN_PATH = ".mdkernel/server.token";
 export const POLICY_PATH = ".mdkernel/policy.toml";
 
-/** `[table] key = <value>` of a TOML text: the raw value (comment and
- * quotes removed), or null. Only the two keys the client reads. */
+/** A TOML value as written: a basic ("…", with \\ and \" escapes) or
+ * literal ('…') string, or a bare value up to a comment. */
+function tomlScalar(v: string): string | null {
+  if (v.startsWith('"')) {
+    const m = /^"((?:[^"\\]|\\.)*)"\s*(#.*)?$/.exec(v);
+    return m?.[1] === undefined ? null : m[1].replace(/\\(.)/g, "$1");
+  }
+  if (v.startsWith("'")) {
+    const m = /^'([^']*)'\s*(#.*)?$/.exec(v);
+    return m?.[1] ?? null;
+  }
+  return v.replace(/\s*#.*$/, "").trim();
+}
+
+/** `[table] key = <value>` of a TOML text, or null. Only the two keys the
+ * client reads (`[server] http_port`, `[identity] human_id`); array tables
+ * (`[[…]]`) are never one of them. A value it cannot read is null, and the
+ * caller says what is missing. */
 export function tomlValue(text: string, table: string, key: string): string | null {
-  let current = "";
+  let current: string | null = "";
   for (const raw of text.split(/\r?\n/)) {
-    const line = raw.replace(/\s+#.*$/, "").trim();
+    const line = raw.trim();
     if (line.startsWith("#") || line === "") continue;
-    const t = /^\[([^\]]+)\]$/.exec(line);
+    if (line.startsWith("[[")) {
+      current = null;
+      continue;
+    }
+    const t = /^\[([^\]]+)\]\s*(#.*)?$/.exec(line);
     if (t?.[1] !== undefined) {
       current = t[1].trim();
       continue;
     }
     const kv = /^([A-Za-z0-9_]+)\s*=\s*(.+)$/.exec(line);
     if (current === table && kv?.[1] === key && kv[2] !== undefined) {
-      return kv[2].trim().replace(/^"(.*)"$/, "$1");
+      return tomlScalar(kv[2].trim());
     }
   }
   return null;
@@ -338,24 +374,24 @@ export interface Settings {
  * `[server] http_port`. Missing → an error saying what is missing. */
 export async function readSettings(vault: VaultReader): Promise<Settings> {
   if (!(await vault.exists(POLICY_PATH))) {
-    throw new MdkError("unreachable", `${POLICY_PATH} not found: this vault is not served by mdk`, null);
+    throw new MdkError("not_configured", `${POLICY_PATH} not found: this vault is not served by mdk`, null);
   }
   const policy = await vault.read(POLICY_PATH);
   const portText = tomlValue(policy, "server", "http_port");
   const port = portText === null ? NaN : Number(portText);
   if (!Number.isInteger(port) || port < 1 || port > 65535) {
     throw new MdkError(
-      "unreachable",
+      "not_configured",
       `${POLICY_PATH} has no [server] http_port: set it and start \`mdk serve --vault <vault> --http 127.0.0.1\``,
       null,
     );
   }
   if (!(await vault.exists(TOKEN_PATH))) {
-    throw new MdkError("unreachable", `${TOKEN_PATH} not found: start \`mdk serve --http\` once`, null);
+    throw new MdkError("not_configured", `${TOKEN_PATH} not found: start \`mdk serve --http\` once`, null);
   }
   const token = (await vault.read(TOKEN_PATH)).trim();
   if (!/^[0-9a-f]{64}$/.test(token)) {
-    throw new MdkError("unreachable", `${TOKEN_PATH} is not a 64-hex token`, null);
+    throw new MdkError("not_configured", `${TOKEN_PATH} is not a 64-hex token`, null);
   }
   return { port, token, humanId: tomlValue(policy, "identity", "human_id") };
 }
@@ -376,7 +412,7 @@ export async function connect(
   try {
     settings = await readSettings(vault);
   } catch (e) {
-    return { kind: "offline", reason: e instanceof Error ? e.message : String(e) };
+    return { kind: "offline", reason: describeError(e) };
   }
   const client = new MdkClient(
     { baseUrl: `http://127.0.0.1:${String(settings.port)}`, token: settings.token, consumer },
@@ -386,8 +422,7 @@ export async function connect(
     const status = await client.status();
     return { kind: "online", client, status, settings };
   } catch (e) {
-    const reason = e instanceof MdkError ? `${e.code}: ${e.message}` : String(e);
-    return { kind: "offline", reason };
+    return { kind: "offline", reason: describeError(e) };
   }
 }
 

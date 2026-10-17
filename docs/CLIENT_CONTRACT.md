@@ -68,6 +68,16 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
 - Politikanın izin verdiği bir istek `proposal` olmayan ya da budanmış bir soy içinse → `invalid_arguments` (HTTP 400).
 - Bir chunk, bloklarının en düşük katmanını alır. Bir belgeyi aramada görünür kılmak için chunk'ın bütün soyları terfi ettirilir.
 
+### 2.5 Yanıtların istemcinin dayandığı iç alanları (P1-E/E1)
+§2 tablosunun ana alanlarının iç yapısı. Bunlar P1-D.1'in davranışıdır (yeni bir şey değil); istemci yalnız buradakilere dayanır ve her yanıtta denetler (eksik ya da yanlış tipte alan → istemcide `bad_response`, sessiz kabul yok). Burada yazmayan alanlar gelebilir; istemci onlara dayanmaz.
+- Blok özeti (`blame.blocks[]`, `propose.blocks[]`): `lineage_id`, `version_id` (dize), `layer` (`canonical`\|`proposal`\|`derived`), `layer_source` (dize), `author_kind` (dize: `Human`, `Agent`, `Transcript`, `Synthetic`), `source` (dize, insan yazımında boş olabilir), `seq_created`, `seq_last` (tamsayı), `inactive` (boole). Belgedeki sırasıyla (snapshot sırası).
+- Olay (`history.events[]`, `promote.event`): `seq` (tamsayı), `kind` (dize), `doc_path` (dize), `lineage_ids` (dize dizisi), `meta` (nesne; §4.2'deki `actor {kind, id}`, `source`; `Promoted`'da `reason`, `from`, `to`).
+- Okunan blok (`read_block.block.block`): `version_id`, `lineage_id`, `block_type`, `text` (dize), `heading_path` (dize dizisi), `layer`, `provenance {author_kind, source}`.
+- Hit (`search.hits[]`): `doc_path`, `chunk_id` (dize), `lineage_ids` (dize dizisi), `layer`, `score` (sayı).
+- İz (`trace.traces[]`, `read_block.trace`): `trace_id`, `checkpoint_id`, `consumer`, `query_hash` (dize), `at_seq` (tamsayı), `returned[{doc_path, lineage_id, version_id}]`.
+- Checkpoint (`checkpoint`, `checkpoints[]`, `status.last_checkpoint`): `checkpoint_id` (dize), `name` (dize ya da `null`), `event_seq` (tamsayı), `docs` (nesne: `doc_path` → snapshot kimliği). `status.last_checkpoint` checkpoint yoksa `null`.
+- `status`: `spec_version`, `mdk_version` (dize), `level_claimed` (tamsayı), `embedder` (dize ya da `null`), `index` (dize), `policy.promotion`, `policy.edit` (dize), `server_policy.identity.human_id` (dize ya da `null`).
+
 ## 3. Hata kodları (K-D1.5)
 Başarısız bir araç çağrısı şu biçimlerde döner:
 - **MCP:** `result.isError: true`, `content[0].text` = `"error: <mesaj>"` ve `structuredContent = {"error": {"code": "<kod>", "message": "<mesaj>"}}`.
