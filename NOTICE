@@ -1,0 +1,12 @@
+rootmark
+Copyright 2026 the rootmark authors
+
+This product is licensed under the Apache License, Version 2.0 (LICENSE).
+It includes:
+- the rootmark specification and its conformance fixtures (spec/), Apache
+  License 2.0 (spec/LICENSE);
+- the Obsidian client (clients/obsidian/), Apache License 2.0.
+
+The embedder model all-MiniLM-L6-v2 (sentence-transformers, Apache License
+2.0) is not distributed in this repository or in the release archives; it is
+fetched at a pinned revision and checked by scripts/fetch_model.sh.

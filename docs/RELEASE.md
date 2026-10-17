@@ -27,6 +27,6 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 1. P1-E.1 bağımsız doğrulaması (`reports/rounds/P1-E.1/VERIFICATION.md`) **"Güvenilir"** demeden hiçbiri yapılmaz (P1-E'nin hükmü "şu koşullarla güvenilir" idi; koşulu P1-E.1 kapattı).
 2. `server/Cargo.toml`'a `repository` alanını yaz (binstall `{ repo }` ve Homebrew URL'si için).
 3. `.github/workflows/release.yml`'ı elle tetikle (workflow_dispatch; başka tetik yok). `release-json` artefaktındaki `dist/release.json`'da `aarch64-apple-darwin` kaydı `ok` olmalı (`--version`, `--spec-version`, `rootmark conformance` 34/34, `sha256`); yerel `dist/release.json` ile sürüm, spec sürümü ve uyumluluk sonucu karşılaştırılır (hash'ler farklı makinelerde farklı olabilir; kaydedilir). Linux ve Windows işlerinin sonucu bilgi olarak kaydedilir (K-E1.1).
-4. `git tag -a v0.1.0 -m "rootmark 0.1.0"` ve itme; GitHub release'e arşivleri, wheel'i, eklenti zip'ini ve `SHA256SUMS`'ı ekle.
+4. `git tag -a v0.1.0 -m "rootmark 0.1.0"` ve itme; GitHub release'e arşivleri, wheel'i, eklenti zip'ini ve `SHA256SUMS`'ı ekle. Eklentinin `main.js`, `manifest.json` ve `styles.css` dosyaları release'e **ayrıca** tek tek eklenir (Obsidian BRAT bunları zip'ten değil, release varlıklarından indirir; README "Obsidian (BRAT)").
 5. `dist/homebrew/rootmark.rb`'yi tap'e koy; `cargo binstall rootmark-server` ile dene.
 6. Obsidian community store başvurusu bu yayımın kapsamında değildir (GOAL P1-E).

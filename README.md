@@ -1,28 +1,84 @@
-# rootmark — Ana Belge Seti
+# rootmark
 
-Bu paket, prototip döneminin (v1–v3) yerine geçen **tek gerçek kaynaktır**. Bundan sonra her Claude Code turu ve her yeni sohbet yalnız bu belgelerden beslenir; bu belgeleri üreten sohbet arşivdir (K13).
+**rootmark** is named for what it keeps: the *root* of every block of a Markdown knowledge base, meaning where it came from, who wrote it and what it was derived from, while the Markdown (*mark*) files stay the one source of truth. It is a client-independent kernel that gives a Markdown corpus written by people and agents together block-level lineage, provenance and a deterministic derived index.
 
-## İçerik
-| Dosya | Rol |
+[![Conformance: Level 3](https://img.shields.io/badge/conformance-Level%203%20%C2%B7%2034%2F34-2ea44f)](spec/CONFORMANCE.md)
+[![Spec 1.0.3](https://img.shields.io/badge/spec-1.0.3-blue)](https://arknsensei.github.io/rootmark/spec/)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+
+> When an agent writes into a knowledge base, every block records who wrote it, when, and which block it came from. Nothing unapproved counts as knowledge. Every answer says which blocks it rests on. You can go back to yesterday's state block by block, and the files stay plain Markdown.
+
+rootmark is not a vector database, an agent memory API, a note-taking app, a team wiki or an LLM framework. It is one binary that runs beside a Markdown folder and answers over MCP (for agents), a local HTTP API (for people and their editors) and a CLI. It never writes identifiers or metadata into your Markdown files; everything it derives lives in `<vault>/.rootmark/` and can be rebuilt from the files.
+
+## The scene, in eleven steps
+
+The product scene of phase 1 (`scripts/scene.sh` runs it on a clean copy of `spec/fixtures/mini_vault`; the real-Obsidian version is `scripts/plugin_e2e_real.sh`). The agent talks MCP over stdio and the human talks HTTP with the token in `.rootmark/server.token`:
+
+```sh
+rootmark ingest-dir vault vault                 # blocks, lineages, event log
+rootmark serve --vault vault --mcp stdio --http 127.0.0.1:0 --watch
+```
+
+| # | Who | Call | What you see |
+|---|---|---|---|
+| 1 | human | `GET /v1/status` | spec version, policies (`human_only` promotion, `append_only` edits), the index state |
+| 2 | human | `POST /v1/checkpoint {"name":"before"}` | a named checkpoint of the state before the agent |
+| 3 | agent | MCP `propose {doc_path:"agent/scene.md", …}` | a new plain Markdown file; its blocks are `proposal` |
+| 4 | human | `POST /v1/blame {"doc_path":"agent/scene.md"}` | every block: `proposal`, author `Agent`, source = the agent |
+| 5 | human | `POST /v1/search {"query":…}` | the proposal is not found: unapproved is not knowledge |
+| 6 | human | `POST /v1/promote {"lineage_id":…, "reason":…}` | `Promoted` by `human:<you>`; without a reason → 400, nothing written |
+| 7 | human | `POST /v1/search` | found, `canonical` |
+| 8 | human | `POST /v1/trace` | the answer of step 7 and the blocks it rested on |
+| 9 | human | `POST /v1/search {"at":"before"}`, `POST /v1/blame {"at":"before"}` | yesterday's state, block by block |
+| 10 | agent | MCP `propose` `replace_section` of a human section | `denied`; a heading-less append → `policy_violation` with a hint; nothing written |
+| 11 | human | `POST /v1/blame`, `POST /v1/search` | unchanged |
+
+The full contract (every tool, field and error code) is [docs/CLIENT_CONTRACT.md](docs/CLIENT_CONTRACT.md).
+
+## Install
+
+Release target of 0.1.0: macOS on Apple silicon (`aarch64-apple-darwin`). Linux x86_64 and Windows x86_64 are built and checked in CI for information (K-E1.1).
+
+- **Release archive:** download `rootmark-0.1.0-aarch64-apple-darwin.tar.gz` from the [releases](https://github.com/arknsensei/rootmark/releases), check it against `SHA256SUMS`, put `rootmark` on your `PATH`. The embedder model is fetched and checked by `models/fetch_model.sh` in the archive (pinned revision, sha256 and blake3).
+- **cargo-binstall:** `cargo binstall rootmark-server` (installs the `rootmark` binary from the release archive; works once the crate is published).
+- **Homebrew:** a formula draft is in [`packaging/homebrew/rootmark.rb.in`](packaging/homebrew/rootmark.rb.in) (filled by `scripts/release.sh`); there is no tap yet.
+- **From source:** Rust 1.92.0, `cargo build --release -p rootmark-server --bin rootmark`, then `make models`.
+
+```sh
+rootmark --version            # rootmark 0.1.0
+rootmark --spec-version       # 1.0.3
+rootmark conformance          # Levels 1–3 on the embedded fixtures: 34/34
+```
+
+A vault written by a build from before the project's rename is opened after `rootmark migrate --rename-store <vault>`, which moves its metadata directory to `.rootmark/` and changes no byte inside it (same event log, same `events_hash`, same index).
+
+### Obsidian (BRAT)
+
+The Obsidian client is not in the community store yet. With [BRAT](https://github.com/TfTHacker/obsidian42-brat):
+
+1. Install and enable BRAT in Obsidian.
+2. BRAT → *Add beta plugin* → `arknsensei/rootmark` (the release assets carry `main.js`, `manifest.json`, `styles.css`).
+3. Enable **rootmark**. In your vault set `[server] http_port` and `[identity] human_id` in `.rootmark/policy.toml` and run `rootmark serve --vault <vault> --http 127.0.0.1:<port>`.
+4. The status bar says `rootmark 0.1.0 · human:<you>`. A stale or damaged index is shown there with the way to rebuild it.
+
+## Specification
+
+The specification is published separately from this implementation: [spec/SPEC.md](spec/SPEC.md) (rendered at https://arknsensei.github.io/rootmark/spec/), with the conformance suite in [spec/CONFORMANCE.md](spec/CONFORMANCE.md) and its fixtures in `spec/fixtures/`. §1–§6 are frozen. `rootmark conformance` runs Levels 1–3 on the fixtures embedded in the binary.
+
+## Repository
+
+| Path | Contents |
 |---|---|
-| `NORTH_STAR.md` | Tek sayfa sabit nokta: amaç, vaat, kim için, ilkeler, kanıtlananlar |
-| `spec/SPEC.md` | Yayımlanabilir spesifikasyon v1.0 (İngilizce, Apache-2.0); §1–6 donmuş |
-| `spec/CONFORMANCE.md` | Uyumluluk testleri (3 seviye) |
-| `docs/ARCHITECTURE.md` | Mimari v1.1: katmanlar, kanıt tablosu, kararlar |
-| `docs/PACKAGES.md` | Monorepo, yedi paket, dil kararları, dağıtım |
-| `docs/ROADMAP.md` | Faz 1 (5 tur), faz 2, araştırma kolları |
-| `docs/DEV_PROCESS.md` | `/goal` tur anayasası, kalite kapıları, dondurma, doğrulama |
-| `docs/DECISIONS.md` | K1–K13 karar kayıtları |
-| `CLAUDE.md` | Kök ajan kuralları |
-| `docs/rounds/P1-A/` | İlk turun GOAL, TASKS, VERIFY, PROMPT dosyaları |
+| `core/`, `index/`, `server/` | Rust crates `rootmark-core`, `rootmark-index`, `rootmark-server` (the `rootmark` binary) |
+| `bindings/python/` | the `rootmark_core` Python module (used by `research/` only) |
+| `clients/obsidian/` | the Obsidian client (TypeScript) |
+| `spec/` | the specification, the conformance suite and fixtures |
+| `research/` | measurement code and research arms (Python, never shipped) |
+| `docs/` | north star, architecture, decisions, development process, round directives (Turkish) |
+| `reports/` | every round's measured results and independent verifications |
 
-## Kurulum
-1. Yeni boş depo `rootmark/` aç; bu paketi köke kopyala.
-2. Prototip deposunda `git tag v3-final` at (son commit v3 raporu ve doğrulamayı içermeli); uzak adresini ya da yolunu `docs/rounds/P1-A/progress/SOURCE.md` için hazır tut (A0 görevi subtree ile içe alır; yol/adresi ajan istemine ekle).
-3. `git add . && git commit -m "rootmark: master docs, spec v1.0, round P1-A directives"`.
-4. Claude Code'u depo kökünde aç; `docs/rounds/P1-A/PROMPT.md` ana istemini `/goal` ile ver (prototip depo yolunu istemin sonuna ekle: "Prototip deposu: <yol veya URL>").
-5. READY.md gelince ayrı oturumda doğrulama istemini ver.
-6. `reports/rounds/P1-A/FINAL.md` + `VERIFICATION.md` ile dön; P1-B yönergeleri ona göre yazılır.
+Development runs in rounds with criteria written before the work and an independent verification after it; see [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/DEV_PROCESS.md](docs/DEV_PROCESS.md). Security reports: [SECURITY.md](SECURITY.md).
 
-## Sonraki turların yönergeleri
-Her tur için `docs/rounds/<id>/` aynı dört dosyayla üretilir; şablon DEV_PROCESS §1. P1-B..P1-E içerikleri ROADMAP'te özetli; her tur başlamadan önce GOAL/TASKS/VERIFY/PROMPT yazılır ve tur başladıktan sonra değişmez.
+## License
+
+Apache License 2.0 for the code, the Obsidian client and the specification ([LICENSE](LICENSE), [NOTICE](NOTICE), [spec/LICENSE](spec/LICENSE)).
