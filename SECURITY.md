@@ -4,6 +4,8 @@
 
 Please **do not open a public issue** for a security problem. Report it privately through GitHub: the repository's **Security** tab → **Report a vulnerability** (private vulnerability reporting). The report reaches the maintainers only; you get an answer within seven days, and a fix or a decision is coordinated with you before anything is disclosed.
 
+While the repository is private, GitHub does not offer private vulnerability reporting: collaborators report to the repository owner directly. Making the repository public includes enabling private vulnerability reporting (Settings → Code security) and removing this sentence.
+
 Useful in a report: the rootmark version (`rootmark --version`), the channel (MCP stdio, local HTTP, CLI, file watcher, Obsidian client), the steps or a minimal vault that reproduces it, and what you expected instead.
 
 ## Supported versions
