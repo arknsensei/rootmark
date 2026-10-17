@@ -78,6 +78,23 @@ describe("blame alignment (gutter)", () => {
     expect(gutterMarks(al)).toEqual([]);
     expect(editorBlocks([{ type: "thematicBreak", start: 0, end: 0 }], [])).toEqual([]);
   });
+
+  it("an allow-list: any section type without a sure block breaks the alignment", () => {
+    for (const t of ["html", "comment", "footnoteDefinition", "definition", "math", "callout", "somethingNew"]) {
+      expect(editorBlocks([{ type: "paragraph", start: 0, end: 0 }, { type: t, start: 2, end: 2 }], []), t).toEqual([]);
+    }
+    for (const t of ["heading", "paragraph", "code", "table", "blockquote"]) {
+      expect(editorBlocks([{ type: t, start: 0, end: 1 }], []), t).toHaveLength(1);
+    }
+  });
+
+  it("a list on line 0 (parent -0) is top level; a child of line 0 (parent 0) is not", () => {
+    const r = editorBlocks(
+      [{ type: "list", start: 0, end: 2 }],
+      [{ start: 0, end: 1, parent: -0 }, { start: 1, end: 1, parent: 0 }, { start: 2, end: 2, parent: -0 }],
+    );
+    expect(r.map((x) => x.start)).toEqual([0, 2]);
+  });
 });
 
 describe("history lines (contract §4.2)", () => {
@@ -100,11 +117,15 @@ describe("proposal list", () => {
     blame.blocks.push(block("prop1", "proposal"), block("gone", "proposal", { inactive: true }));
     fake.reply(200, blame); // a.md
     fake.reply(404, { error: { code: "not_found", message: "blame: no snapshot for untracked.md" } });
-    const rows = await listProposals(client, ["untracked.md", "a.md"], (doc, i) => `${doc}#${String(i)}`);
+    const rows = await listProposals(client, ["untracked.md", "a.md"], (doc, blocks) => blocks.map((_, i) => `${doc}#${String(i)}`));
     expect(fake.requests.map((r) => JSON.parse(r.body) as unknown)).toEqual([{ doc_path: "a.md" }, { doc_path: "untracked.md" }]);
     expect(rows).toEqual([
       { doc_path: "a.md", lineage_id: "prop1", version_id: "vprop1", source: "scene-agent/1.0", author_kind: "Agent", seq_created: 1, seq_last: 1, section: "a.md#3" },
     ]);
+    // not aligned → every section unknown ("—"), never a positional guess
+    fake.reply(200, blame);
+    const unaligned = await listProposals(client, ["a.md"], () => null);
+    expect(unaligned.map((r) => r.section)).toEqual([null]);
     fake.reply(503, { error: { code: "index_stale", message: "x" } });
     await expect(blameOf(client, "a.md")).rejects.toMatchObject({ code: "index_stale" });
   });
@@ -154,16 +175,25 @@ describe("the plugin writes no file (static scan of src/)", () => {
     }
   };
   walk(new URL("../src", import.meta.url).pathname);
+  // method names, whatever the receiver is called (an alias such as
+  // `const a = vault.adapter; a.write(...)` is caught), dotted or bracketed
+  const writeMethods = [
+    "modify", "modifyBinary", "create", "createBinary", "createFolder", "append", "process",
+    "trash", "trashSystem", "trashLocal", "rename", "copy", "write", "writeBinary", "remove",
+    "rmdir", "mkdir", "replaceRange", "replaceSelection", "setValue", "setLine", "changeByRange",
+    "openLinkText", "writeFile", "appendFile", "createWriteStream",
+  ].join("|");
   const forbidden = [
-    /\bvault\s*\.\s*(modify|modifyBinary|create|createBinary|createFolder|append|process|delete|trash|rename|copy)\b/,
-    /\badapter\s*\.\s*(write|writeBinary|append|process|remove|rmdir|mkdir|rename|copy|trashSystem|trashLocal)\b/,
+    new RegExp(`\\.\\s*(${writeMethods})\\s*\\(`),
+    new RegExp(`\\[\\s*["'\`](${writeMethods})["'\`]\\s*\\]`),
     /\bfileManager\b/,
-    /\beditor\s*\.\s*(replaceRange|replaceSelection|setValue|setLine|transaction)\b/,
-    /\b(writeFile|appendFile|createWriteStream)\b/,
     /from\s+["'](node:)?fs(\/promises)?["']/,
-    /\bchanges\s*:/, // a CodeMirror transaction that edits the document
-  ];
-  it("scans every source file", () => {
+    /\brequire\s*\(/,
+    // a CodeMirror transaction that edits the document (`changes`, shorthand
+    // included), or a change set built by hand
+    /\bchanges\b/,
+    /\bChangeSet\b/,
+  ];  it("scans every source file", () => {
     expect(files.length).toBeGreaterThanOrEqual(10);
   });
   it.each(files.map((f) => [f.slice(f.indexOf("/src/") + 1)]))("%s calls no write API", (rel) => {

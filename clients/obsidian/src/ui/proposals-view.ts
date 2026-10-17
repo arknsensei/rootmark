@@ -1,7 +1,7 @@
 // The proposal view: every `proposal` block of the vault (document,
 // section, source, log offset), Promote over HTTP with a required reason;
 // Demote shown disabled — not in the contract (K-E2-T).
-import { ItemView, Notice, Setting, type WorkspaceLeaf } from "obsidian";
+import { ItemView, Notice, Setting, TFile, type WorkspaceLeaf } from "obsidian";
 import { describeError } from "../api";
 import { DEMOTE_UNAVAILABLE, promoteAll, promoteSummary, type ProposalRow } from "../commands";
 import type MdkernelPlugin from "../main";
@@ -11,7 +11,7 @@ export const PROPOSALS_VIEW = "mdkernel-proposals";
 
 export class ProposalsView extends ItemView {
   private rows: ProposalRow[] = [];
-  private readonly selected = new Set<string>();
+  private selected = new Set<string>();
 
   constructor(leaf: WorkspaceLeaf, private readonly plugin: MdkernelPlugin) {
     super(leaf);
@@ -61,18 +61,30 @@ export class ProposalsView extends ItemView {
       const cb = tr.createEl("td").createEl("input", { type: "checkbox" });
       cb.checked = this.selected.has(r.lineage_id);
       cb.addEventListener("change", () => {
-        if (cb.checked) this.selected.add(r.lineage_id);
-        else this.selected.delete(r.lineage_id);
+        this.selected = cb.checked
+          ? new Set([...this.selected, r.lineage_id])
+          : new Set([...this.selected].filter((x) => x !== r.lineage_id));
       });
       const doc = tr.createEl("td").createEl("a", { text: r.doc_path, href: "#" });
       doc.addEventListener("click", (ev) => {
         ev.preventDefault();
-        void this.app.workspace.openLinkText(r.doc_path, "", false);
+        this.openDoc(r.doc_path);
       });
       tr.createEl("td", { text: r.section ?? "—" });
       tr.createEl("td", { text: r.source === "" ? "—" : r.source });
       tr.createEl("td", { text: String(r.seq_created) });
     }
+  }
+
+  /** Opens an existing note only: a path that is gone is an error, never a
+   * new note (the plugin writes no file). */
+  private openDoc(path: string): void {
+    const f = this.app.vault.getAbstractFileByPath(path);
+    if (!(f instanceof TFile)) {
+      new Notice(`mdkernel: ${path} is not in the vault (moved or deleted)`);
+      return;
+    }
+    void this.app.workspace.getLeaf(false).openFile(f);
   }
 
   private async promoteSelected(): Promise<void> {
@@ -83,9 +95,13 @@ export class ProposalsView extends ItemView {
     }
     const reason = await askReason(this.app, `Promote ${String(this.selected.size)} block(s)`);
     if (reason === null) return;
-    const outcomes = await promoteAll(client, [...this.selected], reason);
-    new Notice(`mdkernel: ${promoteSummary(outcomes)}`, 8000);
-    this.selected.clear();
+    try {
+      const outcomes = await promoteAll(client, [...this.selected], reason);
+      new Notice(`mdkernel: ${promoteSummary(outcomes)}`, 8000);
+    } catch (e) {
+      new Notice(`mdkernel promote: ${describeError(e)}`, 8000);
+    }
+    this.selected = new Set();
     await this.refresh();
     await this.plugin.refreshBlame();
   }

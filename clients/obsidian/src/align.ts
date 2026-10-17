@@ -28,28 +28,36 @@ export interface BlockRange {
   heading: string | null;
 }
 
-/** The editor's blocks in document order, in the spec's block model. */
+/** Obsidian section types that are exactly one spec block (spec §2.2);
+ * `list` is one block per top-level item; `yaml` (front matter) is none.
+ * Any other type (thematic break, HTML, comment, footnote, a link
+ * reference definition, or a type this client does not know) has no sure
+ * counterpart, so the note is not aligned: an allow-list, never a guess. */
+const ONE_BLOCK = new Set(["heading", "paragraph", "code", "table", "blockquote"]);
+
+/** Obsidian marks a top-level item with a negative `parent` (minus the
+ * list's first line); a list on line 0 gives -0, which is still top level
+ * (a nested item's parent is a line number ≥ 0, never -0). */
+const isTopLevel = (parent: number): boolean => parent < 0 || Object.is(parent, -0);
+
+/** The editor's blocks in document order, in the spec's block model; `[]`
+ * when a section has no sure counterpart (then nothing is aligned). */
 export function editorBlocks(
   sections: readonly EditorSection[],
   listItems: readonly EditorListItem[],
   headings: readonly { line: number; heading: string }[] = [],
 ): BlockRange[] {
-  const top = listItems.filter((l) => l.parent < 0);
+  const top = listItems.filter((l) => isTopLevel(l.parent));
   const out: { start: number; end: number }[] = [];
   for (const s of sections) {
-    if (s.type === "yaml" || s.type === "thematicBreak" || s.type === "html" || s.type === "comment") {
-      // front matter is no block (spec §2.2); a thematic break, raw HTML or
-      // a comment is `other` in the spec but Obsidian may group it
-      // differently, so it breaks the count instead of guessing
-      if (s.type !== "yaml") return [];
-      continue;
-    }
+    if (s.type === "yaml") continue;
     if (s.type === "list") {
       const items = top.filter((l) => l.start >= s.start && l.end <= s.end);
       if (items.length === 0) return [];
       for (const it of items) out.push({ start: it.start, end: it.end });
       continue;
     }
+    if (!ONE_BLOCK.has(s.type)) return [];
     out.push({ start: s.start, end: s.end });
   }
   const sorted = [...headings].sort((a, b) => a.line - b.line);
@@ -67,7 +75,10 @@ export type Alignment<T> =
 /** `blame` blocks ↔ editor blocks by order; only when the counts agree. */
 export function align<T>(blame: readonly T[], ranges: readonly BlockRange[]): Alignment<T> {
   if (ranges.length === 0 && blame.length > 0) {
-    return { aligned: false, reason: "the editor's block map is not available for this note" };
+    return {
+      aligned: false,
+      reason: "the editor's block map is not available or holds a section without a sure block (thematic break, HTML, footnote, …): not aligned",
+    };
   }
   if (blame.length !== ranges.length) {
     return {

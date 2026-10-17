@@ -39,17 +39,20 @@ export async function historyOf(client: MdkClient, lineage: string): Promise<His
 }
 
 /** The proposal blocks of `docs` (vault order, then block order). A
- * document the log does not know is skipped; `section(doc, i)` names the
- * section of its i-th block when known. */
+ * document the log does not know is skipped. `sections(doc, blocks)` gives
+ * the section of each block only when the editor's block map aligns with
+ * them (`align`), else null: then every section is unknown ("—"), never a
+ * guess by position. */
 export async function listProposals(
   client: MdkClient,
   docs: readonly string[],
-  section: (doc: string, index: number) => string | null = () => null,
+  sections: (doc: string, blocks: readonly BlameBlock[]) => readonly (string | null)[] | null = () => null,
 ): Promise<ProposalRow[]> {
   const rows: ProposalRow[] = [];
   for (const doc of [...docs].sort()) {
     const blocks = await blameOf(client, doc);
     if (blocks === null) continue;
+    const names = sections(doc, blocks);
     blocks.forEach((b, i) => {
       if (b.layer !== "proposal" || b.inactive) return;
       rows.push({
@@ -60,7 +63,7 @@ export async function listProposals(
         author_kind: b.author_kind,
         seq_created: b.seq_created,
         seq_last: b.seq_last,
-        section: section(doc, i),
+        section: names?.[i] ?? null,
       });
     });
   }
@@ -95,12 +98,14 @@ export async function promoteAll(
   return out;
 }
 
-/** Demote is in the GOAL's proposal view but not in the contract
- * (docs/CLIENT_CONTRACT.md §2 has no demote tool); the client relies on
- * nothing the contract does not say, so it is refused here, visibly
- * (decision request K-E2-T; ASSUMPTIONS E2-1). */
+/** Demote is in the GOAL's proposal view but not in the HTTP/MCP contract
+ * (docs/CLIENT_CONTRACT.md §2 has no demote tool; only the CLI has `mdk
+ * demote`). The client relies on nothing the contract does not say, so it
+ * is refused here, visibly, and the user is pointed to the CLI (decision
+ * request K-E2-T; ASSUMPTIONS E2-1). */
 export const DEMOTE_UNAVAILABLE =
-  "Demote is not offered by mdk serve's contract (docs/CLIENT_CONTRACT.md §2); decision request K-E2-T";
+  "Demote is not in mdk serve's contract (docs/CLIENT_CONTRACT.md §2; decision request K-E2-T). " +
+  "From a terminal: mdk demote <vault> <lineage> --actor human:<id> --reason <why>";
 
 export function demote(): never {
   throw new Error(DEMOTE_UNAVAILABLE);

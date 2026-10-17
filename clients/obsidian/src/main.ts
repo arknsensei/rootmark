@@ -66,18 +66,34 @@ export default class MdkernelPlugin extends Plugin {
     );
   }
 
+  /** The status-bar hint of the blame gutter: always the current state of
+   * the active note (no stale reason survives a later success). */
+  private gutterHint(text: string): void {
+    this.statusEl?.setAttr("title", text);
+  }
+
   async refreshBlame(): Promise<void> {
     const view = this.app.workspace.getActiveViewOfType(MarkdownView);
     const client = this.client();
     if (!view?.file || client === null) return;
     // the editor's CodeMirror view (Obsidian exposes it as `editor.cm`)
     const cm = (view.editor as unknown as { cm?: { dispatch: (t: unknown) => void } }).cm;
+    if (cm === undefined) {
+      this.gutterHint("blame gutter unavailable: this editor exposes no CodeMirror view (use the proposal view)");
+      return;
+    }
     try {
       const blocks = await blameOf(client, view.file.path);
-      const al = blocks === null ? { aligned: false as const, reason: "not in the mdk log" } : align(blocks, this.rangesOf(view.file));
-      cm?.dispatch({ effects: setMarks.of(gutterMarks(al)) });
-      if (!al.aligned && blocks !== null) this.statusEl?.setAttr("title", al.reason);
+      if (blocks === null) {
+        cm.dispatch({ effects: setMarks.of([]) });
+        this.gutterHint(`${view.file.path} is not in the mdk log: no blame`);
+        return;
+      }
+      const al = align(blocks, this.rangesOf(view.file));
+      cm.dispatch({ effects: setMarks.of(gutterMarks(al)) });
+      this.gutterHint(al.aligned ? `blame: ${String(blocks.length)} blocks aligned` : al.reason);
     } catch (e) {
+      this.gutterHint(`blame failed: ${describeError(e)}`);
       new Notice(`mdkernel blame: ${describeError(e)}`);
     }
   }
@@ -100,9 +116,11 @@ export default class MdkernelPlugin extends Plugin {
     return listProposals(
       client,
       files.map((f) => f.path),
-      (doc, i) => {
+      (doc, blocks) => {
         const f = byPath.get(doc);
-        return f ? (this.rangesOf(f)[i]?.heading ?? null) : null;
+        if (!f) return null;
+        const al = align(blocks, this.rangesOf(f));
+        return al.aligned ? al.pairs.map((p) => p.range.heading) : null;
       },
     );
   }
