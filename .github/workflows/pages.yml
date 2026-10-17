@@ -1,0 +1,69 @@
+# The specification site (GOAL GH-0 G4, GH-7): spec/ published at
+# https://arknsensei.github.io/rootmark/spec/ — SPEC.md as the page,
+# CONFORMANCE.md, the LICENSE, and the conformance report of the binary built
+# from this commit (`rootmark conformance`, Levels 1–3 on the embedded
+# fixtures) with the README badge's data derived from it (badge.json, a
+# shields.io endpoint): the badge says what was measured, never a hand-typed
+# number. Only spec/ is published; the repository itself stays as it is.
+name: spec pages
+on:
+  push:
+    branches: [main]
+    paths: ["spec/**", ".github/workflows/pages.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: build the spec site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.92.0
+      - uses: actions/cache@v4
+        with:
+          path: |
+            models/minilm-l6-v2
+            ~/.cache/ort.pyke.io
+          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST.json', 'Cargo.lock') }}
+      - run: make models
+      - run: cargo build --release --locked -p rootmark-server --bin rootmark
+      - name: site (spec/ only) and the measured conformance badge
+        run: |
+          set -euo pipefail
+          mkdir -p site/spec
+          cp spec/SPEC.md site/spec/index.md
+          cp spec/CONFORMANCE.md site/spec/CONFORMANCE.md
+          cp spec/LICENSE site/spec/LICENSE.txt
+          ROOTMARK_MODELS="$PWD/models" target/release/rootmark conformance >site/spec/conformance.json
+          jq -e '.passed == .total and .total > 0' site/spec/conformance.json >/dev/null
+          jq '{schemaVersion: 1, label: "conformance",
+               message: "Level \(.level_claimed) · \(.passed)/\(.total)",
+               color: (if .passed == .total then "2ea44f" else "e05d44" end)}' \
+            site/spec/conformance.json >site/spec/badge.json
+          printf -- '---\ntitle: rootmark\n---\n\nThe [rootmark specification](spec/) (Apache-2.0).\n' >site/index.md
+      - uses: actions/configure-pages@v5
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: site
+          destination: _site
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    name: deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

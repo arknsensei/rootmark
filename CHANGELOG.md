@@ -4,11 +4,12 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
-## 0.1.0 — unreleased (phase 1)
+## 0.1.0 — 2026-10-18 (phase 1)
 
-The first release candidate: the first product scene (NORTH_STAR) end to end.
-Not tagged until the independent verification says "Güvenilir" (P1-E said
-"Şu koşullarla güvenilir"; round P1-E.1 closes its condition; docs/RELEASE.md).
+The first release: the first product scene (NORTH_STAR) end to end. Tagged
+after the independent verification of round P1-E.1 said "Güvenilir"
+(reports/rounds/P1-E.1/VERIFICATION.md) and round GH-0 renamed the project
+and moved it to github.com/arknsensei/rootmark (docs/RELEASE.md).
 Release target: `aarch64-apple-darwin` only (K-E1.1).
 
 The project was named `mdkernel` (binary `mdk`, crates `mdkernel-*`, vault

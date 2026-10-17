@@ -2,7 +2,7 @@
 
 **rootmark** is named for what it keeps: the *root* of every block of a Markdown knowledge base, meaning where it came from, who wrote it and what it was derived from, while the Markdown (*mark*) files stay the one source of truth. It is a client-independent kernel that gives a Markdown corpus written by people and agents together block-level lineage, provenance and a deterministic derived index.
 
-[![Conformance: Level 3](https://img.shields.io/badge/conformance-Level%203%20%C2%B7%2034%2F34-2ea44f)](spec/CONFORMANCE.md)
+[![Conformance](https://img.shields.io/endpoint?url=https%3A%2F%2Farknsensei.github.io%2Frootmark%2Fspec%2Fbadge.json)](https://arknsensei.github.io/rootmark/spec/conformance.json)
 [![Spec 1.0.3](https://img.shields.io/badge/spec-1.0.3-blue)](https://arknsensei.github.io/rootmark/spec/)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 
