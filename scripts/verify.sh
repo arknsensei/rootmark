@@ -156,6 +156,12 @@ chain() {
     git status --porcelain --untracked-files=all >&2
     exit 1
   fi
+  # K-E1.4 (re-freeze P1-E.1/F3): every recorder's FAILs; historical ones
+  # are shown with their decisions and not counted; the summary never
+  # changes the exit code (criteria are recorded, not fatal)
+  log "FAIL summary (K-E1.4)"
+  (cd research && uv run --frozen python -m eval.historical --run-dir "reports/runs/$run" || true) \
+    | sed 's/^historical: /[verify summary] /' >&2
   log "chain finished in $((SECONDS - t0)) s"
   echo "RUN=$run" >&3
   echo "RUN_DIR=$work/repo/research/reports/runs/$run" >&3

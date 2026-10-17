@@ -13,3 +13,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** GOAL P1-E.1 E1-8 ("`contract_check.sh` HTTP adımı `status`'un yeni alanını ve 503 istisnasının `status`'u kapsamadığını denetler"); K-E1.2 ile `internal`'ın eski tetikleyicisi `index_stale` olur.
 - **Önce/sonra bit eşitliği** (güncel ağaç, yeni sunucu): eski denetleyici çıkış 1, tek eksik `http-code:internal (status 503, code index_stale; contract 500)`; yeni denetleyici çıkış 0. İki çıktı arasında `tools`, `codes`, `http.endpoints`, `http.transport` eşit; `http.codes`'ta yalnız `internal` satırı farklı (önce 503, sonra 500); yeni alanlar `status_index` (4/4 ok) ve `status_index_fields` (`state, format, expected_format, auto_rebuild`). Kasıtlı vakalar: `scripts/test_tamper_p1e1.sh` contract-status grubu (E1.1.md).
 - **Gözden geçirici onayı:** E1.1.review.md.
+
+## F3 · E1.4 · `scripts/verify.sh` — zincir sonunda FAIL özeti (K-E1.4)
+- **Ne:** `chain`'in sonunda, "chain finished" satırından önce: `python -m eval.historical --run-dir reports/runs/$run` çıktısı `[verify summary]` önekiyle stderr'e (+6 satır, yorum dahil). Özet çıkış kodunu değiştirmez (`|| true`; kriterler kaydedilir, ölümcül değildir); sınıflandırıcının hatası stderr'de görünür. Zincir adımları, sırası, `pair`, `compare*` aynen.
+- **Neden:** GOAL P1-E.1 K-E1.4, E1.4: "eski kaydedicilerin birikmiş FAIL'leri … `verify.sh` özetinde sayılmaz". Bugüne kadar zincirde FAIL'ler yalnız ayrı kayıtlarda görünüyordu; özet her FAIL'i ya kararıyla "tarihsel" ya da sayılan FAIL olarak yazar.
+- **Önce/sonra bit eşitliği:** özet yalnız stderr'e yazar; RUN dizinine dosya eklemez, hiçbir kayıt değişmez — `pair`'in karşılaştırdığı yapıtlar önce ve sonra aynı. `bash -n` temiz. P1-E resmi RUN'ı üzerinde `eval.historical`: 8 tarihsel FAIL (B1-3, C1-7, C-3, C-11, D-2, D-7, D-9, E-7), sayılan 0.
+- **Gözden geçirici onayı:** E1.4.review.md.

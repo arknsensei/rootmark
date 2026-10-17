@@ -172,6 +172,9 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `server/tests/fixtures/index_v2/**` | `P1-E.1/E1.1:` | `p1d-final` `mdk`'nin yazdığı `mdkernel-index/2` indeksli vault (E1-1) |
 | `server/tests/p1e1_status.rs` | `P1-E.1/E1.1:` | E1-1, E1-2 ölçümleri (`MDK_P1E1_OUT`) |
 | `scripts/test_tamper_p1e1.sh` | `P1-E.1/E1.1:` | P1-E.1 kasıtlı bozmaları (contract-status, old-index) |
+| `scripts/verify.sh` | `P1-E.1/E1.4:` | yeniden dondurma P1-E.1/F3: zincir sonunda K-E1.4 FAIL özeti |
+| `research/eval/historical.py` | `P1-E.1/E1.4:` | K-E1.4 tarihsel FAIL sınıflandırıcısı |
+| `research/eval/historical_fails.json` | `P1-E.1/E1.4:` | K-E1.4 tarihsel FAIL listesi (referans P1-E resmi RUN) |
 <!-- /frozen-table -->
 
 ## Notlar

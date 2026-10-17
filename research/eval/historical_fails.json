@@ -1,0 +1,22 @@
+{
+  "about": "K-E1.4 (P1-E.1/E1.4): FAILs that frozen recorders of earlier rounds record in every chain because of decisions taken after their round. A FAIL listed here is shown as historical (closed by its decisions) and not counted, only while its record equals the same record of the reference RUN (paths under `changes` may differ, each with its decision). Any other FAIL counts. research/eval/historical.py.",
+  "reference_run": "reports/rounds/P1-E/runs/20261017T024341Z-632f29e",
+  "entries": [
+    {"file": "p1b1_checks.json", "criterion": "B1-3", "decisions": ["K-C1.3", "K-C1.5", "K-D1.2", "K-D1.4-T", "K-E0.1"],
+     "why": "P1-B.1's recorder expects spec 1.0.1 and C2 8/8; the spec is 1.0.3 (CRITERION patch rule) and Level 2 has grown", "changes": []},
+    {"file": "p1c1_checks.json", "criterion": "C1-7", "decisions": ["K-D1.2", "K-D1.4-T", "K-E0.1"],
+     "why": "P1-C.1's recorder expects spec 1.0.2; the spec is 1.0.3", "changes": []},
+    {"file": "p1c_checks.json", "criterion": "C-3", "decisions": ["K-C8-T", "K-C1.1", "K-C1.2"],
+     "why": "P1-C's hybrid multi-question nDCG@10 was -0.0136 off v2; closed in P1-C.1 by the declared lexical variant and the Rust quality reference", "changes": []},
+    {"file": "p1c_checks.json", "criterion": "C-11", "decisions": ["K-D1.2", "K-D1.4-T", "K-E0.1"],
+     "why": "P1-C's regression against P1-B.1 sees B1-3's spec-version difference", "changes": []},
+    {"file": "p1d_checks.json", "criterion": "D-2", "decisions": ["K-D1.1", "K-D1.5", "K-E0.4", "K-D1.4-T"],
+     "why": "P1-D's MCP e2e expects agent edits of human blocks to pass (append_only since K-D1.1), the old error codes (K-D1.5, K-E0.4) and spec 1.0.2 in status", "changes": []},
+    {"file": "p1d_checks.json", "criterion": "D-7", "decisions": ["K-D1.4-T", "K-D1.5"],
+     "why": "P1-D's HTTP e2e expects spec 1.0.2 (D7-3) and the old status codes of two cases", "changes": []},
+    {"file": "p1d_checks.json", "criterion": "D-9", "decisions": ["K-D1.7", "K-D1.4-T"],
+     "why": "P1-D's regression against P1-C.1 sees the lexical record (lexical.dl), the index manifest and the spec/fixture changes since", "changes": []},
+    {"file": "p1e_checks.json", "criterion": "E-7", "decisions": ["K-E5-T", "K-E1.1"],
+     "why": "P1-E's recorder counts four release targets (2/4); K-E1.1 makes aarch64-apple-darwin the one target (1/1, P1-E.1 E1-5)", "changes": []}
+  ]
+}
