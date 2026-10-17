@@ -193,6 +193,26 @@ pub fn run(root: &Path, source: &str) -> Result<Value> {
     }))
 }
 
+/// A fresh scratch directory for the extracted fixtures: an unpredictable
+/// name (128 random bits), created exclusively (an existing path, symbolic
+/// link included, is an error, never reused or removed) and private (0700
+/// on Unix), so nothing else can plant or read files in it.
+fn scratch_dir() -> Result<PathBuf> {
+    let mut r = [0u8; 16];
+    getrandom::fill(&mut r).map_err(|e| anyhow::anyhow!("random scratch name: {e}"))?;
+    let name: String = r.iter().map(|b| format!("{b:02x}")).collect();
+    let dir = std::env::temp_dir().join(format!("mdk-conformance-{name}"));
+    let mut b = fs::DirBuilder::new();
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::DirBuilderExt;
+        b.mode(0o700);
+    }
+    b.create(&dir)
+        .with_context(|| format!("create scratch directory {}", dir.display()))?;
+    Ok(dir)
+}
+
 /// `mdk conformance`: the embedded fixtures (extracted into a scratch
 /// directory) or `fixtures`; `models` sets the embedder files for Level 3.
 pub fn command(fixtures: Option<PathBuf>, models: Option<PathBuf>) -> Result<Value> {
@@ -209,11 +229,7 @@ pub fn command(fixtures: Option<PathBuf>, models: Option<PathBuf>) -> Result<Val
             run(&root, "--fixtures")
         }
         None => {
-            let dir = std::env::temp_dir().join(format!("mdk-conformance-{}", std::process::id()));
-            if dir.exists() {
-                fs::remove_dir_all(&dir)?;
-            }
-            fs::create_dir_all(&dir)?;
+            let dir = scratch_dir()?;
             let res = extract(&dir).and_then(|_| run(&dir, "embedded"));
             let _ = fs::remove_dir_all(&dir);
             res
