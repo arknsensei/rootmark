@@ -47,7 +47,14 @@ for f in core/Cargo.toml index/Cargo.toml server/Cargo.toml bindings/python/Carg
   while IFS= read -r line; do
     n=$((n + 1))
     case "$line" in
-      "["*) sect="$line"; continue ;;
+      "["*)
+        sect="$line"
+        # a dependency table this check does not read is an error, never a skip
+        case "$sect" in
+          "[dependencies]" | "[dev-dependencies]" | "[build-dependencies]") ;;
+          *dependencies*) echo "check_dep_age: $f:$n: unsupported dependency table $sect" >&2; exit 2 ;;
+        esac
+        continue ;;
     esac
     case "$sect" in
       "[dependencies]" | "[dev-dependencies]" | "[build-dependencies]") ;;
@@ -67,12 +74,24 @@ pj=clients/obsidian/package.json
 while IFS=$'\t' read -r name ver; do
   [[ "$ver" =~ ^[0-9] ]] || { echo "check_dep_age: $pj: $name $ver is not an exact version" >&2; exit 2; }
   n="$(grep -n "\"$name\": \"$ver\"" "$pj" | head -1 | cut -d: -f1)"
+  [ -n "$n" ] || { echo "check_dep_age: $pj: the line of $name $ver was not found" >&2; exit 2; }
   entries+=("npm	$name	$ver	$pj	$n")
 done < <(jq -r '((.dependencies // {}) + (.devDependencies // {})) | to_entries[] | "\(.key)\t\(.value)"' "$pj")
 pp=research/pyproject.toml
 n=0
+inlist=false
 while IFS= read -r line; do
   n=$((n + 1))
+  # requirement strings live in `dependencies = [ … ]` and the dependency groups
+  [[ "$line" =~ ^(dependencies|dev)[[:space:]]*=[[:space:]]*\[ ]] && inlist=true
+  if $inlist; then
+    rest="$line"
+    while [[ "$rest" =~ \"([^\"]*)\"(.*)$ ]]; do
+      req="${BASH_REMATCH[1]}"; rest="${BASH_REMATCH[2]}"
+      [[ "$req" =~ ^[A-Za-z0-9_.-]+==[0-9] ]] || { echo "check_dep_age: $pp:$n: \"$req\" is not pinned with ==" >&2; exit 2; }
+    done
+  fi
+  [[ "$line" == *"]"* ]] && inlist=false
   while [[ "$line" =~ \"([A-Za-z0-9_.-]+)==([0-9][^\"]*)\"(.*)$ ]]; do
     entries+=("pypi	${BASH_REMATCH[1]}	${BASH_REMATCH[2]}	$pp	$n")
     line="${BASH_REMATCH[3]}"
@@ -80,11 +99,13 @@ while IFS= read -r line; do
 done <"$pp"
 
 adopted_at() { # <file> <line> → unix time of the commit that wrote the line (now if uncommitted)
-  local t
-  t="$(git blame --porcelain -L "$2,$2" -- "$1" 2>/dev/null | awk '/^committer-time /{print $2; exit}')"
-  local sha
-  sha="$(git blame --porcelain -L "$2,$2" -- "$1" 2>/dev/null | head -1 | cut -d' ' -f1)"
-  if [ -z "$t" ] || [ "$sha" = "0000000000000000000000000000000000000000" ]; then echo "$now"; else echo "$t"; fi
+  local b t sha
+  b="$(git blame --porcelain -L "$2,$2" -- "$1")" || { echo "check_dep_age: git blame $1:$2 failed" >&2; return 1; }
+  sha="$(printf '%s\n' "$b" | head -1 | cut -d' ' -f1)"
+  t="$(printf '%s\n' "$b" | awk '/^committer-time /{print $2; exit}')"
+  if [ "$sha" = "0000000000000000000000000000000000000000" ]; then echo "$now"
+  elif [ -n "$t" ]; then echo "$t"
+  else echo "check_dep_age: no commit time for $1:$2" >&2; return 1; fi
 }
 iso_to_unix() { jq -rn --arg d "$1" '$d | sub("\\.[0-9]+"; "") | sub("\\+00:00$"; "Z") | fromdateiso8601'; }
 published_at() { # <eco> <name> <version> → ISO time or empty
@@ -103,7 +124,7 @@ for e in "${entries[@]}"; do
     echo "check_dep_age: MISSING $eco $name $ver ($file:$line): no publication time from the registry" >&2
     missing=1; continue
   fi
-  p="$(iso_to_unix "$pub")"; a="$(adopted_at "$file" "$line")"
+  p="$(iso_to_unix "$pub")"; a="$(adopted_at "$file" "$line")" || exit 2
   age=$(( (a - p) / 86400 ))
   ok=true; why=""
   if [ "$age" -lt "$days" ]; then
