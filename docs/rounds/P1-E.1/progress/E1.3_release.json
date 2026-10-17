@@ -1,0 +1,54 @@
+{
+  "version": "0.1.0",
+  "spec_version": "1.0.3",
+  "commit": "6045a31fee23f3bc860caa68f5ba216a0aae2b76",
+  "worktree_dirty": false,
+  "required_targets": [
+    "aarch64-apple-darwin"
+  ],
+  "targets": [
+    {
+      "target": "aarch64-apple-darwin",
+      "required": true,
+      "built": true,
+      "sha256": "fe1337b7683e45562edf6c23ed7ed48a5048e49df8774dd9befff0a2d605290a",
+      "version": "mdk 0.1.0",
+      "spec_version": "1.0.3",
+      "conformance": {
+        "level_claimed": 3,
+        "passed": 34,
+        "total": 34,
+        "fixtures_manifest": "ok"
+      },
+      "conformance_exit": 0,
+      "ok": true
+    },
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "required": false,
+      "built": false,
+      "skipped": true,
+      "reason": "no MSVC toolchain or Windows host here; built and checked by .github/workflows/release.yml (windows-latest)",
+      "ok": false
+    },
+    {
+      "target": "x86_64-unknown-linux-gnu",
+      "required": false,
+      "built": true,
+      "sha256": "a9881f82e39a374df4c06462063a4360b5b0d903cf6bdc6e5001d9d59ffb7691",
+      "version": "mdk 0.1.0",
+      "spec_version": "1.0.3",
+      "conformance": {
+        "level_claimed": 3,
+        "passed": 34,
+        "total": 34,
+        "fixtures_manifest": "ok"
+      },
+      "conformance_exit": 0,
+      "ok": true
+    }
+  ],
+  "built": 2,
+  "ok": 2,
+  "required_ok": true
+}
