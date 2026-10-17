@@ -1,0 +1,103 @@
+{
+  "items": [
+    {
+      "id": "R1",
+      "item": "one version 0.1.0",
+      "ok": true,
+      "detail": "0.1.0 0.1.0 0.1.0 0.1.0 0.1.0 0.1.0"
+    },
+    {
+      "id": "R2",
+      "item": "spec version 1.0.3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R3",
+      "item": "rootmark --version / --spec-version",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R4a",
+      "item": "release package fresh (inputs of 85be0a7 = HEAD, clean tree, version)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R4",
+      "item": "release binary aarch64-apple-darwin: --version, --spec-version, rootmark conformance 34/34, sha256",
+      "ok": true,
+      "detail": "aarch64-apple-darwin: ok; x86_64-pc-windows-msvc (CI info): skipped; x86_64-unknown-linux-gnu (CI info): ok"
+    },
+    {
+      "id": "R5",
+      "item": "rootmark conformance = make conformance",
+      "ok": true,
+      "detail": "make exit 0, rootmark conformance exit 0"
+    },
+    {
+      "id": "R6",
+      "item": "archives and SHA256SUMS",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R7",
+      "item": "Python wheel (module rootmark_core)",
+      "ok": true,
+      "detail": "rootmark_bindings-0.1.0-cp311-abi3-macosx_11_0_arm64.whl"
+    },
+    {
+      "id": "R8",
+      "item": "Obsidian package",
+      "ok": true,
+      "detail": "files: main.js manifest.json styles.css ; main.js    42771 B"
+    },
+    {
+      "id": "R9",
+      "item": "spec publication dist/spec-1.0.3",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R10",
+      "item": "LICENSE Apache-2.0",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R11",
+      "item": "CHANGELOG, THREAT_MODEL, RELEASE",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R12",
+      "item": "cargo-binstall metadata, Homebrew draft",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R13",
+      "item": "CI release.yml: workflow_dispatch only, aarch64 required, Linux/Windows continue-on-error, rootmark conformance per job",
+      "ok": true,
+      "detail": "on: workflow_dispatch:"
+    },
+    {
+      "id": "R14",
+      "item": "no v0.1.0 tag (set by a human after verification)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "id": "R15",
+      "item": "real-Obsidian e2e 11/11 and E1-9 (K-E1.3)",
+      "ok": true,
+      "detail": "11/11, E1-9 true"
+    }
+  ],
+  "passed": 16,
+  "total": 16,
+  "pass": true
+}
