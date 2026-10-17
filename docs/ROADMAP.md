@@ -1,36 +1,53 @@
-# Yol Haritası
+# Yol Haritası v2 — Faz 1 Retrospektifi ve Faz 2
 
-Her tur bir `/goal` koşturmasıdır: kendi yönerge klasörü (`docs/rounds/<id>/`), kabul ölçütleri, bağımsız doğrulama ve çıkış kriteri ile. Turlar sıralıdır; araştırma turları paraleldir ve hiçbir faz turunu bloke etmez.
+Bu belge `docs/ROADMAP.md`'nin yerine geçer (v1 `docs/archive/ROADMAP_v1.md` olarak saklanır). Faz 1 kapanış kararları `DECISIONS.md` K-E1.x.
 
-## Faz 1 — Çekirdek ve ilk ürün sahnesi
+## 1. Faz 1 bilançosu (2026-10-13 → 2026-10-17)
 
-| Tur | Ad | İçerik | Çıkış kriteri |
-|---|---|---|---|
-| **P1-A** | Yeniden yapılandırma ve dondurma | Monorepo iskeleti; prototip `core/` ve `research/` taşınır; `spec/` §1–6 fixture'ları ve C1 uyumluluk testleri; `make conformance`; `make verify` uyarlanır; doğrulayıcının üç önerisi (holdout sentetik set, bölme eşiği zorluk bölgesi, dondurma denetleyicisi politikası) kalıcı regresyon olarak | C1-01..C1-17 geçer; holdout sette H1 eşikleri geçer; çift koşturma determinizmi |
-| **P1-B** | Yönetişim primitifleri | `core`: katman, terfi/demote hook'u, kontrol noktası, tüketim izi, ham günlük/sürüm tetikleyici sınırları, `policy.toml` yükleyici; C2 testleri | C2-01..C2-08 geçer; replay katman geçişlerini kurar |
-| **P1-C** | İndeks | `index`: tantivy, vektör deposu + kesin kosinüs, embedder trait + ONNX MiniLM, RRF, kontrol noktasına göre sorgu, sıcak katman + sıkıştırma; C3 testleri; `research` ile kalite regresyonu (v2 hybrid sayıları ±0) | C3-01..C3-04; `hybrid` nDCG v2 ile eşit; yazma→aranabilir p95 < 100 ms |
-| **P1-D** | Sunucu | `server`: `mdk` CLI, MCP araçları (`search`, `read_block`, `history`, `blame`, `propose`, `promote`, `checkpoint`, `trace`), HTTP eşdeğeri, dosya izleyici, varsayılan politika (yalnız insan onayı) | MCP uyumluluk testi (resmi inspector); her araç için betikli uçtan uca test |
-| **P1-E** | İstemci ve ürün sahnesi | `clients/obsidian` minimal (blame paneli, proposal işaretleme, promote, checkpoint seçici); `scripts/scene.sh`: Claude Code → propose → blame → arama dışı → promote → trace → checkpoint geri dönüş; bağımsız doğrulayıcı sahneyi koşturur | Sahne betiği temiz ortamda geçer; doğrulama raporu "güvenilir"; `mdk` 0.1.0 yayımı |
+### Ne üretildi
+- `mdk 0.1.0` (Apple Silicon): Rust çekirdek + indeks + sunucu; spec 1.0.3, uyumluluk Seviye 3 (34 test); MCP (10 araç) ve HTTP (token, insan kanalı); minimal Obsidian istemcisi; sahne uçtan uca ve gerçek Obsidian'da bağımsız doğrulanmış.
+- Yayımlanabilir spesifikasyon; blok düzeyinde soy, köken, katman/terfi, kontrol noktası, tüketim izi, deterministik indeks; determinizm iki bağımsız klonda 100 bin+ alanda sıfır fark.
+- Üç prototip turu + sekiz geliştirme turu; her tur bağımsız doğrulandı; ihlal sayısı toplam 0, GOAL dışı bulgu her turda en az 1.
 
-Faz 1 çıkışı: `NORTH_STAR.md` ürün sahnesi uçtan uca; `spec` §7–11 "donmuş"a terfi eder; uyumluluk Seviye 3.
+### Ne öğrendik (süreç)
+1. **Önceden kayıtlı eşik ve karar kuralı** tartışmayı sonuçtan koparıyor; "kaldı" dalları en az "geçti" kadar değerli (H2 düştü, C-3 düştü, E-7 düştü; hepsi doğru karar üretti).
+2. **Doğrulayıcı her turda GOAL'ün ölçmediği bir şey buldu** (lineage ULID, F1 karışık vault, canonical silme, boru hattı, `status`). Kriterler davranışı ölçüyor, doğrulayıcı niyeti ölçüyor. Bu yüzden "şu koşullarla güvenilir" hükmü ve ADDENDUM/kısa yama turu mekanizması kalıcı.
+3. **Ölçüm kodu ürün kodu kadar hata yapar** (ULID, `report.py` geri düşme, `compare` belirlenimsiz alan, SIGPIPE). Belirlenimli alan listesi ve dondurma denetleyicisi politikası bu yüzden var.
+4. **Sonuç görüldükten sonra alınan kararlar meşru, ama işaretli olmalı** (K4, K-C1.2, hariç tutma listeleri). Gizlemek yerine yazmak güveni artırdı.
+5. **"Önce Python sonra Rust" tuzağı** bir kez kuruldu (MCP) ve geri çekildi; faz 1 sonunda çalışma zamanında Python yok.
 
-## Faz 2 — Ekip ve genişleme
-| Tur | İçerik |
-|---|---|
-| P2-A | Blok içi CRDT, bloklar arası nesne alışverişi (sync), tenant = vault + anahtar + politika |
-| P2-B | WASM plugin çalışma zamanı (politika ve zenginleştirici), kaynak sınırları |
-| P2-C | Node bağlaması, VS Code istemcisi, sürekli sorgu primitifi (akış) |
-| P2-D | Sunucu dağıtımı, dinlenmede şifreleme, çok tenant |
+### Ne öğrendik (ürün)
+- Hibrit (sözcüksel + vektör) arama taban; wikilink grafı sıralama sinyali olarak katkı vermedi. Graf, varsa, gezinme yapısıdır.
+- Yönetişimin sınırı kanal değil **dosya sistemidir** (P1-E doğrulaması, risk 1). Dosya erişimli ajan md'yi doğrudan yazarsa izleyici onu insan sayar; token'ı okursa insan olarak terfi ettirir. Vaat, hedef kullanıcının en yaygın kurulumunda (Claude Code + yerel vault) tam değil. **Faz 2'nin ilk işi bu.**
+- Biçim göçleri ve bayat durumlar (indeks `/2→/3`, `status`) sync'ten önce altyapı istiyor.
+- İstemci blok hizalaması tahminle çalışıyor; sözleşmede blok konumu yok.
 
-## Araştırma kolları (paralel, `research/`, önceden kayıtlı eşiklerle)
-| Kol | Hipotez | Veri |
+## 2. Faz 2 — sıra ve gerekçe
+
+| Tur | Ad | Tür | İçerik | Çıkış kriteri (özet; GOAL'de önceden kayıtlı) |
+|---|---|---|---|---|
+| **P2-0** | Tasdikli yazma | **Hipotez turu** (prototip disiplini: eşik, D-set, bağımsız doğrulama) | İnsan kanalı istemcisi her kaydı `(doc_path, content_hash)` ile sunucuya **tasdik eder**; izleyicinin yakaladığı tasdiksiz değişiklik yeni katman `unverified` alır (canonical değil, aramada proposal gibi); insan tek tıkla terfi ettirir; politika ile `unverified→canonical` otomatik (eski davranış) seçilebilir. Token'ın ajan tarafından okunması riskine karşı: tasdik, istemcinin kullanıcı oturumuna bağlı kısa ömürlü anahtarla (OS anahtar zinciri varsa oradan) imzalanır; dosyadaki token yalnız okuma kanalı olur. | H-P2-0a: Claude Code'un doğrudan md yazdığı 200 vakada `canonical` sızıntısı 0; H-P2-0b: Obsidian ile insan düzenlemelerinde yanlış `unverified` ≤ %1 (tasdik gecikmesi/yarış); H-P2-0c: tasdik gecikmesi p95 < 500 ms; eski vault'lar açılır, `events_hash` değişmez; spec §7 "layers" genişlemesi CRITERION ile. |
+| **P2-A** | Göç ve sürüm uyumu | Altyapı | İndeks/olay/checkpoint biçim sürümleri için göç çerçevesi (`mdk migrate`, kuru koşturma, geri alma), `status` sürüm matrisi, tarihsel FAIL yerine "göç gerekli" durumu; Linux/Windows kurulum paketleri ve imzalama ("Setup"); Intel macOS yeniden değerlendirme. | Her biçim için ileri göç + geri alma testi; 0.1.0 vault'u → güncel sürüm göçü bayt bayt doğrulanabilir; kurulum paketleri 2 platform. |
+| **P2-B** | İstemci sözleşmesi v2 | Sözleşme | Blok konumu (satır aralığı, kaynak ofset) sözleşmeye; hizalama ölçümü (gerçek kullanıcı notları korpusu: HTML, dipnot, callout, gömme); `include_proposal`/`unverified` görünümü; VS Code istemcisi iskeleti. | Hizalama hatası ≤ %0.5 korpusta; sözleşme dışı çağrı 0; iki istemci aynı sözleşmeyle. |
+| **P2-C** | Sync | Altyapı + hipotez | Blok içi CRDT (Yjs/Automerge eşdeğeri Rust), bloklar arası nesne alışverişi, türev indeksler senkronize edilmez; iki replika determinizmi; çakışma çözümünde soy korunumu. | İki replika aynı olay dizisine yakınsar; çakışmalı düzenlemelerde soy koruma ≥ 0.95; `events_hash` replika başına deterministik. |
+| **P2-D** | WASM politikalar | Plugin | `EditPolicy`/`PromotionPolicy`/`VersionTrigger` için `wasmtime` çalışma zamanı, kaynak sınırları, örtük onay politikası ilk örnek. | Sandbox kaçışı testi; politika değişimi olaylarda izli; örtük onay politikası sahnede. |
+| **P2-E** | Çok vault ve sunucu dağıtımı | Altyapı | Tenant = vault + anahtar + politika; uzak erişim (TLS), dinlenmede şifreleme; tek motor çok replika. | Tenant izolasyonu kasıtlı test; uzak sahne. |
+
+P2-0 bloke edicidir: tasdikli yazma hipotezi düşerse faz 2'nin geri kalanı yeniden sıralanır ve tehdit modeli "yalnız kum havuzlu ajan" olarak daraltılır; bu durumda ürün vaadi de daraltılır ve NORTH_STAR karar kaydıyla değişir.
+
+## 3. Araştırma kolları (paralel, `research/`, önceden kayıtlı eşik)
+| Kol | Hipotez | Durum |
 |---|---|---|
-| R-1 Varlık grafı | LLM ile çıkarılmış varlık/ilişki grafı, hibrit arama üstüne takma ad / dil geçişi / ilişki sorularında kazanç sağlar | önbellekli Haiku çıkarımı (git'te), içeriksiz pasajları eleyen soru üreteci, ikinci vault |
-| R-2 Akış durumu | Üstel ortalama + histerezisli niyet durumu, kayan pencere tabanına göre niyet değişimini daha az yanlış alarmla yakalar | vault'tan sentetik gezinen transkriptler |
-| R-3 Soy sınırı | Aşırı yeniden yazımda (>%30) "soy koptu olabilir" sinyali için güvenilir bir skor | D1-hard genişletilmiş |
-| R-4 Öğrenilen ağırlıklar | Kullanım sinyaliyle güncellenen sıralama ağırlıkları, keşif payıyla popülerlik yanlılığına girmeden kazanç sağlar | sentetik oturum günlükleri |
+| R-1 Varlık grafı | LLM çıkarımlı varlık/ilişki grafı, hibrit üstüne takma ad / dil geçişi / ilişki sorularında kazanç | başlamadı |
+| R-2 Akış durumu | niyet durumu (üstel ortalama + histerezis) kayan pencereye göre daha az yanlış alarm | başlamadı |
+| R-3 Soy sınırı | >%30 yeniden yazımda "soy koptu olabilir" skoru | başlamadı |
+| R-4 Öğrenilen ağırlıklar | kullanım sinyaliyle sıralama ağırlıkları, keşif payıyla | başlamadı |
+| R-5 Graf gezinme | ajanın link üzerinden ikinci sorgu attığı çok-adımlı protokol vs tek sorgu | yeni (H2'nin alternatif hipotezi) |
 
-Araştırma sonucu ancak önceden kayıtlı eşiği geçer ve bağımsız doğrulanırsa `spec`'e ve çekirdeğe önerilir; öneri bir karar kaydıyla girer.
+## 4. Süreç değişiklikleri (DEV_PROCESS'e işlenir)
+- Her turun VERIFY'ı "GOAL'ün ölçmediği ama NORTH_STAR vaadini ilgilendiren bir şey gördün mü" sorusunu açıkça içerir (zaten fiilen yapılıyor; yazılı hale gelir).
+- Hipotez turları (P2-0, P2-C) prototip şablonunu (D-set, eşik, karar kuralı, çift koşturma) kullanır; geliştirme turları mevcut şablonu.
+- Yayım etiketi her zaman insan adımı; `release.yml` yalnız `workflow_dispatch`.
 
-## Değişiklik politikası
-Yol haritası değişebilir; değişiklik `docs/DECISIONS.md`'ye tarih, gerekçe ve etkilenen turlarla yazılır. Tur içeriği, tur başladıktan sonra değişmez; yeni ihtiyaç bir sonraki tura gider.
+## 5. Değişiklik politikası
+Yol haritası değişebilir; değişiklik `DECISIONS.md`'ye gerekçe ve etkilenen turlarla. Tur başladıktan sonra GOAL değişmez; ADDENDUM yalnız tur başlamadan önce.
