@@ -17,11 +17,14 @@
 #                                   conformance.json (level 3), LICENSE
 #   homebrew/mdk.rb                 formula draft (macOS arm64 sha256)
 #   SHA256SUMS
-# Targets: aarch64-apple-darwin (native), x86_64-unknown-linux-gnu
-# (cross-compiled in a named Debian trixie container, run in a named amd64
-# container), x86_64-apple-darwin and x86_64-pc-windows-msvc (attempted /
-# CI only: .github/workflows/release.yml). A target that cannot be built is
-# recorded with its reason, never silently skipped.
+#   release.json                    every target's record
+#                                   (scripts/release_target.sh assemble)
+#   plugin_e2e_real/                the real-Obsidian e2e (K-E1.3)
+# Targets (K-E1.1): aarch64-apple-darwin (native) is the one release
+# target; x86_64-unknown-linux-gnu (cross-compiled in a named Debian trixie
+# container, run in a named amd64 container) and x86_64-pc-windows-msvc
+# (CI only: .github/workflows/release.yml) are CI information. A target
+# that cannot be built is recorded with its reason, never silently skipped.
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 dist="${1:-$root/dist}"
@@ -36,22 +39,8 @@ mkdir -p "$dist/bin" "$dist/wheel" "$dist/obsidian" "$dist/homebrew"
 models="$root/models"
 [ -f "$models/MANIFEST.json" ] || { echo "release: models/ missing (make models)" >&2; exit 1; }
 
-# record <target> <json>
-record() { echo "$2" | jq --arg t "$1" '{target: $t} + .' >"$dist/bin/$1.json"; }
-# check <target> <runner…>: version, spec version, conformance of a built binary
-check() {
-  local t="$1"; shift
-  local v s c rc=0
-  v="$("$@" --version 2>&1 || true)"
-  s="$("$@" --spec-version 2>&1 || true)"
-  c="$("$@" conformance 2>/dev/null)" || rc=$?
-  record "$t" "$(jq -n --arg v "$v" --arg s "$s" --argjson rc "$rc" --arg c "$c" --arg ver "$ver" --arg spec "$spec" '
-    ($c | try fromjson catch null) as $r
-    | {built: true, version: $v, spec_version: $s,
-       conformance: (if $r == null then {error: ($c | .[0:400])} else {level_claimed: $r.level_claimed, passed: $r.passed, total: $r.total, fixtures_manifest: $r.fixtures_manifest} end),
-       conformance_exit: $rc,
-       ok: ($v == ("mdk " + $ver) and $s == $spec and $r != null and $r.level_claimed == 3 and $r.passed == 34 and $r.total == 34)}')"
-}
+# one target's record (scripts/release_target.sh: the same as in CI)
+rt="$root/scripts/release_target.sh"
 pack() { # pack <target> <binary>
   local t="$1" b="$2" d="$dist/bin/mdk-$ver-$1"
   rm -rf "$d"; mkdir -p "$d/models"
@@ -60,40 +49,35 @@ pack() { # pack <target> <binary>
   (cd "$dist/bin" && tar -czf "mdk-$ver-$t.tar.gz" "mdk-$ver-$t" && rm -rf "mdk-$ver-$t")
 }
 
-# ---- aarch64-apple-darwin (native)
+# ---- aarch64-apple-darwin (native): the one release target (K-E1.1)
 cargo build -q --release --locked -p mdkernel-server --bin mdk
-MDK_MODELS="$models" check aarch64-apple-darwin "$root/target/release/mdk"
+MDK_MODELS="$models" bash "$rt" check aarch64-apple-darwin true "$dist/bin/aarch64-apple-darwin.json" "$root/target/release/mdk"
 pack aarch64-apple-darwin "$root/target/release/mdk"
 
-# ---- x86_64-apple-darwin: the pinned onnxruntime crate (ort =2.0.0-rc.13,
-# download-binaries) ships no prebuilt library for this target
-if cargo build -q --release --locked --target x86_64-apple-darwin -p mdkernel-server --bin mdk 2>"$dist/bin/x86_64-apple-darwin.log"; then
-  MDK_MODELS="$models" check x86_64-apple-darwin arch -x86_64 "$root/target/x86_64-apple-darwin/release/mdk"
-  pack x86_64-apple-darwin "$root/target/x86_64-apple-darwin/release/mdk"
-else
-  record x86_64-apple-darwin "$(jq -n --arg e "$(grep -m1 -E '^error' "$dist/bin/x86_64-apple-darwin.log" || tail -1 "$dist/bin/x86_64-apple-darwin.log")" \
-    '{built: false, reason: $e, ok: false}')"
-fi
-
-# ---- x86_64-unknown-linux-gnu: cross-compiled in a named arm64 Debian
-# trixie container (the prebuilt onnxruntime needs glibc >= 2.38), run in a
-# named amd64 container; only containers this script starts are touched
+# ---- x86_64-unknown-linux-gnu (CI info, not a release criterion; K-E1.1):
+# cross-compiled in a named arm64 Debian trixie container (the prebuilt
+# onnxruntime needs glibc >= 2.38), run in a named amd64 container; only
+# containers this script starts are touched. MDK_RELEASE_LINUX=0 skips it.
 lt="$root/target/docker-linux-trixie"
-if command -v docker >/dev/null && docker run --rm --name "mdk-release-linux-build-$$" --platform linux/arm64 \
+if [ "${MDK_RELEASE_LINUX:-1}" = 0 ]; then
+  bash "$rt" skipped x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" "not attempted here (MDK_RELEASE_LINUX=0); built and checked by .github/workflows/release.yml"
+elif command -v docker >/dev/null && docker run --rm --name "mdk-release-linux-build-$$" --platform linux/arm64 \
     -v "$root":/src:ro -v "$lt":/target -v mdk-cargo-home-arm:/usr/local/cargo/registry \
     -v "$root/scripts/linux_cross_build.sh":/cross.sh:ro -w /src -e CARGO_TARGET_DIR=/target -e RUSTUP_TOOLCHAIN=1.92.0 \
     rust:1.92.0-trixie bash /cross.sh >"$dist/bin/x86_64-unknown-linux-gnu.log" 2>&1; then
   lb="$lt/x86_64-unknown-linux-gnu/release/mdk"
-  run_linux() { docker run --rm --name "mdk-release-linux-run-$$-$RANDOM" --platform linux/amd64 -v "$lb":/mdk:ro -v "$models":/models:ro \
-    -e MDK_MODELS=/models debian:trixie-slim /mdk "$@"; }
-  check x86_64-unknown-linux-gnu run_linux
+  bash "$rt" check x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" "$lb" \
+    docker run --rm --name "mdk-release-linux-run-$$" --platform linux/amd64 -v "$lb":/mdk:ro -v "$models":/models:ro \
+    -e MDK_MODELS=/models debian:trixie-slim /mdk
   pack x86_64-unknown-linux-gnu "$lb"
 else
-  record x86_64-unknown-linux-gnu "$(jq -n --arg e "$(grep -m1 -E 'error' "$dist/bin/x86_64-unknown-linux-gnu.log" || echo 'docker unavailable')" '{built: false, reason: $e, ok: false}')"
+  bash "$rt" skipped x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" \
+    "$(grep -m1 -E 'error' "$dist/bin/x86_64-unknown-linux-gnu.log" 2>/dev/null || echo 'docker unavailable')"
 fi
 
-# ---- x86_64-pc-windows-msvc: needs MSVC (or a Windows runner); CI only
-record x86_64-pc-windows-msvc '{"built": false, "reason": "no MSVC toolchain or Windows host here; built and checked by .github/workflows/release.yml (windows-latest)", "ok": false}'
+# ---- x86_64-pc-windows-msvc (CI info): needs MSVC or a Windows runner
+bash "$rt" skipped x86_64-pc-windows-msvc false "$dist/bin/x86_64-pc-windows-msvc.json" "no MSVC toolchain or Windows host here; built and checked by .github/workflows/release.yml (windows-latest)"
+# x86_64-apple-darwin is not a target (K-E1.1)
 
 # ---- wheel
 (cd research && uv run --frozen maturin build --release --quiet -m ../bindings/python/Cargo.toml -o "$dist/wheel") >/dev/null
@@ -119,8 +103,10 @@ sha_arm="$(shasum -a 256 "$dist/bin/mdk-$ver-aarch64-apple-darwin.tar.gz" | cut 
 sed -e "s/@VERSION@/$ver/g" -e "s/@SHA256_AARCH64_APPLE_DARWIN@/$sha_arm/g" packaging/homebrew/mdk.rb.in >"$dist/homebrew/mdk.rb"
 
 (cd "$dist" && find bin wheel obsidian homebrew "spec-$spec" -type f \( -name '*.tar.gz' -o -name '*.whl' -o -name '*.zip' -o -name '*.rb' -o -name 'conformance.json' \) | LC_ALL=C sort | xargs shasum -a 256 >SHA256SUMS)
+# ---- the real-Obsidian e2e of this tree's plugin (K-E1.3; docs/RELEASE.md
+# R15): mandatory for a release, recorded (a skip is recorded as a skip)
+bash scripts/plugin_e2e_real.sh "$dist/plugin_e2e_real" || echo "release: real-Obsidian e2e failed (recorded in $dist/plugin_e2e_real/)" >&2
+
 commit="$(git rev-parse HEAD)"
 dirty="$( [ -z "$(git status --porcelain --untracked-files=no)" ] && echo false || echo true)"
-jq -s --arg c "$commit" --argjson d "$dirty" '{version: "'"$ver"'", spec_version: "'"$spec"'", commit: $c, worktree_dirty: $d, targets: ., built: ([.[] | select(.built)] | length), ok: ([.[] | select(.ok)] | length)}' "$dist"/bin/*.json >"$dist/release.json"
-jq -r '.targets[] | "release: \(if .ok then "ok  " else "FAIL" end) \(.target)\(if .built then "" else " (not built: \(.reason))" end)"' "$dist/release.json"
-jq -r '"release: \(.ok)/4 targets built and checked (E-7)"' "$dist/release.json"
+bash "$rt" assemble "$dist" "$commit" "$dirty" || echo "release: the required target did not pass (see $dist/release.json)" >&2
