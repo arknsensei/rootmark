@@ -5,6 +5,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { MdkClient, type Hit } from "../src/api";
 import { blameAt, listCheckpoints, nameCheckpoint, recentTraces, runSearch } from "../src/commands";
+import { blockLine } from "../src/align";
 import { pastView } from "../src/view";
 import { fetchTransport, startFake, type Fake } from "./fake-server";
 import { SAMPLES } from "./samples";
@@ -57,6 +58,36 @@ describe("search panel (contract §2.2)", () => {
     expect(off.proposal).toEqual([]);
   });
 
+  it("the server's order is kept even when it is not score order; a proposal scoring above a canonical hit stays apart", async () => {
+    // the contract promises the canonical prefix equals the flag-off answer,
+    // not monotone scores: any re-sort (stable by score included) fails here
+    const odd = [hit("low", "canonical", 0.5), hit("high", "canonical", 9), hit("mid", "canonical", 2)];
+    fake.reply(200, searchAnswer(odd, false));
+    fake.reply(200, searchAnswer([...odd, hit("top", "proposal", 50), hit("p2", "proposal", 0.1)], true));
+    const off = await runSearch(client, "x", { k: 3 });
+    const on = await runSearch(client, "x", { k: 3, include_proposal: true });
+    expect(off.canonical.map((h) => h.doc_path)).toEqual(["low.md", "high.md", "mid.md"]);
+    expect(on.canonical).toEqual(off.canonical);
+    expect(on.proposal.map((h) => h.doc_path)).toEqual(["top.md", "p2.md"]);
+  });
+
+  it("proposal hits that were not asked for are bad_response, never hidden", async () => {
+    fake.reply(200, searchAnswer([hit("c", "canonical", 1), hit("p", "proposal", 1)], false));
+    await expect(runSearch(client, "x")).rejects.toMatchObject({ code: "bad_response", message: expect.stringContaining("without include_proposal") as unknown });
+    // the server claims the flag was off although it was sent on
+    fake.reply(200, searchAnswer([hit("c", "canonical", 1), hit("p", "proposal", 1)], false));
+    await expect(runSearch(client, "x", { include_proposal: true })).rejects.toMatchObject({ code: "bad_response" });
+  });
+
+  it("more than k hits in a layer (or 2k in all) is bad_response (§2.2 normative length)", async () => {
+    fake.reply(200, searchAnswer([hit("a", "canonical", 3), hit("b", "canonical", 2), hit("c", "canonical", 1)], false));
+    await expect(runSearch(client, "x", { k: 2 })).rejects.toMatchObject({ code: "bad_response", message: expect.stringContaining("at most k per layer") as unknown });
+    fake.reply(200, searchAnswer([hit("a", "canonical", 3), hit("p", "proposal", 2), hit("q", "proposal", 1)], true));
+    await expect(runSearch(client, "x", { k: 1, include_proposal: true })).rejects.toMatchObject({ code: "bad_response" });
+    fake.reply(200, searchAnswer([hit("a", "canonical", 3), hit("p", "proposal", 2)], true));
+    await expect(runSearch(client, "x", { k: 1, include_proposal: true })).resolves.toMatchObject({ canonical: [{ doc_path: "a.md" }] });
+  });
+
   it("ties keep the server's order (the client never re-ranks)", async () => {
     const tied = [hit("z", "canonical", 1), hit("a", "canonical", 1)];
     fake.reply(200, searchAnswer(tied, false));
@@ -104,6 +135,22 @@ describe("checkpoints (contract §2.3)", () => {
     ]);
     fake.reply(404, { error: { code: "not_found", message: "blame: a.md has no snapshot at checkpoint y" } });
     expect(pastView("a.md", "y", await blameAt(client, "a.md", "y"))).toBe("a.md had no snapshot at checkpoint y");
+  });
+});
+
+describe("trace jump to a block's line", () => {
+  const ranges = [
+    { start: 0, end: 0, heading: "A" },
+    { start: 2, end: 3, heading: "A" },
+    { start: 5, end: 5, heading: "A" },
+  ];
+  const blame = [{ lineage_id: "l0" }, { lineage_id: "l1" }, { lineage_id: "l2" }];
+  it("the returned block's start line when the note aligns", () => {
+    expect(blockLine(blame, ranges, "l1")).toEqual({ line: 2 });
+  });
+  it("otherwise the reason (never a guessed line)", () => {
+    expect(blockLine(blame.slice(0, 2), ranges, "l1")).toMatchObject({ reason: expect.stringContaining("not aligned") as unknown });
+    expect(blockLine(blame, ranges, "gone")).toMatchObject({ reason: expect.stringContaining("no longer in this note") as unknown });
   });
 });
 

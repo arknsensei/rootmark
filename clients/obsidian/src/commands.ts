@@ -171,18 +171,29 @@ export async function runSearch(
   opts: { mode?: "hybrid" | "lexical" | "flat"; k?: number; include_proposal?: boolean; at?: string } = {},
 ): Promise<SearchView> {
   const r = await client.call("search", { query, ...opts });
+  const k = opts.k ?? 10;
+  const asked = opts.include_proposal === true;
   const bad = r.hits.find((h) => h.layer !== "canonical" && h.layer !== "proposal");
   if (bad !== undefined) throw new MdkError("bad_response", `search returned a ${bad.layer} hit (contract §2.2)`, 200);
   const firstProposal = r.hits.findIndex((h) => h.layer === "proposal");
   if (firstProposal >= 0 && r.hits.slice(firstProposal).some((h) => h.layer === "canonical")) {
     throw new MdkError("bad_response", "search: a canonical hit after a proposal hit (contract §2.2)", 200);
   }
-  return {
-    checkpoint_id: r.checkpoint_id,
-    trace_id: r.trace_id,
-    canonical: r.hits.filter((h) => h.layer === "canonical"),
-    proposal: r.hits.filter((h) => h.layer === "proposal"),
-  };
+  const canonical = r.hits.filter((h) => h.layer === "canonical");
+  const proposal = r.hits.filter((h) => h.layer === "proposal");
+  // a proposal is never shown unasked, and never hidden: an answer that
+  // holds one without the flag is outside the contract (§2.2)
+  if ((!asked || !r.include_proposal) && proposal.length > 0) {
+    throw new MdkError("bad_response", "search: proposal hits without include_proposal (contract §2.2)", 200);
+  }
+  if (canonical.length > k || proposal.length > k) {
+    throw new MdkError(
+      "bad_response",
+      `search: ${String(canonical.length)} canonical / ${String(proposal.length)} proposal hits for k = ${String(k)} (contract §2.2: at most k per layer)`,
+      200,
+    );
+  }
+  return { checkpoint_id: r.checkpoint_id, trace_id: r.trace_id, canonical, proposal };
 }
 
 /** Checkpoints in creation order (§2.3). */

@@ -1,10 +1,10 @@
 // Traces: the latest consumption traces and the blocks each answer rested
-// on; a click opens the note of a returned block.
+// on; a click opens the note at the returned block's line (when the note's
+// blocks align; otherwise at the top, with the reason).
 import { ItemView, type WorkspaceLeaf } from "obsidian";
 import { describeError } from "../api";
 import { recentTraces } from "../commands";
 import type MdkernelPlugin from "../main";
-import { openDoc } from "./open";
 
 export const TRACES_VIEW = "mdkernel-traces";
 
@@ -36,7 +36,9 @@ export class TracesView extends ItemView {
     const btn = c.createEl("button", { text: "Refresh" });
     btn.addEventListener("click", () => void this.refresh());
     try {
-      for (const t of await recentTraces(client, { limit: 50 })) {
+      const traces = await recentTraces(client, { limit: 50 });
+      if (traces.length === 0) c.createEl("p", { text: "No consumption traces yet (search or read_block writes one)." });
+      for (const t of traces) {
         const d = c.createEl("details");
         d.createEl("summary", { text: `#${String(t.at_seq)} · ${t.consumer} · ${String(t.returned.length)} blocks · checkpoint ${t.checkpoint_id.slice(0, 8)}` });
         const ul = d.createEl("ul");
@@ -44,7 +46,7 @@ export class TracesView extends ItemView {
           const a = ul.createEl("li").createEl("a", { text: `${r.doc_path} · ${r.lineage_id.slice(0, 8)}`, href: "#" });
           a.addEventListener("click", (ev) => {
             ev.preventDefault();
-            openDoc(this.app, r.doc_path);
+            void this.plugin.openAtBlock(r.doc_path, r.lineage_id);
           });
         }
       }

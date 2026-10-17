@@ -1,6 +1,6 @@
-import { MarkdownView, Notice, Plugin, type TFile } from "obsidian";
+import { MarkdownView, Notice, Plugin, TFile } from "obsidian";
 import { connect, describeError, type ConnectionState, type MdkClient } from "./api";
-import { align, editorBlocks } from "./align";
+import { align, blockLine, editorBlocks } from "./align";
 import { blameOf, historyOf, listProposals, type ProposalRow } from "./commands";
 import { gutterMarks } from "./view";
 import { blameGutter, setMarks } from "./ui/gutter";
@@ -104,6 +104,36 @@ export default class MdkernelPlugin extends Plugin {
     } catch (e) {
       this.gutterHint(`blame failed: ${describeError(e)}`);
       new Notice(`mdkernel blame: ${describeError(e)}`);
+    }
+  }
+
+  /** Opens an existing note at the line of one of its blocks (trace
+   * viewer); when the position is not known the note opens and the reason
+   * is shown. Never creates a note. */
+  async openAtBlock(path: string, lineage: string): Promise<void> {
+    const f = this.app.vault.getAbstractFileByPath(path);
+    if (!(f instanceof TFile)) {
+      new Notice(`mdkernel: ${path} is not in the vault (moved or deleted)`);
+      return;
+    }
+    const leaf = this.app.workspace.getLeaf(false);
+    await leaf.openFile(f);
+    const client = this.client();
+    if (client === null) return;
+    try {
+      const blocks = await blameOf(client, path);
+      const at = blocks === null ? { reason: `${path} is not in the mdk log` } : blockLine(blocks, this.rangesOf(f), lineage);
+      if ("line" in at) {
+        const v = leaf.view;
+        if (v instanceof MarkdownView) {
+          v.editor.setCursor({ line: at.line, ch: 0 });
+          v.editor.scrollIntoView({ from: { line: at.line, ch: 0 }, to: { line: at.line, ch: 0 } }, true);
+        }
+      } else {
+        new Notice(`mdkernel: opened ${path}; block position unknown — ${at.reason}`, 8000);
+      }
+    } catch (e) {
+      new Notice(`mdkernel: ${describeError(e)}`);
     }
   }
 

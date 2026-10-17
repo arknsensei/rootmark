@@ -71,7 +71,10 @@ export class CheckpointsView extends ItemView {
   /** The note as of a checkpoint: read only (no editor, no write). */
   private async past(el: HTMLElement, doc: string, at: string): Promise<void> {
     const client = this.plugin.client();
-    if (client === null) return;
+    if (client === null) {
+      new Notice(`mdk serve not connected: ${this.plugin.offlineReason()}`);
+      return;
+    }
     const pre = el.createEl("pre", { cls: "mdk-past" });
     try {
       pre.setText(pastView(doc, at, await blameAt(client, doc, at)));

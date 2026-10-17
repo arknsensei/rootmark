@@ -88,3 +88,18 @@ export function align<T>(blame: readonly T[], ranges: readonly BlockRange[]): Al
   }
   return { aligned: true, pairs: blame.map((block, i) => ({ block, range: ranges[i] as BlockRange })) };
 }
+
+/** Where to jump for a block of a note (trace viewer): its start line when
+ * the note's blocks align and it is among them, else the reason. */
+export function blockLine(
+  blame: readonly { lineage_id: string }[],
+  ranges: readonly BlockRange[],
+  lineage: string,
+): { line: number } | { reason: string } {
+  const al = align(blame, ranges);
+  if (!al.aligned) return { reason: al.reason };
+  const p = al.pairs.find((x) => x.block.lineage_id === lineage);
+  return p === undefined
+    ? { reason: `block ${lineage.slice(0, 8)} is no longer in this note (changed since the trace)` }
+    : { line: p.range.start };
+}
