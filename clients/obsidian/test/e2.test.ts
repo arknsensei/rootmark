@@ -180,7 +180,7 @@ describe("the plugin writes no file (static scan of src/)", () => {
   const writeMethods = [
     "modify", "modifyBinary", "create", "createBinary", "createFolder", "append", "process",
     "trash", "trashSystem", "trashLocal", "rename", "copy", "write", "writeBinary", "remove",
-    "rmdir", "mkdir", "replaceRange", "replaceSelection", "setValue", "setLine", "changeByRange",
+    "rmdir", "mkdir", "delete", "processFrontMatter", "saveData", "replaceRange", "replaceSelection", "setValue", "setLine", "changeByRange",
     "openLinkText", "writeFile", "appendFile", "createWriteStream",
   ].join("|");
   const forbidden = [
