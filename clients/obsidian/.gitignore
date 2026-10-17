@@ -2,3 +2,4 @@ node_modules/
 main.js
 dist/
 e2e/.build/
+e2e/real/.build/

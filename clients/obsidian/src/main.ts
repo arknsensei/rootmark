@@ -2,7 +2,7 @@ import { MarkdownView, Notice, Plugin, TFile } from "obsidian";
 import { connect, describeError, type ConnectionState, type MdkClient } from "./api";
 import { align, blockLine, editorBlocks } from "./align";
 import { blameOf, historyOf, listProposals, type ProposalRow } from "./commands";
-import { gutterMarks } from "./view";
+import { gutterMarks, indexNotice } from "./view";
 import { blameGutter, setMarks } from "./ui/gutter";
 import { HistoryModal } from "./ui/history-modal";
 import { ProposalsView, PROPOSALS_VIEW } from "./ui/proposals-view";
@@ -18,6 +18,8 @@ import { CONSUMER } from "./consumer";
  * starts a server) and it never writes a vault file. */
 export default class MdkernelPlugin extends Plugin {
   state: ConnectionState = { kind: "offline", reason: "not connected yet" };
+  /** the index line of the connection status (K-E1.2); null when `ok` */
+  private indexDetail: string | null = null;
   private statusEl: HTMLElement | null = null;
 
   override async onload(): Promise<void> {
@@ -54,12 +56,18 @@ export default class MdkernelPlugin extends Plugin {
       CONSUMER,
     );
     const online = this.state.kind === "online";
+    // the index state (K-E1.2): `status` answers whatever it is; anything
+    // but `ok` is shown with the way to rebuild
+    const ix = this.state.kind === "online" ? indexNotice(this.state.status.index) : null;
+    this.indexDetail = ix?.detail ?? null;
     this.statusEl?.setText(
       this.state.kind === "online"
-        ? `mdk ${this.state.status.mdk_version} · ${this.state.settings.humanId === null ? "no human_id" : `human:${this.state.settings.humanId}`}`
+        ? `mdk ${this.state.status.mdk_version} · ${this.state.settings.humanId === null ? "no human_id" : `human:${this.state.settings.humanId}`}${ix === null ? "" : ` · ${ix.label}`}`
         : "mdk: offline",
     );
-    this.statusEl?.setAttr("title", this.state.kind === "offline" ? this.state.reason : "mdk serve connected");
+    this.statusEl?.setAttr("title", this.state.kind === "offline" ? this.state.reason : ix === null ? "mdk serve connected" : ix.detail);
+    this.statusEl?.toggleClass("mdk-index-warning", ix !== null);
+    if (ix !== null) new Notice(`mdkernel: ${ix.detail}`, 15000);
     if (online) await this.refreshBlame();
   }
 
@@ -77,7 +85,8 @@ export default class MdkernelPlugin extends Plugin {
   /** The status-bar hint of the blame gutter: always the current state of
    * the active note (no stale reason survives a later success). */
   private gutterHint(text: string): void {
-    this.statusEl?.setAttr("title", text);
+    // the index state stays first in the tooltip while it is not `ok`
+    this.statusEl?.setAttr("title", this.indexDetail === null ? text : `${this.indexDetail}\n${text}`);
   }
 
   async refreshBlame(): Promise<void> {

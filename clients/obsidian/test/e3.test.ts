@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { MdkClient, type Hit } from "../src/api";
 import { blameAt, listCheckpoints, nameCheckpoint, recentTraces, runSearch } from "../src/commands";
 import { blockLine } from "../src/align";
-import { pastView } from "../src/view";
+import { indexNotice, pastView } from "../src/view";
 import { fetchTransport, startFake, type Fake } from "./fake-server";
 import { SAMPLES } from "./samples";
 
@@ -167,5 +167,27 @@ describe("traces (contract §2)", () => {
     fake.reply(200, SAMPLES.trace);
     expect((await recentTraces(client)).map((r) => r.at_seq)).toEqual([1, 0]);
     expect(JSON.parse(fake.requests[1]?.body ?? "")).toEqual({});
+  });
+});
+
+describe("index state in the connection status (K-E1.2)", () => {
+  const ix = (state: string, auto_rebuild = false) => ({ state, format: state === "stale" ? "mdkernel-index/2" : null, expected_format: "mdkernel-index/3", auto_rebuild });
+  it("index_notice_ok_is_silent", () => {
+    expect(indexNotice({ ...ix("ok"), format: "mdkernel-index/3" })).toBeNull();
+  });
+  it("index_notice_stale_names_formats_and_rebuild", () => {
+    const n = indexNotice(ix("stale"));
+    expect(n?.label).toBe("index stale");
+    expect(n?.detail).toContain("mdkernel-index/2");
+    expect(n?.detail).toContain("mdkernel-index/3");
+    expect(n?.detail).toContain("mdk index build");
+    expect(n?.detail).toContain("auto_rebuild = true");
+  });
+  it("index_notice_missing_and_damaged", () => {
+    expect(indexNotice(ix("missing", true))?.detail).toContain("restart `mdk serve`");
+    const d = indexNotice(ix("damaged"));
+    expect(d?.label).toBe("index damaged");
+    expect(d?.detail).toContain("never rebuilt automatically");
+    expect(d?.detail).toContain("mdk index build");
   });
 });

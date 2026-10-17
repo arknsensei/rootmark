@@ -1,6 +1,6 @@
 // View models of the panels (no Obsidian import; component tests run on
 // these): what the blame gutter shows per line, what a history line says.
-import type { BlameBlock, LogEvent } from "./api";
+import type { BlameBlock, IndexStatus, LogEvent } from "./api";
 import { actorOf } from "./commands";
 import type { Alignment } from "./align";
 
@@ -58,4 +58,33 @@ export function pastView(doc: string, at: string, blocks: readonly BlameBlock[] 
     `${doc} at ${at} (read only)`,
     ...blocks.map((b, i) => `${String(i + 1).padStart(3)} ${b.layer.padEnd(9)} ${b.author_kind.padEnd(6)} ${b.source === "" ? "—" : b.source} · ${b.lineage_id.slice(0, 8)}`),
   ].join("\n");
+}
+
+/** What the connection status says about the vault's index (contract §2.5
+ * `status.index`, K-E1.2): null when it is `ok`; otherwise a short label for
+ * the status bar and the full line (state, formats, what is unavailable, how
+ * to rebuild) for its tooltip and the notice. */
+export function indexNotice(ix: IndexStatus): { label: string; detail: string } | null {
+  if (ix.state === "ok") return null;
+  const rebuild = "rebuild: run `mdk index build <vault>`";
+  const restart = ix.auto_rebuild
+    ? "or restart `mdk serve` ([index] auto_rebuild = true rebuilds it at start)"
+    : "or set [index] auto_rebuild = true in .mdkernel/policy.toml and restart `mdk serve`";
+  const unavailable = "search is unavailable (index_stale) until then; blame, history, checkpoints and traces work";
+  switch (ix.state) {
+    case "stale":
+      return {
+        label: "index stale",
+        detail: `index stale: format ${ix.format ?? "?"}, this mdk expects ${ix.expected_format}; ${unavailable}; ${rebuild}, ${restart}`,
+      };
+    case "missing":
+      return { label: "index missing", detail: `index missing: no index in the vault; ${unavailable}; ${rebuild}, ${restart}` };
+    case "damaged":
+      return {
+        label: "index damaged",
+        detail: `index damaged: its manifest cannot be read; ${unavailable}; ${rebuild} (a damaged index is never rebuilt automatically)`,
+      };
+    default:
+      return { label: `index ${ix.state}`, detail: `index state ${ix.state} (unknown to this plugin); ${rebuild}` };
+  }
 }
