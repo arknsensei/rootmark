@@ -34,5 +34,14 @@ Claude Code bir vault'a `propose` ile yazar → kullanıcı dosyayı herhangi bi
 ## Kanıtlanmış olanlar (prototip v1–v3, 2026-10)
 Diff ile soy takibi (kolay/zor sentetik, 56k bloklu gerçek tarihçe); bölme/birleştirme tespiti; tekrar-blok çapalama; blok/chunk ayrımı; 25 ms altı artımlı indeks; bayt düzeyinde determinizm ve bağımsız çift koşturma doğrulaması. **Desteklenmeyen:** wikilink grafının sözcüksel+vektör arama üstüne sıralama katkısı (araştırma kolunda).
 
+## Kanıtlanmış olanlar (faz 1, P1-A…P1-E, 2026-10)
+Her madde bir turun önceden kayıtlı kriteriyle ölçüldü ve bağımsız doğrulandı (rapor: `reports/rounds/<tur>/`); P1-E'ninki doğrulama bekliyor.
+- **Spec §1–6 donmuş, başvuru çekirdeği uyumlu:** C1 17/17, holdout eşikleri, çift koşturma bayt eşit (P1-A).
+- **Yönetişim primitifleri:** katman (`canonical`/`proposal`/`derived`), politika kancasıyla terfi (varsayılan yalnız insan), adlandırılabilir kontrol noktası, tüketim izi, ham günlük/sürüm tetikleyici sınırları; spec §7, §8, §11 Validated, C2 10/10 (P1-B, P1-B.1, P1-D.1).
+- **Deterministik türev indeks:** Rust BM25 (manifest'te bildirilen varyant) + kesin kosinüs + hibrit RRF, kontrol noktasında sorgu, yazma→aranabilir p95 32 ms; kalite referansı 618 değerde Δ 0; spec §9 Validated, C3 7/7 (P1-C, P1-C.1, P1-D.1).
+- **Ajan yazımı canonical içeriği değiştiremez:** `append_only` varsayılan; silme/değiştirme olayları aktör taşır; MCP ajan, HTTP insan kanalı; tek yazar kuyruğuyla boru hatlı istemci aynı günlüğü üretir (P1-D, P1-D.1).
+- **Ürün sahnesi uçtan uca (P1-E, doğrulama bekliyor):** ajan MCP ile önerir, insan HTTP ile (Obsidian istemcisinin komut katmanı) blame'de görür, terfi ettirir, arama bulur, iz cevabın bloklarını gösterir, kontrol noktasına dönülür, ajanın canonical değiştirme denemesi reddedilir; 11/11, iki koşturmada bayt eşit. Obsidian'ın kendi arayüzü başsız koşturulamadı.
+- **Desteklenmeyen / açık:** wikilink grafının sıralama katkısı (araştırma kolu); `mdk 0.1.0`'ın dört platform ikilisi (Intel macOS ve Windows doğrulanamadı, K-E5-T); istemcide Demote (sözleşmede yok, K-E2-T).
+
 ## Kaynak sırası
 `NORTH_STAR.md` → `spec/` → `docs/ARCHITECTURE.md` → `docs/PACKAGES.md` → `docs/ROADMAP.md` → `docs/DEV_PROCESS.md` → aktif turun yönergesi. Çelişkide üstteki kazanır.
