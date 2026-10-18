@@ -136,6 +136,7 @@ def in_code() -> dict:
         ("compare_p1e", "P1E"),
         ("compare_p1e1", "P1E1"),
         ("compare_p2_0", "P2_0"),
+        ("compare_p2_0_1", "P2_0_1"),
     ):
         if name in mods:
             m = mods[name]
@@ -154,6 +155,7 @@ def in_code() -> dict:
         "compare_p1e": ["P1E_FILES", "P1E_BYTES"],
         "compare_p1e1": ["P1E1_FILES", "P1E1_BYTES"],
         "compare_p2_0": ["P2_0_FILES", "P2_0_BYTES"],
+        "compare_p2_0_1": ["P2_0_1_FILES", "P2_0_1_BYTES"],
     }
     for mod, names in consts.items():
         if mod not in mods:
@@ -225,7 +227,16 @@ def check_runs(decl: dict, runs: list[Path]) -> dict:
             f
             for k, v in decl["files"].items()
             if k.split(".")[1]
-            not in ("BYTE_FILES", "BYTE_DIRS", "P1D_BYTES", "P1D1_BYTES", "P1E_BYTES", "P1E1_BYTES")
+            not in (
+                "BYTE_FILES",
+                "BYTE_DIRS",
+                "P1D_BYTES",
+                "P1D1_BYTES",
+                "P1E_BYTES",
+                "P1E1_BYTES",
+                "P2_0_BYTES",
+                "P2_0_1_BYTES",
+            )
             and k != "compare_p1c.REGRESS_FILES"
             # regress only, compared by test id (`compare_p1d.regress`)
             and k != "compare_p1d.CONFORMANCE"
