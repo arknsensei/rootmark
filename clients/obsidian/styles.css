@@ -2,6 +2,8 @@
 .rootmark-gutter .rootmark-mark { font-size: 0.75em; padding: 0 2px; border-radius: 3px; cursor: pointer; }
 .rootmark-layer-canonical { color: var(--text-muted); }
 .rootmark-layer-proposal { color: var(--text-on-accent); background: var(--color-orange); }
+/* P2-0: an external edit no client attested (spec 2.0.0 §7.1) */
+.rootmark-layer-unverified { color: var(--text-on-accent); background: var(--color-red); }
 .rootmark-layer-derived { color: var(--text-faint); }
 .rootmark-inactive { text-decoration: line-through; }
 .rootmark-proposals td, .rootmark-proposals th { padding: 2px 6px; text-align: left; }

@@ -6,6 +6,10 @@
 export const TOOLS = ["status","search","read_block","history","blame","propose","promote","checkpoint","checkpoints","trace"] as const;
 export type ToolName = (typeof TOOLS)[number];
 
+/** The human channel's own endpoints (§2.6), `POST /v1/<name>`; never MCP tools. */
+export const HTTP_ONLY = ["attest_session","attest"] as const;
+export type HttpOnlyName = (typeof HTTP_ONLY)[number];
+
 /** The stable error codes of the contract (§3) and their HTTP status. */
 export const ERROR_STATUS = {
   invalid_arguments: 400,

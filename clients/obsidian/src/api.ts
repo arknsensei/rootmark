@@ -8,17 +8,20 @@
 
 import {
   ERROR_STATUS,
+  HTTP_ONLY,
   TOOLS,
   type ErrorCode,
+  type HttpOnlyName,
   type ToolArgs,
   type ToolName,
 } from "./contract.gen";
 import { lastCheckpointViolation, resultViolation } from "./shape";
 
-export { TOOLS, ERROR_STATUS };
-export type { ErrorCode, ToolArgs, ToolName };
+export { TOOLS, ERROR_STATUS, HTTP_ONLY };
+export type { ErrorCode, HttpOnlyName, ToolArgs, ToolName };
 
-export type Layer = "canonical" | "proposal" | "derived";
+/** spec 2.0.0: `unverified` (an external edit no client attested, §7.1) */
+export type Layer = "canonical" | "proposal" | "unverified" | "derived";
 /** §2.5: a string (`Human`, `Agent`, `Transcript`, `Synthetic`). */
 export type AuthorKind = string;
 export interface Actor {
@@ -58,6 +61,8 @@ export interface StatusResult {
     index: Record<string, unknown>;
     identity: { human_id: string | null };
   };
+  /** attested writes (P2-0, contract §2.6) */
+  attestation: { unattested: string; window_s: number; stage: number; pending: number };
 }
 
 export interface Hit {
@@ -248,33 +253,40 @@ const isRecord = (v: unknown): v is Record<string, unknown> =>
 const isCode = (c: unknown): c is ErrorCode =>
   typeof c === "string" && Object.prototype.hasOwnProperty.call(ERROR_STATUS, c);
 
-/** The contract's answer → result or `RootmarkError` (§3: decide on `code`);
- * a result is checked against §2/§2.5 (`shape.ts`). */
-export function decode(tool: ToolName, res: HttpResponse): unknown {
+/** An HTTP answer of the contract → its result object (unchecked) or
+ * `RootmarkError` (§3: decide on `code`). */
+export function decodeHttp(name: ToolName | HttpOnlyName, res: HttpResponse): Record<string, unknown> {
   let body: unknown;
   try {
     body = JSON.parse(res.text);
   } catch {
-    throw new RootmarkError("bad_response", `${tool}: HTTP ${String(res.status)}, body is not JSON`, res.status);
+    throw new RootmarkError("bad_response", `${name}: HTTP ${String(res.status)}, body is not JSON`, res.status);
   }
   if (res.status === 200) {
     if (!isRecord(body) || "error" in body) {
-      throw new RootmarkError("bad_response", `${tool}: HTTP 200 without a result object`, 200);
-    }
-    const bad = resultViolation(tool, body) ?? (tool === "status" ? lastCheckpointViolation(body) : null);
-    if (bad !== null) {
-      throw new RootmarkError("bad_response", `answer outside the contract (§2.5): ${bad}`, 200);
+      throw new RootmarkError("bad_response", `${name}: HTTP 200 without a result object`, 200);
     }
     return body;
   }
   const err = isRecord(body) && isRecord(body["error"]) ? body["error"] : null;
   const code = err?.["code"];
   if (err === null || !isCode(code)) {
-    throw new RootmarkError("bad_response", `${tool}: HTTP ${String(res.status)} without a contract error code`, res.status);
+    throw new RootmarkError("bad_response", `${name}: HTTP ${String(res.status)} without a contract error code`, res.status);
   }
   const message = typeof err["message"] === "string" ? err["message"] : code;
   const hint = typeof err["hint"] === "string" ? err["hint"] : null;
   throw new RootmarkError(code, message, res.status, hint);
+}
+
+/** The contract's answer to a tool → result or `RootmarkError`; a result is
+ * checked against §2/§2.5 (`shape.ts`). */
+export function decode(tool: ToolName, res: HttpResponse): unknown {
+  const body = decodeHttp(tool, res);
+  const bad = resultViolation(tool, body) ?? (tool === "status" ? lastCheckpointViolation(body) : null);
+  if (bad !== null) {
+    throw new RootmarkError("bad_response", `answer outside the contract (§2.5): ${bad}`, 200);
+  }
+  return body;
 }
 
 type IsUnion<T, U = T> = T extends unknown ? ([U] extends [T] ? false : true) : never;

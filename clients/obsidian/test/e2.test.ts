@@ -120,7 +120,7 @@ describe("proposal list", () => {
     const rows = await listProposals(client, ["untracked.md", "a.md"], (doc, blocks) => blocks.map((_, i) => `${doc}#${String(i)}`));
     expect(fake.requests.map((r) => JSON.parse(r.body) as unknown)).toEqual([{ doc_path: "a.md" }, { doc_path: "untracked.md" }]);
     expect(rows).toEqual([
-      { doc_path: "a.md", lineage_id: "prop1", version_id: "vprop1", source: "scene-agent/1.0", author_kind: "Agent", seq_created: 1, seq_last: 1, section: "a.md#3" },
+      { doc_path: "a.md", layer: "proposal", lineage_id: "prop1", version_id: "vprop1", source: "scene-agent/1.0", author_kind: "Agent", seq_created: 1, seq_last: 1, section: "a.md#3" },
     ]);
     // not aligned → every section unknown ("—"), never a positional guess
     fake.reply(200, blame);
@@ -196,8 +196,24 @@ describe("the plugin writes no file (static scan of src/)", () => {
   ];  it("scans every source file", () => {
     expect(files.length).toBeGreaterThanOrEqual(10);
   });
+  // a write method taken off its object (`x.write.bind(…)`, `const { write } = …`)
+  // could be called under another name: only src/own-writes.ts may, to wrap
+  // Obsidian's own saves (P2-0/Z3, ASSUMPTIONS Z3-1)
+  const bound = new RegExp(`\\.\\s*(${writeMethods})\\s*\\.\\s*(bind|call|apply)\\s*\\(|\\{[^}]*\\b(${writeMethods})\\b[^}]*\\}\\s*=`);
   it.each(files.map((f) => [f.slice(f.indexOf("/src/") + 1)]))("%s calls no write API", (rel) => {
     const text = readFileSync(new URL(`../${rel}`, import.meta.url), "utf8");
     for (const re of forbidden) expect(text, `${rel} ${String(re)}`).not.toMatch(re);
+    if (rel !== "src/own-writes.ts") expect(text, `${rel} ${String(bound)}`).not.toMatch(bound);
+  });
+  it("src/own-writes.ts: the bound copies are called only inside their wrappers, unchanged", () => {
+    const text = readFileSync(new URL("../src/own-writes.ts", import.meta.url), "utf8");
+    expect([...text.matchAll(/\.(\w+)\.bind\(adapter\)/g)].map((m) => m[1])).toEqual(["write", "append", "rename"]);
+    // each bound copy is called once, with the wrapper's own arguments
+    expect(text.match(/await write\(/g)?.length).toBe(1);
+    expect(text).toContain("await write(path, data, options);");
+    expect(text.match(/await append\(/g)?.length).toBe(1);
+    expect(text).toContain("await append(path, data, options);");
+    expect(text.match(/await rename\(/g)?.length).toBe(1);
+    expect(text).toContain("await rename(from, to);");
   });
 });

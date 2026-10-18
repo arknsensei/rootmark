@@ -16,9 +16,12 @@ import {
   type Returned,
 } from "./api";
 
-/** A proposal block of the vault (proposal view). */
+/** A block awaiting promotion (proposal view): a `proposal`, or (spec
+ * 2.0.0) an `unverified` external edit. */
 export interface ProposalRow {
   doc_path: string;
+  /** `proposal` or `unverified` */
+  layer: string;
   lineage_id: string;
   version_id: string;
   /** who wrote it: the consumer label of the agent (`source`) */
@@ -56,6 +59,7 @@ export async function listProposals(
   client: RootmarkClient,
   docs: readonly string[],
   sections: (doc: string, blocks: readonly BlameBlock[]) => readonly (string | null)[] | null = () => null,
+  layers: readonly string[] = ["proposal"],
 ): Promise<ProposalRow[]> {
   const rows: ProposalRow[] = [];
   for (const doc of [...docs].sort()) {
@@ -63,9 +67,10 @@ export async function listProposals(
     if (blocks === null) continue;
     const names = sections(doc, blocks);
     blocks.forEach((b, i) => {
-      if (b.layer !== "proposal" || b.inactive) return;
+      if (!layers.includes(b.layer) || b.inactive) return;
       rows.push({
         doc_path: doc,
+        layer: b.layer,
         lineage_id: b.lineage_id,
         version_id: b.version_id,
         source: b.source,
@@ -173,14 +178,15 @@ export async function runSearch(
   const r = await client.call("search", { query, ...opts });
   const k = opts.k ?? 10;
   const asked = opts.include_proposal === true;
-  const bad = r.hits.find((h) => h.layer !== "canonical" && h.layer !== "proposal");
+  // spec 2.0.0 §9: `unverified` hits come with the proposals (same pass)
+  const bad = r.hits.find((h) => h.layer !== "canonical" && h.layer !== "proposal" && h.layer !== "unverified");
   if (bad !== undefined) throw new RootmarkError("bad_response", `search returned a ${bad.layer} hit (contract §2.2)`, 200);
-  const firstProposal = r.hits.findIndex((h) => h.layer === "proposal");
+  const firstProposal = r.hits.findIndex((h) => h.layer !== "canonical");
   if (firstProposal >= 0 && r.hits.slice(firstProposal).some((h) => h.layer === "canonical")) {
     throw new RootmarkError("bad_response", "search: a canonical hit after a proposal hit (contract §2.2)", 200);
   }
   const canonical = r.hits.filter((h) => h.layer === "canonical");
-  const proposal = r.hits.filter((h) => h.layer === "proposal");
+  const proposal = r.hits.filter((h) => h.layer !== "canonical");
   // a proposal is never shown unasked, and never hidden: an answer that
   // holds one without the flag is outside the contract (§2.2)
   if ((!asked || !r.include_proposal) && proposal.length > 0) {

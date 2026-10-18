@@ -1,0 +1,225 @@
+{
+  "window_s": 2,
+  "sessions": 20,
+  "saves": 20,
+  "new_blocks": 20,
+  "unverified_after_window": 0,
+  "false_unverified_rate": 0,
+  "raised_late": 0,
+  "latency_p95_ms": 205,
+  "latency_measured": 20,
+  "plugin_counts": "attested 20 · unattested 0",
+  "no_write": 0,
+  "ui": {
+    "agent_write_unverified": true,
+    "gutter_has_U": true,
+    "gutter_hint": null,
+    "unverified_rows": 1,
+    "mine_promoted": true,
+    "promoted_from": "unverified",
+    "pass": true
+  },
+  "attestation_lines": 20,
+  "records": [
+    {
+      "session": "z3-00",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 306,
+      "no_write": false
+    },
+    {
+      "session": "z3-01",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 154,
+      "no_write": false
+    },
+    {
+      "session": "z3-02",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 155,
+      "no_write": false
+    },
+    {
+      "session": "z3-03",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 152,
+      "no_write": false
+    },
+    {
+      "session": "z3-04",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 205,
+      "no_write": false
+    },
+    {
+      "session": "z3-05",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 157,
+      "no_write": false
+    },
+    {
+      "session": "z3-06",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 154,
+      "no_write": false
+    },
+    {
+      "session": "z3-07",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 154,
+      "no_write": false
+    },
+    {
+      "session": "z3-08",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 155,
+      "no_write": false
+    },
+    {
+      "session": "z3-09",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 154,
+      "no_write": false
+    },
+    {
+      "session": "z3-10",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 154,
+      "no_write": false
+    },
+    {
+      "session": "z3-11",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 153,
+      "no_write": false
+    },
+    {
+      "session": "z3-12",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 155,
+      "no_write": false
+    },
+    {
+      "session": "z3-13",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 152,
+      "no_write": false
+    },
+    {
+      "session": "z3-14",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 155,
+      "no_write": false
+    },
+    {
+      "session": "z3-15",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 153,
+      "no_write": false
+    },
+    {
+      "session": "z3-16",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 155,
+      "no_write": false
+    },
+    {
+      "session": "z3-17",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 154,
+      "no_write": false
+    },
+    {
+      "session": "z3-18",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 154,
+      "no_write": false
+    },
+    {
+      "session": "z3-19",
+      "kind": "save",
+      "doc": "espresso.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 154,
+      "no_write": false
+    }
+  ]
+}

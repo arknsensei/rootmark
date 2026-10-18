@@ -3,3 +3,4 @@ main.js
 dist/
 e2e/.build/
 e2e/real/.build/
+e2e/p2_0/.build/

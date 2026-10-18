@@ -10,6 +10,8 @@ import { SearchView, SEARCH_VIEW } from "./ui/search-view";
 import { CheckpointsView, CHECKPOINTS_VIEW } from "./ui/checkpoints-view";
 import { TracesView, TRACES_VIEW } from "./ui/traces-view";
 import { obsidianTransport } from "./obsidian-transport";
+import { Attester } from "./attest";
+import { observeOwnWrites } from "./own-writes";
 
 import { CONSUMER } from "./consumer";
 
@@ -21,9 +23,17 @@ export default class RootmarkPlugin extends Plugin {
   /** the index line of the connection status (K-E1.2); null when `ok` */
   private indexDetail: string | null = null;
   private statusEl: HTMLElement | null = null;
+  /** P2-0 (spec 2.0.0 §7.1): attests every save this Obsidian makes */
+  private attester: Attester | null = null;
+  private attestEl: HTMLElement | null = null;
+  private restoreAdapter: (() => void) | null = null;
+  /** saves made while no server was connected (not attested) */
+  private offlineSaves = 0;
 
   override async onload(): Promise<void> {
     this.statusEl = this.addStatusBarItem();
+    this.attestEl = this.addStatusBarItem();
+    this.observeOwnWrites();
     this.registerEditorExtension(blameGutter((lineage) => void this.showHistory(lineage)));
     this.registerView(PROPOSALS_VIEW, (leaf) => new ProposalsView(leaf, this));
     this.registerView(SEARCH_VIEW, (leaf) => new SearchView(leaf, this));
@@ -38,6 +48,63 @@ export default class RootmarkPlugin extends Plugin {
     this.registerEvent(this.app.workspace.on("active-leaf-change", () => void this.refreshBlame()));
     this.registerEvent(this.app.metadataCache.on("changed", () => void this.refreshBlame()));
     await this.reconnect();
+  }
+
+  override onunload(): void {
+    this.restoreAdapter?.();
+    this.restoreAdapter = null;
+    this.attester = null;
+  }
+
+  /** Attests the saves, appends and renames of this Obsidian, and only
+   * those (`own-writes.ts`, ASSUMPTIONS Z3-1). */
+  private observeOwnWrites(): void {
+    this.restoreAdapter = observeOwnWrites(
+      this.app.vault.adapter,
+      (path, bytes) => void this.attest(path, bytes),
+      (from) => this.onlyCanonical(from),
+    );
+  }
+
+  /** A renamed note is attested under its new path only when its old path
+   * held nothing but canonical content (or is unknown to the log): the server
+   * sees the new path as a new document, and attesting it would make an
+   * agent's proposal or an unverified edit canonical (Z3 review, 11). */
+  private async onlyCanonical(from: string): Promise<boolean> {
+    const client = this.client();
+    if (client === null) return false;
+    const blocks = await blameOf(client, from);
+    return blocks === null || blocks.every((b) => b.layer === "canonical" || b.inactive);
+  }
+
+  private async attest(path: string, bytes: Uint8Array): Promise<void> {
+    const a = this.attester;
+    if (a === null) {
+      // offline: the save is not attested (it will be `unverified` if the
+      // server sees it); counted, never silent
+      this.offlineSaves += 1;
+      this.showAttestCounts();
+      return;
+    }
+    try {
+      await a.attest(path, bytes);
+    } catch (e) {
+      new Notice(`rootmark attest: ${describeError(e)}`, 6000);
+    }
+    this.showAttestCounts();
+  }
+
+  private showAttestCounts(): void {
+    const a = this.attester;
+    const failed = (a?.counts.failed ?? 0) + this.offlineSaves;
+    this.attestEl?.setText(a === null && failed === 0 ? "" : `attested ${String(a?.counts.attested ?? 0)} · unattested ${String(failed)}`);
+    this.attestEl?.setAttr(
+      "title",
+      a?.counts.lastError ??
+        (this.offlineSaves > 0
+          ? `${String(this.offlineSaves)} save(s) while rootmark serve was not connected: not attested`
+          : "every save of this Obsidian is attested to rootmark serve; unattested = saves whose attestation failed or was not sent"),
+    );
   }
 
   client(): RootmarkClient | null {
@@ -56,6 +123,8 @@ export default class RootmarkPlugin extends Plugin {
       CONSUMER,
     );
     const online = this.state.kind === "online";
+    this.attester = this.state.kind === "online" ? new Attester(this.state.client.conn, obsidianTransport, window.crypto.subtle) : null;
+    this.showAttestCounts();
     // the index state (K-E1.2): `status` answers whatever it is; anything
     // but `ok` is shown with the way to rebuild
     const ix = this.state.kind === "online" ? indexNotice(this.state.status.index) : null;
@@ -157,7 +226,7 @@ export default class RootmarkPlugin extends Plugin {
     }
   }
 
-  async proposals(): Promise<ProposalRow[]> {
+  async proposals(layer: "proposal" | "unverified" = "proposal"): Promise<ProposalRow[]> {
     const client = this.client();
     if (client === null) return [];
     const files = this.app.vault.getMarkdownFiles();
@@ -171,6 +240,7 @@ export default class RootmarkPlugin extends Plugin {
         const al = align(blocks, this.rangesOf(f));
         return al.aligned ? al.pairs.map((p) => p.range.heading) : null;
       },
+      [layer],
     );
   }
 

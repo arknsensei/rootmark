@@ -1,0 +1,49 @@
+// P2-0/Z3: the plugin's BLAKE3 against the reference implementation's
+// values (Python `blake3` 1.0.11, input byte i = i mod 251, the official
+// test-vector input), every tree shape from one block to many chunks.
+import { describe, expect, it } from "vitest";
+import { blake3, contentHash } from "../src/blake3";
+
+const VECTORS: [number, string][] = [
+  [0, "af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262"],
+  [1, "2d3adedff11b61f14c886e35afa036736dcd87a74d27b5c1510225d0f592e213"],
+  [63, "e9bc37a594daad83be9470df7f7b3798297c3d834ce80ba85d6e207627b7db7b"],
+  [64, "4eed7141ea4a5cd4b788606bd23f46e212af9cacebacdc7d1f4c6dc7f2511b98"],
+  [65, "de1e5fa0be70df6d2be8fffd0e99ceaa8eb6e8c93a63f2d8d1c30ecb6b263dee"],
+  [1023, "10108970eeda3eb932baac1428c7a2163b0e924c9a9e25b35bba72b28f70bd11"],
+  [1024, "42214739f095a406f3fc83deb889744ac00df831c10daa55189b5d121c855af7"],
+  [1025, "d00278ae47eb27b34faecf67b4fe263f82d5412916c1ffd97c8cb7fb814b8444"],
+  [2048, "e776b6028c7cd22a4d0ba182a8bf62205d2ef576467e838ed6f2529b85fba24a"],
+  [2049, "5f4d72f40d7a5f82b15ca2b2e44b1de3c2ef86c426c95c1af0b6879522563030"],
+  [3072, "b98cb0ff3623be03326b373de6b9095218513e64f1ee2edd2525c7ad1e5cffd2"],
+  [3073, "7124b49501012f81cc7f11ca069ec9226cecb8a2c850cfe644e327d22d3e1cd3"],
+  [4096, "015094013f57a5277b59d8475c0501042c0b642e531b0a1c8f58d2163229e969"],
+  [4097, "9b4052b38f1c5fc8b1f9ff7ac7b27cd242487b3d890d15c96a1c25b8aa0fb995"],
+  [5121, "628bd2cb2004694adaab7bbd778a25df25c47b9d4155a55f8fbd79f2fe154cff"],
+  [8193, "bab6c09cb8ce8cf459261398d2e7aef35700bf488116ceb94a36d0f5f1b7bc3b"],
+  [16385, "1dabe216be2578830263b049de1639f39f05a4da616b9b78c7a5e4e41662fd1f"],
+  [31744, "62b6960e1a44bcc1eb1a611a8d6235b6b4b78f32e7abc4fb4c6cdcce94895c47"],
+  [102400, "bc3e3d41a1146b069abffad3c0d44860cf664390afce4d9661f7902e7943e085"],
+];
+
+function input(n: number): Uint8Array {
+  const b = new Uint8Array(n);
+  for (let i = 0; i < n; i++) b[i] = i % 251;
+  return b;
+}
+
+function hex(b: Uint8Array): string {
+  return Array.from(b, (x) => x.toString(16).padStart(2, "0")).join("");
+}
+
+describe("blake3", () => {
+  for (const [n, want] of VECTORS) {
+    it(`${String(n)} bytes`, () => {
+      expect(hex(blake3(input(n)))).toBe(want);
+    });
+  }
+  it("content_hash is the first 32 hex characters", () => {
+    expect(contentHash(input(1025))).toBe("d00278ae47eb27b34faecf67b4fe263f");
+    expect(contentHash(new Uint8Array(0))).toBe("af1349b9f5f9a1a6a0404dea36dcc949");
+  });
+});

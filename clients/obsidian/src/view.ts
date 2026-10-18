@@ -9,7 +9,8 @@ export interface GutterMark {
   line: number;
   lineage_id: string;
   layer: string;
-  /** one letter in the gutter: C canonical, P proposal, D derived */
+  /** one letter in the gutter: C canonical, P proposal, U unverified
+   * (spec 2.0.0: an external edit no client attested), D derived */
   label: string;
   /** CSS class: `rootmark-layer-<layer>` */
   cls: string;
@@ -23,7 +24,7 @@ export function gutterMarks(al: Alignment<BlameBlock>): GutterMark[] {
     line: range.start,
     lineage_id: b.lineage_id,
     layer: b.layer,
-    label: b.layer === "canonical" ? "C" : b.layer === "proposal" ? "P" : "D",
+    label: b.layer === "canonical" ? "C" : b.layer === "proposal" ? "P" : b.layer === "unverified" ? "U" : "D",
     cls: `rootmark-layer-${b.layer}${b.inactive ? " rootmark-inactive" : ""}`,
     title: [
       b.layer + (b.layer_source === "derived" ? " (derived from the log)" : ""),
