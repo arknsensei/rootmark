@@ -23,7 +23,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps check-compare-fields check-client-types conformance regress verify models c3-quality p1c-checks report-p1c \
         c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e p1e1-checks report-p1e1 \
-        p2-0-harness p2-0-tune p2-0-test
+        p2-0-harness p2-0-tune p2-0-test p2-0-checks
 
 setup: setup-py build
 
@@ -567,6 +567,29 @@ p2-0-tune: require-run build p2-0-harness
 
 p2-0-test: require-run build p2-0-harness
 	$(PY) -m eval.run_p2_0 --phase test --run $(RUN) --rootmark ../target/release/rootmark
+
+# P2-0 (TASKS Z7): the chain's half of the round — the window chosen on the
+# D-B tuning set (committed record docs/rounds/P2-0/progress/Z5_tuning.json,
+# copied into the RUN: the test sets never choose W), the test sets (D-E,
+# D-A, D-C, D-B test in the real Obsidian; without an Obsidian binary D-B is
+# recorded as skipped), the deliberate cases (eval.tamper_p2_0), the regress
+# against the P1-E.1 official RUN and run_p2_0_checks → p2_0_checks.json. A
+# hypothesis that fails is recorded, not fatal; a missing result fails.
+P1E1_REF_RUN := ../reports/rounds/P1-E.1/runs/20261017T140538Z-7ea12dc
+P2_0_DIR = research/reports/runs/$(RUN)/p2_0
+p2-0-checks: require-run p2-0-harness
+	rm -rf $(P2_0_DIR)
+	mkdir -p $(P2_0_DIR)
+	cp docs/rounds/P2-0/progress/Z5_tuning.json $(P2_0_DIR)/tuning.json
+	$(PY) -m eval.run_p2_0 --phase test --run $(RUN) --rootmark ../target/release/rootmark
+	$(PY) -m eval.tamper_p2_0 --rootmark ../target/release/rootmark --out reports/runs/$(RUN)/p2_0/tamper_p2_0.json \
+	  || echo "p2-0-checks: tamper_p2_0 exit $$? (recorded)" >&2
+	@test -f $(P2_0_DIR)/tamper_p2_0.json || exit 1
+	@# exit 3 (a difference) is recorded, not fatal; a missing file/field (1) fails
+	rc=0; $(PY) -m eval.compare_p2_0 regress $(P1E1_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p1e1.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	$(PY) -m eval.run_p2_0_checks --run $(RUN)
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:

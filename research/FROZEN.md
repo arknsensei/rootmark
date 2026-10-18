@@ -300,6 +300,12 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z5-fix:` | yeniden dondurma P2-0/F11: `alwaysUpdateLinks` (yeniden adlandırma penceresi) |
 | `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z5-fix2:` | yeniden dondurma P2-0/F12: HTTP hatası, sonsuz gecikme, yan notlar, yazılmayan not |
 | `research/eval/run_p2_0.py` | `P2-0/Z5-fix2:` | yeniden dondurma P2-0/F12: D-C/D-A sessiz düşmeler, `choose_window` |
+| `scripts/verify.sh` | `P2-0/Z7:` | yeniden dondurma P2-0/F13: `make p2-0-checks`, `compare_p2_0 pair` |
+| `research/eval/check_compare_fields.py` | `P2-0/Z7:` | yeniden dondurma P2-0/F13: `compare_p2_0` tanınır |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0/Z7:` | yeniden dondurma P2-0/F13: `compare_p2_0` bölümü ve satırları |
+| `research/eval/compare_p2_0.py` | `P2-0/Z7:` | P2-0 çift ve regress karşılaştırıcısı |
+| `research/eval/run_p2_0_checks.py` | `P2-0/Z7:` | P2-0 hipotez kaydedicisi |
+| `research/eval/tamper_p2_0.py` | `P2-0/Z7:` | P2-0 kasıtlı vakalar |
 <!-- /frozen-table -->
 
 ## Notlar

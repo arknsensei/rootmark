@@ -45,6 +45,9 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 ### `compare_p1e1`
 `pair`: `compare_p1e.pair` + `P1E1_FILES` alan alan + `P1E1_BYTES` (gerçek Obsidian e2e kaydı ve erişim günlüğü) bayt bayt; hariç: yayım ikilisinin `sha256`'sı (`P1E1_INFO`, ortam: derleme dizinine bağlı olabilir; RELEASE.md insan adımı 3 makineler arası hash'i yalnız kaydeder). `regress`: P1-E resmi RUN'ı, `EXCLUDED` (P1-E.1 kararlarının satırları, resmi RUN'dan önce yazıldı) ve uyumluluk raporu test kimliğiyle.
 
+### `compare_p2_0`
+`pair`: `compare_p1e1.pair` + `P2_0_FILES` alan alan + `P2_0_BYTES` (D-A ve D-C vault'larının `events.jsonl` ve `attestations.jsonl`'i, H-P2-0g) bayt bayt; hariç: gerçek Obsidian D-B ölçümleri (`P2_0_TIMING`, duvar saati: `p2_0_checks.json`'da H-P2-0b, b′, c; kopyalanan ayar kaydının `windows` satırları). `p2_0/d_b.json` bütünüyle duvar saati kaydıdır, dosya listesinde yoktur. `regress`: P1-E.1 resmi RUN'ı, `EXCLUDED` (P2-0 kararlarının satırları, resmi RUN'dan önce yazıldı) ve uyumluluk raporu test kimliğiyle (referansın 34 testi eşit, C2-11, C2-12, C3-08 geçti, spec 2.0.0).
+
 ## Alan tablosu
 <!-- fields-table -->
 | Araç | Kip | Dosya | Yol kalıbı | Sınıf | Gerekçe |
@@ -164,6 +167,10 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p1e1` | regress | `p1e_checks.json` | `E-10/vitest/files` | karar | K-E1.2 (E1.2): the client's index-notice unit tests (97 → 100) |
 | `compare_p1e1` | regress | `p1e_checks.json` | `E-10/vitest/tests` | karar | K-E1.2 (E1.2): the client's index-notice unit tests (97 → 100) |
 | `compare_p1e1` | regress | `p1e_checks.json` | `E-10/vitest/passed` | karar | K-E1.2 (E1.2): the client's index-notice unit tests (97 → 100) |
+| `compare_p2_0` | hepsi | `p2_0_checks.json` | `H-P2-0b` | duvar-saati | D-B test: gerçek Obsidian kayıtlarının yanlış-`unverified` oranı (kaydın ve izleyicinin zamanlamasına bağlı) |
+| `compare_p2_0` | hepsi | `p2_0_checks.json` | `H-P2-0b′` | duvar-saati | D-B test: geç tasdikle düzelen kayıtlar (zamanlamaya bağlı) |
+| `compare_p2_0` | hepsi | `p2_0_checks.json` | `H-P2-0c` | duvar-saati | D-B test: kayıt → `canonical` gecikmesi (ms) |
+| `compare_p2_0` | hepsi | `p2_0/tuning.json` | `windows` | duvar-saati | D-B ayar koşusunun beş `W` satırı (oran, gecikme) |
 <!-- /fields-table -->
 
 ## Dosya tablosu
@@ -188,4 +195,6 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p1e.P1E_BYTES` | `p1e/scene/scene.json`, `p1e/scene/events.jsonl`, `p1e/scene/traces.jsonl`, `p1e/scene/proposals.jsonl`, `p1e/plugin_e2e/plugin_e2e.json`, `p1e/plugin_e2e/access_log.json`, `p1e/plugin_e2e/events.jsonl`, `p1e/plugin_e2e/traces.jsonl`, `p1e/plugin_e2e/proposals.jsonl` |
 | `compare_p1e1.P1E1_FILES` | `p1e1_checks.json`, `p1e1/status/e1_1.json`, `p1e1/status/e1_2.json`, `p1e1/contract.json`, `p1e1/tamper_p1e1.json`, `p1e1/tamper_p1e1_e2e.json`, `p1e1/release/release.json`, `p1e1/release/release_check.json`, `p1e1/release/plugin_e2e_real.json`, `p1e1/release/access_log_real.json`, `p1e1/historical.json`, `p1e1/check_compare_fields.json` |
 | `compare_p1e1.P1E1_BYTES` | `p1e1/release/plugin_e2e_real.json`, `p1e1/release/access_log_real.json` |
+| `compare_p2_0.P2_0_FILES` | `p2_0_checks.json`, `p2_0/tuning.json`, `p2_0/d_e.json`, `p2_0/d_a.json`, `p2_0/d_c.json`, `p2_0/tamper_p2_0.json` |
+| `compare_p2_0.P2_0_BYTES` | `p2_0/d_a/events.jsonl`, `p2_0/d_a/attestations.jsonl`, `p2_0/d_c/events.jsonl`, `p2_0/d_c/attestations.jsonl` |
 <!-- /files-table -->

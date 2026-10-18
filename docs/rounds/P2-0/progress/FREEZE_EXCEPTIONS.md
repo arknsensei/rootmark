@@ -75,3 +75,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Önce/sonra:** ayar seti duman denemesi (ölçüm değil, W = 2): yeniden adlandırma dışı kayıtlar ve gecikmeleri aynı biçimde; yeniden adlandırmalı oturumlar şimdi bağlanan notları da sayar (önce 0, sonra 14 yan not); `pytest tests/test_p2_0_sets.py` 8/8 (yeni: 0 ms p95). Ayar yeni bir RUN'da baştan koşar.
 - **Düzeltilmeyen:** `scripts/gen_p2_0_old_vaults.sh`'ın bekleme döngüsü ve `wait || true` (N9): D-E vault'ları üretildi ve commit'lendi; doğrulukları `v0.1.0`'ın kendi `expected.json`'u ve D-E ölçümüyle denetlenir.
 - **Gözden geçirici onayı:** Z5.review.md.
+
+## F13 · Z7 · `scripts/verify.sh`, `research/eval/check_compare_fields.py`, `research/eval/DETERMINISTIC_FIELDS.md`
+- **Ne:** `verify.sh` zinciri P1-E.1 kontrollerinden sonra `make p2-0-checks`'i koşar; `pair` `eval.compare_p2_0 pair` ile karşılaştırır; yeni alt komut `compare-p2-0` (eskiler aynen). `check_compare_fields.py` yeni karşılaştırıcıyı tanır: `("compare_p2_0", "P2_0")` önek satırı ve `P2_0_FILES`, `P2_0_BYTES` dosya sabitleri (başka değişiklik yok). `DETERMINISTIC_FIELDS.md`: `compare_p2_0` bölümü, dosya tablosuna iki satır, alan tablosuna dört duvar-saati satırı (D-B: H-P2-0b, b′, c; ayar satırları). Yeni ölçüm dosyaları kendi satırlarıyla dondurulur: `research/eval/compare_p2_0.py`, `run_p2_0_checks.py`, `tamper_p2_0.py` (`report_p2_0.py` Z8 commit'inde).
+- **Neden:** TASKS Z7 (doğrulama zinciri: conformance → regress (P1-E.1) → D-E → D-A → D-C → D-B → tamper → pair compare, `attestations.jsonl` dahil); H-P2-0g.
+- **Önce/sonra:** zincirin P1-E.1'e kadarki adımları ve sırası aynı (diff yalnız ekleme); `compare_p2_0.pair` `compare_p1e1.pair`'in üst kümesidir (önce sonucu aynen alır, sonra P2-0 dosyalarını ekler). Alan denetimi: önce `unmatched 0` (9 karşılaştırıcı), sonra `unmatched 0` (10 karşılaştırıcı, `pass: true`).
+- **Gözden geçirici onayı:** Z7.review.md.
