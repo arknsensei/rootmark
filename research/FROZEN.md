@@ -306,6 +306,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/compare_p2_0.py` | `P2-0/Z7:` | P2-0 çift ve regress karşılaştırıcısı |
 | `research/eval/run_p2_0_checks.py` | `P2-0/Z7:` | P2-0 hipotez kaydedicisi |
 | `research/eval/tamper_p2_0.py` | `P2-0/Z7:` | P2-0 kasıtlı vakalar |
+| `research/eval/**` | `P2-0/Z7-frz:` | yeniden dondurma P2-0/F13: GH-0 glob satırının kapsadığı `check_compare_fields.py` ve `DETERMINISTIC_FIELDS.md` (`compare_p2_0`); `research/eval/**`'nin geri kalanı değişmedi |
 <!-- /frozen-table -->
 
 ## Notlar
