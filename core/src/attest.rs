@@ -226,7 +226,30 @@ impl Window {
     /// `(doc_path, content_hash)` observed at most `W` before it are
     /// returned (and forgotten) — the late matches, oldest first.
     pub fn attest(&mut self, a: &Attestation, now_ms: u64) -> Vec<Unattested> {
+        self.attest_with(a, now_ms, true)
+    }
+
+    /// `attest`; with `late = false` (a bulk attestation, `rootmark attest
+    /// --all`) nothing is returned, and when an unattested change of the same
+    /// bytes is pending the attestation is not remembered either: it can
+    /// neither raise that change now nor match its bytes when they are
+    /// observed again (security review of P2-0/Z2). The pending change stays.
+    pub fn attest_with(&mut self, a: &Attestation, now_ms: u64, late: bool) -> Vec<Unattested> {
         self.expire(now_ms);
+        let matches = |u: &Unattested| {
+            u.doc_path == a.doc_path && u.content_hash == a.content_hash && u.observed_ms <= now_ms
+        };
+        if !late {
+            if !self.unattested.iter().any(matches) {
+                self.attested.push((
+                    a.doc_path.clone(),
+                    a.content_hash.clone(),
+                    a.attestation_id.clone(),
+                    now_ms,
+                ));
+            }
+            return Vec::new();
+        }
         self.attested.push((
             a.doc_path.clone(),
             a.content_hash.clone(),
@@ -235,11 +258,7 @@ impl Window {
         ));
         let (late, keep): (Vec<Unattested>, Vec<Unattested>) = std::mem::take(&mut self.unattested)
             .into_iter()
-            .partition(|u| {
-                u.doc_path == a.doc_path
-                    && u.content_hash == a.content_hash
-                    && u.observed_ms <= now_ms
-            });
+            .partition(matches);
         self.unattested = keep;
         late
     }
@@ -300,6 +319,26 @@ mod tests {
         assert_eq!(w.pending(), 1);
         assert_eq!(w.attest(&a, 12_000), vec![u.clone()]);
         assert_eq!(w.pending(), 0);
+        // a bulk attestation (late = false) of pending bytes: no raise, not
+        // remembered, the pending change stays
+        let mut w = Window::new(2_000);
+        let p = Unattested {
+            doc_path: "a.md".into(),
+            content_hash: h.clone(),
+            observed_ms: 10_000,
+            lineages: Vec::new(),
+        };
+        w.unattested.push(p);
+        assert!(w.attest_with(&a, 10_500, false).is_empty());
+        assert_eq!(w.pending(), 1);
+        assert_eq!(w.observe("a.md", &h, 10_600), None);
+        // of bytes not pending: remembered for the next observation
+        let mut w = Window::new(2_000);
+        assert!(w.attest_with(&a, 10_500, false).is_empty());
+        assert_eq!(
+            w.observe("a.md", &h, 10_600),
+            Some(a.attestation_id.clone())
+        );
         // late beyond W: nothing
         let mut w = Window::new(2_000);
         w.unattested(u);

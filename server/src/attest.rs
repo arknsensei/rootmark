@@ -161,9 +161,10 @@ impl Attesting {
         &self,
         policy: &Policy,
         a: &rootmarkcore::attest::Attestation,
+        late: bool,
     ) -> Result<Vec<Unattested>> {
         let now = self.now_ms();
-        Ok(self.window(policy)?.attest(a, now))
+        Ok(self.window(policy)?.attest_with(a, now, late))
     }
 
     /// Unattested ingests still inside their window.
