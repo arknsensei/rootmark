@@ -155,6 +155,15 @@ def decide(r: list[dict], c: dict, hist: dict) -> tuple[str, list[str]]:
     stage = "aşama 2" if by["H-P2-0e"] is True else "aşama 1"
     extra = [k for k in ("regress", "tamper") if c[k]["pass"] is not True]
     counted = hist["counted"]
+    if by["H-P2-0b"] is None or by["H-P2-0c"] is None:
+        return (
+            (
+                "**D-B ölçülmedi (gerçek Obsidian yok) → 0b ve 0c ölçülmedi; karar kuralı "
+                "bekler** (TASKS Z7): D-B gerçek Obsidian'la koşulup hipotez tablosu "
+                f"tamamlanana dek karar verilmez. Diğer kalanlar: {[i for i in failed if i not in ('H-P2-0b', 'H-P2-0c')] or 'yok'}."
+            ),
+            failed,
+        )
     if not failed and not extra and not counted:
         return (
             (
@@ -196,6 +205,19 @@ def decide(r: list[dict], c: dict, hist: dict) -> tuple[str, list[str]]:
         ),
         failed,
     )
+
+
+_EARLIER = {
+    (e["file"], e["criterion"]): e["decisions"]
+    for e in json.loads((Path(__file__).with_name("historical_fails.json")).read_text())["entries"]
+}
+
+
+def _earlier(row: dict) -> str:
+    """The decisions under which P1-E.1's classification (eval.historical,
+    historical_fails.json) already listed this FAIL, when it did."""
+    d = _EARLIER.get((row["file"], row["criterion"]))
+    return f" (P1-E.1'de de tarihsel: {', '.join(d)})" if d else ""
 
 
 def _table(rs: list[dict]) -> list[str]:
@@ -285,13 +307,13 @@ def main(argv: list[str] | None = None) -> None:
         "## Regresyon ve kasıtlı vakalar",
         "",
         f"- P1-E.1 resmi RUN'ına karşı (`regress_vs_p1e1.json`, referans `{reg['reference_run']}`): {reg['n_fields']} alan, hariç dışı fark {len(reg['differing_fields'])}, karar gereği {len(reg['excluded_differences'])} alt ağaç, kullanılmayan hariç {len(reg['exclusions_without_difference'])}; uyumluluk eski testler eşit {not reg['conformance']['differing_tests']}, yeni testler {reg['conformance']['new_tests_passed']} → {_ok(reg['pass'])}.",
-        f"- Kasıtlı vakalar (`p2_0/tamper_p2_0.json`): {t['rejected']} reddedildi, kontroller {t['controls']} → {_ok(t['pass'])}.",
+        f"- Kasıtlı vakalar (`p2_0/tamper_p2_0.json`): {t['rejected']} reddedildi, kontroller {t['controls']} → {_ok(t['pass'])}. \"Token'sız attest\" `attest_session`'la denenir (token'sız oturum yok → MAC'li `attest` üretilemez); `attest`'in kendisi de token ister (sözleşme §2.6, `contract_check.sh`). Sahte satır vakası ilk satırın kimliği bozulmuş kopyasını sona ekler: yalnızca-ekleme sırası da onu reddeder, kimlik formülü denetimini tek başına kanıtlamaz (onu C2-12 `attestation_tamper id` kanıtlar).",
         "",
         "## Önceki turların kaydedicileri",
         "",
         f"`p2_0/historical.json` (`eval.historical_p2_0`, referans: `{hist['reference_run']}`): {hist['historical']} tarihsel FAIL sayılmadı; sayılan FAIL {hist['counted_fails']}.",
         "",
-        *[f"- {historical_p2_0.label(row)}" for row in hist["fails"]],
+        *[f"- {historical_p2_0.label(row)}{_earlier(row)}" for row in hist["fails"]],
         "",
         "## Karar kuralı",
         "",

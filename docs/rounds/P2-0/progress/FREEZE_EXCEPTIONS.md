@@ -93,3 +93,5 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** (1) TASKS Z7 regress (P1-E.1 referansı), hariç tutmalar resmi RUN'dan önce (emsal K-C1.6, P1-E.1 E1.5). (2) K-E1.4'ün P2-0'a taşınması; aksi hâlde P1-E.1 kaydedicileri "referansta yok" diye sayılır. (3) Geliştirme zincirinde D-B test oturumu b106 (3 notlu `multi`) "yazılan not 6 s içinde yazılmadı" ile durdu; aynı oturumlar ayrı koşuda geçti (zamanlamaya bağlı): `openFile` dönünce etkin editör henüz yeni not olmayabilir ve metin önceki nota gider. Kişi notu önünde görünce yazar.
 - **Önce/sonra:** (1) regress: önce 962 fark, sonra 7 (yalnız kirli ağaç). (3) D-B test 200 oturum (geliştirme, W = 0.5, ölçüm değil): önce b106'da durdu; sonra 200/200 oturum tamamlandı, 286 kayıt. Ayar seti etkilenmez (W'si sabit; ayar koşusu F12 harness'ıyla yapıldı ve oturum türleri aynıdır).
 - **Gözden geçirici onayı:** Z7.review.md.
+
+- **F13 notu (Z7 gözden geçirmesi B2):** `scripts/verify.sh`'in başlık yorumundaki "re-freeze P2-0/F12" yanlış numaradır; değişikliğin girdisi F13'tür. Dondurulmuş dosya bunun için yeniden değiştirilmedi.
