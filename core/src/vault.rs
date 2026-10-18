@@ -56,6 +56,10 @@ pub struct DocState {
     /// a drop the layer rule implies must then be a `LayerChanged` event;
     /// before it (a v3-final-format prefix) replay derives the drop (K-B1.1)
     pub layered: bool,
+    /// an ingest is open: a block event or its `LayerChanged` came after the
+    /// last `SnapshotCommitted` (spec 2.0.0 §7.1: a late attestation is
+    /// outside any ingest)
+    pub in_ingest: bool,
 }
 
 impl DocState {
@@ -134,22 +138,110 @@ pub fn carries_layer(ev: &Event) -> bool {
 }
 
 /// Layer a block event's author gives its content: `meta.layer` when the
-/// ingest declared one (synthetic content only, spec §7 "as declared"),
+/// ingest declared one (spec §7: synthetic content "as declared"; any
+/// content of an unattested external change `unverified`, 2.0.0 §7.1),
 /// else `Layer::default_for(author_kind)`.
 fn author_layer(ev: &Event, prov: &Provenance) -> Result<Layer> {
     match ev.meta.get("layer") {
         None => Ok(Layer::default_for(prov.author_kind)),
         Some(_) => {
-            if prov.author_kind != AuthorKind::Synthetic {
+            let l = meta_layer(ev, "layer")?;
+            if l != Layer::Unverified && prov.author_kind != AuthorKind::Synthetic {
                 bail!(
-                    "event seq {}: meta.layer declared for {:?} content (synthetic only)",
+                    "event seq {}: meta.layer {} declared for {:?} content (synthetic only; unverified for any)",
                     ev.seq,
+                    l.as_str(),
                     prov.author_kind
                 );
             }
-            meta_layer(ev, "layer")
+            Ok(l)
         }
     }
+}
+
+/// The block events that give a version a layer (and may declare one,
+/// `meta.layer`).
+fn gives_layer(k: EventKind) -> bool {
+    matches!(
+        k,
+        EventKind::BlockCreated
+            | EventKind::BlockUpdated
+            | EventKind::BlockSplit
+            | EventKind::BlockMerged
+    )
+}
+
+/// Spec 2.0.0 §7.1: `meta.layer` only on the events that give a layer; the
+/// actor kind `unattested_fs` only on the events of an unattested ingest
+/// (those that give a layer declare `unverified`).
+fn check_declared(ev: &Event) -> Result<()> {
+    if ev.meta.get("layer").is_some() && !gives_layer(ev.kind) {
+        bail!(
+            "event seq {}: {:?} carries meta.layer (only block events that give a layer do)",
+            ev.seq,
+            ev.kind
+        );
+    }
+    let unattested = ev
+        .meta
+        .get("actor")
+        .and_then(|a| a.get("kind"))
+        .and_then(|k| k.as_str())
+        == Some("unattested_fs");
+    if unattested {
+        if matches!(ev.kind, EventKind::Promoted | EventKind::Demoted) {
+            bail!(
+                "event seq {}: {:?} by an unattested_fs actor",
+                ev.seq,
+                ev.kind
+            );
+        }
+        if gives_layer(ev.kind) && meta_str(ev, "layer").as_deref() != Some("unverified") {
+            bail!(
+                "event seq {}: an unattested_fs change must declare meta.layer unverified",
+                ev.seq
+            );
+        }
+    }
+    Ok(())
+}
+
+/// A `LayerChanged` that raises a layer (spec 2.0.0 §7.1): only a late
+/// attestation, `unverified → proposal|canonical`, with its
+/// `attestation_id`. The attestation itself is looked up when the vault
+/// opens (`Vault::open`).
+pub fn late_attestation_of(ev: &Event) -> Result<Option<String>> {
+    if ev.kind != EventKind::LayerChanged {
+        return Ok(None);
+    }
+    let (from, to) = (meta_layer(ev, "from")?, meta_layer(ev, "to")?);
+    if to <= from {
+        return Ok(None);
+    }
+    if from != Layer::Unverified
+        || !matches!(to, Layer::Proposal | Layer::Canonical)
+        || meta_str(ev, "cause").as_deref() != Some("late_attestation")
+    {
+        bail!(
+            "event seq {}: a LayerChanged that raises a layer must be a late attestation (unverified → proposal|canonical, cause late_attestation), not {} → {}",
+            ev.seq,
+            from.as_str(),
+            to.as_str()
+        );
+    }
+    let id = meta_str(ev, "attestation_id").with_context(|| {
+        format!(
+            "event seq {}: late attestation without meta.attestation_id",
+            ev.seq
+        )
+    })?;
+    if id.len() != 32 || !id.bytes().all(|b| matches!(b, b'0'..=b'9' | b'a'..=b'f')) {
+        bail!(
+            "event seq {}: meta.attestation_id {id:?} is not an id",
+            ev.seq
+        );
+    }
+    Ok(Some(id))
 }
 
 /// The governance fields every `Promoted` / `Demoted` event must carry
@@ -305,6 +397,14 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
         }
     };
     check_event_actor(ev)?;
+    check_declared(ev)?;
+    // an ingest runs from its first block event to its SnapshotCommitted
+    match ev.kind {
+        EventKind::SnapshotCommitted => st.in_ingest = false,
+        EventKind::LayerChanged if late_attestation_of(ev)?.is_some() => {}
+        k if is_block_event(k) || k == EventKind::LayerChanged => st.in_ingest = true,
+        _ => {}
+    }
     let lower = |st: &mut DocState, l: &str, target: Layer| -> Result<()> {
         let cur = st.layer_of(l, ev)?;
         if target < cur {
@@ -428,6 +528,30 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             let l = one(&ev.lineage_ids, "lineage", ev)?;
             let (from, to) = (meta_layer(ev, "from")?, meta_layer(ev, "to")?);
             let cur = st.layer_of(l, ev)?;
+            if late_attestation_of(ev)?.is_some() {
+                // spec 2.0.0 §7.1: outside any ingest, of a live unverified lineage
+                if !st.pending.is_empty() || st.in_ingest {
+                    bail!(
+                        "event seq {}: late attestation inside an unfinished ingest",
+                        ev.seq
+                    );
+                }
+                if cur != Layer::Unverified
+                    || st.inactive.contains(l)
+                    || ev.old_version_ids != ev.new_version_ids
+                    || ev.new_version_ids.len() != 1
+                    || st.live.get(l) != ev.new_version_ids.first()
+                {
+                    bail!(
+                        "event seq {}: late attestation of {l}, which is not a live unverified lineage at that version",
+                        ev.seq
+                    );
+                }
+                st.layer.insert(l.into(), to);
+                st.derived.remove(l);
+                st.last_seq.insert(l.into(), ev.seq);
+                return Ok(());
+            }
             let due = st.pending.iter().position(|(q, _)| q == l);
             match due {
                 // in the order the block events implied them
@@ -565,9 +689,9 @@ fn check_transition(kind: EventKind, m: &TransitionMeta, cur: Layer, inactive: b
     }
     match (kind, m.prune) {
         (EventKind::Promoted, false) => {
-            if (m.from, m.to) != (Layer::Proposal, Layer::Canonical) {
+            if !matches!(m.from, Layer::Proposal | Layer::Unverified) || m.to != Layer::Canonical {
                 bail!(
-                    "promotion is proposal → canonical only, not {} → {}",
+                    "promotion is proposal → canonical only (2.0.0: or unverified → canonical), not {} → {}",
                     m.from.as_str(),
                     m.to.as_str()
                 );
@@ -585,7 +709,7 @@ fn check_transition(kind: EventKind, m: &TransitionMeta, cur: Layer, inactive: b
         (EventKind::Demoted, true) => {
             if m.to != m.from || m.from == Layer::Canonical {
                 bail!(
-                    "prune keeps a proposal or derived layer, not {} → {}",
+                    "prune keeps a proposal, unverified or derived layer, not {} → {}",
                     m.from.as_str(),
                     m.to.as_str()
                 );
@@ -884,7 +1008,136 @@ impl Vault {
             lock,
         };
         v.next_trace = v.traces(0)?.len() as u64;
+        // spec 2.0.0 §7.1, §8: the attestation log is valid, and every late
+        // attestation names one of the same document recorded before it
+        let atts = v.attestations()?;
+        for ev in &events {
+            if let Some(id) = late_attestation_of(ev)? {
+                match atts.iter().find(|a| a.attestation_id == id) {
+                    Some(a) if a.doc_path == ev.doc_path && a.at_seq <= ev.seq => {}
+                    Some(a) => bail!(
+                        "event seq {}: late attestation {id} is of {} at seq {}",
+                        ev.seq,
+                        a.doc_path,
+                        a.at_seq
+                    ),
+                    None => bail!(
+                        "event seq {}: late attestation {id} is not in attestations.jsonl",
+                        ev.seq
+                    ),
+                }
+            }
+        }
         Ok(v)
+    }
+
+    /// `.rootmark/attestations.jsonl` (spec 2.0.0 §8).
+    pub fn attestations_path(&self) -> PathBuf {
+        self.meta_dir.join("attestations.jsonl")
+    }
+
+    /// The attestation log, checked (spec §8).
+    pub fn attestations(&self) -> Result<Vec<crate::attest::Attestation>> {
+        crate::attest::read_attestations(&self.attestations_path(), self.next_seq)
+    }
+
+    /// The `seq` the log's next event takes.
+    pub fn next_seq(&self) -> u64 {
+        self.next_seq
+    }
+
+    /// Records an attestation of `content_hash` for `doc_path` now
+    /// (`at_seq` = the next event's seq). The same attestation already in
+    /// the log is not written again: `(attestation, false)`.
+    pub fn record_attestation(
+        &mut self,
+        doc_path: &str,
+        content_hash: &str,
+        saved_at_seq: Option<u64>,
+    ) -> Result<(crate::attest::Attestation, bool)> {
+        let a =
+            crate::attest::Attestation::new(doc_path, content_hash, self.next_seq, saved_at_seq)?;
+        if let Some(old) = self
+            .attestations()?
+            .into_iter()
+            .find(|o| o.attestation_id == a.attestation_id)
+        {
+            return Ok((old, false));
+        }
+        let mut line = serde_json::to_vec(&a)?;
+        line.push(b'\n');
+        let mut f = fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(self.attestations_path())?;
+        std::io::Write::write_all(&mut f, &line)?;
+        f.sync_data()?;
+        Ok((a, true))
+    }
+
+    /// A late attestation (spec 2.0.0 §7.1): gives those of `lineages` that
+    /// are still live at the version the unattested change gave them,
+    /// `unverified` and not pruned in `doc_path` the layer an attested ingest
+    /// would have given (`canonical` or `proposal`), one `LayerChanged
+    /// {cause: late_attestation, attestation_id}` each, in the given order.
+    /// A lineage changed again since (by anyone) is not raised: its content
+    /// is not what was attested (Z2 review, finding 1). The attestation must
+    /// be in the log, of `doc_path`.
+    pub fn raise_late(
+        &mut self,
+        doc_path: &str,
+        lineages: &[crate::attest::Raise],
+        attestation_id: &str,
+    ) -> Result<Vec<Event>> {
+        let a = self
+            .attestations()?
+            .into_iter()
+            .find(|a| a.attestation_id == attestation_id)
+            .with_context(|| format!("attestation {attestation_id} is not in the log"))?;
+        if a.doc_path != doc_path {
+            bail!(
+                "attestation {attestation_id} is of {}, not {doc_path}",
+                a.doc_path
+            );
+        }
+        let Some(st) = self.state.docs.get(doc_path) else {
+            return Ok(Vec::new());
+        };
+        let mut events = Vec::new();
+        for r in lineages {
+            let (l, to) = (&r.lineage_id, &r.to);
+            if !matches!(to, Layer::Proposal | Layer::Canonical) {
+                bail!(
+                    "a late attestation raises to proposal or canonical, not {}",
+                    to.as_str()
+                );
+            }
+            let (Some(v), Some(Layer::Unverified)) = (st.live.get(l), st.layer.get(l)) else {
+                continue;
+            };
+            if st.inactive.contains(l) || v != &r.version_id {
+                continue;
+            }
+            events.push(Event {
+                seq: 0,
+                doc_path: doc_path.to_string(),
+                kind: EventKind::LayerChanged,
+                lineage_ids: vec![l.clone()],
+                old_version_ids: vec![v.clone()],
+                new_version_ids: vec![v.clone()],
+                snapshot_id: None,
+                meta: serde_json::json!({
+                    "from": Layer::Unverified.as_str(),
+                    "to": to.as_str(),
+                    "cause": "late_attestation",
+                    "attestation_id": attestation_id,
+                }),
+            });
+        }
+        if events.is_empty() {
+            return Ok(events);
+        }
+        self.commit_inner(&[], events)
     }
 
     /// Matcher version this vault is locked to (`None` while the log is empty).
@@ -1046,6 +1299,11 @@ impl Vault {
                 e.kind
             );
         }
+        for e in &events {
+            if late_attestation_of(e)?.is_some() {
+                bail!("a late attestation's LayerChanged is written only by raise_late");
+            }
+        }
         self.commit_inner(objects, events)
     }
 
@@ -1164,9 +1422,11 @@ impl Vault {
         declared: Option<Layer>,
         actor: Option<&Actor>,
     ) -> Result<IngestPlan> {
-        if declared.is_some() && prov.author_kind != AuthorKind::Synthetic {
+        if declared.is_some_and(|l| l != Layer::Unverified)
+            && prov.author_kind != AuthorKind::Synthetic
+        {
             bail!(
-                "a layer can be declared for synthetic content only, not {:?}",
+                "a layer can be declared for synthetic content only (and unverified for any), not {:?}",
                 prov.author_kind
             );
         }

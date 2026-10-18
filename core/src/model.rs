@@ -63,12 +63,15 @@ impl Default for Provenance {
 }
 
 /// Governance status of a version (spec §7). Ordered by trust:
-/// `Derived < Proposal < Canonical`. Ingest never raises a lineage's layer
-/// (only a `Promoted` event does); see `Vault` for the transition rules.
+/// `Derived < Unverified < Proposal < Canonical` (`Unverified`: spec 2.0.0
+/// §7.1, content of an unattested external change). Ingest never raises a
+/// lineage's layer (only a `Promoted` event, or a late attestation's
+/// `LayerChanged`, does); see `Vault` for the transition rules.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Layer {
     Derived,
+    Unverified,
     Proposal,
     Canonical,
 }
@@ -88,8 +91,9 @@ impl Layer {
         Ok(match s {
             "canonical" => Layer::Canonical,
             "proposal" => Layer::Proposal,
+            "unverified" => Layer::Unverified,
             "derived" => Layer::Derived,
-            _ => anyhow::bail!("unknown layer {s:?} (canonical|proposal|derived)"),
+            _ => anyhow::bail!("unknown layer {s:?} (canonical|proposal|unverified|derived)"),
         })
     }
 
@@ -97,6 +101,7 @@ impl Layer {
         match self {
             Layer::Canonical => "canonical",
             Layer::Proposal => "proposal",
+            Layer::Unverified => "unverified",
             Layer::Derived => "derived",
         }
     }

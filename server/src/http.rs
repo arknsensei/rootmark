@@ -132,7 +132,8 @@ async fn handle(
             format!("no route {}", uri.path()),
         );
     };
-    if !tools::specs().iter().any(|s| s.name == tool) {
+    // the MCP tools and the human channel's own endpoints (§2.6, P2-0)
+    if !tools::specs().iter().any(|s| s.name == tool) && !tools::is_http_only(tool) {
         return err(
             StatusCode::NOT_FOUND,
             Code::NotFound,

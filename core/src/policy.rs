@@ -22,7 +22,14 @@
 //! agent writes: `policy = "append_only"` (also when the table is absent)
 //! or `"unrestricted"`, which only an explicit table gives.
 //!
-//! A present file must hold every field; unknown fields, unknown policies
+//! The optional `[attestation]` table (spec 2.0.0 §7.1, P2-0) chooses how
+//! an external change no human-channel client attested is ingested:
+//! `unattested = "unverified"` (also when absent) or `"canonical"` (the
+//! 1.0.3 behaviour), and the window `window_s` (seconds, 0.1..=60, default
+//! 2.0) within which an attestation matches a change.
+//!
+//! A present file must hold every required field (`[attestation]`'s two
+//! fields are optional, with the defaults above); unknown fields, unknown policies
 //! and values outside the kernel bounds are load errors — the loader never
 //! falls back to the built-in values for a file that exists. Without a file
 //! the built-in recipe applies (`Policy::builtin`, promotion `deny`), and
@@ -103,6 +110,73 @@ pub struct Policy {
     pub edit: Edit,
     /// `[identity]` as written, for the `server` package (K-D1.3)
     pub identity: Option<toml::Table>,
+    /// `[attestation]` (spec 2.0.0 §7.1)
+    pub attestation: Attestation,
+}
+
+/// `[attestation]` (spec 2.0.0 §7.1).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Attestation {
+    /// `unattested = "unverified"` (true, the default) or `"canonical"`
+    pub unverified: bool,
+    /// `window_s` in milliseconds
+    pub window_ms: u64,
+}
+
+impl Default for Attestation {
+    fn default() -> Self {
+        Attestation {
+            unverified: true,
+            window_ms: crate::attest::DEFAULT_WINDOW_MS,
+        }
+    }
+}
+
+impl Attestation {
+    pub fn unattested(&self) -> &'static str {
+        if self.unverified {
+            "unverified"
+        } else {
+            "canonical"
+        }
+    }
+
+    pub fn window_s(&self) -> f64 {
+        self.window_ms as f64 / 1000.0
+    }
+}
+
+/// `[attestation] unattested = "unverified"|"canonical"`, `window_s` in
+/// 0.1..=60 (each optional).
+fn attestation_of(t: Option<&toml::Table>) -> Result<Attestation> {
+    let mut a = Attestation::default();
+    let Some(t) = t else {
+        return Ok(a);
+    };
+    for (k, v) in t {
+        match k.as_str() {
+            "unattested" => {
+                a.unverified = match v.as_str() {
+                    Some("unverified") => true,
+                    Some("canonical") => false,
+                    _ => bail!("[attestation] unattested must be \"unverified\" or \"canonical\""),
+                }
+            }
+            "window_s" => {
+                let w = match v {
+                    toml::Value::Float(f) => *f,
+                    toml::Value::Integer(i) => *i as f64,
+                    _ => bail!("[attestation] window_s must be a number"),
+                };
+                if !(0.1..=60.0).contains(&w) {
+                    bail!("[attestation] window_s = {w} outside [0.1, 60]");
+                }
+                a.window_ms = (w * 1000.0).round() as u64;
+            }
+            _ => bail!("[attestation]: unknown field `{k}` (unattested, window_s)"),
+        }
+    }
+    Ok(a)
 }
 
 #[derive(Deserialize)]
@@ -115,6 +189,7 @@ struct RawPolicy {
     index: Option<toml::Table>,
     edit: Option<toml::Table>,
     identity: Option<toml::Table>,
+    attestation: Option<toml::Table>,
 }
 
 /// `[edit] policy = "<policy>"` (the only field).
@@ -184,6 +259,7 @@ impl Policy {
             index: None,
             edit: Edit::AppendOnly,
             identity: None,
+            attestation: Attestation::default(),
         }
     }
 
@@ -216,6 +292,7 @@ impl Policy {
             retention: JournalRetention::new(raw.journal.retention_hours)?,
             source,
             edit: edit_of(raw.edit.as_ref())?,
+            attestation: attestation_of(raw.attestation.as_ref())?,
             server: raw.server,
             index: raw.index,
             identity: raw.identity,

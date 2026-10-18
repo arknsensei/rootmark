@@ -13,6 +13,7 @@
 //! promotion, no tool other than `propose` writes Markdown, and the output of
 //! a tool that has a CLI twin is the JSON that command prints.
 
+use crate::attest::{Attesting, Ingest};
 use crate::bail_code;
 use crate::error::{Code, CodeExt};
 use crate::queue::{Queue, Ticket};
@@ -275,14 +276,28 @@ impl<'a> Caller<'a> {
 pub fn is_writer(tool: &str) -> bool {
     matches!(
         tool,
-        "search" | "read_block" | "propose" | "promote" | "checkpoint"
+        "search" | "read_block" | "propose" | "promote" | "checkpoint" | "attest"
     )
 }
 
 /// Tools an HTTP caller may use only with `[identity] human_id` (K-D1.3):
-/// those that change the vault's content or governance state.
+/// those that change the vault's content or governance state (and, P2-0,
+/// the attestation endpoints).
 pub fn needs_human_id(tool: &str) -> bool {
-    matches!(tool, "propose" | "promote" | "checkpoint")
+    matches!(
+        tool,
+        "propose" | "promote" | "checkpoint" | "attest_session" | "attest"
+    )
+}
+
+/// Endpoints of the human channel only (CLIENT_CONTRACT §2.6; spec 2.0.0
+/// §7.1): `POST /v1/attest_session`, `POST /v1/attest`. They are not tools:
+/// MCP lists and serves neither (an agent's channel never attests).
+pub const HTTP_ONLY: [&str; 2] = ["attest_session", "attest"];
+
+/// Whether `name` is an HTTP-only endpoint.
+pub fn is_http_only(name: &str) -> bool {
+    HTTP_ONLY.contains(&name)
 }
 
 /// What `Kernel::compact` did.
@@ -323,6 +338,18 @@ pub struct Kernel {
     queue: Arc<Queue>,
     /// loaded on first use, then shared (ONNX session behind a mutex)
     embedder: Mutex<Option<Arc<OnnxMiniLm>>>,
+    /// attestation sessions and window (spec 2.0.0 §7.1), in memory
+    attesting: Attesting,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct AttestArgs {
+    doc_path: String,
+    content_hash: String,
+    saved_at_seq: Option<u64>,
+    session_id: String,
+    mac: String,
 }
 
 #[derive(Deserialize)]
@@ -450,6 +477,7 @@ impl Kernel {
             matcher,
             queue: Queue::new(),
             embedder: Mutex::new(None),
+            attesting: Attesting::new(),
         })
     }
 
@@ -562,26 +590,163 @@ impl Kernel {
         })
     }
 
-    /// A document edited outside the server (`--watch`): ingested as human
-    /// content (spec §7: `human` → `canonical`), attributed to the vault's
-    /// human (K-D1.2), new chunks to the hot tier. An unchanged document
-    /// writes nothing. Runs in the writer queue.
+    /// A document edited outside the server (`--watch`): an external change
+    /// (spec 2.0.0 §7.1, `external_plan`), new chunks to the hot tier. An
+    /// unchanged document writes nothing. Runs in the writer queue.
     pub fn watch_doc(&self, doc: &str, source: &str) -> Result<store::WatchReport> {
         self.ticket().run(|| {
             let path = crate::paths::doc_file(&self.vault, doc)?;
-            let text = std::fs::read_to_string(&path)
-                .with_context(|| format!("read {}", path.display()))?;
+            let bytes = std::fs::read(&path).with_context(|| format!("read {}", path.display()))?;
             let mut v = Vault::open(&self.vault)?;
             let e = self.embedder()?;
             let mut s = Store::open(&v, e.as_ref())?;
-            let m = self.matcher_for(&v);
-            let prov = Provenance {
+            let (policy, _) = self.policy()?;
+            let (plan, after) = self.external_plan(&v, &policy, doc, &bytes, source)?;
+            let r = s.watch_plan(&mut v, e.as_ref(), plan)?;
+            after.done(self, &v, &policy)?;
+            Ok(r)
+        })
+    }
+
+    /// The ingest of an external change of `doc` (the watcher, and
+    /// `propose`'s sync of an edit made outside the server): under
+    /// `[attestation] unattested = "canonical"`, or when a human-channel
+    /// client attested these bytes within the window, human content
+    /// (spec §7: `canonical`, the vault's human, `source`); otherwise
+    /// `unverified` with the actor `unattested_fs` (spec 2.0.0 §7.1). The
+    /// returned `External` must be told when the plan is committed.
+    fn external_plan(
+        &self,
+        v: &Vault,
+        policy: &Policy,
+        doc: &str,
+        bytes: &[u8],
+        source: &str,
+    ) -> Result<(rootmarkcore::IngestPlan, External)> {
+        let text = std::str::from_utf8(bytes)
+            .with_context(|| format!("{doc} is not UTF-8"))?
+            .to_string();
+        let hash = rootmarkcore::attest::content_hash(bytes);
+        let m = self.matcher_for(v);
+        // an unchanged document is no change: nothing to decide
+        let probe = v.plan_ingest(
+            doc,
+            &text,
+            Provenance {
                 author_kind: AuthorKind::Human,
                 source: source.to_string(),
-            };
-            let plan = v.plan_ingest(doc, &text, prov, m, None, Some(&self.watch_actor()?))?;
-            s.watch_plan(&mut v, e.as_ref(), plan)
-        })
+            },
+            m,
+            None,
+            Some(&self.watch_actor()?),
+        )?;
+        if probe.events.is_empty() {
+            return Ok((probe, External::nothing(doc, &hash)));
+        }
+        let (ingest, observed_ms) = self.attesting.decide(policy, doc, &hash)?;
+        // the layer an attested ingest gives each lineage: what a late
+        // attestation restores (spec 2.0.0 §7.1)
+        let attested_layers: std::collections::HashMap<String, rootmarkcore::Layer> = probe
+            .blocks_after
+            .iter()
+            .map(|b| (b.lineage_id.clone(), b.layer))
+            .collect();
+        let plan = match &ingest {
+            Ingest::Canonical | Ingest::Attested(_) => probe,
+            Ingest::Unverified => v.plan_ingest(
+                doc,
+                &text,
+                Provenance {
+                    author_kind: AuthorKind::Human,
+                    source: crate::attest::UNATTESTED_SOURCE.to_string(),
+                },
+                m,
+                Some(rootmarkcore::Layer::Unverified),
+                Some(&crate::attest::unattested_actor()),
+            )?,
+        };
+        // the version this ingest gives each lineage: a late attestation
+        // raises the lineage only while it is still there (Z2 review 1)
+        let versions: std::collections::HashMap<&str, &str> = plan
+            .blocks_after
+            .iter()
+            .map(|b| (b.lineage_id.as_str(), b.version_id.as_str()))
+            .collect();
+        let named: Vec<rootmarkcore::attest::Raise> = plan
+            .events
+            .iter()
+            .flat_map(|e| e.lineage_ids.iter().cloned())
+            .filter_map(|l| {
+                let to = *attested_layers.get(&l)?;
+                let version_id = (*versions.get(l.as_str())?).to_string();
+                Some(rootmarkcore::attest::Raise {
+                    lineage_id: l,
+                    version_id,
+                    to,
+                })
+            })
+            .collect();
+        Ok((
+            plan,
+            External {
+                doc: doc.to_string(),
+                hash,
+                ingest,
+                observed_ms,
+                named,
+            },
+        ))
+    }
+
+    /// Opens the vault's attestation session (stage 1; CLIENT_CONTRACT §2.6).
+    fn attest_session(&self) -> Result<Value> {
+        let (sid, key, ttl) = self.attesting.open_session()?;
+        Ok(json!({"session_id": sid, "key": key, "ttl_s": ttl, "stage": 1}))
+    }
+
+    /// Records an attestation (spec 2.0.0 §7.1, §8) after checking its MAC,
+    /// and raises the unattested ingests it matches late. In the writer
+    /// queue.
+    fn attest(&self, x: AttestArgs) -> Result<Value> {
+        crate::propose::check_doc_path(&x.doc_path)?;
+        rootmarkcore::attest::check_doc_path(&x.doc_path).code(Code::InvalidArguments)?;
+        if x.content_hash.len() != 32
+            || !x
+                .content_hash
+                .bytes()
+                .all(|b| matches!(b, b'0'..=b'9' | b'a'..=b'f'))
+        {
+            bail_code!(
+                Code::InvalidArguments,
+                "attest: content_hash must be 32 lowercase hexadecimal characters"
+            );
+        }
+        self.attesting
+            .verify(
+                &x.session_id,
+                &x.mac,
+                &x.doc_path,
+                &x.content_hash,
+                x.saved_at_seq,
+            )
+            .code(Code::Denied)?;
+        let (policy, _) = self.policy()?;
+        let mut v = open_vault(&self.vault)?;
+        let (a, recorded) = v.record_attestation(&x.doc_path, &x.content_hash, x.saved_at_seq)?;
+        let mut raised: Vec<String> = Vec::new();
+        for u in self.attesting.attested(&policy, &a)? {
+            for ev in v.raise_late(&u.doc_path, &u.lineages, &a.attestation_id)? {
+                raised.extend(ev.lineage_ids);
+            }
+        }
+        Ok(json!({
+            "attestation_id": a.attestation_id,
+            "doc_path": a.doc_path,
+            "content_hash": a.content_hash,
+            "at_seq": a.at_seq,
+            "recorded": recorded,
+            "raised": raised,
+        }))
     }
 
     /// Moves the hot tier into the cold index if it holds anything
@@ -628,7 +793,8 @@ impl Kernel {
         a: &Value,
         caller: Caller,
     ) -> Result<Value> {
-        if !specs().iter().any(|s| s.name == name) {
+        let http_only = is_http_only(name) && caller.channel == Channel::Http;
+        if !http_only && !specs().iter().any(|s| s.name == name) {
             bail_code!(Code::NotFound, "unknown tool {name:?}");
         }
         match (is_writer(name), ticket) {
@@ -761,10 +927,14 @@ impl Kernel {
                         // an allowed request for a lineage that is not a
                         // live proposal is the caller's error (after the
                         // policy: an agent's request stays a denial)
-                        if from != rootmarkcore::Layer::Proposal {
+                        // spec 2.0.0 §7: `unverified` is promoted like `proposal`
+                        if !matches!(
+                            from,
+                            rootmarkcore::Layer::Proposal | rootmarkcore::Layer::Unverified
+                        ) {
                             bail_code!(
                                 Code::InvalidArguments,
-                                "promote: lineage {} is {}; only a proposal is promoted",
+                                "promote: lineage {} is {}; only a proposal (or unverified content) is promoted",
                                 x.lineage_id,
                                 from.as_str()
                             );
@@ -870,6 +1040,14 @@ impl Kernel {
             "checkpoints" => {
                 args::<NoArgs>(name, a)?;
                 Ok(json!({"checkpoints": open_vault(&self.vault)?.checkpoints()}))
+            }
+            "attest_session" if caller.channel == Channel::Http => {
+                args::<NoArgs>(name, a)?;
+                self.attest_session()
+            }
+            "attest" if caller.channel == Channel::Http => {
+                let x: AttestArgs = args(name, a)?;
+                self.attest(x)
             }
             "trace" => {
                 let x: TraceArgs = args(name, a)?;
@@ -1003,22 +1181,26 @@ impl Kernel {
         }
         // an edit made outside the server and not yet ingested is human
         // content (the watcher's rule); it must not be attributed to the agent
+        // (spec 2.0.0 §7.1: an external change, attested or `unverified`)
         let synced = match &old {
             Some(o) => {
-                let prov = Provenance {
-                    author_kind: AuthorKind::Human,
-                    source: "rootmark-serve-watch".to_string(),
-                };
-                let plan =
-                    v.plan_ingest(&x.doc_path, o, prov, m, None, Some(&self.watch_actor()?))?;
+                let (plan, after) = self.external_plan(
+                    &v,
+                    &policy,
+                    &x.doc_path,
+                    o.as_bytes(),
+                    "rootmark-serve-watch",
+                )?;
                 let n = plan.events.len();
-                match (&mut s, &e) {
+                let n = match (&mut s, &e) {
                     (Some(s), Some(e)) => s.watch_plan(&mut v, e.as_ref(), plan)?.events,
                     _ => {
                         v.commit_plan(plan)?;
                         n
                     }
-                }
+                };
+                after.done(self, &v, &policy)?;
+                n
             }
             None => 0,
         };
@@ -1183,6 +1365,13 @@ impl Kernel {
             "last_checkpoint": v.checkpoints().last(),
             "policy": policy.to_json(),
             "server_policy": cfg.to_json(),
+            // spec 2.0.0 §7.1 (P2-0): the policy in force and the key stage
+            "attestation": {
+                "unattested": policy.attestation.unattested(),
+                "window_s": policy.attestation.window_s(),
+                "stage": 1,
+                "pending": self.attesting.pending()?,
+            },
         }))
     }
 }
@@ -1281,4 +1470,56 @@ fn section_blocks(
         })
         .map(|(_, b)| (b.lineage_id.clone(), b.layer))
         .collect())
+}
+
+/// An external ingest's decision, finished once its plan is committed:
+/// an unattested ingest is remembered for a late attestation (spec 2.0.0
+/// §7.1).
+struct External {
+    doc: String,
+    hash: String,
+    ingest: Ingest,
+    /// when the change was observed (the decision)
+    observed_ms: u64,
+    /// the lineages its events name, with their new version and the layer
+    /// an attested ingest gives each
+    named: Vec<rootmarkcore::attest::Raise>,
+}
+
+impl External {
+    fn nothing(doc: &str, hash: &str) -> External {
+        External {
+            doc: doc.to_string(),
+            hash: hash.to_string(),
+            ingest: Ingest::Canonical,
+            observed_ms: 0,
+            named: Vec::new(),
+        }
+    }
+
+    /// After the commit: the lineages the unattested ingest left
+    /// `unverified` wait for a late attestation.
+    fn done(self, k: &Kernel, v: &Vault, policy: &Policy) -> Result<()> {
+        if self.ingest != Ingest::Unverified {
+            return Ok(());
+        }
+        let Some(st) = v.doc_state(&self.doc) else {
+            return Ok(());
+        };
+        let mut seen = std::collections::HashSet::new();
+        let lineages: Vec<rootmarkcore::attest::Raise> = self
+            .named
+            .into_iter()
+            .filter(|r| st.layer.get(&r.lineage_id) == Some(&rootmarkcore::Layer::Unverified))
+            .filter(|r| {
+                matches!(
+                    r.to,
+                    rootmarkcore::Layer::Proposal | rootmarkcore::Layer::Canonical
+                )
+            })
+            .filter(|r| seen.insert(r.lineage_id.clone()))
+            .collect();
+        k.attesting
+            .unattested(policy, &self.doc, &self.hash, self.observed_ms, lineages)
+    }
 }

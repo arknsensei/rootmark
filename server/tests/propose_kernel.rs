@@ -48,11 +48,15 @@ fn external_human_edit_is_not_credited_to_the_agent() {
     // P1-D.1 (K-D1.1, ASSUMPTIONS D1.0-4): under the default `append_only`
     // a heading-less append to a section of canonical blocks is refused
     // (it would join their chunk); this test is about the sync, so the
-    // vault allows it explicitly
+    // vault allows it explicitly. P2-0 (spec 2.0.0 §7.1, K-P2-0.4): the
+    // offline edit is the human's under the P1-D.1 rule, which is the policy
+    // `unattested = "canonical"` since the default became `unverified`
+    // (the default: server/tests/p2_0_attest.rs)
     std::fs::write(
         v.join(".rootmark/policy.toml"),
         rootmarkserver::config::default_recipe()
-            .replace("policy = \"append_only\"", "policy = \"unrestricted\""),
+            .replace("policy = \"append_only\"", "policy = \"unrestricted\"")
+            + "\n[attestation]\nunattested = \"canonical\"\n",
     )
     .unwrap();
     let p = v.join("espresso.md");

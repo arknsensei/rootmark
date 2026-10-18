@@ -44,8 +44,9 @@ pub struct Hit {
 fn rank(l: Layer) -> u8 {
     match l {
         Layer::Derived => 0,
-        Layer::Proposal => 1,
-        Layer::Canonical => 2,
+        Layer::Unverified => 1,
+        Layer::Proposal => 2,
+        Layer::Canonical => 3,
     }
 }
 
@@ -107,6 +108,16 @@ impl View {
             .collect()
     }
 
+    /// The records of the separate, non-`canonical` pass (spec §9; 2.0.0:
+    /// `proposal` and `unverified` together, each keeping its layer).
+    pub fn proposal_pass(&self) -> Vec<(usize, Layer)> {
+        self.entries
+            .iter()
+            .copied()
+            .filter(|(_, l)| matches!(l, Layer::Proposal | Layer::Unverified))
+            .collect()
+    }
+
     /// Eligible `(storage position, layer)` (never `derived`).
     pub fn eligible(&self, include_proposal: bool) -> Vec<(usize, Layer)> {
         self.entries
@@ -114,7 +125,7 @@ impl View {
             .copied()
             .filter(|(_, l)| match l {
                 Layer::Canonical => true,
-                Layer::Proposal => include_proposal,
+                Layer::Proposal | Layer::Unverified => include_proposal,
                 Layer::Derived => false,
             })
             .collect()
@@ -227,8 +238,9 @@ pub fn bm25_with(
 }
 
 /// The returned list: the top `k` canonical hits, then the top `k` proposal
-/// hits with their score × `PROPOSAL_WEIGHT` (K-C1.3; ASSUMPTIONS P1-C.1
-/// C1.2-1). `ranked` holds no `derived` record.
+/// (and, spec 2.0.0, `unverified`) hits with their score ×
+/// `PROPOSAL_WEIGHT` (K-C1.3; ASSUMPTIONS P1-C.1 C1.2-1). `ranked` holds no
+/// `derived` record.
 pub fn finalize(store: &Store, ranked: Vec<Scored>, k: usize) -> Vec<Hit> {
     finalize_ix(store, ranked, k)
         .into_iter()
@@ -278,12 +290,7 @@ pub fn lexical(
     let canon = view.layer(Layer::Canonical);
     let mut ranked = bm25(store, &canon, query)?;
     if include_proposal {
-        ranked.extend(bm25_with(
-            store,
-            &canon,
-            &view.layer(Layer::Proposal),
-            query,
-        )?);
+        ranked.extend(bm25_with(store, &canon, &view.proposal_pass(), query)?);
     }
     Ok(finalize(store, ranked, k))
 }
@@ -378,7 +385,7 @@ pub fn ranked(
     let canon = view.layer(Layer::Canonical);
     let mut out = pass(store, &canon, &canon, mode, query, qv.as_deref())?;
     if include_proposal {
-        let prop = view.layer(Layer::Proposal);
+        let prop = view.proposal_pass();
         out.extend(pass(store, &canon, &prop, mode, query, qv.as_deref())?);
     }
     Ok(out)
@@ -515,15 +522,16 @@ impl<'a> Searcher<'a> {
             include_proposal,
         )?;
         let picked = finalize_ix(self.store, ranked, k);
-        // spec §9 (1.0.3, K-D1.8): at most `k` per layer, `2k` in all —
+        // spec §9 (1.0.3, K-D1.8): at most `k` canonical and `k` others
+        // (`proposal` and, 2.0.0, `unverified` together), `2k` in all —
         // checked before the trace is written, never silently cut
-        for layer in [Layer::Canonical, Layer::Proposal] {
-            let n = picked.iter().filter(|(_, h)| h.layer == layer).count();
+        for (what, canonical) in [("canonical", true), ("proposal/unverified", false)] {
+            let n = picked
+                .iter()
+                .filter(|(_, h)| (h.layer == Layer::Canonical) == canonical)
+                .count();
             if n > k {
-                anyhow::bail!(
-                    "search: {n} {} hits for k = {k} (spec §9: at most k per layer)",
-                    layer.as_str()
-                );
+                anyhow::bail!("search: {n} {what} hits for k = {k} (spec §9: at most k per layer)");
             }
         }
         if picked.len() > 2 * k {
