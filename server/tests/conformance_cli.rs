@@ -1,5 +1,5 @@
 //! P1-E/E5 (GOAL E-7): `rootmark conformance` runs Levels 1–3 on the fixtures
-//! embedded in the binary — level 3, 34/34 — and refuses a fixture tree that
+//! embedded in the binary — level 3, 37/37 since P2-0 (K-P2-0.4) — and refuses a fixture tree that
 //! does not match its manifest. `scripts/conformance_equiv.sh` compares its
 //! report with `make conformance`'s test by test. Needs the model files.
 
@@ -23,8 +23,8 @@ fn embedded_suite_is_level_3() {
     );
     let r: serde_json::Value = serde_json::from_slice(&out.stdout).unwrap();
     assert_eq!(r["level_claimed"], 3);
-    assert_eq!(r["passed"], 34);
-    assert_eq!(r["total"], 34);
+    assert_eq!(r["passed"], 37);
+    assert_eq!(r["total"], 37);
     assert_eq!(r["fixtures_root_source"], "embedded");
     assert_eq!(r["fixtures_manifest"], "ok");
     assert_eq!(r["spec_version"], rootmarkserver::tools::SPEC_VERSION);
