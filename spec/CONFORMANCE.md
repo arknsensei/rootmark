@@ -51,7 +51,7 @@ Each test has a fixture under `spec/fixtures/` (added in Phase 1 round A) and an
 | C3-04 | Retrieval never returns `derived` as content | property |
 | C3-05 | With `proposal` results requested, the `canonical` prefix equals the result without the request, every mode (§9, 1.0.2) | property |
 | C3-06 | Canonical invariance: agent writes allowed by the default edit policy leave the `canonical` ranking of every query unchanged, every mode; writes touching `canonical` content are denied (§7, §9, 1.0.3) | decisions and rankings equal fixture |
-| C3-07 | Response length with `proposal` results requested: at most `k` per layer, `2k` in all, every mode (§9, 1.0.3) | property |
+| C3-07 | Response length with `proposal` results requested: at most `k` per layer, `2k` in all, every mode (§9, 1.0.3; since 2.0.0 the `k` non-`canonical` results are `proposal` and `unverified` together) | property |
 | C3-08 | `unverified` in retrieval (§7.1, §9, 2.0.0): `unverified` chunks are excluded by default; with `proposal` results requested they are ranked with the `proposal` chunks after every `canonical` result, labelled `unverified`, score ×0.5, the `canonical` prefix unchanged, at most `k` non-`canonical` results, every mode | ranking equals fixture; property |
 
 ## Reporting

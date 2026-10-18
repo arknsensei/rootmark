@@ -1,6 +1,7 @@
 //! Conformance Levels 1 and 2 (spec/CONFORMANCE.md C1-01..C1-17,
-//! C2-01..C2-10; C2-09 negative trace input, K-C0.2; C2-10 provenance of
-//! events, spec 1.0.3, K-D1.2).
+//! C2-01..C2-12; C2-09 negative trace input, K-C0.2; C2-10 provenance of
+//! events, spec 1.0.3, K-D1.2; C2-11 `unverified` by default, C2-12
+//! attestation matching, spec 2.0.0, K-P2-0.4).
 //!
 //! Each `spec/fixtures/C1-xx/` holds its inputs (`case.json`, documents) and
 //! `expected.json`, written from the v3-final core by scripts/gen_fixtures.sh
@@ -42,8 +43,9 @@ const LEVEL1: [&str; 17] = [
     "C1-11", "C1-12", "C1-13", "C1-14", "C1-15", "C1-16", "C1-17",
 ];
 
-const LEVEL2: [&str; 10] = [
+const LEVEL2: [&str; 12] = [
     "C2-01", "C2-02", "C2-03", "C2-04", "C2-05", "C2-06", "C2-07", "C2-08", "C2-09", "C2-10",
+    "C2-11", "C2-12",
 ];
 
 /// `(absolute fixture root, how it was resolved)`; a root without
@@ -191,7 +193,7 @@ fn conformance_levels_1_and_2() {
         (true, false, false) => 2,
     };
     let report = json!({
-        "spec_version": "1.0.3",
+        "spec_version": "2.0.0",
         "level_claimed": level,
         "fixtures_root": root.to_str().expect("UTF-8 fixture root"),
         "fixtures_root_source": root_source,

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # GOAL P1-E E-7 in the verify chain (TASKS E7: "release build, en az yerel
 # hedef"): the native release binary — `rootmark --version`, `--spec-version`,
-# `rootmark conformance` (embedded fixtures, 34/34) — and its report equal to a
+# `rootmark conformance` (embedded fixtures, 37/37 since spec 2.0.0; 34/34 before) — and its report equal to a
 # fresh `make conformance` test by test (scripts/conformance_equiv.sh).
 # The four-target build is scripts/release.sh (docs/RELEASE.md R4).
 #
@@ -27,7 +27,7 @@ jq -n --arg t "$target" --arg v "$v" --arg s "$s" --arg ver "$ver" --arg spec "$
   {target: $t, version: $v, spec_version: $s, version_ok: ($v == "rootmark " + $ver), spec_version_ok: ($s == $spec),
    conformance: {level_claimed: $r[0].level_claimed, passed: $r[0].passed, total: $r[0].total, exit: $crc},
    make_conformance_exit: $mrc, equal_to_make_conformance: ($erc == 0)}
-  | .pass = (.version_ok and .spec_version_ok and .conformance.level_claimed == 3 and .conformance.passed == 34
-             and .conformance.total == 34 and .conformance.exit == 0 and .make_conformance_exit == 0 and .equal_to_make_conformance)' >"$out/release_local.json"
+  | .pass = (.version_ok and .spec_version_ok and .conformance.level_claimed == 3 and .conformance.passed == 37
+             and .conformance.total == 37 and .conformance.exit == 0 and .make_conformance_exit == 0 and .equal_to_make_conformance)' >"$out/release_local.json"
 jq -c '{target, version, spec_version, conformance, equal_to_make_conformance, pass}' "$out/release_local.json"
 jq -e .pass "$out/release_local.json" >/dev/null

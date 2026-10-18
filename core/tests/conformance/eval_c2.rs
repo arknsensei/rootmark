@@ -1,4 +1,4 @@
-//! Conformance Level 2 evaluator (spec/CONFORMANCE.md C2-01..C2-10).
+//! Conformance Level 2 evaluator (spec/CONFORMANCE.md C2-01..C2-12).
 //!
 //! A C2 case (`spec/fixtures/C2-xx/case.c2.json` — not `case.json`, which the
 //! frozen v3-final C1 generator walks) is a script of governance operations
@@ -29,14 +29,34 @@
 //!   `actor_kind`, `actor_id_empty`, `actor_extra_field`, `source_number`,
 //!   `add_both`), then restore; observed as `{opened}` or `{open_err}`
 //!
+//! - (C2-11, C2-12; spec 2.0.0 §7.1, §8; P2-0/F7) `restore_store {from}` —
+//!   the case directory `from` becomes the vault's `.rootmark/` (a store
+//!   written by another implementation, e.g. 0.1.0: spec 1.0.3), then
+//!   `fingerprint` (`events_hash`); `unattested_ingest {doc, file}` — the
+//!   ingest of an unattested external change (`meta.layer = "unverified"`,
+//!   actor `unattested_fs:fs`, source `unattested_fs`), observed as
+//!   `ingest` with `attributed` and `declared` per event; `external {doc,
+//!   file, at_ms}` — an external change observed at `at_ms` (explicit
+//!   milliseconds) through the case's window (`window_ms`): attested →
+//!   human ingest (`human:conformance`), else an unattested ingest
+//!   remembered for a late attestation; `attest {doc, file, at_ms, late?}` —
+//!   record an attestation of the file's bytes, match it in the window,
+//!   raise late (`raise_late`); `attestations` — `attestations.jsonl` as
+//!   written; `meta_tamper {kind, key, value, expect_open_err}` — reopen with
+//!   `meta.<key>` of the last event of `kind` set to `value`, then restore;
+//!   `attestation_tamper {change, expect_open_err}` — reopen with the
+//!   attestation log changed (`id`, `content_hash`, `doc_path`, `at_seq`,
+//!   `duplicate`, `remove`), then restore.
+//!
 //! `expect_err` (substring) marks an operation that must fail; an error is
 //! recorded as `{"err": true}` only (messages may hold temp paths).
 
 use anyhow::{anyhow, bail, Context, Result};
+use rootmarkcore::attest::{content_hash, Raise, Unattested, Window};
 use rootmarkcore::store::write_immutable;
 use rootmarkcore::{
-    Actor, AuthorKind, Deny, HumanOnly, Layer, MatchParams, MatcherVersion, PromotionPolicy,
-    Provenance, TransitionKind, Vault,
+    Actor, ActorKind, AuthorKind, Deny, HumanOnly, Layer, MatchParams, MatcherVersion,
+    PromotionPolicy, Provenance, TransitionKind, Vault,
 };
 use serde_json::{json, Value};
 use std::collections::BTreeMap;
@@ -143,6 +163,38 @@ struct Run<'a> {
     m: MatcherVersion,
     params: MatchParams,
     labels: BTreeMap<String, String>,
+    /// the case's attestation window (C2-12), explicit times
+    window: Window,
+}
+
+fn copy_dir(from: &Path, to: &Path) -> Result<()> {
+    fs::create_dir_all(to)?;
+    for e in fs::read_dir(from)? {
+        let p = e?.path();
+        let t = to.join(p.file_name().context("name")?);
+        if p.is_dir() {
+            copy_dir(&p, &t)?;
+        } else {
+            fs::copy(&p, &t)?;
+        }
+    }
+    Ok(())
+}
+
+/// `[kind, meta.actor, meta.source, meta.layer]` per event of an ingest.
+fn attributed(events: &[rootmarkcore::Event]) -> Result<Value> {
+    Ok(events
+        .iter()
+        .map(|e| {
+            Ok(json!([
+                serde_json::to_value(e.kind)?,
+                e.meta.get("actor").cloned().unwrap_or(Value::Null),
+                e.meta.get("source").cloned().unwrap_or(Value::Null),
+                e.meta.get("layer").cloned().unwrap_or(Value::Null)
+            ]))
+        })
+        .collect::<serde_json::Result<Vec<_>>>()?
+        .into())
 }
 
 impl Run<'_> {
@@ -447,8 +499,187 @@ impl Run<'_> {
                     }
                 }
             }
+            "restore_store" => {
+                self.v = None;
+                let md = self.root.join(".rootmark");
+                if md.exists() {
+                    fs::remove_dir_all(&md)?;
+                }
+                copy_dir(&self.dir.join(s(op, "from")?), &md)?;
+                json!({"restored": true})
+            }
+            "fingerprint" => json!({"events_hash": self.v()?.events_hash()?}),
+            "unattested_ingest" => {
+                let doc = s(op, "doc")?.to_string();
+                let text = fs::read_to_string(self.dir.join(s(op, "file")?))?;
+                let r = self.unattested(&doc, &text)?.0;
+                json!({
+                    "snapshot_id": r.snapshot.snapshot_id,
+                    "events": r.events.iter().map(|e| serde_json::to_value(e.kind)).collect::<serde_json::Result<Vec<_>>>()?,
+                    "attributed": attributed(&r.events)?,
+                })
+            }
+            "external" => {
+                let doc = s(op, "doc")?.to_string();
+                let bytes = fs::read(self.dir.join(s(op, "file")?))?;
+                let at = op.get("at_ms").and_then(Value::as_u64).context("at_ms")?;
+                let h = content_hash(&bytes);
+                let text = String::from_utf8(bytes)?;
+                match self.window.observe(&doc, &h, at) {
+                    Some(_) => {
+                        let a = Actor::new(ActorKind::Human, "conformance")?;
+                        let prov = Provenance {
+                            author_kind: AuthorKind::Human,
+                            source: "watch".into(),
+                        };
+                        let r = self.v()?.ingest_by(&doc, &text, prov, m, &a)?;
+                        json!({"decision": "attested", "attributed": attributed(&r.events)?})
+                    }
+                    None => {
+                        let (r, raises) = self.unattested(&doc, &text)?;
+                        self.window.unattested(Unattested {
+                            doc_path: doc,
+                            content_hash: h,
+                            observed_ms: at,
+                            lineages: raises,
+                        });
+                        json!({"decision": "unverified", "attributed": attributed(&r.events)?})
+                    }
+                }
+            }
+            "attest" => {
+                let doc = s(op, "doc")?.to_string();
+                let bytes = fs::read(self.dir.join(s(op, "file")?))?;
+                let at = op.get("at_ms").and_then(Value::as_u64).context("at_ms")?;
+                let late = op.get("late").and_then(Value::as_bool).unwrap_or(true);
+                let (a, recorded) = self.v()?.record_attestation(&doc, &content_hash(&bytes), None)?;
+                let mut raised = Vec::new();
+                for u in self.window.attest_with(&a, at, late) {
+                    for e in self.v()?.raise_late(&u.doc_path, &u.lineages, &a.attestation_id)? {
+                        raised.push(json!([e.lineage_ids[0], e.meta["to"]]));
+                    }
+                }
+                json!({"attestation_id": a.attestation_id, "at_seq": a.at_seq, "recorded": recorded, "raised": raised})
+            }
+            "attestations" => {
+                let p = self.root.join(".rootmark/attestations.jsonl");
+                json!(fs::read_to_string(&p).unwrap_or_default())
+            }
+            "meta_tamper" => {
+                let kind = s(op, "kind")?;
+                let key = s(op, "key")?;
+                let value = op.get("value").cloned().context("value")?;
+                self.v = None;
+                let p = self.root.join(".rootmark/events.jsonl");
+                let log = fs::read_to_string(&p)?;
+                let mut lines: Vec<String> = log.lines().map(str::to_string).collect();
+                let i = lines
+                    .iter()
+                    .rposition(|l| l.contains(&format!("\"kind\":\"{kind}\"")))
+                    .context("no event of that kind")?;
+                let mut ev: Value = serde_json::from_str(&lines[i])?;
+                ev["meta"][key] = value;
+                lines[i] = serde_json::to_string(&ev)?;
+                fs::write(&p, lines.join("\n") + "\n")?;
+                let res = Vault::open_with(&self.root, self.params);
+                fs::write(&p, &log)?;
+                self.open_err(res.err(), op)?
+            }
+            "attestation_tamper" => {
+                let change = s(op, "change")?;
+                self.v = None;
+                let p = self.root.join(".rootmark/attestations.jsonl");
+                let log = fs::read_to_string(&p).context("attestations.jsonl")?;
+                let mut lines: Vec<String> = log.lines().map(str::to_string).collect();
+                let last = lines.last().context("attestations.jsonl is empty")?.clone();
+                let mut a: Value = serde_json::from_str(&last)?;
+                match change {
+                    "id" => a["attestation_id"] = json!("0".repeat(32)),
+                    "content_hash" => a["content_hash"] = json!("ABC"),
+                    "doc_path" => a["doc_path"] = json!("../outside.md"),
+                    "at_seq" => a["at_seq"] = json!(1_000_000),
+                    "duplicate" => {}
+                    "remove" => {}
+                    o => bail!("unknown change {o:?}"),
+                }
+                match change {
+                    "duplicate" => lines.push(last),
+                    "remove" => lines.clear(),
+                    _ => *lines.last_mut().expect("a line") = serde_json::to_string(&a)?,
+                }
+                fs::write(&p, lines.iter().map(|l| format!("{l}\n")).collect::<String>())?;
+                let res = Vault::open_with(&self.root, self.params);
+                fs::write(&p, &log)?;
+                self.open_err(res.err(), op)?
+            }
             o => bail!("unknown op {o:?}"),
         })
+    }
+
+    /// An unattested external change (spec 2.0.0 §7.1): `unverified`, actor
+    /// `unattested_fs:fs`, source `unattested_fs`; with the raises a late
+    /// attestation may make (the layer an attested ingest would give each
+    /// lineage, at the version this ingest gives it).
+    fn unattested(&mut self, doc: &str, text: &str) -> Result<(rootmarkcore::IngestResult, Vec<Raise>)> {
+        let m = self.m;
+        let v = self.v()?;
+        let probe = v.plan_ingest(
+            doc,
+            text,
+            Provenance {
+                author_kind: AuthorKind::Human,
+                source: "watch".into(),
+            },
+            m,
+            None,
+            Some(&Actor::new(ActorKind::Human, "conformance")?),
+        )?;
+        let plan = v.plan_ingest(
+            doc,
+            text,
+            Provenance {
+                author_kind: AuthorKind::Human,
+                source: "unattested_fs".into(),
+            },
+            m,
+            Some(Layer::Unverified),
+            Some(&Actor::new(ActorKind::UnattestedFs, "fs")?),
+        )?;
+        let raises: Vec<Raise> = plan
+            .blocks_after
+            .iter()
+            .filter(|b| b.layer == Layer::Unverified)
+            .filter_map(|b| {
+                let to = probe
+                    .blocks_after
+                    .iter()
+                    .find(|p| p.lineage_id == b.lineage_id)?
+                    .layer;
+                matches!(to, Layer::Proposal | Layer::Canonical).then(|| Raise {
+                    lineage_id: b.lineage_id.clone(),
+                    version_id: b.version_id.clone(),
+                    to,
+                })
+            })
+            .collect();
+        let r = v.commit_plan(plan)?;
+        Ok((r, raises))
+    }
+
+    /// The observation of a tamper: the vault must not have opened, with an
+    /// error holding `expect_open_err`.
+    fn open_err(&self, err: Option<anyhow::Error>, op: &Value) -> Result<Value> {
+        let want = s(op, "expect_open_err")?;
+        match err {
+            None => bail!("tampered store opened"),
+            Some(e) => {
+                let msg = format!("{e:#}");
+                if !msg.contains(want) {
+                    bail!("{msg:?} lacks {want:?}");
+                }
+                Ok(json!({"open_err": want}))
+            }
+        }
     }
 }
 
@@ -466,6 +697,11 @@ pub fn evaluate_c2(dir: &Path) -> Result<Value> {
         m,
         params,
         labels: BTreeMap::new(),
+        window: Window::new(
+            case.get("window_ms")
+                .and_then(Value::as_u64)
+                .unwrap_or(rootmarkcore::attest::DEFAULT_WINDOW_MS),
+        ),
     };
     let mut out = Vec::new();
     for (i, op) in case

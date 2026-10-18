@@ -1,0 +1,172 @@
+{
+  "id": "C3-08",
+  "title": "unverified in retrieval (spec 2.0.0 \u00a77.1, \u00a79): unverified chunks are excluded by default; with proposal results requested they are ranked with the proposal chunks after every canonical result, labelled unverified, score x0.5, the canonical prefix unchanged, at most k non-canonical results, every mode",
+  "kind": "retrieval",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {
+      "op": "ingest_dir",
+      "dir": "../mini_vault"
+    },
+    {
+      "op": "ingest",
+      "doc": "agent/a0.md",
+      "file": "../C3-07/agent0.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "ingest",
+      "doc": "agent/a1.md",
+      "file": "../C3-07/agent1.md",
+      "author": "agent",
+      "source": "claude-code"
+    },
+    {
+      "op": "demote",
+      "doc": "espresso.md",
+      "block": 1,
+      "to": "unverified",
+      "reason": "C3-08: an unattested external change"
+    },
+    {
+      "op": "demote",
+      "doc": "espresso.md",
+      "block": 2,
+      "to": "unverified",
+      "reason": "C3-08: an unattested external change"
+    },
+    {
+      "op": "demote",
+      "doc": "maintenance.md",
+      "block": 1,
+      "to": "unverified",
+      "reason": "C3-08: an unattested external change"
+    },
+    {
+      "op": "demote",
+      "doc": "roasting.md",
+      "block": 1,
+      "to": "unverified",
+      "reason": "C3-08: an unattested external change"
+    },
+    {
+      "op": "demote",
+      "doc": "blends.md",
+      "block": 1,
+      "to": "unverified",
+      "reason": "C3-08: an unattested external change"
+    },
+    {
+      "op": "checkpoint",
+      "name": "t0"
+    },
+    {
+      "op": "build"
+    },
+    {
+      "op": "view",
+      "at": "t0"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "lexical",
+      "k": 3,
+      "include_proposal": false,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "label": "lexical-off"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "lexical",
+      "k": 3,
+      "include_proposal": true,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "lengths": true,
+      "repeat": 3,
+      "canonical_prefix_of": "lexical-off"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "flat",
+      "k": 3,
+      "include_proposal": false,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "label": "flat-off"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "flat",
+      "k": 3,
+      "include_proposal": true,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "lengths": true,
+      "repeat": 3,
+      "canonical_prefix_of": "flat-off"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 3,
+      "include_proposal": false,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "label": "hybrid-off"
+    },
+    {
+      "op": "search",
+      "at": "t0",
+      "mode": "hybrid",
+      "k": 3,
+      "include_proposal": true,
+      "queries": [
+        "espresso grinder routine",
+        "milk and water temperature",
+        "roast and cupping notes",
+        "descaling the machine every month",
+        "house blend recipe"
+      ],
+      "lengths": true,
+      "repeat": 3,
+      "canonical_prefix_of": "hybrid-off"
+    }
+  ]
+}

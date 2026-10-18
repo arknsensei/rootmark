@@ -38,3 +38,21 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** sözleşme her ucu gerçek bir HTTP çağrısıyla eşler (§ başlığı); K-P2-0.5'in iki yeni ucu §2 araç tablosuna giremez (MCP'de yoktur, `tools.equal` bozulurdu), §2.6'da ayrı tablodur.
 - **Önce/sonra:** yeni sözleşme ve sunucu ile Z0 denetleyicisi çıkış 1 (`tools.equal: false`, `missing`: `tool:attest`, `tool:attest_session` ve iki "no request" ucu — §2.6 satırlarını araç sanıyor); yeni denetleyici çıkış 0. Z0 çıktısından bu iki adın ve onların `missing` satırlarının çıkarılmasıyla, yeni çıktıdan `http.http_only` silinince iki çıktı `jq -S` ile bayt eşit (araçlar, kodlar, uçlar, aktarım, `status_index`, `status_fields` — artık `attestation.*` dahil 19 yol).
 - **Gözden geçirici onayı:** Z2.review.md.
+
+## F7 · Z4 · uyumluluk değerlendiricileri: `core/tests/conformance/eval_c2.rs`, `core/tests/conformance.rs`, `core/tests/conformance_c2_gen.rs`, `index/tests/conformance_c3.rs`, `index/tests/conformance_c3_gen.rs` — C2-11, C2-12, C3-08 (spec 2.0.0, K-P2-0.4)
+- **Ne:** `eval_c2.rs`'e yeni işlemler (yalnız ekleme): `restore_store`, `fingerprint`, `unattested_ingest`, `external`, `attest`, `attestations`, `meta_tamper`, `attestation_tamper`; vakanın `window_ms`'i (açık zamanlı pencere); yardımcılar `copy_dir`, `attributed`, `Run::unattested`, `Run::open_err`. Var olan işlemler ve gözlemleri aynen. `conformance.rs`: `LEVEL2` 12 test, rapordaki `spec_version` `"2.0.0"`. `conformance_c2_gen.rs`: dizin sayısı 12. `conformance_c3.rs`: `LEVEL3` 8 test, `LOWER_TOTAL` 29. `conformance_c3_gen.rs`: dizin sayısı 8. (`eval_c3.rs`'in `unverified` kolu Z2'de, F3.)
+- **Neden:** TASKS Z4 "C2-11, C2-12, C3-08 fixture'ları; `gen_fixtures_*`; `make conformance` 37/37"; GOAL H-P2-0h. C2-12'nin eşleşmesi zamana bağlıdır: değerlendirici çekirdeğin saf penceresini (`attest::Window`) vakanın açık zamanlarıyla çalıştırır, determinizm korunur.
+- **Önce/sonra bit eşitliği:** `make conformance`: Seviye 3, 37/37. Eski 34 testin her birinin `id`, `result`, `actual_hash`, `expected_hash`'i P1-E.1 resmi RUN'ının `conformance_p1d1.json`'uyla `jq -S` sonrası **bayt eşit**; yeni üçü geçer. `scripts/gen_fixtures_c2.sh` ve `gen_fixtures_c3.sh` var olan 34 fixture'ın `expected.json`'unu bayt bayt aynı bıraktı (`git status`: yalnız `MANIFEST.json` ve üç yeni dizin). Gömülü `rootmark conformance`: 37/37, spec 2.0.0.
+- **Gözden geçirici onayı:** Z4.review.md.
+
+## F8 · Z4 · `spec/fixtures/**` — C2-11, C2-12, C3-08 fixture'ları ve MANIFEST
+- **Ne:** yeni dizinler `spec/fixtures/C2-11/` (vaka, belgeler, `pre2_store/` — `v0.1.0` ikilisinin, yani spec 1.0.3 uygulamasının yazdığı bir depo: `ingest-dir` + ajan `propose`), `C2-12/`, `C3-08/` (vaka; belgeleri `../C3-07`'den okur); `MANIFEST.json`'a yalnız yeni dosyaların satırları eklendi (27 satır; silinen ya da değişen satır yok). Var olan fixture dosyaları aynen.
+- **Neden:** F7 ile aynı. `pre2_store` C2-11'in "2.0.0 öncesi bir günlük katmanlarını ve parmak izini korur" vakasının girdisidir: açılıştan sonraki `events_hash` (`bec30291346b6d640f6bc725c9b5f943`) `v0.1.0`'ın aynı depo için yazdığı `rootmark events-hash` ile eşit.
+- **Önce/sonra:** F7 kaydı; `git diff --stat spec/fixtures`: yalnız `MANIFEST.json` +27.
+- **Gözden geçirici onayı:** Z4.review.md.
+
+## F9 · Z4 · uyumluluk sayısı 34 → 37: `scripts/test_tamper_p1c.sh`, `scripts/test_tamper_p1d1.sh`, `scripts/release_local.sh`, `scripts/release_target.sh`, `scripts/release_check.sh`
+- **Ne:** uyumluluk raporunun toplamını `34` diye sabitleyen ifadeler `37`'ye (ve ilgili yorum/etiket metinleri); başka değişiklik yok.
+- **Neden:** spec 2.0.0 ile Seviye 3 = 37 test (K-P2-0.4). Bu betiklerin denediği şey "Seviye 3'ün bütün testleri geçti"dir; sayı spec sürümünün özelliğidir. Değiştirilmezse doğrulama zinciri (`verify.sh`, P1-C/P1-D.1 tamper adımları) ve yayım denetimi 37/37'lik doğru bir raporu reddederdi.
+- **Önce/sonra:** `bash -n` temiz; `git diff` yalnız sayı ifadeleri ve yorumlar. Zincirde (Z7) ve yayım denetiminde yeni değerle koşar; eski değerle 37/37'lik rapor her birinde FAIL'dir (sayı eşitsizliği).
+- **Gözden geçirici onayı:** Z4.review.md.

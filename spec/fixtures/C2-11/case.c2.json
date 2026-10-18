@@ -1,0 +1,30 @@
+{
+  "id": "C2-11",
+  "title": "unverified by default (spec 2.0.0 §7, §7.1): a store written by 0.1.0 (spec 1.0.3) opens with its layers and fingerprint; an unattested external change of a canonical document is ingested unverified (meta.layer, actor unattested_fs, LayerChanged); the same change attested (or under unattested = canonical) is human, canonical; misplaced layer or actor values are rejected when the vault is opened",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "ops": [
+    {"op": "restore_store", "from": "pre2_store"},
+    {"op": "layers"},
+    {"op": "fingerprint"},
+    {"op": "events"},
+    {"op": "unattested_ingest", "doc": "notes.md", "file": "n1.md"},
+    {"op": "layers"},
+    {"op": "events"},
+    {"op": "tamper", "kind": "BlockUpdated", "remove_meta": "layer", "expect_open_err": "must declare meta.layer unverified"},
+    {"op": "meta_tamper", "kind": "SnapshotCommitted", "key": "layer", "value": "unverified", "expect_open_err": "carries meta.layer"},
+    {"op": "meta_tamper", "kind": "LayerChanged", "key": "to", "value": "draft", "expect_open_err": "unknown layer"},
+    {"op": "meta_tamper", "kind": "BlockCreated", "key": "layer", "value": "proposal", "expect_open_err": "synthetic only"},
+    {"op": "actor_tamper", "kind": "BlockUpdated", "change": "actor_kind", "expect_open_err": "malformed meta.actor"},
+    {"op": "layers"},
+    {"op": "ingest", "doc": "copy.md", "file": "n0.md", "author": "human", "source": "editor"},
+    {"op": "ingest", "doc": "copy.md", "file": "n1.md", "author": "human", "source": "watch", "actor": "human:conformance"},
+    {"op": "unattested_ingest", "doc": "other.md", "file": "n2.md"},
+    {"op": "layers"},
+    {"op": "fingerprint"}
+  ]
+}

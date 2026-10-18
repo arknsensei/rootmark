@@ -115,7 +115,7 @@ conformance:
 	@test -f reports/conformance.json || { echo "error: reports/conformance.json not written" >&2; exit 1; }
 	ROOTMARK_FIXTURES="$(CURDIR)/spec/fixtures" ROOTMARK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
 	  cargo test -p rootmark-index --release --test conformance_c3 -- --nocapture
-	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 3 and .passed == .total and .total == 34 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string" and ([.tests[] | select(.level == 3)] | length) == 7' reports/conformance.json >/dev/null \
+	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 3 and .passed == .total and .total == 37 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string" and ([.tests[] | select(.level == 3)] | length) == 8' reports/conformance.json >/dev/null \
 	  || { echo "error: conformance level 3 not reached (reports/conformance.json)" >&2; exit 1; }
 	@echo "conformance: level $$(jq -r .level_claimed reports/conformance.json), $$(jq -r '"\(.passed)/\(.total)"' reports/conformance.json) (reports/conformance.json)"
 
