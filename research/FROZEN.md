@@ -297,6 +297,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/data/p2_0_old_vaults/**` | `P2-0/Z5:` | D-E: `v0.1.0`'ın yazdığı vault'lar |
 | `scripts/gen_p2_0_old_vaults.sh` | `P2-0/Z5:` | D-E üreteci |
 | `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z5:` | D-B gerçek Obsidian harness'ı |
+| `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z5-fix:` | yeniden dondurma P2-0/F11: `alwaysUpdateLinks` (yeniden adlandırma penceresi) |
 <!-- /frozen-table -->
 
 ## Notlar

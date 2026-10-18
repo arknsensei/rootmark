@@ -129,6 +129,10 @@ async function blame(doc: string): Promise<Block[] | null> {
 const HANDS = `(window.__p2 = {
   writes: [],
   watch() {
+    // a person who renames notes lets Obsidian update the links to them
+    // (otherwise Obsidian asks in a modal and the rename waits for it)
+    app.vault.setConfig('alwaysUpdateLinks', true);
+    if (app.vault.getConfig('alwaysUpdateLinks') !== true) throw new Error('alwaysUpdateLinks not set');
     const a = app.vault.adapter;
     const w = a.write.bind(a);
     a.write = async (p, d, o) => { const ts = Date.now(); await w(p, d, o); if (p.endsWith('.md')) window.__p2.writes.push({ path: p, ts, t: Date.now() }); };

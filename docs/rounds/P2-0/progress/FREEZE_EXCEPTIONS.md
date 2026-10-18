@@ -62,3 +62,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** Z4 gözden geçirmesi B1 (biçim, `make lint`), B3 (sınırların ikisi de sınanmalı: `<`/`<=` hatası yakalanır), B4 (Reading maddesinin bir vakası eksikti). B2 için spec §8'e cümle (SPEC_EDITS S13): çift kimlik reddi zaten değerlendiricinin vakasıydı.
 - **Önce/sonra:** `make conformance` 37/37; diğer 35 fixture'ın `expected.json`'u bayt bayt aynı (`git status`); eski 34 testin hash'leri P1-E.1 kaydıyla eşit kalır (C2-01..C2-10, C1, C3 dosyaları değişmedi). `cargo fmt --check` temiz.
 - **Gözden geçirici onayı:** Z4.review.md.
+
+## F11 · Z5 · `clients/obsidian/e2e/p2_0/sessions.ts` (yeniden adlandırma penceresi)
+- **Ne:** harness'ın `__p2.watch()`'ı Obsidian'ın `alwaysUpdateLinks` ayarını açar ve açıldığını doğrular (açılmazsa hata). Başka değişiklik yok.
+- **Neden:** ön-kayıt commit'inden sonraki ilk ayar koşusu (RUN `20261018T120620Z-12fa90b`) başka notların bağlandığı `cupping.md`'nin yeniden adlandırılmasında Obsidian'ın "bağlantıları güncelle?" penceresinde takıldı (`CDP evaluate timed out: __p2.rename(...)`); koşu fail-fast durdu, hiçbir `W` için sonuç yazılmadı, `tuning.json` yok. ASSUMPTIONS Z5-5.
+- **Önce/sonra:** yeniden adlandırma dışı oturumlarda adımlar ve ölçüm aynı (ayar yalnız `renameFile`'ın pencere sormasını kaldırır; duman denemesinde aynı 7 türün kayıtları aynı biçimde, gecikmeler aynı aralıkta). Yeniden adlandırma oturumları önce hiç tamamlanmıyordu, sonra 12/12 tamamlanıyor. Durmuş RUN kullanılmaz; ayar yeni bir RUN'da baştan koşar.
+- **Gözden geçirici onayı:** Z5.review.md.
