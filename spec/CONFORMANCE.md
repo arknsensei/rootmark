@@ -38,6 +38,8 @@ Each test has a fixture under `spec/fixtures/` (added in Phase 1 round A) and an
 | C2-08 | Layer transitions replayable from events | equality |
 | C2-09 | Invalid trace input in `traces.jsonl` (`query_hash` of 31 or 33 characters, non-hex, uppercase; `consumer` containing `"\n"`) rejected when the vault is opened (§8, 1.0.1) | error |
 | C2-10 | Provenance of events: change and delete events of an attributed ingest carry `meta.actor` and `meta.source`, events without them replay, malformed or unpaired values are rejected when the vault is opened (§7, 1.0.3) | events equal fixture; error |
+| C2-11 | `unverified` by default (§7, §7.1, 2.0.0): under the default policy an unattested external change of a `canonical` document is ingested with `meta.layer = "unverified"` on its block events, `meta.actor.kind = "unattested_fs"` on its change and delete events and a `LayerChanged` → `unverified` for every lineage it changes; the same change under `unattested = canonical` is ingested as `human`, `canonical`; an attested change as `canonical`; a log written before 2.0.0 replays with unchanged layers and fingerprint; a layer value or actor kind outside §7, `meta.layer` on an event that gives no layer, and an `unattested_fs` change without `meta.layer = "unverified"` are rejected when the vault is opened | events equal fixture; error |
+| C2-12 | Attestation matching (§7.1, §8, 2.0.0): with explicit observation and recording times, an attestation within `W` before the observation → `canonical`; within `W` after → `unverified` then `LayerChanged` with `cause: late_attestation` to the layer an attested ingest gives (`canonical`; `proposal` for a `proposal` lineage the change touched); beyond `W`, or of another `content_hash` → `unverified` stays; `attestation_id` formula; an invalid `attestations.jsonl` line, and a raising `LayerChanged` without a matching attestation, are rejected when the vault is opened | events and attestation log equal fixture; error |
 
 ## Level 3 — Retrieval
 
@@ -50,6 +52,7 @@ Each test has a fixture under `spec/fixtures/` (added in Phase 1 round A) and an
 | C3-05 | With `proposal` results requested, the `canonical` prefix equals the result without the request, every mode (§9, 1.0.2) | property |
 | C3-06 | Canonical invariance: agent writes allowed by the default edit policy leave the `canonical` ranking of every query unchanged, every mode; writes touching `canonical` content are denied (§7, §9, 1.0.3) | decisions and rankings equal fixture |
 | C3-07 | Response length with `proposal` results requested: at most `k` per layer, `2k` in all, every mode (§9, 1.0.3) | property |
+| C3-08 | `unverified` in retrieval (§7.1, §9, 2.0.0): `unverified` chunks are excluded by default; with `proposal` results requested they are ranked with the `proposal` chunks after every `canonical` result, labelled `unverified`, score ×0.5, the `canonical` prefix unchanged, at most `k` non-`canonical` results, every mode | ranking equals fixture; property |
 
 ## Reporting
 A conformance run produces `conformance.json` with one entry per test (`pass`/`fail`, actual vs expected hash). Level is claimed only if all tests of that level and below pass.
