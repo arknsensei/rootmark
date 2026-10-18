@@ -45,3 +45,10 @@ Eski vault'lar ve eski etiketlerin ikilileri `.mdkernel/` ve `mdk` adını taş�
 - **Önce/sonra bit eşitliği:** macOS'ta eski ve yeni kalıbın kopyaları `diff -r` ile eşit (3 632 dosya). Debian trixie kabında (GNU tar) yeni kalıp 3 632 dosya. `scripts/test_freeze_indep.sh` macOS'ta çıkış 0, sonuç önceki gibi.
 - **Yeniden dondurma:** `research/FROZEN.md`'ye `scripts/test_tamper.sh` ve `scripts/test_freeze_indep.sh` için `GH-0/G5-tar:` satırları.
 - **Gözden geçirici onayı:** G5.review.md.
+
+## F5 · G5 · Token dosyası modu Linux'ta yanlış ve belirlenimsizdi (`stat`)
+- **Ne:** `scripts/http_e2e.sh` satır 81: `stat -f '%Lp' f 2>/dev/null || stat -c '%a' f` → `stat -c '%a' f 2>/dev/null || stat -f '%Lp' f` (+1 yorum satırı).
+- **Neden:** `verify.yml` dispatch 3'te (ubuntu, `02ffcd1`) iki zincir bitti ama A ↔ B karşılaştırması tek alanda farklıydı: `p1d/http/http_e2e.json:cases›1›detail` (T-1, "token file created, mode 600"). GNU `stat`'ta `-f` "dosya sistemi durumu" demektir: `stat -f '%Lp' f` boş inode sayısını da içeren dosya sistemi bilgisi basar, çıkış 1 verir, `||` dalı `600`'ü buna ekler. Kayıt iki koşu arasında değişir ve modu doğru denetlemez (T-1 Linux'ta yanlış). BSD `stat -c` stdout'a bir şey basmadan başarısız olur, bu yüzden yeni sıra iki platformda da tam `600` verir.
+- **Önce/sonra:** macOS'ta önce ve sonra `mode` = `600` (BSD `stat -f`; kayıt metni aynı). Debian trixie kabında `stat -c '%a'` = `600`. Yalnız bu satır değişir.
+- **Yeniden dondurma:** `research/FROZEN.md`'ye `scripts/http_e2e.sh` için `GH-0/G5-stat:` satırı.
+- **Gözden geçirici onayı:** G5.review.md (tur 2).

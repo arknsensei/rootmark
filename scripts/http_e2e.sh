@@ -78,7 +78,8 @@ start serve.err --http 127.0.0.1:0 --watch
 base="http://127.0.0.1:$port/v1"
 tokfile=vault/.rootmark/server.token
 tok="$(tr -d '\n' <"$tokfile")"
-mode="$(stat -f '%Lp' "$tokfile" 2>/dev/null || stat -c '%a' "$tokfile")"
+# GNU first: GNU `stat -f` prints file-system data (free inodes) instead of failing
+mode="$(stat -c '%a' "$tokfile" 2>/dev/null || stat -f '%Lp' "$tokfile")"
 record T-1 "token file created, mode 600, 64 hex" \
   "$( [ "$mode" = 600 ] && [[ "$tok" =~ ^[0-9a-f]{64}$ ]] && echo true || echo false)" "mode $mode"
 record T-2 "default recipe written (promotion human_only)" \
