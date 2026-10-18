@@ -1,0 +1,77 @@
+[verify 22:49:22] clone /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/repo -> /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/A/repo
+[verify 22:49:23] commit b152968260bb41d6e913f8472cbe13fa864ceb35
+[verify 22:49:23] setup
+[verify 22:50:03] models (fetch + manifest check)
+[verify 22:50:14] datasets (d2 d3 d1 d1k4 d1h d1ho d1sh d1hs, manifests verified)
+[verify 22:51:14] freeze-check (v2), freeze-check-v3, check_frozen
+[verify 22:51:57] conformance (level 3)
+[verify 22:52:13] RUN=20261017T225213Z-b152968
+[verify 22:52:13] holdout (P1-A A-2) and THETA_SPLIT grid (A-7)
+[verify 22:52:42] regress (v2 + v3 phases vs v3-final; holdout + split grid vs P1-A; holdout-split)
+[verify 22:58:39] A-1 / A-5 / A-6 into the RUN (level-1 view)
+[verify 22:58:59] governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)
+[verify 22:59:40] P1-B.1 checks (B1-1..B1-6 recorded again; C-11 input)
+[verify 22:59:42] P1-C checks (C-1..C-13; D3 determinism vault under /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/A/p1c_work)
+[verify 23:08:00] P1-C deliberate corruptions (model manifest, embedder_id, fixtures)
+[verify 23:08:20] P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)
+[verify 23:09:24] P1-D checks (D-1..D-11: Inspector, MCP e2e, HTTP/service, watch, scene, tamper; D-9 vs P1-C.1)
+[verify 23:10:50] P1-D.1 checks (D1-1..D1-13: criteria tests, p1d-final vaults, contract, tamper; D1-12 vs P1-D)
+[verify 23:13:15] P1-E checks (E-1..E-10, E-12..E-16: E0 tests, scene, plugin e2e, client, local release, tamper, field audit; E-9 vs P1-D.1)
+[verify 23:14:29] P1-E.1 checks (E1-1..E1-9: status on the /2 index, contract status step, tamper, release package + real Obsidian e2e, E1-6 vs P1-E)
+[verify 23:16:49] deliberate corruptions (B-7, B-8 and the P1-A cases)
+[verify 23:17:57] FAIL summary (K-E1.4)
+[verify summary] B1-3 (p1b1_checks.json): FAIL — tarihsel, karar K-C1.3, K-C1.5, K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C1-7 (p1c1_checks.json): FAIL — tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C-11 (p1c_checks.json): FAIL — tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C-3 (p1c_checks.json): FAIL — tarihsel, karar K-C8-T, K-C1.1, K-C1.2 ile kapandı
+[verify summary] D1-12 (p1d1_checks.json): FAIL — tarihsel, karar K-E1.2 ile kapandı
+[verify summary] D-2 (p1d_checks.json): FAIL — tarihsel, karar K-D1.1, K-D1.5, K-E0.4, K-D1.4-T, K-E1.2 ile kapandı
+[verify summary] D-7 (p1d_checks.json): FAIL — tarihsel, karar K-D1.4-T, K-D1.5 ile kapandı
+[verify summary] D-9 (p1d_checks.json): FAIL — tarihsel, karar K-D1.7, K-D1.4-T ile kapandı
+[verify summary] E1-4 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E-7 (p1e_checks.json): FAIL — tarihsel, karar K-E5-T, K-E1.1 ile kapandı
+[verify summary] E-9 (p1e_checks.json): FAIL — tarihsel, karar K-E1.2, F2 (E1-8) ile kapandı
+[verify summary] 10 historical FAIL(s) not counted; counted FAILs 1
+[verify 23:17:57] chain finished in 1715 s
+[verify 23:17:57] clone /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/repo -> /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/B/repo
+[verify 23:17:57] commit b152968260bb41d6e913f8472cbe13fa864ceb35
+[verify 23:17:57] setup
+[verify 23:18:38] models (fetch + manifest check)
+[verify 23:18:50] datasets (d2 d3 d1 d1k4 d1h d1ho d1sh d1hs, manifests verified)
+[verify 23:19:46] freeze-check (v2), freeze-check-v3, check_frozen
+[verify 23:20:28] conformance (level 3)
+[verify 23:20:43] RUN=20261017T232043Z-b152968
+[verify 23:20:43] holdout (P1-A A-2) and THETA_SPLIT grid (A-7)
+[verify 23:21:11] regress (v2 + v3 phases vs v3-final; holdout + split grid vs P1-A; holdout-split)
+[verify 23:27:08] A-1 / A-5 / A-6 into the RUN (level-1 view)
+[verify 23:27:28] governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)
+[verify 23:28:10] P1-B.1 checks (B1-1..B1-6 recorded again; C-11 input)
+[verify 23:28:11] P1-C checks (C-1..C-13; D3 determinism vault under /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/B/p1c_work)
+[verify 23:36:32] P1-C deliberate corruptions (model manifest, embedder_id, fixtures)
+[verify 23:36:51] P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)
+[verify 23:37:52] P1-D checks (D-1..D-11: Inspector, MCP e2e, HTTP/service, watch, scene, tamper; D-9 vs P1-C.1)
+[verify 23:39:18] P1-D.1 checks (D1-1..D1-13: criteria tests, p1d-final vaults, contract, tamper; D1-12 vs P1-D)
+[verify 23:41:42] P1-E checks (E-1..E-10, E-12..E-16: E0 tests, scene, plugin e2e, client, local release, tamper, field audit; E-9 vs P1-D.1)
+[verify 23:42:57] P1-E.1 checks (E1-1..E1-9: status on the /2 index, contract status step, tamper, release package + real Obsidian e2e, E1-6 vs P1-E)
+[verify 23:45:16] deliberate corruptions (B-7, B-8 and the P1-A cases)
+[verify 23:46:26] FAIL summary (K-E1.4)
+[verify summary] B1-3 (p1b1_checks.json): FAIL — tarihsel, karar K-C1.3, K-C1.5, K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C1-7 (p1c1_checks.json): FAIL — tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C-11 (p1c_checks.json): FAIL — tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C-3 (p1c_checks.json): FAIL — tarihsel, karar K-C8-T, K-C1.1, K-C1.2 ile kapandı
+[verify summary] D1-12 (p1d1_checks.json): FAIL — tarihsel, karar K-E1.2 ile kapandı
+[verify summary] D-2 (p1d_checks.json): FAIL — tarihsel, karar K-D1.1, K-D1.5, K-E0.4, K-D1.4-T, K-E1.2 ile kapandı
+[verify summary] D-7 (p1d_checks.json): FAIL — tarihsel, karar K-D1.4-T, K-D1.5 ile kapandı
+[verify summary] D-9 (p1d_checks.json): FAIL — tarihsel, karar K-D1.7, K-D1.4-T ile kapandı
+[verify summary] E1-4 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E-7 (p1e_checks.json): FAIL — tarihsel, karar K-E5-T, K-E1.1 ile kapandı
+[verify summary] E-9 (p1e_checks.json): FAIL — tarihsel, karar K-E1.2, F2 (E1-8) ile kapandı
+[verify summary] 10 historical FAIL(s) not counted; counted FAILs 1
+[verify 23:46:26] chain finished in 1709 s
+[verify 23:46:26] compare (P1-E.1) /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/A/repo/research/reports/runs/20261017T225213Z-b152968 /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/B/repo/research/reports/runs/20261017T232043Z-b152968
+[verify 23:46:27] P1-E set and P1-E.1 results equal; real-Obsidian e2e record and access log byte-equal
+RUN=20261017T225213Z-b152968
+RUN_DIR=/private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/A/repo/research/reports/runs/20261017T225213Z-b152968
+RUN=20261017T232043Z-b152968
+RUN_DIR=/private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5/B/repo/research/reports/runs/20261017T232043Z-b152968
+PAIR_EXIT=0

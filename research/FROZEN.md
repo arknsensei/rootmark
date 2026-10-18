@@ -268,6 +268,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/release_check.sh` | `GH-0/G0:` | yeniden dondurma GH-0/F1: ad `rootmark` (K-GH.1), saf yer değiştirme |
 | `research/eval/compare_p1c1.py` | `GH-0/G0:` | yeniden dondurma GH-0/F3: tarihsel RUN'ın dosya adları `resolve` ile |
 | `research/eval/historical.py` | `GH-0/G0:` | yeniden dondurma GH-0/F3: kayıt ↔ referans ad modulo |
+| `scripts/test_tamper.sh` | `GH-0/G5-tar:` | yeniden dondurma GH-0/F4: depo kopyası `tar --null -T -` (Linux'ta `xargs` bölünmesi) |
+| `scripts/test_freeze_indep.sh` | `GH-0/G5-tar:` | yeniden dondurma GH-0/F4: depo kopyası `tar --null -T -` |
 <!-- /frozen-table -->
 
 ## Notlar

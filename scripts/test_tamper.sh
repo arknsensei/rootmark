@@ -35,7 +35,7 @@ expect_fail() { # expect_fail <label> <pattern> <command...>
 
 copy_tree() { # copy_tree <dest> — tracked + untracked (not ignored) files
   mkdir -p "$1"
-  (cd "$here" && git ls-files -co --exclude-standard -z | xargs -0 tar -cf -) | tar -xf - -C "$1"
+  (cd "$here" && git ls-files -co --exclude-standard -z | tar -cf - --null -T -) | tar -xf - -C "$1"
 }
 
 # --- 1. conformance fixtures (spec/fixtures is frozen and hash-listed)
@@ -70,7 +70,7 @@ expect_fail "fixture expected value + manifest changed -> case mismatch" "C1-04:
 # --- 2. holdout data (research/data/d1ho, MANIFEST.d1ho.json)
 res="$scratch/res/research"
 mkdir -p "$res"
-(cd "$here/research" && git ls-files -co --exclude-standard -z | xargs -0 tar -cf -) | tar -xf - -C "$res"
+(cd "$here/research" && git ls-files -co --exclude-standard -z | tar -cf - --null -T -) | tar -xf - -C "$res"
 mkdir -p "$res/data"
 for d in d3 d1h d1ho; do cp -cR "$here/research/data/$d" "$res/data/" 2>/dev/null || cp -R "$here/research/data/$d" "$res/data/"; done
 cp "$res/data/MANIFEST.d1ho.json" "$scratch/MANIFEST.d1ho.orig"

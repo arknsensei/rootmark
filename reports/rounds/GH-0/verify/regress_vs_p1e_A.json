@@ -1,0 +1,377 @@
+{
+ "conformance": {
+  "differing_tests": [],
+  "equal": true,
+  "level_claimed": [
+   3,
+   3
+  ],
+  "passed": [
+   34,
+   34
+  ],
+  "spec_version": [
+   "1.0.3",
+   "1.0.3"
+  ],
+  "tests": 34
+ },
+ "differing_fields": {},
+ "equal": true,
+ "excluded_differences": {
+  "p1d/mcp_e2e/mcp_e2e.json:checks/4/pass": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:per_tool/status/passed": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1d1/d1_13.json:http/status_index": {
+   "decision": "F2 (E1-8)",
+   "leaves": 41
+  },
+  "p1d1/d1_13.json:http/status_index_fields": {
+   "decision": "F2 (E1-8)",
+   "leaves": 5
+  },
+  "p1d1_checks.json:D1-12/pass": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1d1_checks.json:D1-12/regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1d1_checks.json:D1-12/regress_vs_p1d/equal": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1d_checks.json:D-2/per_tool/status/passed": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:fields_declared": {
+   "decision": "F5, F6",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:fields_in_code": {
+   "decision": "F5, F6",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:file_constants": {
+   "decision": "F5, F6",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:modules": {
+   "decision": "F5, F6",
+   "leaves": 3
+  },
+  "p1e/client.json:bundle_bytes": {
+   "decision": "K-E1.2 (E1.2)",
+   "leaves": 1
+  },
+  "p1e/client.json:vitest/files": {
+   "decision": "K-E1.2 (E1.2)",
+   "leaves": 1
+  },
+  "p1e/client.json:vitest/passed": {
+   "decision": "K-E1.2 (E1.2)",
+   "leaves": 1
+  },
+  "p1e/client.json:vitest/tests": {
+   "decision": "K-E1.2 (E1.2)",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-10/bundle_bytes": {
+   "decision": "K-E1.2 (E1.2)",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-10/vitest/files": {
+   "decision": "K-E1.2 (E1.2)",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-10/vitest/passed": {
+   "decision": "K-E1.2 (E1.2)",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-10/vitest/tests": {
+   "decision": "K-E1.2 (E1.2)",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/pass": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:per_tool›status›passed": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›pass": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›4›pass": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›equal": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d_checks.json:D-2›per_tool›status›passed": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/regress_vs_p1d1/equal": {
+   "decision": "K-E1.2",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/regress_vs_p1d1/excluded_differences/p1d1/d1_13.json:http/leaves": {
+   "decision": "F2 (E1-8)",
+   "leaves": 1
+  }
+ },
+ "exclusions": [
+  {
+   "decision": "K-E1.2",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "checks/4/pass",
+   "why": "P1-D's MCP e2e status check expects the old `index == \"present\"` string; status.index is an object"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "per_tool/status/passed",
+   "why": "the same status check, counted (3 → 2 of 4)"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1d_checks.json",
+   "path": "D-2/per_tool/status/passed",
+   "why": "D-2's record of the status check above (D-2 already failed, historical)"
+  },
+  {
+   "decision": "F2 (E1-8)",
+   "file": "p1d1/d1_13.json",
+   "path": "http/status_index",
+   "why": "contract_check.sh's new status step: status in the four index states"
+  },
+  {
+   "decision": "F2 (E1-8)",
+   "file": "p1d1/d1_13.json",
+   "path": "http/status_index_fields",
+   "why": "the index fields the status step reads from the contract's §2 row"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1d1_checks.json",
+   "path": "D1-12/pass",
+   "why": "D1-12 regresses against P1-D and sees the status check above"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1d1_checks.json",
+   "path": "D1-12/regress_vs_p1d/equal",
+   "why": "the same, its comparison result"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1d1_checks.json",
+   "path": "D1-12/regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass",
+   "why": "the one leaf D1-12 sees: the status check above"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1e_checks.json",
+   "path": "E-9/pass",
+   "why": "E-9 regresses against P1-D.1 and sees the status check above"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1e_checks.json",
+   "path": "E-9/regress_vs_p1d1/equal",
+   "why": "the same, its comparison result"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1e_checks.json",
+   "path": "E-9/regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass",
+   "why": "a leaf E-9 sees: the status check above or its records"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1e_checks.json",
+   "path": "E-9/regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:per_tool›status›passed",
+   "why": "a leaf E-9 sees: the status check above or its records"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1e_checks.json",
+   "path": "E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›pass",
+   "why": "a leaf E-9 sees: the status check above or its records"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1e_checks.json",
+   "path": "E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›4›pass",
+   "why": "a leaf E-9 sees: the status check above or its records"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1e_checks.json",
+   "path": "E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›equal",
+   "why": "a leaf E-9 sees: the status check above or its records"
+  },
+  {
+   "decision": "K-E1.2",
+   "file": "p1e_checks.json",
+   "path": "E-9/regress_vs_p1d1/differing_fields/p1d_checks.json:D-2›per_tool›status›passed",
+   "why": "a leaf E-9 sees: the status check above or its records"
+  },
+  {
+   "decision": "F2 (E1-8)",
+   "file": "p1e_checks.json",
+   "path": "E-9/regress_vs_p1d1/excluded_differences/p1d1/d1_13.json:http/leaves",
+   "why": "E-9's count of excluded d1_13 http leaves grows by the status step"
+  },
+  {
+   "decision": "F5, F6",
+   "file": "p1e/check_compare_fields.json",
+   "path": "fields_declared",
+   "why": "the field audit sees the new comparator compare_p1e1 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F5, F6",
+   "file": "p1e/check_compare_fields.json",
+   "path": "fields_in_code",
+   "why": "the field audit sees the new comparator compare_p1e1 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F5, F6",
+   "file": "p1e/check_compare_fields.json",
+   "path": "file_constants",
+   "why": "the field audit sees the new comparator compare_p1e1 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F5, F6",
+   "file": "p1e/check_compare_fields.json",
+   "path": "modules",
+   "why": "the field audit sees the new comparator compare_p1e1 (its module, rows and file constants)"
+  },
+  {
+   "decision": "K-E1.2 (E1.2)",
+   "file": "p1e/client.json",
+   "path": "bundle_bytes",
+   "why": "main.js carries the index notice of the connection status"
+  },
+  {
+   "decision": "K-E1.2 (E1.2)",
+   "file": "p1e/client.json",
+   "path": "vitest/files",
+   "why": "the client's index-notice unit tests (97 → 100)"
+  },
+  {
+   "decision": "K-E1.2 (E1.2)",
+   "file": "p1e/client.json",
+   "path": "vitest/tests",
+   "why": "the client's index-notice unit tests (97 → 100)"
+  },
+  {
+   "decision": "K-E1.2 (E1.2)",
+   "file": "p1e/client.json",
+   "path": "vitest/passed",
+   "why": "the client's index-notice unit tests (97 → 100)"
+  },
+  {
+   "decision": "K-E1.2 (E1.2)",
+   "file": "p1e_checks.json",
+   "path": "E-10/bundle_bytes",
+   "why": "main.js carries the index notice of the connection status"
+  },
+  {
+   "decision": "K-E1.2 (E1.2)",
+   "file": "p1e_checks.json",
+   "path": "E-10/vitest/files",
+   "why": "the client's index-notice unit tests (97 → 100)"
+  },
+  {
+   "decision": "K-E1.2 (E1.2)",
+   "file": "p1e_checks.json",
+   "path": "E-10/vitest/tests",
+   "why": "the client's index-notice unit tests (97 → 100)"
+  },
+  {
+   "decision": "K-E1.2 (E1.2)",
+   "file": "p1e_checks.json",
+   "path": "E-10/vitest/passed",
+   "why": "the client's index-notice unit tests (97 → 100)"
+  }
+ ],
+ "exclusions_without_difference": [],
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json",
+  "c1_variant.json",
+  "p1c1_checks.json",
+  "p1d_checks.json",
+  "p1d/inspector/inspector.json",
+  "p1d/mcp_e2e/mcp_e2e.json",
+  "p1d/http/http_e2e.json",
+  "p1d/scene/scene.json",
+  "p1d/tamper_p1d.json",
+  "p1d/d10.json",
+  "p1d/sigterm.json",
+  "p1d1_checks.json",
+  "conformance_p1d1.json",
+  "p1d1/p1d1.json",
+  "p1d1/d1_1.json",
+  "p1d1/d1_2.json",
+  "p1d1/d1_3.json",
+  "p1d1/d1_4.json",
+  "p1d1/d1_5.json",
+  "p1d1/d1_6.json",
+  "p1d1/d1_7.json",
+  "p1d1/d1_8.json",
+  "p1d1/d1_9.json",
+  "p1d1/d1_11.json",
+  "p1d1/d1_13.json",
+  "p1d1/v3_compat.json",
+  "p1d1/v3_compat_mixed.json",
+  "p1d1/tamper_p1d1.json",
+  "p1e_checks.json",
+  "p1e/e0/e14.json",
+  "p1e/e0/e15.json",
+  "p1e/scene/scene.json",
+  "p1e/plugin_e2e/plugin_e2e.json",
+  "p1e/plugin_e2e/access_log.json",
+  "p1e/client.json",
+  "p1e/release/release_local.json",
+  "p1e/release/conformance_rootmark.json",
+  "p1e/release/conformance_equiv.json",
+  "p1e/tamper_p1e.json",
+  "p1e/check_compare_fields.json"
+ ],
+ "n_fields": 101929,
+ "reference_run": "20261017T024341Z-632f29e"
+}

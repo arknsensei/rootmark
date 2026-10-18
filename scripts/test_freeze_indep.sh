@@ -19,7 +19,7 @@ log() { printf '[freeze-indep] %s\n' "$*" >&2; }
 
 copy="$scratch/repo"
 mkdir -p "$copy"
-(cd "$here" && git ls-files -co --exclude-standard -z | xargs -0 tar -cf -) | tar -xf - -C "$copy"
+(cd "$here" && git ls-files -co --exclude-standard -z | tar -cf - --null -T -) | tar -xf - -C "$copy"
 # git metadata for runinfo-free checkers is not needed; v3-final checker comes from history
 # its imports under the current module names (K-GH.1; GH-0/F2), nothing else
 git -C "$here" show v3-final:eval/freeze_check.py \
