@@ -1,0 +1,1088 @@
+{
+ "conformance": {
+  "differing_tests": [],
+  "equal": true,
+  "level_claimed": [
+   3,
+   3
+  ],
+  "new_tests_passed": {
+   "C2-11": true,
+   "C2-12": true,
+   "C3-08": true
+  },
+  "passed": [
+   34,
+   37
+  ],
+  "reference_tests": 34,
+  "spec_version": [
+   "1.0.3",
+   "2.0.0"
+  ],
+  "tests": 37,
+  "unexpected_new_tests": []
+ },
+ "differing_fields": {
+  "p1e1/release/release_check.json:passed": 0.058823529411764705
+ },
+ "equal": false,
+ "excluded_differences": {
+  "conformance_p1d1.json:fixtures_manifest_hash": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "conformance_p1d1.json:passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "conformance_p1d1.json:spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "conformance_p1d1.json:tests": {
+   "decision": "K-P2-0.4",
+   "leaves": 52
+  },
+  "conformance_p1d1.json:total": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1b1_checks.json:criteria/B1-3/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1b_checks.json:fixtures_manifest_hash": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1c1_checks.json:C1-7/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1c_checks.json:C-1/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1d/scene/scene.json:steps/0/shows/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1d1/d1_13.json:http/http_only": {
+   "decision": "K-P2-0.5",
+   "leaves": 10
+  },
+  "p1d1/d1_13.json:http/status_fields": {
+   "decision": "K-P2-0.3",
+   "leaves": 20
+  },
+  "p1d1_checks.json:D1-10/pass": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1d1_checks.json:D1-10/passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1d1_checks.json:D1-10/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1d1_checks.json:D1-12/regress_vs_p1d/conformance/spec_version/1": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1d_checks.json:D-9/conformance/spec_version/1": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:fields_declared": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:fields_in_code": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:file_constants": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:modules/#len": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:modules/10": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:modules/9": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e/client.json:bundle_bytes": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e/client.json:vitest/files": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e/client.json:vitest/passed": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e/client.json:vitest/tests": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e/plugin_e2e/plugin_e2e.json:steps/0/shows/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/release/conformance_equiv.json:passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 2
+  },
+  "p1e/release/conformance_equiv.json:spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 2
+  },
+  "p1e/release/conformance_equiv.json:total": {
+   "decision": "K-P2-0.4",
+   "leaves": 2
+  },
+  "p1e/release/conformance_rootmark.json:fixtures_manifest_hash": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/release/conformance_rootmark.json:passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/release/conformance_rootmark.json:spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/release/conformance_rootmark.json:tests": {
+   "decision": "K-P2-0.4",
+   "leaves": 52
+  },
+  "p1e/release/conformance_rootmark.json:total": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/release/release_local.json:conformance/passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/release/release_local.json:conformance/total": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/release/release_local.json:spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/scene/scene.json:steps/0/shows/mcp_spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e/scene/scene.json:steps/0/shows/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/check_compare_fields.json:fields_declared": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e1/check_compare_fields.json:fields_in_code": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e1/check_compare_fields.json:file_constants": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e1/check_compare_fields.json:modules/#len": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e1/check_compare_fields.json:modules/10": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e1/check_compare_fields.json:modules/9": {
+   "decision": "F13",
+   "leaves": 1
+  },
+  "p1e1/contract.json:http/http_only": {
+   "decision": "K-P2-0.5",
+   "leaves": 10
+  },
+  "p1e1/contract.json:http/status_fields": {
+   "decision": "K-P2-0.3",
+   "leaves": 20
+  },
+  "p1e1/historical.json:counted": {
+   "decision": "K-P2-0.4",
+   "leaves": 11
+  },
+  "p1e1/historical.json:counted_fails": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/historical.json:fails": {
+   "decision": "K-P2-0.4",
+   "leaves": 139
+  },
+  "p1e1/historical.json:historical": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/release/release.json:commit": {
+   "decision": "K-P2-0.1",
+   "leaves": 1
+  },
+  "p1e1/release/release.json:spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/release/release.json:targets/0/conformance/passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/release/release.json:targets/0/conformance/total": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/release/release.json:targets/0/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:items/#len": {
+   "decision": "K-P2-0.3",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:items/1/item": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:items/14/detail": {
+   "decision": "K-P2-0.3",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:items/14/item": {
+   "decision": "K-P2-0.3",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:items/16": {
+   "decision": "K-P2-0.3",
+   "leaves": 4
+  },
+  "p1e1/release/release_check.json:items/3/item": {
+   "decision": "K-P2-0.1",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:items/4/item": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:items/8/detail": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:items/9/item": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:total": {
+   "decision": "K-P2-0.3",
+   "leaves": 1
+  },
+  "p1e1/status/e1_1.json:fixture": {
+   "decision": "K-GH.1",
+   "leaves": 1
+  },
+  "p1e1/tamper_p1e1.json:cases/1/as_expected": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e1/tamper_p1e1.json:cases/1/detail/as_expected": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e1/tamper_p1e1.json:pass": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e1/tamper_p1e1.json:rejected": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-4/release_check": {
+   "decision": "K-P2-0.3",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-4/release_md_items/#len": {
+   "decision": "K-P2-0.3",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-4/release_md_items/16": {
+   "decision": "K-P2-0.3",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-4/script_items": {
+   "decision": "K-P2-0.3",
+   "leaves": 11
+  },
+  "p1e1_checks.json:E1-5/required/conformance/passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-5/required/conformance/total": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-5/required/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-6/conformance/passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-6/conformance/total": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-6/pass": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-6/regress_vs_p1e": {
+   "decision": "K-P2-0.4",
+   "leaves": 253
+  },
+  "p1e1_checks.json:E1-8/deliberate/1/as_expected": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-8/pass": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e1_checks.json:tamper/pass": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e1_checks.json:tamper/rejected": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-10/bundle_bytes": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-10/vitest/files": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-10/vitest/passed": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-10/vitest/tests": {
+   "decision": "K-P2-0.5",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-7/chain_local_target/conformance/passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-7/chain_local_target/conformance/total": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-7/chain_local_target/spec_version": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/conformance/passed": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/conformance/total": {
+   "decision": "K-P2-0.4",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-9/regress_vs_p1d1": {
+   "decision": "K-P2-0.4",
+   "leaves": 75
+  }
+ },
+ "exclusions": [
+  {
+   "decision": "K-P2-0.4",
+   "file": "conformance_p1d1.json",
+   "path": "fixtures_manifest_hash",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "conformance_p1d1.json",
+   "path": "passed",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "conformance_p1d1.json",
+   "path": "spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "conformance_p1d1.json",
+   "path": "total",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "conformance_p1d1.json",
+   "path": "tests",
+   "why": "the report holds three new tests (by-id comparison: the 34 of the reference equal, the three new pass)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/conformance_rootmark.json",
+   "path": "fixtures_manifest_hash",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/conformance_rootmark.json",
+   "path": "passed",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/conformance_rootmark.json",
+   "path": "spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/conformance_rootmark.json",
+   "path": "total",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/conformance_rootmark.json",
+   "path": "tests",
+   "why": "the report holds three new tests (by-id comparison: the 34 of the reference equal, the three new pass)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1b1_checks.json",
+   "path": "criteria/B1-3/spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1b_checks.json",
+   "path": "fixtures_manifest_hash",
+   "why": "fixture manifest: C2-11, C2-12, C3-08"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1c1_checks.json",
+   "path": "C1-7/spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1c_checks.json",
+   "path": "C-1/spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1d/scene/scene.json",
+   "path": "steps/0/shows/spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1d1_checks.json",
+   "path": "D1-10/pass",
+   "why": "D1-10 expects 34 tests and spec 1.0.3"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1d1_checks.json",
+   "path": "D1-10/passed",
+   "why": "D1-10 expects 34 tests and spec 1.0.3"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1d1_checks.json",
+   "path": "D1-10/spec_version",
+   "why": "D1-10 expects 34 tests and spec 1.0.3"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1d1_checks.json",
+   "path": "D1-12/regress_vs_p1d/conformance/spec_version/1",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1d_checks.json",
+   "path": "D-9/conformance/spec_version/1",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/plugin_e2e/plugin_e2e.json",
+   "path": "steps/0/shows/spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/conformance_equiv.json",
+   "path": "passed",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/conformance_equiv.json",
+   "path": "spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/conformance_equiv.json",
+   "path": "total",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/release_local.json",
+   "path": "conformance/passed",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/release_local.json",
+   "path": "conformance/total",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/release/release_local.json",
+   "path": "spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/scene/scene.json",
+   "path": "steps/0/shows/mcp_spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e/scene/scene.json",
+   "path": "steps/0/shows/spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/release/release.json",
+   "path": "spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/release/release.json",
+   "path": "targets/0/conformance/passed",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/release/release.json",
+   "path": "targets/0/conformance/total",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/release/release.json",
+   "path": "targets/0/spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.1",
+   "file": "p1e1/release/release.json",
+   "path": "commit",
+   "why": "the release package of this round's commit (the reference is P1-E.1's)"
+  },
+  {
+   "decision": "K-P2-0.1",
+   "file": "p1e1/release/release_check.json",
+   "path": "items/3/item",
+   "why": "R4a's item names the commit of the package (the reference is P1-E.1's)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/release/release_check.json",
+   "path": "items/1/item",
+   "why": "the checklist item names spec 2.0.0 / 37 (F9)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/release/release_check.json",
+   "path": "items/4/item",
+   "why": "the checklist item names spec 2.0.0 / 37 (F9)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/release/release_check.json",
+   "path": "items/9/item",
+   "why": "the checklist item names spec 2.0.0 / 37 (F9)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1_checks.json",
+   "path": "E1-5/required/conformance/passed",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1_checks.json",
+   "path": "E1-5/required/conformance/total",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1_checks.json",
+   "path": "E1-5/required/spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1_checks.json",
+   "path": "E1-6/conformance/passed",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1_checks.json",
+   "path": "E1-6/conformance/total",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1_checks.json",
+   "path": "E1-6/pass",
+   "why": "E1-6 expects 34/34 and regresses against P1-E: it sees the P2-0 differences"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1_checks.json",
+   "path": "E1-6/regress_vs_p1e",
+   "why": "E1-6's regress against P1-E sees every P2-0 difference (this regress lists them by decision)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e_checks.json",
+   "path": "E-7/chain_local_target/conformance/passed",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e_checks.json",
+   "path": "E-7/chain_local_target/conformance/total",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e_checks.json",
+   "path": "E-7/chain_local_target/spec_version",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e_checks.json",
+   "path": "E-9/conformance/passed",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e_checks.json",
+   "path": "E-9/conformance/total",
+   "why": "spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e_checks.json",
+   "path": "E-9/regress_vs_p1d1",
+   "why": "E-9's regress against P1-D.1 sees every P2-0 difference"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1/release/release_check.json",
+   "path": "items/#len",
+   "why": "R14 rewritten, R16 added (17 items)"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1/release/release_check.json",
+   "path": "items/14/detail",
+   "why": "R14 rewritten, R16 added (17 items)"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1/release/release_check.json",
+   "path": "items/14/item",
+   "why": "R14 rewritten, R16 added (17 items)"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1/release/release_check.json",
+   "path": "items/16",
+   "why": "R14 rewritten, R16 added (17 items)"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1/release/release_check.json",
+   "path": "total",
+   "why": "R14 rewritten, R16 added (17 items)"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1_checks.json",
+   "path": "E1-4/release_check",
+   "why": "R14 rewritten, R16 added (17 items)"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1_checks.json",
+   "path": "E1-4/release_md_items/#len",
+   "why": "R16 in docs/RELEASE.md"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1_checks.json",
+   "path": "E1-4/release_md_items/16",
+   "why": "R16 in docs/RELEASE.md"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1_checks.json",
+   "path": "E1-4/script_items",
+   "why": "R16 scripted"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1d1/d1_13.json",
+   "path": "http/status_fields",
+   "why": "contract_check.sh's status step reads every field of the §2 status row"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1d1/d1_13.json",
+   "path": "http/http_only",
+   "why": "contract_check.sh's §2.6 step: attest_session, attest over HTTP, absent from MCP"
+  },
+  {
+   "decision": "K-P2-0.3",
+   "file": "p1e1/contract.json",
+   "path": "http/status_fields",
+   "why": "contract_check.sh's status step reads every field of the §2 status row"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1/contract.json",
+   "path": "http/http_only",
+   "why": "contract_check.sh's §2.6 step: attest_session, attest over HTTP, absent from MCP"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e/client.json",
+   "path": "bundle_bytes",
+   "why": "the plugin attests its own saves (Z3): bundle and unit tests"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e/client.json",
+   "path": "vitest/files",
+   "why": "the plugin attests its own saves (Z3): bundle and unit tests"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e/client.json",
+   "path": "vitest/passed",
+   "why": "the plugin attests its own saves (Z3): bundle and unit tests"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e/client.json",
+   "path": "vitest/tests",
+   "why": "the plugin attests its own saves (Z3): bundle and unit tests"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e_checks.json",
+   "path": "E-10/bundle_bytes",
+   "why": "the plugin attests its own saves (Z3): bundle and unit tests"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e_checks.json",
+   "path": "E-10/vitest/files",
+   "why": "the plugin attests its own saves (Z3): bundle and unit tests"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e_checks.json",
+   "path": "E-10/vitest/passed",
+   "why": "the plugin attests its own saves (Z3): bundle and unit tests"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e_checks.json",
+   "path": "E-10/vitest/tests",
+   "why": "the plugin attests its own saves (Z3): bundle and unit tests"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1/release/release_check.json",
+   "path": "items/8/detail",
+   "why": "R8 records the plugin bundle size (Z3)"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1/tamper_p1e1.json",
+   "path": "cases/1/as_expected",
+   "why": "the p1e-final server case expects only status gaps; it now also lacks §2.6 and status.attestation (F14)"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1/tamper_p1e1.json",
+   "path": "cases/1/detail/as_expected",
+   "why": "the p1e-final server case expects only status gaps; it now also lacks §2.6 and status.attestation (F14)"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1/tamper_p1e1.json",
+   "path": "pass",
+   "why": "the p1e-final server case expects only status gaps; it now also lacks §2.6 and status.attestation (F14)"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1/tamper_p1e1.json",
+   "path": "rejected",
+   "why": "the p1e-final server case expects only status gaps; it now also lacks §2.6 and status.attestation (F14)"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1_checks.json",
+   "path": "E1-8/deliberate/1/as_expected",
+   "why": "the same p1e-final case (F14)"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1_checks.json",
+   "path": "E1-8/pass",
+   "why": "the same p1e-final case (F14)"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1_checks.json",
+   "path": "tamper/pass",
+   "why": "the same p1e-final case (F14)"
+  },
+  {
+   "decision": "K-P2-0.5",
+   "file": "p1e1_checks.json",
+   "path": "tamper/rejected",
+   "why": "the same p1e-final case (F14)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e/check_compare_fields.json",
+   "path": "fields_declared",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e/check_compare_fields.json",
+   "path": "fields_in_code",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e/check_compare_fields.json",
+   "path": "file_constants",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e/check_compare_fields.json",
+   "path": "modules/#len",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e/check_compare_fields.json",
+   "path": "modules/9",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e/check_compare_fields.json",
+   "path": "modules/10",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e1/check_compare_fields.json",
+   "path": "fields_declared",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e1/check_compare_fields.json",
+   "path": "fields_in_code",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e1/check_compare_fields.json",
+   "path": "file_constants",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e1/check_compare_fields.json",
+   "path": "modules/#len",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e1/check_compare_fields.json",
+   "path": "modules/9",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "F13",
+   "file": "p1e1/check_compare_fields.json",
+   "path": "modules/10",
+   "why": "the field audit sees the new comparator compare_p2_0 (its module, rows and file constants)"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/historical.json",
+   "path": "counted_fails",
+   "why": "eval.historical (reference P1-E) sees the FAILs P2-0 decisions cause; eval.historical_p2_0 classifies them"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/historical.json",
+   "path": "counted",
+   "why": "eval.historical (reference P1-E) sees the FAILs P2-0 decisions cause; eval.historical_p2_0 classifies them"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/historical.json",
+   "path": "fails",
+   "why": "eval.historical (reference P1-E) sees the FAILs P2-0 decisions cause; eval.historical_p2_0 classifies them"
+  },
+  {
+   "decision": "K-P2-0.4",
+   "file": "p1e1/historical.json",
+   "path": "historical",
+   "why": "eval.historical (reference P1-E) sees the FAILs P2-0 decisions cause; eval.historical_p2_0 classifies them"
+  },
+  {
+   "decision": "K-GH.1",
+   "file": "p1e1/status/e1_1.json",
+   "path": "fixture",
+   "why": "the fixture label after the project rename (GH-0, after the P1-E.1 official RUN)"
+  }
+ ],
+ "exclusions_without_difference": [],
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json",
+  "c1_variant.json",
+  "p1c1_checks.json",
+  "p1d_checks.json",
+  "p1d/inspector/inspector.json",
+  "p1d/mcp_e2e/mcp_e2e.json",
+  "p1d/http/http_e2e.json",
+  "p1d/scene/scene.json",
+  "p1d/tamper_p1d.json",
+  "p1d/d10.json",
+  "p1d/sigterm.json",
+  "p1d1_checks.json",
+  "conformance_p1d1.json",
+  "p1d1/p1d1.json",
+  "p1d1/d1_1.json",
+  "p1d1/d1_2.json",
+  "p1d1/d1_3.json",
+  "p1d1/d1_4.json",
+  "p1d1/d1_5.json",
+  "p1d1/d1_6.json",
+  "p1d1/d1_7.json",
+  "p1d1/d1_8.json",
+  "p1d1/d1_9.json",
+  "p1d1/d1_11.json",
+  "p1d1/d1_13.json",
+  "p1d1/v3_compat.json",
+  "p1d1/v3_compat_mixed.json",
+  "p1d1/tamper_p1d1.json",
+  "p1e_checks.json",
+  "p1e/e0/e14.json",
+  "p1e/e0/e15.json",
+  "p1e/scene/scene.json",
+  "p1e/plugin_e2e/plugin_e2e.json",
+  "p1e/plugin_e2e/access_log.json",
+  "p1e/client.json",
+  "p1e/release/release_local.json",
+  "p1e/release/conformance_rootmark.json",
+  "p1e/release/conformance_equiv.json",
+  "p1e/tamper_p1e.json",
+  "p1e/check_compare_fields.json",
+  "p1e1_checks.json",
+  "p1e1/status/e1_1.json",
+  "p1e1/status/e1_2.json",
+  "p1e1/contract.json",
+  "p1e1/tamper_p1e1.json",
+  "p1e1/tamper_p1e1_e2e.json",
+  "p1e1/release/release.json",
+  "p1e1/release/release_check.json",
+  "p1e1/release/plugin_e2e_real.json",
+  "p1e1/release/access_log_real.json",
+  "p1e1/historical.json",
+  "p1e1/check_compare_fields.json"
+ ],
+ "n_fields": 102370,
+ "reference_run": "20261017T140538Z-7ea12dc"
+}

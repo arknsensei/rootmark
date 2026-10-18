@@ -1,0 +1,6 @@
+rootmark serve: watching vault
+rootmark serve: watch: filter.md ingested (2 events, 1 chunks embedded, snapshot 097acabebab6438b479cc55ff7f2da80)
+rootmark serve: compact (timer): 36 records, 15 snapshots, 1 moved from the hot tier
+rootmark serve: stopping (SIGTERM)
+rootmark serve: compact (shutdown): hot tier empty
+rootmark serve: stopped

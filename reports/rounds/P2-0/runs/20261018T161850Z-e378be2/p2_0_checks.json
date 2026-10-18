@@ -1,0 +1,548 @@
+{
+ "H-P2-0a": {
+  "canonical_leak": 0,
+  "new_blocks": 525,
+  "pass": true,
+  "scenarios": 200
+ },
+ "H-P2-0a′": {
+  "canonical_changed": 52,
+  "pass": true,
+  "scenarios": "200/200"
+ },
+ "H-P2-0b": {
+  "by_kind": {
+   "char": {
+    "new_blocks": 29,
+    "saves": 29,
+    "unverified": 4
+   },
+   "focus": {
+    "new_blocks": 28,
+    "saves": 28,
+    "unverified": 0
+   },
+   "multi": {
+    "new_blocks": 65,
+    "saves": 65,
+    "unverified": 0
+   },
+   "paragraph": {
+    "new_blocks": 29,
+    "saves": 29,
+    "unverified": 0
+   },
+   "paste": {
+    "new_blocks": 384,
+    "saves": 30,
+    "unverified": 0
+   },
+   "rapid": {
+    "new_blocks": 92,
+    "saves": 27,
+    "unverified": 0
+   },
+   "rename": {
+    "new_blocks": 1263,
+    "saves": 78,
+    "unverified": 927
+   }
+  },
+  "false_unverified_rate": 0.4925925925925926,
+  "new_blocks": 1890,
+  "pass": false,
+  "rename_records_without_blocks": 0,
+  "saves": 286,
+  "sessions": 200,
+  "side_notes": 47,
+  "unverified_after_window": 931
+ },
+ "H-P2-0b′": {
+  "pass": null,
+  "raised_late": 0,
+  "saves": 286
+ },
+ "H-P2-0c": {
+  "latency_measured": 208,
+  "latency_p95_ms": 270,
+  "latency_p95_over_window": false,
+  "latency_unsettled": 4,
+  "no_write": 78,
+  "pass": true
+ },
+ "H-P2-0d": {
+  "accuracy": 0.9794117647058823,
+  "blocks": 340,
+  "by_mode": {
+   "apart": {
+    "blocks": 298,
+    "right": 298
+   },
+   "collide": {
+    "blocks": 14,
+    "right": 7
+   },
+   "same_doc_after": {
+    "blocks": 28,
+    "right": 28
+   }
+  },
+  "pass": false,
+  "right": 333,
+  "ticks": 160
+ },
+ "H-P2-0e": {
+  "measured": false,
+  "pass": null,
+  "reason": "the probe reads a person's keychain item (Z6); scripts/keychain_probe.sh is run by a person"
+ },
+ "H-P2-0f": {
+  "failed": [],
+  "pass": true,
+  "vaults": "3/3"
+ },
+ "H-P2-0h": {
+  "level_claimed": 3,
+  "pass": true,
+  "passed": 37,
+  "spec_version": "2.0.0",
+  "total": 37
+ },
+ "regress": {
+  "conformance": {
+   "differing_tests": [],
+   "equal": true,
+   "level_claimed": [
+    3,
+    3
+   ],
+   "new_tests_passed": {
+    "C2-11": true,
+    "C2-12": true,
+    "C3-08": true
+   },
+   "passed": [
+    34,
+    37
+   ],
+   "reference_tests": 34,
+   "spec_version": [
+    "1.0.3",
+    "2.0.0"
+   ],
+   "tests": 37,
+   "unexpected_new_tests": []
+  },
+  "differing_fields": {
+   "p1e1/release/release_check.json:passed": 0.058823529411764705
+  },
+  "excluded_differences": {
+   "conformance_p1d1.json:fixtures_manifest_hash": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "conformance_p1d1.json:passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "conformance_p1d1.json:spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "conformance_p1d1.json:tests": {
+    "decision": "K-P2-0.4",
+    "leaves": 52
+   },
+   "conformance_p1d1.json:total": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1b1_checks.json:criteria/B1-3/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1b_checks.json:fixtures_manifest_hash": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1c1_checks.json:C1-7/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1c_checks.json:C-1/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1d/scene/scene.json:steps/0/shows/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1d1/d1_13.json:http/http_only": {
+    "decision": "K-P2-0.5",
+    "leaves": 10
+   },
+   "p1d1/d1_13.json:http/status_fields": {
+    "decision": "K-P2-0.3",
+    "leaves": 20
+   },
+   "p1d1_checks.json:D1-10/pass": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1d1_checks.json:D1-10/passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1d1_checks.json:D1-10/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1d1_checks.json:D1-12/regress_vs_p1d/conformance/spec_version/1": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1d_checks.json:D-9/conformance/spec_version/1": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:fields_declared": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:fields_in_code": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:file_constants": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules/#len": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules/10": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules/9": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e/client.json:bundle_bytes": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e/client.json:vitest/files": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e/client.json:vitest/passed": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e/client.json:vitest/tests": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e/plugin_e2e/plugin_e2e.json:steps/0/shows/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/release/conformance_equiv.json:passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 2
+   },
+   "p1e/release/conformance_equiv.json:spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 2
+   },
+   "p1e/release/conformance_equiv.json:total": {
+    "decision": "K-P2-0.4",
+    "leaves": 2
+   },
+   "p1e/release/conformance_rootmark.json:fixtures_manifest_hash": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/release/conformance_rootmark.json:passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/release/conformance_rootmark.json:spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/release/conformance_rootmark.json:tests": {
+    "decision": "K-P2-0.4",
+    "leaves": 52
+   },
+   "p1e/release/conformance_rootmark.json:total": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/release/release_local.json:conformance/passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/release/release_local.json:conformance/total": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/release/release_local.json:spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/scene/scene.json:steps/0/shows/mcp_spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e/scene/scene.json:steps/0/shows/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:fields_declared": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:fields_in_code": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:file_constants": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules/#len": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules/10": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules/9": {
+    "decision": "F13",
+    "leaves": 1
+   },
+   "p1e1/contract.json:http/http_only": {
+    "decision": "K-P2-0.5",
+    "leaves": 10
+   },
+   "p1e1/contract.json:http/status_fields": {
+    "decision": "K-P2-0.3",
+    "leaves": 20
+   },
+   "p1e1/historical.json:counted": {
+    "decision": "K-P2-0.4",
+    "leaves": 11
+   },
+   "p1e1/historical.json:counted_fails": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/historical.json:fails": {
+    "decision": "K-P2-0.4",
+    "leaves": 139
+   },
+   "p1e1/historical.json:historical": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:commit": {
+    "decision": "K-P2-0.1",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:targets/0/conformance/passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:targets/0/conformance/total": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:targets/0/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/#len": {
+    "decision": "K-P2-0.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/1/item": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/14/detail": {
+    "decision": "K-P2-0.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/14/item": {
+    "decision": "K-P2-0.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/16": {
+    "decision": "K-P2-0.3",
+    "leaves": 4
+   },
+   "p1e1/release/release_check.json:items/3/item": {
+    "decision": "K-P2-0.1",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/4/item": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/8/detail": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/9/item": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:total": {
+    "decision": "K-P2-0.3",
+    "leaves": 1
+   },
+   "p1e1/status/e1_1.json:fixture": {
+    "decision": "K-GH.1",
+    "leaves": 1
+   },
+   "p1e1/tamper_p1e1.json:cases/1/as_expected": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e1/tamper_p1e1.json:cases/1/detail/as_expected": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e1/tamper_p1e1.json:pass": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e1/tamper_p1e1.json:rejected": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-4/release_check": {
+    "decision": "K-P2-0.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-4/release_md_items/#len": {
+    "decision": "K-P2-0.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-4/release_md_items/16": {
+    "decision": "K-P2-0.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-4/script_items": {
+    "decision": "K-P2-0.3",
+    "leaves": 11
+   },
+   "p1e1_checks.json:E1-5/required/conformance/passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-5/required/conformance/total": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-5/required/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/conformance/passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/conformance/total": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/pass": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/regress_vs_p1e": {
+    "decision": "K-P2-0.4",
+    "leaves": 253
+   },
+   "p1e1_checks.json:E1-8/deliberate/1/as_expected": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-8/pass": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e1_checks.json:tamper/pass": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e1_checks.json:tamper/rejected": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-10/bundle_bytes": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-10/vitest/files": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-10/vitest/passed": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-10/vitest/tests": {
+    "decision": "K-P2-0.5",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-7/chain_local_target/conformance/passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-7/chain_local_target/conformance/total": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-7/chain_local_target/spec_version": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-9/conformance/passed": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-9/conformance/total": {
+    "decision": "K-P2-0.4",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-9/regress_vs_p1d1": {
+    "decision": "K-P2-0.4",
+    "leaves": 75
+   }
+  },
+  "exclusions_without_difference": [],
+  "n_fields": 102370,
+  "pass": false,
+  "reference_run": "20261017T140538Z-7ea12dc"
+ },
+ "tamper": {
+  "controls": "2/2",
+  "pass": true,
+  "rejected": "9/9"
+ },
+ "window": {
+  "chosen_by": "choose_window (Z5.md)",
+  "tune_set_blake3": "77f2aacda0581a96e87f657374b7977bcf0d130081dbb7717bafeb9d977822fb",
+  "window_s": 0.5
+ }
+}

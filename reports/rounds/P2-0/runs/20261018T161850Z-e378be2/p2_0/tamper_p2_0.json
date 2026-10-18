@@ -1,0 +1,120 @@
+{
+ "cases": [
+  {
+   "group": "attest",
+   "case": "save attested with its own bytes (control)",
+   "expected": "accepted",
+   "got": "accepted",
+   "detail": {
+    "layers": [
+     "canonical"
+    ]
+   },
+   "as_expected": true
+  },
+  {
+   "group": "attest",
+   "case": "attestation of other bytes",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "layers": [
+     "unverified"
+    ]
+   },
+   "as_expected": true
+  },
+  {
+   "group": "http",
+   "case": "attest_session without a token",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 401
+   },
+   "as_expected": true
+  },
+  {
+   "group": "http",
+   "case": "attest with a MAC over other bytes",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 403
+   },
+   "as_expected": true
+  },
+  {
+   "group": "http",
+   "case": "attest with a session the server never opened",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 403
+   },
+   "as_expected": true
+  },
+  {
+   "group": "log",
+   "case": "untouched vault opens (control)",
+   "expected": "accepted",
+   "got": "accepted",
+   "detail": null,
+   "as_expected": true
+  },
+  {
+   "group": "log",
+   "case": "forged attestation line appended",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": null,
+   "as_expected": true
+  },
+  {
+   "group": "log",
+   "case": "line of a late attestation removed",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "raised": 1,
+    "as_expected_needs_raise": true
+   },
+   "as_expected": true
+  },
+  {
+   "group": "mcp",
+   "case": "tools/list holds no attestation tool",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "tools": 10
+   },
+   "as_expected": true
+  },
+  {
+   "group": "mcp",
+   "case": "tools/call attest",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "code": -32602
+   },
+   "as_expected": true
+  },
+  {
+   "group": "mcp",
+   "case": "tools/call attest_session",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "code": -32602
+   },
+   "as_expected": true
+  }
+ ],
+ "rejected": 9,
+ "rejected_total": 9,
+ "controls_ok": 2,
+ "controls_total": 2,
+ "pass": true
+}

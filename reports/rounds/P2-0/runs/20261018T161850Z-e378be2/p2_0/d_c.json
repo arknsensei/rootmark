@@ -1,0 +1,86 @@
+{
+ "set": "D-C",
+ "ticks": 160,
+ "modes": {
+  "apart": 139,
+  "same_doc_after": 14,
+  "collide": 7
+ },
+ "blocks": 340,
+ "right": 333,
+ "accuracy": 0.9794117647058823,
+ "accuracy_without_collide": 1.0,
+ "by_mode": {
+  "apart": {
+   "blocks": 298,
+   "right": 298
+  },
+  "same_doc_after": {
+   "blocks": 28,
+   "right": 28
+  },
+  "collide": {
+   "blocks": 14,
+   "right": 7
+  }
+ },
+ "wrong": [
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "0b5b07f4369eca98d36db991d651197b",
+   "author": "human",
+   "tick": "c029",
+   "layer": "unverified",
+   "right": false
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "8d3776ce59722c2b95b26c6762e32511",
+   "author": "human",
+   "tick": "c088",
+   "layer": "unverified",
+   "right": false
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "3e5ef8886a7aaee77b07118e1e6709e0",
+   "author": "human",
+   "tick": "c107",
+   "layer": "unverified",
+   "right": false
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "5ae1092a5fca8e65708a80895f65f42d",
+   "author": "human",
+   "tick": "c032",
+   "layer": "unverified",
+   "right": false
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "12487beb620e2a95af294c2ec1df1d4a",
+   "author": "human",
+   "tick": "c024",
+   "layer": "unverified",
+   "right": false
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "5cbf77cdda22f1d5ab36a19b46f59137",
+   "author": "human",
+   "tick": "c004",
+   "layer": "unverified",
+   "right": false
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "f9a6e2e41e52277721adfe09db96cf49",
+   "author": "human",
+   "tick": "c109",
+   "layer": "unverified",
+   "right": false
+  }
+ ],
+ "pass": false
+}
