@@ -202,6 +202,20 @@ impl Attesting {
         Ok(m.first().map(|x| x.base.clone()))
     }
 
+    /// Whether an unattested ingest of `doc` with these bytes is still in
+    /// its window (an attestation of them is not "unmatched").
+    pub fn has_pending(&self, policy: &Policy, doc: &str, content_hash: &str) -> Result<bool> {
+        let now = self.now_ms();
+        let w = policy.attestation.window_ms;
+        let b = self
+            .bases
+            .lock()
+            .map_err(|_| anyhow::anyhow!("base lock poisoned"))?;
+        Ok(b.iter().any(|x| {
+            x.doc == doc && x.content_hash == content_hash && now.saturating_sub(x.observed_ms) <= w
+        }))
+    }
+
     /// Forgets the bases of `doc`'s unattested ingests of `content_hash`
     /// (an attestation of those bytes was recorded: matched or not, they
     /// serve no later check).

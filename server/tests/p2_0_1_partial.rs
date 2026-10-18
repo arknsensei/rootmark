@@ -219,6 +219,8 @@ fn a_late_collision_raises_the_human_blocks_only() {
     assert_eq!(layer_of(&k, "a.md", HUMAN), "canonical");
     assert_eq!(layer_of(&k, "a.md", AGENT), "unverified");
     assert_eq!(log_lines(&v)[0]["partial"], json!(true));
+    // a late (partial) match leaves no `matched` mark (Y4 review 3)
+    assert!(log_lines(&v)[0].get("matched").is_none());
 }
 
 #[test]
@@ -366,4 +368,36 @@ fn saved_bytes_missing_a_kept_block_are_no_late_partial_match() {
     watch(&k, "a.md");
     assert_eq!(layer_of(&k, "a.md", AGENT), "unverified");
     assert_eq!(layer_of(&k, "a.md", "A second agent line."), "unverified");
+}
+
+#[test]
+fn an_attestation_of_bytes_never_seen_is_marked_unmatched() {
+    // P2-0.1 T4 (P2-0 verification F5): recorded, not refused, marked
+    // `matched: false`, counted by `status.attestation.unmatched`
+    let v = vault("unmatched");
+    let k = Kernel::open(&v).unwrap();
+    let s = session(&k);
+    let unmatched = |k: &Kernel| {
+        k.call("status", &json!({}), human()).unwrap()["attestation"]["unmatched"]
+            .as_u64()
+            .unwrap()
+    };
+    assert_eq!(unmatched(&k), 0);
+    let never = "# A\n\nBytes no file ever held.\n";
+    k.call("attest", &content_body(&s, never), human()).unwrap();
+    let lines = log_lines(&v);
+    assert_eq!(lines.last().unwrap()["matched"], json!(false));
+    assert_eq!(unmatched(&k), 1);
+    // the file's own bytes: no mark
+    attest(&k, &s, &v, "a.md", json!({})).unwrap();
+    assert!(log_lines(&v).last().unwrap().get("matched").is_none());
+    // saved bytes whose blocks the file holds (an agent appended after the
+    // save): no mark (a partial match is coming)
+    let h = format!("{A}\n{HUMAN}\n");
+    std::fs::write(v.join("a.md"), format!("{h}\n{AGENT}\n")).unwrap();
+    k.call("attest", &content_body(&s, &h), human()).unwrap();
+    assert!(log_lines(&v).last().unwrap().get("matched").is_none());
+    assert_eq!(unmatched(&k), 1);
+    // the vault still opens with the marked line
+    rootmarkcore::Vault::open(&v).unwrap();
 }

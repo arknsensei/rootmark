@@ -1,0 +1,50 @@
+{
+ "about": "P2-0.1 (Y4, Y6): FAILs that frozen recorders of earlier rounds record in every chain because of decisions taken after their round, classified against the P2-0 official RUN by research/eval/historical_p2_0_1.py; extended from a development RUN before the official RUN (Y6). A listed FAIL is historical only while its record equals the reference record outside its declared changes and the compare_p2_0_1.EXCLUDED subtrees below it.",
+ "reference_run": "reports/rounds/P2-0/runs/20261018T161850Z-e378be2",
+ "entries": [
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-3",
+   "decisions": [
+    "K-C8-T",
+    "K-C1.1",
+    "K-C1.2"
+   ],
+   "why": "P1-C's hybrid multi-question nDCG@10 was -0.0136 off v2; closed in P1-C.1 by the declared lexical variant and the Rust quality reference (historical in P1-E.1 too: research/eval/historical_fails.json)",
+   "changes": []
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-11",
+   "decisions": [
+    "K-D1.2",
+    "K-D1.4-T",
+    "K-E0.1"
+   ],
+   "why": "P1-C's regression against P1-B.1 sees B1-3's spec-version difference (historical in P1-E.1 too: research/eval/historical_fails.json)",
+   "changes": []
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-2",
+   "decisions": [
+    "K-D1.1",
+    "K-D1.5",
+    "K-E0.4",
+    "K-D1.4-T"
+   ],
+   "why": "P1-D's MCP e2e expects agent edits of human blocks to pass (append_only since K-D1.1), the old error codes (K-D1.5, K-E0.4) and spec 1.0.2 in status (historical in P1-E.1 too: research/eval/historical_fails.json)",
+   "changes": []
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-7",
+   "decisions": [
+    "K-D1.4-T",
+    "K-D1.5"
+   ],
+   "why": "P1-D's HTTP e2e expects spec 1.0.2 (D7-3) and the old status codes of two cases (historical in P1-E.1 too: research/eval/historical_fails.json)",
+   "changes": []
+  }
+ ]
+}

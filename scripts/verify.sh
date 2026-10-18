@@ -181,10 +181,12 @@ chain() {
   fi
   # K-E1.4 (re-freeze P1-E.1/F3): every recorder's FAILs; historical ones
   # are shown with their decisions and not counted; the summary never
-  # changes the exit code (criteria are recorded, not fatal)
-  log "FAIL summary (K-E1.4)"
-  (cd research && uv run --frozen python -m eval.historical --run-dir "reports/runs/$run" || true) \
-    | sed 's/^historical: /[verify summary] /' >&2
+  # changes the exit code (criteria are recorded, not fatal). Since P2-0.1
+  # (P2-0.1/F4; P2-0 verification recommendation 3) the summary is the
+  # round's own classifier against the previous official RUN, so its
+  # counted FAILs are the round's (eval.historical_p2_0_1)
+  log "FAIL summary (K-E1.4, round classifier eval.historical_p2_0_1)"
+  (cd research && uv run --frozen python -m eval.historical_p2_0_1 --run-dir "reports/runs/$run" --summary || true) >&2
   log "chain finished in $((SECONDS - t0)) s"
   echo "RUN=$run" >&3
   echo "RUN_DIR=$work/repo/research/reports/runs/$run" >&3
