@@ -287,9 +287,12 @@ def run_d_a(rootmark: str, window_s: float, out: Path, work: Path) -> dict:
     finally:
         sv.stop()
     (out / "d_a").mkdir(parents=True, exist_ok=True)
-    for f in ["events.jsonl", "attestations.jsonl"]:
-        src = sv.vault / ".rootmark" / f
-        (out / "d_a" / f).write_bytes(src.read_bytes() if src.exists() else b"")
+    (out / "d_a" / "events.jsonl").write_bytes((sv.vault / ".rootmark/events.jsonl").read_bytes())
+    # the agent never attests: an attestation log here would be a fault
+    att = sv.vault / ".rootmark/attestations.jsonl"
+    if att.exists() and att.read_bytes() != b"":
+        raise RuntimeError("D-A: the vault holds attestations, but nothing attested")
+    (out / "d_a" / "attestations.jsonl").write_bytes(b"")
     leaks = sum(len(r["leak"]) for r in rows)
     res = {
         "set": "D-A",
@@ -298,6 +301,8 @@ def run_d_a(rootmark: str, window_s: float, out: Path, work: Path) -> dict:
         "canonical_leak": leaks,
         "pass_0a": leaks == 0 and all(r["pass_0a"] for r in rows),
         "scenarios_0a_prime": sum(r["pass_0a_prime"] for r in rows),
+        "scenarios_with_canonical_changed": sum(1 for r in rows if r["canonical_changed"] > 0),
+        "new_blocks_not_unverified": sum(r["new_blocks"] - r["unverified"] for r in rows),
         "canonical_changed": sum(r["canonical_changed"] for r in rows),
         "pass_0a_prime": all(r["pass_0a_prime"] for r in rows) and len(rows) == 200,
         "by_kind": {k: sum(1 for r in rows if r["kind"] == k) for k in sets.D_A_KINDS},
@@ -329,7 +334,10 @@ def run_d_c(rootmark: str, window_s: float, out: Path, work: Path) -> dict:
         )
         blocks = []
         for d in docs:
-            for b in sv.blame(d) or []:
+            bl = sv.blame(d)
+            if bl is None:
+                raise RuntimeError(f"D-C: the server does not know {d}")
+            for b in bl:
                 text = sv.call("read_block", {"doc_path": d, "lineage_id": b["lineage_id"]})[
                     "block"
                 ]["block"]["text"]
@@ -353,7 +361,9 @@ def run_d_c(rootmark: str, window_s: float, out: Path, work: Path) -> dict:
     (out / "d_c").mkdir(parents=True, exist_ok=True)
     for f in ["events.jsonl", "attestations.jsonl"]:
         src = sv.vault / ".rootmark" / f
-        (out / "d_c" / f).write_bytes(src.read_bytes() if src.exists() else b"")
+        if not src.is_file():
+            raise FileNotFoundError(f"D-C: {src} missing (the human attested every save)")
+        (out / "d_c" / f).write_bytes(src.read_bytes())
     right = sum(b["right"] for b in blocks)
     tick_mode = {t["id"]: t["mode"] for t in data["ticks"]}
     by_mode: dict[str, dict[str, int]] = {}
@@ -371,6 +381,10 @@ def run_d_c(rootmark: str, window_s: float, out: Path, work: Path) -> dict:
         "blocks": len(blocks),
         "right": right,
         "accuracy": right / len(blocks) if blocks else None,
+        "accuracy_without_collide": (
+            sum(b["right"] for b in blocks if tick_mode[b["tick"]] != "collide")
+            / max(1, sum(1 for b in blocks if tick_mode[b["tick"]] != "collide"))
+        ),
         "by_mode": by_mode,
         "wrong": [b for b in blocks if not b["right"]],
         "pass": bool(blocks) and right / len(blocks) >= 0.99,
@@ -476,7 +490,11 @@ def choose_window(rows: list[dict]) -> float:
     with the lowest rate (and the report says so)."""
     best = min(r["false_unverified_rate"] for r in rows)
     ok = [
-        r for r in rows if r["false_unverified_rate"] == best and (r["latency_p95_ms"] or 1e9) < 500
+        r
+        for r in rows
+        if r["false_unverified_rate"] == best
+        and r["latency_p95_ms"] is not None
+        and r["latency_p95_ms"] < 500
     ]
     pick = ok or [r for r in rows if r["false_unverified_rate"] == best]
     return min(r["window_s"] for r in pick)
@@ -520,7 +538,10 @@ def main(argv: list[str] | None = None) -> int:
                                 "false_unverified_rate",
                                 "raised_late",
                                 "latency_p95_ms",
+                                "latency_p95_over_window",
                                 "latency_measured",
+                                "latency_unsettled",
+                                "side_notes",
                                 "no_write",
                             ]
                         }

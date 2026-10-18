@@ -22,7 +22,11 @@
 // the first observation, among those that answered after the write began,
 // whose log position (`seq_last`) is past the one observed before the write
 // began and where every new block is `canonical`; a document without a
-// captured write has no latency (`no_write`).
+// captured write has no latency (`no_write`); a written save that never
+// became canonical counts as an infinite latency in the p95. A typed note
+// that Obsidian does not write, or an HTTP error, stops the run. Notes the
+// session did not edit but Obsidian rewrote (the links of a renamed note)
+// are measured too (`side`).
 //
 // <scenarios>: {"sessions": [{"id", "kind", "steps": [{"op": "type", "doc",
 // "text"} | {"op": "save", "how": "command"|"autosave"|"blur"} | {"op":
@@ -112,17 +116,30 @@ for (let i = 0; i < 600 && !serverErr.includes("watching"); i++) await sleep(100
 if (!serverErr.includes("watching")) throw new Error(`rootmark serve did not start:\n${serverErr}`);
 const token = readFileSync(join(vault, ".rootmark/server.token"), "utf8").trim();
 
-async function call(tool: string, body: unknown): Promise<Record<string, unknown>> {
+async function post(tool: string, body: unknown): Promise<{ status: number; body: Record<string, unknown> }> {
   const r = await fetch(`http://127.0.0.1:${String(httpPort)}/v1/${tool}`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "X-Consumer": "p2-0-sessions", "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-  return (await r.json()) as Record<string, unknown>;
+  return { status: r.status, body: (await r.json()) as Record<string, unknown> };
 }
+/** `blame` of a document; null only for a document the server does not
+ * know (404). Any other failure is an error (no silent drop). */
 async function blame(doc: string): Promise<Block[] | null> {
-  const r = await call("blame", { doc_path: doc });
-  return Array.isArray(r["blocks"]) ? (r["blocks"] as Block[]) : null;
+  const r = await post("blame", { doc_path: doc });
+  if (r.status === 404) return null;
+  if (r.status !== 200 || !Array.isArray(r.body["blocks"])) throw new Error(`blame ${doc}: HTTP ${String(r.status)} ${JSON.stringify(r.body)}`);
+  return r.body["blocks"] as Block[];
+}
+/** The vault's notes (outside `.obsidian/` and `.rootmark/`) and their bytes. */
+function notes(): Map<string, string> {
+  const m = new Map<string, string>();
+  for (const f of readdirSync(vault, { recursive: true }) as string[]) {
+    if (!f.endsWith(".md") || f.startsWith(".obsidian") || f.startsWith(".rootmark")) continue;
+    m.set(f.split("\\").join("/"), readFileSync(join(vault, f), "latin1"));
+  }
+  return m;
 }
 
 // the person's hands, in the Obsidian window (not the plugin)
@@ -223,6 +240,9 @@ interface SaveRecord {
   latency_ms: number | null;
   /** no write of this document was captured in the page: not a save */
   no_write: boolean;
+  /** a note the session did not edit but Obsidian rewrote (the links of a
+   * renamed note; ASSUMPTIONS Z5-5): measured, no latency */
+  side: boolean;
 }
 const records: SaveRecord[] = [];
 let page: Page | null = null;
@@ -264,6 +284,13 @@ try {
     // Obsidian's own (delayed) save, so the session ends once every typed
     // document has been written after its last keystroke (at most 6 s)
     const typed = new Map<string, number>();
+    // every note's bytes before the session; with a rename, also every
+    // note's blocks (Obsidian rewrites the notes that link to it)
+    const bytesBefore = notes();
+    const renames = s.steps.some((st) => st.op === "rename");
+    const allBefore = new Map<string, Set<string>>();
+    if (renames) for (const d of bytesBefore.keys()) allBefore.set(d, new Set(((await blame(d)) ?? []).map((b) => b.version_id)));
+    const renamedFrom = new Set<string>();
     for (const st of s.steps) {
       if (st.op === "open" || st.op === "type") {
         const doc = st.doc ?? "";
@@ -284,6 +311,7 @@ try {
         const from = st.doc ?? "";
         const to = st.to ?? "";
         await pg.ev(`__p2.rename(${J(from)}, ${J(to)})`);
+        renamedFrom.add(from);
         before.set(to, new Set());
         docs.delete(from);
         docs.add(to);
@@ -295,11 +323,22 @@ try {
       return [...typed].every(([d, t]) => ws.some((x) => x.path === d && x.t >= t));
     };
     for (let i = 0; i < 240 && !(await written()); i++) await sleep(25);
+    if (!(await written())) throw new Error(`session ${s.id}: a typed note was not written by Obsidian within 6 s`);
     await sleep(150);
     polling.on = false;
     await poller;
+    // notes Obsidian rewrote without the session editing them
+    const side = new Set<string>();
+    for (const [d, b] of notes()) {
+      if (docs.has(d) || bytesBefore.get(d) === b) continue;
+      const old = allBefore.get(d);
+      if (old === undefined) throw new Error(`session ${s.id}: ${d} changed outside the session's notes`);
+      before.set(d, old);
+      side.add(d);
+    }
+    for (const d of renamedFrom) docs.delete(d);
     const writes = await pg.ev<{ path: string; ts: number; t: number }[]>(`__p2.writes.slice(${String(startWrites)})`);
-    for (const doc of docs) {
+    for (const doc of [...docs, ...side]) {
       const w = writes.filter((x) => x.path === doc).pop();
       const t0 = w?.t ?? Date.now();
       const noWrite = w === undefined;
@@ -335,6 +374,7 @@ try {
         raised_late: seenUnverified && latency !== null,
         latency_ms: noWrite ? null : latency,
         no_write: noWrite,
+        side: side.has(doc),
       });
     }
   }
@@ -346,8 +386,13 @@ try {
   const att = existsSync(attPath) ? readFileSync(attPath, "utf8").split("\n").filter((l) => l !== "").length : 0;
   const blocks = records.reduce((a, r) => a + r.new_blocks, 0);
   const unverified = records.reduce((a, r) => a + r.unverified_after_window, 0);
-  const lat = records.map((r) => r.latency_ms).filter((x): x is number => x !== null).sort((a, b) => a - b);
-  const p95 = lat.length === 0 ? null : (lat[Math.min(lat.length - 1, Math.ceil(lat.length * 0.95) - 1)] ?? null);
+  // a written save that never became canonical within W + 1.5 s counts as
+  // an infinite latency (it is not dropped); a p95 that lands on one is null
+  // with `latency_p95_over_window`
+  const written_ = records.filter((r) => !r.no_write);
+  const lat = written_.map((r) => r.latency_ms ?? Number.POSITIVE_INFINITY).sort((a, b) => a - b);
+  const p95raw = lat.length === 0 ? null : (lat[Math.min(lat.length - 1, Math.ceil(lat.length * 0.95) - 1)] ?? null);
+  const p95 = p95raw === null || !Number.isFinite(p95raw) ? null : p95raw;
   const res = {
     window_s: windowS,
     sessions: scenarios.sessions.length,
@@ -357,7 +402,10 @@ try {
     false_unverified_rate: blocks === 0 ? null : unverified / blocks,
     raised_late: records.filter((r) => r.raised_late).length,
     latency_p95_ms: p95,
+    latency_p95_over_window: p95raw !== null && !Number.isFinite(p95raw),
     latency_measured: lat.length,
+    latency_unsettled: written_.filter((r) => r.latency_ms === null).length,
+    side_notes: records.filter((r) => r.side).length,
     plugin_counts: counts,
     no_write: records.filter((r) => r.no_write).length,
     ui,
