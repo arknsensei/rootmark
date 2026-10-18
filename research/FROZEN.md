@@ -278,6 +278,17 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `server/tests/serve_watch.rs` | `P2-0/Z2:` | yeniden dondurma P2-0/F4: D-10'un politikası açık `unattested = "canonical"` (K-P2-0.4) |
 | `scripts/http_e2e.sh` | `P2-0/Z2:` | yeniden dondurma P2-0/F5: W-1/S-1'in politikası açık `unattested = "canonical"` (K-P2-0.4) |
 | `scripts/contract_check.sh` | `P2-0/Z2:` | yeniden dondurma P2-0/F6: §2.6 HTTP'ye özel uçlar gerçek çağrıyla, MCP'de yok (K-P2-0.5) |
+| `core/tests/conformance/eval_c2.rs` | `P2-0/Z4:` | yeniden dondurma P2-0/F7: C2-11, C2-12 işlemleri (spec 2.0.0) |
+| `core/tests/conformance.rs` | `P2-0/Z4:` | yeniden dondurma P2-0/F7: Seviye 2 = 12 test, `spec_version` 2.0.0 |
+| `core/tests/conformance_c2_gen.rs` | `P2-0/Z4:` | yeniden dondurma P2-0/F7: 12 C2 dizini |
+| `index/tests/conformance_c3.rs` | `P2-0/Z4:` | yeniden dondurma P2-0/F7: Seviye 3 = 8 test |
+| `index/tests/conformance_c3_gen.rs` | `P2-0/Z4:` | yeniden dondurma P2-0/F7: 8 C3 dizini |
+| `spec/fixtures/**` | `P2-0/Z4:` | yeniden dondurma P2-0/F8: C2-11, C2-12, C3-08 fixture'ları, MANIFEST yalnız ekleme |
+| `scripts/test_tamper_p1c.sh` | `P2-0/Z4:` | yeniden dondurma P2-0/F9: uyumluluk toplamı 37 |
+| `scripts/test_tamper_p1d1.sh` | `P2-0/Z4:` | yeniden dondurma P2-0/F9: uyumluluk toplamı 37 |
+| `scripts/release_local.sh` | `P2-0/Z4:` | yeniden dondurma P2-0/F9: uyumluluk toplamı 37 |
+| `scripts/release_target.sh` | `P2-0/Z4:` | yeniden dondurma P2-0/F9: uyumluluk toplamı 37 |
+| `scripts/release_check.sh` | `P2-0/Z4:` | yeniden dondurma P2-0/F9: uyumluluk toplamı 37 |
 <!-- /frozen-table -->
 
 ## Notlar

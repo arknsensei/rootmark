@@ -1,0 +1,457 @@
+{
+  "id": "C2-11",
+  "output": [
+    {
+      "op": "restore_store",
+      "result": {
+        "restored": true
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "95fa2f97d845945eef125f3aba79256e"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "a05fafe95a8a10858b05dbcde68ff39b"
+            }
+          ],
+          "plan.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "95262c7fb3ca0ea6b12587a73ad55d0e"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "8fd131d1025ddb481914549229576349"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "fingerprint",
+      "result": {
+        "events_hash": "bec30291346b6d640f6bc725c9b5f943"
+      }
+    },
+    {
+      "op": "events",
+      "result": [
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted"
+      ]
+    },
+    {
+      "op": "unattested_ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockUpdated",
+            {
+              "id": "fs",
+              "kind": "unattested_fs"
+            },
+            "unattested_fs",
+            "unverified"
+          ],
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "LayerChanged",
+            null,
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockUpdated",
+          "BlockCreated",
+          "LayerChanged",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "e683f685eed7d26b6beca9ae633edd27"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "95fa2f97d845945eef125f3aba79256e"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "a05fafe95a8a10858b05dbcde68ff39b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "4e462ee4aa6a37bd3348971b0501e969"
+            }
+          ],
+          "plan.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "95262c7fb3ca0ea6b12587a73ad55d0e"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "8fd131d1025ddb481914549229576349"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "events",
+      "result": [
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockUpdated",
+        "BlockCreated",
+        "LayerChanged",
+        "SnapshotCommitted"
+      ]
+    },
+    {
+      "op": "tamper",
+      "result": {
+        "open_err": "must declare meta.layer unverified"
+      }
+    },
+    {
+      "op": "meta_tamper",
+      "result": {
+        "open_err": "carries meta.layer"
+      }
+    },
+    {
+      "op": "meta_tamper",
+      "result": {
+        "open_err": "unknown layer"
+      }
+    },
+    {
+      "op": "meta_tamper",
+      "result": {
+        "open_err": "synthetic only"
+      }
+    },
+    {
+      "op": "actor_tamper",
+      "result": {
+        "open_err": "malformed meta.actor"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "95fa2f97d845945eef125f3aba79256e"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "a05fafe95a8a10858b05dbcde68ff39b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "4e462ee4aa6a37bd3348971b0501e969"
+            }
+          ],
+          "plan.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "95262c7fb3ca0ea6b12587a73ad55d0e"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "8fd131d1025ddb481914549229576349"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "14d68489cae3dec9cfec73f26c1a74dc"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockUpdated",
+            {
+              "id": "conformance",
+              "kind": "human"
+            },
+            "watch"
+          ],
+          [
+            "BlockCreated",
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockUpdated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "e683f685eed7d26b6beca9ae633edd27"
+      }
+    },
+    {
+      "op": "unattested_ingest",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "d8dd42829d330c32b4cb01284e4ae037"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "copy.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "73ccf7f4759c775c50e49a6de68c2451"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "b63ae6772c29dc7ef25c3cd3594a5ab2"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "407ae5fc3f97d7b27cc0dfe6866aea90"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "b40712a89c49c03b43f6ad3a45f4df81"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "d6f997128078ca50b5b15de7c65d581d"
+            }
+          ],
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "95fa2f97d845945eef125f3aba79256e"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "a05fafe95a8a10858b05dbcde68ff39b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "4e462ee4aa6a37bd3348971b0501e969"
+            }
+          ],
+          "other.md": [
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "935b4b8f54f625a3918939c17a2aa749"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "18c34d7e6c1d948e33de0b35eef369c4"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "d0c63bee2643b1e5165e9eb8b689140c"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "e0715cb80a053e4c2c550e601eeb08a0"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "0886bf01da537ef64fb4fba32624dbdb"
+            }
+          ],
+          "plan.md": [
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "95262c7fb3ca0ea6b12587a73ad55d0e"
+            },
+            {
+              "inactive": false,
+              "layer": "proposal",
+              "lineage_id": "8fd131d1025ddb481914549229576349"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "fingerprint",
+      "result": {
+        "events_hash": "df38af45f9445debf9a7da0524fbfade"
+      }
+    }
+  ]
+}

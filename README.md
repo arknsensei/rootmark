@@ -47,7 +47,7 @@ Release target of 0.1.0: macOS on Apple silicon (`aarch64-apple-darwin`). Linux 
 ```sh
 rootmark --version            # rootmark 0.1.0
 rootmark --spec-version       # 1.0.3
-rootmark conformance          # Levels 1–3 on the embedded fixtures: 34/34
+rootmark conformance          # Levels 1–3 on the embedded fixtures: 37/37 (spec 2.0.0)
 ```
 
 A vault written by a build from before the project's rename is opened after `rootmark migrate --rename-store <vault>`, which moves its metadata directory to `.rootmark/` and changes no byte inside it (same event log, same `events_hash`, same index).

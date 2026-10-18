@@ -21,10 +21,10 @@ use serde_json::{json, Value};
 use std::fs;
 use std::path::{Path, PathBuf};
 
-const LEVEL3: [&str; 7] = [
-    "C3-01", "C3-02", "C3-03", "C3-04", "C3-05", "C3-06", "C3-07",
+const LEVEL3: [&str; 8] = [
+    "C3-01", "C3-02", "C3-03", "C3-04", "C3-05", "C3-06", "C3-07", "C3-08",
 ];
-const LOWER_TOTAL: u64 = 27;
+const LOWER_TOTAL: u64 = 29;
 
 fn fixtures() -> PathBuf {
     let root = match std::env::var_os("ROOTMARK_FIXTURES") {

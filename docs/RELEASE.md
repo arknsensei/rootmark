@@ -9,13 +9,13 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 | R1 | Tek sürüm: bütün crate'ler ve eklenti 0.1.0 | `Cargo.toml` (`core`, `index`, `server`, `bindings/python`) ve `clients/obsidian/{package,manifest}.json` sürümleri eşit |
 | R2 | Spec sürümü CRITERION'ın güncel değeri | `server/src/tools.rs SPEC_VERSION` = `core/tests/conformance.rs` `spec_version` = `spec/SPEC.md` başlığındaki sürüm |
 | R3 | `rootmark --version` / `--spec-version` doğru | yerel ikili `rootmark 0.1.0` / spec sürümü |
-| R4 | Yayım ikilisi kendi `rootmark conformance`'ında 34/34 | `dist/release.json`: `required_targets` = [`aarch64-apple-darwin`], `required_ok`; o kaydın `version` = `rootmark 0.1.0`, `spec_version`, `conformance` 34/34, `sha256`; diğer hedefler bilgi: kayıtları varsa aynı biçimde, yoksa nedeniyle `skipped` (K-E1.1) |
+| R4 | Yayım ikilisi kendi `rootmark conformance`'ında 37/37 | `dist/release.json`: `required_targets` = [`aarch64-apple-darwin`], `required_ok`; o kaydın `version` = `rootmark 0.1.0`, `spec_version`, `conformance` 37/37, `sha256`; diğer hedefler bilgi: kayıtları varsa aynı biçimde, yoksa nedeniyle `skipped` (K-E1.1) |
 | R4a | Paket güncel | `dist/release.json`: `version` = 0.1.0, `worktree_dirty` false, kaydedilen commit ile HEAD arasında paket girdileri aynı (`git diff --quiet <commit> HEAD -- Cargo.toml Cargo.lock core index server bindings clients/obsidian spec models/MANIFEST.json scripts/release.sh scripts/linux_cross_build.sh scripts/fetch_model.sh packaging LICENSE README.md`); yalnız kayıt (ör. `docs/rounds/`) commit'leri güncelliği bozmaz |
 | R5 | `rootmark conformance` = `make conformance` | `scripts/conformance_equiv.sh` test-test eşit |
 | R6 | Arşivler ve SHA256SUMS | `dist/SHA256SUMS` her arşivi kapsar, `shasum -c` geçer |
 | R7 | Python wheel | `dist/wheel/*-0.1.0-*.whl` (dağıtım adı `rootmark_bindings`) içinde `rootmark_core` modülü (liste dosyaya alınıp aranır; SIGPIPE yok, E1-4) |
 | R8 | Obsidian paketi (mağaza başvurusu yok) | `dist/obsidian/rootmark-0.1.0.zip` içinde yalnız `main.js`, `manifest.json`, `styles.css`; `main.js` < 500 KB; `package.json`'da çalışma zamanı bağımlılığı yok |
-| R9 | Spec yayım dizini | `dist/spec-<ver>/` içinde `SPEC.md`, `CONFORMANCE.md`, `LICENSE`, `fixtures/MANIFEST.json`, `conformance.json` (level 3, 34/34, manifest ok) |
+| R9 | Spec yayım dizini | `dist/spec-<ver>/` içinde `SPEC.md`, `CONFORMANCE.md`, `LICENSE`, `fixtures/MANIFEST.json`, `conformance.json` (level 3, 37/37, manifest ok) |
 | R10 | Lisans | kökte `LICENSE` Apache-2.0 metni (`Apache License` / `Version 2.0, January 2004`), arşivlerde de |
 | R11 | Belgeler | `CHANGELOG.md`'de `## 0.1.0`, `docs/THREAT_MODEL.md`, bu dosya |
 | R12 | cargo-binstall ve Homebrew taslağı | `server/Cargo.toml [package.metadata.binstall]`; `dist/homebrew/rootmark.rb` sürüm ve sha256 dolu |
@@ -27,7 +27,7 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 ## İnsan adımları (betik yapmaz)
 1. P1-E.1 bağımsız doğrulaması (`reports/rounds/P1-E.1/VERIFICATION.md`) **"Güvenilir"** demeden hiçbiri yapılmaz (P1-E'nin hükmü "şu koşullarla güvenilir" idi; koşulu P1-E.1 kapattı).
 2. `server/Cargo.toml`'a `repository` alanını yaz (binstall `{ repo }` ve Homebrew URL'si için).
-3. `.github/workflows/release.yml`'ı elle tetikle (workflow_dispatch; başka tetik yok). `release-json` artefaktındaki `dist/release.json`'da `aarch64-apple-darwin` kaydı `ok` olmalı (`--version`, `--spec-version`, `rootmark conformance` 34/34, `sha256`); yerel `dist/release.json` ile sürüm, spec sürümü ve uyumluluk sonucu karşılaştırılır (hash'ler farklı makinelerde farklı olabilir; kaydedilir). Linux ve Windows işlerinin sonucu bilgi olarak kaydedilir (K-E1.1).
+3. `.github/workflows/release.yml`'ı elle tetikle (workflow_dispatch; başka tetik yok). `release-json` artefaktındaki `dist/release.json`'da `aarch64-apple-darwin` kaydı `ok` olmalı (`--version`, `--spec-version`, `rootmark conformance` 37/37, `sha256`); yerel `dist/release.json` ile sürüm, spec sürümü ve uyumluluk sonucu karşılaştırılır (hash'ler farklı makinelerde farklı olabilir; kaydedilir). Linux ve Windows işlerinin sonucu bilgi olarak kaydedilir (K-E1.1).
 4. `git tag -a v0.1.0 -m "rootmark 0.1.0"` ve itme; GitHub release'e arşivleri, wheel'i, eklenti zip'ini ve `SHA256SUMS`'ı ekle. Eklentinin `main.js`, `manifest.json` ve `styles.css` dosyaları release'e **ayrıca** tek tek eklenir (Obsidian BRAT bunları zip'ten değil, release varlıklarından indirir; README "Obsidian (BRAT)").
 5. `dist/homebrew/rootmark.rb`'yi tap'e koy; `cargo binstall rootmark-server` ile dene.
 6. Obsidian community store başvurusu bu yayımın kapsamında değildir (GOAL P1-E).

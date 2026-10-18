@@ -9,7 +9,7 @@
 #       writes {target, required, built: true, sha256 (of the binary),
 #       version, spec_version, conformance {level_claimed, passed, total,
 #       fixtures_manifest} | {error}, conformance_exit, ok}; ok = version
-#       `rootmark <ver>`, spec version of the tree, 34/34 at level 3.
+#       `rootmark <ver>`, spec version of the tree, 37/37 at level 3 (34/34 before spec 2.0.0).
 #   scripts/release_target.sh skipped <target> <required> <out.json> <reason>
 #       {target, required, built: false, skipped: true, reason, ok: false}
 #   scripts/release_target.sh assemble <dist> <commit> <dirty true|false>
@@ -39,7 +39,7 @@ case "${1:-}" in
       | {target: $t, required: $req, built: true, sha256: $h, version: $v, spec_version: $s,
          conformance: (if $r == null then {error: ($c | .[0:400])} else {level_claimed: $r.level_claimed, passed: $r.passed, total: $r.total, fixtures_manifest: $r.fixtures_manifest} end),
          conformance_exit: $rc,
-         ok: ($v == ("rootmark " + $ver) and $s == $spec and $r != null and $r.level_claimed == 3 and $r.passed == 34 and $r.total == 34)}' >"$out"
+         ok: ($v == ("rootmark " + $ver) and $s == $spec and $r != null and $r.level_claimed == 3 and $r.passed == 37 and $r.total == 37)}' >"$out"
     jq -r '"release_target: \(if .ok then "ok  " else "FAIL" end) \(.target) \(.version) spec \(.spec_version) conformance \(.conformance.passed // "-")/\(.conformance.total // "-")"' "$out"
     ;;
   skipped)
