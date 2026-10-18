@@ -1,0 +1,3 @@
+rootmark serve: stopping (end of the MCP stream)
+rootmark serve: compact (shutdown): hot tier empty
+rootmark serve: stopped

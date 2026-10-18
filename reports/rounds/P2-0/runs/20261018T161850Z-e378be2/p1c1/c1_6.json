@@ -1,0 +1,69 @@
+{
+  "lexical": {
+    "b": 0.75,
+    "dl": "exact token count, f64, no fieldnorm quantization",
+    "idf": "ln(1 + (N - n + 0.5) / (n + 0.5))",
+    "k1": 1.2,
+    "tokenizer": "mdk_lower_alnum",
+    "variant": "lucene-bm25"
+  },
+  "pass": true,
+  "rejected": [
+    {
+      "case": "remove lexical.variant",
+      "error": "index manifest.json: missing field `variant`"
+    },
+    {
+      "case": "remove lexical.idf",
+      "error": "index manifest.json: missing field `idf`"
+    },
+    {
+      "case": "remove lexical.k1",
+      "error": "index manifest.json: missing field `k1`"
+    },
+    {
+      "case": "remove lexical.b",
+      "error": "index manifest.json: missing field `b`"
+    },
+    {
+      "case": "remove lexical.tokenizer",
+      "error": "index manifest.json: missing field `tokenizer`"
+    },
+    {
+      "case": "remove lexical.dl",
+      "error": "index manifest.json: missing field `dl`"
+    },
+    {
+      "case": "remove lexical",
+      "error": "index manifest.json: missing field `lexical`"
+    },
+    {
+      "case": "change lexical.variant",
+      "error": "index lexical record LexicalParams { variant: \"okapi\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" } != this implementation's LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" }; rebuild it"
+    },
+    {
+      "case": "change lexical.idf",
+      "error": "index lexical record LexicalParams { variant: \"lucene-bm25\", idf: \"ln((N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" } != this implementation's LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" }; rebuild it"
+    },
+    {
+      "case": "change lexical.k1",
+      "error": "index lexical record LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.5, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" } != this implementation's LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" }; rebuild it"
+    },
+    {
+      "case": "change lexical.b",
+      "error": "index lexical record LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.7, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" } != this implementation's LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" }; rebuild it"
+    },
+    {
+      "case": "change lexical.tokenizer",
+      "error": "index lexical record LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"whitespace\", dl: \"exact token count, f64, no fieldnorm quantization\" } != this implementation's LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" }; rebuild it"
+    },
+    {
+      "case": "change lexical.dl",
+      "error": "index lexical record LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"fieldnorm, 1 byte\" } != this implementation's LexicalParams { variant: \"lucene-bm25\", idf: \"ln(1 + (N - n + 0.5) / (n + 0.5))\", k1: 1.2, b: 0.75, tokenizer: \"mdk_lower_alnum\", dl: \"exact token count, f64, no fieldnorm quantization\" }; rebuild it"
+    },
+    {
+      "case": "unknown lexical.extra",
+      "error": "index manifest.json: unknown field `extra`, expected one of `variant`, `idf`, `k1`, `b`, `tokenizer`, `dl`"
+    }
+  ]
+}

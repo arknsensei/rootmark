@@ -1,0 +1,1 @@
+error: vault/.rootmark/server.token has mode 644; it must be 600 (chmod 600, or delete it to get a new token)

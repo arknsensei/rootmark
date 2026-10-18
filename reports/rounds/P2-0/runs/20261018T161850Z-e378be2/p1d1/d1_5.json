@@ -1,0 +1,29 @@
+{
+  "calls": 100,
+  "criterion": "D1-5",
+  "elapsed_ms_lockstep": 2169.6130829999997,
+  "elapsed_ms_pipelined": 2050.168875,
+  "events_hash32": "96100fc08434e58dd57472079448edc9",
+  "pass": true,
+  "pipelined_a_vs_b": {
+    "events.jsonl": true,
+    "md_files": true,
+    "proposals.jsonl": true,
+    "traces.jsonl": true
+  },
+  "pipelined_vs_lockstep": {
+    "events.jsonl": true,
+    "md_files": true,
+    "proposals.jsonl": true,
+    "traces.jsonl": true
+  },
+  "propose": 40,
+  "propose_denied": 0,
+  "responses_a_vs_b_equal": false,
+  "responses_pipelined_vs_lockstep_equal": false,
+  "traces": 40,
+  "traces_hash32": "7f24e518c9098c6f1670bfda5b2a3cc7",
+  "write_responses": 80,
+  "write_responses_a_vs_b_equal": true,
+  "write_responses_pipelined_vs_lockstep_equal": true
+}

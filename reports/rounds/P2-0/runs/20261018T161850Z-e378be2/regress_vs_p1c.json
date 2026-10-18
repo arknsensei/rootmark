@@ -1,0 +1,74 @@
+{
+ "allowed": [
+  "p1b_checks.json:fixtures_manifest_hash",
+  "p1b1_checks.json:criteria›B1-3›spec_version",
+  "p1b1_checks.json:criteria›B1-3›pass",
+  "p1c_checks.json:C-1›spec_version",
+  "p1c_checks.json:C-11›pass",
+  "p1c_checks.json:C-11›differing_outside_exclusions",
+  "p1c_checks.json:C-7›proposal_hits_with_include_proposal",
+  "p1c_index.json:index_files_build›manifest·json",
+  "p1c_index.json:index_files_compact›manifest·json",
+  "p1c_index.json:index_files_final›manifest·json"
+ ],
+ "differing_excluded": {
+  "p1b1_checks.json:criteria›B1-3›pass": [
+   "criteria›B1-3›pass: True → False"
+  ],
+  "p1b1_checks.json:criteria›B1-3›spec_version": [
+   "criteria›B1-3›spec_version: '1.0.1' → '2.0.0'"
+  ],
+  "p1b_checks.json:fixtures_manifest_hash": [
+   "fixtures_manifest_hash: '02e2b512804ca5bd150ab8f43047df56' → '2d86ecf748fe81e1af46c7384a097174'"
+  ],
+  "p1c_checks.json:C-11›differing_outside_exclusions": [
+   "C-11›differing_outside_exclusions›#len: 0 → 2",
+   "C-11›differing_outside_exclusions›0 only in B",
+   "C-11›differing_outside_exclusions›1 only in B"
+  ],
+  "p1c_checks.json:C-11›pass": [
+   "C-11›pass: True → False"
+  ],
+  "p1c_checks.json:C-1›spec_version": [
+   "C-1›spec_version: '1.0.1' → '2.0.0'"
+  ],
+  "p1c_checks.json:C-7›proposal_hits_with_include_proposal": [
+   "C-7›proposal_hits_with_include_proposal: 297 → 4833"
+  ],
+  "p1c_index.json:index_files_build›manifest·json": [
+   "index_files_build›manifest·json: '81639f4019b7e5bbaaf99e5a002af017' → '0eea3d2abcc9937764131fcc34cad67c'"
+  ],
+  "p1c_index.json:index_files_compact›manifest·json": [
+   "index_files_compact›manifest·json: '2d9af579320cb8119daa9e067971b0c7' → 'dd2b1787952030f110cc1702cef1ff22'"
+  ],
+  "p1c_index.json:index_files_final›manifest·json": [
+   "index_files_final›manifest·json: '2d9af579320cb8119daa9e067971b0c7' → 'dd2b1787952030f110cc1702cef1ff22'"
+  ]
+ },
+ "differing_fields": {},
+ "equal": true,
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json"
+ ],
+ "n_fields": 99053,
+ "reference_run": "20261015T014417Z-9aa326b",
+ "run_a": "../reports/rounds/P1-C/runs/20261015T014417Z-9aa326b",
+ "run_b": "reports/runs/20261018T161850Z-e378be2"
+}

@@ -1,0 +1,33 @@
+# written by `rootmark serve` (no policy.toml was present)
+[promotion]
+policy = "human_only"
+
+[edit]
+policy = "append_only"
+
+[version_trigger]
+idle_ms = 30000
+min_sim_change = 0.2
+
+[journal]
+retention_hours = 168
+
+[server]
+token_rotate_days = 30
+max_propose_bytes = 1048576
+
+[index]
+compact_every_s = 1
+
+# the human behind the HTTP token; HTTP writes are refused without it
+# [identity]
+# human_id = "<your id>"
+
+# external edits no client attested (spec 2.0.0 §7.1): "unverified"
+# (the default) or "canonical" (every file edit counts as the human's)
+# [attestation]
+# unattested = "unverified"
+# window_s = 2.0
+
+[attestation]
+unattested = "canonical"

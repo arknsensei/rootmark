@@ -1,0 +1,74 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"attestation\":{\"pending\":0,\"stage\":1,\"unattested\":\"unverified\",\"window_s\":2.0},\"embedder\":\"minilm-l6-v2/e73168f9\",\"index\":{\"auto_rebuild\":true,\"expected_format\":\"mdkernel-index/3\",\"format\":\"mdkernel-index/3\",\"state\":\"ok\"},\"last_checkpoint\":{\"checkpoint_id\":\"9a1342342e600fdca482ac2c60fcfa3c\",\"docs\":{\"blends.md\":\"070758c57df97061ab8b2c31d7258693\",\"cupping.md\":\"43d2b7d07aca1313681c890bcdbbff73\",\"espresso.md\":\"d05efb1942bc6c979609181e2908541d\",\"filter.md\":\"97e904ebaaeec6e92a81b60345f8604c\",\"glossary.md\":\"8f7cb256bdb20a28c16547ca1a194ad1\",\"grinders.md\":\"cf7fe2aecef65b0524f2603ddaf5d3a1\",\"maintenance.md\":\"6e0b796c4f33b6bb8cec858970b01563\",\"origins.md\":\"90b24c87a585b4103ea34ba15b855e51\",\"roast-log.md\":\"a38f7786c420c06fd068a3942852b261\",\"roasting.md\":\"a645c2900306b779908d20294402925c\",\"safety.md\":\"4db2edec358bed35b724a585ddf9c262\",\"staff.md\":\"6bc9a267128d290e30a3e032e2471c91\"},\"event_seq\":109,\"name\":\"t0\"},\"level_claimed\":3,\"mdk_version\":\"0.1.0\",\"policy\":{\"edit\":\"append_only\",\"edit_version\":\"1\",\"journal\":{\"retention_hours\":168},\"promotion\":\"human_only\",\"promotion_version\":\"1\",\"source\":\"vault/.rootmark/policy.toml\",\"version_trigger\":{\"idle_ms\":30000,\"min_sim_change\":0.2}},\"server_policy\":{\"identity\":{\"human_id\":null},\"index\":{\"compact_every_s\":300},\"server\":{\"http_port\":null,\"max_propose_bytes\":1048576,\"token_rotate_days\":30}},\"spec_version\":\"2.0.0\",\"vault\":\"vault\"}"
+    }
+  ],
+  "structuredContent": {
+    "attestation": {
+      "pending": 0,
+      "stage": 1,
+      "unattested": "unverified",
+      "window_s": 2
+    },
+    "embedder": "minilm-l6-v2/e73168f9",
+    "index": {
+      "auto_rebuild": true,
+      "expected_format": "mdkernel-index/3",
+      "format": "mdkernel-index/3",
+      "state": "ok"
+    },
+    "last_checkpoint": {
+      "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+      "docs": {
+        "blends.md": "070758c57df97061ab8b2c31d7258693",
+        "cupping.md": "43d2b7d07aca1313681c890bcdbbff73",
+        "espresso.md": "d05efb1942bc6c979609181e2908541d",
+        "filter.md": "97e904ebaaeec6e92a81b60345f8604c",
+        "glossary.md": "8f7cb256bdb20a28c16547ca1a194ad1",
+        "grinders.md": "cf7fe2aecef65b0524f2603ddaf5d3a1",
+        "maintenance.md": "6e0b796c4f33b6bb8cec858970b01563",
+        "origins.md": "90b24c87a585b4103ea34ba15b855e51",
+        "roast-log.md": "a38f7786c420c06fd068a3942852b261",
+        "roasting.md": "a645c2900306b779908d20294402925c",
+        "safety.md": "4db2edec358bed35b724a585ddf9c262",
+        "staff.md": "6bc9a267128d290e30a3e032e2471c91"
+      },
+      "event_seq": 109,
+      "name": "t0"
+    },
+    "level_claimed": 3,
+    "mdk_version": "0.1.0",
+    "policy": {
+      "edit": "append_only",
+      "edit_version": "1",
+      "journal": {
+        "retention_hours": 168
+      },
+      "promotion": "human_only",
+      "promotion_version": "1",
+      "source": "vault/.rootmark/policy.toml",
+      "version_trigger": {
+        "idle_ms": 30000,
+        "min_sim_change": 0.2
+      }
+    },
+    "server_policy": {
+      "identity": {
+        "human_id": null
+      },
+      "index": {
+        "compact_every_s": 300
+      },
+      "server": {
+        "http_port": null,
+        "max_propose_bytes": 1048576,
+        "token_rotate_days": 30
+      }
+    },
+    "spec_version": "2.0.0",
+    "vault": "vault"
+  },
+  "isError": false
+}

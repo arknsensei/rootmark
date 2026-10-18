@@ -1,0 +1,25 @@
+release_target: ok   aarch64-apple-darwin rootmark 0.1.0 spec 2.0.0 conformance 37/37
+release_target: skipped x86_64-unknown-linux-gnu (not attempted here (ROOTMARK_RELEASE_LINUX=0); built and checked by .github/workflows/release.yml)
+release_target: skipped x86_64-pc-windows-msvc (no MSVC toolchain or Windows host here; built and checked by .github/workflows/release.yml (windows-latest))
+🐍 Found CPython 3.12 at /private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.smCia7uGac/A/repo/research/.venv/bin/python
+🔗 Found pyo3 bindings with abi3-py3.11 support
+💻 Using `MACOSX_DEPLOYMENT_TARGET=11.0` for aarch64-apple-darwin by default
+📦 Built wheel for abi3 Python ≥ 3.11 to /private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.smCia7uGac/A/repo/target/p1e1-dist/wheel/rootmark_bindings-0.1.0-cp311-abi3-macosx_11_0_arm64.whl
+rootmark conformance: level 3, 37/37 (spec 2.0.0)
+plugin-e2e-real: ok   1 human status bar
+plugin-e2e-real: ok   2 human checkpoint panel: Name 'before'
+plugin-e2e-real: ok   3 agent MCP propose
+plugin-e2e-real: ok   4 human gutter + proposal view
+plugin-e2e-real: ok   5 human search panel (default; include proposals)
+plugin-e2e-real: ok   6 human proposal view: Promote selected + reason modal
+plugin-e2e-real: ok   7 human search panel
+plugin-e2e-real: ok   8 human trace viewer + jump
+plugin-e2e-real: ok   9 human search at 'before' + checkpoint past view
+plugin-e2e-real: ok   10 agent MCP propose replace_section + heading-less append
+plugin-e2e-real: ok   11 human gutter + search panel unchanged
+plugin-e2e-real: ok   E1-9 connection screen (stale index) + rebuild
+plugin-e2e-real: 11/11; E1-9 true; E-3 true; E-4 outside contract 0 of 57 requests
+release: ok   aarch64-apple-darwin (required)
+release: skip x86_64-pc-windows-msvc (CI info): no MSVC toolchain or Windows host here; built and checked by .github/workflows/release.yml (windows-latest)
+release: skip x86_64-unknown-linux-gnu (CI info): not attempted here (ROOTMARK_RELEASE_LINUX=0); built and checked by .github/workflows/release.yml
+release: required aarch64-apple-darwin: ok; 1/3 targets ok
