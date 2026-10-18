@@ -151,6 +151,228 @@ pub fn read_attestations(path: &Path, next_seq: u64) -> Result<Vec<Attestation>>
     Ok(out)
 }
 
+fn wikilink_re() -> &'static regex::Regex {
+    static RE: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    // `[[target#heading|label]]` (and the embed `![[…]]`): the target is
+    // everything before `#` or `|`
+    RE.get_or_init(|| {
+        regex::Regex::new(r"\[\[([^\[\]|#]*)((?:#[^\[\]|]*)?(?:\|[^\[\]]*)?)\]\]")
+            .expect("valid regex")
+    })
+}
+
+fn mdlink_re() -> &'static regex::Regex {
+    static RE: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    // `[label](dest "title")` / `![alt](dest)`: the destination's path, before
+    // any `#fragment`, `<…>` kept as written
+    RE.get_or_init(|| {
+        regex::Regex::new(
+            r#"\]\(\s*(<[^<>\n#]*|[^\s()<>#]*)((?:#[^\s()>]*)?>?(?:\s+"[^"\n]*")?\s*)\)"#,
+        )
+        .expect("valid regex")
+    })
+}
+
+/// One link target of a text: its kind (`w` wikilink, `m` Markdown link)
+/// and its target text as written.
+type Target = (char, String);
+
+/// `text` with the target of every wikilink and Markdown link replaced by a
+/// marker, and the targets in order (P2-0.1 T1).
+fn link_skeleton(text: &str) -> (String, Vec<Target>) {
+    let mut targets = Vec::new();
+    let w = wikilink_re().replace_all(text, |c: &regex::Captures| {
+        targets.push(('w', c[1].to_string()));
+        format!("[[\u{0}{}]]", &c[2])
+    });
+    let mut md = Vec::new();
+    let m = mdlink_re().replace_all(&w, |c: &regex::Captures| {
+        md.push(('m', c[1].to_string()));
+        format!("](\u{0}{})", &c[2])
+    });
+    // wikilinks first, then Markdown links: both lists keep their own order
+    targets.extend(md);
+    (m.into_owned(), targets)
+}
+
+/// The file a link target names, as a `/`-separated path without `.md`:
+/// percent-decoded (Markdown links), without `<…>`, `./` and `../`
+/// segments.
+fn target_file(kind: char, t: &str) -> String {
+    let t = t.trim().trim_start_matches('<').trim_end_matches('>');
+    let t = if kind == 'm' {
+        percent_decode(t)
+    } else {
+        t.to_string()
+    };
+    let parts: Vec<&str> = t
+        .split('/')
+        .filter(|p| !p.is_empty() && *p != "." && *p != "..")
+        .collect();
+    let t = parts.join("/");
+    t.strip_suffix(".md").unwrap_or(&t).trim().to_string()
+}
+
+fn percent_decode(s: &str) -> String {
+    let hex = |c: u8| (c as char).to_digit(16).map(|d| d as u8);
+    let b = s.as_bytes();
+    let mut out = Vec::with_capacity(b.len());
+    let mut i = 0;
+    while i < b.len() {
+        if b[i] == b'%' && i + 2 < b.len() {
+            if let (Some(h), Some(l)) = (hex(b[i + 1]), hex(b[i + 2])) {
+                out.push(h * 16 + l);
+                i += 3;
+                continue;
+            }
+        }
+        out.push(b[i]);
+        i += 1;
+    }
+    String::from_utf8_lossy(&out).into_owned()
+}
+
+/// Does the link target text `t` (kind `w`/`m`) name the note at
+/// `doc_path`? Its file path must be `doc_path` without `.md`, or a
+/// trailing run of its `/`-separated components (`bee` and `sub/bee` name
+/// `sub/bee.md`).
+pub fn link_names(kind: char, t: &str, doc_path: &str) -> bool {
+    let f = target_file(kind, t);
+    let d = doc_path.strip_suffix(".md").unwrap_or(doc_path);
+    !f.is_empty() && (f == d || d.ends_with(&format!("/{f}")))
+}
+
+/// A link update (P2-0.1 T1, contract §2.6 `link_update_of`): `new` differs
+/// from `old` only in the targets of links, and every changed target names
+/// the note `renamed` (its path now) — and, when the renamed note's old path
+/// `was` is known, its old target named `was` — the text around the links,
+/// the number and kinds of links, labels and `#heading` parts are the same.
+/// `Ok(n)` with the number of changed targets; `Err` says what else
+/// differs.
+pub fn link_update_only(old: &str, new: &str, renamed: &str, was: Option<&str>) -> Result<usize> {
+    let (so, to) = link_skeleton(old);
+    let (sn, tn) = link_skeleton(new);
+    if so != sn || to.len() != tn.len() {
+        bail!("the text differs outside link targets");
+    }
+    let mut changed = 0;
+    for ((ko, a), (kn, b)) in to.iter().zip(&tn) {
+        if ko != kn {
+            bail!("a link changed its kind");
+        }
+        if a == b {
+            continue;
+        }
+        if !link_names(*kn, b, renamed) {
+            bail!("the link target {b:?} does not name {renamed}");
+        }
+        if let Some(w) = was {
+            if !link_names(*ko, a, w) {
+                bail!("the old link target {a:?} does not name {w}");
+            }
+        }
+        changed += 1;
+    }
+    Ok(changed)
+}
+
+/// One block of the state a link update is checked against.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct BaseBlock {
+    pub version_id: String,
+    pub block_type: crate::model::BlockType,
+    pub text: String,
+    /// a live (not pruned) `canonical` lineage
+    pub canonical: bool,
+}
+
+/// The state of a document a link update is checked against (P2-0.1 T1):
+/// its blocks and front matter, either the head now or the head before an
+/// unattested change was ingested (a late link update must be checked
+/// against what preceded the change it would raise, Y1 review 1).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LinkBase {
+    pub doc_path: String,
+    pub frontmatter: Option<String>,
+    pub blocks: Vec<BaseBlock>,
+}
+
+impl LinkBase {
+    /// The head of `doc` in `v` (`None` for a document the log does not know).
+    pub fn head(v: &crate::Vault, doc: &str) -> Result<Option<LinkBase>> {
+        let Some(head) = v.snapshot(doc)? else {
+            return Ok(None);
+        };
+        let st = v
+            .doc_state(doc)
+            .with_context(|| format!("{doc}: no document state"))?;
+        let blocks = v
+            .snapshot_blocks(&head)?
+            .into_iter()
+            .map(|b| BaseBlock {
+                canonical: st.layer.get(&b.lineage_id) == Some(&crate::Layer::Canonical)
+                    && !st.inactive.contains(&b.lineage_id),
+                version_id: b.version_id,
+                block_type: b.block_type,
+                text: b.text,
+            })
+            .collect();
+        Ok(Some(LinkBase {
+            doc_path: doc.to_string(),
+            frontmatter: head.frontmatter,
+            blocks,
+        }))
+    }
+}
+
+/// A link update of a document (P2-0.1 T1; spec §7.1 "Link update"): the
+/// bytes `new_text` are `base` with, at most, the targets of links changed
+/// to name the note now at `renamed` (and, when known, its old path `was`).
+/// Block for block (same count, order and kinds; the front matter
+/// likewise): a block is either the base's version, or differs from it
+/// only in link targets (`link_update_only`) and is then a live `canonical`
+/// lineage — the other blocks may hold any layer, they stay as they are.
+/// Content an agent wrote that is not in the base, or any other change,
+/// makes it an error: a rename's link update never vouches for anything
+/// but itself. `Ok` with the number of changed link targets.
+pub fn check_link_update(
+    base: &LinkBase,
+    new_text: &str,
+    renamed: &str,
+    was: Option<&str>,
+) -> Result<usize> {
+    let (drafts, fm) = crate::parse_document(new_text, &base.doc_path)?;
+    if drafts.len() != base.blocks.len() {
+        bail!(
+            "{} blocks against {} in {}",
+            drafts.len(),
+            base.blocks.len(),
+            base.doc_path
+        );
+    }
+    let mut changed = match (&base.frontmatter, &fm) {
+        (a, b) if a == b => 0,
+        (Some(a), Some(b)) => {
+            link_update_only(a, b, renamed, was).context("the front matter differs")?
+        }
+        _ => bail!("the front matter differs"),
+    };
+    for (i, (d, b)) in drafts.iter().zip(&base.blocks).enumerate() {
+        if d.version_id == b.version_id {
+            continue;
+        }
+        if d.block_type != b.block_type {
+            bail!("block {i} changed its kind");
+        }
+        changed += link_update_only(&b.text, &d.text, renamed, was)
+            .with_context(|| format!("block {i}"))?;
+        if !b.canonical {
+            bail!("block {i} is not a live canonical lineage");
+        }
+    }
+    Ok(changed)
+}
+
 /// An unattested external change waiting for a late attestation (spec
 /// §7.1): the bytes it ingested, when it was observed, and the lineages it
 /// left `unverified` — each with the version that change gave it and the
@@ -203,19 +425,31 @@ impl Window {
     /// An external change of `doc_path` observed at `now_ms` with bytes
     /// hashing to `content_hash`: the id of the newest attestation of the
     /// same `(doc_path, content_hash)` recorded at most `W` before, if any.
+    ///
+    /// An attestation matches at most one change: it is consumed when it
+    /// matches (P2-0.1 Y1 security review B1: bytes written again within
+    /// `W` — after the agent removed and restored its block — must not
+    /// match again).
     pub fn observe(&mut self, doc_path: &str, content_hash: &str, now_ms: u64) -> Option<String> {
         self.expire(now_ms);
-        self.attested
+        let i = self
+            .attested
             .iter()
-            .rev()
-            .find(|a| a.0 == doc_path && a.1 == content_hash && a.3 <= now_ms)
-            .map(|a| a.2.clone())
+            .rposition(|a| a.0 == doc_path && a.1 == content_hash && a.3 <= now_ms)?;
+        Some(self.attested.remove(i).2)
     }
 
     /// An unattested change was ingested (its `unverified` lineages): a late
     /// attestation within `W` may still raise them.
+    ///
+    /// The document's attestations recorded before it no longer match a
+    /// later observation (P2-0.1 Y1 security review B1): bytes observed
+    /// after a change nobody vouched for are not vouched for by an earlier
+    /// statement, even when they are the same bytes again.
     pub fn unattested(&mut self, u: Unattested) {
         self.expire(u.observed_ms);
+        self.attested
+            .retain(|a| !(a.0 == u.doc_path && a.3 <= u.observed_ms));
         if !u.lineages.is_empty() {
             self.unattested.push(u);
         }
@@ -243,16 +477,28 @@ impl Window {
         let matches = |u: &Unattested| {
             u.doc_path == a.doc_path && u.content_hash == a.content_hash && u.observed_ms <= now_ms
         };
-        self.attested.push((
-            a.doc_path.clone(),
-            a.content_hash.clone(),
-            a.attestation_id.clone(),
-            now_ms,
-        ));
-        let (late, keep): (Vec<Unattested>, Vec<Unattested>) = std::mem::take(&mut self.unattested)
-            .into_iter()
-            .partition(matches);
+        let (mut late, keep): (Vec<Unattested>, Vec<Unattested>) =
+            std::mem::take(&mut self.unattested)
+                .into_iter()
+                .partition(matches);
         self.unattested = keep;
+        // one match per attestation: when the same bytes were observed
+        // unattested more than once in the window, which change the
+        // statement vouches for is ambiguous, so it raises none of them
+        // (they are dropped; Y1 security review B5)
+        if late.len() > 1 {
+            late.clear();
+            return late;
+        }
+        // an attestation that matched late is consumed (Y1 security review)
+        if late.is_empty() {
+            self.attested.push((
+                a.doc_path.clone(),
+                a.content_hash.clone(),
+                a.attestation_id.clone(),
+                now_ms,
+            ));
+        }
         late
     }
 
@@ -281,6 +527,48 @@ mod tests {
         let mut b = a.clone();
         b.at_seq = 2;
         assert!(b.check(9).is_err(), "id no longer matches");
+    }
+
+    #[test]
+    fn link_update_only_targets() {
+        // Obsidian's rewrite of `b.md` → `sub/bee.md` (measured, P2-0.1/Y1)
+        let old = "See [[b]] and [[b|bee]] and [md](b.md) and ![[b#B]].";
+        let new = "See [[bee]] and [[bee|bee]] and [md](bee.md) and ![[sub/bee#B]].";
+        assert_eq!(link_update_only(old, new, "sub/bee.md", None).unwrap(), 4);
+        assert_eq!(link_update_only(old, old, "sub/bee.md", None).unwrap(), 0);
+        let ok = |o: &str, n: &str| link_update_only(o, n, "sub/bee.md", Some("b.md")).is_ok();
+        // percent-encoded and angle-bracket destinations, a title, a fragment
+        assert!(ok("[x](b.md \"t\")", "[x](sub/bee.md \"t\")"));
+        assert!(ok("[x](<b.md>)", "[x](<sub/bee.md>)"));
+        assert!(ok("[x](b.md#h)", "[x](../sub/bee.md#h)"));
+        assert!(link_update_only("[x](b.md)", "[x](my%20bee.md)", "my bee.md", None).is_ok());
+        // the old target must name the renamed note's old path, when known
+        assert!(
+            !ok("See [[c]].", "See [[bee]]."),
+            "a link to another note redirected"
+        );
+        assert!(link_update_only("See [[c]].", "See [[bee]].", "sub/bee.md", None).is_ok());
+        // anything else is not a link update
+        assert!(!ok("See [[b]].", "See [[bee]]!"), "text outside the link");
+        assert!(!ok("See [[b|x]].", "See [[bee|y]]."), "a label");
+        assert!(!ok("See [[b#A]].", "See [[bee#B]]."), "a heading part");
+        assert!(!ok("See [[b]].", "See [[bee]] [[bee]]."), "a new link");
+        assert!(
+            !ok("See [[b]].", "See [[other]]."),
+            "a target naming another note"
+        );
+        assert!(
+            !ok("See [[b]].", "See [md](bee.md)."),
+            "another kind of link"
+        );
+        assert!(
+            !ok("[[b]]", "[[bee]]\n\nAgent text."),
+            "an appended paragraph"
+        );
+        assert!(
+            !ok("See [[b]].", "See [[ee]]."),
+            "a suffix inside a component"
+        );
     }
 
     #[test]
@@ -328,6 +616,33 @@ mod tests {
         let mut w = Window::new(2_000);
         assert!(w.attest_with(&a, 10_500, false).is_empty());
         assert_eq!(w.observe("a.md", &h, 10_600), None);
+        // consumed at the first match; voided by a later unattested change
+        let mut w = Window::new(2_000);
+        assert!(w.attest(&a, 1_000).is_empty());
+        assert_eq!(w.observe("a.md", &h, 1_100), Some(a.attestation_id.clone()));
+        assert_eq!(w.observe("a.md", &h, 1_200), None, "consumed");
+        assert!(w.attest(&a, 2_000).is_empty());
+        w.unattested(Unattested {
+            doc_path: "a.md".into(),
+            content_hash: content_hash(b"agent"),
+            observed_ms: 2_100,
+            lineages: Vec::new(),
+        });
+        assert_eq!(
+            w.observe("a.md", &h, 2_200),
+            None,
+            "voided by the unattested change"
+        );
+        // the same bytes observed unattested twice: a late attestation is
+        // ambiguous and raises neither
+        let mut w = Window::new(2_000);
+        w.unattested(u.clone());
+        w.unattested(Unattested {
+            observed_ms: 10_500,
+            ..u.clone()
+        });
+        assert!(w.attest(&a, 11_000).is_empty());
+        assert_eq!(w.pending(), 0);
         // late beyond W: nothing
         let mut w = Window::new(2_000);
         w.unattested(u);

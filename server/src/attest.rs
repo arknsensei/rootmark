@@ -84,7 +84,21 @@ pub struct Attesting {
     start: Instant,
     window: Mutex<Window>,
     sessions: Mutex<HashMap<String, Session>>,
+    /// accepted rename attestations, newest last: (new path, old path)
+    /// (P2-0.1 T1: the base of a link update of a note the log does not
+    /// know yet)
+    renames: Mutex<Vec<(String, String)>>,
+    /// link-update attestations accepted (P2-0.1 T1; `status`)
+    link_updates: std::sync::atomic::AtomicU64,
+    /// unattested ingests still in their window: (doc, content_hash,
+    /// observed ms, the document's head before the ingest) — a late link
+    /// update is checked against the state before the change it would
+    /// raise (P2-0.1 Y1 review 1)
+    bases: Mutex<Vec<(String, String, u64, rootmarkcore::attest::LinkBase)>>,
 }
+
+/// Rename attestations remembered at most (the oldest is dropped).
+pub const MAX_RENAMES: usize = 256;
 
 impl Default for Attesting {
     fn default() -> Self {
@@ -98,7 +112,144 @@ impl Attesting {
             start: Instant::now(),
             window: Mutex::new(Window::new(rootmarkcore::attest::DEFAULT_WINDOW_MS)),
             sessions: Mutex::new(HashMap::new()),
+            renames: Mutex::new(Vec::new()),
+            link_updates: std::sync::atomic::AtomicU64::new(0),
+            bases: Mutex::new(Vec::new()),
         }
+    }
+
+    /// An unattested ingest of `doc` (bytes `content_hash`) observed at
+    /// `observed_ms`, and the document's head before it (`None`: a new
+    /// document).
+    pub fn unattested_base(
+        &self,
+        policy: &Policy,
+        doc: &str,
+        content_hash: &str,
+        observed_ms: u64,
+        base: Option<rootmarkcore::attest::LinkBase>,
+    ) -> Result<()> {
+        let w = policy.attestation.window_ms;
+        let mut b = self
+            .bases
+            .lock()
+            .map_err(|_| anyhow::anyhow!("base lock poisoned"))?;
+        b.retain(|x| observed_ms.saturating_sub(x.2) <= w);
+        if let Some(base) = base {
+            b.push((doc.to_string(), content_hash.to_string(), observed_ms, base));
+        } else {
+            // a new document: an empty base (every block is new, so no link
+            // update of it can raise anything)
+            b.push((
+                doc.to_string(),
+                content_hash.to_string(),
+                observed_ms,
+                rootmarkcore::attest::LinkBase {
+                    doc_path: doc.to_string(),
+                    frontmatter: None,
+                    blocks: Vec::new(),
+                },
+            ));
+        }
+        Ok(())
+    }
+
+    /// The head of `doc` before the oldest unattested ingest of the same
+    /// bytes still in its window, if any (the state a late link update is
+    /// checked against).
+    pub fn pending_base(
+        &self,
+        policy: &Policy,
+        doc: &str,
+        content_hash: &str,
+    ) -> Result<Option<rootmarkcore::attest::LinkBase>> {
+        let now = self.now_ms();
+        let w = policy.attestation.window_ms;
+        let b = self
+            .bases
+            .lock()
+            .map_err(|_| anyhow::anyhow!("base lock poisoned"))?;
+        let m: Vec<_> = b
+            .iter()
+            .filter(|x| x.0 == doc && x.1 == content_hash && now.saturating_sub(x.2) <= w)
+            .collect();
+        if m.len() > 1 {
+            // the same bytes observed unattested more than once: which
+            // change a late attestation would vouch for is ambiguous (the
+            // window raises none, Y1 security review B5)
+            bail!("{doc}: these bytes were observed unattested more than once in the window");
+        }
+        Ok(m.first().map(|x| x.3.clone()))
+    }
+
+    /// Forgets the bases of `doc`'s unattested ingests of `content_hash`
+    /// (an attestation of those bytes was recorded: matched or not, they
+    /// serve no later check).
+    pub fn drop_bases(&self, doc: &str, content_hash: &str) -> Result<()> {
+        let mut b = self
+            .bases
+            .lock()
+            .map_err(|_| anyhow::anyhow!("base lock poisoned"))?;
+        b.retain(|x| !(x.0 == doc && x.1 == content_hash));
+        Ok(())
+    }
+
+    /// The old path of the newest accepted rename to `to`, if any.
+    pub fn renamed_from_of(&self, to: &str) -> Result<Option<String>> {
+        let r = self
+            .renames
+            .lock()
+            .map_err(|_| anyhow::anyhow!("rename lock poisoned"))?;
+        Ok(r.iter()
+            .rev()
+            .find(|(t, _)| t == to)
+            .map(|(_, f)| f.clone()))
+    }
+
+    /// An accepted rename attestation `from` → `to` (P2-0.1 T1).
+    pub fn renamed(&self, from: &str, to: &str) -> Result<()> {
+        let mut r = self
+            .renames
+            .lock()
+            .map_err(|_| anyhow::anyhow!("rename lock poisoned"))?;
+        r.push((to.to_string(), from.to_string()));
+        if r.len() > MAX_RENAMES {
+            r.remove(0);
+        }
+        Ok(())
+    }
+
+    /// The document whose head a link update of `doc` is checked against:
+    /// `doc` itself when the log knows it (`known`), else the path an
+    /// accepted rename moved it from, followed back (a chain of renames
+    /// the watcher has not observed yet). An error when neither is known.
+    pub fn base_of(&self, doc: &str, known: impl Fn(&str) -> bool) -> Result<String> {
+        let r = self
+            .renames
+            .lock()
+            .map_err(|_| anyhow::anyhow!("rename lock poisoned"))?;
+        let mut d = doc.to_string();
+        for _ in 0..=MAX_RENAMES {
+            if known(&d) {
+                return Ok(d);
+            }
+            match r.iter().rev().find(|(to, _)| *to == d) {
+                Some((_, from)) => d = from.clone(),
+                None => break,
+            }
+        }
+        bail!("{doc} is not a document of the log")
+    }
+
+    /// A link-update attestation was accepted.
+    pub fn link_update(&self) {
+        self.link_updates
+            .fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    }
+
+    /// Link-update attestations accepted since the server started.
+    pub fn link_updates(&self) -> u64 {
+        self.link_updates.load(std::sync::atomic::Ordering::Relaxed)
     }
 
     /// Milliseconds since the service started (the matcher's clock).

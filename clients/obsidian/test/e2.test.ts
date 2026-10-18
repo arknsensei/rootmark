@@ -207,7 +207,7 @@ describe("the plugin writes no file (static scan of src/)", () => {
   });
   it("src/own-writes.ts: the bound copies are called only inside their wrappers, unchanged", () => {
     const text = readFileSync(new URL("../src/own-writes.ts", import.meta.url), "utf8");
-    expect([...text.matchAll(/\.(\w+)\.bind\(adapter\)/g)].map((m) => m[1])).toEqual(["write", "append", "rename"]);
+    expect([...text.matchAll(/\.(\w+)\.bind\(adapter\)/g)].map((m) => m[1])).toEqual(["write", "append", "rename", "process"]);
     // each bound copy is called once, with the wrapper's own arguments
     expect(text.match(/await write\(/g)?.length).toBe(1);
     expect(text).toContain("await write(path, data, options);");
@@ -215,5 +215,9 @@ describe("the plugin writes no file (static scan of src/)", () => {
     expect(text).toContain("await append(path, data, options);");
     expect(text.match(/await rename\(/g)?.length).toBe(1);
     expect(text).toContain("await rename(from, to);");
+    expect(text.match(/await proc\(/g)?.length).toBe(1);
+    // `fn`'s result reaches the adapter unchanged; only the text Obsidian
+    // read is noted (P2-0.1 Y1 security review B2)
+    expect(text).toContain("await proc(path, (data: string) => ((read.data = data), fn(data)), options);");
   });
 });

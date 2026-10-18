@@ -356,6 +356,11 @@ struct AttestArgs {
     /// a rename by the client: accepted only when the file at `doc_path`
     /// holds exactly the canonical head of this document (contract §2.6)
     renamed_from: Option<String>,
+    /// a link update Obsidian wrote while renaming the note now at this
+    /// path (P2-0.1 T1): accepted only when the bytes differ from the
+    /// document's head in link targets naming that note, in canonical
+    /// blocks (contract §2.6)
+    link_update_of: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -657,6 +662,15 @@ impl Kernel {
             .iter()
             .map(|b| (b.lineage_id.clone(), b.layer))
             .collect();
+        if ingest == Ingest::Unverified {
+            self.attesting.unattested_base(
+                policy,
+                doc,
+                &hash,
+                observed_ms,
+                rootmarkcore::attest::LinkBase::head(v, doc)?,
+            )?;
+        }
         let plan = match &ingest {
             Ingest::Canonical | Ingest::Attested(_) => probe,
             Ingest::Unverified => v.plan_ingest(
@@ -743,6 +757,82 @@ impl Kernel {
         Ok(())
     }
 
+    /// A link-update attestation (P2-0.1 T1, contract §2.6): the file at
+    /// `doc` holds bytes hashing to `content_hash` that are a link update
+    /// (`rootmarkcore::attest::check_link_update`) for the note now at
+    /// `renamed` of: the document's head before an unattested ingest of
+    /// these very bytes, when the watcher already ingested them (a late
+    /// attestation must not raise what preceded it, Y1 review 1); else its
+    /// head now — or, for a document the log does not know yet because it
+    /// was just renamed (a note linking to itself), the head of the path it
+    /// was renamed from. Changed link targets must name `renamed`, and its
+    /// old path when an accepted rename attestation gave it. Anything else
+    /// is `denied`: Obsidian's rewrite of a note during a rename never
+    /// vouches for bytes an agent wrote there.
+    fn check_link_update(
+        &self,
+        v: &Vault,
+        policy: &Policy,
+        doc: &str,
+        content_hash: &str,
+        renamed: &str,
+    ) -> Result<()> {
+        crate::propose::check_doc_path(renamed)?;
+        rootmarkcore::attest::check_doc_path(renamed).code(Code::InvalidArguments)?;
+        if !crate::paths::doc_file(&self.vault, renamed)?.is_file() {
+            bail_code!(
+                Code::Denied,
+                "attest: link_update_of {renamed} is not a note of the vault"
+            );
+        }
+        let path = crate::paths::doc_file(&self.vault, doc)?;
+        let bytes = std::fs::read(&path)
+            .with_context(|| format!("attest: read {}", path.display()))
+            .code(Code::Denied)?;
+        if rootmarkcore::attest::content_hash(&bytes) != content_hash {
+            bail_code!(
+                Code::Denied,
+                "attest: {doc} on disk does not hold the attested bytes"
+            );
+        }
+        let text = std::str::from_utf8(&bytes)
+            .with_context(|| format!("attest: {doc} is not UTF-8"))
+            .code(Code::Denied)?;
+        let base = match self
+            .attesting
+            .pending_base(policy, doc, content_hash)
+            .code(Code::Denied)?
+        {
+            Some(b) => b,
+            None => {
+                let d = self
+                    .attesting
+                    .base_of(doc, |d| v.snapshot(d).ok().flatten().is_some())
+                    .code(Code::Denied)?;
+                rootmarkcore::attest::LinkBase::head(v, &d)?
+                    .with_context(|| format!("attest: {d} is not a document of the log"))
+                    .code(Code::Denied)?
+            }
+        };
+        let was = self.attesting.renamed_from_of(renamed)?;
+        let changed = rootmarkcore::attest::check_link_update(&base, text, renamed, was.as_deref())
+            .map_err(|e| {
+                anyhow::anyhow!(
+                    "attest: {doc} is not a link update of {} for {renamed}: {e:#}",
+                    base.doc_path
+                )
+            })
+            .code(Code::Denied)?;
+        if changed == 0 {
+            // a link update changes a link (Y1 security review B2)
+            bail_code!(
+                Code::Denied,
+                "attest: {doc} changes no link target naming {renamed}"
+            );
+        }
+        Ok(())
+    }
+
     /// Opens the vault's attestation session (stage 1; CLIENT_CONTRACT §2.6).
     fn attest_session(&self) -> Result<Value> {
         let (sid, key, ttl) = self.attesting.open_session()?;
@@ -777,14 +867,26 @@ impl Kernel {
             .code(Code::Denied)?;
         let (policy, _) = self.policy()?;
         let mut v = open_vault(&self.vault)?;
+        if x.renamed_from.is_some() && x.link_update_of.is_some() {
+            bail_code!(
+                Code::InvalidArguments,
+                "attest: renamed_from and link_update_of exclude each other"
+            );
+        }
         if let Some(from) = &x.renamed_from {
             self.check_rename(&v, from, &x.doc_path, &x.content_hash)?;
+            self.attesting.renamed(from, &x.doc_path)?;
+        }
+        if let Some(renamed) = &x.link_update_of {
+            self.check_link_update(&v, &policy, &x.doc_path, &x.content_hash, renamed)?;
+            self.attesting.link_update();
         }
         let (a, recorded) = v.record_attestation(&x.doc_path, &x.content_hash, x.saved_at_seq)?;
         let mut raised: Vec<String> = Vec::new();
         let late = self
             .attesting
             .attested(&policy, &a, x.late != Some(false))?;
+        self.attesting.drop_bases(&a.doc_path, &a.content_hash)?;
         for u in late {
             for ev in v.raise_late(&u.doc_path, &u.lineages, &a.attestation_id)? {
                 raised.extend(ev.lineage_ids);
@@ -1422,6 +1524,8 @@ impl Kernel {
                 "window_s": policy.attestation.window_s(),
                 "stage": 1,
                 "pending": self.attesting.pending()?,
+                // P2-0.1 T1: link updates attested since the server started
+                "link_updates": self.attesting.link_updates(),
             },
         }))
     }
