@@ -326,6 +326,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/release_local.sh` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F3: uyumluluk toplamı 38 |
 | `scripts/release_target.sh` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F3: uyumluluk toplamı 38 |
 | `scripts/release_check.sh` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F3: uyumluluk toplamı 38 |
+| `scripts/verify.sh` | `P2-0.1/Y4:` | yeniden dondurma P2-0.1/F4: FAIL özeti turun sınıflandırıcısı (`eval.historical_p2_0_1`) |
 <!-- /frozen-table -->
 
 ## Notlar

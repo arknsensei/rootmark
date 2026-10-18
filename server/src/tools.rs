@@ -1029,12 +1029,16 @@ impl Kernel {
         // file holds the attested bytes (their own observation is coming:
         // Y2 review 1 a), nor when the exact late match was ambiguous
         let mut partial = None;
+        // the file now (P2-0.1 T4: `matched`; T2: no late partial match while
+        // it holds the attested bytes)
+        let disk = crate::paths::doc_file(&self.vault, &x.doc_path)
+            .ok()
+            .and_then(|p| std::fs::read(p).ok());
+        let on_disk = disk
+            .as_deref()
+            .is_some_and(|b| rootmarkcore::attest::content_hash(b) == x.content_hash);
         if late.is_empty() && !ambiguous && late_on {
             if let Some(c) = &x.content {
-                let on_disk = crate::paths::doc_file(&self.vault, &x.doc_path)
-                    .ok()
-                    .and_then(|p| std::fs::read(p).ok())
-                    .is_some_and(|b| rootmarkcore::attest::content_hash(&b) == x.content_hash);
                 if !on_disk {
                     let av = rootmarkcore::attest::block_versions(c, &x.doc_path)?;
                     if let Some(rs) =
@@ -1047,6 +1051,28 @@ impl Kernel {
                     }
                 }
             }
+        }
+        // T4 (P2-0 verification F5): bytes the file never held are recorded
+        // all the same (an attestation may precede its write) but marked:
+        // neither the file nor (with content) its blocks hold them, and no
+        // pending change of these bytes matched
+        let pending_same = self
+            .attesting
+            .has_pending(&policy, &x.doc_path, &x.content_hash)?;
+        let disk_covers = match (&x.content, disk.as_deref()) {
+            (Some(c), Some(b)) => match std::str::from_utf8(b) {
+                Ok(t) => rootmarkcore::attest::covers(
+                    &rootmarkcore::attest::block_versions(t, &x.doc_path)?,
+                    &rootmarkcore::attest::block_versions(c, &x.doc_path)?,
+                ),
+                Err(_) => false,
+            },
+            _ => false,
+        };
+        if !(on_disk || disk_covers || !late.is_empty() || ambiguous || pending_same)
+            && partial.is_none()
+        {
+            a.matched = Some(false);
         }
         let (a, recorded) = v.record_attestation_line(a)?;
         self.attesting.drop_bases(&a.doc_path, &a.content_hash)?;
@@ -1691,6 +1717,12 @@ impl Kernel {
                 "pending": self.attesting.pending()?,
                 // P2-0.1 T1: link updates attested since the server started
                 "link_updates": self.attesting.link_updates(),
+                // P2-0.1 T4: attestations of the log marked `matched: false`
+                "unmatched": v
+                    .attestations()?
+                    .iter()
+                    .filter(|a| a.matched == Some(false))
+                    .count(),
             },
         }))
     }

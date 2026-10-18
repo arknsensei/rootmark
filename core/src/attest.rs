@@ -718,6 +718,16 @@ mod tests {
         assert!(Attestation::new(".rootmark/a.md", &content_hash(b"x"), 0, None).is_err());
         assert!(Attestation::new("a.txt", &content_hash(b"x"), 0, None).is_err());
         assert!(a.check(2).is_err(), "at_seq beyond the log");
+        // P2-0.1: `partial` only as true, `matched` only as false
+        let mut p = a.clone();
+        p.partial = Some(false);
+        assert!(p.check(3).is_err());
+        p.partial = Some(true);
+        p.check(3).unwrap();
+        p.matched = Some(true);
+        assert!(p.check(3).is_err());
+        p.matched = Some(false);
+        p.check(3).unwrap();
         let mut b = a.clone();
         b.at_seq = 2;
         assert!(b.check(9).is_err(), "id no longer matches");
