@@ -211,6 +211,9 @@ if printf '%s\n' "$http_only" | grep -qx attest_session && printf '%s\n' "$http_
     && echo "${r#* }" | jq -e '(.ttl_s | type == "number") and (.stage | type == "number")' >/dev/null && ok=true
   add_http_only attest_session "$ok" "status ${r%% *}"
   h=00000000000000000000000000000000
+  # a server without a session (an older build) gives no key: the MAC is
+  # then made with a zero key, so `attest` is still asked and recorded
+  [[ "$key" =~ ^[0-9a-f]{64}$ ]] || key="$(printf '0%.0s' $(seq 1 64))"
   mac="$(printf 'rootmark-attest/1\na.md\n%s\n' "$h" | openssl dgst -sha256 -mac HMAC -macopt "hexkey:$key" -r | cut -d' ' -f1)"
   r="$(req POST /v1/attest "{\"doc_path\":\"a.md\",\"content_hash\":\"$h\",\"session_id\":\"$sid\",\"mac\":\"$mac\"}")"
   ok=false

@@ -5,7 +5,7 @@ hypothesis table H-P2-0a..h (H-P2-0g = `pair_compare.json`,
 `eval.compare_p2_0 pair`, A ↔ B: the D-A and D-C logs byte for byte), the
 chosen window and its tuning rows, the deliberate cases, the regress
 against the P1-E.1 official RUN, the FAILs that the frozen recorders of
-earlier rounds record (`p1e1/historical.json`, `eval.historical`), and the
+earlier rounds record (`p2_0/historical.json`, `eval.historical_p2_0`), and the
 decision rule of docs/rounds/P2-0/GOAL.md:
 
 - 0a ∧ 0a′ ∧ 0b ∧ 0c ∧ 0d ∧ 0f ∧ 0g ∧ 0h → the hypothesis holds: spec §7
@@ -33,7 +33,7 @@ import argparse
 import json
 from pathlib import Path
 
-from eval import historical
+from eval import historical_p2_0
 from eval.datasets.common import ROOT, die
 from eval.report_p1b import commit_of
 
@@ -259,7 +259,7 @@ def main(argv: list[str] | None = None) -> None:
     d = a.run_dir
     man = _load(d, "manifest.json")
     c = _load(d, "p2_0_checks.json")
-    hist = _load(d, "p1e1/historical.json")
+    hist = _load(d, "p2_0/historical.json")
     r = rows(d)
     assert tuple(x["id"] for x in r) == IDS
     rule, failed = decide(r, c, hist)
@@ -289,9 +289,9 @@ def main(argv: list[str] | None = None) -> None:
         "",
         "## Önceki turların kaydedicileri",
         "",
-        f"`p1e1/historical.json` (referans: `{hist['reference_run']}`): {hist['historical']} tarihsel FAIL sayılmadı; sayılan FAIL {hist['counted_fails']}.",
+        f"`p2_0/historical.json` (`eval.historical_p2_0`, referans: `{hist['reference_run']}`): {hist['historical']} tarihsel FAIL sayılmadı; sayılan FAIL {hist['counted_fails']}.",
         "",
-        *[f"- {historical.label(row)}" for row in hist["fails"]],
+        *[f"- {historical_p2_0.label(row)}" for row in hist["fails"]],
         "",
         "## Karar kuralı",
         "",
