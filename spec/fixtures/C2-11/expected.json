@@ -251,6 +251,47 @@
       }
     },
     {
+      "op": "label",
+      "result": {
+        "lineage_id": "8fd131d1025ddb481914549229576349"
+      }
+    },
+    {
+      "op": "promote",
+      "result": {
+        "doc_path": "plan.md",
+        "kind": "Promoted",
+        "lineage_ids": [
+          "8fd131d1025ddb481914549229576349"
+        ],
+        "meta": {
+          "actor": {
+            "id": "ada",
+            "kind": "human"
+          },
+          "from": "proposal",
+          "policy": "human_only",
+          "policy_version": "1",
+          "reason": "approved",
+          "to": "canonical"
+        },
+        "new_version_ids": [
+          "d3c1d2f560310d7d6d964df21b4a9da0"
+        ],
+        "old_version_ids": [
+          "d3c1d2f560310d7d6d964df21b4a9da0"
+        ],
+        "seq": 12,
+        "snapshot_id": null
+      }
+    },
+    {
+      "op": "meta_tamper",
+      "result": {
+        "open_err": "by an unattested_fs actor"
+      }
+    },
+    {
       "op": "ingest",
       "result": {
         "events": [
@@ -439,7 +480,7 @@
             },
             {
               "inactive": false,
-              "layer": "proposal",
+              "layer": "canonical",
               "lineage_id": "8fd131d1025ddb481914549229576349"
             }
           ]
@@ -450,7 +491,7 @@
     {
       "op": "fingerprint",
       "result": {
-        "events_hash": "df38af45f9445debf9a7da0524fbfade"
+        "events_hash": "8657a5ae83c0c2bed2c6cf51a279589f"
       }
     }
   ]

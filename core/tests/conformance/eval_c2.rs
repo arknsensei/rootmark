@@ -552,10 +552,15 @@ impl Run<'_> {
                 let bytes = fs::read(self.dir.join(s(op, "file")?))?;
                 let at = op.get("at_ms").and_then(Value::as_u64).context("at_ms")?;
                 let late = op.get("late").and_then(Value::as_bool).unwrap_or(true);
-                let (a, recorded) = self.v()?.record_attestation(&doc, &content_hash(&bytes), None)?;
+                let (a, recorded) =
+                    self.v()?
+                        .record_attestation(&doc, &content_hash(&bytes), None)?;
                 let mut raised = Vec::new();
                 for u in self.window.attest_with(&a, at, late) {
-                    for e in self.v()?.raise_late(&u.doc_path, &u.lineages, &a.attestation_id)? {
+                    for e in self
+                        .v()?
+                        .raise_late(&u.doc_path, &u.lineages, &a.attestation_id)?
+                    {
                         raised.push(json!([e.lineage_ids[0], e.meta["to"]]));
                     }
                 }
@@ -607,7 +612,10 @@ impl Run<'_> {
                     "remove" => lines.clear(),
                     _ => *lines.last_mut().expect("a line") = serde_json::to_string(&a)?,
                 }
-                fs::write(&p, lines.iter().map(|l| format!("{l}\n")).collect::<String>())?;
+                fs::write(
+                    &p,
+                    lines.iter().map(|l| format!("{l}\n")).collect::<String>(),
+                )?;
                 let res = Vault::open_with(&self.root, self.params);
                 fs::write(&p, &log)?;
                 self.open_err(res.err(), op)?
@@ -620,7 +628,11 @@ impl Run<'_> {
     /// `unattested_fs:fs`, source `unattested_fs`; with the raises a late
     /// attestation may make (the layer an attested ingest would give each
     /// lineage, at the version this ingest gives it).
-    fn unattested(&mut self, doc: &str, text: &str) -> Result<(rootmarkcore::IngestResult, Vec<Raise>)> {
+    fn unattested(
+        &mut self,
+        doc: &str,
+        text: &str,
+    ) -> Result<(rootmarkcore::IngestResult, Vec<Raise>)> {
         let m = self.m;
         let v = self.v()?;
         let probe = v.plan_ingest(

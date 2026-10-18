@@ -1,6 +1,6 @@
 {
   "id": "C2-12",
-  "title": "Attestation matching (spec 2.0.0 §7.1, §8): with explicit times and W = 2000 ms, an attestation within W before the observation → canonical; within W after → unverified, then LayerChanged cause late_attestation to the layer an attested ingest gives (canonical; proposal for a proposal the change touched); beyond W, or of other bytes → unverified stays; a bulk attestation (late = false) raises nothing; attestation_id formula and the log as written; invalid attestation lines, and a late LayerChanged without its attestation, are rejected when the vault is opened",
+  "title": "Attestation matching (spec 2.0.0 \u00a77.1, \u00a78): with explicit times and W = 2000 ms (edges: exactly W before and after counts, W + 1 ms does not), an attestation within W before the observation \u2192 canonical; within W after \u2192 unverified, then LayerChanged cause late_attestation to the layer an attested ingest gives (canonical; proposal for a proposal the change touched); beyond W, or of other bytes \u2192 unverified stays; a bulk attestation (late = false) raises nothing; attestation_id formula and the log as written; invalid attestation lines, and a late LayerChanged without its attestation, are rejected when the vault is opened",
   "kind": "governance",
   "matcher": {
     "version": "v3",
@@ -9,37 +9,208 @@
   },
   "window_ms": 2000,
   "ops": [
-    {"op": "ingest", "doc": "log.md", "file": "l0.md", "author": "human", "source": "editor"},
-    {"op": "attest", "doc": "log.md", "file": "l1.md", "at_ms": 1000},
-    {"op": "external", "doc": "log.md", "file": "l1.md", "at_ms": 1500},
-    {"op": "layers"},
-    {"op": "external", "doc": "log.md", "file": "l2.md", "at_ms": 10000},
-    {"op": "layers"},
-    {"op": "attest", "doc": "log.md", "file": "l2.md", "at_ms": 11500},
-    {"op": "layers"},
-    {"op": "external", "doc": "log.md", "file": "l3.md", "at_ms": 20000},
-    {"op": "attest", "doc": "log.md", "file": "l3.md", "at_ms": 22001},
-    {"op": "layers"},
-    {"op": "external", "doc": "other.md", "file": "x0.md", "at_ms": 30000},
-    {"op": "attest", "doc": "other.md", "file": "l0.md", "at_ms": 30100},
-    {"op": "attest", "doc": "log.md", "file": "x0.md", "at_ms": 30200},
-    {"op": "attest", "doc": "other.md", "file": "x0.md", "at_ms": 30300, "late": false},
-    {"op": "layers"},
-    {"op": "ingest", "doc": "plan.md", "file": "p0.md", "author": "agent", "source": "conformance-agent/1.0"},
-    {"op": "external", "doc": "plan.md", "file": "p1.md", "at_ms": 40000},
-    {"op": "layers"},
-    {"op": "attest", "doc": "plan.md", "file": "p1.md", "at_ms": 41000},
-    {"op": "layers"},
-    {"op": "events"},
-    {"op": "attestations"},
-    {"op": "attestation_tamper", "change": "id", "expect_open_err": "id does not match"},
-    {"op": "attestation_tamper", "change": "content_hash", "expect_open_err": "32 lowercase hexadecimal"},
-    {"op": "attestation_tamper", "change": "doc_path", "expect_open_err": "not a vault-relative Markdown path"},
-    {"op": "attestation_tamper", "change": "at_seq", "expect_open_err": "beyond the log"},
-    {"op": "attestation_tamper", "change": "duplicate", "expect_open_err": "recorded twice"},
-    {"op": "attestation_tamper", "change": "remove", "expect_open_err": "not in attestations.jsonl"},
-    {"op": "meta_tamper", "kind": "LayerChanged", "key": "cause", "value": "ingest", "expect_open_err": "must be a late attestation"},
-    {"op": "layers"},
-    {"op": "fingerprint"}
+    {
+      "op": "ingest",
+      "doc": "log.md",
+      "file": "l0.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "attest",
+      "doc": "log.md",
+      "file": "l1.md",
+      "at_ms": 1000
+    },
+    {
+      "op": "external",
+      "doc": "log.md",
+      "file": "l1.md",
+      "at_ms": 1500
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "external",
+      "doc": "log.md",
+      "file": "l2.md",
+      "at_ms": 10000
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "attest",
+      "doc": "log.md",
+      "file": "l2.md",
+      "at_ms": 11500
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "external",
+      "doc": "log.md",
+      "file": "l3.md",
+      "at_ms": 20000
+    },
+    {
+      "op": "attest",
+      "doc": "log.md",
+      "file": "l3.md",
+      "at_ms": 22001
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "external",
+      "doc": "other.md",
+      "file": "x0.md",
+      "at_ms": 30000
+    },
+    {
+      "op": "attest",
+      "doc": "other.md",
+      "file": "l0.md",
+      "at_ms": 30100
+    },
+    {
+      "op": "attest",
+      "doc": "log.md",
+      "file": "x0.md",
+      "at_ms": 30200
+    },
+    {
+      "op": "attest",
+      "doc": "other.md",
+      "file": "x0.md",
+      "at_ms": 30300,
+      "late": false
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "ingest",
+      "doc": "edge.md",
+      "file": "l0.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "attest",
+      "doc": "edge.md",
+      "file": "l1.md",
+      "at_ms": 60000
+    },
+    {
+      "op": "external",
+      "doc": "edge.md",
+      "file": "l1.md",
+      "at_ms": 62000
+    },
+    {
+      "op": "attest",
+      "doc": "edge.md",
+      "file": "l2.md",
+      "at_ms": 62000
+    },
+    {
+      "op": "external",
+      "doc": "edge.md",
+      "file": "l2.md",
+      "at_ms": 64001
+    },
+    {
+      "op": "external",
+      "doc": "edge.md",
+      "file": "l3.md",
+      "at_ms": 70000
+    },
+    {
+      "op": "attest",
+      "doc": "edge.md",
+      "file": "l3.md",
+      "at_ms": 72000
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "ingest",
+      "doc": "plan.md",
+      "file": "p0.md",
+      "author": "agent",
+      "source": "conformance-agent/1.0"
+    },
+    {
+      "op": "external",
+      "doc": "plan.md",
+      "file": "p1.md",
+      "at_ms": 40000
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "attest",
+      "doc": "plan.md",
+      "file": "p1.md",
+      "at_ms": 41000
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "events"
+    },
+    {
+      "op": "attestations"
+    },
+    {
+      "op": "attestation_tamper",
+      "change": "id",
+      "expect_open_err": "id does not match"
+    },
+    {
+      "op": "attestation_tamper",
+      "change": "content_hash",
+      "expect_open_err": "32 lowercase hexadecimal"
+    },
+    {
+      "op": "attestation_tamper",
+      "change": "doc_path",
+      "expect_open_err": "not a vault-relative Markdown path"
+    },
+    {
+      "op": "attestation_tamper",
+      "change": "at_seq",
+      "expect_open_err": "beyond the log"
+    },
+    {
+      "op": "attestation_tamper",
+      "change": "duplicate",
+      "expect_open_err": "recorded twice"
+    },
+    {
+      "op": "attestation_tamper",
+      "change": "remove",
+      "expect_open_err": "not in attestations.jsonl"
+    },
+    {
+      "op": "meta_tamper",
+      "kind": "LayerChanged",
+      "key": "cause",
+      "value": "ingest",
+      "expect_open_err": "must be a late attestation"
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "fingerprint"
+    }
   ]
 }
