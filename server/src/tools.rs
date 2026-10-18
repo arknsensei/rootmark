@@ -353,6 +353,9 @@ struct AttestArgs {
     /// `false`: record the attestation for later observations only, never
     /// raise an earlier unattested change (`rootmark attest --all`)
     late: Option<bool>,
+    /// a rename by the client: accepted only when the file at `doc_path`
+    /// holds exactly the canonical head of this document (contract §2.6)
+    renamed_from: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -701,6 +704,45 @@ impl Kernel {
         ))
     }
 
+    /// A rename attestation (contract §2.6): the file now at `to` must hold
+    /// bytes hashing to `content_hash` whose blocks are, one for one, the
+    /// head snapshot of `from`, every one of them live and `canonical` —
+    /// a rename moves canonical content and nothing else (an agent's bytes
+    /// that reached `from` unobserved, or a proposal, make it `denied`).
+    fn check_rename(&self, v: &Vault, from: &str, to: &str, content_hash: &str) -> Result<()> {
+        crate::propose::check_doc_path(from)?;
+        let path = crate::paths::doc_file(&self.vault, to)?;
+        let bytes = std::fs::read(&path).with_context(|| format!("read {}", path.display()))?;
+        if rootmarkcore::attest::content_hash(&bytes) != content_hash {
+            bail_code!(
+                Code::Denied,
+                "attest: {to} on disk does not hold the attested bytes"
+            );
+        }
+        let text = std::str::from_utf8(&bytes).with_context(|| format!("{to} is not UTF-8"))?;
+        let (drafts, _) = rootmarkcore::parse_document(text, to)?;
+        let Some(head) = v.snapshot(from)? else {
+            bail_code!(Code::Denied, "attest: {from} is not a document of the log");
+        };
+        let blocks = v.snapshot_blocks(&head)?;
+        let st = v.doc_state(from).context("document state")?;
+        let same = drafts.len() == blocks.len()
+            && drafts
+                .iter()
+                .zip(&blocks)
+                .all(|(d, b)| d.version_id == b.version_id);
+        let canonical = blocks.iter().all(|b| {
+            b.layer == rootmarkcore::Layer::Canonical && !st.inactive.contains(&b.lineage_id)
+        });
+        if !same || !canonical {
+            bail_code!(
+                Code::Denied,
+                "attest: {to} is not a rename of the canonical content of {from}"
+            );
+        }
+        Ok(())
+    }
+
     /// Opens the vault's attestation session (stage 1; CLIENT_CONTRACT §2.6).
     fn attest_session(&self) -> Result<Value> {
         let (sid, key, ttl) = self.attesting.open_session()?;
@@ -735,6 +777,9 @@ impl Kernel {
             .code(Code::Denied)?;
         let (policy, _) = self.policy()?;
         let mut v = open_vault(&self.vault)?;
+        if let Some(from) = &x.renamed_from {
+            self.check_rename(&v, from, &x.doc_path, &x.content_hash)?;
+        }
         let (a, recorded) = v.record_attestation(&x.doc_path, &x.content_hash, x.saved_at_seq)?;
         let mut raised: Vec<String> = Vec::new();
         let late = self

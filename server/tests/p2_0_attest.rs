@@ -754,3 +754,46 @@ fn an_unattested_then_attested_paragraph_stays_unverified_until_promoted() {
     assert_eq!(r["decision"], "promoted");
     assert!(layers(&k, "notes.md").iter().all(|l| l == "canonical"));
 }
+
+/// A rename attestation (`renamed_from`, contract §2.6): accepted only when
+/// the renamed file holds exactly the canonical head of the old document;
+/// the new path is then human content. Changed bytes, or a proposal in the
+/// old document, are `denied`.
+#[test]
+fn a_rename_attestation_needs_the_canonical_head() {
+    let v = vault("rename-from", "");
+    let k = Kernel::open(&v).unwrap();
+    let s = session(&k);
+    let call = |doc: &str, bytes: &[u8], from: &str| {
+        let h = rootmarkcore::attest::content_hash(bytes);
+        k.call(
+            "attest",
+            &json!({"doc_path": doc, "content_hash": h, "session_id": s.id,
+                    "mac": mac(&s.key, &mac_message(doc, &h, None)), "renamed_from": from}),
+            human(),
+        )
+    };
+    // a canonical document renamed as it is
+    std::fs::rename(v.join("notes.md"), v.join("kept.md")).unwrap();
+    call("kept.md", NOTES.as_bytes(), "notes.md").unwrap();
+    k.watch_doc("kept.md", "rootmark-serve-watch").unwrap();
+    assert!(layers(&k, "kept.md").iter().all(|l| l == "canonical"));
+    // renamed with other bytes (an agent's edit not yet observed): denied
+    let other = format!("{NOTES}\nAn agent line slipped in before the rename.\n");
+    std::fs::write(v.join("kept.md"), &other).unwrap();
+    std::fs::rename(v.join("kept.md"), v.join("moved.md")).unwrap();
+    let e = call("moved.md", other.as_bytes(), "kept.md").unwrap_err();
+    assert_eq!(code_of(&e), Code::Denied);
+    // a document holding a proposal: denied
+    k.call(
+        "propose",
+        &json!({"doc_path": "plan.md", "mode": "create", "reason": "r",
+                "content": "# Plan\n\nAn agent's plan."}),
+        Caller::mcp(Some("agent/1")),
+    )
+    .unwrap();
+    let plan = std::fs::read(v.join("plan.md")).unwrap();
+    std::fs::rename(v.join("plan.md"), v.join("plan2.md")).unwrap();
+    let e = call("plan2.md", &plan, "plan.md").unwrap_err();
+    assert_eq!(code_of(&e), Code::Denied);
+}
