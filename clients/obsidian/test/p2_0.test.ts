@@ -82,8 +82,6 @@ describe("own writes (src/own-writes.ts)", () => {
 
   it("a rename is reported only when the caller allows it (Z3 review, 11)", async () => {
     const a = new FakeAdapter();
-    a.files.set("p.md", "# P\n\nAn agent's proposal.\n");
-    a.files.set("h.md", "# H\n\nHuman text.\n");
     const seen: string[] = [];
     const asked: string[] = [];
     observeOwnWrites(
@@ -94,14 +92,36 @@ describe("own writes (src/own-writes.ts)", () => {
         return Promise.resolve(from === "h.md");
       },
     );
+    // both saved by this Obsidian; only h.md is canonical in the log
+    await a.write("p.md", "# P\n\nAn agent's proposal, edited here.\n");
+    await a.write("h.md", "# H\n\nHuman text.\n");
     await a.rename("p.md", "q.md");
     await a.rename("h.md", "g.md");
     expect(asked).toEqual(["p.md", "h.md"]);
-    expect(seen).toEqual(["g.md"]);
+    expect(seen).toEqual(["p.md", "h.md", "g.md"]);
     // a failing check is a refusal
-    observeOwnWrites(a, (p) => seen.push(p), () => Promise.reject(new Error("offline")));
-    await a.rename("g.md", "f.md");
-    expect(seen).toEqual(["g.md"]);
+    const b = new FakeAdapter();
+    const seenB: string[] = [];
+    observeOwnWrites(b, (p) => seenB.push(p), () => Promise.reject(new Error("offline")));
+    await b.write("g.md", "# G\n");
+    await b.rename("g.md", "f.md");
+    expect(seenB).toEqual(["g.md"]);
+  });
+
+  it("an append or a rename of bytes this Obsidian did not report is not reported (security review)", async () => {
+    const a = new FakeAdapter();
+    const seen: string[] = [];
+    observeOwnWrites(a, (p) => seen.push(p), () => Promise.resolve(true));
+    // another process wrote these files; this Obsidian never saved them
+    a.files.set("agent.md", "# A\n\nAn agent's unseen text.\n");
+    await a.append("agent.md", "\nAn appended line.\n");
+    await a.rename("agent.md", "renamed.md");
+    expect(seen).toEqual([]);
+    // saved here, then changed on disk by someone else: an append is not ours
+    await a.write("n.md", "# N\n");
+    a.files.set("n.md", "# N\n\nForeign bytes.\n");
+    await a.append("n.md", "\nMore.\n");
+    expect(seen).toEqual(["n.md"]);
   });
 
   it("restores the adapter's own methods (and removes the wrappers of inherited ones)", async () => {
