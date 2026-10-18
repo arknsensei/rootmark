@@ -1,0 +1,2 @@
+{"actor":{"id":"scene-agent/1.0","kind":"agent"},"consumer":"scene-agent/1.0","doc_path":"agent/plan.md","events":3,"heading":null,"mode":"create","reason":"rootmark propose (CLI)","snapshot_id":"a306c4adf1312248970437d740453a63"}
+{"actor":{"id":"scene-agent/1.0","kind":"agent"},"consumer":"scene-agent/1.0","doc_path":"roasting.md","events":3,"heading":null,"mode":"append","reason":"rootmark propose (CLI)","snapshot_id":"4687935fb9c5e6e9e3676d166ec69a3e"}

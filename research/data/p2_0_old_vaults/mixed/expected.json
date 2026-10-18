@@ -1,0 +1,230 @@
+{
+  "docs": [
+    "agent/mixed.md",
+    "garden.md",
+    "meeting.md",
+    "notes.md",
+    "release.md",
+    "summary.md"
+  ],
+  "events_hash": "952cf4830310b10ba8c124366ec6c1b3",
+  "layers": {
+    "agent/mixed.md": [
+      [
+        "a5f0eb7b7ef69909e5f3f5b91954b469",
+        "proposal"
+      ],
+      [
+        "bc342bf01aa111048ea33a2eb4aec6df",
+        "proposal"
+      ]
+    ],
+    "garden.md": [
+      [
+        "a1169c18526dd4d8c37a38f79dcaed36",
+        "canonical"
+      ],
+      [
+        "a151823f0a6a2bb27c46f7f119810880",
+        "proposal"
+      ],
+      [
+        "9aeca95ac1f89083f1ae3477e2843f19",
+        "proposal"
+      ],
+      [
+        "b00f5bde024655072e25df5645f15d76",
+        "proposal"
+      ]
+    ],
+    "meeting.md": [
+      [
+        "8aafc9cfc9ce5b8a9afcf3d42f075b11",
+        "proposal"
+      ],
+      [
+        "d7854ba67fcc168e465271742a3d0a58",
+        "proposal"
+      ],
+      [
+        "7089f3d92aa49fc11b9eb6966c0e96da",
+        "proposal"
+      ],
+      [
+        "39e39576788950b3a594acf9fd1ee278",
+        "proposal"
+      ]
+    ],
+    "notes.md": [
+      [
+        "08a17d817d6f17c62060b6211062dbfd",
+        "canonical"
+      ],
+      [
+        "933f8fe0cb82daeafa26e415ecf43fbe",
+        "canonical"
+      ]
+    ],
+    "release.md": [
+      [
+        "c65f68eee0e34d47a0d8bc88cea41662",
+        "proposal"
+      ],
+      [
+        "6ddab7b1e5e874676d19532ab1e8de0b",
+        "proposal"
+      ],
+      [
+        "09a9e182deb27333aa518c730ec7221c",
+        "proposal"
+      ],
+      [
+        "b92308429b8482e2060406de631c5fe6",
+        "canonical"
+      ]
+    ],
+    "summary.md": [
+      [
+        "90550b2851f46b0dab096426adf2d980",
+        "canonical"
+      ],
+      [
+        "6ee8ce930e185f7d3612759a881c6c3a",
+        "proposal"
+      ],
+      [
+        "09184c2af474dd468b420f8eeda3ad08",
+        "canonical"
+      ]
+    ]
+  },
+  "replay": {
+    "agent/mixed.md": {
+      "blocks": [
+        [
+          "a5f0eb7b7ef69909e5f3f5b91954b469",
+          "e80891865ae405bb3678c43f50ecf0b5"
+        ],
+        [
+          "bc342bf01aa111048ea33a2eb4aec6df",
+          "f055504658e3034693c557ad9cb33a7e"
+        ]
+      ],
+      "doc_path": "agent/mixed.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "27891ec4da416fc80910e3e50ead9adb"
+    },
+    "garden.md": {
+      "blocks": [
+        [
+          "a1169c18526dd4d8c37a38f79dcaed36",
+          "a748e8461265a33965e7e9026b6293b6"
+        ],
+        [
+          "a151823f0a6a2bb27c46f7f119810880",
+          "b13e0bb211214799d6a1934be6408899"
+        ],
+        [
+          "9aeca95ac1f89083f1ae3477e2843f19",
+          "fdd86b3d02741dabd138b3b0e11d2466"
+        ],
+        [
+          "b00f5bde024655072e25df5645f15d76",
+          "e3ff39f1434ac6d79e0bbc047906c178"
+        ]
+      ],
+      "doc_path": "garden.md",
+      "frontmatter": null,
+      "parent_snapshot": "61c8d5631e6e1ecc6ef5d43e0d19078d",
+      "snapshot_id": "cd0d4d2e7f894e864e6fb0d513d7b76a"
+    },
+    "meeting.md": {
+      "blocks": [
+        [
+          "8aafc9cfc9ce5b8a9afcf3d42f075b11",
+          "8057f3a8a60324f094c2f90bb26cb400"
+        ],
+        [
+          "d7854ba67fcc168e465271742a3d0a58",
+          "fe21880286839d847a92b2322a10ded8"
+        ],
+        [
+          "7089f3d92aa49fc11b9eb6966c0e96da",
+          "c5924d704d8b77d884f94847264a4e59"
+        ],
+        [
+          "39e39576788950b3a594acf9fd1ee278",
+          "97b54fc57573316d263f9f90999ecaff"
+        ]
+      ],
+      "doc_path": "meeting.md",
+      "frontmatter": null,
+      "parent_snapshot": "cd88d73636e54159e85e5562efb01b3c",
+      "snapshot_id": "01919e9e7a648c99836c7b88ce101769"
+    },
+    "notes.md": {
+      "blocks": [
+        [
+          "08a17d817d6f17c62060b6211062dbfd",
+          "7a0ef2a885b84052d5bc0cceca0f9545"
+        ],
+        [
+          "933f8fe0cb82daeafa26e415ecf43fbe",
+          "ce83f4f4111c4260eafd4cd8a22258ae"
+        ]
+      ],
+      "doc_path": "notes.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "f7096965e767fac463efda02cc5846f0"
+    },
+    "release.md": {
+      "blocks": [
+        [
+          "c65f68eee0e34d47a0d8bc88cea41662",
+          "31645775e5b3b9fc55db94308259d97e"
+        ],
+        [
+          "6ddab7b1e5e874676d19532ab1e8de0b",
+          "702db12fb4d6a44ed3cc13407c85176f"
+        ],
+        [
+          "09a9e182deb27333aa518c730ec7221c",
+          "b6e3b8329d2ebdb1ed0afcf09678790a"
+        ],
+        [
+          "b92308429b8482e2060406de631c5fe6",
+          "a5ec76c8d164c7f8c5328cd13780612f"
+        ]
+      ],
+      "doc_path": "release.md",
+      "frontmatter": null,
+      "parent_snapshot": "ab0204b80066adf407de56d0d736186c",
+      "snapshot_id": "86ca440c2393ce99eb1a06bbf2510b60"
+    },
+    "summary.md": {
+      "blocks": [
+        [
+          "90550b2851f46b0dab096426adf2d980",
+          "002e8993ace1220b8b348e512bfdfa98"
+        ],
+        [
+          "6ee8ce930e185f7d3612759a881c6c3a",
+          "824d5ae8dfc687612aa65c41ebbdbfbe"
+        ],
+        [
+          "09184c2af474dd468b420f8eeda3ad08",
+          "e440b97714e606b43f7e0512838bc607"
+        ]
+      ],
+      "doc_path": "summary.md",
+      "frontmatter": null,
+      "parent_snapshot": "90d23c3ce773188366bc95e1c990e6e9",
+      "snapshot_id": "0f833e5cd0ba7dbaae2a376865b80636"
+    }
+  },
+  "spec_version": "1.0.3",
+  "vault": "mixed",
+  "written_by": "rootmark 0.1.0"
+}

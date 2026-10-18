@@ -22,7 +22,8 @@ TS_PKGS := $(wildcard clients/*/package.json)
         test-freeze-indep eval-h1s-tune eval-h1s eval-h1r eval-h1s-v3 eval-h1r-v3 eval-h3 eval-h4 \
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps check-compare-fields check-client-types conformance regress verify models c3-quality p1c-checks report-p1c \
-        c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e p1e1-checks report-p1e1
+        c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e p1e1-checks report-p1e1 \
+        p2-0-harness p2-0-tune p2-0-test
 
 setup: setup-py build
 
@@ -552,6 +553,20 @@ p1e1-checks: require-run
 report-p1e1:
 	@if [ -z "$(RUN_DIR)" ]; then echo "error: RUN_DIR=<research/reports/runs/RUN> is required" >&2; exit 1; fi
 	$(PY) -m eval.report_p1e1 --run-dir "$(abspath $(RUN_DIR))"
+
+# P2-0 (TASKS Z5): the real-Obsidian session harness (D-B), the plugin
+# bundle it installs, then the window tuning on the D-B tuning set
+# (p2_0/tuning.json) and the test sets with the chosen W (D-E, D-A, D-C,
+# D-B test) → research/reports/runs/<RUN>/p2_0/
+p2-0-harness:
+	cd clients/obsidian && npm run build && npx esbuild e2e/p2_0/sessions.ts --bundle --format=esm \
+	  --platform=node --target=node22 --outfile=e2e/p2_0/.build/sessions.mjs
+
+p2-0-tune: require-run build p2-0-harness
+	$(PY) -m eval.run_p2_0 --phase tune --run $(RUN) --rootmark ../target/release/rootmark
+
+p2-0-test: require-run build p2-0-harness
+	$(PY) -m eval.run_p2_0 --phase test --run $(RUN) --rootmark ../target/release/rootmark
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:
