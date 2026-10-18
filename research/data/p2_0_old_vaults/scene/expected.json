@@ -1,0 +1,963 @@
+{
+  "docs": [
+    "agent/plan.md",
+    "blends.md",
+    "cupping.md",
+    "espresso.md",
+    "filter.md",
+    "glossary.md",
+    "grinders.md",
+    "maintenance.md",
+    "origins.md",
+    "roast-log.md",
+    "roasting.md",
+    "safety.md",
+    "staff.md"
+  ],
+  "events_hash": "10972fd963231d012db854a1d1a4dc7e",
+  "layers": {
+    "agent/plan.md": [
+      [
+        "edc3a9d75143ef8f735b8092db31926e",
+        "proposal"
+      ],
+      [
+        "f8464263fbf2a1c8022930b8722f8032",
+        "canonical"
+      ]
+    ],
+    "blends.md": [
+      [
+        "11aa27c7221f1107bed32302c3d12492",
+        "canonical"
+      ],
+      [
+        "da272f8d0e7b15f0c54de8c583d828d5",
+        "canonical"
+      ],
+      [
+        "cb869c916832cfbc9f09cc53ed0559c1",
+        "canonical"
+      ],
+      [
+        "9766f5150eeef83348798cee15876ea0",
+        "canonical"
+      ],
+      [
+        "c5033708f8a62d3b6def3fec1f656996",
+        "canonical"
+      ],
+      [
+        "f78c2c81c95df2cc1dbec0a2e01985b8",
+        "canonical"
+      ]
+    ],
+    "cupping.md": [
+      [
+        "3f195e3640df6315a98c1f8a84349623",
+        "canonical"
+      ],
+      [
+        "60b39edc75707140ed28eb25201f4197",
+        "canonical"
+      ],
+      [
+        "6dd797296310723f61ae9ac462b571cf",
+        "canonical"
+      ],
+      [
+        "2b2be297fc4b4a418387646075b3763b",
+        "canonical"
+      ],
+      [
+        "ef5fcd506910f7b023257537d7443f88",
+        "canonical"
+      ],
+      [
+        "2264127b1ff97bc973f131b8038ad007",
+        "canonical"
+      ],
+      [
+        "f0dca8eee1b5445ef827398f6a25f52d",
+        "canonical"
+      ],
+      [
+        "3a4c7c83774056859951c2170913df86",
+        "canonical"
+      ],
+      [
+        "2d4a279848f91eb4e50234729aca3de2",
+        "canonical"
+      ],
+      [
+        "fc4148a411eb823f1d1db4d09fa06652",
+        "canonical"
+      ]
+    ],
+    "espresso.md": [
+      [
+        "74ecb4d582f0ffede4479a044f078542",
+        "canonical"
+      ],
+      [
+        "c4bf6f31f6d9b9b83904d4d2d4cb8c22",
+        "canonical"
+      ],
+      [
+        "b8207c223754799bd8d227b68dcb3518",
+        "canonical"
+      ],
+      [
+        "ddde6b3b5dd3e2fb53dd11c9177b915b",
+        "canonical"
+      ],
+      [
+        "bde4a62ef108123db6225d3cc7469dba",
+        "canonical"
+      ],
+      [
+        "ccb4b5d556126285ce5c51379cb3f2d4",
+        "canonical"
+      ],
+      [
+        "b950226d51df600280c2d5d172cf1c01",
+        "canonical"
+      ],
+      [
+        "0ac7567834b23705676531bd025b23c8",
+        "canonical"
+      ],
+      [
+        "28273578dc4c268579aa8945a7b08dcf",
+        "canonical"
+      ],
+      [
+        "9167da9b3609a6a9c574eae9cff723e4",
+        "canonical"
+      ]
+    ],
+    "filter.md": [
+      [
+        "c88e8e42b9befe250dcb92750d0eed1c",
+        "canonical"
+      ],
+      [
+        "150bbe08e21736c4cc0d4364036f2f2f",
+        "canonical"
+      ],
+      [
+        "7f9ffbc107637b9713a9e09bb4533327",
+        "canonical"
+      ],
+      [
+        "b3492b2dc27f1dec2ab9d6294adf0028",
+        "canonical"
+      ],
+      [
+        "086ed5e4a486fcfffcba05e5bc6c338e",
+        "canonical"
+      ],
+      [
+        "812db2269fdb246899d9589d0fc9b94e",
+        "canonical"
+      ],
+      [
+        "525be26945839638ba7dd6468a473af3",
+        "canonical"
+      ]
+    ],
+    "glossary.md": [
+      [
+        "0efa64472202c2d77142203787309089",
+        "canonical"
+      ],
+      [
+        "a4b54ef54214708543ba32461c7245e2",
+        "canonical"
+      ],
+      [
+        "89243155c63473406c366c44443f086f",
+        "canonical"
+      ],
+      [
+        "3d768a5c89201ff82d09784ead3dc969",
+        "canonical"
+      ],
+      [
+        "6f4596082c7f4a96560a99c85c76f60e",
+        "canonical"
+      ],
+      [
+        "8f9472fd786e623025b60662175d5d01",
+        "canonical"
+      ],
+      [
+        "3fd1de74d25beba7fbcde785ac892015",
+        "canonical"
+      ],
+      [
+        "082c4f7b097b987b31fca352286b6e5f",
+        "canonical"
+      ]
+    ],
+    "grinders.md": [
+      [
+        "7bd601d2ce14e64380e25e30415a29be",
+        "canonical"
+      ],
+      [
+        "4e4087198ffb697d7be3d75936a104ae",
+        "canonical"
+      ],
+      [
+        "18ebdbdcc8370425145618bd1d06b8a0",
+        "canonical"
+      ],
+      [
+        "92e516c0d8f629d3ab1496c21a76ec08",
+        "canonical"
+      ],
+      [
+        "37992f0d422682328b5bb7885a288391",
+        "canonical"
+      ],
+      [
+        "f250715b14001b490eda7073159de3aa",
+        "canonical"
+      ]
+    ],
+    "maintenance.md": [
+      [
+        "ab06b7f582b48ad296694a15d91c744e",
+        "canonical"
+      ],
+      [
+        "401cf2b00cadd06809512a205ce60e3c",
+        "canonical"
+      ],
+      [
+        "79c0341c912967236466addcbf32ac7b",
+        "canonical"
+      ],
+      [
+        "511781a653cef44c1082cb8ae479f18c",
+        "canonical"
+      ],
+      [
+        "3fec4cab321c0827ad0102bc608426b3",
+        "canonical"
+      ],
+      [
+        "3d9dc31aacdb63ad0b1979945859fdb4",
+        "canonical"
+      ],
+      [
+        "93a23b7f02b1582d36b72e9d5e1b2113",
+        "canonical"
+      ],
+      [
+        "c39253d12745a779808f1cb8c466d11b",
+        "canonical"
+      ],
+      [
+        "24c60acf8d181e5579a455e328ecea8c",
+        "canonical"
+      ],
+      [
+        "b549b3e6438da8de994ba2affeea9030",
+        "canonical"
+      ],
+      [
+        "df33c17d6cd41afcb018b203074a9ba3",
+        "canonical"
+      ],
+      [
+        "9525c2bb8ea5cad09d325be1efb949dc",
+        "canonical"
+      ]
+    ],
+    "origins.md": [
+      [
+        "0f9106274ab1c605acf051494693c13b",
+        "canonical"
+      ],
+      [
+        "1638a2f3b9e857e3a307fa90f9c8ad3c",
+        "canonical"
+      ],
+      [
+        "d74937e7345481424c8dd1094ff7c0ea",
+        "canonical"
+      ],
+      [
+        "4f27983352c768648a1b70ead03e8b21",
+        "canonical"
+      ],
+      [
+        "d063e253dde5e5110a0664ac0b122676",
+        "canonical"
+      ],
+      [
+        "be976b06bb66514f14537a10e67598fa",
+        "canonical"
+      ],
+      [
+        "3b69a8eea38ce998ba32bac2303794bd",
+        "canonical"
+      ],
+      [
+        "88514aa2ac67834c409b6e9c6e49fec7",
+        "canonical"
+      ]
+    ],
+    "roast-log.md": [
+      [
+        "a7003050663632c970e6bb8f5628ef22",
+        "canonical"
+      ],
+      [
+        "772aafd2ee6229225a248753ccad3b92",
+        "canonical"
+      ],
+      [
+        "769770a8d7428b1e12ae9614516b1027",
+        "canonical"
+      ],
+      [
+        "49414535cf37edd0490f096c4b8244ec",
+        "canonical"
+      ],
+      [
+        "b6d7f20845db7cac4ec61469eea0a9a9",
+        "canonical"
+      ]
+    ],
+    "roasting.md": [
+      [
+        "530e157c296aa53a7cac557cd6f50e6b",
+        "canonical"
+      ],
+      [
+        "e867631adaf5c9405da4462355c603ba",
+        "canonical"
+      ],
+      [
+        "8a5c4ac57dfa6428155dc63fe99f722f",
+        "canonical"
+      ],
+      [
+        "057d8979d988330cce399b635bb14842",
+        "canonical"
+      ],
+      [
+        "e9167efac8ed691a4309006162504524",
+        "canonical"
+      ],
+      [
+        "49e9d55dff4edbd5bd37aa54ab045f63",
+        "canonical"
+      ],
+      [
+        "6703152c8524d55191e43523bcd76437",
+        "canonical"
+      ],
+      [
+        "adfee4046d6d7040924b11ab5e6b6be9",
+        "canonical"
+      ],
+      [
+        "bba694bad31c041bfdf6401205d94abe",
+        "canonical"
+      ],
+      [
+        "cfdf3be561a7398df0d4f6fd1c898c9c",
+        "canonical"
+      ],
+      [
+        "26a70789ce43f1c17da5ad51f7f4fe9b",
+        "proposal"
+      ],
+      [
+        "6ec8bbf06da390e8c8d33ca5c96755f4",
+        "proposal"
+      ]
+    ],
+    "safety.md": [
+      [
+        "292188541d3a44d4fbef7e14e0636198",
+        "canonical"
+      ],
+      [
+        "2e95f78c2aaf2c01a09f0083f8a0f295",
+        "canonical"
+      ],
+      [
+        "b36be22e34fea8a53d5256e105afd133",
+        "canonical"
+      ],
+      [
+        "8a609fd9231756d186c7bcaf78497f20",
+        "canonical"
+      ],
+      [
+        "ae76c1e2e41be6a714f759e271a71d15",
+        "canonical"
+      ],
+      [
+        "d947bb460004de04a8e0fe56e4be28c7",
+        "canonical"
+      ],
+      [
+        "4dd0b3ced2e3466f03963048ddf5fb8f",
+        "canonical"
+      ],
+      [
+        "1fb0c3f0a52234cfacd543e5fe3537ef",
+        "canonical"
+      ],
+      [
+        "25b61420a5d58c3edb4d742a09043b27",
+        "canonical"
+      ]
+    ],
+    "staff.md": [
+      [
+        "37bba9069bab1086bcf1a5d6b2bc6f79",
+        "canonical"
+      ],
+      [
+        "7dc9de0d3bc7da51ce1558c1dcc4cfa3",
+        "canonical"
+      ],
+      [
+        "21cb65ffb7b1887158f1e00eb687a130",
+        "canonical"
+      ],
+      [
+        "a965a1162c262f61851009cf7102be04",
+        "canonical"
+      ],
+      [
+        "734eda49b32fb6c82b4cf96b4a24165f",
+        "canonical"
+      ],
+      [
+        "cbd035fe38d39331bd6e72d84b2b3125",
+        "canonical"
+      ]
+    ]
+  },
+  "replay": {
+    "agent/plan.md": {
+      "blocks": [
+        [
+          "edc3a9d75143ef8f735b8092db31926e",
+          "87d1da4f824576411bd15b20b5005a65"
+        ],
+        [
+          "f8464263fbf2a1c8022930b8722f8032",
+          "5d18d27154fe205357636e1d5deac200"
+        ]
+      ],
+      "doc_path": "agent/plan.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "a306c4adf1312248970437d740453a63"
+    },
+    "blends.md": {
+      "blocks": [
+        [
+          "11aa27c7221f1107bed32302c3d12492",
+          "05597c314da02e6d03f61b69efa72c94"
+        ],
+        [
+          "da272f8d0e7b15f0c54de8c583d828d5",
+          "c0579df61ff816b891ce86bd4ca7fee0"
+        ],
+        [
+          "cb869c916832cfbc9f09cc53ed0559c1",
+          "5ba7acf502e0feffe0712fd9638ec814"
+        ],
+        [
+          "9766f5150eeef83348798cee15876ea0",
+          "26c5052680be3f35041c205e711f1dfa"
+        ],
+        [
+          "c5033708f8a62d3b6def3fec1f656996",
+          "73a2be55d19253b26dfaf7493ceafff6"
+        ],
+        [
+          "f78c2c81c95df2cc1dbec0a2e01985b8",
+          "995b50f9f1aa4ab03b98132405f12dd2"
+        ]
+      ],
+      "doc_path": "blends.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "070758c57df97061ab8b2c31d7258693"
+    },
+    "cupping.md": {
+      "blocks": [
+        [
+          "3f195e3640df6315a98c1f8a84349623",
+          "ae938eb142902efad6f3482a9c8e39fd"
+        ],
+        [
+          "60b39edc75707140ed28eb25201f4197",
+          "2ea4221c1a4aba369117ca34ad2b598c"
+        ],
+        [
+          "6dd797296310723f61ae9ac462b571cf",
+          "ba160268d37ecc59aab1ad1d6dbe0a51"
+        ],
+        [
+          "2b2be297fc4b4a418387646075b3763b",
+          "b2bd358d4360f32783bb62d7a092e891"
+        ],
+        [
+          "ef5fcd506910f7b023257537d7443f88",
+          "9ee79ac5cff7d6ecc8eaf9f28db9ac69"
+        ],
+        [
+          "2264127b1ff97bc973f131b8038ad007",
+          "5d1f9761c1045821aaf58f858ff1e136"
+        ],
+        [
+          "f0dca8eee1b5445ef827398f6a25f52d",
+          "b3dd9e7bca42ab07c9fc1e761da36107"
+        ],
+        [
+          "3a4c7c83774056859951c2170913df86",
+          "4dca08987c010603cf1aeacbb5905cca"
+        ],
+        [
+          "2d4a279848f91eb4e50234729aca3de2",
+          "85ce26171d4a4401a1e1b6380ad04424"
+        ],
+        [
+          "fc4148a411eb823f1d1db4d09fa06652",
+          "c3c312b130138478cdc340995455ee1a"
+        ]
+      ],
+      "doc_path": "cupping.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "43d2b7d07aca1313681c890bcdbbff73"
+    },
+    "espresso.md": {
+      "blocks": [
+        [
+          "74ecb4d582f0ffede4479a044f078542",
+          "89d0a18e79e31ff49018e502401250e4"
+        ],
+        [
+          "c4bf6f31f6d9b9b83904d4d2d4cb8c22",
+          "fa889c08d606d0a20dc7680c00784642"
+        ],
+        [
+          "b8207c223754799bd8d227b68dcb3518",
+          "785a55dccf78d48d6ca2327c3e8fbf32"
+        ],
+        [
+          "ddde6b3b5dd3e2fb53dd11c9177b915b",
+          "2e1daa661fb1aa5d53bc525a2165901d"
+        ],
+        [
+          "bde4a62ef108123db6225d3cc7469dba",
+          "8ad3efef173ae2b9a8684a7fc01ccd20"
+        ],
+        [
+          "ccb4b5d556126285ce5c51379cb3f2d4",
+          "f9cf861b32d6aacc54907b038ab7342b"
+        ],
+        [
+          "b950226d51df600280c2d5d172cf1c01",
+          "35a3c10f6941ba9f66cfbf97642a5718"
+        ],
+        [
+          "0ac7567834b23705676531bd025b23c8",
+          "9b758e879f21aca0808ef32ae53fa764"
+        ],
+        [
+          "28273578dc4c268579aa8945a7b08dcf",
+          "f4173aeaa5a70b50ca09732821ed142f"
+        ],
+        [
+          "9167da9b3609a6a9c574eae9cff723e4",
+          "b4627a9650bbadeafc64fca956629e55"
+        ]
+      ],
+      "doc_path": "espresso.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "d05efb1942bc6c979609181e2908541d"
+    },
+    "filter.md": {
+      "blocks": [
+        [
+          "c88e8e42b9befe250dcb92750d0eed1c",
+          "ad289e24ca936f772b26d0f0deec3153"
+        ],
+        [
+          "150bbe08e21736c4cc0d4364036f2f2f",
+          "817fe428c140b21107643dabc69af10b"
+        ],
+        [
+          "7f9ffbc107637b9713a9e09bb4533327",
+          "45b9611349ef88482fd634a33408069d"
+        ],
+        [
+          "b3492b2dc27f1dec2ab9d6294adf0028",
+          "ce92b405de85da9bcf82f95b2bdf9846"
+        ],
+        [
+          "086ed5e4a486fcfffcba05e5bc6c338e",
+          "1e8a06f232fc955fe84257abcfe2a8fc"
+        ],
+        [
+          "812db2269fdb246899d9589d0fc9b94e",
+          "2c071c41b48a5e2ffedeaad24bdd4394"
+        ],
+        [
+          "525be26945839638ba7dd6468a473af3",
+          "0a9065af81877037dab4d62a7105e9a9"
+        ]
+      ],
+      "doc_path": "filter.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "97e904ebaaeec6e92a81b60345f8604c"
+    },
+    "glossary.md": {
+      "blocks": [
+        [
+          "0efa64472202c2d77142203787309089",
+          "31c451103b4da26383a3c081c542f479"
+        ],
+        [
+          "a4b54ef54214708543ba32461c7245e2",
+          "2d65bf3b0bb9c6cd7a1aafc730b4345a"
+        ],
+        [
+          "89243155c63473406c366c44443f086f",
+          "3cb70935467386c3af79d93baba74a30"
+        ],
+        [
+          "3d768a5c89201ff82d09784ead3dc969",
+          "da55c0f032e75c09999e8d627384dac4"
+        ],
+        [
+          "6f4596082c7f4a96560a99c85c76f60e",
+          "8e40d924b23ed024a9ec70b1abd37783"
+        ],
+        [
+          "8f9472fd786e623025b60662175d5d01",
+          "98380860c91d8b563f429f7f21f6df56"
+        ],
+        [
+          "3fd1de74d25beba7fbcde785ac892015",
+          "3051c2bc7b92cdb37b7f212345687a7b"
+        ],
+        [
+          "082c4f7b097b987b31fca352286b6e5f",
+          "da55c0f032e75c09999e8d627384dac4"
+        ]
+      ],
+      "doc_path": "glossary.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "8f7cb256bdb20a28c16547ca1a194ad1"
+    },
+    "grinders.md": {
+      "blocks": [
+        [
+          "7bd601d2ce14e64380e25e30415a29be",
+          "3dfa2c9c3836bfaf252504f8de509a47"
+        ],
+        [
+          "4e4087198ffb697d7be3d75936a104ae",
+          "70e25a91cbb70a30d236400a1d239da4"
+        ],
+        [
+          "18ebdbdcc8370425145618bd1d06b8a0",
+          "2c516bd1045190c960cf8e33274aa3d1"
+        ],
+        [
+          "92e516c0d8f629d3ab1496c21a76ec08",
+          "bfd67b4f6e5ce827b594c579c152e4a0"
+        ],
+        [
+          "37992f0d422682328b5bb7885a288391",
+          "d7a0e9ce7abffecfb11dffd9161b752c"
+        ],
+        [
+          "f250715b14001b490eda7073159de3aa",
+          "25b2c4b6b9dd9c5d1b829699ed75fd60"
+        ]
+      ],
+      "doc_path": "grinders.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "cf7fe2aecef65b0524f2603ddaf5d3a1"
+    },
+    "maintenance.md": {
+      "blocks": [
+        [
+          "ab06b7f582b48ad296694a15d91c744e",
+          "c068cab61cfff4469c352b377c72647a"
+        ],
+        [
+          "401cf2b00cadd06809512a205ce60e3c",
+          "9688173983b23a1d8ef773610a4c5aff"
+        ],
+        [
+          "79c0341c912967236466addcbf32ac7b",
+          "49a442ecd9135fa87e5e0a7c59c9e630"
+        ],
+        [
+          "511781a653cef44c1082cb8ae479f18c",
+          "aec6af0df4de362bc215beafda6190c6"
+        ],
+        [
+          "3fec4cab321c0827ad0102bc608426b3",
+          "e8dbf7693e88179ff3cff3a602628cb8"
+        ],
+        [
+          "3d9dc31aacdb63ad0b1979945859fdb4",
+          "c411a7216cf76a5089b0f57e7aaa9f8a"
+        ],
+        [
+          "93a23b7f02b1582d36b72e9d5e1b2113",
+          "61a9d8723629da3a36cefff3fe691736"
+        ],
+        [
+          "c39253d12745a779808f1cb8c466d11b",
+          "cefe8a10cfadf14cd45cced00d1f102e"
+        ],
+        [
+          "24c60acf8d181e5579a455e328ecea8c",
+          "3051c2bc7b92cdb37b7f212345687a7b"
+        ],
+        [
+          "b549b3e6438da8de994ba2affeea9030",
+          "158bc851b1d88b10483ff5729a38d18b"
+        ],
+        [
+          "df33c17d6cd41afcb018b203074a9ba3",
+          "7b8483c438e26e05a0a9a3c1fdfad02a"
+        ],
+        [
+          "9525c2bb8ea5cad09d325be1efb949dc",
+          "3051c2bc7b92cdb37b7f212345687a7b"
+        ]
+      ],
+      "doc_path": "maintenance.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "6e0b796c4f33b6bb8cec858970b01563"
+    },
+    "origins.md": {
+      "blocks": [
+        [
+          "0f9106274ab1c605acf051494693c13b",
+          "51a3ae9ea78e6eabb4d9aae16b5d03f7"
+        ],
+        [
+          "1638a2f3b9e857e3a307fa90f9c8ad3c",
+          "1a1684eaeb930556cd7f3970697c5d41"
+        ],
+        [
+          "d74937e7345481424c8dd1094ff7c0ea",
+          "9346b6c75afb5b3c735445c5c9a052da"
+        ],
+        [
+          "4f27983352c768648a1b70ead03e8b21",
+          "6dc6ed499cfcab64abf37b55c4c8da08"
+        ],
+        [
+          "d063e253dde5e5110a0664ac0b122676",
+          "d0f7f9e5371a89a60b7260a9d03191cc"
+        ],
+        [
+          "be976b06bb66514f14537a10e67598fa",
+          "7be671793a5cfbe8d8b3e31a3c956edf"
+        ],
+        [
+          "3b69a8eea38ce998ba32bac2303794bd",
+          "e10a7848a943cb2c6169b29dab491e60"
+        ],
+        [
+          "88514aa2ac67834c409b6e9c6e49fec7",
+          "e1c9632be171e46dc3baa798003f7bab"
+        ]
+      ],
+      "doc_path": "origins.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "90b24c87a585b4103ea34ba15b855e51"
+    },
+    "roast-log.md": {
+      "blocks": [
+        [
+          "a7003050663632c970e6bb8f5628ef22",
+          "61db1351561b2df061f0cd672e35fede"
+        ],
+        [
+          "772aafd2ee6229225a248753ccad3b92",
+          "c98a256035174ea9de4ecc2a58f55ea5"
+        ],
+        [
+          "769770a8d7428b1e12ae9614516b1027",
+          "170410bd6d3a656a296f08d5361eb06e"
+        ],
+        [
+          "49414535cf37edd0490f096c4b8244ec",
+          "75ba9fc1f7a5b5c19c61760b966dfc4c"
+        ],
+        [
+          "b6d7f20845db7cac4ec61469eea0a9a9",
+          "3051c2bc7b92cdb37b7f212345687a7b"
+        ]
+      ],
+      "doc_path": "roast-log.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "a38f7786c420c06fd068a3942852b261"
+    },
+    "roasting.md": {
+      "blocks": [
+        [
+          "530e157c296aa53a7cac557cd6f50e6b",
+          "8aae694f79bc1c928b5feae285565a57"
+        ],
+        [
+          "e867631adaf5c9405da4462355c603ba",
+          "4c54b41f0faf1006d4f3ebdebc54c904"
+        ],
+        [
+          "8a5c4ac57dfa6428155dc63fe99f722f",
+          "be98f109cfa0443702ec59fd68a88f79"
+        ],
+        [
+          "057d8979d988330cce399b635bb14842",
+          "74d36b715ac99a7d430da3e23330961c"
+        ],
+        [
+          "e9167efac8ed691a4309006162504524",
+          "07921ccf0eb318a9fccbb4c6347e9c1f"
+        ],
+        [
+          "49e9d55dff4edbd5bd37aa54ab045f63",
+          "3d63061a1a59e9a01975b11b36292cbd"
+        ],
+        [
+          "6703152c8524d55191e43523bcd76437",
+          "389a10a27e7a0fdf851b1fa87468158d"
+        ],
+        [
+          "adfee4046d6d7040924b11ab5e6b6be9",
+          "78423145751e0de4333aec6ecbc0c308"
+        ],
+        [
+          "bba694bad31c041bfdf6401205d94abe",
+          "a3d537fbfe4e46a59c3014bc187451b4"
+        ],
+        [
+          "cfdf3be561a7398df0d4f6fd1c898c9c",
+          "3051c2bc7b92cdb37b7f212345687a7b"
+        ],
+        [
+          "26a70789ce43f1c17da5ad51f7f4fe9b",
+          "9398cd4446a5e5c81da3079782e5d2aa"
+        ],
+        [
+          "6ec8bbf06da390e8c8d33ca5c96755f4",
+          "1c111493116a170b91e6abea23b2f761"
+        ]
+      ],
+      "doc_path": "roasting.md",
+      "frontmatter": "title: Roasting\ntags: [coffee, process]\n",
+      "parent_snapshot": "a645c2900306b779908d20294402925c",
+      "snapshot_id": "4687935fb9c5e6e9e3676d166ec69a3e"
+    },
+    "safety.md": {
+      "blocks": [
+        [
+          "292188541d3a44d4fbef7e14e0636198",
+          "a8a8bdbdf5c157a7e005ecc5ade19629"
+        ],
+        [
+          "2e95f78c2aaf2c01a09f0083f8a0f295",
+          "c326d856b270d64d20a875a633d46041"
+        ],
+        [
+          "b36be22e34fea8a53d5256e105afd133",
+          "c6a462bd0692b1d3f192c5ecb6b1cb38"
+        ],
+        [
+          "8a609fd9231756d186c7bcaf78497f20",
+          "436944ba908df893fc27ea9f4303e186"
+        ],
+        [
+          "ae76c1e2e41be6a714f759e271a71d15",
+          "4adc0205cce21f530155e533b6ce8067"
+        ],
+        [
+          "d947bb460004de04a8e0fe56e4be28c7",
+          "03a165438cfdf3b2c1df4dc6b41bbd9d"
+        ],
+        [
+          "4dd0b3ced2e3466f03963048ddf5fb8f",
+          "81ada11194c5b8efc74c4d8e90b0c3fc"
+        ],
+        [
+          "1fb0c3f0a52234cfacd543e5fe3537ef",
+          "7562548fac1032b1331fea01142958e2"
+        ],
+        [
+          "25b61420a5d58c3edb4d742a09043b27",
+          "2df4fe14d041a11c8cf5b0249625d1a6"
+        ]
+      ],
+      "doc_path": "safety.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "4db2edec358bed35b724a585ddf9c262"
+    },
+    "staff.md": {
+      "blocks": [
+        [
+          "37bba9069bab1086bcf1a5d6b2bc6f79",
+          "b9fe02e3a0803473551a15f099edd947"
+        ],
+        [
+          "7dc9de0d3bc7da51ce1558c1dcc4cfa3",
+          "e4b60834fd3ebae1125ad460d83b301a"
+        ],
+        [
+          "21cb65ffb7b1887158f1e00eb687a130",
+          "7a3f46eb788c1e540e215dad9c4fc507"
+        ],
+        [
+          "a965a1162c262f61851009cf7102be04",
+          "53c4f96b57d4da679c5ce561455005f6"
+        ],
+        [
+          "734eda49b32fb6c82b4cf96b4a24165f",
+          "4ae1de09b6f4fe771ffdf563ee3f5111"
+        ],
+        [
+          "cbd035fe38d39331bd6e72d84b2b3125",
+          "844cd9066596ff41f983908197008e4e"
+        ]
+      ],
+      "doc_path": "staff.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "6bc9a267128d290e30a3e032e2471c91"
+    }
+  },
+  "spec_version": "1.0.3",
+  "vault": "scene",
+  "written_by": "rootmark 0.1.0"
+}

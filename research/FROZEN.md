@@ -291,6 +291,12 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/release_check.sh` | `P2-0/Z4:` | yeniden dondurma P2-0/F9: uyumluluk toplamı 37 |
 | `core/tests/conformance/eval_c2.rs` | `P2-0/Z4-fix:` | yeniden dondurma P2-0/F10: rustfmt satır kırmaları |
 | `spec/fixtures/**` | `P2-0/Z4-fix:` | yeniden dondurma P2-0/F10: C2-12 W kenarları, C2-11 Promoted/unattested_fs reddi |
+| `research/eval/run_p2_0.py` | `P2-0/Z5:` | P2-0 ölçümleri (ön-kayıt Z5.md) |
+| `research/eval/datasets/p2_0_sets.py` | `P2-0/Z5:` | D-A, D-B, D-C üreteci |
+| `research/eval/agent_fs_writer.py` | `P2-0/Z5:` | D-A/D-C ajanı |
+| `research/data/p2_0_old_vaults/**` | `P2-0/Z5:` | D-E: `v0.1.0`'ın yazdığı vault'lar |
+| `scripts/gen_p2_0_old_vaults.sh` | `P2-0/Z5:` | D-E üreteci |
+| `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z5:` | D-B gerçek Obsidian harness'ı |
 <!-- /frozen-table -->
 
 ## Notlar

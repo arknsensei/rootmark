@@ -46,3 +46,5 @@ node_modules/
 /models/*
 !/models/MANIFEST.json
 dist/
+# P2-0 D-E: vaults written by rootmark 0.1.0 (scripts/gen_p2_0_old_vaults.sh)
+!/research/data/p2_0_old_vaults/

@@ -16,10 +16,13 @@
 // With `--ui true`, after the sessions: an agent-like direct write to a note
 // (outside Obsidian), then in Obsidian the gutter's `U` mark, the proposal
 // view's "Show unverified" tab and one "Mine" click (contract §2.6 UI;
-// P2-0/Z3). The latency of a save is measured from Obsidian's write of its
-// last save of the document in the session to the first `blame` where every
-// new block is `canonical`; a document without a captured write has no
-// latency (`no_write`).
+// P2-0/Z3). While a session runs, `blame` of its documents is polled every
+// 25 ms (a log of observations). The latency of a save is measured from the
+// end of Obsidian's write of its last save of the document in the session to
+// the first observation, among those that answered after the write began,
+// whose log position (`seq_last`) is past the one observed before the write
+// began and where every new block is `canonical`; a document without a
+// captured write has no latency (`no_write`).
 //
 // <scenarios>: {"sessions": [{"id", "kind", "steps": [{"op": "type", "doc",
 // "text"} | {"op": "save", "how": "command"|"autosave"|"blur"} | {"op":
@@ -65,6 +68,15 @@ interface Block {
   lineage_id: string;
   version_id: string;
   layer: string;
+  seq_last: number;
+}
+/** one `blame` of a document: when it was asked, when it answered */
+interface Obs {
+  asked: number;
+  answered: number;
+  seq: number;
+  canonical: boolean;
+  unverified: boolean;
 }
 
 const sleep = (ms: number): Promise<void> => new Promise((ok) => setTimeout(ok, ms));
@@ -119,7 +131,7 @@ const HANDS = `(window.__p2 = {
   watch() {
     const a = app.vault.adapter;
     const w = a.write.bind(a);
-    a.write = async (p, d, o) => { await w(p, d, o); if (p.endsWith('.md')) window.__p2.writes.push({ path: p, t: Date.now() }); };
+    a.write = async (p, d, o) => { const ts = Date.now(); await w(p, d, o); if (p.endsWith('.md')) window.__p2.writes.push({ path: p, ts, t: Date.now() }); };
     return true;
   },
   async open(path) {
@@ -222,14 +234,42 @@ try {
   for (const s of scenarios.sessions) {
     const docs = new Set<string>();
     const before = new Map<string, Set<string>>();
+    const obs = new Map<string, Obs[]>();
+    const observe = async (doc: string): Promise<Block[] | null> => {
+      const asked = Date.now();
+      const bl = await blame(doc);
+      if (bl !== null) {
+        const old = before.get(doc) ?? new Set<string>();
+        const fresh = bl.filter((b) => !old.has(b.version_id));
+        const seq = bl.reduce((m, b) => Math.max(m, b.seq_last), -1);
+        const list = obs.get(doc) ?? [];
+        list.push({ asked, answered: Date.now(), seq, canonical: fresh.length > 0 && fresh.every((b) => b.layer === "canonical"), unverified: fresh.some((b) => b.layer === "unverified") });
+        obs.set(doc, list);
+      }
+      return bl;
+    };
+    const polling = { on: true };
+    const poller = (async () => {
+      while (polling.on) {
+        for (const d of [...docs]) await observe(d);
+        await sleep(25);
+      }
+    })();
     const startWrites = await pg.ev<number>("__p2.writes.length");
+    // when each document was last typed into: a save on focus loss is
+    // Obsidian's own (delayed) save, so the session ends once every typed
+    // document has been written after its last keystroke (at most 6 s)
+    const typed = new Map<string, number>();
     for (const st of s.steps) {
       if (st.op === "open" || st.op === "type") {
         const doc = st.doc ?? "";
         if (!before.has(doc)) before.set(doc, new Set(((await blame(doc)) ?? []).map((b) => b.version_id)));
         docs.add(doc);
         await pg.ev(`__p2.open(${J(doc)})`);
-        if (st.op === "type") await pg.ev(`__p2.type(${J(st.text ?? "")})`);
+        if (st.op === "type") {
+          typed.set(doc, Date.now());
+          await pg.ev(`__p2.type(${J(st.text ?? "")})`);
+        }
       } else if (st.op === "save") {
         if (st.how === "autosave") await sleep(2600);
         else if (st.how === "blur") {
@@ -246,35 +286,41 @@ try {
       }
     }
     // the writes of this session; then the server's view of each document
+    const written = async (): Promise<boolean> => {
+      const ws = await pg.ev<{ path: string; t: number }[]>(`__p2.writes.slice(${String(startWrites)})`);
+      return [...typed].every(([d, t]) => ws.some((x) => x.path === d && x.t >= t));
+    };
+    for (let i = 0; i < 240 && !(await written()); i++) await sleep(25);
     await sleep(150);
-    const writes = await pg.ev<{ path: string; t: number }[]>(`__p2.writes.slice(${String(startWrites)})`);
+    polling.on = false;
+    await poller;
+    const writes = await pg.ev<{ path: string; ts: number; t: number }[]>(`__p2.writes.slice(${String(startWrites)})`);
     for (const doc of docs) {
       const w = writes.filter((x) => x.path === doc).pop();
       const t0 = w?.t ?? Date.now();
       const noWrite = w === undefined;
       const old = before.get(doc) ?? new Set<string>();
+      // the log position the server had before the last write began
+      const s0 = (obs.get(doc) ?? []).filter((o) => o.answered <= (w?.ts ?? t0)).reduce((m, o) => Math.max(m, o.seq), -1);
+      const settled = (): Obs | undefined => (obs.get(doc) ?? []).find((o) => o.asked >= (w?.ts ?? t0) && o.seq > s0 && o.canonical);
       let latency: number | null = null;
-      let seenUnverified = false;
       let last: Block[] = [];
       const deadline = t0 + windowS * 1000 + 1500;
-      while (Date.now() < deadline) {
-        const bl = await blame(doc);
-        if (bl !== null) {
-          last = bl;
-          const fresh = bl.filter((b) => !old.has(b.version_id));
-          if (fresh.some((b) => b.layer === "unverified")) seenUnverified = true;
-          if (fresh.length > 0 && fresh.every((b) => b.layer === "canonical")) {
-            latency = Date.now() - t0;
-            break;
-          }
+      for (;;) {
+        const hit = settled();
+        if (hit !== undefined) {
+          latency = Math.max(0, hit.answered - t0);
+          break;
         }
+        if (Date.now() >= deadline) break;
+        await observe(doc);
         await sleep(25);
       }
-      if (latency === null) {
-        // the window is over: what stays unverified is a false unverified
-        const bl = await blame(doc);
-        if (bl !== null) last = bl;
-      }
+      // seen unverified after the write began, then canonical: a late raise
+      const seenUnverified = (obs.get(doc) ?? []).some((o) => o.asked >= (w?.ts ?? t0) && o.unverified);
+      // the server's view now (after the window, when it never settled)
+      const bl = await blame(doc);
+      if (bl !== null) last = bl;
       const fresh = last.filter((b) => !old.has(b.version_id));
       records.push({
         session: s.id,
