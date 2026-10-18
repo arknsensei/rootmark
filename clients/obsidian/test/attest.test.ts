@@ -53,8 +53,23 @@ describe("attest (contract §2.6)", () => {
       content_hash: hash,
       session_id: "s1",
       mac: createHmac("sha256", Buffer.from(KEY, "hex")).update(`rootmark-attest/1\nnotes/a.md\n${hash}\n`).digest("hex"),
+      // P2-0.1 T2: the saved bytes (UTF-8) for a partial match
+      content: "# Note\n\nA human line.\n",
     });
     expect(a.counts).toEqual({ attested: 1, failed: 0, lastError: null });
+  });
+
+  it("bytes that are not UTF-8 are attested without content; a link update carries its old path (P2-0.1)", async () => {
+    const s = server([() => session("s1"), recorded, recorded]);
+    const a = new Attester(conn, s.transport, subtle);
+    await a.attest("a.md", new Uint8Array([0xff, 0xfe, 0x41]));
+    await a.attest("x.md", new TextEncoder().encode("See [[bee]].\n"), null, { linkUpdateOf: "sub/bee.md", linkUpdateFrom: "b.md" });
+    const b1 = JSON.parse(s.seen[1]?.body ?? "") as Record<string, unknown>;
+    const b2 = JSON.parse(s.seen[2]?.body ?? "") as Record<string, unknown>;
+    expect("content" in b1).toBe(false);
+    expect(b2["link_update_of"]).toBe("sub/bee.md");
+    expect(b2["link_update_from"]).toBe("b.md");
+    expect(b2["content"]).toBe("See [[bee]].\n");
   });
 
   it("the MAC message carries saved_at_seq in decimal", () => {

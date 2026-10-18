@@ -1,4 +1,4 @@
-//! Conformance Level 2 evaluator (spec/CONFORMANCE.md C2-01..C2-12).
+//! Conformance Level 2 evaluator (spec/CONFORMANCE.md C2-01..C2-13).
 //!
 //! A C2 case (`spec/fixtures/C2-xx/case.c2.json` — not `case.json`, which the
 //! frozen v3-final C1 generator walks) is a script of governance operations
@@ -29,6 +29,16 @@
 //!   `actor_kind`, `actor_id_empty`, `actor_extra_field`, `source_number`,
 //!   `add_both`), then restore; observed as `{opened}` or `{open_err}`
 //!
+//! - (C2-13; spec 2.0.1 §7.1 "Partial match", §8; P2-0.1/F1) `attest
+//!   {content: true | content_file}` sends the saved bytes (a
+//!   `content_file` whose bytes are not the file's is refused); `external`
+//!   (`on_disk: true`: the file holds the attested bytes when it is
+//!   recorded — no late partial match) decides `partial` when the bytes
+//!   contain an attestation's blocks (the
+//!   attested bytes ingested first, observed as `attested`, the line
+//!   `partial: true`, then the rest unattested); a late attestation with
+//!   content raises the attested lineages of the one pending change that
+//!   contains its blocks; `attestation_tamper {change: "partial_false"}`.
 //! - (C2-11, C2-12; spec 2.0.0 §7.1, §8; P2-0/F7) `restore_store {from}` —
 //!   the case directory `from` becomes the vault's `.rootmark/` (a store
 //!   written by another implementation, e.g. 0.1.0: spec 1.0.3), then
@@ -165,7 +175,16 @@ struct Run<'a> {
     labels: BTreeMap<String, String>,
     /// the case's attestation window (C2-12), explicit times
     window: Window,
+    /// unattested changes in the window as the reference server remembers
+    /// them beside the matcher (C2-13, P2-0.1): (doc, content_hash,
+    /// observed ms, the observed blocks' versions, the lineages the change
+    /// named with their raise)
+    pending: Vec<Pending>,
 }
+
+/// One remembered unattested change (C2-13): doc, content_hash, observed
+/// ms, observed versions, named lineages.
+type Pending = (String, String, u64, Vec<String>, Vec<Raise>);
 
 fn copy_dir(from: &Path, to: &Path) -> Result<()> {
     fs::create_dir_all(to)?;
@@ -536,14 +555,62 @@ impl Run<'_> {
                         json!({"decision": "attested", "attributed": attributed(&r.events)?})
                     }
                     None => {
+                        // (C2-13, P2-0.1 T2) a partial match: the attested
+                        // bytes as an attested change, the line `partial`,
+                        // then the rest unattested
+                        let partial = self.window.observe_partial(&doc, &text, at)?;
+                        let mut first = None;
+                        if let Some((_, saved)) = &partial {
+                            let a = Actor::new(ActorKind::Human, "conformance")?;
+                            let prov = Provenance {
+                                author_kind: AuthorKind::Human,
+                                source: "watch".into(),
+                            };
+                            let r = self.v()?.ingest_by(&doc, saved, prov, m, &a)?;
+                            first = Some(attributed(&r.events)?);
+                            let v = self.v()?;
+                            let mut line = rootmarkcore::attest::Attestation::new(
+                                &doc,
+                                &content_hash(saved.as_bytes()),
+                                v.next_seq(),
+                                None,
+                            )?;
+                            line.partial = Some(true);
+                            v.record_attestation_line(line)?;
+                        }
                         let (r, raises) = self.unattested(&doc, &text)?;
+                        let named: Vec<Raise> = raises
+                            .iter()
+                            .filter(|x| {
+                                r.events
+                                    .iter()
+                                    .any(|e| e.lineage_ids.contains(&x.lineage_id))
+                            })
+                            .cloned()
+                            .collect();
+                        self.pending
+                            .retain(|p| at.saturating_sub(p.2) <= self.window.window_ms);
+                        self.pending.push((
+                            doc.clone(),
+                            h.clone(),
+                            at,
+                            rootmarkcore::attest::block_versions(&text, &doc)?,
+                            named,
+                        ));
                         self.window.unattested(Unattested {
                             doc_path: doc,
                             content_hash: h,
                             observed_ms: at,
                             lineages: raises,
                         });
-                        json!({"decision": "unverified", "attributed": attributed(&r.events)?})
+                        match first {
+                            Some(f) => {
+                                json!({"decision": "partial", "attested": f, "attributed": attributed(&r.events)?})
+                            }
+                            None => {
+                                json!({"decision": "unverified", "attributed": attributed(&r.events)?})
+                            }
+                        }
                     }
                 }
             }
@@ -552,15 +619,79 @@ impl Run<'_> {
                 let bytes = fs::read(self.dir.join(s(op, "file")?))?;
                 let at = op.get("at_ms").and_then(Value::as_u64).context("at_ms")?;
                 let late = op.get("late").and_then(Value::as_bool).unwrap_or(true);
-                let (a, recorded) =
-                    self.v()?
-                        .record_attestation(&doc, &content_hash(&bytes), None)?;
+                let h = content_hash(&bytes);
+                // (C2-13, P2-0.1 T2) the saved bytes sent with it: `content:
+                // true` the file's, `content_file` another file's (which
+                // must then be refused)
+                let content = match (
+                    op.get("content").and_then(Value::as_bool),
+                    op.get("content_file").and_then(Value::as_str),
+                ) {
+                    (Some(true), _) => Some(String::from_utf8(bytes.clone())?),
+                    (_, Some(f)) => Some(fs::read_to_string(self.dir.join(f))?),
+                    _ => None,
+                };
+                if let Some(c) = &content {
+                    if content_hash(c.as_bytes()) != h {
+                        bail!("attest: content does not hash to content_hash");
+                    }
+                }
+                let v = self.v()?;
+                let mut a = rootmarkcore::attest::Attestation::new(&doc, &h, v.next_seq(), None)?;
+                let (late_list, ambiguous) =
+                    self.window.attest_content(&a, at, late, content.clone());
+                // the file holds the attested bytes when it is recorded
+                // (`on_disk`): their own observation is coming, no late
+                // partial match (spec 2.0.1 §7.1)
+                let on_disk = op.get("on_disk").and_then(Value::as_bool).unwrap_or(false);
+                let mut partial = None;
+                if late_list.is_empty() && !ambiguous && late && !on_disk {
+                    if let Some(c) = &content {
+                        let av = rootmarkcore::attest::block_versions(c, &doc)?;
+                        let w = self.window.window_ms;
+                        let hits: Vec<usize> = (0..self.pending.len())
+                            .filter(|&i| {
+                                let p = &self.pending[i];
+                                p.0 == doc
+                                    && p.1 != h
+                                    && at.saturating_sub(p.2) <= w
+                                    && rootmarkcore::attest::covers(&p.3, &av)
+                            })
+                            .collect();
+                        if hits.len() == 1 {
+                            let p = self.pending[hits[0]].clone();
+                            // the lineages the change named (as the server
+                            // remembers them), while it is still in the window
+                            let rs = self
+                                .window
+                                .pending_lineages(&p.0, &p.1, p.2)
+                                .and_then(|_| {
+                                    rootmarkcore::attest::late_partial_raises(&p.3, &av, &p.4)
+                                })
+                                .filter(|r| !r.is_empty());
+                            if let Some(rs) = rs {
+                                self.window.take_unattested(&p.0, &p.1, p.2);
+                                self.pending.remove(hits[0]);
+                                a.partial = Some(true);
+                                self.window.forget(&a.attestation_id);
+                                partial = Some(rs);
+                            }
+                        }
+                    }
+                }
+                self.pending.retain(|p| !(p.0 == doc && p.1 == h));
+                let (a, recorded) = self.v()?.record_attestation_line(a)?;
                 let mut raised = Vec::new();
-                for u in self.window.attest_with(&a, at, late) {
+                for u in late_list {
                     for e in self
                         .v()?
                         .raise_late(&u.doc_path, &u.lineages, &a.attestation_id)?
                     {
+                        raised.push(json!([e.lineage_ids[0], e.meta["to"]]));
+                    }
+                }
+                if let Some(rs) = partial {
+                    for e in self.v()?.raise_late(&doc, &rs, &a.attestation_id)? {
                         raised.push(json!([e.lineage_ids[0], e.meta["to"]]));
                     }
                 }
@@ -603,6 +734,8 @@ impl Run<'_> {
                     "content_hash" => a["content_hash"] = json!("ABC"),
                     "doc_path" => a["doc_path"] = json!("../outside.md"),
                     "at_seq" => a["at_seq"] = json!(1_000_000),
+                    // C2-13: `partial` is written only as true
+                    "partial_false" => a["partial"] = json!(false),
                     "duplicate" => {}
                     "remove" => {}
                     o => bail!("unknown change {o:?}"),
@@ -714,6 +847,7 @@ pub fn evaluate_c2(dir: &Path) -> Result<Value> {
                 .and_then(Value::as_u64)
                 .unwrap_or(rootmarkcore::attest::DEFAULT_WINDOW_MS),
         ),
+        pending: Vec::new(),
     };
     let mut out = Vec::new();
     for (i, op) in case

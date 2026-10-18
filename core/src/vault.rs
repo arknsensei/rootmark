@@ -1057,6 +1057,25 @@ impl Vault {
     ) -> Result<(crate::attest::Attestation, bool)> {
         let a =
             crate::attest::Attestation::new(doc_path, content_hash, self.next_seq, saved_at_seq)?;
+        self.record_attestation_line(a)
+    }
+
+    /// Records `a` (built for this log's next seq, its optional fields set
+    /// by the caller: `partial`, `matched`, P2-0.1) unless an attestation
+    /// with its id is already in the log: `(the logged one, false)`.
+    pub fn record_attestation_line(
+        &mut self,
+        a: crate::attest::Attestation,
+    ) -> Result<(crate::attest::Attestation, bool)> {
+        a.check(self.next_seq)?;
+        if a.at_seq != self.next_seq {
+            bail!(
+                "attestation {}: at_seq {} is not the log's next seq {}",
+                a.attestation_id,
+                a.at_seq,
+                self.next_seq
+            );
+        }
         if let Some(old) = self
             .attestations()?
             .into_iter()

@@ -51,6 +51,9 @@ export interface SavedHow {
    * server checks the bytes differ from the head only in link targets
    * naming it) */
   linkUpdateOf?: string;
+  /** with `linkUpdateOf`: the renamed note's old path (the server checks
+   * every changed link named it; Y1 security review) */
+  linkUpdateFrom?: string;
 }
 
 /** Called with a note this Obsidian saved and the exact bytes it wrote (an
@@ -81,7 +84,7 @@ export function observeOwnWrites(
   const proc = adapter.process.bind(adapter);
   // the recent note renames this Obsidian made: (new path, when it
   // finished), newest last
-  const renames: { to: string; at: number }[] = [];
+  const renames: { from: string; to: string; at: number }[] = [];
   // the content_hash of the bytes this Obsidian last reported, by path
   const reported = new Map<string, string>();
   const report = (path: string, bytes: Uint8Array, how: SavedHow = {}): void => {
@@ -115,7 +118,7 @@ export function observeOwnWrites(
     const allowed = before !== null && (await mayReportRename(from).catch(() => false));
     await rename(from, to);
     if (isNote(to)) {
-      renames.push({ to, at: now() });
+      renames.push({ from, to, at: now() });
       if (renames.length > 16) renames.shift();
     }
     if (!allowed) return;
@@ -153,7 +156,7 @@ export function observeOwnWrites(
     const bytes = new TextEncoder().encode(out);
     const after = await bytesOf(path);
     // reported only when the file holds what this process call wrote
-    if (after !== null && same(after, bytes)) report(path, bytes, { linkUpdateOf: r.to });
+    if (after !== null && same(after, bytes)) report(path, bytes, { linkUpdateOf: r.to, linkUpdateFrom: r.from });
     return out;
   };
   return () => {

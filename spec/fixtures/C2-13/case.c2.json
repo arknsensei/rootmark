@@ -1,0 +1,171 @@
+{
+  "id": "C2-13",
+  "title": "Partial match (spec 2.0.1 \u00a77.1, \u00a78; P2-0.1 T2): an attestation carrying the saved bytes (content), observed together with an agent's append in one change: the attested bytes are ingested as an attested change (canonical), the line partial: true, then the rest unattested (unverified); attested late: only the attested lineages are raised; an exact match with content is an ordinary match; an agent's copy of an existing human block stays unverified; content that is not the attested bytes is refused; an observation without the attested blocks stays unverified; partial is written only as true; a save made after a pending agent change is never a late partial match \u2014 the file holding the attested bytes (on_disk), or saved bytes lacking a block the change kept",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "window_ms": 2000,
+  "ops": [
+    {
+      "op": "ingest",
+      "doc": "notes.md",
+      "file": "l0.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "attest",
+      "doc": "notes.md",
+      "file": "h1.md",
+      "at_ms": 1000,
+      "content": true
+    },
+    {
+      "op": "external",
+      "doc": "notes.md",
+      "file": "o1.md",
+      "at_ms": 1100
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "external",
+      "doc": "notes.md",
+      "file": "o2.md",
+      "at_ms": 5000
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "attest",
+      "doc": "notes.md",
+      "file": "h2.md",
+      "at_ms": 5500,
+      "content": true
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "attest",
+      "doc": "notes.md",
+      "file": "h3.md",
+      "at_ms": 9000,
+      "content": true
+    },
+    {
+      "op": "external",
+      "doc": "notes.md",
+      "file": "h3.md",
+      "at_ms": 9100
+    },
+    {
+      "op": "attest",
+      "doc": "notes.md",
+      "file": "h4.md",
+      "at_ms": 12000,
+      "content": true
+    },
+    {
+      "op": "external",
+      "doc": "notes.md",
+      "file": "o4.md",
+      "at_ms": 12100
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "attest",
+      "doc": "notes.md",
+      "file": "h6.md",
+      "at_ms": 15000,
+      "content_file": "x.md",
+      "expect_err": "does not hash"
+    },
+    {
+      "op": "attest",
+      "doc": "notes.md",
+      "file": "h6.md",
+      "at_ms": 15100,
+      "content": true
+    },
+    {
+      "op": "external",
+      "doc": "notes.md",
+      "file": "o6.md",
+      "at_ms": 15200
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "ingest",
+      "doc": "late.md",
+      "file": "k0.md",
+      "author": "human",
+      "source": "editor"
+    },
+    {
+      "op": "external",
+      "doc": "late.md",
+      "file": "k1.md",
+      "at_ms": 20000
+    },
+    {
+      "op": "attest",
+      "doc": "late.md",
+      "file": "k2.md",
+      "at_ms": 20500,
+      "content": true,
+      "on_disk": true
+    },
+    {
+      "op": "external",
+      "doc": "late.md",
+      "file": "k2.md",
+      "at_ms": 20600
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "external",
+      "doc": "late.md",
+      "file": "k3.md",
+      "at_ms": 30000
+    },
+    {
+      "op": "attest",
+      "doc": "late.md",
+      "file": "k4.md",
+      "at_ms": 30500,
+      "content": true
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "events"
+    },
+    {
+      "op": "attestations"
+    },
+    {
+      "op": "attestation_tamper",
+      "change": "partial_false",
+      "expect_open_err": "partial is written only as true"
+    },
+    {
+      "op": "layers"
+    },
+    {
+      "op": "fingerprint"
+    }
+  ]
+}

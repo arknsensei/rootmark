@@ -41,16 +41,16 @@ if [ -f "$dist/release.json" ]; then
   item R4a "release package fresh (inputs of ${pc:0:7} = HEAD, clean tree, version)" "$( [ -z "$why" ]; echo $?)" "$why"
   # K-E1.1: the required target (aarch64-apple-darwin) passes with its hash;
   # the other targets are information (recorded, or recorded as skipped)
-  item R4 "release binary aarch64-apple-darwin: --version, --spec-version, rootmark conformance 37/37, sha256" \
+  item R4 "release binary aarch64-apple-darwin: --version, --spec-version, rootmark conformance 38/38, sha256" \
     "$(jq -e --arg ver "$ver" --arg spec "$spec" '.required_ok == true and .required_targets == ["aarch64-apple-darwin"]
       and all(.targets[]; .ok or .skipped == true or .required == false)
       and (.targets[] | select(.target == "aarch64-apple-darwin")
         | .ok and .version == ("rootmark " + $ver) and .spec_version == $spec and (.sha256 | test("^[0-9a-f]{64}$"))
-          and .conformance.passed == 37 and .conformance.total == 37)' "$dist/release.json" >/dev/null; echo $?)" \
+          and .conformance.passed == 38 and .conformance.total == 38)' "$dist/release.json" >/dev/null; echo $?)" \
     "$(jq -r '[.targets[] | "\(.target)\(if .required then "" else " (CI info)" end): \(if .ok then "ok" elif .built then "built, check failed" else "skipped" end)"] | join("; ")' "$dist/release.json")"
 else
   item R4a "release package fresh" 1 "dist/release.json missing (scripts/release.sh)"
-  item R4 "release binaries pass rootmark conformance 37/37" 1 "dist/release.json missing (scripts/release.sh)"
+  item R4 "release binaries pass rootmark conformance 38/38" 1 "dist/release.json missing (scripts/release.sh)"
 fi
 tmp="$(mktemp -d -t rootmark-relcheck.XXXXXX)"; trap 'rm -rf "$tmp"' EXIT
 # a fresh make report (a stale reports/conformance.json never counts) and
@@ -74,7 +74,7 @@ sd="$dist/spec-$spec"
 item R9 "spec publication dist/spec-$spec" "$( for f in SPEC.md CONFORMANCE.md LICENSE fixtures/MANIFEST.json conformance.json; do [ -f "$sd/$f" ] || exit 1; done
   cmp -s "$sd/SPEC.md" spec/SPEC.md && cmp -s "$sd/CONFORMANCE.md" spec/CONFORMANCE.md && cmp -s "$sd/LICENSE" LICENSE \
   && diff -rq -x .DS_Store -x .rootmark "$sd/fixtures" spec/fixtures >/dev/null \
-  && jq -e '.level_claimed == 3 and .passed == 37 and .total == 37 and .fixtures_manifest == "ok"' "$sd/conformance.json" >/dev/null; echo $?)"
+  && jq -e '.level_claimed == 3 and .passed == 38 and .total == 38 and .fixtures_manifest == "ok"' "$sd/conformance.json" >/dev/null; echo $?)"
 item R10 "LICENSE Apache-2.0" "$( grep -q 'Apache License' LICENSE && grep -q 'Version 2.0, January 2004' LICENSE && for a in "$dist"/bin/*.tar.gz; do tar -tzf "$a" >"$tmp/tar.list" && grep -q '/LICENSE$' "$tmp/tar.list" || exit 1; done; echo $?)"
 item R11 "CHANGELOG, THREAT_MODEL, RELEASE" "$( grep -q "^## $ver" CHANGELOG.md && [ -f docs/THREAT_MODEL.md ] && [ -f docs/RELEASE.md ]; echo $?)"
 item R12 "cargo-binstall metadata, Homebrew draft" "$( grep -q '^\[package.metadata.binstall\]' server/Cargo.toml && grep -q "version \"$ver\"" "$dist/homebrew/rootmark.rb" && ! grep -q '@SHA256' "$dist/homebrew/rootmark.rb"; echo $?)"

@@ -316,6 +316,16 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z7-fix:` | yeniden dondurma P2-0/F15: etkin editör beklemesi, adlandırılmış yazılmayan not |
 | `research/eval/**` | `P2-0/Z7-rev:` | yeniden dondurma P2-0/F16: `report_p2_0.py` (karar "bekler" dalı, devralınan kararlar) |
 | `research/eval/**` | `P2-0/Z8-pre:` | yeniden dondurma P2-0/F17: `report_p2_0.py` metin düzeltmeleri |
+| `core/tests/conformance/eval_c2.rs` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F1: C2-13 işlemleri (spec 2.0.1, kısmi eşleşme) |
+| `core/tests/conformance.rs` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F1: Seviye 2 = 13 test, `spec_version` 2.0.1 |
+| `core/tests/conformance_c2_gen.rs` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F1: 13 C2 dizini |
+| `index/tests/conformance_c3.rs` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F1: alt seviyeler toplamı 30 |
+| `spec/fixtures/**` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F2: C2-13 fixture'ı, MANIFEST yalnız ekleme |
+| `scripts/test_tamper_p1c.sh` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F3: uyumluluk toplamı 38 |
+| `scripts/test_tamper_p1d1.sh` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F3: uyumluluk toplamı 38 |
+| `scripts/release_local.sh` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F3: uyumluluk toplamı 38 |
+| `scripts/release_target.sh` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F3: uyumluluk toplamı 38 |
+| `scripts/release_check.sh` | `P2-0.1/Y2:` | yeniden dondurma P2-0.1/F3: uyumluluk toplamı 38 |
 <!-- /frozen-table -->
 
 ## Notlar

@@ -112,6 +112,10 @@ enum Cmd {
         /// ingested (only later observations of these bytes count)
         #[arg(long)]
         all: bool,
+        /// the one document was renamed from this path (`mv`): the server
+        /// accepts it only as a rename of canonical content (P2-0.1 T3)
+        #[arg(long = "renamed-from")]
+        renamed_from: Option<String>,
     },
     /// Promote a lineage proposal → canonical through the vault's promotion policy
     Promote {
@@ -446,7 +450,15 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             out["layers"] = Value::Array(layers);
             out
         }
-        Cmd::Attest { vault, docs, all } => {
+        Cmd::Attest {
+            vault,
+            docs,
+            all,
+            renamed_from,
+        } => {
+            if renamed_from.is_some() && (all || docs.len() != 1) {
+                bail!("rootmark attest: --renamed-from goes with exactly one document");
+            }
             let docs = match (all, docs.is_empty()) {
                 (true, true) => rootmarkcore::files::markdown_files(&vault)?
                     .into_iter()
@@ -457,7 +469,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
                 (false, true) => bail!("rootmark attest: no document (give paths or --all)"),
             };
             // `--all` never raises an earlier unattested change (late: false)
-            rootmarkserver::attest::cli_attest(&vault, &docs, !all)?
+            rootmarkserver::attest::cli_attest(&vault, &docs, !all, renamed_from.as_deref())?
         }
         Cmd::Promote {
             vault,

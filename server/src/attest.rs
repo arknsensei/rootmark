@@ -64,6 +64,10 @@ pub enum Ingest {
     Attested(String),
     /// not attested at its observation: `unverified`, actor `unattested_fs`
     Unverified,
+    /// a partial match (P2-0.1 T2): the attestation's id and the bytes it
+    /// vouched for (as text); those are ingested first as an attested change,
+    /// then the observed bytes as an unattested one
+    Partial(String, String),
 }
 
 /// The actor of an unattested external change (spec §7.1).
@@ -94,7 +98,20 @@ pub struct Attesting {
     /// observed ms, the document's head before the ingest) — a late link
     /// update is checked against the state before the change it would
     /// raise (P2-0.1 Y1 review 1)
-    bases: Mutex<Vec<(String, String, u64, rootmarkcore::attest::LinkBase)>>,
+    /// and the observed blocks' versions (a late partial match, T2)
+    bases: Mutex<Vec<Pending>>,
+}
+
+/// An unattested ingest in its window, as the server remembers it beside
+/// the matcher (P2-0.1): the document's head before it and the observed
+/// blocks' versions.
+#[derive(Debug, Clone)]
+pub struct Pending {
+    pub doc: String,
+    pub content_hash: String,
+    pub observed_ms: u64,
+    pub base: rootmarkcore::attest::LinkBase,
+    pub observed: Vec<String>,
 }
 
 /// Rename attestations remembered at most (the oldest is dropped).
@@ -128,29 +145,28 @@ impl Attesting {
         content_hash: &str,
         observed_ms: u64,
         base: Option<rootmarkcore::attest::LinkBase>,
+        observed: Vec<String>,
     ) -> Result<()> {
         let w = policy.attestation.window_ms;
         let mut b = self
             .bases
             .lock()
             .map_err(|_| anyhow::anyhow!("base lock poisoned"))?;
-        b.retain(|x| observed_ms.saturating_sub(x.2) <= w);
-        if let Some(base) = base {
-            b.push((doc.to_string(), content_hash.to_string(), observed_ms, base));
-        } else {
-            // a new document: an empty base (every block is new, so no link
-            // update of it can raise anything)
-            b.push((
-                doc.to_string(),
-                content_hash.to_string(),
-                observed_ms,
-                rootmarkcore::attest::LinkBase {
-                    doc_path: doc.to_string(),
-                    frontmatter: None,
-                    blocks: Vec::new(),
-                },
-            ));
-        }
+        b.retain(|x| observed_ms.saturating_sub(x.observed_ms) <= w);
+        // a new document: an empty base (every block is new, so no link
+        // update of it can raise anything)
+        let base = base.unwrap_or(rootmarkcore::attest::LinkBase {
+            doc_path: doc.to_string(),
+            frontmatter: None,
+            blocks: Vec::new(),
+        });
+        b.push(Pending {
+            doc: doc.to_string(),
+            content_hash: content_hash.to_string(),
+            observed_ms,
+            base,
+            observed,
+        });
         Ok(())
     }
 
@@ -171,7 +187,11 @@ impl Attesting {
             .map_err(|_| anyhow::anyhow!("base lock poisoned"))?;
         let m: Vec<_> = b
             .iter()
-            .filter(|x| x.0 == doc && x.1 == content_hash && now.saturating_sub(x.2) <= w)
+            .filter(|x| {
+                x.doc == doc
+                    && x.content_hash == content_hash
+                    && now.saturating_sub(x.observed_ms) <= w
+            })
             .collect();
         if m.len() > 1 {
             // the same bytes observed unattested more than once: which
@@ -179,7 +199,7 @@ impl Attesting {
             // window raises none, Y1 security review B5)
             bail!("{doc}: these bytes were observed unattested more than once in the window");
         }
-        Ok(m.first().map(|x| x.3.clone()))
+        Ok(m.first().map(|x| x.base.clone()))
     }
 
     /// Forgets the bases of `doc`'s unattested ingests of `content_hash`
@@ -190,7 +210,64 @@ impl Attesting {
             .bases
             .lock()
             .map_err(|_| anyhow::anyhow!("base lock poisoned"))?;
-        b.retain(|x| !(x.0 == doc && x.1 == content_hash));
+        b.retain(|x| !(x.doc == doc && x.content_hash == content_hash));
+        Ok(())
+    }
+
+    /// A late partial match (P2-0.1 T2): the one unattested ingest of `doc`
+    /// in its window, of other bytes than `content_hash`, whose observed
+    /// blocks contain the attested blocks `attested` (versions) and that
+    /// they can precede (`late_partial_raises`: the saved bytes hold every
+    /// block the change left as it was) — taken out of the window, with the
+    /// lineages to raise. More than one candidate is ambiguous, and a match
+    /// that would raise nothing is none (the attestation then stays for its
+    /// own observation; Y2 review 1 b, c).
+    pub fn late_partial(
+        &self,
+        policy: &Policy,
+        doc: &str,
+        content_hash: &str,
+        attested: &[String],
+    ) -> Result<Option<Vec<rootmarkcore::attest::Raise>>> {
+        let now = self.now_ms();
+        let w = policy.attestation.window_ms;
+        let mut b = self
+            .bases
+            .lock()
+            .map_err(|_| anyhow::anyhow!("base lock poisoned"))?;
+        let m: Vec<usize> = b
+            .iter()
+            .enumerate()
+            .filter(|(_, x)| {
+                x.doc == doc
+                    && x.content_hash != content_hash
+                    && now.saturating_sub(x.observed_ms) <= w
+                    && rootmarkcore::attest::covers(&x.observed, attested)
+            })
+            .map(|(i, _)| i)
+            .collect();
+        if m.len() != 1 {
+            return Ok(None);
+        }
+        let mut win = self.window(policy)?;
+        let p = &b[m[0]];
+        let Some(lineages) = win.pending_lineages(&p.doc, &p.content_hash, p.observed_ms) else {
+            return Ok(None);
+        };
+        let raises =
+            match rootmarkcore::attest::late_partial_raises(&p.observed, attested, &lineages) {
+                Some(r) if !r.is_empty() => r,
+                _ => return Ok(None),
+            };
+        win.take_unattested(&p.doc, &p.content_hash, p.observed_ms);
+        b.remove(m[0]);
+        Ok(Some(raises))
+    }
+
+    /// Forgets a recorded attestation in the window (it matched late,
+    /// partially).
+    pub fn forget(&self, policy: &Policy, attestation_id: &str) -> Result<()> {
+        self.window(policy)?.forget(attestation_id);
         Ok(())
     }
 
@@ -275,14 +352,19 @@ impl Attesting {
         policy: &Policy,
         doc_path: &str,
         content_hash: &str,
+        text: &str,
     ) -> Result<(Ingest, u64)> {
         let now = self.now_ms();
         if !policy.attestation.unverified {
             return Ok((Ingest::Canonical, now));
         }
-        let i = match self.window(policy)?.observe(doc_path, content_hash, now) {
+        let mut w = self.window(policy)?;
+        let i = match w.observe(doc_path, content_hash, now) {
             Some(id) => Ingest::Attested(id),
-            None => Ingest::Unverified,
+            None => match w.observe_partial(doc_path, text, now)? {
+                Some((id, saved)) => Ingest::Partial(id, saved),
+                None => Ingest::Unverified,
+            },
         };
         Ok((i, now))
     }
@@ -313,9 +395,10 @@ impl Attesting {
         policy: &Policy,
         a: &rootmarkcore::attest::Attestation,
         late: bool,
-    ) -> Result<Vec<Unattested>> {
+        content: Option<String>,
+    ) -> Result<(Vec<Unattested>, bool)> {
         let now = self.now_ms();
-        Ok(self.window(policy)?.attest_with(a, now, late))
+        Ok(self.window(policy)?.attest_content(a, now, late, content))
     }
 
     /// Unattested ingests still inside their window.
@@ -439,10 +522,17 @@ fn post(
 /// `late = false` (`--all`) nothing already ingested is raised: a bulk
 /// attestation must not launder an unattested change it did not look at
 /// (security review of P2-0/Z2); it counts for the next observations only.
+///
+/// Each attestation carries the bytes read (`content`, UTF-8; P2-0.1 T2:
+/// a partial match when another writer's bytes reach the file in the same
+/// observation), except for `--all`. `renamed_from` (one document, `mv`):
+/// the server accepts it only as a rename of canonical content (contract
+/// §2.6; P2-0.1 T3).
 pub fn cli_attest(
     vault: &std::path::Path,
     docs: &[String],
     late: bool,
+    renamed_from: Option<&str>,
 ) -> Result<serde_json::Value> {
     let policy = Policy::load(vault)?;
     let cfg = crate::config::ServerConfig::from_policy(&policy)?;
@@ -470,13 +560,17 @@ pub fn cli_attest(
         let bytes =
             std::fs::read(&path).map_err(|e| anyhow::anyhow!("read {}: {e}", path.display()))?;
         let h = rootmarkcore::attest::content_hash(&bytes);
-        out.push(post(
-            port,
-            &token,
-            "attest",
-            &serde_json::json!({"doc_path": d, "content_hash": h, "session_id": sid,
-                "mac": mac(&key, &mac_message(d, &h, None)), "late": late}),
-        )?);
+        let mut body = serde_json::json!({"doc_path": d, "content_hash": h, "session_id": sid,
+            "mac": mac(&key, &mac_message(d, &h, None)), "late": late});
+        if late {
+            if let Ok(text) = std::str::from_utf8(&bytes) {
+                body["content"] = serde_json::json!(text);
+            }
+        }
+        if let Some(from) = renamed_from {
+            body["renamed_from"] = serde_json::json!(from);
+        }
+        out.push(post(port, &token, "attest", &body)?);
     }
     Ok(serde_json::json!({"attested": out.len(), "attestations": out}))
 }

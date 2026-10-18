@@ -1,0 +1,899 @@
+{
+  "id": "C2-13",
+  "output": [
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "55020a979eca2f2d8d7576a721861a97"
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 5,
+        "attestation_id": "e185a650a05feb5602937cdaa0bab8d1",
+        "raised": [],
+        "recorded": true
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attested": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "partial"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c0f6d6d9ac443038900068e058537ad2"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "86c38594a4ae0d00952d537b993feeee"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "637ae4ea1f3c31f8e15d5a76c84f7f9b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5125ec901fcfcf6ed34a9824ef381c28"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "unverified"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c0f6d6d9ac443038900068e058537ad2"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "86c38594a4ae0d00952d537b993feeee"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "637ae4ea1f3c31f8e15d5a76c84f7f9b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5125ec901fcfcf6ed34a9824ef381c28"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "426a8036a8b21fa793857d215f8469e5"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "57b5b8a1d66465c07f8be3353ff1273b"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 12,
+        "attestation_id": "6f157e2d42e18d759e27ae396f64807b",
+        "raised": [
+          [
+            "426a8036a8b21fa793857d215f8469e5",
+            "canonical"
+          ]
+        ],
+        "recorded": true
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c0f6d6d9ac443038900068e058537ad2"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "86c38594a4ae0d00952d537b993feeee"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "637ae4ea1f3c31f8e15d5a76c84f7f9b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5125ec901fcfcf6ed34a9824ef381c28"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "426a8036a8b21fa793857d215f8469e5"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "57b5b8a1d66465c07f8be3353ff1273b"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 13,
+        "attestation_id": "adffca7db585d38171690704bb88dc6b",
+        "raised": [],
+        "recorded": true
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "attested"
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 15,
+        "attestation_id": "005e7dfe0f15b593635c06bd16d2dab1",
+        "raised": [],
+        "recorded": true
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attested": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "partial"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c0f6d6d9ac443038900068e058537ad2"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "86c38594a4ae0d00952d537b993feeee"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "637ae4ea1f3c31f8e15d5a76c84f7f9b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5125ec901fcfcf6ed34a9824ef381c28"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "426a8036a8b21fa793857d215f8469e5"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "57b5b8a1d66465c07f8be3353ff1273b"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "2f343aaa4e6f9e1b4049bc5908d28031"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6081680eb85ce39335827e1c0ea9854c"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "eb4049fc763d8ae29ea23227f015ca83"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "err": true
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 19,
+        "attestation_id": "86177768bd32c16356c8307c934926ba",
+        "raised": [],
+        "recorded": true
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "unverified"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c0f6d6d9ac443038900068e058537ad2"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "86c38594a4ae0d00952d537b993feeee"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "637ae4ea1f3c31f8e15d5a76c84f7f9b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5125ec901fcfcf6ed34a9824ef381c28"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "426a8036a8b21fa793857d215f8469e5"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "57b5b8a1d66465c07f8be3353ff1273b"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "2f343aaa4e6f9e1b4049bc5908d28031"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6081680eb85ce39335827e1c0ea9854c"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "eb4049fc763d8ae29ea23227f015ca83"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "448faa411d0ac5df56fb0fce7804f91c"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "14fe0f9f18a6af460bffdf277ffdc7ab"
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "unverified"
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 27,
+        "attestation_id": "bc54255351b7e3a635ff8b247861b23b",
+        "raised": [],
+        "recorded": true
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attributed": [
+          [
+            "BlockDeleted",
+            {
+              "id": "conformance",
+              "kind": "human"
+            },
+            "watch",
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "attested"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "late.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "b7e228b1b86245f5cf6ac9f07137173a"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "243f9102c088df29f7e651251b56a895"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "87bc6494c0ed0faf58787d8c1f4e150e"
+            }
+          ],
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c0f6d6d9ac443038900068e058537ad2"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "86c38594a4ae0d00952d537b993feeee"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "637ae4ea1f3c31f8e15d5a76c84f7f9b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5125ec901fcfcf6ed34a9824ef381c28"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "426a8036a8b21fa793857d215f8469e5"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "57b5b8a1d66465c07f8be3353ff1273b"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "2f343aaa4e6f9e1b4049bc5908d28031"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6081680eb85ce39335827e1c0ea9854c"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "eb4049fc763d8ae29ea23227f015ca83"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "448faa411d0ac5df56fb0fce7804f91c"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "unverified"
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 31,
+        "attestation_id": "2a05650840dee8453295ea7825043437",
+        "raised": [],
+        "recorded": true
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "late.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "b7e228b1b86245f5cf6ac9f07137173a"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "243f9102c088df29f7e651251b56a895"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "87bc6494c0ed0faf58787d8c1f4e150e"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "ab6aaa766b3ca8b46793b6d503c02ab4"
+            }
+          ],
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c0f6d6d9ac443038900068e058537ad2"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "86c38594a4ae0d00952d537b993feeee"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "637ae4ea1f3c31f8e15d5a76c84f7f9b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5125ec901fcfcf6ed34a9824ef381c28"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "426a8036a8b21fa793857d215f8469e5"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "57b5b8a1d66465c07f8be3353ff1273b"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "2f343aaa4e6f9e1b4049bc5908d28031"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6081680eb85ce39335827e1c0ea9854c"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "eb4049fc763d8ae29ea23227f015ca83"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "448faa411d0ac5df56fb0fce7804f91c"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "events",
+      "result": [
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "LayerChanged",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockDeleted",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted"
+      ]
+    },
+    {
+      "op": "attestations",
+      "result": "{\"attestation_id\":\"e185a650a05feb5602937cdaa0bab8d1\",\"doc_path\":\"notes.md\",\"content_hash\":\"b262d4a29865fc892f78fc75db9e8e40\",\"at_seq\":5}\n{\"attestation_id\":\"bda1d6d8a3d7730a38f342ede21d22ff\",\"doc_path\":\"notes.md\",\"content_hash\":\"b262d4a29865fc892f78fc75db9e8e40\",\"at_seq\":7,\"partial\":true}\n{\"attestation_id\":\"6f157e2d42e18d759e27ae396f64807b\",\"doc_path\":\"notes.md\",\"content_hash\":\"87e1d58e24064c9017167a2c1da3b434\",\"at_seq\":12,\"partial\":true}\n{\"attestation_id\":\"adffca7db585d38171690704bb88dc6b\",\"doc_path\":\"notes.md\",\"content_hash\":\"acf0eed38fd3fa270940435d17bebaf4\",\"at_seq\":13}\n{\"attestation_id\":\"005e7dfe0f15b593635c06bd16d2dab1\",\"doc_path\":\"notes.md\",\"content_hash\":\"dcda1046412e266aa95709ec9d23b7e1\",\"at_seq\":15}\n{\"attestation_id\":\"ea6d890db5c2d414bd1b5533ec8cae56\",\"doc_path\":\"notes.md\",\"content_hash\":\"dcda1046412e266aa95709ec9d23b7e1\",\"at_seq\":17,\"partial\":true}\n{\"attestation_id\":\"86177768bd32c16356c8307c934926ba\",\"doc_path\":\"notes.md\",\"content_hash\":\"544d0fad0082c90a077b8361c1b06c32\",\"at_seq\":19}\n{\"attestation_id\":\"bc54255351b7e3a635ff8b247861b23b\",\"doc_path\":\"late.md\",\"content_hash\":\"59e9705b9b6c9922216dba4914aa08c8\",\"at_seq\":27}\n{\"attestation_id\":\"2a05650840dee8453295ea7825043437\",\"doc_path\":\"late.md\",\"content_hash\":\"635532c1778f76794a741c4cdadceebe\",\"at_seq\":31}\n"
+    },
+    {
+      "op": "attestation_tamper",
+      "result": {
+        "open_err": "partial is written only as true"
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "late.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "b7e228b1b86245f5cf6ac9f07137173a"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "243f9102c088df29f7e651251b56a895"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "87bc6494c0ed0faf58787d8c1f4e150e"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "ab6aaa766b3ca8b46793b6d503c02ab4"
+            }
+          ],
+          "notes.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "08a17d817d6f17c62060b6211062dbfd"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c0f6d6d9ac443038900068e058537ad2"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ef6c59efefcf814639bad41d33b2f1ae"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "86c38594a4ae0d00952d537b993feeee"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "637ae4ea1f3c31f8e15d5a76c84f7f9b"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5125ec901fcfcf6ed34a9824ef381c28"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "426a8036a8b21fa793857d215f8469e5"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "57b5b8a1d66465c07f8be3353ff1273b"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "2f343aaa4e6f9e1b4049bc5908d28031"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6081680eb85ce39335827e1c0ea9854c"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "eb4049fc763d8ae29ea23227f015ca83"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "448faa411d0ac5df56fb0fce7804f91c"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "fingerprint",
+      "result": {
+        "events_hash": "c7328ba196b9ccaef4875ec594913f72"
+      }
+    }
+  ]
+}

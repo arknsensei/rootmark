@@ -32,7 +32,7 @@ use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
 /// Spec version this build implements (spec/SPEC.md title).
-pub const SPEC_VERSION: &str = "2.0.0";
+pub const SPEC_VERSION: &str = "2.0.1";
 /// Conformance level the reference implementation claims (spec §12;
 /// `make conformance`).
 pub const LEVEL_CLAIMED: u8 = 3;
@@ -361,6 +361,12 @@ struct AttestArgs {
     /// document's head in link targets naming that note, in canonical
     /// blocks (contract §2.6)
     link_update_of: Option<String>,
+    /// with `link_update_of`: the renamed note's old path as the client
+    /// knows it (used when no accepted rename attestation gave it)
+    link_update_from: Option<String>,
+    /// the saved bytes (UTF-8 text; P2-0.1 T2): they must hash to
+    /// `content_hash`; kept in memory for a partial match, never stored
+    content: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -612,11 +618,71 @@ impl Kernel {
             let e = self.embedder()?;
             let mut s = Store::open(&v, e.as_ref())?;
             let (policy, _) = self.policy()?;
-            let (plan, after) = self.external_plan(&v, &policy, doc, &bytes, source)?;
-            let r = s.watch_plan(&mut v, e.as_ref(), plan)?;
-            after.done(self, &v, &policy)?;
-            Ok(r)
+            let (_, r) = self.ingest_external(
+                &mut v,
+                Some((&mut s, e.as_ref())),
+                &policy,
+                doc,
+                &bytes,
+                source,
+            )?;
+            Ok(r.expect("a store was given"))
         })
+    }
+
+    /// Ingests an external change of `doc` (`external_plan`) and commits it
+    /// (with `store`: the hot tier too). A partial match (P2-0.1 T2) is two
+    /// commits: the attested bytes as an attested change, the line
+    /// `{doc_path, content_hash, at_seq, partial: true}` in the attestation
+    /// log, then the observed bytes as an unattested change. The number of
+    /// events and, with a store, its report (the two merged).
+    fn ingest_external(
+        &self,
+        v: &mut Vault,
+        mut store: Option<(&mut Store, &dyn rootmarkindex::Embedder)>,
+        policy: &Policy,
+        doc: &str,
+        bytes: &[u8],
+        source: &str,
+    ) -> Result<(usize, Option<store::WatchReport>)> {
+        let mut events = 0;
+        let mut report: Option<store::WatchReport> = None;
+        let mut force_unattested = false;
+        loop {
+            let (plan, after) =
+                self.external_plan(v, policy, doc, bytes, source, force_unattested)?;
+            let n = plan.events.len();
+            match &mut store {
+                Some((s, e)) => {
+                    let r = s.watch_plan(v, *e, plan)?;
+                    report = Some(match report.take() {
+                        None => r,
+                        Some(mut old) => {
+                            old.events += r.events;
+                            old.embedded += r.embedded;
+                            old.snapshot_id = r.snapshot_id;
+                            old.chunks = r.chunks;
+                            old
+                        }
+                    });
+                }
+                None => {
+                    v.commit_plan(plan)?;
+                }
+            }
+            events += n;
+            let partial = after.partial_hash();
+            after.done(self, v, policy)?;
+            let Some(saved_hash) = partial else {
+                return Ok((events, report));
+            };
+            // the rest of the observed bytes: unattested
+            let mut line =
+                rootmarkcore::attest::Attestation::new(doc, &saved_hash, v.next_seq(), None)?;
+            line.partial = Some(true);
+            v.record_attestation_line(line)?;
+            force_unattested = true;
+        }
     }
 
     /// The ingest of an external change of `doc` (the watcher, and
@@ -633,6 +699,7 @@ impl Kernel {
         doc: &str,
         bytes: &[u8],
         source: &str,
+        force_unattested: bool,
     ) -> Result<(rootmarkcore::IngestPlan, External)> {
         let text = std::str::from_utf8(bytes)
             .with_context(|| format!("{doc} is not UTF-8"))?
@@ -654,7 +721,35 @@ impl Kernel {
         if probe.events.is_empty() {
             return Ok((probe, External::nothing(doc, &hash)));
         }
-        let (ingest, observed_ms) = self.attesting.decide(policy, doc, &hash)?;
+        let (ingest, observed_ms) = if force_unattested {
+            (Ingest::Unverified, self.attesting.now_ms())
+        } else {
+            self.attesting.decide(policy, doc, &hash, &text)?
+        };
+        if let Ingest::Partial(_, saved) = &ingest {
+            // the attested bytes first, as an attested change (P2-0.1 T2)
+            let plan = v.plan_ingest(
+                doc,
+                saved,
+                Provenance {
+                    author_kind: AuthorKind::Human,
+                    source: source.to_string(),
+                },
+                m,
+                None,
+                Some(&self.watch_actor()?),
+            )?;
+            return Ok((
+                plan,
+                External {
+                    doc: doc.to_string(),
+                    hash: rootmarkcore::attest::content_hash(saved.as_bytes()),
+                    ingest,
+                    observed_ms,
+                    named: Vec::new(),
+                },
+            ));
+        }
         // the layer an attested ingest gives each lineage: what a late
         // attestation restores (spec 2.0.0 §7.1)
         let attested_layers: std::collections::HashMap<String, rootmarkcore::Layer> = probe
@@ -669,10 +764,11 @@ impl Kernel {
                 &hash,
                 observed_ms,
                 rootmarkcore::attest::LinkBase::head(v, doc)?,
+                rootmarkcore::attest::block_versions(&text, doc)?,
             )?;
         }
         let plan = match &ingest {
-            Ingest::Canonical | Ingest::Attested(_) => probe,
+            Ingest::Canonical | Ingest::Attested(_) | Ingest::Partial(..) => probe,
             Ingest::Unverified => v.plan_ingest(
                 doc,
                 &text,
@@ -723,17 +819,8 @@ impl Kernel {
     /// head snapshot of `from`, every one of them live and `canonical` —
     /// a rename moves canonical content and nothing else (an agent's bytes
     /// that reached `from` unobserved, or a proposal, make it `denied`).
-    fn check_rename(&self, v: &Vault, from: &str, to: &str, content_hash: &str) -> Result<()> {
+    fn check_rename(&self, v: &Vault, from: &str, to: &str, text: &str) -> Result<()> {
         crate::propose::check_doc_path(from)?;
-        let path = crate::paths::doc_file(&self.vault, to)?;
-        let bytes = std::fs::read(&path).with_context(|| format!("read {}", path.display()))?;
-        if rootmarkcore::attest::content_hash(&bytes) != content_hash {
-            bail_code!(
-                Code::Denied,
-                "attest: {to} on disk does not hold the attested bytes"
-            );
-        }
-        let text = std::str::from_utf8(&bytes).with_context(|| format!("{to} is not UTF-8"))?;
         let (drafts, _) = rootmarkcore::parse_document(text, to)?;
         let Some(head) = v.snapshot(from)? else {
             bail_code!(Code::Denied, "attest: {from} is not a document of the log");
@@ -773,10 +860,15 @@ impl Kernel {
         &self,
         v: &Vault,
         policy: &Policy,
-        doc: &str,
-        content_hash: &str,
-        renamed: &str,
+        x: &AttestArgs,
+        text: &str,
     ) -> Result<()> {
+        let (doc, content_hash) = (x.doc_path.as_str(), x.content_hash.as_str());
+        let renamed = x
+            .link_update_of
+            .as_deref()
+            .context("a link update names the renamed note")?;
+        let from_hint = x.link_update_from.as_deref();
         crate::propose::check_doc_path(renamed)?;
         rootmarkcore::attest::check_doc_path(renamed).code(Code::InvalidArguments)?;
         if !crate::paths::doc_file(&self.vault, renamed)?.is_file() {
@@ -785,19 +877,6 @@ impl Kernel {
                 "attest: link_update_of {renamed} is not a note of the vault"
             );
         }
-        let path = crate::paths::doc_file(&self.vault, doc)?;
-        let bytes = std::fs::read(&path)
-            .with_context(|| format!("attest: read {}", path.display()))
-            .code(Code::Denied)?;
-        if rootmarkcore::attest::content_hash(&bytes) != content_hash {
-            bail_code!(
-                Code::Denied,
-                "attest: {doc} on disk does not hold the attested bytes"
-            );
-        }
-        let text = std::str::from_utf8(&bytes)
-            .with_context(|| format!("attest: {doc} is not UTF-8"))
-            .code(Code::Denied)?;
         let base = match self
             .attesting
             .pending_base(policy, doc, content_hash)
@@ -809,12 +888,28 @@ impl Kernel {
                     .attesting
                     .base_of(doc, |d| v.snapshot(d).ok().flatten().is_some())
                     .code(Code::Denied)?;
-                rootmarkcore::attest::LinkBase::head(v, &d)?
+                let b = rootmarkcore::attest::LinkBase::head(v, &d)?
                     .with_context(|| format!("attest: {d} is not a document of the log"))
-                    .code(Code::Denied)?
+                    .code(Code::Denied)?;
+                // the head of another path (the log does not know `doc` yet):
+                // its content became `doc`'s by a rename, which moves only
+                // canonical content — whatever the old path holds now must be
+                // that, all of it (automated security review of Y1)
+                if d != doc && !b.blocks.iter().all(|x| x.canonical) {
+                    bail_code!(
+                        Code::Denied,
+                        "attest: {d}, the path {doc} was renamed from, no longer holds only canonical content"
+                    );
+                }
+                b
             }
         };
-        let was = self.attesting.renamed_from_of(renamed)?;
+        // the renamed note's old path: from an accepted rename attestation,
+        // else as the client states it (`link_update_from`)
+        let was = match self.attesting.renamed_from_of(renamed)? {
+            Some(w) => Some(w),
+            None => from_hint.map(str::to_string),
+        };
         let changed = rootmarkcore::attest::check_link_update(&base, text, renamed, was.as_deref())
             .map_err(|e| {
                 anyhow::anyhow!(
@@ -873,22 +968,96 @@ impl Kernel {
                 "attest: renamed_from and link_update_of exclude each other"
             );
         }
+        if x.link_update_from.is_some() && x.link_update_of.is_none() {
+            bail_code!(
+                Code::InvalidArguments,
+                "attest: link_update_from goes with link_update_of"
+            );
+        }
+        // the saved bytes the client sent (P2-0.1 T2): they must be the
+        // attested ones; kept in memory for a partial match only
+        if let Some(c) = &x.content {
+            if rootmarkcore::attest::content_hash(c.as_bytes()) != x.content_hash {
+                bail_code!(
+                    Code::InvalidArguments,
+                    "attest: content does not hash to content_hash"
+                );
+            }
+        }
+        // the bytes a rename or a link update is checked on: the file on
+        // disk, which must hold the attested bytes (also when `content` is
+        // sent: Y2 review 2)
+        let checked = |s: &Self| -> Result<String> {
+            let path = crate::paths::doc_file(&s.vault, &x.doc_path)?;
+            let bytes = std::fs::read(&path)
+                .with_context(|| format!("attest: read {}", path.display()))
+                .code(Code::Denied)?;
+            if rootmarkcore::attest::content_hash(&bytes) != x.content_hash {
+                bail_code!(
+                    Code::Denied,
+                    "attest: {} on disk does not hold the attested bytes",
+                    x.doc_path
+                );
+            }
+            String::from_utf8(bytes)
+                .with_context(|| format!("attest: {} is not UTF-8", x.doc_path))
+                .code(Code::Denied)
+        };
         if let Some(from) = &x.renamed_from {
-            self.check_rename(&v, from, &x.doc_path, &x.content_hash)?;
+            let text = checked(self)?;
+            self.check_rename(&v, from, &x.doc_path, &text)?;
             self.attesting.renamed(from, &x.doc_path)?;
         }
-        if let Some(renamed) = &x.link_update_of {
-            self.check_link_update(&v, &policy, &x.doc_path, &x.content_hash, renamed)?;
+        if x.link_update_of.is_some() {
+            let text = checked(self)?;
+            self.check_link_update(&v, &policy, &x, &text)?;
             self.attesting.link_update();
         }
-        let (a, recorded) = v.record_attestation(&x.doc_path, &x.content_hash, x.saved_at_seq)?;
-        let mut raised: Vec<String> = Vec::new();
-        let late = self
+        let mut a = rootmarkcore::attest::Attestation::new(
+            &x.doc_path,
+            &x.content_hash,
+            v.next_seq(),
+            x.saved_at_seq,
+        )
+        .code(Code::InvalidArguments)?;
+        let late_on = x.late != Some(false);
+        let (late, ambiguous) = self
             .attesting
-            .attested(&policy, &a, x.late != Some(false))?;
+            .attested(&policy, &a, late_on, x.content.clone())?;
+        // a late partial match (P2-0.1 T2): the one pending unattested
+        // change whose blocks contain the attested ones — never while the
+        // file holds the attested bytes (their own observation is coming:
+        // Y2 review 1 a), nor when the exact late match was ambiguous
+        let mut partial = None;
+        if late.is_empty() && !ambiguous && late_on {
+            if let Some(c) = &x.content {
+                let on_disk = crate::paths::doc_file(&self.vault, &x.doc_path)
+                    .ok()
+                    .and_then(|p| std::fs::read(p).ok())
+                    .is_some_and(|b| rootmarkcore::attest::content_hash(&b) == x.content_hash);
+                if !on_disk {
+                    let av = rootmarkcore::attest::block_versions(c, &x.doc_path)?;
+                    if let Some(rs) =
+                        self.attesting
+                            .late_partial(&policy, &x.doc_path, &x.content_hash, &av)?
+                    {
+                        a.partial = Some(true);
+                        self.attesting.forget(&policy, &a.attestation_id)?;
+                        partial = Some(rs);
+                    }
+                }
+            }
+        }
+        let (a, recorded) = v.record_attestation_line(a)?;
         self.attesting.drop_bases(&a.doc_path, &a.content_hash)?;
+        let mut raised: Vec<String> = Vec::new();
         for u in late {
             for ev in v.raise_late(&u.doc_path, &u.lineages, &a.attestation_id)? {
+                raised.extend(ev.lineage_ids);
+            }
+        }
+        if let Some(rs) = partial {
+            for ev in v.raise_late(&a.doc_path, &rs, &a.attestation_id)? {
                 raised.extend(ev.lineage_ids);
             }
         }
@@ -1337,23 +1506,19 @@ impl Kernel {
         // (spec 2.0.0 §7.1: an external change, attested or `unverified`)
         let synced = match &old {
             Some(o) => {
-                let (plan, after) = self.external_plan(
-                    &v,
+                let store = match (&mut s, &e) {
+                    (Some(s), Some(e)) => Some((s, e.as_ref() as &dyn rootmarkindex::Embedder)),
+                    _ => None,
+                };
+                self.ingest_external(
+                    &mut v,
+                    store,
                     &policy,
                     &x.doc_path,
                     o.as_bytes(),
                     "rootmark-serve-watch",
-                )?;
-                let n = plan.events.len();
-                let n = match (&mut s, &e) {
-                    (Some(s), Some(e)) => s.watch_plan(&mut v, e.as_ref(), plan)?.events,
-                    _ => {
-                        v.commit_plan(plan)?;
-                        n
-                    }
-                };
-                after.done(self, &v, &policy)?;
-                n
+                )?
+                .0
             }
             None => 0,
         };
@@ -1642,6 +1807,15 @@ struct External {
 }
 
 impl External {
+    /// A partial match: the attested bytes' hash (the rest of the observed
+    /// change is ingested next, unattested).
+    fn partial_hash(&self) -> Option<String> {
+        match &self.ingest {
+            Ingest::Partial(..) => Some(self.hash.clone()),
+            _ => None,
+        }
+    }
+
     fn nothing(doc: &str, hash: &str) -> External {
         External {
             doc: doc.to_string(),
