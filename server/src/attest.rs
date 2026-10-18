@@ -283,8 +283,15 @@ fn post(
 /// without a client): attests the current bytes of each document to the
 /// vault's running server over HTTP with the token, as a client does after a
 /// save (stage 1: one session, one MAC per document). The window applies:
-/// run it right after saving (e.g. from the editor's save hook).
-pub fn cli_attest(vault: &std::path::Path, docs: &[String]) -> Result<serde_json::Value> {
+/// run it right after saving (e.g. from the editor's save hook). With
+/// `late = false` (`--all`) nothing already ingested is raised: a bulk
+/// attestation must not launder an unattested change it did not look at
+/// (security review of P2-0/Z2); it counts for the next observations only.
+pub fn cli_attest(
+    vault: &std::path::Path,
+    docs: &[String],
+    late: bool,
+) -> Result<serde_json::Value> {
     let policy = Policy::load(vault)?;
     let cfg = crate::config::ServerConfig::from_policy(&policy)?;
     let Some(port) = cfg.http_port else {
@@ -316,7 +323,7 @@ pub fn cli_attest(vault: &std::path::Path, docs: &[String]) -> Result<serde_json
             &token,
             "attest",
             &serde_json::json!({"doc_path": d, "content_hash": h, "session_id": sid,
-                "mac": mac(&key, &mac_message(d, &h, None))}),
+                "mac": mac(&key, &mac_message(d, &h, None)), "late": late}),
         )?);
     }
     Ok(serde_json::json!({"attested": out.len(), "attestations": out}))

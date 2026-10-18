@@ -584,11 +584,32 @@ fn cli_attest_raises_a_watched_edit() {
         "{r}"
     );
     assert!(layers(&k, "notes.md").iter().all(|l| l == "canonical"));
+    // `--all` raises nothing already ingested: an unattested agent write in
+    // the window stays unverified (security review of Z2)
+    std::fs::write(
+        v.join("notes.md"),
+        format!("{NOTES}\nA vim user's line.\n\nAn agent's line.\n"),
+    )
+    .unwrap();
+    let mut seen = false;
+    for _ in 0..50 {
+        std::thread::sleep(Duration::from_millis(50));
+        if layers(&k, "notes.md").iter().any(|l| l == "unverified") {
+            seen = true;
+            break;
+        }
+    }
+    assert!(seen, "the watcher did not ingest the agent's line");
     let o = Command::new(rootmark())
         .args(["attest", vs, "--all"])
         .output()
         .unwrap();
     assert!(o.status.success(), "{}", String::from_utf8_lossy(&o.stderr));
+    let r: Value = serde_json::from_slice(&o.stdout).unwrap();
+    for a in r["attestations"].as_array().unwrap() {
+        assert_eq!(a["raised"], json!([]), "{r}");
+    }
+    assert!(layers(&k, "notes.md").iter().any(|l| l == "unverified"));
     let _ = child.kill();
     let _ = child.wait();
 }

@@ -108,7 +108,8 @@ enum Cmd {
         vault: PathBuf,
         /// vault-relative Markdown paths
         docs: Vec<String>,
-        /// every Markdown document of the vault
+        /// every Markdown document of the vault; raises no change already
+        /// ingested (only later observations of these bytes count)
         #[arg(long)]
         all: bool,
     },
@@ -455,7 +456,8 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
                 (true, false) => bail!("rootmark attest: give documents or --all, not both"),
                 (false, true) => bail!("rootmark attest: no document (give paths or --all)"),
             };
-            rootmarkserver::attest::cli_attest(&vault, &docs)?
+            // `--all` never raises an earlier unattested change (late: false)
+            rootmarkserver::attest::cli_attest(&vault, &docs, !all)?
         }
         Cmd::Promote {
             vault,
