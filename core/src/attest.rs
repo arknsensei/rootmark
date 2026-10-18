@@ -28,6 +28,14 @@ pub struct Attestation {
     pub at_seq: u64,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub saved_at_seq: Option<u64>,
+    /// `true` (P2-0.1 T2): the attestation vouched for only part of an
+    /// observed change — the attested blocks — the rest stayed unattested
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub partial: Option<bool>,
+    /// `false` (P2-0.1 T4): when it was recorded, the file held other bytes
+    /// and no observed change contained them (informative)
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub matched: Option<bool>,
 }
 
 /// `attestation_id = H(doc_path + "\n" + content_hash + "\n" + at_seq)`,
@@ -77,6 +85,8 @@ impl Attestation {
             content_hash: content_hash.to_string(),
             at_seq,
             saved_at_seq,
+            partial: None,
+            matched: None,
         };
         a.check(at_seq)?;
         Ok(a)
@@ -99,6 +109,18 @@ impl Attestation {
                 "attestation {}: at_seq {} is beyond the log (next seq {next_seq})",
                 self.attestation_id,
                 self.at_seq
+            );
+        }
+        if self.partial == Some(false) {
+            bail!(
+                "attestation {}: partial is written only as true",
+                self.attestation_id
+            );
+        }
+        if self.matched == Some(true) {
+            bail!(
+                "attestation {}: matched is written only as false",
+                self.attestation_id
             );
         }
         let id = attestation_id(&self.doc_path, &self.content_hash, self.at_seq);
@@ -373,6 +395,93 @@ pub fn check_link_update(
     Ok(changed)
 }
 
+/// The block versions of a document text, in order (P2-0.1 T2).
+pub fn block_versions(text: &str, doc_path: &str) -> Result<Vec<String>> {
+    Ok(crate::parse_document(text, doc_path)?
+        .0
+        .into_iter()
+        .map(|d| d.version_id)
+        .collect())
+}
+
+/// `attested` is a non-empty sub-multiset of `observed` (block versions).
+pub fn covers(observed: &[String], attested: &[String]) -> bool {
+    if attested.is_empty() {
+        return false;
+    }
+    let mut left: std::collections::HashMap<&str, usize> = std::collections::HashMap::new();
+    for v in observed {
+        *left.entry(v).or_default() += 1;
+    }
+    attested.iter().all(|v| match left.get_mut(v.as_str()) {
+        Some(n) if *n > 0 => {
+            *n -= 1;
+            true
+        }
+        _ => false,
+    })
+}
+
+/// The lineages a late partial match raises (P2-0.1 T2): of the unattested
+/// change's `lineages` (each at the version the change gave it), those
+/// whose versions are attested blocks the document did not already hold
+/// unchanged — `observed` are the observed blocks' versions; the versions
+/// the change gave no event (the blocks it left as they were) are taken out
+/// of `attested` first, so an agent's copy of an existing human block is
+/// never raised. Multiplicities count; order follows `lineages`.
+pub fn partial_raises(observed: &[String], attested: &[String], lineages: &[Raise]) -> Vec<Raise> {
+    late_partial_raises(observed, attested, lineages).unwrap_or_default()
+}
+
+/// `partial_raises`, `None` when the saved bytes cannot precede the change
+/// (Y2 review 1 c): they lack a block the change left as it was — so they
+/// were saved after it (the human removed something the change kept).
+pub fn late_partial_raises(
+    observed: &[String],
+    attested: &[String],
+    lineages: &[Raise],
+) -> Option<Vec<Raise>> {
+    use std::collections::HashMap;
+    let mut changed: HashMap<&str, usize> = HashMap::new();
+    for r in lineages {
+        *changed.entry(r.version_id.as_str()).or_default() += 1;
+    }
+    // versions the change left unchanged: observed minus the changed ones
+    let mut unchanged: HashMap<&str, usize> = HashMap::new();
+    for v in observed {
+        let c = changed.entry(v.as_str()).or_default();
+        if *c > 0 {
+            *c -= 1;
+        } else {
+            *unchanged.entry(v.as_str()).or_default() += 1;
+        }
+    }
+    let mut want: HashMap<&str, usize> = HashMap::new();
+    for v in attested {
+        let u = unchanged.entry(v.as_str()).or_default();
+        if *u > 0 {
+            *u -= 1;
+        } else {
+            *want.entry(v.as_str()).or_default() += 1;
+        }
+    }
+    if unchanged.values().any(|n| *n > 0) {
+        return None;
+    }
+    let raised = lineages
+        .iter()
+        .filter(|r| match want.get_mut(r.version_id.as_str()) {
+            Some(n) if *n > 0 => {
+                *n -= 1;
+                true
+            }
+            _ => false,
+        })
+        .cloned()
+        .collect();
+    Some(raised)
+}
+
 /// An unattested external change waiting for a late attestation (spec
 /// §7.1): the bytes it ingested, when it was observed, and the lineages it
 /// left `unverified` — each with the version that change gave it and the
@@ -402,7 +511,9 @@ pub struct Raise {
 pub struct Window {
     pub window_ms: u64,
     /// recorded attestations: (doc_path, content_hash, attestation_id, ms)
-    attested: Vec<(String, String, String, u64)>,
+    /// recorded attestations: (doc_path, content_hash, attestation_id, ms,
+    /// the saved bytes as text when the client sent them — memory only)
+    attested: Vec<(String, String, String, u64, Option<String>)>,
     unattested: Vec<Unattested>,
 }
 
@@ -439,6 +550,75 @@ impl Window {
         Some(self.attested.remove(i).2)
     }
 
+    /// An external change of `doc_path` observed at `now_ms` with bytes
+    /// `observed` that no attestation matches exactly (P2-0.1 T2, spec
+    /// §7.1 "Partial match"): the newest attestation of the document
+    /// recorded at most `W` before that carried its saved bytes, whose blocks
+    /// are a non-empty sub-multiset (by version) of the observed blocks —
+    /// `(attestation_id, saved text)`, consumed.
+    pub fn observe_partial(
+        &mut self,
+        doc_path: &str,
+        observed: &str,
+        now_ms: u64,
+    ) -> Result<Option<(String, String)>> {
+        self.expire(now_ms);
+        let obs = block_versions(observed, doc_path)?;
+        let mut hit = None;
+        for (i, a) in self.attested.iter().enumerate().rev() {
+            let (Some(text), true) = (&a.4, a.0 == doc_path && a.3 <= now_ms) else {
+                continue;
+            };
+            if covers(&obs, &block_versions(text, doc_path)?) {
+                hit = Some(i);
+                break;
+            }
+        }
+        Ok(hit.map(|i| {
+            let a = self.attested.remove(i);
+            (a.2, a.4.unwrap_or_default())
+        }))
+    }
+
+    /// Takes the unattested change of `doc_path` with bytes `content_hash`
+    /// observed at `observed_ms` out of the window (a late partial match
+    /// the caller decided, P2-0.1 T2).
+    pub fn take_unattested(
+        &mut self,
+        doc_path: &str,
+        content_hash: &str,
+        observed_ms: u64,
+    ) -> Option<Unattested> {
+        let i = self.unattested.iter().position(|u| {
+            u.doc_path == doc_path && u.content_hash == content_hash && u.observed_ms == observed_ms
+        })?;
+        Some(self.unattested.remove(i))
+    }
+
+    /// The lineages of the unattested change of `doc_path` with bytes
+    /// `content_hash` observed at `observed_ms`, if it is still in the
+    /// window (read only).
+    pub fn pending_lineages(
+        &self,
+        doc_path: &str,
+        content_hash: &str,
+        observed_ms: u64,
+    ) -> Option<Vec<Raise>> {
+        self.unattested
+            .iter()
+            .find(|u| {
+                u.doc_path == doc_path
+                    && u.content_hash == content_hash
+                    && u.observed_ms == observed_ms
+            })
+            .map(|u| u.lineages.clone())
+    }
+
+    /// Forgets a recorded attestation (it matched partially, late).
+    pub fn forget(&mut self, attestation_id: &str) {
+        self.attested.retain(|a| a.2 != attestation_id);
+    }
+
     /// An unattested change was ingested (its `unverified` lineages): a late
     /// attestation within `W` may still raise them.
     ///
@@ -470,8 +650,21 @@ impl Window {
     /// bytes not observed yet, so it must never vouch for a change
     /// (security reviews of P2-0/Z2). It is only written to the log.
     pub fn attest_with(&mut self, a: &Attestation, now_ms: u64, late: bool) -> Vec<Unattested> {
+        self.attest_content(a, now_ms, late, None).0
+    }
+
+    /// `attest_with`, remembering the saved bytes `content` (as text) for a
+    /// partial match (P2-0.1 T2; memory only); with whether the late match
+    /// was ambiguous (then it is no partial match either, Y2 review 3).
+    pub fn attest_content(
+        &mut self,
+        a: &Attestation,
+        now_ms: u64,
+        late: bool,
+        content: Option<String>,
+    ) -> (Vec<Unattested>, bool) {
         if !late {
-            return Vec::new();
+            return (Vec::new(), false);
         }
         self.expire(now_ms);
         let matches = |u: &Unattested| {
@@ -488,7 +681,7 @@ impl Window {
         // (they are dropped; Y1 security review B5)
         if late.len() > 1 {
             late.clear();
-            return late;
+            return (late, true);
         }
         // an attestation that matched late is consumed (Y1 security review)
         if late.is_empty() {
@@ -497,9 +690,10 @@ impl Window {
                 a.content_hash.clone(),
                 a.attestation_id.clone(),
                 now_ms,
+                content,
             ));
         }
-        late
+        (late, false)
     }
 
     /// Unattested changes still inside their window (status).

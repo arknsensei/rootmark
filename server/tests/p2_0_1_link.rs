@@ -408,3 +408,68 @@ fn the_same_bytes_pending_twice_raise_nothing() {
     assert!(r["raised"].as_array().unwrap().is_empty());
     assert_eq!(layer_of(&k, "a.md", "Agent paragraph"), "unverified");
 }
+
+#[test]
+fn the_old_path_of_an_unobserved_rename_must_hold_canonical_content_only() {
+    // automated security review: bee.md (renamed from b.md, not observed
+    // yet) is checked against the head of b.md; an agent wrote a new b.md
+    // since, so that head is no longer canonical content: denied
+    let v = vault("old-path-reused");
+    let self_text = "# B\n\nThe roast note, see [[b]].\n";
+    std::fs::write(v.join("b.md"), self_text).unwrap();
+    let k = Kernel::open(&v).unwrap();
+    let s = session(&k);
+    attest(&k, &s, &v, "b.md", json!({})).unwrap();
+    watch(&k, "b.md");
+    std::fs::rename(v.join("b.md"), v.join("bee.md")).unwrap();
+    attest(&k, &s, &v, "bee.md", json!({"renamed_from": "b.md"})).unwrap();
+    std::fs::write(
+        v.join("b.md"),
+        format!("{self_text}\nAgent text at the old path.\n"),
+    )
+    .unwrap();
+    watch(&k, "b.md");
+    // the new path holds the same agent paragraph (unchanged against the
+    // old path's head) and the rewritten link: without the rule this would
+    // pass block for block and make the paragraph canonical at bee.md
+    std::fs::write(
+        v.join("bee.md"),
+        format!(
+            "{}\nAgent text at the old path.\n",
+            self_text.replace("[[b]]", "[[bee]]")
+        ),
+    )
+    .unwrap();
+    let e = attest(&k, &s, &v, "bee.md", json!({"link_update_of": "bee.md"})).unwrap_err();
+    assert_eq!(code_of(&e), Code::Denied);
+    assert!(
+        format!("{e:#}").contains("no longer holds only canonical"),
+        "{e:#}"
+    );
+}
+
+#[test]
+fn link_update_from_checks_the_old_targets() {
+    // no rename attestation reached the server (the plugin did not report
+    // it): the client's old path still checks every changed old target
+    let v = vault("from-hint");
+    std::fs::write(v.join("a.md"), format!("{A}\nAnd [[c]] too.\n")).unwrap();
+    std::fs::write(v.join("c.md"), "# C\n").unwrap();
+    let k = Kernel::open(&v).unwrap();
+    let s = session(&k);
+    attest(&k, &s, &v, "a.md", json!({})).unwrap();
+    watch(&k, "a.md");
+    std::fs::create_dir_all(v.join("sub")).unwrap();
+    std::fs::rename(v.join("b.md"), v.join("sub/bee.md")).unwrap();
+    let a = std::fs::read_to_string(v.join("a.md")).unwrap();
+    let both = a.replace("[[c]]", "[[bee]]").replace("[[b]]", "[[bee]]");
+    std::fs::write(v.join("a.md"), &both).unwrap();
+    let hint = json!({"link_update_of": "sub/bee.md", "link_update_from": "b.md"});
+    let e = attest(&k, &s, &v, "a.md", hint.clone()).unwrap_err();
+    assert_eq!(code_of(&e), Code::Denied);
+    std::fs::write(v.join("a.md"), a.replace("[[b]]", "[[bee]]")).unwrap();
+    attest(&k, &s, &v, "a.md", hint).unwrap();
+    // link_update_from alone is malformed
+    let e = attest(&k, &s, &v, "a.md", json!({"link_update_from": "b.md"})).unwrap_err();
+    assert_eq!(code_of(&e), Code::InvalidArguments);
+}

@@ -135,6 +135,15 @@ export class Attester {
     how: SavedHow = {},
   ): Promise<AttestResult> {
     const hash = contentHash(bytes);
+    // the saved bytes themselves (P2-0.1 T2, contract §2.6 `content`): the
+    // server keeps them in memory for a partial match, never stores them;
+    // bytes that are not UTF-8 are not sent (the attestation still is)
+    let content: string | null = null;
+    try {
+      content = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    } catch {
+      content = null;
+    }
     const send = async (s: AttestSession): Promise<AttestResult> => {
       const mac = await hmacHex(this.subtle, s.key, macMessage(docPath, hash, savedAtSeq));
       return checkResult(
@@ -144,6 +153,8 @@ export class Attester {
           ...(savedAtSeq === null ? {} : { saved_at_seq: savedAtSeq }),
           ...(how.renamedFrom === undefined ? {} : { renamed_from: how.renamedFrom }),
           ...(how.linkUpdateOf === undefined ? {} : { link_update_of: how.linkUpdateOf }),
+          ...(how.linkUpdateOf === undefined || how.linkUpdateFrom === undefined ? {} : { link_update_from: how.linkUpdateFrom }),
+          ...(content === null ? {} : { content }),
           session_id: s.session_id,
           mac,
         }),

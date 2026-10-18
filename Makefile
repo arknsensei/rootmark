@@ -105,7 +105,7 @@ test-check-deps:
 # (index/tests/conformance_c3.rs extends the report: 31 entries since
 # P1-C.1 (C3-05, K-C1.3); 34 since P1-D.1 (C3-06, C3-07, K-D1.1, K-D1.8; C2-10,
 # K-D1.2; spec 1.0.3), level_claimed 3; P1-C/C7); 37 since P2-0 (C2-11,
-# C2-12, C3-08; spec 2.0.0). Fails unless 37/37 pass
+# C2-12, C3-08; spec 2.0.0); 38 since P2-0.1 (C2-13; spec 2.0.1). Fails unless 38/38 pass
 # (level_claimed 3) and
 # the frozen fixture manifest matches. The fixture root is this tree's,
 # resolved at run time (ROOTMARK_FIXTURES; P1-A verifier recommendation Ö2).
@@ -117,7 +117,7 @@ conformance:
 	@test -f reports/conformance.json || { echo "error: reports/conformance.json not written" >&2; exit 1; }
 	ROOTMARK_FIXTURES="$(CURDIR)/spec/fixtures" ROOTMARK_CONFORMANCE_REPORT="$(CURDIR)/reports/conformance.json" \
 	  cargo test -p rootmark-index --release --test conformance_c3 -- --nocapture
-	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 3 and .passed == .total and .total == 37 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string" and ([.tests[] | select(.level == 3)] | length) == 8' reports/conformance.json >/dev/null \
+	@jq -e --arg root "$$(cd spec/fixtures && pwd -P)" '.level_claimed == 3 and .passed == .total and .total == 38 and .fixtures_root == $$root and (.fixtures_manifest_hash | type) == "string" and ([.tests[] | select(.level == 3)] | length) == 8' reports/conformance.json >/dev/null \
 	  || { echo "error: conformance level 3 not reached (reports/conformance.json)" >&2; exit 1; }
 	@echo "conformance: level $$(jq -r .level_claimed reports/conformance.json), $$(jq -r '"\(.passed)/\(.total)"' reports/conformance.json) (reports/conformance.json)"
 
