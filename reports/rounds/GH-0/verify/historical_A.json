@@ -1,0 +1,189 @@
+{
+  "reference_run": "reports/rounds/P1-E/runs/20261017T024341Z-632f29e",
+  "fails": [
+    {
+      "file": "p1b1_checks.json",
+      "criterion": "B1-3",
+      "label": "historical",
+      "decisions": [
+        "K-C1.3",
+        "K-C1.5",
+        "K-D1.2",
+        "K-D1.4-T",
+        "K-E0.1"
+      ],
+      "why": "P1-B.1's recorder expects spec 1.0.1 and C2 8/8; the spec is 1.0.3 (CRITERION patch rule) and Level 2 has grown",
+      "declared_changes": []
+    },
+    {
+      "file": "p1c1_checks.json",
+      "criterion": "C1-7",
+      "label": "historical",
+      "decisions": [
+        "K-D1.2",
+        "K-D1.4-T",
+        "K-E0.1"
+      ],
+      "why": "P1-C.1's recorder expects spec 1.0.2; the spec is 1.0.3",
+      "declared_changes": []
+    },
+    {
+      "file": "p1c_checks.json",
+      "criterion": "C-11",
+      "label": "historical",
+      "decisions": [
+        "K-D1.2",
+        "K-D1.4-T",
+        "K-E0.1"
+      ],
+      "why": "P1-C's regression against P1-B.1 sees B1-3's spec-version difference",
+      "declared_changes": []
+    },
+    {
+      "file": "p1c_checks.json",
+      "criterion": "C-3",
+      "label": "historical",
+      "decisions": [
+        "K-C8-T",
+        "K-C1.1",
+        "K-C1.2"
+      ],
+      "why": "P1-C's hybrid multi-question nDCG@10 was -0.0136 off v2; closed in P1-C.1 by the declared lexical variant and the Rust quality reference",
+      "declared_changes": []
+    },
+    {
+      "file": "p1d1_checks.json",
+      "criterion": "D1-12",
+      "label": "historical",
+      "decisions": [
+        "K-E1.2"
+      ],
+      "why": "a frozen recorder of an earlier round; its record changed only under the declared P1-E.1 decision exclusions",
+      "declared_changes": [
+        {
+          "path": "pass",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d/equal",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass",
+          "decision": "K-E1.2"
+        }
+      ]
+    },
+    {
+      "file": "p1d_checks.json",
+      "criterion": "D-2",
+      "label": "historical",
+      "decisions": [
+        "K-D1.1",
+        "K-D1.5",
+        "K-E0.4",
+        "K-D1.4-T",
+        "K-E1.2"
+      ],
+      "why": "P1-D's MCP e2e expects agent edits of human blocks to pass (append_only since K-D1.1), the old error codes (K-D1.5, K-E0.4) and spec 1.0.2 in status",
+      "declared_changes": [
+        {
+          "path": "per_tool/status/passed",
+          "decision": "K-E1.2"
+        }
+      ]
+    },
+    {
+      "file": "p1d_checks.json",
+      "criterion": "D-7",
+      "label": "historical",
+      "decisions": [
+        "K-D1.4-T",
+        "K-D1.5"
+      ],
+      "why": "P1-D's HTTP e2e expects spec 1.0.2 (D7-3) and the old status codes of two cases",
+      "declared_changes": []
+    },
+    {
+      "file": "p1d_checks.json",
+      "criterion": "D-9",
+      "label": "historical",
+      "decisions": [
+        "K-D1.7",
+        "K-D1.4-T"
+      ],
+      "why": "P1-D's regression against P1-C.1 sees the lexical record (lexical.dl), the index manifest and the spec/fixture changes since",
+      "declared_changes": []
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "E1-4",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e_checks.json",
+      "criterion": "E-7",
+      "label": "historical",
+      "decisions": [
+        "K-E5-T",
+        "K-E1.1"
+      ],
+      "why": "P1-E's recorder counts four release targets (2/4); K-E1.1 makes aarch64-apple-darwin the one target (1/1, P1-E.1 E1-5)",
+      "declared_changes": []
+    },
+    {
+      "file": "p1e_checks.json",
+      "criterion": "E-9",
+      "label": "historical",
+      "decisions": [
+        "K-E1.2",
+        "F2 (E1-8)"
+      ],
+      "why": "a frozen recorder of an earlier round; its record changed only under the declared P1-E.1 decision exclusions",
+      "declared_changes": [
+        {
+          "path": "pass",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d1/equal",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:per_tool›status›passed",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›pass",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›4›pass",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›equal",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d1/differing_fields/p1d_checks.json:D-2›per_tool›status›passed",
+          "decision": "K-E1.2"
+        },
+        {
+          "path": "regress_vs_p1d1/excluded_differences/p1d1/d1_13.json:http/leaves",
+          "decision": "F2 (E1-8)"
+        }
+      ]
+    }
+  ],
+  "historical": 10,
+  "counted_fails": 1,
+  "counted": [
+    "p1e1_checks.json:E1-4"
+  ]
+}

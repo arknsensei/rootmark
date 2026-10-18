@@ -38,3 +38,10 @@ Eski vault'lar ve eski etiketlerin ikilileri `.mdkernel/` ve `mdk` adını taş�
   - `eval.historical` P1-E.1 resmi RUN'ında: 10 tarihsel, 0 sayılan (önceki gibi).
   - `research/tests/test_rename_modulo.py` (4): eski ↔ yeni ad eşit, korunan kimlikler ve kelime içi rastlantılar değişmez, gerçek fark fark kalır, `resolve` eski adı bulur. pytest 220.
 - **Gözden geçirici onayı:** G0.review.md.
+
+## F4 · G5 · Depo kopyası Linux'ta eksik kalıyordu (`xargs` + `tar`)
+- **Ne:** `scripts/test_tamper.sh` (satır 38, 73) ve `scripts/test_freeze_indep.sh` (satır 22): depo kopyası `git ls-files -z | xargs -0 tar -cf - | tar -xf -` yerine `git ls-files -z | tar -cf - --null -T - | tar -xf -` (3 satır; GNU ve BSD tar ikisi de `--null -T -` okur).
+- **Neden:** `verify.yml` iki dispatch'te de (ubuntu) A zincirinin sonunda `tar: -: Cannot write: Broken pipe` ile durdu. GNU `xargs` 325 KB'lık dosya listesini varsayılan ~128 KB komut tamponuna göre birkaç `tar` çağrısına böler. Okuyan `tar` ilk arşivin sonunda çıkar, sonraki yazıcılar SIGPIPE alır. Debian kabında eski kalıp 3 632 dosyanın **1 504'ünü** kopyalıyor (sessiz eksik kopya). macOS'ta `xargs` tek çağrı yaptığı için görünmüyordu.
+- **Önce/sonra bit eşitliği:** macOS'ta eski ve yeni kalıbın kopyaları `diff -r` ile eşit (3 632 dosya). Debian trixie kabında (GNU tar) yeni kalıp 3 632 dosya. `scripts/test_freeze_indep.sh` macOS'ta çıkış 0, sonuç önceki gibi.
+- **Yeniden dondurma:** `research/FROZEN.md`'ye `scripts/test_tamper.sh` ve `scripts/test_freeze_indep.sh` için `GH-0/G5-tar:` satırları.
+- **Gözden geçirici onayı:** G5.review.md.
