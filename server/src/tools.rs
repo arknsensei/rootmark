@@ -737,8 +737,10 @@ impl Kernel {
         let mut v = open_vault(&self.vault)?;
         let (a, recorded) = v.record_attestation(&x.doc_path, &x.content_hash, x.saved_at_seq)?;
         let mut raised: Vec<String> = Vec::new();
-        let late = self.attesting.attested(&policy, &a)?;
-        for u in late.into_iter().filter(|_| x.late != Some(false)) {
+        let late = self
+            .attesting
+            .attested(&policy, &a, x.late != Some(false))?;
+        for u in late {
             for ev in v.raise_late(&u.doc_path, &u.lineages, &a.attestation_id)? {
                 raised.extend(ev.lineage_ids);
             }
