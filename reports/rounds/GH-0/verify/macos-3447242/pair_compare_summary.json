@@ -1,0 +1,8 @@
+{
+  "run_a": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5b/A/repo/research/reports/runs/20261018T075227Z-3447242",
+  "run_b": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/2aaafe19-d8af-4e2d-8703-c0e0f33dbe2a/scratchpad/g5b/B/repo/research/reports/runs/20261018T082054Z-3447242",
+  "equal": true,
+  "n_fields": 103195,
+  "bytes_equal": true,
+  "differing_fields": {}
+}

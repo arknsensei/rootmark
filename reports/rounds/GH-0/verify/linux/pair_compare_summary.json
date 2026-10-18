@@ -1,0 +1,9 @@
+{
+  "run_a": "/home/runner/work/_temp/verify/A/repo/research/reports/runs/20261018T050140Z-3447242",
+  "run_b": "/home/runner/work/_temp/verify/B/repo/research/reports/runs/20261018T061724Z-3447242",
+  "equal": true,
+  "n_fields": 505535,
+  "bytes_equal": true,
+  "differing_fields": {},
+  "artefact": "Actions run 39098486795, artefact verify-pair (the full comparison)"
+}

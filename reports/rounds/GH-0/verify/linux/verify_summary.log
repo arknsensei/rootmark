@@ -1,0 +1,82 @@
+[verify 04:54:13] clone /home/runner/work/rootmark/rootmark -> /home/runner/work/_temp/verify/A/repo
+[verify 04:54:13] commit 3447242ec0f4ad6fffac7b3df5674d870fa82cdc
+[verify 04:54:13] setup
+[verify 04:59:13] models (fetch + manifest check)
+[verify 04:59:48] datasets (d2 d3 d1 d1k4 d1h d1ho d1sh d1hs, manifests verified)
+[verify 05:00:16] freeze-check (v2), freeze-check-v3, check_frozen
+[verify 05:01:01] conformance (level 3)
+[verify 05:01:40] RUN=20261018T050140Z-3447242
+[verify 05:01:40] holdout (P1-A A-2) and THETA_SPLIT grid (A-7)
+[verify 05:01:45] regress (v2 + v3 phases vs v3-final; holdout + split grid vs P1-A; holdout-split)
+[verify 05:08:15] A-1 / A-5 / A-6 into the RUN (level-1 view)
+[verify 05:08:28] governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)
+[verify 05:09:47] P1-B.1 checks (B1-1..B1-6 recorded again; C-11 input)
+[verify 05:09:49] P1-C checks (C-1..C-13; D3 determinism vault under /home/runner/work/_temp/verify/A/p1c_work)
+[verify 05:26:35] P1-C deliberate corruptions (model manifest, embedder_id, fixtures)
+[verify 05:26:47] P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)
+[verify 05:28:44] P1-D checks (D-1..D-11: Inspector, MCP e2e, HTTP/service, watch, scene, tamper; D-9 vs P1-C.1)
+[verify 05:32:05] P1-D.1 checks (D1-1..D1-13: criteria tests, p1d-final vaults, contract, tamper; D1-12 vs P1-D)
+[verify 05:38:05] P1-E checks (E-1..E-10, E-12..E-16: E0 tests, scene, plugin e2e, client, local release, tamper, field audit; E-9 vs P1-D.1)
+[verify 05:41:53] P1-E.1 checks (E1-1..E1-9: status on the /2 index, contract status step, tamper, release package + real Obsidian e2e, E1-6 vs P1-E)
+[verify 05:59:14] deliberate corruptions (B-7, B-8 and the P1-A cases)
+[verify 06:00:48] FAIL summary (K-E1.4)
+[verify summary] B1-3 (p1b1_checks.json): FAIL — tarihsel, karar K-C1.3, K-C1.5, K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C1-7 (p1c1_checks.json): FAIL — tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C1-8 (p1c1_checks.json): FAIL — not a listed historical FAIL
+[verify summary] C-11 (p1c_checks.json): FAIL — tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C-3 (p1c_checks.json): FAIL — tarihsel, karar K-C8-T, K-C1.1, K-C1.2 ile kapandı
+[verify summary] D1-12 (p1d1_checks.json): FAIL — its record differs from the reference RUN outside the declared changes
+[verify summary] D-2 (p1d_checks.json): FAIL — tarihsel, karar K-D1.1, K-D1.5, K-E0.4, K-D1.4-T, K-E1.2 ile kapandı
+[verify summary] D-7 (p1d_checks.json): FAIL — tarihsel, karar K-D1.4-T, K-D1.5 ile kapandı
+[verify summary] D-9 (p1d_checks.json): FAIL — its record differs from the reference RUN outside the declared changes
+[verify summary] E1-3 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E1-4 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E1-6 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E1-9 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] tamper (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E-7 (p1e_checks.json): FAIL — its record differs from the reference RUN outside the declared changes
+[verify summary] E-9 (p1e_checks.json): FAIL — its record differs from the reference RUN outside the declared changes
+[verify summary] 6 historical FAIL(s) not counted; counted FAILs 10
+[verify 06:10:38] chain finished in 4585 s
+[verify 06:10:38] clone /home/runner/work/rootmark/rootmark -> /home/runner/work/_temp/verify/B/repo
+[verify 06:10:38] commit 3447242ec0f4ad6fffac7b3df5674d870fa82cdc
+[verify 06:10:38] setup
+[verify 06:15:02] models (fetch + manifest check)
+[verify 06:15:36] datasets (d2 d3 d1 d1k4 d1h d1ho d1sh d1hs, manifests verified)
+[verify 06:16:01] freeze-check (v2), freeze-check-v3, check_frozen
+[verify 06:16:47] conformance (level 3)
+[verify 06:17:24] RUN=20261018T061724Z-3447242
+[verify 06:17:24] holdout (P1-A A-2) and THETA_SPLIT grid (A-7)
+[verify 06:17:29] regress (v2 + v3 phases vs v3-final; holdout + split grid vs P1-A; holdout-split)
+[verify 06:24:02] A-1 / A-5 / A-6 into the RUN (level-1 view)
+[verify 06:24:15] governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)
+[verify 06:25:37] P1-B.1 checks (B1-1..B1-6 recorded again; C-11 input)
+[verify 06:25:39] P1-C checks (C-1..C-13; D3 determinism vault under /home/runner/work/_temp/verify/B/p1c_work)
+[verify 06:44:31] P1-C deliberate corruptions (model manifest, embedder_id, fixtures)
+[verify 06:44:44] P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)
+[verify 06:46:36] P1-D checks (D-1..D-11: Inspector, MCP e2e, HTTP/service, watch, scene, tamper; D-9 vs P1-C.1)
+[verify 06:49:44] P1-D.1 checks (D1-1..D1-13: criteria tests, p1d-final vaults, contract, tamper; D1-12 vs P1-D)
+[verify 06:55:44] P1-E checks (E-1..E-10, E-12..E-16: E0 tests, scene, plugin e2e, client, local release, tamper, field audit; E-9 vs P1-D.1)
+[verify 06:59:35] P1-E.1 checks (E1-1..E1-9: status on the /2 index, contract status step, tamper, release package + real Obsidian e2e, E1-6 vs P1-E)
+[verify 07:17:03] deliberate corruptions (B-7, B-8 and the P1-A cases)
+[verify 07:18:35] FAIL summary (K-E1.4)
+[verify summary] B1-3 (p1b1_checks.json): FAIL — tarihsel, karar K-C1.3, K-C1.5, K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C1-7 (p1c1_checks.json): FAIL — tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C1-8 (p1c1_checks.json): FAIL — not a listed historical FAIL
+[verify summary] C-11 (p1c_checks.json): FAIL — tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı
+[verify summary] C-3 (p1c_checks.json): FAIL — tarihsel, karar K-C8-T, K-C1.1, K-C1.2 ile kapandı
+[verify summary] D1-12 (p1d1_checks.json): FAIL — its record differs from the reference RUN outside the declared changes
+[verify summary] D-2 (p1d_checks.json): FAIL — tarihsel, karar K-D1.1, K-D1.5, K-E0.4, K-D1.4-T, K-E1.2 ile kapandı
+[verify summary] D-7 (p1d_checks.json): FAIL — tarihsel, karar K-D1.4-T, K-D1.5 ile kapandı
+[verify summary] D-9 (p1d_checks.json): FAIL — its record differs from the reference RUN outside the declared changes
+[verify summary] E1-3 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E1-4 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E1-6 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E1-9 (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] tamper (p1e1_checks.json): FAIL — absent from the reference RUN
+[verify summary] E-7 (p1e_checks.json): FAIL — its record differs from the reference RUN outside the declared changes
+[verify summary] E-9 (p1e_checks.json): FAIL — its record differs from the reference RUN outside the declared changes
+[verify summary] 6 historical FAIL(s) not counted; counted FAILs 10
+[verify 07:28:12] chain finished in 4654 s
+[verify 07:28:12] compare (P1-E.1) /home/runner/work/_temp/verify/A/repo/research/reports/runs/20261018T050140Z-3447242 /home/runner/work/_temp/verify/B/repo/research/reports/runs/20261018T061724Z-3447242
+[verify 07:47:27] P1-E set and P1-E.1 results equal; real-Obsidian e2e record and access log byte-equal
