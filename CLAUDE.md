@@ -23,7 +23,7 @@ Bu depo `rootmark` monoreposudur. Tek gerçek kaynak bu depodaki belgelerdir; d�
 - Testleri geçmek için test değiştirilmez.
 
 ## Görev disiplini
-`docs/DEV_PROCESS.md` §2 aynen: progress kaydı (BAŞLADI/TAMAMLANDI/KISMİ/PARK), kabul ölçütleri tek tek, gözden geçirici alt-ajan (`<task>.review.md`, kod yazmaz), görev başına commit `<round>/<task>: ...`, bir sonraki göreve iki kayıt da TAMAMLANDI ise.
+`docs/DEV_PROCESS.md` §2 aynen: progress kaydı (BAŞLADI/TAMAMLANDI/KISMİ/PARK), kabul ölçütleri tek tek, gözden geçirici alt-ajan (`<task>.review.md`, kod yazmaz), görev başına commit `<round>/<task>: ...`, bir sonraki göreve iki kayıt da TAMAMLANDI ise. Dal ve PR (K-P2.1): `main` korumalı, doğrudan push yok; tur tek dalda (`<tur-id>/round`) ilerler, görev sonunda dal itilir, tur sonunda (READY.md) tek PR açılır; PR'ı ajan birleştirmez.
 
 ## Kalite kapıları
 `make test` (cargo+pytest+vitest), `make lint`, `make conformance`, `make verify`. Tur bitişinde dördü de temiz olmadan "hazır" yazılmaz.
