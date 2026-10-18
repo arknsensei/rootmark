@@ -315,6 +315,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/historical_fails_p2_0.json` | `P2-0/Z7-fix:` | P2-0 tarihsel FAIL listesi |
 | `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z7-fix:` | yeniden dondurma P2-0/F15: etkin editör beklemesi, adlandırılmış yazılmayan not |
 | `research/eval/**` | `P2-0/Z7-rev:` | yeniden dondurma P2-0/F16: `report_p2_0.py` (karar "bekler" dalı, devralınan kararlar) |
+| `research/eval/**` | `P2-0/Z8-pre:` | yeniden dondurma P2-0/F17: `report_p2_0.py` metin düzeltmeleri |
 <!-- /frozen-table -->
 
 ## Notlar
