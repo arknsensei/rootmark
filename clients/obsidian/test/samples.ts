@@ -55,6 +55,12 @@ export const SAMPLES: Record<ToolName, unknown> = {
         "min_sim_change": 0.15
       }
     },
+    "attestation": {
+      "pending": 0,
+      "stage": 1,
+      "unattested": "unverified",
+      "window_s": 2.0
+    },
     "server_policy": {
       "identity": {
         "human_id": "ada"

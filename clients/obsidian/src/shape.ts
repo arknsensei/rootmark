@@ -16,7 +16,8 @@ export type Spec =
   | readonly [Spec]
   | { readonly [field: string]: Spec };
 
-const LAYERS = new Set(["canonical", "proposal", "derived"]);
+// spec 2.0.0 adds `unverified` (§7.1; contract §2.5)
+const LAYERS = new Set(["canonical", "proposal", "unverified", "derived"]);
 
 /** The first violation of `spec` at `path`, or null. */
 export function violation(v: unknown, spec: Spec, path: string): string | null {
@@ -90,6 +91,7 @@ export const RESULT: { readonly [T in Exclude<ToolName, "promote">]: Spec } = {
     index: { state: "string", format: "string|null", expected_format: "string", auto_rebuild: "boolean" },
     policy: { promotion: "string", edit: "string" },
     server_policy: { server: "object", index: "object", identity: { human_id: "string|null" } },
+    attestation: { unattested: "string", window_s: "number", stage: "integer", pending: "integer" },
   },
   search: {
     checkpoint_id: "string",
