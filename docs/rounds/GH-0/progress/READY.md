@@ -12,7 +12,7 @@
 
 | Kod | Ölçüm | Değer | Eşik | Sonuç |
 |---|---|---|---|---|
-| GH-1 | `rg -i mdkernel` kalıntı (izinli dizinler hariç) | harfiyen: 35 dosya (GOAL'ün dört izinli yeri dışında). ASSUMPTIONS G0-1 kümesi ve G0-2 veri kimliği `mdkernel-index/<n>` hariç: **0** (küme içindeki 18 dosya tek tek gerekçeli, G0.md) | 0 | **harfiyen kaldı / varsayımla geçti → karar talebi K-GH.5-T** |
+| GH-1 | `rg -i mdkernel` kalıntı (izinli dizinler hariç) | harfiyen: 35 dosya (GOAL'ün dört izinli yeri dışında). ASSUMPTIONS G0-1 kümesi ve G0-2 veri kimliği `mdkernel-index/<n>` hariç: **0** (küme içindeki 18 dosya tek tek gerekçeli, G0.md) | 0 | **geçti — K-GH.5 (insan kararı, seçenek (a): veri kimliği ve gerekçeli küme hariç)** |
 | GH-2 | Yeniden adlandırma sonrası `make verify` çift koşturma | `d061c28`, `b152968`, `3447242` (macOS) ve `3447242` (Linux): fark 0 | fark 0 | geçti |
 | GH-3 | Eski `.mdkernel/` vault göçü | `rootmark migrate --rename-store`: `events_hash` ve replay/blame `p1d-final` ikilisininkiyle eşit; depo ağacı dosya dosya bayt eşit; `p1e-final` `/3` indeksi yeniden kurulmadan okunur (`server/tests/gh0_migrate.rs` 3/3) | `events_hash` eşit, replay eşit | geçti |
 | GH-4 | CI üç iş akışı PR'da yeşil; `verify.yml` elle tetiklenince yeşil | `ci.yml` PR'larda yeşil (zorunlu: "dependency direction and age", "test + lint + conformance (macos-14)"; Linux bilgi işi bilinen bir testten kırmızı, K-GH.6-T); `release.yml` zorunlu `aarch64-apple-darwin` yeşil (Windows bilgi işi model indirmede düştü); `verify.yml` dispatch 4 yeşil (1–3 kaldı: `xargs`/`tar` ve `stat` taşınabilirliği, F4/F5 ile düzeltildi) | geçer | geçti (notlarla) |
@@ -33,7 +33,7 @@
 `make test`, `make lint`, `make conformance`: CI'nin zorunlu macOS işi her PR'da (son: PR #8, `3447242` ile aynı kod) yeşil; yerelde G0'da temiz. `make verify`: yukarıdaki çiftler.
 
 ## Açık karar talepleri ve insan adımları
-- **K-GH.5-T** (GH-1'in veri kimlikleri), **K-GH.6-T** (Linux'ta dizin yazımı).
+- **K-GH.5** (GH-1, insan kararıyla kapandı; K-GH.5-T), açık: **K-GH.6-T** (Linux'ta dizin yazımı).
 - **STOP.md 1–7:** tek hesapla "1 onay"; private depoda güvenlik raporlama kanalı; Actions dakikaları; açık talepler; yayım adımlarını ajanın yapması; private depo ve dağıtım; Windows/Node 20 bakım notları.
 - Dependabot PR #2 (`clients/obsidian`: `moment`, `obsidian`; güvenlik) açık; birleştirilmedi (sabitleme politikası ve ≥ 14 gün kuralı insan kararı).
 - `docs/rounds/P2-0/` bu turda izlenmedi ve değişmedi (başka bir turun dosyaları).
