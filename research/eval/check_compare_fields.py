@@ -135,6 +135,7 @@ def in_code() -> dict:
         ("compare_p1d1", "P1D1"),
         ("compare_p1e", "P1E"),
         ("compare_p1e1", "P1E1"),
+        ("compare_p2_0", "P2_0"),
     ):
         if name in mods:
             m = mods[name]
@@ -152,6 +153,7 @@ def in_code() -> dict:
         "compare_p1d1": ["P1D1_FILES", "P1D1_BYTES"],
         "compare_p1e": ["P1E_FILES", "P1E_BYTES"],
         "compare_p1e1": ["P1E1_FILES", "P1E1_BYTES"],
+        "compare_p2_0": ["P2_0_FILES", "P2_0_BYTES"],
     }
     for mod, names in consts.items():
         if mod not in mods:
