@@ -330,6 +330,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/verify.sh` | `P2-0.1/Y6-dev:` | yeniden dondurma P2-0.1/F5: P2-0.1 zinciri (`p2-0-1-checks`), `pair` → `compare_p2_0_1 pair`, `compare-p2-0-1` |
 | `research/eval/check_compare_fields.py` | `P2-0.1/Y6-dev:` | yeniden dondurma P2-0.1/F6: `compare_p2_0_1` |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0.1/Y6-dev:` | yeniden dondurma P2-0.1/F6: `compare_p2_0_1` bölümü, alan ve dosya satırları |
+| `research/eval/**` | `P2-0.1/Y6-frz:` | yeniden dondurma P2-0.1/F6: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md` (`compare_p2_0_1`); bu commit'te var olan P2-0.1 ölçüm dosyaları (`run_p2_0_1.py`, `agent_fs_paths.py`, `datasets/p2_0_1_sets.py`, `compare_p2_0_1.py`, `historical_p2_0_1.py`, `historical_fails_p2_0_1.json`, `run_p2_0_1_checks.py`, `tamper_p2_0_1.py`) de bu satırla donar |
 <!-- /frozen-table -->
 
 ## Notlar
