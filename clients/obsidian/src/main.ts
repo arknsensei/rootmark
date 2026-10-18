@@ -61,7 +61,7 @@ export default class RootmarkPlugin extends Plugin {
   private observeOwnWrites(): void {
     this.restoreAdapter = observeOwnWrites(
       this.app.vault.adapter,
-      (path, bytes) => void this.attest(path, bytes),
+      (path, bytes, renamedFrom) => void this.attest(path, bytes, renamedFrom),
       (from) => this.onlyCanonical(from),
     );
   }
@@ -71,8 +71,8 @@ export default class RootmarkPlugin extends Plugin {
    * path as a new document, and attesting it would make an agent's proposal
    * or an unverified edit canonical (Z3 review, 11). A path the log does not
    * know is refused (automated security review: its bytes were never seen
-   * by the server). `own-writes.ts` also requires the old file to hold the
-   * bytes this Obsidian last reported. */
+   * by the server). The server checks the renamed bytes are that canonical
+   * content (`renamed_from`, contract §2.6). */
   private async onlyCanonical(from: string): Promise<boolean> {
     const client = this.client();
     if (client === null) return false;
@@ -80,7 +80,7 @@ export default class RootmarkPlugin extends Plugin {
     return blocks !== null && blocks.every((b) => b.layer === "canonical" || b.inactive);
   }
 
-  private async attest(path: string, bytes: Uint8Array): Promise<void> {
+  private async attest(path: string, bytes: Uint8Array, renamedFrom?: string): Promise<void> {
     const a = this.attester;
     if (a === null) {
       // offline: the save is not attested (it will be `unverified` if the
@@ -90,7 +90,7 @@ export default class RootmarkPlugin extends Plugin {
       return;
     }
     try {
-      await a.attest(path, bytes);
+      await a.attest(path, bytes, null, renamedFrom);
     } catch (e) {
       new Notice(`rootmark attest: ${describeError(e)}`, 6000);
     }

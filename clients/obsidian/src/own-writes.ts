@@ -5,12 +5,15 @@
 // `adapter.write`, a rename `adapter.rename`; a file another process writes
 // reaches Obsidian only as a `modify` event and does not pass here (another
 // plugin of the same Obsidian does: the human channel, Z3-1). A rewrite of
-// the bytes already on disk is no save; an append or a rename is reported
-// only when the file held, before it, exactly the bytes this Obsidian last
-// reported for it (so no foreign bytes are vouched for: automated security
-// review of P2-0/Z3), and a rename only when the caller allows it too
-// (`mayReportRename`: the old document holds nothing but canonical content,
-// Z3 review, finding 11). The wrapped calls run
+// the bytes already on disk is no save. An append is reported only when the
+// file held, before it, exactly the bytes this Obsidian last reported and
+// holds after it those bytes followed by the appended ones; a rename only
+// when the caller allows it (`mayReportRename`: the old document holds
+// nothing but canonical content, Z3 review, finding 11) and the file holds
+// after it the very bytes it held before — the server then checks they are
+// the canonical head of the old document (`renamed_from`, contract §2.6).
+// Every comparison is on raw bytes (automated security reviews of P2-0/Z3).
+// The wrapped calls run
 // unchanged; the plugin never writes a file itself. The static scan
 // (test/e2.test.ts) allows the adapter's methods to be bound only here.
 // No Obsidian import: tested with a fake adapter (test/p2_0.test.ts).
@@ -25,19 +28,18 @@ export interface OwnWritesAdapter {
   readBinary(path: string): Promise<ArrayBuffer>;
 }
 
-/** Called with a note this Obsidian saved and the bytes now on disk (for a
- * rename or an append: read back after the call). */
-export type OnSaved = (path: string, bytes: Uint8Array) => void;
+/** Called with a note this Obsidian saved and the exact bytes it wrote (an
+ * append: the bytes before it followed by the appended ones); a rename
+ * carries the old path (`renamedFrom`: the server checks the bytes are the
+ * canonical head of that document, contract §2.6). */
+export type OnSaved = (path: string, bytes: Uint8Array, renamedFrom?: string) => void;
 
 import { contentHash } from "./blake3";
 
 const isNote = (p: string): boolean => p.endsWith(".md");
 
 /** Wraps `adapter`'s `write`, `append` and `rename`; returns the function
- * that restores the adapter as it was. A write of the bytes already on disk
- * is no save (Obsidian rewriting what another process wrote, e.g. after a
- * reload) and is not reported: attesting it would vouch for that process's
- * bytes (Z3 review, finding 1). */
+ * that restores the adapter as it was. */
 export function observeOwnWrites(
   adapter: OwnWritesAdapter,
   onSaved: OnSaved,
@@ -51,30 +53,39 @@ export function observeOwnWrites(
   const rename = adapter.rename.bind(adapter);
   // the content_hash of the bytes this Obsidian last reported, by path
   const reported = new Map<string, string>();
-  const report = (path: string, bytes: Uint8Array): void => {
+  const report = (path: string, bytes: Uint8Array, renamedFrom?: string): void => {
     reported.set(path, contentHash(bytes));
-    onSaved(path, bytes);
+    onSaved(path, bytes, renamedFrom);
   };
-  const current = async (path: string): Promise<string | null> => ((await adapter.exists(path)) ? adapter.read(path) : null);
-  const ours = async (path: string): Promise<boolean> => {
-    const before = await current(path);
-    return before !== null && reported.get(path) === contentHash(new TextEncoder().encode(before));
-  };
+  const bytesOf = async (path: string): Promise<Uint8Array | null> =>
+    (await adapter.exists(path)) ? new Uint8Array(await adapter.readBinary(path)) : null;
+  const same = (a: Uint8Array, b: Uint8Array): boolean => a.length === b.length && a.every((x, i) => x === b[i]);
   adapter.write = async (path: string, data: string, options?: unknown): Promise<void> => {
-    const before = isNote(path) ? await current(path) : null;
+    const before = isNote(path) ? await bytesOf(path) : null;
+    const bytes = new TextEncoder().encode(data);
     await write(path, data, options);
-    if (isNote(path) && before !== data) report(path, new TextEncoder().encode(data));
+    if (isNote(path) && (before === null || !same(before, bytes))) report(path, bytes);
   };
   adapter.append = async (path: string, data: string, options?: unknown): Promise<void> => {
-    const own = isNote(path) && data !== "" && (await ours(path));
+    const before = isNote(path) && data !== "" ? await bytesOf(path) : null;
+    const own = before !== null && reported.get(path) === contentHash(before);
     await append(path, data, options);
-    if (own) report(path, new Uint8Array(await adapter.readBinary(path)));
+    if (!own) return;
+    const added = new TextEncoder().encode(data);
+    const want = new Uint8Array(before.length + added.length);
+    want.set(before, 0);
+    want.set(added, before.length);
+    const after = await bytesOf(path);
+    if (after !== null && same(after, want)) report(path, after);
   };
   adapter.rename = async (from: string, to: string): Promise<void> => {
     // decided before the rename: the server still knows the old path
-    const own = isNote(to) && (await ours(from)) && (await mayReportRename(from).catch(() => false));
+    const before = isNote(to) ? await bytesOf(from) : null;
+    const allowed = before !== null && (await mayReportRename(from).catch(() => false));
     await rename(from, to);
-    if (own) report(to, new Uint8Array(await adapter.readBinary(to)));
+    if (!allowed) return;
+    const after = await bytesOf(to);
+    if (after !== null && same(after, before)) report(to, after, from);
   };
   return () => {
     for (const [n, d] of own) {

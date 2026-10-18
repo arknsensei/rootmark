@@ -108,15 +108,28 @@ describe("own writes (src/own-writes.ts)", () => {
     expect(seenB).toEqual(["g.md"]);
   });
 
-  it("an append or a rename of bytes this Obsidian did not report is not reported (security review)", async () => {
+  it("an append of bytes this Obsidian did not report is not reported; a rename carries its old path for the server's check (security reviews)", async () => {
     const a = new FakeAdapter();
     const seen: string[] = [];
-    observeOwnWrites(a, (p) => seen.push(p), () => Promise.resolve(true));
-    // another process wrote these files; this Obsidian never saved them
+    const renames: (string | undefined)[] = [];
+    observeOwnWrites(
+      a,
+      (p, _b, from) => {
+        seen.push(p);
+        renames.push(from);
+      },
+      () => Promise.resolve(true),
+    );
+    // another process wrote this file; this Obsidian never saved it
     a.files.set("agent.md", "# A\n\nAn agent's unseen text.\n");
     await a.append("agent.md", "\nAn appended line.\n");
-    await a.rename("agent.md", "renamed.md");
     expect(seen).toEqual([]);
+    // a rename is reported with renamed_from: the server accepts it only if
+    // the bytes are the canonical head of the old document (contract §2.6)
+    await a.rename("agent.md", "renamed.md");
+    expect(seen).toEqual(["renamed.md"]);
+    expect(renames).toEqual(["agent.md"]);
+    seen.length = 0;
     // saved here, then changed on disk by someone else: an append is not ours
     await a.write("n.md", "# N\n");
     a.files.set("n.md", "# N\n\nForeign bytes.\n");

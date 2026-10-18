@@ -127,7 +127,12 @@ export class Attester {
 
   /** Attests the saved bytes of `docPath`. An expired or unknown session
    * (the server restarted) is opened again once. */
-  async attest(docPath: string, bytes: Uint8Array, savedAtSeq: number | null = null): Promise<AttestResult> {
+  async attest(
+    docPath: string,
+    bytes: Uint8Array,
+    savedAtSeq: number | null = null,
+    renamedFrom?: string,
+  ): Promise<AttestResult> {
     const hash = contentHash(bytes);
     const send = async (s: AttestSession): Promise<AttestResult> => {
       const mac = await hmacHex(this.subtle, s.key, macMessage(docPath, hash, savedAtSeq));
@@ -136,6 +141,7 @@ export class Attester {
           doc_path: docPath,
           content_hash: hash,
           ...(savedAtSeq === null ? {} : { saved_at_seq: savedAtSeq }),
+          ...(renamedFrom === undefined ? {} : { renamed_from: renamedFrom }),
           session_id: s.session_id,
           mac,
         }),
