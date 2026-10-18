@@ -270,6 +270,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/historical.py` | `GH-0/G0:` | yeniden dondurma GH-0/F3: kayıt ↔ referans ad modulo |
 | `scripts/test_tamper.sh` | `GH-0/G5-tar:` | yeniden dondurma GH-0/F4: depo kopyası `tar --null -T -` (Linux'ta `xargs` bölünmesi) |
 | `scripts/test_freeze_indep.sh` | `GH-0/G5-tar:` | yeniden dondurma GH-0/F4: depo kopyası `tar --null -T -` |
+| `scripts/http_e2e.sh` | `GH-0/G5-stat:` | yeniden dondurma GH-0/F5: token modu GNU `stat -c` önce (Linux'ta `stat -f` dosya sistemi bilgisi basar) |
 <!-- /frozen-table -->
 
 ## Notlar
