@@ -20,37 +20,37 @@ const IV = new Uint32Array([
 const MSG_PERMUTATION = [2, 6, 3, 10, 7, 0, 4, 13, 1, 11, 12, 5, 9, 14, 15, 8];
 
 /** `a[i]` (always in range here; 0 keeps the type a number) */
-const ix = (a: Uint32Array | Uint8Array | readonly number[], i: number): number => a[i] ?? 0;
+const word = (a: Uint32Array | Uint8Array | readonly number[], i: number): number => a[i] ?? 0;
 
 function rotr(x: number, n: number): number {
   return ((x >>> n) | (x << (32 - n))) >>> 0;
 }
 
 function g(s: Uint32Array, a: number, b: number, c: number, d: number, mx: number, my: number): void {
-  s[a] = (ix(s, a) + ix(s, b) + mx) >>> 0;
-  s[d] = rotr(ix(s, d) ^ ix(s, a), 16);
-  s[c] = (ix(s, c) + ix(s, d)) >>> 0;
-  s[b] = rotr(ix(s, b) ^ ix(s, c), 12);
-  s[a] = (ix(s, a) + ix(s, b) + my) >>> 0;
-  s[d] = rotr(ix(s, d) ^ ix(s, a), 8);
-  s[c] = (ix(s, c) + ix(s, d)) >>> 0;
-  s[b] = rotr(ix(s, b) ^ ix(s, c), 7);
+  s[a] = (word(s, a) + word(s, b) + mx) >>> 0;
+  s[d] = rotr(word(s, d) ^ word(s, a), 16);
+  s[c] = (word(s, c) + word(s, d)) >>> 0;
+  s[b] = rotr(word(s, b) ^ word(s, c), 12);
+  s[a] = (word(s, a) + word(s, b) + my) >>> 0;
+  s[d] = rotr(word(s, d) ^ word(s, a), 8);
+  s[c] = (word(s, c) + word(s, d)) >>> 0;
+  s[b] = rotr(word(s, b) ^ word(s, c), 7);
 }
 
 function round(s: Uint32Array, m: Uint32Array): void {
-  g(s, 0, 4, 8, 12, ix(m, 0), ix(m, 1));
-  g(s, 1, 5, 9, 13, ix(m, 2), ix(m, 3));
-  g(s, 2, 6, 10, 14, ix(m, 4), ix(m, 5));
-  g(s, 3, 7, 11, 15, ix(m, 6), ix(m, 7));
-  g(s, 0, 5, 10, 15, ix(m, 8), ix(m, 9));
-  g(s, 1, 6, 11, 12, ix(m, 10), ix(m, 11));
-  g(s, 2, 7, 8, 13, ix(m, 12), ix(m, 13));
-  g(s, 3, 4, 9, 14, ix(m, 14), ix(m, 15));
+  g(s, 0, 4, 8, 12, word(m, 0), word(m, 1));
+  g(s, 1, 5, 9, 13, word(m, 2), word(m, 3));
+  g(s, 2, 6, 10, 14, word(m, 4), word(m, 5));
+  g(s, 3, 7, 11, 15, word(m, 6), word(m, 7));
+  g(s, 0, 5, 10, 15, word(m, 8), word(m, 9));
+  g(s, 1, 6, 11, 12, word(m, 10), word(m, 11));
+  g(s, 2, 7, 8, 13, word(m, 12), word(m, 13));
+  g(s, 3, 4, 9, 14, word(m, 14), word(m, 15));
 }
 
 function permute(m: Uint32Array): Uint32Array {
   const out = new Uint32Array(16);
-  for (let i = 0; i < 16; i++) out[i] = ix(m, ix(MSG_PERMUTATION, i));
+  for (let i = 0; i < 16; i++) out[i] = word(m, word(MSG_PERMUTATION, i));
   return out;
 }
 
@@ -74,8 +74,8 @@ function compress(
     if (r < 6) m = permute(m);
   }
   for (let i = 0; i < 8; i++) {
-    s[i] = (ix(s, i) ^ ix(s, i + 8)) >>> 0;
-    s[i + 8] = (ix(s, i + 8) ^ ix(cv, i)) >>> 0;
+    s[i] = (word(s, i) ^ word(s, i + 8)) >>> 0;
+    s[i + 8] = (word(s, i + 8) ^ word(cv, i)) >>> 0;
   }
   return s;
 }
@@ -86,7 +86,7 @@ function words(bytes: Uint8Array, at: number, len: number): Uint32Array {
   const w = new Uint32Array(16);
   for (let i = 0; i < 16; i++) {
     w[i] =
-      (ix(block, 4 * i) | (ix(block, 4 * i + 1) << 8) | (ix(block, 4 * i + 2) << 16) | (ix(block, 4 * i + 3) << 24)) >>> 0;
+      (word(block, 4 * i) | (word(block, 4 * i + 1) << 8) | (word(block, 4 * i + 2) << 16) | (word(block, 4 * i + 3) << 24)) >>> 0;
   }
   return w;
 }
@@ -163,7 +163,7 @@ export function blake3(bytes: Uint8Array): Uint8Array {
   const words32 = compress(o.cv, o.block, 0, o.blockLen, o.flags | ROOT);
   const res = new Uint8Array(OUT_LEN);
   for (let i = 0; i < OUT_LEN / 4; i++) {
-    const w = ix(words32, i);
+    const w = word(words32, i);
     res[4 * i] = w & 0xff;
     res[4 * i + 1] = (w >>> 8) & 0xff;
     res[4 * i + 2] = (w >>> 16) & 0xff;

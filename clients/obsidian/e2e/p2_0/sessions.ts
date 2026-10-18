@@ -159,11 +159,20 @@ const HANDS = `(window.__p2 = {
     const f = app.vault.getAbstractFileByPath(path);
     if (!f) throw new Error(path + ' not in the vault');
     await app.workspace.getLeaf(false).openFile(f);
-    return true;
+    // a person types once the note is in front of them: wait until the
+    // active editor shows this note
+    for (let i = 0; i < 200; i++) {
+      const ed = app.workspace.activeEditor;
+      if (ed && ed.editor && ed.file && ed.file.path === path) return true;
+      await new Promise((ok) => setTimeout(ok, 25));
+    }
+    throw new Error(path + ' did not become the active editor');
   },
   type(text) {
-    const e = app.workspace.activeEditor && app.workspace.activeEditor.editor;
+    const ed = app.workspace.activeEditor;
+    const e = ed && ed.editor;
     if (!e) throw new Error('no active editor');
+    if (!ed.file || ed.file.path !== window.__p2.current) throw new Error('the active editor is not ' + window.__p2.current);
     const last = e.lastLine();
     e.replaceRange(text, { line: last, ch: e.getLine(last).length });
     return true;
@@ -297,6 +306,7 @@ try {
         if (!before.has(doc)) before.set(doc, new Set(((await blame(doc)) ?? []).map((b) => b.version_id)));
         docs.add(doc);
         await pg.ev(`__p2.open(${J(doc)})`);
+        await pg.ev(`(window.__p2.current = ${J(doc)}, true)`);
         if (st.op === "type") {
           typed.set(doc, Date.now());
           await pg.ev(`__p2.type(${J(st.text ?? "")})`);
@@ -323,7 +333,11 @@ try {
       return [...typed].every(([d, t]) => ws.some((x) => x.path === d && x.t >= t));
     };
     for (let i = 0; i < 240 && !(await written()); i++) await sleep(25);
-    if (!(await written())) throw new Error(`session ${s.id}: a typed note was not written by Obsidian within 6 s`);
+    if (!(await written())) {
+      const ws = await pg.ev<{ path: string; t: number }[]>(`__p2.writes.slice(${String(startWrites)})`);
+      const missing = [...typed].filter(([d, t]) => !ws.some((x) => x.path === d && x.t >= t)).map(([d]) => d);
+      throw new Error(`session ${s.id}: typed notes not written by Obsidian within 6 s: ${missing.join(", ")}; writes ${JSON.stringify(ws.map((x) => x.path))}`);
+    }
     await sleep(150);
     polling.on = false;
     await poller;

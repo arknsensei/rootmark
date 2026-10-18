@@ -171,6 +171,104 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2_0` | hepsi | `p2_0_checks.json` | `H-P2-0b′` | duvar-saati | D-B test: geç tasdikle düzelen kayıtlar (zamanlamaya bağlı) |
 | `compare_p2_0` | hepsi | `p2_0_checks.json` | `H-P2-0c` | duvar-saati | D-B test: kayıt → `canonical` gecikmesi (ms) |
 | `compare_p2_0` | hepsi | `p2_0/tuning.json` | `windows` | duvar-saati | D-B ayar koşusunun beş `W` satırı (oran, gecikme) |
+| `compare_p2_0` | regress | `conformance_p1d1.json` | `fixtures_manifest_hash` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `conformance_p1d1.json` | `passed` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `conformance_p1d1.json` | `spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `conformance_p1d1.json` | `total` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `conformance_p1d1.json` | `tests` | karar | K-P2-0.4: the report holds three new tests (by-id comparison: the 34 of the reference equal, the three new pass) |
+| `compare_p2_0` | regress | `p1e/release/conformance_rootmark.json` | `fixtures_manifest_hash` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/conformance_rootmark.json` | `passed` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/conformance_rootmark.json` | `spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/conformance_rootmark.json` | `total` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/conformance_rootmark.json` | `tests` | karar | K-P2-0.4: the report holds three new tests (by-id comparison: the 34 of the reference equal, the three new pass) |
+| `compare_p2_0` | regress | `p1b1_checks.json` | `criteria/B1-3/spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1b_checks.json` | `fixtures_manifest_hash` | karar | K-P2-0.4: fixture manifest: C2-11, C2-12, C3-08 |
+| `compare_p2_0` | regress | `p1c1_checks.json` | `C1-7/spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1c_checks.json` | `C-1/spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1d/scene/scene.json` | `steps/0/shows/spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1d1_checks.json` | `D1-10/pass` | karar | K-P2-0.4: D1-10 expects 34 tests and spec 1.0.3 |
+| `compare_p2_0` | regress | `p1d1_checks.json` | `D1-10/passed` | karar | K-P2-0.4: D1-10 expects 34 tests and spec 1.0.3 |
+| `compare_p2_0` | regress | `p1d1_checks.json` | `D1-10/spec_version` | karar | K-P2-0.4: D1-10 expects 34 tests and spec 1.0.3 |
+| `compare_p2_0` | regress | `p1d1_checks.json` | `D1-12/regress_vs_p1d/conformance/spec_version/1` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1d_checks.json` | `D-9/conformance/spec_version/1` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/plugin_e2e/plugin_e2e.json` | `steps/0/shows/spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/conformance_equiv.json` | `passed` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/conformance_equiv.json` | `spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/conformance_equiv.json` | `total` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/release_local.json` | `conformance/passed` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/release_local.json` | `conformance/total` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/release/release_local.json` | `spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/scene/scene.json` | `steps/0/shows/mcp_spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e/scene/scene.json` | `steps/0/shows/spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1/release/release.json` | `spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1/release/release.json` | `targets/0/conformance/passed` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1/release/release.json` | `targets/0/conformance/total` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1/release/release.json` | `targets/0/spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1/release/release.json` | `commit` | karar | K-P2-0.1: the release package of this round's commit (the reference is P1-E.1's) |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `items/3/item` | karar | K-P2-0.1: R4a's item names the commit of the package (the reference is P1-E.1's) |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `items/1/item` | karar | K-P2-0.4: the checklist item names spec 2.0.0 / 37 (F9) |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `items/4/item` | karar | K-P2-0.4: the checklist item names spec 2.0.0 / 37 (F9) |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `items/9/item` | karar | K-P2-0.4: the checklist item names spec 2.0.0 / 37 (F9) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-5/required/conformance/passed` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-5/required/conformance/total` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-5/required/spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-6/conformance/passed` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-6/conformance/total` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-6/pass` | karar | K-P2-0.4: E1-6 expects 34/34 and regresses against P1-E: it sees the P2-0 differences |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-6/regress_vs_p1e` | karar | K-P2-0.4: E1-6's regress against P1-E sees every P2-0 difference (this regress lists them by decision) |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-7/chain_local_target/conformance/passed` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-7/chain_local_target/conformance/total` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-7/chain_local_target/spec_version` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-9/conformance/passed` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-9/conformance/total` | karar | K-P2-0.4: spec 2.0.0 and conformance 37 (C2-11, C2-12, C3-08) |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1` | karar | K-P2-0.4: E-9's regress against P1-D.1 sees every P2-0 difference |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `items/#len` | karar | K-P2-0.3: R14 rewritten, R16 added (17 items) |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `items/14/detail` | karar | K-P2-0.3: R14 rewritten, R16 added (17 items) |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `items/14/item` | karar | K-P2-0.3: R14 rewritten, R16 added (17 items) |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `items/16` | karar | K-P2-0.3: R14 rewritten, R16 added (17 items) |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `total` | karar | K-P2-0.3: R14 rewritten, R16 added (17 items) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-4/release_check` | karar | K-P2-0.3: R14 rewritten, R16 added (17 items) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-4/release_md_items/#len` | karar | K-P2-0.3: R16 in docs/RELEASE.md |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-4/release_md_items/16` | karar | K-P2-0.3: R16 in docs/RELEASE.md |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-4/script_items` | karar | K-P2-0.3: R16 scripted |
+| `compare_p2_0` | regress | `p1d1/d1_13.json` | `http/status_fields` | karar | K-P2-0.3: contract_check.sh's status step reads every field of the §2 status row |
+| `compare_p2_0` | regress | `p1d1/d1_13.json` | `http/http_only` | karar | K-P2-0.5: contract_check.sh's §2.6 step: attest_session, attest over HTTP, absent from MCP |
+| `compare_p2_0` | regress | `p1e1/contract.json` | `http/status_fields` | karar | K-P2-0.3: contract_check.sh's status step reads every field of the §2 status row |
+| `compare_p2_0` | regress | `p1e1/contract.json` | `http/http_only` | karar | K-P2-0.5: contract_check.sh's §2.6 step: attest_session, attest over HTTP, absent from MCP |
+| `compare_p2_0` | regress | `p1e/client.json` | `bundle_bytes` | karar | K-P2-0.5: the plugin attests its own saves (Z3): bundle and unit tests |
+| `compare_p2_0` | regress | `p1e/client.json` | `vitest/files` | karar | K-P2-0.5: the plugin attests its own saves (Z3): bundle and unit tests |
+| `compare_p2_0` | regress | `p1e/client.json` | `vitest/passed` | karar | K-P2-0.5: the plugin attests its own saves (Z3): bundle and unit tests |
+| `compare_p2_0` | regress | `p1e/client.json` | `vitest/tests` | karar | K-P2-0.5: the plugin attests its own saves (Z3): bundle and unit tests |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-10/bundle_bytes` | karar | K-P2-0.5: the plugin attests its own saves (Z3): bundle and unit tests |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-10/vitest/files` | karar | K-P2-0.5: the plugin attests its own saves (Z3): bundle and unit tests |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-10/vitest/passed` | karar | K-P2-0.5: the plugin attests its own saves (Z3): bundle and unit tests |
+| `compare_p2_0` | regress | `p1e_checks.json` | `E-10/vitest/tests` | karar | K-P2-0.5: the plugin attests its own saves (Z3): bundle and unit tests |
+| `compare_p2_0` | regress | `p1e1/release/release_check.json` | `items/8/detail` | karar | K-P2-0.5: R8 records the plugin bundle size (Z3) |
+| `compare_p2_0` | regress | `p1e1/tamper_p1e1.json` | `cases/1/as_expected` | karar | K-P2-0.5: the p1e-final server case expects only status gaps; it now also lacks §2.6 and status.attestation (F14) |
+| `compare_p2_0` | regress | `p1e1/tamper_p1e1.json` | `cases/1/detail/as_expected` | karar | K-P2-0.5: the p1e-final server case expects only status gaps; it now also lacks §2.6 and status.attestation (F14) |
+| `compare_p2_0` | regress | `p1e1/tamper_p1e1.json` | `pass` | karar | K-P2-0.5: the p1e-final server case expects only status gaps; it now also lacks §2.6 and status.attestation (F14) |
+| `compare_p2_0` | regress | `p1e1/tamper_p1e1.json` | `rejected` | karar | K-P2-0.5: the p1e-final server case expects only status gaps; it now also lacks §2.6 and status.attestation (F14) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-8/deliberate/1/as_expected` | karar | K-P2-0.5: the same p1e-final case (F14) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `E1-8/pass` | karar | K-P2-0.5: the same p1e-final case (F14) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `tamper/pass` | karar | K-P2-0.5: the same p1e-final case (F14) |
+| `compare_p2_0` | regress | `p1e1_checks.json` | `tamper/rejected` | karar | K-P2-0.5: the same p1e-final case (F14) |
+| `compare_p2_0` | regress | `p1e/check_compare_fields.json` | `fields_declared` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e/check_compare_fields.json` | `fields_in_code` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e/check_compare_fields.json` | `file_constants` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e/check_compare_fields.json` | `modules/#len` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e/check_compare_fields.json` | `modules/9` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e/check_compare_fields.json` | `modules/10` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e1/check_compare_fields.json` | `fields_declared` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e1/check_compare_fields.json` | `fields_in_code` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e1/check_compare_fields.json` | `file_constants` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e1/check_compare_fields.json` | `modules/#len` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e1/check_compare_fields.json` | `modules/9` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e1/check_compare_fields.json` | `modules/10` | karar | F13: the field audit sees the new comparator compare_p2_0 (its module, rows and file constants) |
+| `compare_p2_0` | regress | `p1e1/historical.json` | `counted_fails` | karar | K-P2-0.4: eval.historical (reference P1-E) sees the FAILs P2-0 decisions cause; eval.historical_p2_0 classifies them |
+| `compare_p2_0` | regress | `p1e1/historical.json` | `counted` | karar | K-P2-0.4: eval.historical (reference P1-E) sees the FAILs P2-0 decisions cause; eval.historical_p2_0 classifies them |
+| `compare_p2_0` | regress | `p1e1/historical.json` | `fails` | karar | K-P2-0.4: eval.historical (reference P1-E) sees the FAILs P2-0 decisions cause; eval.historical_p2_0 classifies them |
+| `compare_p2_0` | regress | `p1e1/historical.json` | `historical` | karar | K-P2-0.4: eval.historical (reference P1-E) sees the FAILs P2-0 decisions cause; eval.historical_p2_0 classifies them |
+| `compare_p2_0` | regress | `p1e1/status/e1_1.json` | `fixture` | karar | K-GH.1: the fixture label after the project rename (GH-0, after the P1-E.1 official RUN) |
 <!-- /fields-table -->
 
 ## Dosya tablosu

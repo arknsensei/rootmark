@@ -307,6 +307,13 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/run_p2_0_checks.py` | `P2-0/Z7:` | P2-0 hipotez kaydedicisi |
 | `research/eval/tamper_p2_0.py` | `P2-0/Z7:` | P2-0 kasıtlı vakalar |
 | `research/eval/**` | `P2-0/Z7-frz:` | yeniden dondurma P2-0/F13: GH-0 glob satırının kapsadığı `check_compare_fields.py` ve `DETERMINISTIC_FIELDS.md` (`compare_p2_0`); `research/eval/**`'nin geri kalanı değişmedi |
+| `scripts/contract_check.sh` | `P2-0/Z7-fix:` | yeniden dondurma P2-0/F14: anahtar vermeyen eski sunucuda §2.6 adımı kaydeder, ölmez |
+| `research/eval/**` | `P2-0/Z7-fix:` | yeniden dondurma P2-0/F15: `compare_p2_0.EXCLUDED`, `DETERMINISTIC_FIELDS.md` satırları; `historical_p2_0.py`, `historical_fails_p2_0.json` yeni |
+| `research/eval/compare_p2_0.py` | `P2-0/Z7-fix:` | yeniden dondurma P2-0/F15: regress hariç tutmaları (geliştirme RUN'ından) |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0/Z7-fix:` | yeniden dondurma P2-0/F15: `compare_p2_0` regress satırları |
+| `research/eval/historical_p2_0.py` | `P2-0/Z7-fix:` | P2-0 tarihsel FAIL sınıflandırıcısı (P1-E.1 referansı) |
+| `research/eval/historical_fails_p2_0.json` | `P2-0/Z7-fix:` | P2-0 tarihsel FAIL listesi |
+| `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z7-fix:` | yeniden dondurma P2-0/F15: etkin editör beklemesi, adlandırılmış yazılmayan not |
 <!-- /frozen-table -->
 
 ## Notlar

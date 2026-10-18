@@ -104,7 +104,8 @@ test-check-deps:
 # P1-C/C0, K-C0.2), then spec/fixtures/C3-* against the current index
 # (index/tests/conformance_c3.rs extends the report: 31 entries since
 # P1-C.1 (C3-05, K-C1.3); 34 since P1-D.1 (C3-06, C3-07, K-D1.1, K-D1.8; C2-10,
-# K-D1.2; spec 1.0.3), level_claimed 3; P1-C/C7). Fails unless 34/34 pass
+# K-D1.2; spec 1.0.3), level_claimed 3; P1-C/C7); 37 since P2-0 (C2-11,
+# C2-12, C3-08; spec 2.0.0). Fails unless 37/37 pass
 # (level_claimed 3) and
 # the frozen fixture manifest matches. The fixture root is this tree's,
 # resolved at run time (ROOTMARK_FIXTURES; P1-A verifier recommendation Ö2).
@@ -231,9 +232,9 @@ p1b-checks: require-run
 	@# P1-B/P1-B.1 recorders read the P1-B view of it (C1-01..17, C2-01..08:
 	@# 25 entries, level 2 iff all 25 pass with an intact manifest), as
 	@# p1a-checks reads the level-1 view; the full report is kept beside it
-	@# (P1-D.1: C2-10 is outside the P1-B view too)
+	@# (P1-D.1: C2-10 is outside the P1-B view too; P2-0: C2-11, C2-12 too)
 	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_full.json
-	jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
+	jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10" and .id != "C2-11" and .id != "C2-12")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
@@ -334,11 +335,13 @@ p1c-checks: require-run
 	@# P1-D.1: the report holds C2-10, C3-06, C3-07 too (34 entries, spec
 	@# 1.0.3); conformance_p1c1.json is the P1-C.1 view (31 entries, level 3
 	@# iff all 31 pass with an intact manifest) and conformance_p1d1.json the
-	@# full report
+	@# full report. P2-0: the report holds C2-11, C2-12, C3-08 too (37
+	@# entries, spec 2.0.0); the P1-C.1 and P1-C views leave them out, and
+	@# conformance_p1d1.json stays the full report (37)
 	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_p1d1.json
-	jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C3-08")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_p1c1.json
-	jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C3-08")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_full.json
 	cargo test -p rootmark-core --release --test compat_v3final kc01 -- --test-threads=1 \
 	  >research/reports/runs/$(RUN)/c13_tests.log 2>&1 \
@@ -573,7 +576,8 @@ p2-0-test: require-run build p2-0-harness
 # copied into the RUN: the test sets never choose W), the test sets (D-E,
 # D-A, D-C, D-B test in the real Obsidian; without an Obsidian binary D-B is
 # recorded as skipped), the deliberate cases (eval.tamper_p2_0), the regress
-# against the P1-E.1 official RUN and run_p2_0_checks → p2_0_checks.json. A
+# against the P1-E.1 official RUN and run_p2_0_checks → p2_0_checks.json, the
+# historical FAILs of earlier recorders (p2_0/historical.json). A
 # hypothesis that fails is recorded, not fatal; a missing result fails.
 P1E1_REF_RUN := ../reports/rounds/P1-E.1/runs/20261017T140538Z-7ea12dc
 P2_0_DIR = research/reports/runs/$(RUN)/p2_0
@@ -590,6 +594,10 @@ p2-0-checks: require-run p2-0-harness
 	  --out reports/runs/$(RUN)/regress_vs_p1e1.json >/dev/null || rc=$$?; \
 	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
 	$(PY) -m eval.run_p2_0_checks --run $(RUN)
+	@# the FAILs of earlier recorders against the P1-E.1 official RUN (P2-0
+	@# decisions; exit 3 = counted FAILs, recorded, not fatal)
+	rc=0; $(PY) -m eval.historical_p2_0 --run-dir reports/runs/$(RUN) --out reports/runs/$(RUN)/p2_0/historical.json || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:
