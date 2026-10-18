@@ -104,6 +104,7 @@ Başarısız bir araç çağrısı şu biçimlerde döner:
 İstisnalar:
 - MCP'de bilinmeyen araç bir JSON-RPC hatasıdır (`-32602`). HTTP'de 404 `not_found`'dur.
 - `rootmark serve` başlarken indeks yoksa kurar; başka biçimdeyse `[index] auto_rebuild = true` (varsayılan) ile yeniden kurar. `auto_rebuild = false` ise indeksi olduğu gibi bırakır, stderr'e yazar ve indeks isteyen çağrılar (`search`, indeks taşıyan vault'ta `propose`) `index_stale` döner. Okunamayan manifest'i (`damaged`) hiçbir ayarda kendiliğinden yeniden kurmaz; indeks isteyen çağrılar yine `index_stale` döner. Salt okunur çağrılar (`blame`, `history`, `checkpoints`, `trace`, …) indekssiz de çalışır (K-E0.3); `status` her indeks durumunda 200 döner ve durumu `index.state`'te bildirir (K-E1.2).
+- **Kapanış (P2-0/Z0):** `rootmark serve` SIGTERM/SIGINT ya da MCP akışının sonuyla durur; sıcak katmanı soğuk indekse sıkıştırır ve 0 ile çıkar, sıkıştırma başarısızsa 1 ile. `index.state` `ok` değilse (`stale`, `missing`, `damaged`) sıkıştırılacak bir şey yoktur: stderr'e `rootmark serve: compact (shutdown): skipped, index <state> …` notu yazılır ve çıkış 0'dır (zamanlayıcı sıkıştırması da aynı notla atlanır). İndeks yine kendiliğinden kurulmaz.
 - Politikanın `promote` reddi her kanalda yanıttır, hata değildir (§2.4).
 
 ## 4. Olaylar, köken ve ajan yönergesi

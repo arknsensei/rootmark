@@ -2,7 +2,7 @@
 
 **Hedef (K-E1.1):** 0.1.0'ın tek yayım hedefi `aarch64-apple-darwin`'dir. `x86_64-unknown-linux-gnu` ve `x86_64-pc-windows-msvc` CI'da derlenir, `rootmark conformance` koşturulur ve artefakt saklanır, ama yayım kriteri değildir ("CI bilgi"); `x86_64-apple-darwin` hedef değildir. Kurulum paketleri (installer, imzalama, dağıtım kanalları) faz 2'nin konusudur.
 
-Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde kimlikleri R1…R15 ve R4a; betik her biri için `ok`/`FAIL` yazar, çıkış 0 yalnız hepsi geçerse). `scripts/release.sh` paketi `dist/`'e kurar (hedef kayıtları `scripts/release_target.sh` ile, CI'daki kayıtla aynı biçimde; gerçek Obsidian e2e'si `dist/plugin_e2e_real/`); hiçbir şey yayımlamaz, etiket atmaz. Betik hiçbir boru hattını erken çıkan bir okuyucuyla (`grep -q`) bitirmez: liste önce bir dosyaya alınır (P1-E doğrulaması V7, E1-4).
+Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde kimlikleri R1…R16 ve R4a; betik her biri için `ok`/`FAIL` yazar, çıkış 0 yalnız hepsi geçerse). `scripts/release.sh` paketi `dist/`'e kurar (hedef kayıtları `scripts/release_target.sh` ile, CI'daki kayıtla aynı biçimde; gerçek Obsidian e2e'si `dist/plugin_e2e_real/`); hiçbir şey yayımlamaz, etiket atmaz. Betik hiçbir boru hattını erken çıkan bir okuyucuyla (`grep -q`) bitirmez: liste önce bir dosyaya alınır (P1-E doğrulaması V7, E1-4).
 
 | # | Madde | Doğrulama (release_check.sh) |
 |---|---|---|
@@ -20,8 +20,9 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 | R11 | Belgeler | `CHANGELOG.md`'de `## 0.1.0`, `docs/THREAT_MODEL.md`, bu dosya |
 | R12 | cargo-binstall ve Homebrew taslağı | `server/Cargo.toml [package.metadata.binstall]`; `dist/homebrew/rootmark.rb` sürüm ve sha256 dolu |
 | R13 | CI derleme | `.github/workflows/release.yml` yalnız `workflow_dispatch` ile tetiklenir; matris `aarch64-apple-darwin` (zorunlu) ve `x86_64-unknown-linux-gnu`, `x86_64-pc-windows-msvc` (`continue-on-error`); `x86_64-apple-darwin` yok; her artefaktta `rootmark conformance` (K-E1.1) |
-| R14 | Etiket yok | `git tag -l v0.1.0` boş: etiketi bu tur atmaz |
+| R14 | Etiket insan adımıdır | `v0.1.0` etiketi yok, ya da (P2-0/Z0'dan beri) var ve R16'nın raporu "Güvenilir", etiketin commit'i en yeni `ROUND_START`'ın kendisi ya da atası (etiketi bir tur atmaz; 0.1.0'ı GH-0'da insan attı, K-GH.4) |
 | R15 | Gerçek Obsidian e2e (K-E1.3) | `dist/plugin_e2e_real/plugin_e2e_real.json`: 11/11, E1-9 bağlantı adımı geçti, `pass: true`; Obsidian ikilisi yoksa kayıt `skipped` olur ve R15 FAIL'dir (atlanma yayım için geçme sayılmaz) |
+| R16 | İnsan adımı 1'in bağı (P2-0/Z0; P1-E.1 doğrulaması öneri 1) | aşağıdaki insan adımı 1'in adını verdiği `reports/rounds/<tur>/VERIFICATION.md` var ve son `**Hüküm: …**` satırı "Güvenilir" |
 
 ## İnsan adımları (betik yapmaz)
 1. P1-E.1 bağımsız doğrulaması (`reports/rounds/P1-E.1/VERIFICATION.md`) **"Güvenilir"** demeden hiçbiri yapılmaz (P1-E'nin hükmü "şu koşullarla güvenilir" idi; koşulu P1-E.1 kapattı).

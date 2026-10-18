@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Checks every item of docs/RELEASE.md (R1–R15, R4a) against the tree and
+# Checks every item of docs/RELEASE.md (R1–R16, R4a) against the tree and
 # the release package built by scripts/release.sh. No pipeline ends in an
 # early-exiting reader (`grep -q`, `head`) under pipefail: a listing is
 # captured first and then searched (P1-E verification V7: R7's `unzip |
@@ -93,11 +93,37 @@ item R13 "CI release.yml: workflow_dispatch only, aarch64 required, Linux/Window
   && grep -qF 'continue-on-error: ${{ !matrix.required }}' "$wf" \
   && grep -qF 'bash scripts/release_target.sh check' "$wf" \
   && grep -qF 'bash scripts/release_target.sh assemble' "$wf"; echo $?)" "on: $on_block"
-item R14 "no v$ver tag (set by a human after verification)" "$( [ -z "$(git tag -l "v$ver")" ]; echo $?)"
+# R16 (P2-0/Z0; P1-E.1 verification, recommendation 1): RELEASE.md human
+# step 1 names the verification the release waits for; that report exists
+# and its last verdict line is "Güvenilir"
+step1="$(sed -n '/^## İnsan adımları/,$p' docs/RELEASE.md | grep -E '^1\. ' | head -1 || true)"
+vrep="$(grep -oE 'reports/rounds/[^/` ]+/VERIFICATION\.md' <<<"$step1" | head -1 || true)"
+verdict=""
+if [ -n "$vrep" ] && [ -f "$vrep" ]; then
+  verdict="$(grep -oE '^\*\*Hüküm: [^*]+\*\*' "$vrep" | tail -1 | sed -E 's/^\*\*Hüküm: //; s/\.?\*\*$//' || true)"
+fi
+# R14: the tag is a human step (RELEASE.md step 4): absent, or set after
+# that verification said "Güvenilir" and not by the active round (the tag's
+# commit is the newest ROUND_START or an ancestor of it)
+newest_rs=""
+for f in docs/rounds/*/progress/ROUND_START; do
+  c="$(tr -d ' \n' <"$f")"
+  if [ -z "$newest_rs" ] || git merge-base --is-ancestor "$newest_rs" "$c" 2>/dev/null; then newest_rs="$c"; fi
+done
+tagc="$(git rev-list -n1 "v$ver" 2>/dev/null || true)"
+if [ -z "$tagc" ]; then
+  item R14 "v$ver tag absent or set by a human after a Güvenilir verification" 0 "no tag"
+else
+  item R14 "v$ver tag absent or set by a human after a Güvenilir verification" \
+    "$( [ "$verdict" = "Güvenilir" ] && git merge-base --is-ancestor "$tagc" "$newest_rs" 2>/dev/null; echo $?)" \
+    "v$ver at ${tagc:0:7}, newest round start ${newest_rs:0:7}, ${vrep:-no report}: ${verdict:-no verdict}"
+fi
 # R15 (K-E1.3): the real-Obsidian e2e of this package passed (a skip is not a pass)
 re="$dist/plugin_e2e_real/plugin_e2e_real.json"
 item R15 "real-Obsidian e2e 11/11 and E1-9 (K-E1.3)" "$( [ -f "$re" ] && jq -e '.pass == true and .passed == 11 and .e1_9_connection.pass == true' "$re" >/dev/null; echo $?)" \
   "$( [ -f "$re" ] && jq -r 'if .skipped then "skipped: \(.reason)" else "\(.passed)/11, E1-9 \(.e1_9_connection.pass)" end' "$re" || echo "no record (scripts/release.sh runs scripts/plugin_e2e_real.sh)")"
+item R16 "RELEASE.md human step 1 waits for a verification that says Güvenilir" "$( [ "$verdict" = "Güvenilir" ]; echo $?)" \
+  "${vrep:-no report named in step 1}: ${verdict:-no verdict}"
 
 printf '%s\n' "${items[@]}" | jq -s '{items: ., passed: ([.[] | select(.ok)] | length), total: length} | .pass = (.passed == .total)' >"$dist/release_check.json"
 jq -r '"release_check: \(.passed)/\(.total)"' "$dist/release_check.json"

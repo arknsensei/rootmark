@@ -28,6 +28,10 @@
 #      `missing` entries `http-status-index:<state>`). `internal` is now
 #      triggered by an index file that does not match its manifest (an
 #      unreadable manifest is `index_stale`, K-E1.2).
+#      (P2-0/Z0, P1-E.1 verification recommendation 2) in each of those
+#      states both `status` answers also hold every field of the §2 `status`
+#      row: every top-level name and every name of its `{…}` groups
+#      (`http.status_fields`; a missing one is `http-status-fields:<state>`).
 # Prints and writes (<out.json>, optional) {tools, codes, http, missing,
 # pass}; exit 1 if anything is missing or differs.
 #
@@ -223,15 +227,27 @@ done <<<"$order"
 index_fields="$(sed -n '/^## 2\. /,/^## 3\. /p' "$contract" | grep -E '^\| `status` \|' | grep -oE 'index \{[^}]*\}' | head -1 \
   | sed -E 's/^index \{//; s/\}$//' | tr ',' '\n' | tr -d ' ' | grep -v '^$' | jq -R . | jq -sc .)"
 [ "$index_fields" != "[]" ] || missing+=("contract:status.index fields (no \`index {…}\` in the §2 status row)")
+# (P2-0/Z0; P1-E.1 verification, recommendation 2) every field of the §2
+# `status` row: each top-level name and each name listed in its `{…}` group
+# (`…` is not a field) is a path the response must hold (`null` values
+# allowed: `last_checkpoint`, `embedder`)
+status_paths="$(sed -n '/^## 2\. /,/^## 3\. /p' "$contract" | grep -E '^\| `status` \|' | head -1 | awk -F'|' '{print $5}' | tr -d '`' \
+  | jq -Rc '[scan("([a-z_]+)( \\{([^}]*)\\})?") | .[0] as $n
+      | if .[2] == null then [[$n]]
+        else [.[2] | split(",")[] | gsub("^\\s+|\\s+$"; "") | select(. != "" and . != "…") | [$n, .]] end] | add // []')"
+[ "$(echo "$status_paths" | jq 'map(select(length == 1)) | length')" -gt 0 ] || missing+=("contract:status fields (no field list in the §2 status row)")
 status_index="[]"
 index_state_check() { # <state>: status GET/POST 200 with that state; search 503 unless ok
-  local want="$1" g p sr ok=true sst scode
+  local want="$1" g p sr ok=true sst scode absent
   g="$(req GET /v1/status '')"; p="$(req POST /v1/status '{}')"
   for r in "$g" "$p"; do
     [ "${r%% *}" = 200 ] || ok=false
     echo "${r#* }" | jq -e --arg s "$want" \
       '(has("error") | not) and (.index | type == "object") and .index.state == $s' >/dev/null 2>&1 || ok=false
     echo "${r#* }" | jq -e --argjson f "$index_fields" '.index as $i | all($f[]; . as $k | $i | has($k))' >/dev/null 2>&1 || ok=false
+    absent="$(echo "${r#* }" | jq -c --argjson ps "$status_paths" \
+      '. as $r | [$ps[] | select(. as $p | ($r | getpath($p[:-1]) | type == "object" and has($p[-1])) | not) | join(".")]' 2>/dev/null || echo '["?"]')"
+    if [ "$absent" != "[]" ]; then ok=false; missing+=("http-status-fields:$want $absent"); fi
   done
   sr="$(req POST /v1/search '{"query":"espresso"}')"
   sst="${sr%% *}"; scode="$(echo "${sr#* }" | jq -r '.error.code // empty')"
@@ -276,8 +292,8 @@ wait "$serve_pid" 2>/dev/null || true
 http_pass="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson t "$transport" --argjson si "$status_index" \
   '($e | length) > 0 and ($c | length) > 0 and ($si | length) == 4 and all($e[]; .ok) and all($c[]; .ok) and all($t[]; .ok) and all($si[]; .ok)')"
 http_json="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson t "$transport" --argjson si "$status_index" \
-  --argjson f "$index_fields" --argjson p "$http_pass" \
-  '{endpoints: $e, codes: $c, transport: $t, status_index: $si, status_index_fields: $f, pass: $p}')"
+  --argjson f "$index_fields" --argjson sf "$status_paths" --argjson p "$http_pass" \
+  '{endpoints: $e, codes: $c, transport: $t, status_index: $si, status_index_fields: $f, status_fields: ($sf | map(join("."))), pass: $p}')"
 
 tools_equal=false; [ "$contract_tools" = "$server_tools" ] && tools_equal=true
 codes_equal=false; [ "$contract_codes" = "$server_codes" ] && codes_equal=true

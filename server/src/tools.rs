@@ -285,6 +285,17 @@ pub fn needs_human_id(tool: &str) -> bool {
     matches!(tool, "propose" | "promote" | "checkpoint")
 }
 
+/// What `Kernel::compact` did.
+#[derive(Debug)]
+pub enum Compacted {
+    /// the hot tier moved into the cold index
+    Done(store::CompactReport),
+    /// the hot tier is empty
+    Empty,
+    /// the index is not `ok` (its `status.index.state`): nothing to compact
+    Skipped(&'static str),
+}
+
 /// What `Kernel::ensure_index` found and did at the start of `rootmark serve`.
 #[derive(Debug)]
 pub enum IndexAtStart {
@@ -574,17 +585,24 @@ impl Kernel {
     }
 
     /// Moves the hot tier into the cold index if it holds anything
-    /// (`rootmark index compact`); `None` when the hot tier is empty. Runs in the
-    /// writer queue.
-    pub fn compact(&self) -> Result<Option<store::CompactReport>> {
+    /// (`rootmark index compact`). Runs in the writer queue. An index that is
+    /// not `ok` (`stale`, `missing`, `damaged`: `status.index.state`) has no
+    /// hot tier this process could have filled — its tools answer
+    /// `index_stale` — so there is nothing to compact: `Skipped` with the
+    /// state, not an error (P1-E.1 verification, recommendation 3; P2-0/Z0).
+    pub fn compact(&self) -> Result<Compacted> {
         self.ticket().run(|| {
             let v = Vault::open(&self.vault)?;
+            let ix = index_state(&v);
+            if ix.state != "ok" {
+                return Ok(Compacted::Skipped(ix.state));
+            }
             let e = self.embedder()?;
             let st = Store::open(&v, e.as_ref())?.status(&v)?;
             if st.hot_records == 0 && st.hot_snapshots == 0 {
-                return Ok(None);
+                return Ok(Compacted::Empty);
             }
-            Ok(Some(store::compact(&v, e.as_ref())?))
+            Ok(Compacted::Done(store::compact(&v, e.as_ref())?))
         })
     }
 
