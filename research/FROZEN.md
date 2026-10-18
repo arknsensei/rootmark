@@ -298,6 +298,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/gen_p2_0_old_vaults.sh` | `P2-0/Z5:` | D-E üreteci |
 | `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z5:` | D-B gerçek Obsidian harness'ı |
 | `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z5-fix:` | yeniden dondurma P2-0/F11: `alwaysUpdateLinks` (yeniden adlandırma penceresi) |
+| `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-0/Z5-fix2:` | yeniden dondurma P2-0/F12: HTTP hatası, sonsuz gecikme, yan notlar, yazılmayan not |
+| `research/eval/run_p2_0.py` | `P2-0/Z5-fix2:` | yeniden dondurma P2-0/F12: D-C/D-A sessiz düşmeler, `choose_window` |
 <!-- /frozen-table -->
 
 ## Notlar

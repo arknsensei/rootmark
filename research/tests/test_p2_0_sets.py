@@ -81,3 +81,8 @@ def test_choose_window_smallest_lowest_rate_under_500():
     # an unmeasured latency counts as not below 500
     rows = [_row(0.5, 0.0, None), _row(1.0, 0.0, 200)]
     assert choose_window(rows) == 1.0
+
+
+def test_choose_window_zero_latency_is_measured():
+    rows = [_row(0.5, 0.0, 0), _row(1.0, 0.0, 120)]
+    assert choose_window(rows) == 0.5
