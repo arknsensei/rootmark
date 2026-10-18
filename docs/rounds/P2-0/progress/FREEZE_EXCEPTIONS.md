@@ -101,3 +101,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** Z7.review.md Tur 1 B1, B3, B4, B5.
 - **Önce/sonra:** gerçek Obsidian'lı bir RUN'da karar dalları aynı (B1 yalnız 0b/0c `None` iken devreye girer); tarihsel satırlar ek parantez taşır.
 - **Gözden geçirici onayı:** Z7.review.md (B1 "dosya henüz dondurulmadı" dedi; F15'in glob satırı onu kapsıyordu, bu girdi o yüzden).
+
+## F17 · Z8 gözden geçirmesi · `research/eval/report_p2_0.py`
+- **Ne:** rapor metni: bilgi satırı (0b′) "raporlandı (bilgi)"; 0f kaynağı Z5-3'ü anar; 0a′ satırı canonical soyu değiştiren senaryo sayısını verir; tehdit modeli taslağına `collide`, yerleşmeyen kayıtlar ve "tasarım doğrulanmış sayılmaz"; NORTH_STAR önerisine tanımlanmamış kalış dalı; tarihsel FAIL bölümüne `verify.sh` özetinin neden farklı saydığı. Karar dalları değişmedi.
+- **Neden:** Z8.review.md Tur 1 B2, B4, B6, B7, B9.
+- **Önce/sonra:** ilk resmi RUN'ın kopyasında (`20261018T140007Z-fa02519`) karar satırı aynı ("tanımlanmamış kalış", 0b ve 0d, regress); yalnız metin satırları değişir.
+- **Gözden geçirici onayı:** Z8.review.md.

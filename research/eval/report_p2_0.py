@@ -49,12 +49,15 @@ def _load(d: Path, name: str):
     return json.loads(p.read_text(encoding="utf-8"))
 
 
-def _ok(b: bool | None) -> str:
+def _ok(b: bool | str | None) -> str:
+    if b == "info":
+        return "raporlandı (bilgi)"
     return "geçti" if b is True else "ölçülmedi" if b is None else "kaldı"
 
 
 def rows(d: Path) -> list[dict]:
     c = _load(d, "p2_0_checks.json")
+    da = _load(d, "p2_0/d_a.json")
     pair = _load(d, "pair_compare.json")
     g = pair["h_p2_0g"]
     b, bp, cc = c["H-P2-0b"], c["H-P2-0b′"], c["H-P2-0c"]
@@ -71,7 +74,7 @@ def rows(d: Path) -> list[dict]:
         {
             "id": "H-P2-0a′",
             "what": "Canonical içerik korunumu: eski sürüm checkpoint'ten okunur, `history` silen/değiştiren aktörü (`unattested_fs`) gösterir",
-            "value": f"{c['H-P2-0a′']['scenarios']} senaryo; değişen canonical soy {c['H-P2-0a′']['canonical_changed']}",
+            "value": f"{c['H-P2-0a′']['scenarios']} senaryo; canonical soyu değiştiren senaryo {da['scenarios_with_canonical_changed']} (diğerlerinde koşul boş), değişen canonical soy {c['H-P2-0a′']['canonical_changed']}",
             "threshold": "200/200",
             "pass": c["H-P2-0a′"]["pass"],
             "source": "p2_0/d_a.json",
@@ -91,7 +94,7 @@ def rows(d: Path) -> list[dict]:
             "what": "Geç tasdikle düzelen kayıt (bilgi)",
             "value": "atlandı" if db_skip else f"{bp['raised_late']}/{bp['saves']} kayıt",
             "threshold": "raporlanır",
-            "pass": None if db_skip else True,
+            "pass": None if db_skip else "info",
             "source": "p2_0/d_b.json",
         },
         {
@@ -126,7 +129,7 @@ def rows(d: Path) -> list[dict]:
             "value": c["H-P2-0f"]["vaults"],
             "threshold": "3/3",
             "pass": c["H-P2-0f"]["pass"],
-            "source": "p2_0/d_e.json",
+            "source": "p2_0/d_e.json (ASSUMPTIONS Z5-3)",
         },
         {
             "id": "H-P2-0g",
@@ -262,7 +265,7 @@ def _by_kind(c: dict) -> list[str]:
 THREAT = [
     "- **Aşama 1 (etkin, `status.attestation.stage = 1`):** tasdik, token'la açılan bir oturum anahtarının MAC'idir (HTTP-only; MCP'de tasdik aracı yoktur — kasıtlı vakalar). İnsan kanalı Obsidian sürecinden geçen yazımlardır (eklentinin `adapter.write/append/rename` gözlemi; aynı süreçteki başka eklentiler de bu kanaldadır). **`.rootmark/server.token`'ı okuyabilen bir ajan oturum açıp tasdik üretebilir**; aşama 1 dikkatsiz ajana (dosyaya doğrudan yazan) karşı korur, kasıtlı ajana karşı korumaz.",
     '- **Tasdiksiz yazım** (`unverified`, aktör `unattested_fs`): aramada varsayılan görünmez, `include_proposal` ile etiketli; insan "Mine"/`promote` ile yükseltir. Toplu tasdik (`rootmark attest --all`) yalnız günlüğe yazar, hiçbir alımı yükseltmez.',
-    "- **Bilinen boşluklar:** Obsidian'ın bağlantı güncellemeleri `adapter.write` dışından yazılır ve tasdik edilmez (ASSUMPTIONS Z5-5; yeniden adlandırmada yanlış `unverified`); ajanın insanın kaydedilmemiş değişikliği olan nota yazması ve Obsidian'ın birleştirip kaydetmesi ajan bloklarını tasdikli yapabilir (Z3 bulgu 12).",
+    "- **Bilinen boşluklar:** Obsidian'ın bağlantı güncellemeleri `adapter.write` dışından yazılır ve tasdik edilmez (ASSUMPTIONS Z5-5; yeniden adlandırmada yanlış `unverified`); ajanın insanın kaydedilmemiş değişikliği olan nota yazması ve Obsidian'ın birleştirip kaydetmesi ajan bloklarını tasdikli yapabilir (Z3 bulgu 12); insanın kaydı ile ajanın yazımı izleyicinin tek gözlemine düşerse (D-C `collide`) insan içeriği de `unverified` olur (güvenli taraf, Z5-6); birkaç kayıt W + 1.5 s içinde `canonical` olmadı (D-B `latency_unsettled`). Bu taslak tasarımı doğrulanmış saymaz: hipotez bu turda kanıtlanmadı (karar kuralı).",
     "- **Aşama 2 (ölçülmedi, Z6):** eklentinin tek anahtar zinciri ilkeli Electron `safeStorage`; açık sorunlar: sunucu tarafında sırrın ajandan uzak saklanması, açık anahtar kaydının insana özgü bir onaya bağlanması, `.obsidian/plugins/**` yazımıyla eklenti enjeksiyonu, ve terminalin Obsidian'ı `--remote-debugging-port` ile başlatıp CDP üzerinden `safeStorage`'ı çağırması (istem yok; anahtar zinciri ACL'si bunu kapatmaz). Sonda `scripts/keychain_probe.sh` insanın koşturması için hazır.",
 ]
 
@@ -271,6 +274,7 @@ NORTH_STAR = [
     "",
     '- Hipotez kanıtlandıysa: vaade "Bir ajanın dosyaya doğrudan yazdığı içerik, insan onaylayana dek `canonical` değildir (aşama 1: tasdikli istemci ile; token okuyan kasıtlı ajan kapsam dışı)." eklenir.',
     '- 0b dalında: vaat "tasdikli istemci ile" ibaresiyle daraltılır; varsayılan politika `canonical` kalır, `unverified` isteğe bağlı (`[attestation] unattested = "unverified"`).',
+    "- Tanımlanmamış kalışta (bu RUN'ın sonucu dalda değilse): vaat değişmez; öneri insanın karar talebine verdiği cevaba bağlıdır (DECISIONS K-P2-0.6-T).",
 ]
 
 
@@ -311,7 +315,7 @@ def main(argv: list[str] | None = None) -> None:
         "",
         "## Önceki turların kaydedicileri",
         "",
-        f"`p2_0/historical.json` (`eval.historical_p2_0`, referans: `{hist['reference_run']}`): {hist['historical']} tarihsel FAIL sayılmadı; sayılan FAIL {hist['counted_fails']}.",
+        f"`p2_0/historical.json` (`eval.historical_p2_0`, referans: `{hist['reference_run']}`): {hist['historical']} tarihsel FAIL sayılmadı; sayılan FAIL {hist['counted_fails']}. (`verify.sh`'in FAIL özeti P1-E.1'in `eval.historical`'ını, P1-E referansıyla, bütün `*_checks.json` üzerinde koşar: P1-E.1 kaydedicilerini referansta bulamaz ve bu turun `p2_0_checks.json` satırlarını da sayar; o sayım bu sınıflandırmanın yerine geçmez.)",
         "",
         *[f"- {historical_p2_0.label(row)}{_earlier(row)}" for row in hist["fails"]],
         "",
@@ -328,6 +332,7 @@ def main(argv: list[str] | None = None) -> None:
         "## NORTH_STAR önerisi",
         "",
         *NORTH_STAR,
+        "",
         "",
     ]
     text = "\n".join(lines)
