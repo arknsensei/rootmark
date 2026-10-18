@@ -25,3 +25,15 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** P2-0 doğrulaması F3/Ö3: `make verify` "counted FAILs 15" yazarken turun sınıflandırıcısı 0 sayıyordu; bağımsız okuyucu iki kaynağı uzlaştırmak zorunda kalıyordu. GOAL P2-0.1 T4, H-P2-0.1k.
 - **Önce/sonra:** önce — P2-0 resmi RUN'ı (`reports/rounds/P2-0/runs/20261018T161850Z-e378be2`) üzerinde eski adım (`eval.historical`): "4 historical FAIL(s) not counted; counted FAILs 15"; aynı RUN'da P2-0'ın sınıflandırıcısı (`eval.historical_p2_0`): "14 historical, 0 counted" (Y4.md'de yeniden üretildi). Sonra — özet turun sınıflandırıcısının kendi çıktısıdır: sayılan FAIL, aynı RUN'ın `p2_0_1/historical.json`'undaki `counted_fails` ile yapı gereği eşittir (aynı modül, aynı RUN, aynı liste); geliştirme ve resmi RUN'da iki değer yan yana kaydedilir (Y6).
 - **Gözden geçirici onayı:** Y4.review.md.
+
+## F5 · Y6 · `scripts/verify.sh` — P2-0.1 zinciri ve çift karşılaştırması
+- **Ne:** zincir `make p2-0-checks` yerine `make p2-0-1-checks`'i koşar (W P2-0'ınki; D-E 3+2, D-A, D-A2, D-C, D-B2; gerçek Obsidian'da D-B test-2, D-A′, D-C′; kasıtlı vakalar; P2-0 resmi RUN'ına karşı regress; turun sınıflandırıcısı → `p2_0_1_checks.json`); `pair` A ↔ B'yi `eval.compare_p2_0_1 pair` ile karşılaştırır (P1-E.1 çift kümesi + P2-0.1 dosyaları, D-A, D-A2 ve D-C günlükleri bayt bayt); yeni alt komut `compare-p2-0-1`, `compare-p2-0` aynen kalır; başlık yorumu. Diğer adımlar, sıraları ve çıkış davranışı aynen.
+- **Neden:** TASKS Y6; GOAL P2-0.1 "P2-0 test seti okunmaz": P2-0'ın `p2-0-checks`'i P2-0'ın D-B test setini her zincirde yeniden koşardı.
+- **Önce/sonra:** `bash -n` temiz; `git diff scripts/verify.sh` yalnız bu adım, `pair`'in karşılaştırıcısı, yeni alt komut ve yorumlar. Davranış geliştirme zinciri (Y6.md) ve resmi `make verify` ile kaydedilir.
+- **Gözden geçirici onayı:** Y6.review.md.
+
+## F6 · Y6 · `research/eval/check_compare_fields.py`, `research/eval/DETERMINISTIC_FIELDS.md` — `compare_p2_0_1`
+- **Ne:** denetleyicinin karşılaştırıcı listesine `("compare_p2_0_1", "P2_0_1")` ve dosya sabitleri `P2_0_1_FILES`, `P2_0_1_BYTES`; `--runs` kipinde bayt sabitleri (`P2_0_BYTES`, `P2_0_1_BYTES`) JSON olarak okunmaz. Beyana `compare_p2_0_1` bölümü, alan satırları (altı duvar saati satırı, `EXCLUDED`'ın satırları) ve dosya satırları. Başka satır değişmedi.
+- **Neden:** K-E0.2: her karşılaştırıcının karşılaştırmadığı her alan beyan edilir; yeni karşılaştırıcı (Y4'te eklendi) beyansız kalınca `make check-compare-fields` "unmatched 1" veriyordu.
+- **Önce/sonra:** önce (`c37935c`, Y4'ten önce) `check_compare_fields: OK (11 comparators …)`; Y4 sonrası "unmatched 1"; sonra `OK (12 comparators, 226 declared fields, 22 file constants)`. Geliştirme RUN'ından sonra `EXCLUDED` satırları eklendikçe beyan aynı commit'te güncellenir.
+- **Gözden geçirici onayı:** Y6.review.md.

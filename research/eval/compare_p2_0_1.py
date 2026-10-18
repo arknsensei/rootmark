@@ -78,6 +78,8 @@ P2_0_1_TIMING: dict[str, list[tuple]] = {
         ("H-P2-0.1f",),
     ],
 }
+# informational fields of the P2-0.1 files: none
+P2_0_1_INFO: dict[str, list[tuple]] = {}
 P2_0_1_BYTES = [
     P2_0_1 / "d_a" / "events.jsonl",
     P2_0_1 / "d_a" / "attestations.jsonl",
@@ -123,7 +125,11 @@ def _match(pats: list[tuple], path: tuple) -> bool:
 
 
 def _skip(name: str, path: tuple) -> bool:
-    return Z._skip(name, path) or _match(P2_0_1_TIMING.get(name, []), path)
+    return (
+        Z._skip(name, path)
+        or _match(P2_0_1_TIMING.get(name, []), path)
+        or _match(P2_0_1_INFO.get(name, []), path)
+    )
 
 
 def _excl_match(name: str, path: tuple) -> tuple | None:
