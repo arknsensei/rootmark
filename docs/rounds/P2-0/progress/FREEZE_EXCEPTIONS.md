@@ -95,3 +95,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Gözden geçirici onayı:** Z7.review.md.
 
 - **F13 notu (Z7 gözden geçirmesi B2):** `scripts/verify.sh`'in başlık yorumundaki "re-freeze P2-0/F12" yanlış numaradır; değişikliğin girdisi F13'tür. Dondurulmuş dosya bunun için yeniden değiştirilmedi.
+
+## F16 · Z7 gözden geçirmesi · `research/eval/report_p2_0.py`
+- **Ne:** rapor üreteci (resmi RUN'dan önce, F15 glob satırının kapsamında): D-B ölçülmediyse karar kuralı "bekler" (B1); devralınan tarihsel FAIL'lerin P1-E.1 kararları anılır (B5); kasıtlı vakaların yorumu (B3, B4). Ölçüm kodu değil, rapor metni ve karar dalı.
+- **Neden:** Z7.review.md Tur 1 B1, B3, B4, B5.
+- **Önce/sonra:** gerçek Obsidian'lı bir RUN'da karar dalları aynı (B1 yalnız 0b/0c `None` iken devreye girer); tarihsel satırlar ek parantez taşır.
+- **Gözden geçirici onayı:** Z7.review.md (B1 "dosya henüz dondurulmadı" dedi; F15'in glob satırı onu kapsıyordu, bu girdi o yüzden).
