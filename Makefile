@@ -23,7 +23,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps check-compare-fields check-client-types conformance regress verify models c3-quality p1c-checks report-p1c \
         c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e p1e1-checks report-p1e1 \
-        p2-0-harness p2-0-tune p2-0-test p2-0-checks
+        p2-0-harness p2-0-tune p2-0-test p2-0-checks p2-0-1-harness p2-0-1-checks
 
 setup: setup-py build
 
@@ -565,6 +565,12 @@ p2-0-harness:
 	cd clients/obsidian && npm run build && npx esbuild e2e/p2_0/sessions.ts --bundle --format=esm \
 	  --platform=node --target=node22 --outfile=e2e/p2_0/.build/sessions.mjs
 
+# P2-0.1 (TASKS Y3, Y5): the real-Obsidian harness of D-A′ and D-C′
+# (clients/obsidian/e2e/p2_0_1/real.ts) next to P2-0's session harness
+p2-0-1-harness: p2-0-harness
+	cd clients/obsidian && npx esbuild e2e/p2_0_1/real.ts --bundle --format=esm \
+	  --platform=node --target=node22 --outfile=e2e/p2_0_1/.build/real.mjs
+
 p2-0-tune: require-run build p2-0-harness
 	$(PY) -m eval.run_p2_0 --phase tune --run $(RUN) --rootmark ../target/release/rootmark
 
@@ -598,6 +604,36 @@ p2-0-checks: require-run p2-0-harness
 	@# decisions; exit 3 = counted FAILs, recorded, not fatal)
 	rc=0; $(PY) -m eval.historical_p2_0 --run-dir reports/runs/$(RUN) --out reports/runs/$(RUN)/p2_0/historical.json || rc=$$?; \
 	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+
+# P2-0.1 (TASKS Y5, Y6): the chain's half of the round — W is P2-0's
+# (docs/rounds/P2-0/progress/Z5_tuning.json, read by eval.run_p2_0_1; never
+# tuned again), the sets (D-E 3 + 2, D-A, D-A2, D-C, D-B2, and in the real
+# Obsidian D-B test-2, D-A′, D-C′; without an Obsidian binary those are
+# recorded as skipped), the deliberate cases (eval.tamper_p2_0_1), the
+# regress against the P2-0 official RUN, the round's classifier of earlier
+# recorders' FAILs (p2_0_1/historical.json — the chain's printed summary is
+# the same classifier) and run_p2_0_1_checks → p2_0_1_checks.json. P2-0's
+# own checks (p2-0-checks) are not run: they would run P2-0's D-B test set
+# again (GOAL P2-0.1). A hypothesis that fails is recorded, not fatal; a
+# missing result fails.
+P2_0_REF_RUN := ../reports/rounds/P2-0/runs/20261018T161850Z-e378be2
+P2_0_1_DIR = research/reports/runs/$(RUN)/p2_0_1
+p2-0-1-checks: require-run p2-0-1-harness
+	rm -rf $(P2_0_1_DIR)
+	mkdir -p $(P2_0_1_DIR)
+	$(PY) -m eval.run_p2_0_1 --phase test --run $(RUN) --rootmark ../target/release/rootmark
+	$(PY) -m eval.tamper_p2_0_1 --rootmark ../target/release/rootmark --out reports/runs/$(RUN)/p2_0_1/tamper_p2_0_1.json \
+	  || echo "p2-0-1-checks: tamper_p2_0_1 exit $$? (recorded)" >&2
+	@test -f $(P2_0_1_DIR)/tamper_p2_0_1.json || exit 1
+	@# exit 3 (a difference) is recorded, not fatal; a missing file/field (1) fails
+	rc=0; $(PY) -m eval.compare_p2_0_1 regress $(P2_0_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p2_0.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	@# the FAILs of earlier recorders against the P2-0 official RUN (P2-0.1
+	@# decisions; exit 3 = counted FAILs, recorded, not fatal)
+	rc=0; $(PY) -m eval.historical_p2_0_1 --run-dir reports/runs/$(RUN) --out reports/runs/$(RUN)/p2_0_1/historical.json || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	$(PY) -m eval.run_p2_0_1_checks --run $(RUN)
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:
