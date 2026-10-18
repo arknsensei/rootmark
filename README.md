@@ -3,7 +3,7 @@
 **rootmark** is named for what it keeps: the *root* of every block of a Markdown knowledge base, meaning where it came from, who wrote it and what it was derived from, while the Markdown (*mark*) files stay the one source of truth. It is a client-independent kernel that gives a Markdown corpus written by people and agents together block-level lineage, provenance and a deterministic derived index.
 
 [![Conformance](https://img.shields.io/endpoint?url=https%3A%2F%2Farknsensei.github.io%2Frootmark%2Fspec%2Fbadge.json)](https://arknsensei.github.io/rootmark/spec/conformance.json)
-[![Spec 1.0.3](https://img.shields.io/badge/spec-1.0.3-blue)](https://arknsensei.github.io/rootmark/spec/)
+[![Spec 2.0.0](https://img.shields.io/badge/spec-2.0.0-blue)](https://arknsensei.github.io/rootmark/spec/)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 
 > When an agent writes into a knowledge base, every block records who wrote it, when, and which block it came from. Nothing unapproved counts as knowledge. Every answer says which blocks it rests on. You can go back to yesterday's state block by block, and the files stay plain Markdown.
@@ -46,7 +46,7 @@ Release target of 0.1.0: macOS on Apple silicon (`aarch64-apple-darwin`). Linux 
 
 ```sh
 rootmark --version            # rootmark 0.1.0
-rootmark --spec-version       # 1.0.3
+rootmark --spec-version       # 2.0.0
 rootmark conformance          # Levels 1–3 on the embedded fixtures: 37/37 (spec 2.0.0)
 ```
 

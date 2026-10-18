@@ -56,3 +56,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** spec 2.0.0 ile Seviye 3 = 37 test (K-P2-0.4). Bu betiklerin denediği şey "Seviye 3'ün bütün testleri geçti"dir; sayı spec sürümünün özelliğidir. Değiştirilmezse doğrulama zinciri (`verify.sh`, P1-C/P1-D.1 tamper adımları) ve yayım denetimi 37/37'lik doğru bir raporu reddederdi.
 - **Önce/sonra:** `bash -n` temiz; `git diff` yalnız sayı ifadeleri ve yorumlar. Zincirde (Z7) ve yayım denetiminde yeni değerle koşar; eski değerle 37/37'lik rapor her birinde FAIL'dir (sayı eşitsizliği).
 - **Gözden geçirici onayı:** Z4.review.md.
+
+## F10 · Z4 gözden geçirmesi · `core/tests/conformance/eval_c2.rs` (biçim), `spec/fixtures/**` (C2-11, C2-12 vakaları)
+- **Ne:** (1) `eval_c2.rs`: `rustfmt`'in istediği satır kırmaları (3 yer; F7 commit'inde biçimlendirilmemişti, `make lint` kalıyordu); belirteçler aynen, rustfmt'in eklediği iki sondaki virgül dışında (boşluk ve bu iki virgül çıkarılınca d8c90db ile özdeş). (2) `C2-12/case.c2.json`: W'nin kenarları — tam W önce (60 000 → 62 000: `attested`), W+1 önce (62 000 → 64 001: `unverified`), tam W sonra (70 000 → 72 000: yükselir); `C2-11/case.c2.json`: `Promoted` olayında `unattested_fs` aktörü reddi (spec §7.1 "Reading"); ikisinin `expected.json`'u `gen_fixtures_c2.sh` ile; `MANIFEST.json`'da yalnız bu dört dosyanın satırları değişti.
+- **Neden:** Z4 gözden geçirmesi B1 (biçim, `make lint`), B3 (sınırların ikisi de sınanmalı: `<`/`<=` hatası yakalanır), B4 (Reading maddesinin bir vakası eksikti). B2 için spec §8'e cümle (SPEC_EDITS S13): çift kimlik reddi zaten değerlendiricinin vakasıydı.
+- **Önce/sonra:** `make conformance` 37/37; diğer 35 fixture'ın `expected.json`'u bayt bayt aynı (`git status`); eski 34 testin hash'leri P1-E.1 kaydıyla eşit kalır (C2-01..C2-10, C1, C3 dosyaları değişmedi). `cargo fmt --check` temiz.
+- **Gözden geçirici onayı:** Z4.review.md.

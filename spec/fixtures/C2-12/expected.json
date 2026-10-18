@@ -382,6 +382,205 @@
         "events": [
           "BlockCreated",
           "BlockCreated",
+          "BlockCreated",
+          "BlockCreated",
+          "SnapshotCommitted"
+        ],
+        "snapshot_id": "c6e6a520243c9b1e3dc58cb99fbd501b"
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 20,
+        "attestation_id": "52b39321fed93636e00cd8ef88bec4e2",
+        "raised": [],
+        "recorded": true
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            null
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "attested"
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 22,
+        "attestation_id": "3d9ceee7c944e64e2230bfa62eb35682",
+        "raised": [],
+        "recorded": true
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "unverified"
+      }
+    },
+    {
+      "op": "external",
+      "result": {
+        "attributed": [
+          [
+            "BlockCreated",
+            null,
+            null,
+            "unverified"
+          ],
+          [
+            "SnapshotCommitted",
+            null,
+            null,
+            null
+          ]
+        ],
+        "decision": "unverified"
+      }
+    },
+    {
+      "op": "attest",
+      "result": {
+        "at_seq": 26,
+        "attestation_id": "1251d3db86367dbf57c8646ea27e9ebf",
+        "raised": [
+          [
+            "84a04a74d301902607adb0447d7c23b0",
+            "canonical"
+          ]
+        ],
+        "recorded": true
+      }
+    },
+    {
+      "op": "layers",
+      "result": {
+        "layers": {
+          "edge.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "9a4e03a74b23d079e824887ebb7e513c"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ecd45e3a5d68c25a0d9d3e02cfd9e074"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "64f4e66baba6f8f18bee58c90b29f82d"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ede05a4cfe3b22375cbbb9326b776f09"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6134f403c91e216a8873426a8ec7a3a4"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5819da6043e3315af7a61d3865c0cf3f"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "84a04a74d301902607adb0447d7c23b0"
+            }
+          ],
+          "log.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "31706e96886cc727b8644da38297110f"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "c788c84ca67eb16196ef0291404e815f"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "7dcf2d8207c127846735d61266bbc8b7"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "a4fb739226eba68614695d8491a30072"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ba4561f53028140c11c521385d0720a3"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "011ea344758c76d36a62002a8adfcc9c"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "c6baf5ca9d74f3b612fc687fa8c679b7"
+            }
+          ],
+          "other.md": [
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "e586a582ae6f544d8dd0503548e1eb5a"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "459732400962da1ba106986f101de60b"
+            }
+          ]
+        },
+        "replay_equal": true
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "events": [
+          "BlockCreated",
+          "BlockCreated",
           "SnapshotCommitted"
         ],
         "snapshot_id": "19843d028f62cfd569a3d6b2590b1aef"
@@ -420,6 +619,43 @@
       "op": "layers",
       "result": {
         "layers": {
+          "edge.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "9a4e03a74b23d079e824887ebb7e513c"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ecd45e3a5d68c25a0d9d3e02cfd9e074"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "64f4e66baba6f8f18bee58c90b29f82d"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ede05a4cfe3b22375cbbb9326b776f09"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6134f403c91e216a8873426a8ec7a3a4"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5819da6043e3315af7a61d3865c0cf3f"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "84a04a74d301902607adb0447d7c23b0"
+            }
+          ],
           "log.md": [
             {
               "inactive": false,
@@ -488,8 +724,8 @@
     {
       "op": "attest",
       "result": {
-        "at_seq": 21,
-        "attestation_id": "210770d413a5cdf6281a6f93844ca7e0",
+        "at_seq": 33,
+        "attestation_id": "02ea19a90a09fc26e46611c50d9da602",
         "raised": [
           [
             "8fd131d1025ddb481914549229576349",
@@ -503,6 +739,43 @@
       "op": "layers",
       "result": {
         "layers": {
+          "edge.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "9a4e03a74b23d079e824887ebb7e513c"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ecd45e3a5d68c25a0d9d3e02cfd9e074"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "64f4e66baba6f8f18bee58c90b29f82d"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ede05a4cfe3b22375cbbb9326b776f09"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6134f403c91e216a8873426a8ec7a3a4"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5819da6043e3315af7a61d3865c0cf3f"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "84a04a74d301902607adb0447d7c23b0"
+            }
+          ],
           "log.md": [
             {
               "inactive": false,
@@ -588,6 +861,18 @@
         "SnapshotCommitted",
         "BlockCreated",
         "BlockCreated",
+        "BlockCreated",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "BlockCreated",
+        "SnapshotCommitted",
+        "LayerChanged",
+        "BlockCreated",
+        "BlockCreated",
         "SnapshotCommitted",
         "BlockUpdated",
         "LayerChanged",
@@ -597,7 +882,7 @@
     },
     {
       "op": "attestations",
-      "result": "{\"attestation_id\":\"5566f323e8f5e7b87ff277f94cbb6ea7\",\"doc_path\":\"log.md\",\"content_hash\":\"ca3e1eda7e79e8b8fee1fac5b1346860\",\"at_seq\":5}\n{\"attestation_id\":\"0dc71e3f582593b6dd5cbda6d7778cee\",\"doc_path\":\"log.md\",\"content_hash\":\"c31e68566c5e3501fed7e9ff491a7ac6\",\"at_seq\":9}\n{\"attestation_id\":\"76258b6c8c0c4a631a9bdce82feb7fcd\",\"doc_path\":\"log.md\",\"content_hash\":\"d9394eecdb2e36649f1d489dabae970b\",\"at_seq\":12}\n{\"attestation_id\":\"2249ef2f15128b0e4f6fd1821c286423\",\"doc_path\":\"other.md\",\"content_hash\":\"5cbe72a952dfe038b62abbebb4c4ad9d\",\"at_seq\":15}\n{\"attestation_id\":\"e6f1f2a20b898de3626862e3dfd71263\",\"doc_path\":\"log.md\",\"content_hash\":\"d81e1c209d1763e4f5ca8f92a93bf98b\",\"at_seq\":15}\n{\"attestation_id\":\"d50cb512d1e1a19c03a95a50c8c5fc02\",\"doc_path\":\"other.md\",\"content_hash\":\"d81e1c209d1763e4f5ca8f92a93bf98b\",\"at_seq\":15}\n{\"attestation_id\":\"210770d413a5cdf6281a6f93844ca7e0\",\"doc_path\":\"plan.md\",\"content_hash\":\"d46c9c8f63faf030275eed65425535fe\",\"at_seq\":21}\n"
+      "result": "{\"attestation_id\":\"5566f323e8f5e7b87ff277f94cbb6ea7\",\"doc_path\":\"log.md\",\"content_hash\":\"ca3e1eda7e79e8b8fee1fac5b1346860\",\"at_seq\":5}\n{\"attestation_id\":\"0dc71e3f582593b6dd5cbda6d7778cee\",\"doc_path\":\"log.md\",\"content_hash\":\"c31e68566c5e3501fed7e9ff491a7ac6\",\"at_seq\":9}\n{\"attestation_id\":\"76258b6c8c0c4a631a9bdce82feb7fcd\",\"doc_path\":\"log.md\",\"content_hash\":\"d9394eecdb2e36649f1d489dabae970b\",\"at_seq\":12}\n{\"attestation_id\":\"2249ef2f15128b0e4f6fd1821c286423\",\"doc_path\":\"other.md\",\"content_hash\":\"5cbe72a952dfe038b62abbebb4c4ad9d\",\"at_seq\":15}\n{\"attestation_id\":\"e6f1f2a20b898de3626862e3dfd71263\",\"doc_path\":\"log.md\",\"content_hash\":\"d81e1c209d1763e4f5ca8f92a93bf98b\",\"at_seq\":15}\n{\"attestation_id\":\"d50cb512d1e1a19c03a95a50c8c5fc02\",\"doc_path\":\"other.md\",\"content_hash\":\"d81e1c209d1763e4f5ca8f92a93bf98b\",\"at_seq\":15}\n{\"attestation_id\":\"52b39321fed93636e00cd8ef88bec4e2\",\"doc_path\":\"edge.md\",\"content_hash\":\"ca3e1eda7e79e8b8fee1fac5b1346860\",\"at_seq\":20}\n{\"attestation_id\":\"3d9ceee7c944e64e2230bfa62eb35682\",\"doc_path\":\"edge.md\",\"content_hash\":\"c31e68566c5e3501fed7e9ff491a7ac6\",\"at_seq\":22}\n{\"attestation_id\":\"1251d3db86367dbf57c8646ea27e9ebf\",\"doc_path\":\"edge.md\",\"content_hash\":\"d9394eecdb2e36649f1d489dabae970b\",\"at_seq\":26}\n{\"attestation_id\":\"02ea19a90a09fc26e46611c50d9da602\",\"doc_path\":\"plan.md\",\"content_hash\":\"d46c9c8f63faf030275eed65425535fe\",\"at_seq\":33}\n"
     },
     {
       "op": "attestation_tamper",
@@ -645,6 +930,43 @@
       "op": "layers",
       "result": {
         "layers": {
+          "edge.md": [
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "9a4e03a74b23d079e824887ebb7e513c"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ecd45e3a5d68c25a0d9d3e02cfd9e074"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "64f4e66baba6f8f18bee58c90b29f82d"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "ede05a4cfe3b22375cbbb9326b776f09"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "6134f403c91e216a8873426a8ec7a3a4"
+            },
+            {
+              "inactive": false,
+              "layer": "unverified",
+              "lineage_id": "5819da6043e3315af7a61d3865c0cf3f"
+            },
+            {
+              "inactive": false,
+              "layer": "canonical",
+              "lineage_id": "84a04a74d301902607adb0447d7c23b0"
+            }
+          ],
           "log.md": [
             {
               "inactive": false,
@@ -713,7 +1035,7 @@
     {
       "op": "fingerprint",
       "result": {
-        "events_hash": "410941590c4a4c63d9fc87fa0babfab8"
+        "events_hash": "933c8725ba36829b06677237ec25b38a"
       }
     }
   ]

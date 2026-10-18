@@ -289,6 +289,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/release_local.sh` | `P2-0/Z4:` | yeniden dondurma P2-0/F9: uyumluluk toplamı 37 |
 | `scripts/release_target.sh` | `P2-0/Z4:` | yeniden dondurma P2-0/F9: uyumluluk toplamı 37 |
 | `scripts/release_check.sh` | `P2-0/Z4:` | yeniden dondurma P2-0/F9: uyumluluk toplamı 37 |
+| `core/tests/conformance/eval_c2.rs` | `P2-0/Z4-fix:` | yeniden dondurma P2-0/F10: rustfmt satır kırmaları |
+| `spec/fixtures/**` | `P2-0/Z4-fix:` | yeniden dondurma P2-0/F10: C2-12 W kenarları, C2-11 Promoted/unattested_fs reddi |
 <!-- /frozen-table -->
 
 ## Notlar
