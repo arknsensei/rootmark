@@ -101,6 +101,17 @@ enum Cmd {
         #[arg(long, default_value = "rootmark propose (CLI)")]
         reason: String,
     },
+    /// Attest the current bytes of documents to the vault's running server
+    /// (spec 2.0.0 §7.1; HTTP with the token, as a client does after a save;
+    /// the window applies: run it right after saving)
+    Attest {
+        vault: PathBuf,
+        /// vault-relative Markdown paths
+        docs: Vec<String>,
+        /// every Markdown document of the vault
+        #[arg(long)]
+        all: bool,
+    },
     /// Promote a lineage proposal → canonical through the vault's promotion policy
     Promote {
         vault: PathBuf,
@@ -317,7 +328,8 @@ fn transition(
                 Some(t) => Layer::parse(t)?,
                 None => match v.layer_of(lineage)? {
                     Layer::Canonical => Layer::Proposal,
-                    Layer::Proposal => Layer::Derived,
+                    // the 1.0.3 defaults; `unverified` (2.0.0) has `derived` below it
+                    Layer::Proposal | Layer::Unverified => Layer::Derived,
                     Layer::Derived => bail!("lineage {lineage} is derived: no lower layer"),
                 },
             };
@@ -432,6 +444,18 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
                 .unwrap_or_default();
             out["layers"] = Value::Array(layers);
             out
+        }
+        Cmd::Attest { vault, docs, all } => {
+            let docs = match (all, docs.is_empty()) {
+                (true, true) => rootmarkcore::files::markdown_files(&vault)?
+                    .into_iter()
+                    .map(|(d, _)| d)
+                    .collect(),
+                (false, false) => docs,
+                (true, false) => bail!("rootmark attest: give documents or --all, not both"),
+                (false, true) => bail!("rootmark attest: no document (give paths or --all)"),
+            };
+            rootmarkserver::attest::cli_attest(&vault, &docs)?
         }
         Cmd::Promote {
             vault,

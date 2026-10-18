@@ -38,6 +38,10 @@ pub enum ActorKind {
     Human,
     Agent,
     Policy,
+    /// the writer of an external change no human-channel client attested
+    /// (spec 2.0.0 §7.1); only on the events of such an ingest
+    #[serde(rename = "unattested_fs")]
+    UnattestedFs,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]

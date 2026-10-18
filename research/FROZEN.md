@@ -274,6 +274,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/contract_check.sh` | `P2-0/Z0:` | yeniden dondurma P2-0/F1: `status` §2 satırının bütün alanları dört indeks durumunda (P1-E.1 doğrulaması öneri 2) |
 | `scripts/release_check.sh` | `P2-0/Z0:` | yeniden dondurma P2-0/F2: R16 insan adımı 1 → "Güvenilir" doğrulama; R14 insanın attığı etiket (K-P2-0.3) |
 | `research/eval/run_artifacts.py` | `P2-0/Z0:` | resmi RUN bayt yapıtlarının `artifacts.sha256`/`artifacts.json`'u (P1-E.1 doğrulaması öneri 3) |
+| `index/tests/conformance/eval_c3.rs` | `P2-0/Z2:` | yeniden dondurma P2-0/F3: `unverified` ikinci geçişte (spec 2.0.0 §9) |
+| `server/tests/serve_watch.rs` | `P2-0/Z2:` | yeniden dondurma P2-0/F4: D-10'un politikası açık `unattested = "canonical"` (K-P2-0.4) |
+| `scripts/http_e2e.sh` | `P2-0/Z2:` | yeniden dondurma P2-0/F5: W-1/S-1'in politikası açık `unattested = "canonical"` (K-P2-0.4) |
+| `scripts/contract_check.sh` | `P2-0/Z2:` | yeniden dondurma P2-0/F6: §2.6 HTTP'ye özel uçlar gerçek çağrıyla, MCP'de yok (K-P2-0.5) |
 <!-- /frozen-table -->
 
 ## Notlar

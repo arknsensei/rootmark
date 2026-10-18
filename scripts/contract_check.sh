@@ -28,6 +28,13 @@
 #      `missing` entries `http-status-index:<state>`). `internal` is now
 #      triggered by an index file that does not match its manifest (an
 #      unreadable manifest is `index_stale`, K-E1.2).
+#      (P2-0/Z2, K-P2-0.5) the human channel's own endpoints of §2.6
+#      (`| \`<name>\` |` rows under "### 2.6"): none is an MCP tool
+#      (`tools/list`), and over HTTP `attest_session` answers 200 with
+#      `session_id, key (64 hex), ttl_s, stage`; `attest` with a MAC made with
+#      that key (HMAC-SHA256, `openssl`) answers 200 with every field of its
+#      row; a wrong MAC answers 403 `denied` (`http.http_only`; a missing one
+#      is `http-only:<name>`).
 #      (P2-0/Z0, P1-E.1 verification recommendation 2) in each of those
 #      states both `status` answers also hold every field of the §2 `status`
 #      row: every top-level name and every name of its `{…}` groups
@@ -50,8 +57,11 @@ trap 'rm -rf "$work"' EXIT
 rootmark="${ROOTMARK_BIN:-$here/target/release/rootmark}"
 pipe="$here/target/release/examples/mcp_pipeline"
 
-# 1. tools: contract §2 rows `| \`name\` | …` between "## 2." and "## 3."
-contract_tools="$(sed -n '/^## 2\. /,/^## 3\. /p' "$contract" | grep -E '^\| `[a-z_]+` \|' | sed -E 's/^\| `([a-z_]+)`.*/\1/' | sort)"
+# 1. tools: contract §2 rows `| \`name\` | …` between "## 2." and "### 2.1"
+#    (the tools table; P2-0: §2.6's HTTP-only endpoints are not tools)
+contract_tools="$(sed -n '/^## 2\. /,/^### 2\.1 /p' "$contract" | grep -E '^\| `[a-z_]+` \|' | sed -E 's/^\| `([a-z_]+)`.*/\1/' | sort)"
+# §2.6: the HTTP-only endpoints (P2-0)
+http_only="$(sed -n '/^### 2\.6 /,/^## 3\. /p' "$contract" | grep -E '^\| `[a-z_]+` \|' | sed -E 's/^\| `([a-z_]+)`.*/\1/' | sort)"
 mkdir -p "$work/vault"
 printf '# A\n\nText.\n' >"$work/vault/a.md"
 "$rootmark" ingest-dir "$work/vault" "$work/vault" >/dev/null
@@ -183,6 +193,35 @@ while read -r t; do
 done <<<"$contract_tools"
 r="$(req GET /v1/status '')"
 add_endpoint GET /v1/status "${r%% *}" "${r#* }"
+# §2.6 (P2-0): HTTP-only endpoints, never MCP tools
+http_only_json="[]"
+add_http_only() { # <name> <ok> <detail>
+  $2 || missing+=("http-only:$1 ($3)")
+  http_only_json="$(echo "$http_only_json" | jq -c --arg n "$1" --argjson ok "$2" --arg d "$3" '. + [{endpoint: $n, ok: $ok, detail: $d}]')"
+}
+[ -n "$http_only" ] || missing+=("contract:§2.6 (no HTTP-only endpoint rows)")
+for n in $http_only; do
+  if printf '%s\n' "$server_tools" | grep -qx "$n"; then add_http_only "$n" false "listed by MCP tools/list"; fi
+done
+if printf '%s\n' "$http_only" | grep -qx attest_session && printf '%s\n' "$http_only" | grep -qx attest; then
+  r="$(req POST /v1/attest_session '{}')"
+  sid="$(echo "${r#* }" | jq -r '.session_id // empty')"; key="$(echo "${r#* }" | jq -r '.key // empty')"
+  ok=false
+  [ "${r%% *}" = 200 ] && [ -n "$sid" ] && [[ "$key" =~ ^[0-9a-f]{64}$ ]] \
+    && echo "${r#* }" | jq -e '(.ttl_s | type == "number") and (.stage | type == "number")' >/dev/null && ok=true
+  add_http_only attest_session "$ok" "status ${r%% *}"
+  h=00000000000000000000000000000000
+  mac="$(printf 'rootmark-attest/1\na.md\n%s\n' "$h" | openssl dgst -sha256 -mac HMAC -macopt "hexkey:$key" -r | cut -d' ' -f1)"
+  r="$(req POST /v1/attest "{\"doc_path\":\"a.md\",\"content_hash\":\"$h\",\"session_id\":\"$sid\",\"mac\":\"$mac\"}")"
+  ok=false
+  [ "${r%% *}" = 200 ] && echo "${r#* }" | jq -e '(has("error") | not) and has("attestation_id") and has("doc_path") and has("content_hash") and has("at_seq") and has("recorded") and has("raised")' >/dev/null && ok=true
+  add_http_only attest "$ok" "status ${r%% *}"
+  r="$(req POST /v1/attest "{\"doc_path\":\"a.md\",\"content_hash\":\"$h\",\"session_id\":\"$sid\",\"mac\":\"$(printf '0%.0s' $(seq 1 64))\"}")"
+  ok=false; [ "${r%% *}" = 403 ] && [ "$(echo "${r#* }" | jq -r '.error.code // empty')" = denied ] && ok=true
+  add_http_only "attest (wrong mac → 403 denied)" "$ok" "status ${r%% *}"
+else
+  missing+=("contract:§2.6 attest_session/attest rows")
+fi
 # §3: each code from a real request (index_stale and internal last: they
 # age, then damage the index)
 code_req() {
@@ -293,7 +332,8 @@ http_pass="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson 
   '($e | length) > 0 and ($c | length) > 0 and ($si | length) == 4 and all($e[]; .ok) and all($c[]; .ok) and all($t[]; .ok) and all($si[]; .ok)')"
 http_json="$(jq -n --argjson e "$endpoints" --argjson c "$http_codes" --argjson t "$transport" --argjson si "$status_index" \
   --argjson f "$index_fields" --argjson sf "$status_paths" --argjson p "$http_pass" \
-  '{endpoints: $e, codes: $c, transport: $t, status_index: $si, status_index_fields: $f, status_fields: ($sf | map(join("."))), pass: $p}')"
+  --argjson ho "$http_only_json" \
+  '{endpoints: $e, codes: $c, transport: $t, status_index: $si, status_index_fields: $f, status_fields: ($sf | map(join("."))), http_only: $ho, pass: $p}')"
 
 tools_equal=false; [ "$contract_tools" = "$server_tools" ] && tools_equal=true
 codes_equal=false; [ "$contract_codes" = "$server_codes" ] && codes_equal=true

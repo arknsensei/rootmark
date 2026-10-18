@@ -201,7 +201,12 @@ pub fn evaluate_c3(dir: &Path) -> Result<Value> {
                                 .iter()
                                 .filter(|h| h.layer == Layer::Canonical)
                                 .count();
-                            let n_p = r.hits.iter().filter(|h| h.layer == Layer::Proposal).count();
+                            // spec 2.0.0 §9: `proposal` and `unverified` share the second pass
+                            let n_p = r
+                                .hits
+                                .iter()
+                                .filter(|h| matches!(h.layer, Layer::Proposal | Layer::Unverified))
+                                .count();
                             max_c = max_c.max(n_c);
                             max_p = max_p.max(n_p);
                             max_all = max_all.max(r.hits.len());
@@ -212,7 +217,7 @@ pub fn evaluate_c3(dir: &Path) -> Result<Value> {
                                 .map(|h| {
                                     match h.layer {
                                         Layer::Derived => derived += 1,
-                                        Layer::Proposal => seen_prop = true,
+                                        Layer::Proposal | Layer::Unverified => seen_prop = true,
                                         Layer::Canonical => {
                                             if seen_prop {
                                                 proposal_after_canonical = false;

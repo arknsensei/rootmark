@@ -171,7 +171,13 @@ pub fn default_recipe() -> String {
          \n\
          # the human behind the HTTP token; HTTP writes are refused without it\n\
          # [identity]\n\
-         # human_id = \"<your id>\"\n",
+         # human_id = \"<your id>\"\n\
+         \n\
+         # external edits no client attested (spec 2.0.0 §7.1): \"unverified\"\n\
+         # (the default) or \"canonical\" (every file edit counts as the human's)\n\
+         # [attestation]\n\
+         # unattested = \"unverified\"\n\
+         # window_s = 2.0\n",
         b.trigger.idle_ms(),
         b.trigger.min_sim_change(),
         b.retention.hours(),

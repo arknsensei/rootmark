@@ -44,9 +44,16 @@ fn vault(name: &str) -> PathBuf {
 }
 
 fn policy(v: &Path, extra: &str) {
+    // P2-0 (spec 2.0.0 §7.1, K-P2-0.4): these tests measure the P1-D.1
+    // behaviour of external edits (the watcher's human content), which is
+    // the policy `unattested = "canonical"` since the default became
+    // `unverified`; the default is measured by server/tests/p2_0_attest.rs
     std::fs::write(
         v.join(".rootmark/policy.toml"),
-        format!("{}{extra}", rootmarkserver::config::default_recipe()),
+        format!(
+            "{}{extra}\n[attestation]\nunattested = \"canonical\"\n",
+            rootmarkserver::config::default_recipe()
+        ),
     )
     .unwrap();
 }
@@ -81,6 +88,8 @@ const SAFETY: &str = "# Safety\n\nIntro written by a human.\n\n## Fire\n\nKeep a
 fn append_only_refuses_every_canonical_replace_and_allows_proposal_sections() {
     let v = vault("edit");
     std::fs::write(v.join("safety.md"), SAFETY).unwrap();
+    // P2-0: the P1-D.1 watcher rule is the policy `unattested = "canonical"`
+    policy(&v, "");
     let k = Kernel::open(&v).unwrap();
     // the human document is ingested as human content (the watcher's rule)
     k.watch_doc("safety.md", "rootmark-serve-watch").unwrap();

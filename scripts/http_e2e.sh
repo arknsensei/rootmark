@@ -127,7 +127,10 @@ c4="$(code -X GET -H "Authorization: Bearer $tok" -H 'X-Consumer: http-e2e' "$ba
 record H-1 "unknown tool 404, non-object body 400, tool error 422 with message, GET on a tool 405" \
   "$( [ "$c" = 404 ] && [ "$c2" = 400 ] && [ "$c3" = 422 ] && [ "$c4" = 405 ] && [[ "$e3" == *"no snapshot"* ]] && echo true || echo false)" "$c $c2 $c3 $c4"
 
-# watch: a human edit outside the server
+# watch: a human edit outside the server. P2-0 (spec 2.0.0 §7.1, K-P2-0.4;
+# freeze exception P2-0/F5): the P1-D watcher rule measured here is the
+# policy `unattested = "canonical"` since the default became `unverified`
+printf '\n[attestation]\nunattested = "canonical"\n' >>vault/.rootmark/policy.toml
 n_before="$(code -X POST -H "Authorization: Bearer $tok" -H 'X-Consumer: http-e2e' -d '{"doc_path":"espresso.md"}' "$base/blame" >/dev/null; jq '.blocks | length' body.json)"
 printf '\nA watched human paragraph about zanzibar crema.\n' >>vault/espresso.md
 seen=false

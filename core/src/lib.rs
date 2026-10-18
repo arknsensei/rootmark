@@ -1,6 +1,7 @@
 //! rootmark-core: block-level lineage, provenance and derived structures over
 //! plain Markdown (spec/SPEC.md). Matcher v3 (default) and v2 (flag).
 
+pub mod attest;
 pub mod chunk;
 pub mod events;
 pub mod files;
@@ -34,7 +35,7 @@ pub use model::{
 };
 pub use normalize::normalize;
 pub use parse::parse_document;
-pub use policy::{Edit, Policy, PolicySource, Promotion};
+pub use policy::{Attestation as AttestationPolicy, Edit, Policy, PolicySource, Promotion};
 pub use store::BlockObject;
 pub use vault::{snapshot_id, BlameLine, IngestPlan, IngestResult, ReadBlock, Snapshot, Vault};
 pub use wikilink::extract_wikilinks;

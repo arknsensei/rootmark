@@ -83,6 +83,14 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
         .output()
         .unwrap();
     assert!(st.status.success());
+    // P2-0 (spec 2.0.0 §7.1, K-P2-0.4; freeze exception P2-0/F4): D-10
+    // measures the watcher's human edit, which is the policy
+    // `unattested = "canonical"` since the default became `unverified`
+    std::fs::write(
+        vault.join(".rootmark/policy.toml"),
+        rootmarkserver::config::default_recipe() + "\n[attestation]\nunattested = \"canonical\"\n",
+    )
+    .unwrap();
 
     let mut child = Command::new(rootmark())
         .args(["serve", "--vault", vs, "--http", "127.0.0.1:0", "--watch"])
