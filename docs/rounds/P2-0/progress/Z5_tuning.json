@@ -1,0 +1,79 @@
+{
+ "set": "D-B tune",
+ "sessions": 100,
+ "windows": [
+  {
+   "window_s": 0.5,
+   "saves": 140,
+   "new_blocks": 542,
+   "unverified_after_window": 63,
+   "false_unverified_rate": 0.11623616236162361,
+   "raised_late": 0,
+   "latency_p95_ms": 257,
+   "latency_p95_over_window": false,
+   "latency_measured": 114,
+   "latency_unsettled": 0,
+   "side_notes": 14,
+   "no_write": 26
+  },
+  {
+   "window_s": 1,
+   "saves": 140,
+   "new_blocks": 542,
+   "unverified_after_window": 63,
+   "false_unverified_rate": 0.11623616236162361,
+   "raised_late": 0,
+   "latency_p95_ms": 260,
+   "latency_p95_over_window": false,
+   "latency_measured": 114,
+   "latency_unsettled": 0,
+   "side_notes": 14,
+   "no_write": 26
+  },
+  {
+   "window_s": 2,
+   "saves": 140,
+   "new_blocks": 542,
+   "unverified_after_window": 63,
+   "false_unverified_rate": 0.11623616236162361,
+   "raised_late": 0,
+   "latency_p95_ms": 260,
+   "latency_p95_over_window": false,
+   "latency_measured": 114,
+   "latency_unsettled": 0,
+   "side_notes": 14,
+   "no_write": 26
+  },
+  {
+   "window_s": 3,
+   "saves": 140,
+   "new_blocks": 542,
+   "unverified_after_window": 63,
+   "false_unverified_rate": 0.11623616236162361,
+   "raised_late": 0,
+   "latency_p95_ms": 266,
+   "latency_p95_over_window": false,
+   "latency_measured": 114,
+   "latency_unsettled": 0,
+   "side_notes": 14,
+   "no_write": 26
+  },
+  {
+   "window_s": 5,
+   "saves": 140,
+   "new_blocks": 542,
+   "unverified_after_window": 63,
+   "false_unverified_rate": 0.11623616236162361,
+   "raised_late": 0,
+   "latency_p95_ms": 261,
+   "latency_p95_over_window": false,
+   "latency_measured": 114,
+   "latency_unsettled": 0,
+   "side_notes": 14,
+   "no_write": 26
+  }
+ ],
+ "window_s": 0.5,
+ "chosen_by": "choose_window (Z5.md)",
+ "tune_set_blake3": "77f2aacda0581a96e87f657374b7977bcf0d130081dbb7717bafeb9d977822fb"
+}
