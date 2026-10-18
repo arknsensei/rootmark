@@ -1,0 +1,9 @@
+{"sessions":[
+{"id":"s1","kind":"rename","steps":[{"op":"rename","doc":"roasting.md","to":"r1-roasting.md"}]},
+{"id":"s2","kind":"paragraph","steps":[{"op":"type","doc":"r1-roasting.md","text":"\n\nHuman s2 typed after the rename."},{"op":"save","how":"command"}]},
+{"id":"s3","kind":"rename","steps":[{"op":"rename","doc":"r1-roasting.md","to":"r2-roasting.md"}]},
+{"id":"s4","kind":"rename","steps":[{"op":"rename","doc":"glossary.md","to":"r3-glossary.md"}]},
+{"id":"s5","kind":"rename","steps":[{"op":"rename","doc":"espresso.md","to":"r4-espresso.md"}]},
+{"id":"s6","kind":"rename","steps":[{"op":"rename","doc":"grinders.md","to":"r5-grinders.md"}]},
+{"id":"s7","kind":"char","steps":[{"op":"type","doc":"r3-glossary.md","text":"x"},{"op":"save","how":"command"}]}
+]}

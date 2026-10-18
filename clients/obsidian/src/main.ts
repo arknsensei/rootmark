@@ -11,7 +11,7 @@ import { CheckpointsView, CHECKPOINTS_VIEW } from "./ui/checkpoints-view";
 import { TracesView, TRACES_VIEW } from "./ui/traces-view";
 import { obsidianTransport } from "./obsidian-transport";
 import { Attester } from "./attest";
-import { observeOwnWrites } from "./own-writes";
+import { observeOwnWrites, type SavedHow } from "./own-writes";
 
 import { CONSUMER } from "./consumer";
 
@@ -29,6 +29,10 @@ export default class RootmarkPlugin extends Plugin {
   private restoreAdapter: (() => void) | null = null;
   /** saves made while no server was connected (not attested) */
   private offlineSaves = 0;
+  /** attestations are sent one after another, in the order this Obsidian
+   * wrote (a rename reaches the server before the link updates it caused:
+   * P2-0.1 Y1 security review B6) */
+  private attestQueue: Promise<void> = Promise.resolve();
 
   override async onload(): Promise<void> {
     this.statusEl = this.addStatusBarItem();
@@ -61,7 +65,9 @@ export default class RootmarkPlugin extends Plugin {
   private observeOwnWrites(): void {
     this.restoreAdapter = observeOwnWrites(
       this.app.vault.adapter,
-      (path, bytes, renamedFrom) => void this.attest(path, bytes, renamedFrom),
+      (path, bytes, how) => {
+        this.attestQueue = this.attestQueue.then(() => this.attest(path, bytes, how));
+      },
       (from) => this.onlyCanonical(from),
     );
   }
@@ -80,7 +86,7 @@ export default class RootmarkPlugin extends Plugin {
     return blocks !== null && blocks.every((b) => b.layer === "canonical" || b.inactive);
   }
 
-  private async attest(path: string, bytes: Uint8Array, renamedFrom?: string): Promise<void> {
+  private async attest(path: string, bytes: Uint8Array, how: SavedHow): Promise<void> {
     const a = this.attester;
     if (a === null) {
       // offline: the save is not attested (it will be `unverified` if the
@@ -90,7 +96,7 @@ export default class RootmarkPlugin extends Plugin {
       return;
     }
     try {
-      await a.attest(path, bytes, null, renamedFrom);
+      await a.attest(path, bytes, null, how);
     } catch (e) {
       new Notice(`rootmark attest: ${describeError(e)}`, 6000);
     }

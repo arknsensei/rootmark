@@ -6,6 +6,7 @@
 
 import { decodeHttp, RootmarkError, type Connection, type HttpRequest, type Transport } from "./api";
 import { contentHash } from "./blake3";
+import type { SavedHow } from "./own-writes";
 
 /** `POST /v1/attest_session` (§2.6). */
 export interface AttestSession {
@@ -131,7 +132,7 @@ export class Attester {
     docPath: string,
     bytes: Uint8Array,
     savedAtSeq: number | null = null,
-    renamedFrom?: string,
+    how: SavedHow = {},
   ): Promise<AttestResult> {
     const hash = contentHash(bytes);
     const send = async (s: AttestSession): Promise<AttestResult> => {
@@ -141,7 +142,8 @@ export class Attester {
           doc_path: docPath,
           content_hash: hash,
           ...(savedAtSeq === null ? {} : { saved_at_seq: savedAtSeq }),
-          ...(renamedFrom === undefined ? {} : { renamed_from: renamedFrom }),
+          ...(how.renamedFrom === undefined ? {} : { renamed_from: how.renamedFrom }),
+          ...(how.linkUpdateOf === undefined ? {} : { link_update_of: how.linkUpdateOf }),
           session_id: s.session_id,
           mac,
         }),

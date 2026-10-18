@@ -36,6 +36,12 @@ class FakeAdapter implements OwnWritesAdapter {
     this.files.set(from, "");
     return Promise.resolve();
   }
+  process(path: string, fn: (data: string) => string): Promise<string> {
+    this.calls.push(`process ${path}`);
+    const out = fn(this.files.get(path) ?? "");
+    this.files.set(path, out);
+    return Promise.resolve(out);
+  }
   exists(path: string): Promise<boolean> {
     return Promise.resolve(this.files.has(path));
   }
@@ -114,9 +120,9 @@ describe("own writes (src/own-writes.ts)", () => {
     const renames: (string | undefined)[] = [];
     observeOwnWrites(
       a,
-      (p, _b, from) => {
+      (p, _b, how) => {
         seen.push(p);
-        renames.push(from);
+        renames.push(how.renamedFrom);
       },
       () => Promise.resolve(true),
     );
@@ -137,13 +143,60 @@ describe("own writes (src/own-writes.ts)", () => {
     expect(seen).toEqual(["n.md"]);
   });
 
+  it("a process write right after a rename is reported as its link update; any other process write is not (P2-0.1/Y1)", async () => {
+    const a = new FakeAdapter();
+    let t = 1_000;
+    const seen: [string, string, string | undefined][] = [];
+    observeOwnWrites(
+      a,
+      (p, b, how) => seen.push([p, text(b), how.linkUpdateOf]),
+      () => Promise.resolve(false),
+      () => t,
+    );
+    a.files.set("a.md", "See [[b]].\n");
+    a.files.set("b.md", "# B\n");
+    // a process write with no rename before it: not a save of this editor
+    await a.process("a.md", (d) => d.replace("See", "Saw"));
+    expect(seen).toEqual([]);
+    // Obsidian renames b.md, then rewrites the links to it
+    await a.rename("b.md", "sub/bee.md");
+    t += 50;
+    await a.process("a.md", (d) => d.replace("[[b]]", "[[bee]]"));
+    await a.process("c.json", (d) => d + "x");
+    await a.process("a.md", (d) => d);
+    expect(seen).toEqual([["a.md", "Saw [[bee]].\n", "sub/bee.md"]]);
+    // two renames in a row: the rewrite is attributed to the rename whose
+    // note it names; a process write naming neither is not reported
+    a.files.set("c.md", "# C\n");
+    a.files.set("d.md", "# D\n");
+    a.files.set("x.md", "See [[c]] and [[d]].\n");
+    await a.rename("c.md", "c2.md");
+    await a.rename("d.md", "d2.md");
+    await a.process("x.md", (d) => d.replace("[[c]]", "[[c2]]"));
+    await a.process("x.md", (d) => d.replace("See", "Seen"));
+    expect(seen.slice(1)).toEqual([["x.md", "See [[c2]] and [[d]].\n", "c2.md"]]);
+    seen.splice(1);
+    // a new name inside the old one (bee.md → b.md): counted on link targets
+    a.files.set("bee.md", "# Bee\n");
+    a.files.set("y.md", "See [[bee]].\n");
+    await a.rename("bee.md", "b.md");
+    await a.process("y.md", (d) => d.replace("[[bee]]", "[[b]]"));
+    expect(seen.slice(1)).toEqual([["y.md", "See [[b]].\n", "b.md"]]);
+    seen.splice(1);
+    // long after the rename: not reported
+    t += 20_000;
+    await a.process("a.md", (d) => d + "more\n");
+    expect(seen.length).toBe(1);
+    expect(a.calls.filter((c) => c.startsWith("process"))).toEqual(["process a.md", "process a.md", "process c.json", "process a.md", "process x.md", "process x.md", "process y.md", "process a.md"]);
+  });
+
   it("restores the adapter's own methods (and removes the wrappers of inherited ones)", async () => {
     const a = new FakeAdapter();
     const seen: string[] = [];
     const restore = observeOwnWrites(a, (p) => seen.push(p));
     expect(Object.prototype.hasOwnProperty.call(a, "write")).toBe(true);
     restore();
-    for (const m of ["write", "append", "rename"]) expect(Object.prototype.hasOwnProperty.call(a, m)).toBe(false);
+    for (const m of ["write", "append", "rename", "process"]) expect(Object.prototype.hasOwnProperty.call(a, m)).toBe(false);
     await a.write("n.md", "x");
     expect(seen).toEqual([]);
   });
