@@ -17,11 +17,13 @@
 //!
 //! SIGTERM or SIGINT (or the end of the MCP stream) stops the service: the
 //! HTTP server and the watcher stop, the hot tier is compacted, and the
-//! process exits 0 — or 1 if that final compaction fails. Progress lines go
+//! process exits 0 — or 1 if that final compaction fails. An index that is
+//! not `ok` (`stale`, `missing`, `damaged`) is not compacted: a note, exit 0
+//! (CLIENT_CONTRACT §3; P2-0/Z0). Progress lines go
 //! to stderr (`rootmark serve: …`); stdout carries only MCP.
 
 use crate::config::{self, ServerConfig};
-use crate::tools::{IndexAtStart, Kernel};
+use crate::tools::{Compacted, IndexAtStart, Kernel};
 use anyhow::{bail, Context, Result};
 use rootmarkcore::{MatcherVersion, Policy, PolicySource};
 use std::path::{Path, PathBuf};
@@ -172,15 +174,21 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
 async fn compact(kernel: &Arc<Kernel>, why: &str) -> Result<()> {
     let k = kernel.clone();
     match tokio::task::spawn_blocking(move || k.compact()).await? {
-        Ok(Some(r)) => {
+        Ok(Compacted::Done(r)) => {
             log(format!(
                 "compact ({why}): {} records, {} snapshots, {} moved from the hot tier",
                 r.records, r.snapshots, r.moved_from_hot
             ));
             Ok(())
         }
-        Ok(None) => {
+        Ok(Compacted::Empty) => {
             log(format!("compact ({why}): hot tier empty"));
+            Ok(())
+        }
+        Ok(Compacted::Skipped(state)) => {
+            log(format!(
+                "compact ({why}): skipped, index {state} (rebuild it with `rootmark index build`)"
+            ));
             Ok(())
         }
         Err(e) => Err(e.context(format!("compact ({why})"))),

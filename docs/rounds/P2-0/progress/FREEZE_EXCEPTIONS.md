@@ -1,0 +1,16 @@
+# P2-0 — Dondurma istisnaları
+
+Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/sonra bit eşitliği kaydı, (c) gözden geçirici onayı. Her istisna `research/FROZEN.md` tablosuna aynı kalıpla **eklenen** bir yeniden dondurma satırıyla eşleşir. Satırın notu `P2-0/F<n>`'i anar. Eski satırlar silinmez ve değişmez.
+
+## F1 · Z0 · `scripts/contract_check.sh` — `status` §2 satırının bütün alanları (P1-E.1 doğrulaması öneri 2)
+- **Ne:** sözleşmenin §2 `status` satırının yanıt sütunu okunur; her üst düzey ad ve her `{…}` grubunun adları (`…` alan değildir) bir yol olur (`status_paths`: `vault`, `spec_version`, `mdk_version`, `level_claimed`, `embedder`, `index.{state,format,expected_format,auto_rebuild}`, `last_checkpoint`, `policy.{promotion,edit}`, `server_policy.{server,index,identity}`). `index_state_check` dört indeks durumunun her birinde GET ve POST `status` yanıtında her yolun bulunmasını ister (değer `null` olabilir: `last_checkpoint`, `embedder`); eksik yol `missing`'e `http-status-fields:<durum> [<yol>…]` olarak girer ve o durumun `ok`'unu düşürür. Satırda alan listesi yoksa `contract:status fields`. Çıktıya `http.status_fields`. Başlık yorumu (+5 satır). Diğer adımlar, `index {…}` denetimi, kod istekleri, aktarım kuralları aynen.
+- **Neden:** P1-E.1 doğrulaması V6 / öneri 2: üst düzey `last_checkpoint` kaldırılınca denetleyici çıkış 0 verdi; yalnız CI'da atlanan gerçek Obsidian e2e yakaladı. TASKS Z0: "`contract_check.sh` `status` §2 tüm üst düzey alanlar".
+- **Önce/sonra bit eşitliği** (güncel ağaç, güncel sunucu): eski denetleyici (`HEAD:scripts/contract_check.sh`) çıkış 0; yeni denetleyici çıkış 0; iki çıktı, yeni `http.status_fields` alanı silindikten sonra `jq -S` ile bayt eşit.
+- **Kasıtlı vaka:** `last_checkpoint`'i `status`'tan kaldıran derleme (`ROOTMARK_BIN`): eski denetleyici çıkış 0 (yakalamadı), yeni denetleyici çıkış 1, `missing`: dört durumun her birinde iki kez `http-status-fields:<durum> ["last_checkpoint"]` ve `http-status-index:<durum>`. Z7'nin tamper betiği bu vakayı zincire alır.
+- **Gözden geçirici onayı:** Z0.review.md.
+
+## F2 · Z0 · `scripts/release_check.sh` — R16 ve R14 (K-P2-0.3; P1-E.1 doğrulaması öneri 1)
+- **Ne:** yeni madde **R16**: `docs/RELEASE.md` "İnsan adımları" bölümünün 1. maddesinin adını verdiği `reports/rounds/<tur>/VERIFICATION.md` var ve son `**Hüküm: …**` satırı "Güvenilir". **R14** "etiket yok"tan şuna döner: `v<ver>` etiketi yok (geçer), ya da var ve R16'nın hükmü "Güvenilir" ve etiketin commit'i en yeni `ROUND_START`'ın kendisi ya da atası (etiketi bir tur atmaz). Başlık yorumu R1–R16. Diğer maddeler, sıraları, `release_check.json` biçimi aynen; madde sayısı 16 → 17.
+- **Neden:** TASKS Z0 "`release_check.sh` 17/17 (yeni madde)" ve "`RELEASE.md` insan adımı 1 → VERIFICATION bağı". `v0.1.0` GH-0'da insan tarafından atıldı (K-GH.4); eski R14 ("etiket yok") bundan sonra her koşuda FAIL'di, oysa madde "etiketi tur atmaz" kuralını denetler.
+- **Önce/sonra:** Z0.md "Ölçüm" (aynı `dist/` üzerinde eski ve yeni betik).
+- **Gözden geçirici onayı:** Z0.review.md.

@@ -1,0 +1,8 @@
+# P2-0 — Varsayımlar
+
+Etiketler: `[spec]` spesifikasyon yorumu, `[arch]` mimari/süreç yorumu, `[-]` yerel uygulama kararı.
+
+- **Z0-1 [arch] `ROUND_START` = `v0.1.0`'ın commit'i.** TASKS Z0 "`ROUND_START` (= `v0.1.0`)", PROMPT "GOAL gereği `v0.1.0` etiketi (regresyon referansı); çalışma tabanı `main` HEAD". Dosya etiketin işaret ettiği commit'i (`85be0a7`) taşır; `check_frozen.sh` dondurma tablosunun yalnızca-ekleme denetimini bu commit'ten yapar (GH-0 satırları o commit'te vardı). Dal `p2-0/round` `main` HEAD'den (`63ea451`) açıldı.
+- **Z0-2 [arch] Çalışma ağacı.** Oturum, kullanıcının çalışma kopyasıyla çakışmamak için bir git worktree'sinde (`.claude/worktrees/p2-0-impl`, yerel dal `worktree-p2-0-impl`, `origin/p2-0/round`'u izler) çalışır; commit'ler `git push origin HEAD:p2-0/round` ile turun dalına itilir. Tur tek dalda ilerler kuralı (K-P2.1) uzak dal için aynen geçerlidir.
+- **Z0-3 [-] Geriye dönük `artifacts.sha256`.** P1-E ve P1-E.1 resmi RUN'larının commit'lenmemiş 8 bayt yapıtı (`p1d/mcp_e2e/run1/**`) artık hiçbir yerde yok (RUN geçici bir klonda koştu). Onların sha256'sı hesaplanamaz; `pair_compare.json`'un kaydettiği BLAKE3 (ilk 32 hex) ve boyutu `artifacts.json`'da "commit'lenmemiş" olarak yazılır. `artifacts.sha256` yalnız commit'lenmiş yapıtları kapsar ki `shasum -a 256 -c` ile denetlenebilsin. Yeni RUN'larda (`verify.sh`, Z7) araç klon silinmeden önce çağrılır ve yapıtlar commit'lenir.
+- **Z0-4 [-] R14'ün "tur atmadı" ölçütü.** "Etiketi bir tur atmaz": etiketin commit'i en yeni `ROUND_START`'ın kendisi ya da atası olmalı. Bir tur kendi `ROUND_START`'ından sonra etiket atarsa R14 FAIL olur. En yeni `ROUND_START`, diğer bütün `ROUND_START`'ların torunu olandır (doğrusal geçmiş, K-P2.1).

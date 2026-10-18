@@ -271,6 +271,9 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/test_tamper.sh` | `GH-0/G5-tar:` | yeniden dondurma GH-0/F4: depo kopyası `tar --null -T -` (Linux'ta `xargs` bölünmesi) |
 | `scripts/test_freeze_indep.sh` | `GH-0/G5-tar:` | yeniden dondurma GH-0/F4: depo kopyası `tar --null -T -` |
 | `scripts/http_e2e.sh` | `GH-0/G5-stat:` | yeniden dondurma GH-0/F5: token modu GNU `stat -c` önce (Linux'ta `stat -f` dosya sistemi bilgisi basar) |
+| `scripts/contract_check.sh` | `P2-0/Z0:` | yeniden dondurma P2-0/F1: `status` §2 satırının bütün alanları dört indeks durumunda (P1-E.1 doğrulaması öneri 2) |
+| `scripts/release_check.sh` | `P2-0/Z0:` | yeniden dondurma P2-0/F2: R16 insan adımı 1 → "Güvenilir" doğrulama; R14 insanın attığı etiket (K-P2-0.3) |
+| `research/eval/run_artifacts.py` | `P2-0/Z0:` | resmi RUN bayt yapıtlarının `artifacts.sha256`/`artifacts.json`'u (P1-E.1 doğrulaması öneri 3) |
 <!-- /frozen-table -->
 
 ## Notlar
