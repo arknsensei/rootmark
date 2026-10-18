@@ -67,14 +67,17 @@ export default class RootmarkPlugin extends Plugin {
   }
 
   /** A renamed note is attested under its new path only when its old path
-   * held nothing but canonical content (or is unknown to the log): the server
-   * sees the new path as a new document, and attesting it would make an
-   * agent's proposal or an unverified edit canonical (Z3 review, 11). */
+   * holds nothing but canonical content in the log: the server sees the new
+   * path as a new document, and attesting it would make an agent's proposal
+   * or an unverified edit canonical (Z3 review, 11). A path the log does not
+   * know is refused (automated security review: its bytes were never seen
+   * by the server). `own-writes.ts` also requires the old file to hold the
+   * bytes this Obsidian last reported. */
   private async onlyCanonical(from: string): Promise<boolean> {
     const client = this.client();
     if (client === null) return false;
     const blocks = await blameOf(client, from);
-    return blocks === null || blocks.every((b) => b.layer === "canonical" || b.inactive);
+    return blocks !== null && blocks.every((b) => b.layer === "canonical" || b.inactive);
   }
 
   private async attest(path: string, bytes: Uint8Array): Promise<void> {
