@@ -18,9 +18,12 @@ use std::path::Path;
 /// Reference default of the window `W` (spec §7.1), milliseconds.
 pub const DEFAULT_WINDOW_MS: u64 = 2_000;
 
-/// One line of `attestations.jsonl` (spec §8, 2.0.0).
+/// One line of `attestations.jsonl` (spec §8, 2.0.0). Reading rule (P2-0.2
+/// T4, spec §8): a field this reader does not know is ignored (a later
+/// version may add one); a known field's value outside its definition is
+/// rejected (`check`). The log is append-only: a line read is never written
+/// back, so an ignored field is never lost.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(deny_unknown_fields)]
 pub struct Attestation {
     pub attestation_id: String,
     pub doc_path: String,
@@ -881,6 +884,37 @@ mod tests {
         let mut b = a.clone();
         b.at_seq = 2;
         assert!(b.check(9).is_err(), "id no longer matches");
+    }
+
+    #[test]
+    fn unknown_fields_are_read_unknown_values_rejected() {
+        // P2-0.2 T4 (spec §8 reading rule): a line with a field this reader
+        // does not know is read; a known field with a value outside its
+        // definition is rejected
+        let dir = std::env::temp_dir().join(format!("rootmark-att-fwd-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let p = dir.join("attestations.jsonl");
+        let a = Attestation::new("a.md", &content_hash(b"x"), 0, None).unwrap();
+        let mut line = serde_json::to_value(&a).unwrap();
+        line["x_future"] = serde_json::json!(1);
+        std::fs::write(&p, format!("{line}\n")).unwrap();
+        let read = read_attestations(&p, 0).unwrap();
+        assert_eq!(read, vec![a.clone()]);
+        for (field, value) in [
+            ("partial", serde_json::json!(false)),
+            ("matched", serde_json::json!(true)),
+            ("partial", serde_json::json!("yes")),
+            ("at_seq", serde_json::json!(-1)),
+        ] {
+            let mut bad = serde_json::to_value(&a).unwrap();
+            bad[field] = value.clone();
+            std::fs::write(&p, format!("{bad}\n")).unwrap();
+            assert!(
+                read_attestations(&p, 0).is_err(),
+                "{field} = {value} must be rejected"
+            );
+        }
+        std::fs::remove_dir_all(&dir).unwrap();
     }
 
     #[test]

@@ -180,6 +180,24 @@ struct Run<'a> {
     /// observed ms, the observed blocks' versions, the lineages the change
     /// named with their raise)
     pending: Vec<Pending>,
+    /// (C2-14, P2-0.2 T2) the caps of accepted rename and link-update
+    /// attestations, by attestation id
+    caps: BTreeMap<String, rootmarkcore::attest::Caps>,
+}
+
+/// (C2-14) A late raise under caps: the lower of its target and its
+/// version's cap, none when that is not above `unverified`.
+fn cap_raises(caps: &rootmarkcore::attest::Caps, raises: Vec<Raise>) -> Vec<Raise> {
+    raises
+        .into_iter()
+        .filter_map(|mut r| {
+            let to = r.to.min(caps.cap(&r.version_id)?);
+            (to > Layer::Unverified).then(|| {
+                r.to = to;
+                r
+            })
+        })
+        .collect()
 }
 
 /// One remembered unattested change (C2-13): doc, content_hash, observed
@@ -545,13 +563,38 @@ impl Run<'_> {
                 let h = content_hash(&bytes);
                 let text = String::from_utf8(bytes)?;
                 match self.window.observe(&doc, &h, at) {
-                    Some(_) => {
+                    Some(id) => {
                         let a = Actor::new(ActorKind::Human, "conformance")?;
                         let prov = Provenance {
                             author_kind: AuthorKind::Human,
                             source: "watch".into(),
                         };
-                        let r = self.v()?.ingest_by(&doc, &text, prov, m, &a)?;
+                        // (C2-14, spec 2.0.2 §7.1 "Rename") a rename or link
+                        // update carries the layers over: the ingest under its
+                        // caps, never above them
+                        let r = match self.caps.get(&id).cloned() {
+                            None => self.v()?.ingest_by(&doc, &text, prov, m, &a)?,
+                            Some(c) => {
+                                let v = self.v()?;
+                                let plan = v.plan_ingest_carried(
+                                    &doc,
+                                    &text,
+                                    prov,
+                                    m,
+                                    Some(&a),
+                                    &c.carried(),
+                                )?;
+                                let layers: Vec<(String, Layer)> = plan
+                                    .blocks_after
+                                    .iter()
+                                    .map(|b| (b.version_id.clone(), b.layer))
+                                    .collect();
+                                if !c.within(&layers) {
+                                    bail!("external: a plan above the caps (to be ingested unattested)");
+                                }
+                                v.commit_plan(plan)?
+                            }
+                        };
                         json!({"decision": "attested", "attributed": attributed(&r.events)?})
                     }
                     None => {
@@ -636,10 +679,23 @@ impl Run<'_> {
                         bail!("attest: content does not hash to content_hash");
                     }
                 }
+                // (C2-14, spec 2.0.2 §7.1 "Link update", "Rename") a rename
+                // (`renamed_from`) or a link update (`link_update_of`,
+                // `link_update_from`) is checked against the head it stands
+                // for and gives the caps its bytes are ingested under
+                let caps = self.link_caps(op, &doc, &bytes)?;
                 let v = self.v()?;
                 let mut a = rootmarkcore::attest::Attestation::new(&doc, &h, v.next_seq(), None)?;
-                let (late_list, ambiguous) =
+                if let Some(c) = &caps {
+                    self.caps.insert(a.attestation_id.clone(), c.clone());
+                }
+                let (mut late_list, ambiguous) =
                     self.window.attest_content(&a, at, late, content.clone());
+                if let Some(c) = &caps {
+                    for u in &mut late_list {
+                        u.lineages = cap_raises(c, std::mem::take(&mut u.lineages));
+                    }
+                }
                 // the file holds the attested bytes when it is recorded
                 // (`on_disk`): their own observation is coming, no late
                 // partial match (spec 2.0.1 §7.1)
@@ -811,6 +867,60 @@ impl Run<'_> {
         Ok((r, raises))
     }
 
+    /// (C2-14, spec 2.0.2 §7.1) The caps of a rename or link-update
+    /// attestation, after its check (an error: the attestation is refused):
+    /// `renamed_from` — the bytes are the old path's head, its own links
+    /// rewritten at most; `link_update_of` (with `link_update_from`) — the
+    /// bytes differ from the document's head (or, for the renamed note the
+    /// log does not know yet, the old path's head) in links naming the
+    /// renamed note, a changed block of another note `canonical`. `None` for
+    /// a plain attestation.
+    fn link_caps(
+        &mut self,
+        op: &Value,
+        doc: &str,
+        bytes: &[u8],
+    ) -> Result<Option<rootmarkcore::attest::Caps>> {
+        use rootmarkcore::attest::{check_link_update, LinkBase};
+        let text = String::from_utf8(bytes.to_vec())?;
+        let from = op.get("renamed_from").and_then(Value::as_str);
+        let renamed = op.get("link_update_of").and_then(Value::as_str);
+        let was = op.get("link_update_from").and_then(Value::as_str);
+        let v = self.v()?;
+        if let Some(from) = from {
+            let base = LinkBase::head(v, from)?.context("denied: not a document of the log")?;
+            let (_, caps) =
+                check_link_update(&base, &text, doc, Some(from)).context("denied: not a rename")?;
+            return Ok(Some(caps));
+        }
+        let Some(renamed) = renamed else {
+            return Ok(None);
+        };
+        let base = match LinkBase::head(v, doc)? {
+            Some(b) => b,
+            None if doc == renamed => match was {
+                Some(w) => LinkBase::head(v, w)?.context("denied: not a document of the log")?,
+                None => bail!("denied: not a document of the log"),
+            },
+            None => bail!("denied: not a document of the log"),
+        };
+        let (changed, caps) =
+            check_link_update(&base, &text, renamed, was).context("denied: not a link update")?;
+        if changed == 0 {
+            bail!("denied: no link target changed");
+        }
+        if doc != renamed
+            && base
+                .blocks
+                .iter()
+                .zip(&caps.blocks)
+                .any(|(b, (v, l, _))| *v != b.version_id && *l != Layer::Canonical)
+        {
+            bail!("denied: a link rewritten in a block that is not canonical");
+        }
+        Ok(Some(caps))
+    }
+
     /// The observation of a tamper: the vault must not have opened, with an
     /// error holding `expect_open_err`.
     fn open_err(&self, err: Option<anyhow::Error>, op: &Value) -> Result<Value> {
@@ -848,6 +958,7 @@ pub fn evaluate_c2(dir: &Path) -> Result<Value> {
                 .unwrap_or(rootmarkcore::attest::DEFAULT_WINDOW_MS),
         ),
         pending: Vec::new(),
+        caps: BTreeMap::new(),
     };
     let mut out = Vec::new();
     for (i, op) in case

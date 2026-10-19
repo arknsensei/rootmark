@@ -93,7 +93,7 @@ conf() { # conf <fixture root>
   rm -f "$r"
   ROOTMARK_FIXTURES="$1" ROOTMARK_CONFORMANCE_REPORT="$r" cargo test -q -p rootmark-core --release --test conformance >/dev/null 2>&1 || return 1
   ROOTMARK_FIXTURES="$1" ROOTMARK_CONFORMANCE_REPORT="$r" cargo test -q -p rootmark-index --release --test conformance_c3 >/dev/null 2>&1 || return 1
-  jq -e '.level_claimed == 3 and .passed == .total and .total == 38' "$r" >/dev/null
+  jq -e '.level_claimed == 3 and .passed == .total and .total == 39' "$r" >/dev/null
 }
 cp -R spec/fixtures "$work/fx0"
 add fixtures "untouched fixture copy" accepted "$(run conf "$work/fx0")"

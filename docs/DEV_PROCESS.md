@@ -38,6 +38,7 @@ Tur başladıktan sonra `GOAL.md` değişmez. Yeni ihtiyaç bir sonraki tura gid
 - Ayrı oturum, temiz klon, ana çalışma dizinine okuma dahil erişim yok.
 - Çift koşturma, kasıtlı bozma testleri, izlenebilirlik, karar kuralının bağımsız türetimi.
 - Çıktı: `reports/rounds/<id>/VERIFICATION.md`; hüküm "güvenilir / şu koşullarla / değil" + en fazla 3 öneri. Öneriler bir sonraki turun `GOAL.md`'sinde ele alınır ya da `DECISIONS.md`'de reddedilme gerekçesiyle kapatılır.
+- **Spec durum damgası (K-P2-02.3; P2-0.1 doğrulaması Ö3, K-P2-01.6).** Bir spec bölümünün durum damgası "Validated", bağımsız doğrulamanın **"güvenilir"** hükmünden — ya da "şu koşullarla güvenilir" hükmünün koşulları bir sonraki turda kapanıp bağımsız olarak teyit edildikten sonra — konur. Turun ana ajanı FINAL'de damga koymaz: karar kuralının dalını ve damga önerisini yazar, spec'in damgasını "Draft (<tur>'un doğrulamasına kadar)" bırakır. Damgayı, doğrulamadan sonraki kapanış commit'i (orkestratör) ya da sonraki turun açılış görevi koyar ve `SPEC_EDITS.md`'ye açıklık satırı olarak yazar; doğrulamanın hükmüne atıf zorunludur.
 
 ## 6. Karar kayıtları
 `docs/DECISIONS.md`: `K<n>` numaralı, tarihli, gerekçeli, etkilenen belgeler listeli. Mimari belgedeki K1–K8 ilk girdilerdir. "Sonuç görüldükten sonra alınan karar" olarak işaretleme zorunludur (K4 örneği).
