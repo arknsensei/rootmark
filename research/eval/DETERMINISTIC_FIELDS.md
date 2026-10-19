@@ -51,6 +51,9 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 ### `compare_p2_0_1`
 `pair`: `compare_p1e1.pair` + `P2_0_1_FILES` alan alan + `P2_0_1_BYTES` (D-A, D-A2 ve D-C vault'larının `events.jsonl` ve `attestations.jsonl`'i, H-P2-0.1i) bayt bayt; hariç: gerçek Obsidian kümelerinin ve düzenleyici oturumlarının ölçümleri (`P2_0_1_TIMING`, duvar saati: `p2_0_1_checks.json`'da H-P2-0.1b, b′, c, d′, e, f). `p2_0_1/d_b.json`, `d_a_prime.json`, `d_c_prime.json` ve `d_b2.json` bütünüyle duvar saati kayıtlarıdır, dosya listesinde yoktur. `regress`: P2-0 resmi RUN'ı, `EXCLUDED` (P2-0.1 kararlarının satırları, resmi RUN'dan önce geliştirme RUN'ından yazıldı), uyumluluk raporu test kimliğiyle (referansın 37 testi eşit, C2-13 geçti, spec 2.0.1) ve P2-0'ın yeniden koşan kümeleri (D-A her alan ve `events.jsonl`, D-E'nin `v0.1.0` satırları; hariç tutmasız).
 
+### `compare_p2_0_2`
+`pair`: `compare_p1e1.pair` + `P2_0_2_FILES` alan alan + `P2_0_2_BYTES` (D-A, D-A2 ve D-C vault'larının `events.jsonl` ve `attestations.jsonl`'i, H-P2-0.2i) bayt bayt; hariç: gerçek Obsidian kümelerinin ve düzenleyici oturumlarının ölçümleri (`P2_0_2_TIMING`, duvar saati: `p2_0_2_checks.json`'da H-P2-0.2b, b′, c, d'nin `d_c_prime` alt ağacı ve `pass`'i, e, f). `p2_0_2/d_b.json`, `d_a_prime.json`, `d_c_prime.json` ve `d_b2.json` bütünüyle duvar saati kayıtlarıdır, dosya listesinde yoktur. `regress`: P2-0.1 resmi RUN'ı, `EXCLUDED` (P2-0.2 kararlarının satırları, resmi RUN'dan önce geliştirme RUN'ından yazıldı), uyumluluk raporu test kimliğiyle (referansın 38 testi eşit, C2-14 geçti, spec 2.0.2) ve P2-0.1'in yeniden koşan kümeleri (D-A ve D-A2 her alan ve `events.jsonl`, D-E'nin beş satırı; D-C: T3 sırayı sabitlediği için `seq` dışında aynı olay çoklu kümesi ve `collide` satırlarındaki `matched: false` dışında aynı tasdik satırları — X2; hariç tutmasız).
+
 ## Alan tablosu
 <!-- fields-table -->
 | Araç | Kip | Dosya | Yol kalıbı | Sınıf | Gerekçe |
@@ -278,6 +281,79 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2_0_1` | hepsi | `p2_0_1_checks.json` | `H-P2-0.1d′` | duvar-saati | D-C′: gerçek Obsidian çakışma tikleri (gecikme ve izleyicinin gözlemine bağlı) |
 | `compare_p2_0_1` | hepsi | `p2_0_1_checks.json` | `H-P2-0.1e` | duvar-saati | D-A′: gerçek Obsidian yeniden adlandırma senaryoları (gözlem zamanlaması) |
 | `compare_p2_0_1` | hepsi | `p2_0_1_checks.json` | `H-P2-0.1f` | duvar-saati | D-B2: CLI tasdikinin izleyiciyle yarışı, gecikme (ms) |
+| `compare_p2_0_2` | hepsi | `p2_0_2_checks.json` | `H-P2-0.2b` | duvar-saati | D-B test-3: gerçek Obsidian kayıtlarının yanlış-`unverified` oranı (zamanlamaya bağlı) |
+| `compare_p2_0_2` | hepsi | `p2_0_2_checks.json` | `H-P2-0.2b′` | duvar-saati | D-B test-3: yeniden adlandırma oturumları ve biçim başına rapor (zamanlamaya bağlı) |
+| `compare_p2_0_2` | hepsi | `p2_0_2_checks.json` | `H-P2-0.2c` | duvar-saati | D-B test-3: kayıt → `canonical` gecikmesi (ms) |
+| `compare_p2_0_2` | hepsi | `p2_0_2_checks.json` | `H-P2-0.2d/d_c_prime` | duvar-saati | D-C′: gerçek Obsidian çakışma tikleri (gecikme ve izleyicinin gözlemine bağlı) |
+| `compare_p2_0_2` | hepsi | `p2_0_2_checks.json` | `H-P2-0.2d/pass` | duvar-saati | D-C ve D-C′'nün birleşik sonucu (D-C′ zamanlamaya bağlı) |
+| `compare_p2_0_2` | hepsi | `p2_0_2_checks.json` | `H-P2-0.2e` | duvar-saati | D-A′: gerçek Obsidian yeniden adlandırma ve taşıma senaryoları (gözlem zamanlaması) |
+| `compare_p2_0_2` | hepsi | `p2_0_2_checks.json` | `H-P2-0.2f` | duvar-saati | D-B2: CLI tasdikinin izleyiciyle yarışı, gecikme (ms) |
+| `compare_p2_0_2` | regress | `conformance_p1d1.json` | `fixtures_manifest_hash` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `conformance_p1d1.json` | `passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `conformance_p1d1.json` | `spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `conformance_p1d1.json` | `tests` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `conformance_p1d1.json` | `total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1b1_checks.json` | `criteria/B1-3/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1b_checks.json` | `fixtures_manifest_hash` | karar | K-P2-02.3: fixture manifest: C2-14 |
+| `compare_p2_0_2` | regress | `p1c1_checks.json` | `C1-7/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1c_checks.json` | `C-1/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1d/scene/scene.json` | `steps/0/shows/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1d1_checks.json` | `D1-10/passed` | karar | K-P2-02.3: D1-10 expects 34 tests and spec 1.0.3 |
+| `compare_p2_0_2` | regress | `p1d1_checks.json` | `D1-10/spec_version` | karar | K-P2-02.3: D1-10 expects 34 tests and spec 1.0.3 |
+| `compare_p2_0_2` | regress | `p1d1_checks.json` | `D1-12/regress_vs_p1d/conformance/spec_version/1` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1d_checks.json` | `D-9/conformance/spec_version/1` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/check_compare_fields.json` | `fields_declared` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e/check_compare_fields.json` | `fields_in_code` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e/check_compare_fields.json` | `file_constants` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e/check_compare_fields.json` | `modules/#len` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e/check_compare_fields.json` | `modules/11` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e/check_compare_fields.json` | `modules/12` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e/client.json` | `bundle_bytes` | karar | K-P2-02.2: the plugin attests every rename (K-P2-02.2): bundle and tests |
+| `compare_p2_0_2` | regress | `p1e/plugin_e2e/plugin_e2e.json` | `steps/0/shows/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/conformance_equiv.json` | `passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/conformance_equiv.json` | `spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/conformance_equiv.json` | `total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/conformance_rootmark.json` | `fixtures_manifest_hash` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/conformance_rootmark.json` | `passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/conformance_rootmark.json` | `spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/conformance_rootmark.json` | `tests` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/conformance_rootmark.json` | `total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/release_local.json` | `conformance/passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/release_local.json` | `conformance/total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/release/release_local.json` | `spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/scene/scene.json` | `steps/0/shows/mcp_spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e/scene/scene.json` | `steps/0/shows/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1/check_compare_fields.json` | `fields_declared` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e1/check_compare_fields.json` | `fields_in_code` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e1/check_compare_fields.json` | `file_constants` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e1/check_compare_fields.json` | `modules/#len` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e1/check_compare_fields.json` | `modules/11` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e1/check_compare_fields.json` | `modules/12` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
+| `compare_p2_0_2` | regress | `p1e1/historical.json` | `fails` | karar | K-P2-02.3: eval.historical (reference P1-E) sees the FAILs P2-0, P2-0.1 and P2-0.2 decisions cause; eval.historical_p2_0_2 classifies them |
+| `compare_p2_0_2` | regress | `p1e1/release/release.json` | `commit` | karar | K-P2-02.1: the release package of this round's commit (the reference is P2-0.1's) |
+| `compare_p2_0_2` | regress | `p1e1/release/release.json` | `spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1/release/release.json` | `targets/0/conformance/passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1/release/release.json` | `targets/0/conformance/total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1/release/release.json` | `targets/0/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1/release/release_check.json` | `items/1/item` | karar | K-P2-02.3: the checklist item names 39/39 (P2-0.2/F4) |
+| `compare_p2_0_2` | regress | `p1e1/release/release_check.json` | `items/14/detail` | karar | K-P2-02.1: R14's detail names the newest ROUND_START (this round's) |
+| `compare_p2_0_2` | regress | `p1e1/release/release_check.json` | `items/3/item` | karar | K-P2-02.1: R4a's item names the commit of the package (the reference is P2-0.1's) |
+| `compare_p2_0_2` | regress | `p1e1/release/release_check.json` | `items/4/item` | karar | K-P2-02.3: the checklist item names 39/39 (P2-0.2/F4) |
+| `compare_p2_0_2` | regress | `p1e1/release/release_check.json` | `items/8/detail` | karar | K-P2-02.2: R8 records the plugin bundle size (every rename attested, K-P2-02.2) |
+| `compare_p2_0_2` | regress | `p1e1/release/release_check.json` | `items/9/item` | karar | K-P2-02.3: the checklist item names 39/39 (P2-0.2/F4) |
+| `compare_p2_0_2` | regress | `p1e1_checks.json` | `E1-5/required/conformance/passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1_checks.json` | `E1-5/required/conformance/total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1_checks.json` | `E1-5/required/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1_checks.json` | `E1-6/conformance/passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1_checks.json` | `E1-6/conformance/total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e1_checks.json` | `E1-6/regress_vs_p1e` | karar | K-P2-02.3: E1-6's regress against P1-E sees every P2-0, P2-0.1 and P2-0.2 difference |
+| `compare_p2_0_2` | regress | `p1e_checks.json` | `E-10/bundle_bytes` | karar | K-P2-02.2: the plugin attests every rename (K-P2-02.2): bundle and tests |
+| `compare_p2_0_2` | regress | `p1e_checks.json` | `E-7/chain_local_target/conformance/passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e_checks.json` | `E-7/chain_local_target/conformance/total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e_checks.json` | `E-7/chain_local_target/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e_checks.json` | `E-9/conformance/passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e_checks.json` | `E-9/conformance/total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
+| `compare_p2_0_2` | regress | `p1e_checks.json` | `E-9/regress_vs_p1d1` | karar | K-P2-02.3: E-9's regress against P1-D.1 sees every P2-0, P2-0.1 and P2-0.2 difference |
 | `compare_p2_0_1` | regress | `conformance_p1d1.json` | `fixtures_manifest_hash` | karar | K-P2-01.3: spec 2.0.1 and conformance 38 (C2-13) |
 | `compare_p2_0_1` | regress | `conformance_p1d1.json` | `passed` | karar | K-P2-01.3: spec 2.0.1 and conformance 38 (C2-13) |
 | `compare_p2_0_1` | regress | `conformance_p1d1.json` | `spec_version` | karar | K-P2-01.3: spec 2.0.1 and conformance 38 (C2-13) |
@@ -381,4 +457,6 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2_0.P2_0_BYTES` | `p2_0/d_a/events.jsonl`, `p2_0/d_a/attestations.jsonl`, `p2_0/d_c/events.jsonl`, `p2_0/d_c/attestations.jsonl` |
 | `compare_p2_0_1.P2_0_1_FILES` | `p2_0_1_checks.json`, `p2_0_1/d_e.json`, `p2_0_1/d_a.json`, `p2_0_1/d_a2.json`, `p2_0_1/d_c.json`, `p2_0_1/tamper_p2_0_1.json` |
 | `compare_p2_0_1.P2_0_1_BYTES` | `p2_0_1/d_a/events.jsonl`, `p2_0_1/d_a/attestations.jsonl`, `p2_0_1/d_a2/events.jsonl`, `p2_0_1/d_a2/attestations.jsonl`, `p2_0_1/d_c/events.jsonl`, `p2_0_1/d_c/attestations.jsonl` |
+| `compare_p2_0_2.P2_0_2_FILES` | `p2_0_2_checks.json`, `p2_0_2/rules.json`, `p2_0_2/d_e.json`, `p2_0_2/d_a.json`, `p2_0_2/d_a2.json`, `p2_0_2/d_c.json`, `p2_0_2/tamper_p2_0_2.json` |
+| `compare_p2_0_2.P2_0_2_BYTES` | `p2_0_2/d_a/events.jsonl`, `p2_0_2/d_a/attestations.jsonl`, `p2_0_2/d_a2/events.jsonl`, `p2_0_2/d_a2/attestations.jsonl`, `p2_0_2/d_c/events.jsonl`, `p2_0_2/d_c/attestations.jsonl` |
 <!-- /files-table -->
