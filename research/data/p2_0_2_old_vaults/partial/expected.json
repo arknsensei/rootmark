@@ -1,0 +1,512 @@
+{
+  "attestation_lines": 4,
+  "attestations_blake3": "b856b26f19896219c449f2ac78c11634",
+  "docs": [
+    "coffee-espresso.md",
+    "espresso.md",
+    "filter.md",
+    "glossary.md",
+    "roasting.md",
+    "staff.md"
+  ],
+  "events_hash": "bcab134c0df19b334df5334730022eee",
+  "layers": {
+    "coffee-espresso.md": [
+      [
+        "85d13cbe137fc96a311454c6b941d52a",
+        "canonical"
+      ],
+      [
+        "5ef38e234d41187ad1e222b0e1f53712",
+        "canonical"
+      ],
+      [
+        "3ad9f75796104177c1ed040aa5fe502d",
+        "canonical"
+      ],
+      [
+        "bde99c7344ce7d6fff8028af0360d6e8",
+        "canonical"
+      ],
+      [
+        "4548083e257d13ccc506834729d4dbbf",
+        "canonical"
+      ],
+      [
+        "4e4feea0f7bfe174f9ec7060a489ec74",
+        "canonical"
+      ],
+      [
+        "fb4252ba33e123bd525bed1e53481e63",
+        "canonical"
+      ],
+      [
+        "55bdb9f7d2ab5ec46f895293aaeb9a03",
+        "canonical"
+      ],
+      [
+        "30b11555a336649ac8599dc20606b2ca",
+        "canonical"
+      ],
+      [
+        "1e4c88ad2c1d1d1c7f4ddf09db7cd0d7",
+        "canonical"
+      ]
+    ],
+    "espresso.md": [
+      [
+        "74ecb4d582f0ffede4479a044f078542",
+        "canonical"
+      ],
+      [
+        "c4bf6f31f6d9b9b83904d4d2d4cb8c22",
+        "canonical"
+      ],
+      [
+        "b8207c223754799bd8d227b68dcb3518",
+        "canonical"
+      ],
+      [
+        "ddde6b3b5dd3e2fb53dd11c9177b915b",
+        "canonical"
+      ],
+      [
+        "bde4a62ef108123db6225d3cc7469dba",
+        "canonical"
+      ],
+      [
+        "ccb4b5d556126285ce5c51379cb3f2d4",
+        "canonical"
+      ],
+      [
+        "b950226d51df600280c2d5d172cf1c01",
+        "canonical"
+      ],
+      [
+        "0ac7567834b23705676531bd025b23c8",
+        "canonical"
+      ],
+      [
+        "28273578dc4c268579aa8945a7b08dcf",
+        "canonical"
+      ],
+      [
+        "9167da9b3609a6a9c574eae9cff723e4",
+        "canonical"
+      ]
+    ],
+    "filter.md": [
+      [
+        "c88e8e42b9befe250dcb92750d0eed1c",
+        "canonical"
+      ],
+      [
+        "150bbe08e21736c4cc0d4364036f2f2f",
+        "canonical"
+      ],
+      [
+        "7f9ffbc107637b9713a9e09bb4533327",
+        "canonical"
+      ],
+      [
+        "b3492b2dc27f1dec2ab9d6294adf0028",
+        "canonical"
+      ],
+      [
+        "086ed5e4a486fcfffcba05e5bc6c338e",
+        "canonical"
+      ],
+      [
+        "812db2269fdb246899d9589d0fc9b94e",
+        "canonical"
+      ],
+      [
+        "525be26945839638ba7dd6468a473af3",
+        "canonical"
+      ],
+      [
+        "b38e57c426c0b898829dec9d57f18131",
+        "canonical"
+      ]
+    ],
+    "glossary.md": [
+      [
+        "0efa64472202c2d77142203787309089",
+        "canonical"
+      ],
+      [
+        "a4b54ef54214708543ba32461c7245e2",
+        "canonical"
+      ],
+      [
+        "89243155c63473406c366c44443f086f",
+        "canonical"
+      ],
+      [
+        "3d768a5c89201ff82d09784ead3dc969",
+        "canonical"
+      ],
+      [
+        "6f4596082c7f4a96560a99c85c76f60e",
+        "canonical"
+      ],
+      [
+        "8f9472fd786e623025b60662175d5d01",
+        "canonical"
+      ],
+      [
+        "3fd1de74d25beba7fbcde785ac892015",
+        "canonical"
+      ],
+      [
+        "082c4f7b097b987b31fca352286b6e5f",
+        "canonical"
+      ]
+    ],
+    "roasting.md": [
+      [
+        "530e157c296aa53a7cac557cd6f50e6b",
+        "canonical"
+      ],
+      [
+        "e867631adaf5c9405da4462355c603ba",
+        "canonical"
+      ],
+      [
+        "8a5c4ac57dfa6428155dc63fe99f722f",
+        "canonical"
+      ],
+      [
+        "057d8979d988330cce399b635bb14842",
+        "canonical"
+      ],
+      [
+        "e9167efac8ed691a4309006162504524",
+        "canonical"
+      ],
+      [
+        "49e9d55dff4edbd5bd37aa54ab045f63",
+        "canonical"
+      ],
+      [
+        "6703152c8524d55191e43523bcd76437",
+        "canonical"
+      ],
+      [
+        "adfee4046d6d7040924b11ab5e6b6be9",
+        "canonical"
+      ],
+      [
+        "bba694bad31c041bfdf6401205d94abe",
+        "canonical"
+      ],
+      [
+        "cfdf3be561a7398df0d4f6fd1c898c9c",
+        "canonical"
+      ]
+    ],
+    "staff.md": [
+      [
+        "37bba9069bab1086bcf1a5d6b2bc6f79",
+        "canonical"
+      ],
+      [
+        "7dc9de0d3bc7da51ce1558c1dcc4cfa3",
+        "canonical"
+      ],
+      [
+        "21cb65ffb7b1887158f1e00eb687a130",
+        "canonical"
+      ],
+      [
+        "a965a1162c262f61851009cf7102be04",
+        "canonical"
+      ],
+      [
+        "734eda49b32fb6c82b4cf96b4a24165f",
+        "canonical"
+      ],
+      [
+        "cbd035fe38d39331bd6e72d84b2b3125",
+        "canonical"
+      ],
+      [
+        "2f49ef87b26aeffc139de1b1d259af2a",
+        "canonical"
+      ],
+      [
+        "ee2dcf3ecaf24d03eb2f5a0b8945f7c9",
+        "unverified"
+      ]
+    ]
+  },
+  "replay": {
+    "coffee-espresso.md": {
+      "blocks": [
+        [
+          "85d13cbe137fc96a311454c6b941d52a",
+          "89d0a18e79e31ff49018e502401250e4"
+        ],
+        [
+          "5ef38e234d41187ad1e222b0e1f53712",
+          "fa889c08d606d0a20dc7680c00784642"
+        ],
+        [
+          "3ad9f75796104177c1ed040aa5fe502d",
+          "785a55dccf78d48d6ca2327c3e8fbf32"
+        ],
+        [
+          "bde99c7344ce7d6fff8028af0360d6e8",
+          "2e1daa661fb1aa5d53bc525a2165901d"
+        ],
+        [
+          "4548083e257d13ccc506834729d4dbbf",
+          "8ad3efef173ae2b9a8684a7fc01ccd20"
+        ],
+        [
+          "4e4feea0f7bfe174f9ec7060a489ec74",
+          "f9cf861b32d6aacc54907b038ab7342b"
+        ],
+        [
+          "fb4252ba33e123bd525bed1e53481e63",
+          "35a3c10f6941ba9f66cfbf97642a5718"
+        ],
+        [
+          "55bdb9f7d2ab5ec46f895293aaeb9a03",
+          "9b758e879f21aca0808ef32ae53fa764"
+        ],
+        [
+          "30b11555a336649ac8599dc20606b2ca",
+          "f4173aeaa5a70b50ca09732821ed142f"
+        ],
+        [
+          "1e4c88ad2c1d1d1c7f4ddf09db7cd0d7",
+          "b4627a9650bbadeafc64fca956629e55"
+        ]
+      ],
+      "doc_path": "coffee-espresso.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "d05efb1942bc6c979609181e2908541d"
+    },
+    "espresso.md": {
+      "blocks": [
+        [
+          "74ecb4d582f0ffede4479a044f078542",
+          "89d0a18e79e31ff49018e502401250e4"
+        ],
+        [
+          "c4bf6f31f6d9b9b83904d4d2d4cb8c22",
+          "fa889c08d606d0a20dc7680c00784642"
+        ],
+        [
+          "b8207c223754799bd8d227b68dcb3518",
+          "785a55dccf78d48d6ca2327c3e8fbf32"
+        ],
+        [
+          "ddde6b3b5dd3e2fb53dd11c9177b915b",
+          "2e1daa661fb1aa5d53bc525a2165901d"
+        ],
+        [
+          "bde4a62ef108123db6225d3cc7469dba",
+          "8ad3efef173ae2b9a8684a7fc01ccd20"
+        ],
+        [
+          "ccb4b5d556126285ce5c51379cb3f2d4",
+          "f9cf861b32d6aacc54907b038ab7342b"
+        ],
+        [
+          "b950226d51df600280c2d5d172cf1c01",
+          "35a3c10f6941ba9f66cfbf97642a5718"
+        ],
+        [
+          "0ac7567834b23705676531bd025b23c8",
+          "9b758e879f21aca0808ef32ae53fa764"
+        ],
+        [
+          "28273578dc4c268579aa8945a7b08dcf",
+          "f4173aeaa5a70b50ca09732821ed142f"
+        ],
+        [
+          "9167da9b3609a6a9c574eae9cff723e4",
+          "b4627a9650bbadeafc64fca956629e55"
+        ]
+      ],
+      "doc_path": "espresso.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "d05efb1942bc6c979609181e2908541d"
+    },
+    "filter.md": {
+      "blocks": [
+        [
+          "c88e8e42b9befe250dcb92750d0eed1c",
+          "ad289e24ca936f772b26d0f0deec3153"
+        ],
+        [
+          "150bbe08e21736c4cc0d4364036f2f2f",
+          "817fe428c140b21107643dabc69af10b"
+        ],
+        [
+          "7f9ffbc107637b9713a9e09bb4533327",
+          "45b9611349ef88482fd634a33408069d"
+        ],
+        [
+          "b3492b2dc27f1dec2ab9d6294adf0028",
+          "ce92b405de85da9bcf82f95b2bdf9846"
+        ],
+        [
+          "086ed5e4a486fcfffcba05e5bc6c338e",
+          "1e8a06f232fc955fe84257abcfe2a8fc"
+        ],
+        [
+          "812db2269fdb246899d9589d0fc9b94e",
+          "2c071c41b48a5e2ffedeaad24bdd4394"
+        ],
+        [
+          "525be26945839638ba7dd6468a473af3",
+          "0a9065af81877037dab4d62a7105e9a9"
+        ],
+        [
+          "b38e57c426c0b898829dec9d57f18131",
+          "b547c07977c18bd99b9734509e8c3ee2"
+        ]
+      ],
+      "doc_path": "filter.md",
+      "frontmatter": null,
+      "parent_snapshot": "97e904ebaaeec6e92a81b60345f8604c",
+      "snapshot_id": "64b20dfbb02486e7873e60c8d5cf5646"
+    },
+    "glossary.md": {
+      "blocks": [
+        [
+          "0efa64472202c2d77142203787309089",
+          "31c451103b4da26383a3c081c542f479"
+        ],
+        [
+          "a4b54ef54214708543ba32461c7245e2",
+          "2d65bf3b0bb9c6cd7a1aafc730b4345a"
+        ],
+        [
+          "89243155c63473406c366c44443f086f",
+          "3cb70935467386c3af79d93baba74a30"
+        ],
+        [
+          "3d768a5c89201ff82d09784ead3dc969",
+          "da55c0f032e75c09999e8d627384dac4"
+        ],
+        [
+          "6f4596082c7f4a96560a99c85c76f60e",
+          "8e40d924b23ed024a9ec70b1abd37783"
+        ],
+        [
+          "8f9472fd786e623025b60662175d5d01",
+          "98380860c91d8b563f429f7f21f6df56"
+        ],
+        [
+          "3fd1de74d25beba7fbcde785ac892015",
+          "3051c2bc7b92cdb37b7f212345687a7b"
+        ],
+        [
+          "082c4f7b097b987b31fca352286b6e5f",
+          "da55c0f032e75c09999e8d627384dac4"
+        ]
+      ],
+      "doc_path": "glossary.md",
+      "frontmatter": null,
+      "parent_snapshot": null,
+      "snapshot_id": "8f7cb256bdb20a28c16547ca1a194ad1"
+    },
+    "roasting.md": {
+      "blocks": [
+        [
+          "530e157c296aa53a7cac557cd6f50e6b",
+          "8aae694f79bc1c928b5feae285565a57"
+        ],
+        [
+          "e867631adaf5c9405da4462355c603ba",
+          "4c54b41f0faf1006d4f3ebdebc54c904"
+        ],
+        [
+          "8a5c4ac57dfa6428155dc63fe99f722f",
+          "be98f109cfa0443702ec59fd68a88f79"
+        ],
+        [
+          "057d8979d988330cce399b635bb14842",
+          "74d36b715ac99a7d430da3e23330961c"
+        ],
+        [
+          "e9167efac8ed691a4309006162504524",
+          "07921ccf0eb318a9fccbb4c6347e9c1f"
+        ],
+        [
+          "49e9d55dff4edbd5bd37aa54ab045f63",
+          "3d63061a1a59e9a01975b11b36292cbd"
+        ],
+        [
+          "6703152c8524d55191e43523bcd76437",
+          "389a10a27e7a0fdf851b1fa87468158d"
+        ],
+        [
+          "adfee4046d6d7040924b11ab5e6b6be9",
+          "78423145751e0de4333aec6ecbc0c308"
+        ],
+        [
+          "bba694bad31c041bfdf6401205d94abe",
+          "a3d537fbfe4e46a59c3014bc187451b4"
+        ],
+        [
+          "cfdf3be561a7398df0d4f6fd1c898c9c",
+          "3051c2bc7b92cdb37b7f212345687a7b"
+        ]
+      ],
+      "doc_path": "roasting.md",
+      "frontmatter": "title: Roasting\ntags: [coffee, process]\n",
+      "parent_snapshot": null,
+      "snapshot_id": "a645c2900306b779908d20294402925c"
+    },
+    "staff.md": {
+      "blocks": [
+        [
+          "37bba9069bab1086bcf1a5d6b2bc6f79",
+          "b9fe02e3a0803473551a15f099edd947"
+        ],
+        [
+          "7dc9de0d3bc7da51ce1558c1dcc4cfa3",
+          "e4b60834fd3ebae1125ad460d83b301a"
+        ],
+        [
+          "21cb65ffb7b1887158f1e00eb687a130",
+          "7a3f46eb788c1e540e215dad9c4fc507"
+        ],
+        [
+          "a965a1162c262f61851009cf7102be04",
+          "53c4f96b57d4da679c5ce561455005f6"
+        ],
+        [
+          "734eda49b32fb6c82b4cf96b4a24165f",
+          "4ae1de09b6f4fe771ffdf563ee3f5111"
+        ],
+        [
+          "cbd035fe38d39331bd6e72d84b2b3125",
+          "844cd9066596ff41f983908197008e4e"
+        ],
+        [
+          "2f49ef87b26aeffc139de1b1d259af2a",
+          "fea4a9c0f45af68be0c168d2a26aa95d"
+        ],
+        [
+          "ee2dcf3ecaf24d03eb2f5a0b8945f7c9",
+          "dbb3a1b7030edc8191403286029b8c70"
+        ]
+      ],
+      "doc_path": "staff.md",
+      "frontmatter": null,
+      "parent_snapshot": "6bc9a267128d290e30a3e032e2471c91",
+      "snapshot_id": "2f35c15d93c2df8f6ffd1485fa685f33"
+    }
+  },
+  "spec_version": "2.0.1",
+  "vault": "partial",
+  "written_by": "rootmark 0.1.0 (21b16ea)"
+}
