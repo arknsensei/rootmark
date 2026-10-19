@@ -1,0 +1,36 @@
+{
+  "criterion": "D1-11",
+  "p1d_final": "c173bc11c1ee5bf44c879aa6dbdb0d2bb9af6e75",
+  "vaults": [
+    {
+      "vault": "scene",
+      "docs": 13,
+      "replay_equal": 13,
+      "blame_ok": 13,
+      "events_hash_p1d_final": "f1944f63007e74c6615ba47028816b00",
+      "events_hash_current": "f1944f63007e74c6615ba47028816b00",
+      "events_hash_equal": true,
+      "events_bytes_unchanged": true,
+      "block_deleted_events": 0,
+      "deletion_history_without_actor": true,
+      "old_index_refused_with_rebuild_hint": true,
+      "pass": true
+    },
+    {
+      "vault": "e2e",
+      "docs": 15,
+      "replay_equal": 15,
+      "blame_ok": 15,
+      "events_hash_p1d_final": "45ad4ea291b35d5912a4b5ae0a8d1d64",
+      "events_hash_current": "45ad4ea291b35d5912a4b5ae0a8d1d64",
+      "events_hash_equal": true,
+      "events_bytes_unchanged": true,
+      "block_deleted_events": 3,
+      "deletion_history_without_actor": true,
+      "old_index_refused_with_rebuild_hint": true,
+      "pass": true
+    }
+  ],
+  "v3_final_compat": true,
+  "pass": true
+}

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "rootmark": {
+      "command": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/fc476d5a-a1e3-4fe6-928b-a5beef21c804/scratchpad/official/A/repo/target/release/rootmark",
+      "args": [
+        "serve",
+        "--vault",
+        "vault",
+        "--mcp",
+        "stdio"
+      ]
+    }
+  }
+}

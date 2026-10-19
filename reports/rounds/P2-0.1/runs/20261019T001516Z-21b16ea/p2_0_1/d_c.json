@@ -1,0 +1,31 @@
+{
+ "set": "D-C",
+ "ticks": 160,
+ "modes": {
+  "apart": 139,
+  "same_doc_after": 14,
+  "collide": 7
+ },
+ "blocks": 340,
+ "right": 340,
+ "accuracy": 1.0,
+ "agent_canonical": 0,
+ "accuracy_without_collide": 1.0,
+ "by_mode": {
+  "apart": {
+   "blocks": 298,
+   "right": 298
+  },
+  "same_doc_after": {
+   "blocks": 28,
+   "right": 28
+  },
+  "collide": {
+   "blocks": 14,
+   "right": 14
+  }
+ },
+ "partial_lines": 7,
+ "wrong": [],
+ "pass": true
+}

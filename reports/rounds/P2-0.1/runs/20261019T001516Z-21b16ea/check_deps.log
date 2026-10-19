@@ -1,0 +1,12 @@
+check_deps: OK (core ← index ← server ← clients; research → bindings/python)
+ok   [pass] unmodified workspace
+ok   [fail] core depends on index
+ok   [fail] index depends on server
+ok   [fail] core dev-depends on server
+ok   [fail] core depends on server (table form)
+ok   [fail] research reaches past bindings/python
+ok   [fail] client imports core directly
+ok   [fail] client imports server directly (P1-E/E0)
+ok   [fail] client names an HTTP path outside the contract (P1-E/E0)
+ok   [pass] client names a contract endpoint
+test_check_deps: OK

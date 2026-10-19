@@ -1,0 +1,46 @@
+{
+  "version": "0.1.0",
+  "spec_version": "2.0.1",
+  "commit": "21b16ea7f643fa73051e2bc495ad7cb8d0f3b959",
+  "worktree_dirty": false,
+  "required_targets": [
+    "aarch64-apple-darwin"
+  ],
+  "targets": [
+    {
+      "target": "aarch64-apple-darwin",
+      "required": true,
+      "built": true,
+      "sha256": "2a080784b50447da1f991a3b906c1e5d4bc0024d7a661e39bf852ec279a7f26a",
+      "version": "rootmark 0.1.0",
+      "spec_version": "2.0.1",
+      "conformance": {
+        "level_claimed": 3,
+        "passed": 38,
+        "total": 38,
+        "fixtures_manifest": "ok"
+      },
+      "conformance_exit": 0,
+      "ok": true
+    },
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "required": false,
+      "built": false,
+      "skipped": true,
+      "reason": "no MSVC toolchain or Windows host here; built and checked by .github/workflows/release.yml (windows-latest)",
+      "ok": false
+    },
+    {
+      "target": "x86_64-unknown-linux-gnu",
+      "required": false,
+      "built": false,
+      "skipped": true,
+      "reason": "not attempted here (ROOTMARK_RELEASE_LINUX=0); built and checked by .github/workflows/release.yml",
+      "ok": false
+    }
+  ],
+  "built": 1,
+  "ok": 1,
+  "required_ok": true
+}
