@@ -350,8 +350,12 @@ try {
       const newName = sc.steps.find((s) => s.op === "rename")?.to ?? "";
       const text = readFileSync(join(vault, sc.agent_doc), "utf8");
       // Obsidian must have rewritten the link (else the scenario measures
-      // nothing; Y3 review)
-      if (!text.includes(`[[${stemOf(newName)}`)) throw new Error(`${sc.id}: Obsidian did not rewrite the link to ${newName} in ${sc.agent_doc}`);
+      // nothing; Y3 review) — except in the "unobserved" kind, where the
+      // rename starts 0–50 ms after the agent's write and Obsidian's own
+      // metadata cache may not know the new link yet: then Obsidian leaves
+      // it as written (a real outcome of the race the kind measures,
+      // development RUN, Y6.md); it is recorded, not an error
+      if (!text.includes(`[[${stemOf(newName)}`) && sc.kind !== "unobserved") throw new Error(`${sc.id}: Obsidian did not rewrite the link to ${newName} in ${sc.agent_doc}`);
       recs.push({
         id: sc.id,
         kind: sc.kind,

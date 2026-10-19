@@ -1,5 +1,5 @@
 {
- "about": "P2-0.1 (Y4, Y6): FAILs that frozen recorders of earlier rounds record in every chain because of decisions taken after their round, classified against the P2-0 official RUN by research/eval/historical_p2_0_1.py; extended from a development RUN before the official RUN (Y6). A listed FAIL is historical only while its record equals the reference record outside its declared changes and the compare_p2_0_1.EXCLUDED subtrees below it.",
+ "about": "P2-0.1 (Y4, Y6): FAILs that frozen recorders of earlier rounds record in every chain because of decisions taken after their round, classified against the P2-0 official RUN by research/eval/historical_p2_0_1.py; extended from the development RUN 20261018T225232Z-757251a before the official RUN (Y6); the criteria whose records differ from the P2-0 official RUN only under compare_p2_0_1.EXCLUDED subtrees need no entry (eval.historical_p2_0_1.decided). A listed FAIL is historical only while its record equals the reference record outside its declared changes and the compare_p2_0_1.EXCLUDED subtrees below it.",
  "reference_run": "reports/rounds/P2-0/runs/20261018T161850Z-e378be2",
  "entries": [
   {
@@ -44,6 +44,24 @@
     "K-D1.5"
    ],
    "why": "P1-D's HTTP e2e expects spec 1.0.2 (D7-3) and the old status codes of two cases (historical in P1-E.1 too: research/eval/historical_fails.json)",
+   "changes": []
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-8",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "the p1e-final server case of P1-E.1's contract tamper expects only status gaps; it also lacks §2.6 and status.attestation since P2-0 (P2-0/F14); historical in P2-0 too, its record equal to the P2-0 official RUN's",
+   "changes": []
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "tamper",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "the p1e-final server case of P1-E.1's contract tamper expects only status gaps; it also lacks §2.6 and status.attestation since P2-0 (P2-0/F14); historical in P2-0 too, its record equal to the P2-0 official RUN's",
    "changes": []
   }
  ]

@@ -331,6 +331,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/check_compare_fields.py` | `P2-0.1/Y6-dev:` | yeniden dondurma P2-0.1/F6: `compare_p2_0_1` |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0.1/Y6-dev:` | yeniden dondurma P2-0.1/F6: `compare_p2_0_1` bölümü, alan ve dosya satırları |
 | `research/eval/**` | `P2-0.1/Y6-frz:` | yeniden dondurma P2-0.1/F6: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md` (`compare_p2_0_1`); bu commit'te var olan P2-0.1 ölçüm dosyaları (`run_p2_0_1.py`, `agent_fs_paths.py`, `datasets/p2_0_1_sets.py`, `compare_p2_0_1.py`, `historical_p2_0_1.py`, `historical_fails_p2_0_1.json`, `run_p2_0_1_checks.py`, `tamper_p2_0_1.py`) de bu satırla donar |
+| `research/eval/**` | `P2-0.1/Y6-pre:` | yeniden dondurma P2-0.1/F7: `compare_p2_0_1.EXCLUDED`, `historical_fails_p2_0_1.json`, `DETERMINISTIC_FIELDS.md` (geliştirme RUN'ı); yeni `report_p2_0_1.py` de bu satırla donar |
+| `clients/obsidian/e2e/p2_0_1/real.ts` | `P2-0.1/Y6-pre:` | D-A′, D-C′ gerçek Obsidian harness'i |
+| `scripts/gen_p2_0_1_old_vaults.sh` | `P2-0.1/Y6-pre:` | D-E'nin `ce4cf04` vault üreteci |
+| `research/data/p2_0_1_old_vaults/**` | `P2-0.1/Y6-pre:` | D-E'nin `ce4cf04` vault'ları ve beklenenleri |
 <!-- /frozen-table -->
 
 ## Notlar
