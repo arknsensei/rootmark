@@ -784,7 +784,9 @@ fn a_rename_attestation_needs_the_canonical_head() {
     std::fs::rename(v.join("kept.md"), v.join("moved.md")).unwrap();
     let e = call("moved.md", other.as_bytes(), "kept.md").unwrap_err();
     assert_eq!(code_of(&e), Code::Denied);
-    // a document holding a proposal: denied
+    // a document holding a proposal: denied until P2-0.1; since P2-0.2 T2
+    // (K-P2-02.2) the rename carries the layer over — the proposal stays a
+    // proposal at the new path, never canonical
     k.call(
         "propose",
         &json!({"doc_path": "plan.md", "mode": "create", "reason": "r",
@@ -794,6 +796,8 @@ fn a_rename_attestation_needs_the_canonical_head() {
     .unwrap();
     let plan = std::fs::read(v.join("plan.md")).unwrap();
     std::fs::rename(v.join("plan.md"), v.join("plan2.md")).unwrap();
-    let e = call("plan2.md", &plan, "plan.md").unwrap_err();
-    assert_eq!(code_of(&e), Code::Denied);
+    call("plan2.md", &plan, "plan.md").unwrap();
+    k.watch_doc("plan2.md", "rootmark-serve-watch").unwrap();
+    assert_eq!(layers(&k, "plan2.md"), layers(&k, "plan.md"));
+    assert!(layers(&k, "plan2.md").iter().all(|l| l == "proposal"));
 }

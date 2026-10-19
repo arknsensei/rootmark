@@ -896,6 +896,11 @@ pub struct IngestResult {
     pub changed_lineages: Vec<String>,
 }
 
+/// Per block version: the provenance, and the declared layer if any, that a
+/// block event creating it carries in `Vault::plan_ingest_carried`
+/// (P2-0.2 T2; `attest::Caps::carried`).
+pub type Carried = HashMap<String, (Provenance, Option<Layer>)>;
+
 /// An ingest computed but not written (`Vault::plan_ingest`,
 /// `Vault::commit_plan`).
 #[derive(Debug, Clone)]
@@ -1441,6 +1446,39 @@ impl Vault {
         declared: Option<Layer>,
         actor: Option<&Actor>,
     ) -> Result<IngestPlan> {
+        self.plan_ingest_inner(doc_path, text, prov, matcher, declared, actor, None)
+    }
+
+    /// `plan_ingest` of an attested rename or link update (P2-0.2 T2): a
+    /// `BlockCreated` or `BlockUpdated` event creating a version of
+    /// `carried` carries that version's provenance (instead of `prov`) and,
+    /// when given, declares its layer (`meta.layer`: `unverified` for any
+    /// author, another layer for `synthetic` content only — the reading
+    /// rules of spec §7, §7.1, unchanged). The layer rules then apply as for
+    /// any ingest: a block keeps the layer of the content it carries over.
+    pub fn plan_ingest_carried(
+        &self,
+        doc_path: &str,
+        text: &str,
+        prov: Provenance,
+        matcher: MatcherVersion,
+        actor: Option<&Actor>,
+        carried: &Carried,
+    ) -> Result<IngestPlan> {
+        self.plan_ingest_inner(doc_path, text, prov, matcher, None, actor, Some(carried))
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn plan_ingest_inner(
+        &self,
+        doc_path: &str,
+        text: &str,
+        prov: Provenance,
+        matcher: MatcherVersion,
+        declared: Option<Layer>,
+        actor: Option<&Actor>,
+        carried: Option<&Carried>,
+    ) -> Result<IngestPlan> {
         if declared.is_some_and(|l| l != Layer::Unverified)
             && prov.author_kind != AuthorKind::Synthetic
         {
@@ -1522,6 +1560,28 @@ impl Vault {
                 )
             }) {
                 ev.meta["layer"] = serde_json::json!(layer.as_str());
+            }
+        }
+        if let Some(c) = carried {
+            for ev in events
+                .iter_mut()
+                .filter(|e| matches!(e.kind, EventKind::BlockCreated | EventKind::BlockUpdated))
+            {
+                let Some((p, l)) = ev.new_version_ids.first().and_then(|v| c.get(v)) else {
+                    continue;
+                };
+                if l.is_some_and(|l| l != Layer::Unverified)
+                    && p.author_kind != AuthorKind::Synthetic
+                {
+                    bail!(
+                        "a carried layer can be declared for synthetic content only (and unverified for any), not {:?}",
+                        p.author_kind
+                    );
+                }
+                ev.meta["provenance"] = serde_json::to_value(p)?;
+                if let Some(l) = l {
+                    ev.meta["layer"] = serde_json::json!(l.as_str());
+                }
             }
         }
         if let Some(a) = actor {

@@ -1,0 +1,14 @@
+{"sessions": [
+ {"id": "s01", "kind": "rename", "steps": [{"op": "rename", "doc": "t1.md", "to": "r-t1.md"}]},
+ {"id": "s02", "kind": "rename", "steps": [{"op": "rename", "doc": "t2.md", "to": "r-t2.md"}]},
+ {"id": "s03", "kind": "rename", "steps": [{"op": "rename", "doc": "t3.md", "to": "r-t3.md"}]},
+ {"id": "s04", "kind": "rename", "steps": [{"op": "rename", "doc": "t4.md", "to": "r-t4.md"}]},
+ {"id": "s05", "kind": "rename", "steps": [{"op": "rename", "doc": "t5.md", "to": "r-t5.md"}]},
+ {"id": "s06", "kind": "rename", "steps": [{"op": "rename", "doc": "t6.md", "to": "r-t6.md"}]},
+ {"id": "s07", "kind": "rename", "steps": [{"op": "rename", "doc": "dizin adı/t7.md", "to": "dizin adı/r-t7.md"}]},
+ {"id": "s08", "kind": "rename", "steps": [{"op": "rename", "doc": "self.md", "to": "r-self.md"}]},
+ {"id": "s09", "kind": "rename_again", "steps": [{"op": "rename", "doc": "r-self.md", "to": "r2-self.md"}]},
+ {"id": "s10", "kind": "move_folder", "steps": [{"op": "rename", "doc": "r-t5.md", "to": "arşiv/r-t5.md"}]},
+ {"id": "s11", "kind": "move_folder", "steps": [{"op": "rename", "doc": "r2-self.md", "to": "dizin adı/r2-self.md"}]},
+ {"id": "s12", "kind": "paragraph", "steps": [{"op": "type", "doc": "hub.md", "text": "\n\nHuman s12 after the renames."}, {"op": "save", "how": "command"}]}
+]}

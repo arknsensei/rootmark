@@ -100,6 +100,10 @@ pub struct Attesting {
     /// raise (P2-0.1 Y1 review 1)
     /// and the observed blocks' versions (a late partial match, T2)
     bases: Mutex<Vec<Pending>>,
+    /// the caps of accepted rename and link-update attestations, newest
+    /// last: (attestation id, caps) — the layers their bytes may carry
+    /// (P2-0.2 T2)
+    caps: Mutex<Vec<(String, rootmarkcore::attest::Caps)>>,
 }
 
 /// An unattested ingest in its window, as the server remembers it beside
@@ -132,7 +136,36 @@ impl Attesting {
             renames: Mutex::new(Vec::new()),
             link_updates: std::sync::atomic::AtomicU64::new(0),
             bases: Mutex::new(Vec::new()),
+            caps: Mutex::new(Vec::new()),
         }
+    }
+
+    /// The caps of an accepted rename or link-update attestation (P2-0.2
+    /// T2), kept while it may still match (at most `MAX_RENAMES`).
+    pub fn set_caps(&self, attestation_id: &str, caps: rootmarkcore::attest::Caps) -> Result<()> {
+        let mut c = self
+            .caps
+            .lock()
+            .map_err(|_| anyhow::anyhow!("caps lock poisoned"))?;
+        c.retain(|(id, _)| id != attestation_id);
+        c.push((attestation_id.to_string(), caps));
+        if c.len() > MAX_RENAMES {
+            c.remove(0);
+        }
+        Ok(())
+    }
+
+    /// The caps of attestation `attestation_id`, if it is a rename or a
+    /// link update.
+    pub fn caps_of(&self, attestation_id: &str) -> Result<Option<rootmarkcore::attest::Caps>> {
+        let c = self
+            .caps
+            .lock()
+            .map_err(|_| anyhow::anyhow!("caps lock poisoned"))?;
+        Ok(c.iter()
+            .rev()
+            .find(|(id, _)| id == attestation_id)
+            .map(|(_, x)| x.clone()))
     }
 
     /// An unattested ingest of `doc` (bytes `content_hash`) observed at
@@ -540,8 +573,9 @@ fn post(
 /// Each attestation carries the bytes read (`content`, UTF-8; P2-0.1 T2:
 /// a partial match when another writer's bytes reach the file in the same
 /// observation), except for `--all`. `renamed_from` (one document, `mv`):
-/// the server accepts it only as a rename of canonical content (contract
-/// §2.6; P2-0.1 T3).
+/// the server accepts it only as a rename of the old path's content and
+/// carries each block's layer over as it is (contract §2.6; P2-0.1 T3,
+/// P2-0.2 T2).
 pub fn cli_attest(
     vault: &std::path::Path,
     docs: &[String],

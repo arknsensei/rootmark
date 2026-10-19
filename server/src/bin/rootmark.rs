@@ -113,7 +113,8 @@ enum Cmd {
         #[arg(long)]
         all: bool,
         /// the one document was renamed from this path (`mv`): the server
-        /// accepts it only as a rename of canonical content (P2-0.1 T3)
+        /// accepts it only as a rename of that path's content and carries
+        /// each block's layer over as it is (P2-0.1 T3, P2-0.2 T2)
         #[arg(long = "renamed-from")]
         renamed_from: Option<String>,
     },

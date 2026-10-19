@@ -8,10 +8,10 @@
 // the bytes already on disk is no save. An append is reported only when the
 // file held, before it, exactly the bytes this Obsidian last reported and
 // holds after it those bytes followed by the appended ones; a rename only
-// when the caller allows it (`mayReportRename`: the old document holds
-// nothing but canonical content, Z3 review, finding 11) and the file holds
-// after it the very bytes it held before — the server then checks they are
-// the canonical head of the old document (`renamed_from`, contract §2.6).
+// when the caller allows it (`mayReportRename`; the plugin allows every
+// rename since P2-0.2 T2) and the file holds after it the very bytes it held
+// before — the server then checks they are the head of the old document and
+// carries each block's layer over as it is (`renamed_from`, contract §2.6).
 // While renaming a note Obsidian rewrites the links to it in other notes
 // (and in the note itself) through `adapter.process` (measured in the real
 // Obsidian, P2-0.1/Y1): a `process` write of a note within
@@ -22,8 +22,10 @@
 // rename is no note rename (its notes' link updates stay unattested, a
 // known limit). The server accepts it only
 // when the bytes differ from the note's head in link targets naming that
-// note, in canonical blocks (contract §2.6), so an agent's bytes in the
-// note are never vouched for. A `process` write outside a rename is not
+// note (and Markdown labels that are the note's name, P2-0.2 T1), in
+// canonical blocks of another note or in any block of the renamed note
+// itself, whose layers it carries over (contract §2.6), so an agent's bytes
+// in the note are never vouched for. A `process` write outside a rename is not
 // reported (it is not a save of this Obsidian's editor).
 // Every comparison is on raw bytes (automated security reviews of P2-0/Z3).
 // The wrapped calls run
