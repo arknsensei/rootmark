@@ -1,0 +1,39 @@
+{
+ "seed": 1793744460,
+ "link_counts": {
+  "wiki": 8,
+  "wiki_alias": 7,
+  "wiki_heading": 8,
+  "embed": 8,
+  "md_name": 6,
+  "md_label": 8,
+  "self_wiki": 2,
+  "self_wiki_heading": 2,
+  "self_md": 2,
+  "md_path": 1
+ },
+ "session_kinds": {
+  "char": 22,
+  "paragraph": 22,
+  "multi": 22,
+  "rapid": 22,
+  "paste": 21,
+  "focus": 21,
+  "rename": 40,
+  "rename_again": 15,
+  "move_folder": 15
+ },
+ "rename_facts": {
+  "renames": 70,
+  "self_link": 31,
+  "in_folder": 45,
+  "incoming_md": 52,
+  "self_link_by_kind": {
+   "move_folder": 10,
+   "rename": 17,
+   "rename_again": 4
+  }
+ },
+ "zero": [],
+ "ok": true
+}
