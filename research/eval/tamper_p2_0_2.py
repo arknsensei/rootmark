@@ -38,6 +38,8 @@ import json
 import shutil
 import sys
 import tempfile
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 import blake3
@@ -67,6 +69,25 @@ def _human(sv: Served, doc: str, text: str) -> None:
     (sv.vault / doc).write_bytes(data)
     sv.attest(doc, data)
     _settle(sv)
+
+
+def _post_why(sv: Served, tool: str, body: dict) -> tuple[int, str | None]:
+    """`_post`, keeping the error body of a refusal (its reason)."""
+    req = urllib.request.Request(
+        f"http://127.0.0.1:{sv.port}/v1/{tool}",
+        data=json.dumps(body).encode(),
+        headers={
+            "Authorization": f"Bearer {sv.token}",
+            "X-Consumer": "p2-0-2-tamper",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            return r.status, None
+    except urllib.error.HTTPError as e:
+        return e.code, e.read().decode("utf-8", "replace")
 
 
 def _rewrite(text: str, old: str, new: str) -> str:
@@ -133,7 +154,7 @@ def main(argv: list[str] | None = None) -> int:
                 "[kiln](kiln.md) today", "[the kiln](kiln.md) now"
             )
             p.write_text(t)
-            st = _post(
+            st, why = _post_why(
                 sv,
                 "attest",
                 _body(
@@ -152,25 +173,20 @@ def main(argv: list[str] | None = None) -> int:
                     "a label changed to something that is not the new name, and a word",
                     "rejected",
                     "rejected" if st == 403 and "canonical" not in lay else "accepted",
-                    {"status": st, "layers": lay},
+                    {"status": st, "layers": lay, "reason": why},
                 )
             )
             # control: the self-linking note renamed, its own links rewritten
-            # in the same attestation; the carry keeps the agent unverified (T2)
-            (sv.vault / "selfnote.md").rename(sv.vault / "self2.md")
-            p = sv.vault / "self2.md"
-            p.write_text(_rewrite(p.read_text(encoding="utf-8"), "selfnote", "self2"))
-            st = _post(
-                sv,
-                "attest",
-                _body(
-                    sv,
-                    "self2.md",
-                    p.read_bytes(),
-                    link_update_of="self2.md",
-                    link_update_from="selfnote.md",
-                ),
+            # in the same attestation; the carry keeps the agent unverified (T2).
+            # The bytes and the body are made before the file operations, so the
+            # rename, the write and the attestation follow each other (X5-1)
+            new = _rewrite(sp.read_text(encoding="utf-8"), "selfnote", "self2").encode()
+            body = _body(
+                sv, "self2.md", new, link_update_of="self2.md", link_update_from="selfnote.md"
             )
+            sp.rename(sv.vault / "self2.md")
+            (sv.vault / "self2.md").write_bytes(new)
+            st = _post(sv, "attest", body)
             _settle(sv)
             tx = _texts(sv, "self2.md")
             humans = [v for k, v in tx.items() if AGENT not in k]
@@ -194,7 +210,9 @@ def main(argv: list[str] | None = None) -> int:
             src = (sv.vault / "espresso.md").read_bytes()
             fake = src.rstrip(b"\n") + b"\n\nAn agent paragraph riding a fake rename.\n"
             (sv.vault / "fake.md").write_bytes(fake)
-            st = _post(sv, "attest", _body(sv, "fake.md", fake, renamed_from="espresso.md"))
+            st, why = _post_why(
+                sv, "attest", _body(sv, "fake.md", fake, renamed_from="espresso.md")
+            )
             _settle(sv)
             tx = _texts(sv, "fake.md")
             cases.append(
@@ -206,7 +224,7 @@ def main(argv: list[str] | None = None) -> int:
                     if st == 403
                     and tx.get("An agent paragraph riding a fake rename.") != "canonical"
                     else "accepted",
-                    {"status": st, "layers": tx},
+                    {"status": st, "layers": tx, "reason": why},
                 )
             )
             # a fake rename of the agent's own (unverified) note: accepted,

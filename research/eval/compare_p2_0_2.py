@@ -201,7 +201,7 @@ EXCLUDED: list[tuple[str, tuple, str, str]] = [
         "p1e/client.json",
         ("bundle_bytes",),
         "K-P2-02.2",
-        "the plugin attests every rename (K-P2-02.2): bundle and tests",
+        "the plugin attests every rename (K-P2-02.2): its bundle size",
     ),
     (
         "p1e/plugin_e2e/plugin_e2e.json",
@@ -435,7 +435,7 @@ EXCLUDED: list[tuple[str, tuple, str, str]] = [
         "p1e_checks.json",
         ("E-10", "bundle_bytes"),
         "K-P2-02.2",
-        "the plugin attests every rename (K-P2-02.2): bundle and tests",
+        "the plugin attests every rename (K-P2-02.2): its bundle size",
     ),
     (
         "p1e_checks.json",
@@ -605,16 +605,20 @@ def _d_c(ref: Path, run: Path) -> dict:
     ab = _lines(run / "p2_0_2" / "d_c" / "attestations.jsonl")
     stripped = [{k: v for k, v in x.items() if k != "matched"} for x in ab]
     matched = sum(1 for x in ab if x.get("matched") is False)
+    # `matched` exists only as `false` (T3 leaves a collide line unmatched)
+    other = sum(1 for x in ab if "matched" in x and x["matched"] is not False)
     out = {
         "events_same_multiset": ea == eb,
         "attestations_equal_but_matched": stripped == aa,
         "matched_false_lines": matched,
+        "matched_other_lines": other,
         "collide_ticks": _json(run / "p2_0_2" / "d_c.json")["modes"]["collide"],
     }
     out["equal"] = (
         out["events_same_multiset"]
         and out["attestations_equal_but_matched"]
         and matched == out["collide_ticks"]
+        and other == 0
     )
     return out
 

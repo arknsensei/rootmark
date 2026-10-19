@@ -36,5 +36,11 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 ## F6 · X5 · `research/eval/check_compare_fields.py`, `research/eval/DETERMINISTIC_FIELDS.md` — `compare_p2_0_2`
 - **Ne:** denetleyicinin karşılaştırıcı listesine `("compare_p2_0_2", "P2_0_2")` ve dosya sabitleri `P2_0_2_FILES`, `P2_0_2_BYTES`; `--runs` kipinde bayt sabiti `P2_0_2_BYTES` JSON olarak okunmaz. Beyana `compare_p2_0_2` bölümü, alan satırları (yedi duvar saati satırı; geliştirme RUN'ından sonra `EXCLUDED` satırları) ve dosya satırları. Başka satır değişmedi.
 - **Neden:** K-E0.2: her karşılaştırıcının karşılaştırmadığı her alan beyan edilir (P2-0.1/F6 emsali).
-- **Önce/sonra:** önce `check_compare_fields: OK (12 comparators, …)`; sonra `OK (13 comparators, 305 declared fields, 24 file constants)` (geliştirme RUN'ından sonra `EXCLUDED` satırlarıyla güncellenir).
+- **Önce/sonra:** önce `check_compare_fields: OK (12 comparators, …)`; sonra `OK (13 comparators, 371 declared fields, 24 file constants)` (`EXCLUDED`'ın 66 satırı geliştirme RUN'ından sonra eklendi; X5 gözden geçirmesi 2).
 - **Gözden geçirici onayı:** X5.review.md.
+
+## F7 · X5 · `research/eval/tamper_p2_0_2.py`, `research/eval/compare_p2_0_2.py`, `research/eval/DETERMINISTIC_FIELDS.md` — X5 gözden geçirmesinin bulguları
+- **Ne:** (a) `tamper_p2_0_2`: T2 kontrolünde yeni baytlar ve tasdik gövdesi dosya işlemlerinden önce hesaplanır, yeniden adlandırma + yazım + tasdik arka arkaya (bulgu 1; X5-1); "etiket + metin" ve "sahte katman taşıma" vakaları sunucunun ret gövdesini `detail.reason`'a yazar (bulgu 5). (b) `compare_p2_0_2._d_c`: tasdik satırlarında `matched` yalnız `false` olarak bulunabilir; başka değerli satır sayılır (`matched_other_lines`) ve eşitliği bozar (bulgu 3). (c) iki `EXCLUDED` satırının gerekçesi "bundle and tests" → "its bundle size" (vitest satırları bu turda fark etmedi; bulgu 6); beyan satırları aynı metinle. Başka satır değişmedi.
+- **Neden:** X5.review.md bulgu 1, 3, 5, 6; resmi RUN'dan önce.
+- **Önce/sonra:** `tamper_p2_0_2` iki kez koştu: ikisi de "rejected 12/12, controls 4/4", çıktılar bayt bayt aynı; ret sebepleri "the text differs outside link targets" ve "11 blocks against 10 in espresso.md". `check_compare_fields: OK (13 comparators, 371 declared fields, 24 file constants)`. `ruff` temiz.
+- **Gözden geçirici onayı:** X5.review.md (2. tur).

@@ -351,6 +351,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/check_compare_fields.py` | `P2-0.2/X5-dev:` | yeniden dondurma P2-0.2/F6: `compare_p2_0_2` |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0.2/X5-dev:` | yeniden dondurma P2-0.2/F6: `compare_p2_0_2` bölümü, alan ve dosya satırları |
 | `research/eval/**` | `P2-0.2/X5-dev:` | yeniden dondurma P2-0.2/F6: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md` (`compare_p2_0_2`); bu commit'te var olan P2-0.2 ölçüm dosyaları (`run_p2_0_2.py`, `datasets/p2_0_2_sets.py`, `compare_p2_0_2.py`, `historical_p2_0_2.py`, `historical_fails_p2_0_2.json`, `run_p2_0_2_checks.py`, `tamper_p2_0_2.py`, `report_p2_0_2.py`) de bu satırla donar |
+| `research/eval/**` | `P2-0.2/X5-rec:` | yeniden dondurma P2-0.2/F7: `tamper_p2_0_2.py` (T2 kontrolünün sırası, ret sebepleri), `compare_p2_0_2.py` (`_d_c` `matched` şartı, iki gerekçe metni), `DETERMINISTIC_FIELDS.md` (iki gerekçe metni) |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0.2/X5-rec:` | yeniden dondurma P2-0.2/F7: iki `EXCLUDED` gerekçe metni |
 <!-- /frozen-table -->
 
 ## Notlar
