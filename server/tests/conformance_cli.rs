@@ -1,5 +1,5 @@
 //! P1-E/E5 (GOAL E-7): `rootmark conformance` runs Levels 1–3 on the fixtures
-//! embedded in the binary — level 3, 38/38 since P2-0.1 (C2-13, K-P2-01.3; 37/37 in P2-0) — and refuses a fixture tree that
+//! embedded in the binary — level 3, 39/39 since P2-0.2 (C2-14, K-P2-02.3; 38/38 in P2-0.1, 37/37 in P2-0) — and refuses a fixture tree that
 //! does not match its manifest. `scripts/conformance_equiv.sh` compares its
 //! report with `make conformance`'s test by test. Needs the model files.
 

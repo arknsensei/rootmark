@@ -29,16 +29,44 @@ pub struct Attestation {
     pub doc_path: String,
     pub content_hash: String,
     pub at_seq: u64,
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "present"
+    )]
     pub saved_at_seq: Option<u64>,
     /// `true` (P2-0.1 T2): the attestation vouched for only part of an
     /// observed change — the attested blocks — the rest stayed unattested
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "present"
+    )]
     pub partial: Option<bool>,
     /// `false` (P2-0.1 T4): when it was recorded, the file held other bytes
     /// and no observed change contained them (informative)
-    #[serde(default, skip_serializing_if = "Option::is_none")]
+    #[serde(
+        default,
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "present"
+    )]
     pub matched: Option<bool>,
+}
+
+/// An optional field that, when present, holds a value of its type: `null`
+/// is a value outside every field's definition (spec §8 reading rule,
+/// P2-0.2; X3 review R2), so it is refused, not read as absent.
+fn present<'de, D, T>(d: D) -> std::result::Result<Option<T>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+    T: Deserialize<'de>,
+{
+    match Option::<T>::deserialize(d)? {
+        Some(v) => Ok(Some(v)),
+        None => Err(serde::de::Error::custom(
+            "a field written as null (outside its definition)",
+        )),
+    }
 }
 
 /// `attestation_id = H(doc_path + "\n" + content_hash + "\n" + at_seq)`,
@@ -905,6 +933,10 @@ mod tests {
             ("matched", serde_json::json!(true)),
             ("partial", serde_json::json!("yes")),
             ("at_seq", serde_json::json!(-1)),
+            // null is outside every field's definition (X3 review R2)
+            ("partial", serde_json::Value::Null),
+            ("matched", serde_json::Value::Null),
+            ("saved_at_seq", serde_json::Value::Null),
         ] {
             let mut bad = serde_json::to_value(&a).unwrap();
             bad[field] = value.clone();
