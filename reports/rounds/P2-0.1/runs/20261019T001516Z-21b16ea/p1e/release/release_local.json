@@ -1,0 +1,16 @@
+{
+  "target": "aarch64-apple-darwin",
+  "version": "rootmark 0.1.0",
+  "spec_version": "2.0.1",
+  "version_ok": true,
+  "spec_version_ok": true,
+  "conformance": {
+    "level_claimed": 3,
+    "passed": 38,
+    "total": 38,
+    "exit": 0
+  },
+  "make_conformance_exit": 0,
+  "equal_to_make_conformance": true,
+  "pass": true
+}

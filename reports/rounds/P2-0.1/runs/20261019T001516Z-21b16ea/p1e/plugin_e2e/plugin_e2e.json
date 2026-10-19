@@ -1,0 +1,195 @@
+{
+  "harness": "plugin command layer in Node against a real rootmark serve (Obsidian not headless; ASSUMPTIONS E4-1)",
+  "consumer": "rootmark-obsidian/0.1.0",
+  "agent": "e2e-agent/1.0",
+  "steps": [
+    {
+      "step": 1,
+      "actor": "human",
+      "command": "connect (status)",
+      "shows": {
+        "spec_version": "2.0.1",
+        "promotion": "human_only",
+        "edit": "append_only",
+        "human_id": "editor"
+      },
+      "pass": true
+    },
+    {
+      "step": 2,
+      "actor": "human",
+      "command": "nameCheckpoint before",
+      "shows": {
+        "name": "before",
+        "event_seq": 109
+      },
+      "pass": true
+    },
+    {
+      "step": 3,
+      "actor": "agent",
+      "command": "MCP propose",
+      "shows": {
+        "is_error": false,
+        "edit_policy": "append_only"
+      },
+      "pass": true
+    },
+    {
+      "step": 4,
+      "actor": "human",
+      "command": "blameOf + listProposals",
+      "shows": {
+        "blocks": [
+          {
+            "layer": "proposal",
+            "author_kind": "Agent",
+            "source": "e2e-agent/1.0"
+          },
+          {
+            "layer": "proposal",
+            "author_kind": "Agent",
+            "source": "e2e-agent/1.0"
+          }
+        ],
+        "proposal_rows": [
+          {
+            "doc_path": "agent/scene.md",
+            "source": "e2e-agent/1.0"
+          },
+          {
+            "doc_path": "agent/scene.md",
+            "source": "e2e-agent/1.0"
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 5,
+      "actor": "human",
+      "command": "runSearch default",
+      "shows": {
+        "hits_on_doc": 0
+      },
+      "pass": true
+    },
+    {
+      "step": 6,
+      "actor": "human",
+      "command": "promoteAll (reason) + promoteAll (no reason)",
+      "shows": {
+        "decisions": [
+          "promoted",
+          "promoted"
+        ],
+        "actors": [
+          {
+            "id": "editor",
+            "kind": "human"
+          },
+          {
+            "id": "editor",
+            "kind": "human"
+          }
+        ],
+        "without_reason": {
+          "status": 400,
+          "code": "invalid_arguments"
+        }
+      },
+      "pass": true
+    },
+    {
+      "step": 7,
+      "actor": "human",
+      "command": "runSearch default",
+      "shows": {
+        "hits_on_doc": [
+          "canonical"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 8,
+      "actor": "human",
+      "command": "recentTraces",
+      "shows": {
+        "traces": 2,
+        "latest_is_step_7": true,
+        "jump_targets_on_doc": 2
+      },
+      "pass": true
+    },
+    {
+      "step": 9,
+      "actor": "human",
+      "command": "runSearch at + blameAt",
+      "shows": {
+        "same_checkpoint_as_step_2": true,
+        "hits_on_doc": 0,
+        "doc_then": "no snapshot",
+        "espresso_then_equals_now": true
+      },
+      "pass": true
+    },
+    {
+      "step": 10,
+      "actor": "agent",
+      "command": "MCP propose replace_section + heading-less append",
+      "shows": {
+        "replace_section": "denied",
+        "append": "policy_violation",
+        "hint": "start the appended text with a heading",
+        "describe_error_shows_hint": true
+      },
+      "pass": true
+    },
+    {
+      "step": 11,
+      "actor": "human",
+      "command": "blameOf + runSearch",
+      "shows": {
+        "blame_unchanged": true,
+        "search_unchanged": true
+      },
+      "pass": true
+    }
+  ],
+  "passed": 11,
+  "total": 11,
+  "e3_md_changed_per_step": [
+    [],
+    [],
+    [
+      "agent/scene.md"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "e3_md_changes_only_at_propose": true,
+  "e4_access_log": {
+    "requests": 30,
+    "endpoints_used": [
+      "GET /v1/status",
+      "POST /v1/blame",
+      "POST /v1/checkpoint",
+      "POST /v1/promote",
+      "POST /v1/search",
+      "POST /v1/trace"
+    ],
+    "outside_contract": 0,
+    "outside": []
+  },
+  "e5": {
+    "promoted_by_human_editor": true
+  },
+  "pass": true
+}

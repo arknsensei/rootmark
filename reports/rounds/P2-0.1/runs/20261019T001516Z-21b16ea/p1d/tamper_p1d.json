@@ -1,0 +1,135 @@
+{
+  "cases": [
+    {
+      "group": "schema",
+      "case": "untouched Inspector list (control)",
+      "expected": "accepted",
+      "as_expected": true
+    },
+    {
+      "group": "schema",
+      "case": "inputSchema type misspelt",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "schema",
+      "case": "additionalProperties true",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "schema",
+      "case": "a tool removed",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "schema",
+      "case": "required names no property",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "schema",
+      "case": "property type not a JSON Schema type",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "schema",
+      "case": "schema differs from the server's",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "token",
+      "case": "token file mode 644 → start refused",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "token",
+      "case": "token file not 64 hex → start refused",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "token",
+      "case": "right token (control)",
+      "expected": "accepted",
+      "as_expected": true
+    },
+    {
+      "group": "token",
+      "case": "wrong token → 401",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "token",
+      "case": "another vault's token → 401",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "token",
+      "case": "token without Bearer → 401",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "x-consumer",
+      "case": "missing → 400",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "x-consumer",
+      "case": "empty → 400",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "x-consumer",
+      "case": "whitespace → 400",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "d-11",
+      "case": "propose ../escape.md → error, nothing written",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "d-11",
+      "case": "propose outside the vault → error, nothing written",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "d-11",
+      "case": "propose over 10 MB → error, nothing written",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "d-11",
+      "case": "replace_section with a missing heading → error, file unchanged",
+      "expected": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "d-11",
+      "case": "valid propose (control)",
+      "expected": "accepted",
+      "as_expected": true
+    }
+  ],
+  "rejected": 18,
+  "rejected_total": 18,
+  "controls_ok": 3,
+  "controls_total": 3,
+  "pass": true
+}
