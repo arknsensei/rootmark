@@ -18,7 +18,7 @@ Tur başladıktan sonra `GOAL.md` değişmez. Yeni ihtiyaç bir sonraki tura gid
 ## 2. Ajan disiplini (kök `CLAUDE.md` bunu uygular)
 - Okuma sırası: `NORTH_STAR.md` → `spec/SPEC.md` → `docs/ARCHITECTURE.md` → `docs/PACKAGES.md` → aktif tur dosyaları → ilgili paketin `CLAUDE.md`'si → `docs/rounds/<id>/progress/`.
 - Görev başı/sonu kayıtları, gözden geçirici alt-ajan (yalnız kabul ölçütleri + değişen dosya listesi ile; kod yazmaz), görev başına commit (`<round>/<task>: ...`).
-- Dal ve PR (K-P2.1): `main` korumalıdır (PR + CI, doğrusal geçmiş). Tur tek bir dalda (`<tur-id>/round`) ilerler; görev başına commit dalda, her görev sonunda dal uzağa itilir; tur sonunda READY.md ile tek PR açılır. PR'ı orkestratör birleştirir; doğrulayıcı birleşmiş `main`'i klonlar, VERIFICATION.md ayrı PR ile girer.
+- Dal ve PR (K-P2.1): `main` korumalıdır (PR + CI, doğrusal geçmiş). Tur tek bir dalda (`<tur-id>/round`) ilerler; görev başına commit dalda, her görev sonunda dal uzağa itilir; tur sonunda READY.md ile tek PR açılır. PR'ı orkestratör birleştirir; doğrulayıcı birleşmiş `main`'i klonlar, VERIFICATION.md ayrı PR ile girer. Bir tur yalnız birleşmiş `main`'den açılır; `ROUND_START` bir `main` commit'ini ya da etiketi gösterir (rebase birleştirmesi dal commit'lerini yeniden yazar, K-P2.2).
 - Park kuralı: yalnız durma koşulunda; bağımlılar işaretlenir; park yerinden devam.
 - Soru sorulmaz; varsayım etiketli (`[spec] [arch] [-]`) olarak `ASSUMPTIONS.md`'ye yazılır. Spesifikasyonla çelişen varsayım yapılmaz; çelişki görülürse görev park edilir ve `DECISIONS.md`'ye karar talebi yazılır.
 
