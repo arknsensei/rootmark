@@ -775,9 +775,17 @@ impl Kernel {
                 // a plain attestation of bytes a rename or link update
                 // vouched for in the window takes its caps, whichever came
                 // first (X1 security B3)
+                // (the bytes the attestation vouched for: for a partial
+                // match the saved bytes, not the observed ones)
+                let vouched = match &ingest {
+                    Ingest::Partial(_, saved) => {
+                        rootmarkcore::attest::content_hash(saved.as_bytes())
+                    }
+                    _ => hash.clone(),
+                };
                 match c {
                     Some(c) => Some(c),
-                    None => self.attesting.pending_caps(policy, doc, &hash)?,
+                    None => self.attesting.pending_caps(policy, doc, &vouched)?,
                 }
             }
             _ => None,
