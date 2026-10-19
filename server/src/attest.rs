@@ -101,9 +101,12 @@ pub struct Attesting {
     /// and the observed blocks' versions (a late partial match, T2)
     bases: Mutex<Vec<Pending>>,
     /// the caps of accepted rename and link-update attestations, newest
-    /// last: (attestation id, caps) — the layers their bytes may carry
-    /// (P2-0.2 T2)
-    caps: Mutex<Vec<(String, rootmarkcore::attest::Caps)>>,
+    /// last: (attestation id, caps, recorded ms) — the layers their bytes
+    /// may carry (P2-0.2 T2); kept while the attestation can still match
+    caps: Mutex<Vec<Capped>>,
+    /// every attestation id that ever had caps (32 hex each): one whose caps
+    /// are gone is ingested unattested, never uncapped (fail closed)
+    bound: Mutex<std::collections::HashSet<String>>,
 }
 
 /// An unattested ingest in its window, as the server remembers it beside
@@ -116,6 +119,17 @@ pub struct Pending {
     pub observed_ms: u64,
     pub base: rootmarkcore::attest::LinkBase,
     pub observed: Vec<String>,
+}
+
+/// The caps of an accepted rename or link-update attestation (P2-0.2 T2),
+/// with the bytes it vouched for and when it was recorded.
+#[derive(Debug, Clone)]
+pub struct Capped {
+    pub id: String,
+    pub doc: String,
+    pub content_hash: String,
+    pub caps: rootmarkcore::attest::Caps,
+    pub at_ms: u64,
 }
 
 /// Rename attestations remembered at most (the oldest is dropped).
@@ -137,21 +151,49 @@ impl Attesting {
             link_updates: std::sync::atomic::AtomicU64::new(0),
             bases: Mutex::new(Vec::new()),
             caps: Mutex::new(Vec::new()),
+            bound: Mutex::new(std::collections::HashSet::new()),
         }
     }
 
+    /// Whether attestation `attestation_id` was accepted with caps (a
+    /// rename or a link update), whether or not they are still kept.
+    pub fn cap_bound(&self, attestation_id: &str) -> Result<bool> {
+        Ok(self
+            .bound
+            .lock()
+            .map_err(|_| anyhow::anyhow!("caps lock poisoned"))?
+            .contains(attestation_id))
+    }
+
     /// The caps of an accepted rename or link-update attestation (P2-0.2
-    /// T2), kept while it may still match (at most `MAX_RENAMES`).
-    pub fn set_caps(&self, attestation_id: &str, caps: rootmarkcore::attest::Caps) -> Result<()> {
+    /// T2). They are kept by age, never by count: an entry goes only once
+    /// its attestation can no longer match (twice the window after it was
+    /// recorded), so a cap is never missing while its attestation could
+    /// still give an uncapped ingest (automated security review of X1).
+    pub fn set_caps(
+        &self,
+        policy: &Policy,
+        a: &rootmarkcore::attest::Attestation,
+        caps: rootmarkcore::attest::Caps,
+    ) -> Result<()> {
+        let now = self.now_ms();
+        let keep = 2 * policy.attestation.window_ms;
         let mut c = self
             .caps
             .lock()
             .map_err(|_| anyhow::anyhow!("caps lock poisoned"))?;
-        c.retain(|(id, _)| id != attestation_id);
-        c.push((attestation_id.to_string(), caps));
-        if c.len() > MAX_RENAMES {
-            c.remove(0);
-        }
+        c.retain(|x| x.id != a.attestation_id && now.saturating_sub(x.at_ms) <= keep);
+        c.push(Capped {
+            id: a.attestation_id.clone(),
+            doc: a.doc_path.clone(),
+            content_hash: a.content_hash.clone(),
+            caps,
+            at_ms: now,
+        });
+        self.bound
+            .lock()
+            .map_err(|_| anyhow::anyhow!("caps lock poisoned"))?
+            .insert(a.attestation_id.clone());
         Ok(())
     }
 
@@ -164,8 +206,43 @@ impl Attesting {
             .map_err(|_| anyhow::anyhow!("caps lock poisoned"))?;
         Ok(c.iter()
             .rev()
-            .find(|(id, _)| id == attestation_id)
-            .map(|(_, x)| x.clone()))
+            .find(|x| x.id == attestation_id)
+            .map(|x| x.caps.clone()))
+    }
+
+    /// The caps of the rename and link-update attestations of the same
+    /// bytes of `doc` recorded within the window, the lowest at each place
+    /// (an attestation of those bytes inherits them: X1 security B3).
+    pub fn pending_caps(
+        &self,
+        policy: &Policy,
+        doc: &str,
+        content_hash: &str,
+    ) -> Result<Option<rootmarkcore::attest::Caps>> {
+        let now = self.now_ms();
+        let w = policy.attestation.window_ms;
+        let c = self
+            .caps
+            .lock()
+            .map_err(|_| anyhow::anyhow!("caps lock poisoned"))?;
+        let mut out: Option<rootmarkcore::attest::Caps> = None;
+        for x in c.iter().filter(|x| {
+            x.doc == doc && x.content_hash == content_hash && now.saturating_sub(x.at_ms) <= w
+        }) {
+            out = Some(match out {
+                None => x.caps.clone(),
+                // the same bytes: the same blocks in the same order
+                Some(mut o) => {
+                    for (a, b) in o.blocks.iter_mut().zip(&x.caps.blocks) {
+                        if b.1 < a.1 {
+                            *a = b.clone();
+                        }
+                    }
+                    o
+                }
+            });
+        }
+        Ok(out)
     }
 
     /// An unattested ingest of `doc` (bytes `content_hash`) observed at

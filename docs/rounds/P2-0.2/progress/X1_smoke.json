@@ -11,7 +11,7 @@
   "unverified_after_window": 0,
   "false_unverified_rate": 0,
   "raised_late": 0,
-  "latency_p95_ms": 102,
+  "latency_p95_ms": 112,
   "latency_p95_over_window": false,
   "latency_measured": 1,
   "latency_unsettled": 0,
@@ -462,7 +462,7 @@
       "new_blocks": 1,
       "unverified_after_window": 0,
       "raised_late": false,
-      "latency_ms": 102,
+      "latency_ms": 112,
       "no_write": false,
       "side": false
     }

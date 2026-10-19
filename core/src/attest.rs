@@ -394,38 +394,56 @@ impl Caps {
             .all(|(_, l, _)| *l == crate::Layer::Canonical)
     }
 
-    /// The provenance and declared layer a block event creating version `v`
-    /// carries instead of the ingest's own (`Vault::plan_ingest_carried`):
-    /// none for a `canonical` cap (the attested ingest's human provenance,
-    /// as before P2-0.2); for a lower cap, the base block's provenance, and
+    /// Whether `layers` — the layers an ingest of the new bytes gives their
+    /// blocks, in document order, with their versions — stay within the
+    /// caps: block for block when the counts agree (a version found twice
+    /// is capped at each place by its own base block, X1 review R6), else
+    /// by the lowest cap of each version.
+    pub fn within(&self, layers: &[(String, crate::Layer)]) -> bool {
+        if layers.len() == self.blocks.len()
+            && layers
+                .iter()
+                .zip(&self.blocks)
+                .all(|((v, _), (w, _, _))| v == w)
+        {
+            return layers
+                .iter()
+                .zip(&self.blocks)
+                .all(|((_, l), (_, c, _))| l <= c);
+        }
+        layers
+            .iter()
+            .all(|(v, l)| self.cap(v).is_some_and(|c| *l <= c))
+    }
+
+    /// The provenance and declared layer the block events creating each
+    /// version carry instead of the ingest's own (`Vault::plan_ingest_carried`),
+    /// one entry per place of the version in the new bytes, in order: none
+    /// for a `canonical` cap (the attested ingest's human provenance, as
+    /// before P2-0.2); for a lower cap, the base block's provenance, and
     /// `meta.layer` declared when that provenance alone would not give the
     /// cap — `unverified` for any author (spec §7.1), another layer only for
     /// `synthetic` content (spec §7). A `proposal` whose provenance is
     /// `human` (a human edit of a proposal) cannot be declared and is
-    /// carried as `unverified` (lower, never higher).
+    /// carried as `unverified` (lower, never higher; ASSUMPTIONS X1-1).
     pub fn carried(&self) -> crate::Carried {
         use crate::model::AuthorKind;
         use crate::Layer;
         let mut out = crate::Carried::new();
-        for (v, _, _) in &self.blocks {
-            let Some(cap) = self.cap(v) else { continue };
-            if cap == Layer::Canonical || out.contains_key(v) {
-                continue;
-            }
-            // the provenance of the lowest base block of this version
-            let p = self
-                .blocks
-                .iter()
-                .find(|(x, l, _)| x == v && *l == cap)
-                .map(|(_, _, p)| p.clone())
-                .expect("the cap is one of the blocks");
-            let declared = match (cap, p.author_kind) {
-                (Layer::Unverified, _) => Some(Layer::Unverified),
-                (l, AuthorKind::Synthetic) => Some(l),
-                (Layer::Proposal, AuthorKind::Agent | AuthorKind::Transcript) => None,
-                _ => Some(Layer::Unverified),
+        for (v, cap, p) in &self.blocks {
+            let entry = match cap {
+                Layer::Canonical => None,
+                _ => Some((
+                    p.clone(),
+                    match (*cap, p.author_kind) {
+                        (Layer::Unverified, _) => Some(Layer::Unverified),
+                        (l, AuthorKind::Synthetic) => Some(l),
+                        (Layer::Proposal, AuthorKind::Agent | AuthorKind::Transcript) => None,
+                        _ => Some(Layer::Unverified),
+                    },
+                )),
             };
-            out.insert(v.clone(), (p, declared));
+            out.entry(v.clone()).or_default().push(entry);
         }
         out
     }

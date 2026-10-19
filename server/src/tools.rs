@@ -493,13 +493,15 @@ fn cap_raises(
         .collect()
 }
 
-/// Whether an ingest plan gives no block a layer above its cap (P2-0.2 T2):
-/// a block of a version the caps do not hold, or above the cap of its
-/// version, fails — the ingest is then unattested.
+/// Whether an ingest plan gives no block a layer above its cap (P2-0.2 T2;
+/// `Caps::within`, block for block): otherwise the ingest is unattested.
 fn within_caps(caps: &rootmarkcore::attest::Caps, plan: &rootmarkcore::IngestPlan) -> bool {
-    plan.blocks_after
+    let layers: Vec<(String, rootmarkcore::Layer)> = plan
+        .blocks_after
         .iter()
-        .all(|b| caps.cap(&b.version_id).is_some_and(|c| b.layer <= c))
+        .map(|b| (b.version_id.clone(), b.layer))
+        .collect();
+    caps.within(&layers)
 }
 
 /// A checkpoint `at` names (id or name); unknown → `not_found`.
@@ -763,7 +765,21 @@ impl Kernel {
         // unattested instead — never above the cap
         let mut carried_plan = None;
         let caps = match &ingest {
-            Ingest::Attested(id) | Ingest::Partial(id, _) => self.attesting.caps_of(id)?,
+            Ingest::Attested(id) | Ingest::Partial(id, _) => {
+                let c = self.attesting.caps_of(id)?;
+                // a rename or link update whose caps are gone is never
+                // ingested uncapped: unattested (fail closed, X1 review R1)
+                if c.is_none() && self.attesting.cap_bound(id)? {
+                    ingest = Ingest::Unverified;
+                }
+                // a plain attestation of bytes a rename or link update
+                // vouched for in the window takes its caps, whichever came
+                // first (X1 security B3)
+                match c {
+                    Some(c) => Some(c),
+                    None => self.attesting.pending_caps(policy, doc, &hash)?,
+                }
+            }
             _ => None,
         };
         if let Some(c) = &caps {
@@ -958,8 +974,17 @@ impl Kernel {
                 let d = match self.attesting.base_of(doc, known) {
                     Ok(d) => d,
                     // the renamed note itself, unknown to the log and with no
-                    // accepted rename: the client's old path (P2-0.2 T2)
-                    Err(_) if doc == renamed && from_hint.is_some_and(known) => {
+                    // accepted rename: the client's old path (P2-0.2 T2) —
+                    // only when that file is gone, as after a rename (a
+                    // copy of a note is no rename of it: X1 security B2)
+                    Err(_)
+                        if doc == renamed
+                            && from_hint.is_some_and(|f| {
+                                known(f)
+                                    && !crate::paths::doc_file(&self.vault, f)
+                                        .is_ok_and(|p| p.exists())
+                            }) =>
+                    {
                         from_hint.expect("checked").to_string()
                     }
                     Err(e) => return Err(e).code(Code::Denied),
@@ -995,11 +1020,11 @@ impl Kernel {
                 "attest: {doc} changes no link target naming {renamed}"
             );
         }
-        // another note's link update (its own head): every changed block a
-        // `canonical` lineage, as since P2-0.1 — a rewritten agent block makes
-        // it `denied` (known limit F6); only a rename's own content carries
-        // lower layers over (P2-0.2 T2)
-        if base.doc_path == doc && doc != renamed {
+        // another note's link update (whatever its base): every changed
+        // block a `canonical` lineage, as since P2-0.1 — a rewritten agent
+        // block makes it `denied` (known limit F6); only the renamed note's
+        // own content carries lower layers over (P2-0.2 T2; X1 review R4)
+        if doc != renamed {
             for (b, (v, layer, _)) in base.blocks.iter().zip(&caps.blocks) {
                 if *v != b.version_id && *layer != rootmarkcore::Layer::Canonical {
                     bail_code!(
@@ -1107,10 +1132,18 @@ impl Kernel {
         )
         .code(Code::InvalidArguments)?;
         let late_on = x.late != Some(false);
+        // a plain attestation of bytes a rename or link update already
+        // vouched for within the window inherits those caps: a newer
+        // attestation never lifts them (X1 security B3)
+        if caps.is_none() {
+            caps = self
+                .attesting
+                .pending_caps(&policy, &a.doc_path, &a.content_hash)?;
+        }
         if let Some(c) = &caps {
             // before the window sees it: an observation it matches next is
             // ingested under these caps
-            self.attesting.set_caps(&a.attestation_id, c.clone())?;
+            self.attesting.set_caps(&policy, &a, c.clone())?;
         }
         let (mut late, ambiguous) =
             self.attesting
