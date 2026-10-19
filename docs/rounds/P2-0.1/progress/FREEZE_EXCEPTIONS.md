@@ -37,3 +37,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** K-E0.2: her karşılaştırıcının karşılaştırmadığı her alan beyan edilir; yeni karşılaştırıcı (Y4'te eklendi) beyansız kalınca `make check-compare-fields` "unmatched 1" veriyordu.
 - **Önce/sonra:** önce (`c37935c`, Y4'ten önce) `check_compare_fields: OK (11 comparators …)`; Y4 sonrası "unmatched 1"; sonra `OK (12 comparators, 226 declared fields, 22 file constants)`. Geliştirme RUN'ından sonra `EXCLUDED` satırları eklendikçe beyan aynı commit'te güncellenir.
 - **Gözden geçirici onayı:** Y6.review.md.
+
+## F7 · Y6 geliştirme RUN'ı · `research/eval/compare_p2_0_1.py`, `research/eval/historical_fails_p2_0_1.json`, `research/eval/DETERMINISTIC_FIELDS.md`
+- **Ne:** `compare_p2_0_1.EXCLUDED`'a geliştirme RUN'ının (`20261018T225232Z-757251a`) farklarını kararlarına bağlayan 72 satır (Y6.md; en dar alt ağaç, joker yok); tarihsel listeye iki girdi (E1-8, tamper; K-P2-0.5) ve `about`'a RUN kimliği; beyana aynı 72 satır. Kod mantığı değişmedi.
+- **Neden:** P2-0'ın yöntemi (F15): önceki turların kaydedicilerinin bu turun kararlarıyla değişen alanları ve tarihsel FAIL'leri resmi RUN'dan önce geliştirme RUN'ından yazılır (Y4 gözden geçirmesi 6).
+- **Önce/sonra:** önce, geliştirme RUN'ında regress 397 farklı yaprak, sınıflandırıcı 11 sayılan; sonra regress yalnız kirli klonun 8 yapıt yaprağı (resmi temiz zincirde yok), kullanılmayan hariç 0; sınıflandırıcı 1 sayılan (E1-4, aynı yapıt). `make check-compare-fields` OK (298 beyan alanı).
+- **Gözden geçirici onayı:** Y6.review.md.
