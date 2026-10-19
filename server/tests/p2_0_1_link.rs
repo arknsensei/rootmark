@@ -410,10 +410,13 @@ fn the_same_bytes_pending_twice_raise_nothing() {
 }
 
 #[test]
-fn the_old_path_of_an_unobserved_rename_must_hold_canonical_content_only() {
-    // automated security review: bee.md (renamed from b.md, not observed
-    // yet) is checked against the head of b.md; an agent wrote a new b.md
-    // since, so that head is no longer canonical content: denied
+fn the_old_path_of_an_unobserved_rename_carries_its_layers() {
+    // automated security review (P2-0.1): bee.md (renamed from b.md, not
+    // observed yet) is checked against the head of b.md; an agent wrote a
+    // new b.md since. P2-0.1 denied the link update (that head was no longer
+    // canonical content only); since P2-0.2 T2 (K-P2-02.2) the rename
+    // carries the head's layers over block for block: accepted, and the
+    // agent's paragraph stays unverified at bee.md — never canonical
     let v = vault("old-path-reused");
     let self_text = "# B\n\nThe roast note, see [[b]].\n";
     std::fs::write(v.join("b.md"), self_text).unwrap();
@@ -429,9 +432,9 @@ fn the_old_path_of_an_unobserved_rename_must_hold_canonical_content_only() {
     )
     .unwrap();
     watch(&k, "b.md");
+    assert_eq!(layer_of(&k, "b.md", "Agent text"), "unverified");
     // the new path holds the same agent paragraph (unchanged against the
-    // old path's head) and the rewritten link: without the rule this would
-    // pass block for block and make the paragraph canonical at bee.md
+    // old path's head) and the rewritten link
     std::fs::write(
         v.join("bee.md"),
         format!(
@@ -440,12 +443,10 @@ fn the_old_path_of_an_unobserved_rename_must_hold_canonical_content_only() {
         ),
     )
     .unwrap();
-    let e = attest(&k, &s, &v, "bee.md", json!({"link_update_of": "bee.md"})).unwrap_err();
-    assert_eq!(code_of(&e), Code::Denied);
-    assert!(
-        format!("{e:#}").contains("no longer holds only canonical"),
-        "{e:#}"
-    );
+    attest(&k, &s, &v, "bee.md", json!({"link_update_of": "bee.md"})).unwrap();
+    watch(&k, "bee.md");
+    assert_eq!(layer_of(&k, "bee.md", "Agent text"), "unverified");
+    assert_eq!(layer_of(&k, "bee.md", "[[bee]]"), "canonical");
 }
 
 #[test]

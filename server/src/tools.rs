@@ -354,7 +354,8 @@ struct AttestArgs {
     /// raise an earlier unattested change (`rootmark attest --all`)
     late: Option<bool>,
     /// a rename by the client: accepted only when the file at `doc_path`
-    /// holds exactly the canonical head of this document (contract §2.6)
+    /// holds the head of this document (its own links rewritten at most);
+    /// the layers are carried over (contract §2.6, P2-0.2 T2)
     renamed_from: Option<String>,
     /// a link update Obsidian wrote while renaming the note now at this
     /// path (P2-0.1 T1): accepted only when the bytes differ from the
@@ -470,6 +471,35 @@ fn non_empty(tool: &str, field: &str, v: &str) -> Result<()> {
 
 fn open_vault(vault: &Path) -> Result<Vault> {
     Vault::open(vault).code(Code::Internal)
+}
+
+/// The late raises of a rename or link-update attestation under its caps
+/// (P2-0.2 T2): each lineage is raised to the lower of its target and the
+/// cap of its version, and not at all when that is no higher than
+/// `unverified` (or its version is not one the attestation vouched for).
+fn cap_raises(
+    caps: &rootmarkcore::attest::Caps,
+    raises: Vec<rootmarkcore::attest::Raise>,
+) -> Vec<rootmarkcore::attest::Raise> {
+    raises
+        .into_iter()
+        .filter_map(|mut r| {
+            let to = r.to.min(caps.cap(&r.version_id)?);
+            (to > rootmarkcore::Layer::Unverified).then(|| {
+                r.to = to;
+                r
+            })
+        })
+        .collect()
+}
+
+/// Whether an ingest plan gives no block a layer above its cap (P2-0.2 T2):
+/// a block of a version the caps do not hold, or above the cap of its
+/// version, fails — the ingest is then unattested.
+fn within_caps(caps: &rootmarkcore::attest::Caps, plan: &rootmarkcore::IngestPlan) -> bool {
+    plan.blocks_after
+        .iter()
+        .all(|b| caps.cap(&b.version_id).is_some_and(|c| b.layer <= c))
 }
 
 /// A checkpoint `at` names (id or name); unknown → `not_found`.
@@ -721,24 +751,59 @@ impl Kernel {
         if probe.events.is_empty() {
             return Ok((probe, External::nothing(doc, &hash)));
         }
-        let (ingest, observed_ms) = if force_unattested {
+        let (mut ingest, observed_ms) = if force_unattested {
             (Ingest::Unverified, self.attesting.now_ms())
         } else {
             self.attesting.decide(policy, doc, &hash, &text)?
         };
-        if let Ingest::Partial(_, saved) = &ingest {
-            // the attested bytes first, as an attested change (P2-0.1 T2)
-            let plan = v.plan_ingest(
+        // an attested rename or link update carries its blocks' layers
+        // over (P2-0.2 T2): the attested bytes are ingested under the
+        // attestation's caps, and a plan that would still give a block more
+        // than its cap (a path whose old head the log keeps) is ingested
+        // unattested instead — never above the cap
+        let mut carried_plan = None;
+        let caps = match &ingest {
+            Ingest::Attested(id) | Ingest::Partial(id, _) => self.attesting.caps_of(id)?,
+            _ => None,
+        };
+        if let Some(c) = &caps {
+            let attested_text = match &ingest {
+                Ingest::Partial(_, saved) => saved.as_str(),
+                _ => text.as_str(),
+            };
+            let p = v.plan_ingest_carried(
                 doc,
-                saved,
+                attested_text,
                 Provenance {
                     author_kind: AuthorKind::Human,
                     source: source.to_string(),
                 },
                 m,
-                None,
                 Some(&self.watch_actor()?),
+                &c.carried(),
             )?;
+            if within_caps(c, &p) {
+                carried_plan = Some(p);
+            } else {
+                ingest = Ingest::Unverified;
+            }
+        }
+        if let Ingest::Partial(_, saved) = &ingest {
+            // the attested bytes first, as an attested change (P2-0.1 T2)
+            let plan = match carried_plan {
+                Some(p) => p,
+                None => v.plan_ingest(
+                    doc,
+                    saved,
+                    Provenance {
+                        author_kind: AuthorKind::Human,
+                        source: source.to_string(),
+                    },
+                    m,
+                    None,
+                    Some(&self.watch_actor()?),
+                )?,
+            };
             return Ok((
                 plan,
                 External {
@@ -768,7 +833,8 @@ impl Kernel {
             )?;
         }
         let plan = match &ingest {
-            Ingest::Canonical | Ingest::Attested(_) | Ingest::Partial(..) => probe,
+            Ingest::Attested(_) => carried_plan.unwrap_or(probe),
+            Ingest::Canonical | Ingest::Partial(..) => probe,
             Ingest::Unverified => v.plan_ingest(
                 doc,
                 &text,
@@ -816,32 +882,31 @@ impl Kernel {
 
     /// A rename attestation (contract §2.6): the file now at `to` must hold
     /// bytes hashing to `content_hash` whose blocks are, one for one, the
-    /// head snapshot of `from`, every one of them live and `canonical` —
-    /// a rename moves canonical content and nothing else (an agent's bytes
-    /// that reached `from` unobserved, or a proposal, make it `denied`).
-    fn check_rename(&self, v: &Vault, from: &str, to: &str, text: &str) -> Result<()> {
+    /// head snapshot of `from` — or differ from it only in the note's own
+    /// links rewritten to its new path (P2-0.2 T2; the link-update rule,
+    /// `rootmarkcore::attest::check_link_update` with `from` as the old
+    /// path). Content that reached `from` unobserved (an agent's bytes) makes
+    /// it `denied`. The caps: a rename carries every block's layer over as
+    /// it is — no block is raised, none dropped (P2-0.2 T2; before, any
+    /// block not `canonical` made the rename `denied`).
+    fn check_rename(
+        &self,
+        v: &Vault,
+        from: &str,
+        to: &str,
+        text: &str,
+    ) -> Result<rootmarkcore::attest::Caps> {
         crate::propose::check_doc_path(from)?;
-        let (drafts, _) = rootmarkcore::parse_document(text, to)?;
-        let Some(head) = v.snapshot(from)? else {
+        let Some(base) = rootmarkcore::attest::LinkBase::head(v, from)? else {
             bail_code!(Code::Denied, "attest: {from} is not a document of the log");
         };
-        let blocks = v.snapshot_blocks(&head)?;
-        let st = v.doc_state(from).context("document state")?;
-        let same = drafts.len() == blocks.len()
-            && drafts
-                .iter()
-                .zip(&blocks)
-                .all(|(d, b)| d.version_id == b.version_id);
-        let canonical = blocks.iter().all(|b| {
-            b.layer == rootmarkcore::Layer::Canonical && !st.inactive.contains(&b.lineage_id)
-        });
-        if !same || !canonical {
-            bail_code!(
+        match rootmarkcore::attest::check_link_update(&base, text, to, Some(from)) {
+            Ok((_, caps)) => Ok(caps),
+            Err(e) => bail_code!(
                 Code::Denied,
-                "attest: {to} is not a rename of the canonical content of {from}"
-            );
+                "attest: {to} is not a rename of the content of {from}: {e:#}"
+            ),
         }
-        Ok(())
     }
 
     /// A link-update attestation (P2-0.1 T1, contract §2.6): the file at
@@ -852,17 +917,22 @@ impl Kernel {
     /// attestation must not raise what preceded it, Y1 review 1); else its
     /// head now — or, for a document the log does not know yet because it
     /// was just renamed (a note linking to itself), the head of the path it
-    /// was renamed from. Changed link targets must name `renamed`, and its
-    /// old path when an accepted rename attestation gave it. Anything else
-    /// is `denied`: Obsidian's rewrite of a note during a rename never
-    /// vouches for bytes an agent wrote there.
+    /// was renamed from (P2-0.2 T2: or, for the renamed note itself, the
+    /// path the client says it was renamed from, `link_update_from` — the
+    /// rename and the note's own link update in one attestation, when the
+    /// watcher never saw the note under its new path before its links were
+    /// rewritten). Changed link targets must name `renamed`, and its old
+    /// path when an accepted rename attestation gave it. Anything else is
+    /// `denied`: Obsidian's rewrite of a note during a rename never vouches
+    /// for bytes an agent wrote there. The caps: each block keeps at most
+    /// the layer of the base block it stands for (P2-0.2 T2).
     fn check_link_update(
         &self,
         v: &Vault,
         policy: &Policy,
         x: &AttestArgs,
         text: &str,
-    ) -> Result<()> {
+    ) -> Result<rootmarkcore::attest::Caps> {
         let (doc, content_hash) = (x.doc_path.as_str(), x.content_hash.as_str());
         let renamed = x
             .link_update_of
@@ -884,24 +954,23 @@ impl Kernel {
         {
             Some(b) => b,
             None => {
-                let d = self
-                    .attesting
-                    .base_of(doc, |d| v.snapshot(d).ok().flatten().is_some())
-                    .code(Code::Denied)?;
-                let b = rootmarkcore::attest::LinkBase::head(v, &d)?
+                let known = |d: &str| v.snapshot(d).ok().flatten().is_some();
+                let d = match self.attesting.base_of(doc, known) {
+                    Ok(d) => d,
+                    // the renamed note itself, unknown to the log and with no
+                    // accepted rename: the client's old path (P2-0.2 T2)
+                    Err(_) if doc == renamed && from_hint.is_some_and(known) => {
+                        from_hint.expect("checked").to_string()
+                    }
+                    Err(e) => return Err(e).code(Code::Denied),
+                };
+                // the head of another path (the log does not know `doc` yet)
+                // is what a rename moved to `doc`; the caps carry its layers
+                // over as they are (P2-0.2 T2; before, it had to hold only
+                // canonical content: automated security review of P2-0.1/Y1)
+                rootmarkcore::attest::LinkBase::head(v, &d)?
                     .with_context(|| format!("attest: {d} is not a document of the log"))
-                    .code(Code::Denied)?;
-                // the head of another path (the log does not know `doc` yet):
-                // its content became `doc`'s by a rename, which moves only
-                // canonical content — whatever the old path holds now must be
-                // that, all of it (automated security review of Y1)
-                if d != doc && !b.blocks.iter().all(|x| x.canonical) {
-                    bail_code!(
-                        Code::Denied,
-                        "attest: {d}, the path {doc} was renamed from, no longer holds only canonical content"
-                    );
-                }
-                b
+                    .code(Code::Denied)?
             }
         };
         // the renamed note's old path: from an accepted rename attestation,
@@ -910,14 +979,15 @@ impl Kernel {
             Some(w) => Some(w),
             None => from_hint.map(str::to_string),
         };
-        let changed = rootmarkcore::attest::check_link_update(&base, text, renamed, was.as_deref())
-            .map_err(|e| {
-                anyhow::anyhow!(
-                    "attest: {doc} is not a link update of {} for {renamed}: {e:#}",
-                    base.doc_path
-                )
-            })
-            .code(Code::Denied)?;
+        let (changed, caps) =
+            rootmarkcore::attest::check_link_update(&base, text, renamed, was.as_deref())
+                .map_err(|e| {
+                    anyhow::anyhow!(
+                        "attest: {doc} is not a link update of {} for {renamed}: {e:#}",
+                        base.doc_path
+                    )
+                })
+                .code(Code::Denied)?;
         if changed == 0 {
             // a link update changes a link (Y1 security review B2)
             bail_code!(
@@ -925,7 +995,21 @@ impl Kernel {
                 "attest: {doc} changes no link target naming {renamed}"
             );
         }
-        Ok(())
+        // another note's link update (its own head): every changed block a
+        // `canonical` lineage, as since P2-0.1 — a rewritten agent block makes
+        // it `denied` (known limit F6); only a rename's own content carries
+        // lower layers over (P2-0.2 T2)
+        if base.doc_path == doc && doc != renamed {
+            for (b, (v, layer, _)) in base.blocks.iter().zip(&caps.blocks) {
+                if *v != b.version_id && *layer != rootmarkcore::Layer::Canonical {
+                    bail_code!(
+                        Code::Denied,
+                        "attest: {doc} rewrites a link in a block that is not canonical"
+                    );
+                }
+            }
+        }
+        Ok(caps)
     }
 
     /// Opens the vault's attestation session (stage 1; CLIENT_CONTRACT §2.6).
@@ -1003,14 +1087,16 @@ impl Kernel {
                 .with_context(|| format!("attest: {} is not UTF-8", x.doc_path))
                 .code(Code::Denied)
         };
+        // the layers a rename or a link update may give its blocks (P2-0.2 T2)
+        let mut caps = None;
         if let Some(from) = &x.renamed_from {
             let text = checked(self)?;
-            self.check_rename(&v, from, &x.doc_path, &text)?;
+            caps = Some(self.check_rename(&v, from, &x.doc_path, &text)?);
             self.attesting.renamed(from, &x.doc_path)?;
         }
         if x.link_update_of.is_some() {
             let text = checked(self)?;
-            self.check_link_update(&v, &policy, &x, &text)?;
+            caps = Some(self.check_link_update(&v, &policy, &x, &text)?);
             self.attesting.link_update();
         }
         let mut a = rootmarkcore::attest::Attestation::new(
@@ -1021,9 +1107,22 @@ impl Kernel {
         )
         .code(Code::InvalidArguments)?;
         let late_on = x.late != Some(false);
-        let (late, ambiguous) = self
-            .attesting
-            .attested(&policy, &a, late_on, x.content.clone())?;
+        if let Some(c) = &caps {
+            // before the window sees it: an observation it matches next is
+            // ingested under these caps
+            self.attesting.set_caps(&a.attestation_id, c.clone())?;
+        }
+        let (mut late, ambiguous) =
+            self.attesting
+                .attested(&policy, &a, late_on, x.content.clone())?;
+        // a late match raises no block above its cap (P2-0.2 T2): a carried
+        // `unverified` block stays `unverified`, a `proposal` one returns
+        // to `proposal` at most
+        if let Some(c) = &caps {
+            for u in &mut late {
+                u.lineages = cap_raises(c, std::mem::take(&mut u.lineages));
+            }
+        }
         // a late partial match (P2-0.1 T2): the one pending unattested
         // change whose blocks contain the attested ones — never while the
         // file holds the attested bytes (their own observation is coming:
@@ -1047,7 +1146,10 @@ impl Kernel {
                     {
                         a.partial = Some(true);
                         self.attesting.forget(&policy, &a.attestation_id)?;
-                        partial = Some(rs);
+                        partial = Some(match &caps {
+                            Some(c) => cap_raises(c, rs),
+                            None => rs,
+                        });
                     }
                 }
             }

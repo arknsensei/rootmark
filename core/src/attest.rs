@@ -195,26 +195,73 @@ fn mdlink_re() -> &'static regex::Regex {
     })
 }
 
-/// One link target of a text: its kind (`w` wikilink, `m` Markdown link)
-/// and its target text as written.
-type Target = (char, String);
+fn mdlabel_re() -> &'static regex::Regex {
+    static RE: std::sync::OnceLock<regex::Regex> = std::sync::OnceLock::new();
+    // a whole Markdown link `[label](dest …)` whose label holds no bracket
+    // (P2-0.2 T1: the label is kept apart from the text around it)
+    RE.get_or_init(|| {
+        regex::Regex::new(
+            r#"\[([^\[\]\n]*)\]\(\s*(<[^<>\n#]*|[^\s()<>#]*)((?:#[^\s()>]*)?>?(?:\s+"[^"\n]*")?\s*)\)"#,
+        )
+        .expect("valid regex")
+    })
+}
 
-/// `text` with the target of every wikilink and Markdown link replaced by a
-/// marker, and the targets in order (P2-0.1 T1).
+/// One link target of a text: its kind (`w` wikilink, `m` Markdown link),
+/// its target text as written and, for a Markdown link whose label holds no
+/// bracket, its label (P2-0.2 T1).
+type Target = (char, String, Option<String>);
+
+/// `text` with the target of every wikilink and Markdown link (and the
+/// label of every Markdown link without brackets in it) replaced by a
+/// marker, and the targets in order (P2-0.1 T1, P2-0.2 T1).
 fn link_skeleton(text: &str) -> (String, Vec<Target>) {
     let mut targets = Vec::new();
     let w = wikilink_re().replace_all(text, |c: &regex::Captures| {
-        targets.push(('w', c[1].to_string()));
+        targets.push(('w', c[1].to_string(), None));
         format!("[[\u{0}{}]]", &c[2])
     });
     let mut md = Vec::new();
-    let m = mdlink_re().replace_all(&w, |c: &regex::Captures| {
-        md.push(('m', c[1].to_string()));
+    let l = mdlabel_re().replace_all(&w, |c: &regex::Captures| {
+        md.push(('m', c[2].to_string(), Some(c[1].to_string())));
+        format!("[\u{1}](\u{0}{})", &c[3])
+    });
+    // a Markdown link whose label holds brackets: its target only
+    let m = mdlink_re().replace_all(&l, |c: &regex::Captures| {
+        if c[1].starts_with('\u{0}') {
+            return c[0].to_string();
+        }
+        md.push(('m', c[1].to_string(), None));
         format!("](\u{0}{})", &c[2])
     });
-    // wikilinks first, then Markdown links: both lists keep their own order
+    // wikilinks first, then Markdown links: each list keeps its own order
     targets.extend(md);
     (m.into_owned(), targets)
+}
+
+/// The name a link target shows for its note: the file name without `.md`
+/// (percent-decoded for a Markdown link).
+fn target_stem(kind: char, t: &str) -> String {
+    let f = target_file(kind, t);
+    f.rsplit('/').next().unwrap_or(&f).to_string()
+}
+
+/// A Markdown link label that a rename may rewrite along with the target
+/// (P2-0.2 T1): the old label named the old target — its note's name, or
+/// the target as written (with or without `.md`) — and the new label names
+/// the new target the same way. Any other label change is no link update.
+fn label_follows(old_t: &str, new_t: &str, old_l: &str, new_l: &str) -> bool {
+    let as_written = |t: &str| -> Vec<String> {
+        let t = t.trim().trim_start_matches('<').trim_end_matches('>');
+        vec![
+            t.to_string(),
+            t.strip_suffix(".md").unwrap_or(t).to_string(),
+        ]
+    };
+    let (ow, nw) = (as_written(old_t), as_written(new_t));
+    let stem = target_stem('m', old_t) == old_l && target_stem('m', new_t) == new_l;
+    let written = (0..2).any(|i| ow[i] == old_l && nw[i] == new_l);
+    !old_l.is_empty() && (stem || written)
 }
 
 /// The file a link target names, as a `/`-separated path without `.md`:
@@ -268,9 +315,11 @@ pub fn link_names(kind: char, t: &str, doc_path: &str) -> bool {
 /// from `old` only in the targets of links, and every changed target names
 /// the note `renamed` (its path now) — and, when the renamed note's old path
 /// `was` is known, its old target named `was` — the text around the links,
-/// the number and kinds of links, labels and `#heading` parts are the same.
-/// `Ok(n)` with the number of changed targets; `Err` says what else
-/// differs.
+/// the number and kinds of links, wikilink labels and `#heading` parts are
+/// the same; a Markdown link's label changes only along with its target,
+/// from the old target's name to the new one's (P2-0.2 T1:
+/// `label_follows`). `Ok(n)` with the number of changed targets; `Err` says
+/// what else differs.
 pub fn link_update_only(old: &str, new: &str, renamed: &str, was: Option<&str>) -> Result<usize> {
     let (so, to) = link_skeleton(old);
     let (sn, tn) = link_skeleton(new);
@@ -278,9 +327,14 @@ pub fn link_update_only(old: &str, new: &str, renamed: &str, was: Option<&str>) 
         bail!("the text differs outside link targets");
     }
     let mut changed = 0;
-    for ((ko, a), (kn, b)) in to.iter().zip(&tn) {
-        if ko != kn {
+    for ((ko, a, la), (kn, b, lb)) in to.iter().zip(&tn) {
+        if ko != kn || la.is_some() != lb.is_some() {
             bail!("a link changed its kind");
+        }
+        if let (Some(la), Some(lb)) = (la, lb) {
+            if la != lb && (a == b || !label_follows(a, b, la, lb)) {
+                bail!("the label {la:?} became {lb:?}: not the name of the link's target");
+            }
         }
         if a == b {
             continue;
@@ -298,14 +352,83 @@ pub fn link_update_only(old: &str, new: &str, renamed: &str, was: Option<&str>) 
     Ok(changed)
 }
 
-/// One block of the state a link update is checked against.
+/// One block of the state a link update or a rename is checked against.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BaseBlock {
     pub version_id: String,
     pub block_type: crate::model::BlockType,
     pub text: String,
-    /// a live (not pruned) `canonical` lineage
-    pub canonical: bool,
+    /// its lineage's layer (P2-0.2 T2: what a rename carries over)
+    pub layer: crate::Layer,
+    /// its lineage's provenance (carried over with a lower layer)
+    pub provenance: crate::model::Provenance,
+}
+
+/// What an attested ingest of the bytes a rename or a link update vouches
+/// for may give each block (P2-0.2 T2): for each block of the new bytes, in
+/// order, its version and the layer and provenance of the base block it
+/// stands for. A rename moves layers as they are — it raises none and drops
+/// none (`canonical` stays `canonical`, `unverified` `unverified`,
+/// `proposal` `proposal`).
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct Caps {
+    pub blocks: Vec<(String, crate::Layer, crate::model::Provenance)>,
+}
+
+impl Caps {
+    /// The highest layer a block of version `v` may get: the lowest of the
+    /// base blocks it stands for (a version found twice takes the lower);
+    /// `None` for a version the bytes do not hold.
+    pub fn cap(&self, v: &str) -> Option<crate::Layer> {
+        self.blocks
+            .iter()
+            .filter(|(x, _, _)| x == v)
+            .map(|(_, l, _)| *l)
+            .min()
+    }
+
+    /// Whether every block keeps its base layer: nothing to carry.
+    pub fn all_canonical(&self) -> bool {
+        self.blocks
+            .iter()
+            .all(|(_, l, _)| *l == crate::Layer::Canonical)
+    }
+
+    /// The provenance and declared layer a block event creating version `v`
+    /// carries instead of the ingest's own (`Vault::plan_ingest_carried`):
+    /// none for a `canonical` cap (the attested ingest's human provenance,
+    /// as before P2-0.2); for a lower cap, the base block's provenance, and
+    /// `meta.layer` declared when that provenance alone would not give the
+    /// cap — `unverified` for any author (spec §7.1), another layer only for
+    /// `synthetic` content (spec §7). A `proposal` whose provenance is
+    /// `human` (a human edit of a proposal) cannot be declared and is
+    /// carried as `unverified` (lower, never higher).
+    pub fn carried(&self) -> crate::Carried {
+        use crate::model::AuthorKind;
+        use crate::Layer;
+        let mut out = crate::Carried::new();
+        for (v, _, _) in &self.blocks {
+            let Some(cap) = self.cap(v) else { continue };
+            if cap == Layer::Canonical || out.contains_key(v) {
+                continue;
+            }
+            // the provenance of the lowest base block of this version
+            let p = self
+                .blocks
+                .iter()
+                .find(|(x, l, _)| x == v && *l == cap)
+                .map(|(_, _, p)| p.clone())
+                .expect("the cap is one of the blocks");
+            let declared = match (cap, p.author_kind) {
+                (Layer::Unverified, _) => Some(Layer::Unverified),
+                (l, AuthorKind::Synthetic) => Some(l),
+                (Layer::Proposal, AuthorKind::Agent | AuthorKind::Transcript) => None,
+                _ => Some(Layer::Unverified),
+            };
+            out.insert(v.clone(), (p, declared));
+        }
+        out
+    }
 }
 
 /// The state of a document a link update is checked against (P2-0.1 T1):
@@ -332,8 +455,14 @@ impl LinkBase {
             .snapshot_blocks(&head)?
             .into_iter()
             .map(|b| BaseBlock {
-                canonical: st.layer.get(&b.lineage_id) == Some(&crate::Layer::Canonical)
-                    && !st.inactive.contains(&b.lineage_id),
+                // a pruned lineage keeps its layer (pruning is not a layer;
+                // `prune` applies to `proposal`/`unverified`, never above)
+                layer: st.layer.get(&b.lineage_id).copied().unwrap_or(b.layer),
+                provenance: st
+                    .provenance
+                    .get(&b.lineage_id)
+                    .cloned()
+                    .unwrap_or_else(|| b.provenance.clone()),
                 version_id: b.version_id,
                 block_type: b.block_type,
                 text: b.text,
@@ -347,22 +476,25 @@ impl LinkBase {
     }
 }
 
-/// A link update of a document (P2-0.1 T1; spec §7.1 "Link update"): the
+/// A link update of a document (P2-0.1 T1; spec §7.1 "Link update"), or a
+/// rename with the renamed note's own links rewritten (P2-0.2 T2): the
 /// bytes `new_text` are `base` with, at most, the targets of links changed
-/// to name the note now at `renamed` (and, when known, its old path `was`).
-/// Block for block (same count, order and kinds; the front matter
-/// likewise): a block is either the base's version, or differs from it
-/// only in link targets (`link_update_only`) and is then a live `canonical`
-/// lineage — the other blocks may hold any layer, they stay as they are.
+/// to name the note now at `renamed` (and, when known, its old path `was`)
+/// and Markdown labels following them (`link_update_only`). Block for
+/// block (same count, order and kinds; the front matter likewise): a block
+/// is either the base's version, or differs from it only in that way.
 /// Content an agent wrote that is not in the base, or any other change,
-/// makes it an error: a rename's link update never vouches for anything
-/// but itself. `Ok` with the number of changed link targets.
+/// makes it an error: a rename never vouches for anything but itself. `Ok`
+/// with the number of changed link targets and the caps — each new block
+/// may get no higher layer than the base block it stands for (P2-0.2 T2:
+/// an unverified or proposal block whose link was rewritten stays what it
+/// was; before P2-0.2 such a block made the whole rewrite `denied`).
 pub fn check_link_update(
     base: &LinkBase,
     new_text: &str,
     renamed: &str,
     was: Option<&str>,
-) -> Result<usize> {
+) -> Result<(usize, Caps)> {
     let (drafts, fm) = crate::parse_document(new_text, &base.doc_path)?;
     if drafts.len() != base.blocks.len() {
         bail!(
@@ -379,7 +511,10 @@ pub fn check_link_update(
         }
         _ => bail!("the front matter differs"),
     };
+    let mut caps = Caps::default();
     for (i, (d, b)) in drafts.iter().zip(&base.blocks).enumerate() {
+        caps.blocks
+            .push((d.version_id.clone(), b.layer, b.provenance.clone()));
         if d.version_id == b.version_id {
             continue;
         }
@@ -388,11 +523,8 @@ pub fn check_link_update(
         }
         changed += link_update_only(&b.text, &d.text, renamed, was)
             .with_context(|| format!("block {i}"))?;
-        if !b.canonical {
-            bail!("block {i} is not a live canonical lineage");
-        }
     }
-    Ok(changed)
+    Ok((changed, caps))
 }
 
 /// The block versions of a document text, in order (P2-0.1 T2).
@@ -731,6 +863,46 @@ mod tests {
         let mut b = a.clone();
         b.at_seq = 2;
         assert!(b.check(9).is_err(), "id no longer matches");
+    }
+
+    #[test]
+    fn markdown_labels_follow_their_target() {
+        // P2-0.2 T1: Obsidian rewrites a label that is the old note's name
+        let ok = |o: &str, n: &str| link_update_only(o, n, "sub/bee.md", Some("b.md")).is_ok();
+        assert!(ok("See [b](b.md).", "See [bee](sub/bee.md)."));
+        assert!(ok("See [b](b.md).", "See [bee](bee.md)."));
+        assert!(ok("See [b.md](b.md).", "See [bee.md](bee.md)."));
+        assert!(ok("See ![b](b.md).", "See ![bee](bee.md)."));
+        assert!(ok("See [notes](b.md).", "See [notes](bee.md)."));
+        let enc = |o: &str, n: &str| {
+            link_update_only(o, n, "dizin adı/bee.md", Some("dizin adı/b.md")).is_ok()
+        };
+        assert!(enc("[b](dizin%20adı/b.md)", "[bee](dizin%20adı/bee.md)"));
+        assert!(enc(
+            "[b](dizin%20ad%C4%B1/b.md)",
+            "[bee](dizin%20ad%C4%B1/bee.md)"
+        ));
+        assert!(enc(
+            "[dizin%20adı/b](dizin%20adı/b.md)",
+            "[dizin%20adı/bee](dizin%20adı/bee.md)"
+        ));
+        // any other label change is no link update
+        assert!(!ok("See [b](b.md).", "See [the bee](bee.md)."), "label");
+        assert!(!ok("See [b](b.md).", "See [bee](b.md)."), "label alone");
+        assert!(
+            !ok("See [b](b.md).", "See [bee](bee.md)!"),
+            "label and text"
+        );
+        assert!(
+            !ok("See [notes](b.md).", "See [bee](bee.md)."),
+            "a label not the name"
+        );
+        assert!(
+            !ok("See [b](b.md).", "See [b](bee.md) [bee](bee.md)."),
+            "a new link"
+        );
+        // a label naming the new note while the old one named another
+        assert!(!ok("See [c](b.md).", "See [bee](bee.md)."));
     }
 
     #[test]

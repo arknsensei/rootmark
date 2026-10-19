@@ -37,5 +37,7 @@ pub use normalize::normalize;
 pub use parse::parse_document;
 pub use policy::{Attestation as AttestationPolicy, Edit, Policy, PolicySource, Promotion};
 pub use store::BlockObject;
-pub use vault::{snapshot_id, BlameLine, IngestPlan, IngestResult, ReadBlock, Snapshot, Vault};
+pub use vault::{
+    snapshot_id, BlameLine, Carried, IngestPlan, IngestResult, ReadBlock, Snapshot, Vault,
+};
 pub use wikilink::extract_wikilinks;

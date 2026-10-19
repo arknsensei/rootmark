@@ -1,0 +1,470 @@
+{
+  "window_s": 0.5,
+  "link_settings": {
+    "alwaysUpdateLinks": true,
+    "newLinkFormat": "shortest",
+    "useMarkdownLinks": false
+  },
+  "sessions": 12,
+  "saves": 19,
+  "new_blocks": 33,
+  "unverified_after_window": 0,
+  "false_unverified_rate": 0,
+  "raised_late": 0,
+  "latency_p95_ms": 102,
+  "latency_p95_over_window": false,
+  "latency_measured": 1,
+  "latency_unsettled": 0,
+  "side_notes": 7,
+  "plugin_counts": "attested 19 · unattested 2",
+  "no_write": 18,
+  "ui": null,
+  "attestation_lines": 19,
+  "records": [
+    {
+      "rename": {
+        "from": "t1.md",
+        "to": "r-t1.md"
+      },
+      "blocks": [
+        {
+          "text": "# T1",
+          "layer": "canonical"
+        },
+        {
+          "text": "Body of note 1.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s01",
+      "kind": "rename",
+      "doc": "r-t1.md",
+      "new_blocks": 2,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "t1.md",
+        "to": "r-t1.md"
+      },
+      "blocks": [
+        {
+          "text": "Wiki [[r-t1]] here.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s01",
+      "kind": "rename",
+      "doc": "hub.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": true
+    },
+    {
+      "rename": {
+        "from": "t2.md",
+        "to": "r-t2.md"
+      },
+      "blocks": [
+        {
+          "text": "# T2",
+          "layer": "canonical"
+        },
+        {
+          "text": "Body of note 2.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s02",
+      "kind": "rename",
+      "doc": "r-t2.md",
+      "new_blocks": 2,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "t2.md",
+        "to": "r-t2.md"
+      },
+      "blocks": [
+        {
+          "text": "Alias [[r-t2|second one]] here.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s02",
+      "kind": "rename",
+      "doc": "hub.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": true
+    },
+    {
+      "rename": {
+        "from": "t3.md",
+        "to": "r-t3.md"
+      },
+      "blocks": [
+        {
+          "text": "# T3",
+          "layer": "canonical"
+        },
+        {
+          "text": "Body of note 3.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s03",
+      "kind": "rename",
+      "doc": "r-t3.md",
+      "new_blocks": 2,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "t3.md",
+        "to": "r-t3.md"
+      },
+      "blocks": [
+        {
+          "text": "Heading [[r-t3#T3]] here.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s03",
+      "kind": "rename",
+      "doc": "hub.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": true
+    },
+    {
+      "rename": {
+        "from": "t4.md",
+        "to": "r-t4.md"
+      },
+      "blocks": [
+        {
+          "text": "# T4",
+          "layer": "canonical"
+        },
+        {
+          "text": "Body of note 4.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s04",
+      "kind": "rename",
+      "doc": "r-t4.md",
+      "new_blocks": 2,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "t4.md",
+        "to": "r-t4.md"
+      },
+      "blocks": [
+        {
+          "text": "![[r-t4]]",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s04",
+      "kind": "rename",
+      "doc": "hub.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": true
+    },
+    {
+      "rename": {
+        "from": "t5.md",
+        "to": "r-t5.md"
+      },
+      "blocks": [
+        {
+          "text": "# T5",
+          "layer": "canonical"
+        },
+        {
+          "text": "Body of note 5.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s05",
+      "kind": "rename",
+      "doc": "r-t5.md",
+      "new_blocks": 2,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "t5.md",
+        "to": "r-t5.md"
+      },
+      "blocks": [
+        {
+          "text": "Name [r-t5](r-t5.md) here.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s05",
+      "kind": "rename",
+      "doc": "hub.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": true
+    },
+    {
+      "rename": {
+        "from": "t6.md",
+        "to": "r-t6.md"
+      },
+      "blocks": [
+        {
+          "text": "# T6",
+          "layer": "canonical"
+        },
+        {
+          "text": "Body of note 6.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s06",
+      "kind": "rename",
+      "doc": "r-t6.md",
+      "new_blocks": 2,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "t6.md",
+        "to": "r-t6.md"
+      },
+      "blocks": [
+        {
+          "text": "Label [the sixth](r-t6.md) here.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s06",
+      "kind": "rename",
+      "doc": "hub.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": true
+    },
+    {
+      "rename": {
+        "from": "dizin adı/t7.md",
+        "to": "dizin adı/r-t7.md"
+      },
+      "blocks": [
+        {
+          "text": "# T7",
+          "layer": "canonical"
+        },
+        {
+          "text": "Body of note 7.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s07",
+      "kind": "rename",
+      "doc": "dizin adı/r-t7.md",
+      "new_blocks": 2,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "dizin adı/t7.md",
+        "to": "dizin adı/r-t7.md"
+      },
+      "blocks": [
+        {
+          "text": "Path [r-t7](r-t7.md) here.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s07",
+      "kind": "rename",
+      "doc": "hub.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": true
+    },
+    {
+      "rename": {
+        "from": "self.md",
+        "to": "r-self.md"
+      },
+      "blocks": [
+        {
+          "text": "# Self",
+          "layer": "canonical"
+        },
+        {
+          "text": "See [[r-self]] and [[r-self#Self]].",
+          "layer": "canonical"
+        },
+        {
+          "text": "Also [r-self](r-self.md) here.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s08",
+      "kind": "rename",
+      "doc": "r-self.md",
+      "new_blocks": 3,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "r-self.md",
+        "to": "r2-self.md"
+      },
+      "blocks": [
+        {
+          "text": "# Self",
+          "layer": "canonical"
+        },
+        {
+          "text": "See [[r2-self]] and [[r2-self#Self]].",
+          "layer": "canonical"
+        },
+        {
+          "text": "Also [r2-self](r2-self.md) here.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s09",
+      "kind": "rename_again",
+      "doc": "r2-self.md",
+      "new_blocks": 3,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "r-t5.md",
+        "to": "arşiv/r-t5.md"
+      },
+      "blocks": [
+        {
+          "text": "# T5",
+          "layer": "canonical"
+        },
+        {
+          "text": "Body of note 5.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s10",
+      "kind": "move_folder",
+      "doc": "arşiv/r-t5.md",
+      "new_blocks": 2,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "rename": {
+        "from": "r2-self.md",
+        "to": "dizin adı/r2-self.md"
+      },
+      "blocks": [
+        {
+          "text": "# Self",
+          "layer": "canonical"
+        },
+        {
+          "text": "See [[r2-self]] and [[r2-self#Self]].",
+          "layer": "canonical"
+        },
+        {
+          "text": "Also [r2-self](r2-self.md) here.",
+          "layer": "canonical"
+        }
+      ],
+      "session": "s11",
+      "kind": "move_folder",
+      "doc": "dizin adı/r2-self.md",
+      "new_blocks": 3,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": null,
+      "no_write": true,
+      "side": false
+    },
+    {
+      "session": "s12",
+      "kind": "paragraph",
+      "doc": "hub.md",
+      "new_blocks": 1,
+      "unverified_after_window": 0,
+      "raised_late": false,
+      "latency_ms": 102,
+      "no_write": false,
+      "side": false
+    }
+  ]
+}

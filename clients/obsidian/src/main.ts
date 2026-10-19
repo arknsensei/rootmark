@@ -65,25 +65,14 @@ export default class RootmarkPlugin extends Plugin {
   private observeOwnWrites(): void {
     this.restoreAdapter = observeOwnWrites(
       this.app.vault.adapter,
+      // every rename is attested (P2-0.2 T2): the server checks the renamed
+      // bytes are the old path's head and carries each block's layer over as
+      // it is — an agent's proposal or an unverified edit stays what it was
+      // (before P2-0.2 only an all-canonical note was reported, Z3 review 11)
       (path, bytes, how) => {
         this.attestQueue = this.attestQueue.then(() => this.attest(path, bytes, how));
       },
-      (from) => this.onlyCanonical(from),
     );
-  }
-
-  /** A renamed note is attested under its new path only when its old path
-   * holds nothing but canonical content in the log: the server sees the new
-   * path as a new document, and attesting it would make an agent's proposal
-   * or an unverified edit canonical (Z3 review, 11). A path the log does not
-   * know is refused (automated security review: its bytes were never seen
-   * by the server). The server checks the renamed bytes are that canonical
-   * content (`renamed_from`, contract §2.6). */
-  private async onlyCanonical(from: string): Promise<boolean> {
-    const client = this.client();
-    if (client === null) return false;
-    const blocks = await blameOf(client, from);
-    return blocks !== null && blocks.every((b) => b.layer === "canonical" || b.inactive);
   }
 
   private async attest(path: string, bytes: Uint8Array, how: SavedHow): Promise<void> {
