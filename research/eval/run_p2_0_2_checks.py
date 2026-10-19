@@ -56,6 +56,15 @@ def _skipped(rec: dict) -> bool:
 NOT_MEASURED = {"skipped": True, "measured": False, "pass": None}
 
 
+def _w(d: Path) -> float:
+    """W of the RUN's P2-0.2 phase (`runinfo.record_phase` params)."""
+    phases = _load(d / "manifest.json")["phases"]
+    ws = {v["params"]["window_s"] for k, v in phases.items() if k.startswith("p2_0_2_test")}
+    if len(ws) != 1:
+        raise ValueError(f"the RUN's P2-0.2 phases name {len(ws)} windows")
+    return ws.pop()
+
+
 def _by_kind(db: dict) -> dict:
     """The D-B test-3 records by session kind: new blocks, still `unverified`."""
     out: dict[str, dict[str, int]] = {}
@@ -158,7 +167,9 @@ def checks(d: Path) -> dict:
     )
     tests = {t["id"]: t for t in conf["tests"]}
     return {
-        "window": {"window_s": 0.5, "source": "docs/rounds/P2-0/progress/Z5_tuning.json"},
+        # the W the RUN measured with (X4 review 4b); eval.run_p2_0_2 reads it
+        # from docs/rounds/P2-0/progress/Z5_tuning.json
+        "window": {"window_s": _w(d), "source": "manifest.json (p2_0_2_test window_s)"},
         "H-P2-0.2a": {
             "d_a": {
                 "scenarios": da["scenarios"],
@@ -192,7 +203,12 @@ def checks(d: Path) -> dict:
             "d_c_prime": d_cp,
             "source": "p2_0_2/d_c.json, p2_0_2/d_c_prime.json",
             # a real-Obsidian half not measured leaves the hypothesis unmeasured
-            "pass": None if d_cp["pass"] is None else d_c["pass"] and d_cp["pass"],
+            # a D-C failure stands even when D-C′ was not measured (X4 review 4a)
+            "pass": False
+            if d_c["pass"] is False
+            else None
+            if d_cp["pass"] is None
+            else d_c["pass"] and d_cp["pass"],
         },
         "H-P2-0.2e": h_e,
         "H-P2-0.2f": {
