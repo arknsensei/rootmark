@@ -210,10 +210,27 @@ pair() {
   self="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
   res_a="$(mktemp -t rootmark-verify-a.XXXXXX)"
   res_b="$(mktemp -t rootmark-verify-b.XXXXXX)"
+  # P2-0.2 (P2-0.2/F1, TASKS X2): VERIFY_LOAD=1 runs both chains under an
+  # artificial CPU load — as many `yes >/dev/null` as logical CPUs (`nproc`;
+  # macOS `sysctl -n hw.ncpu`), stopped when the chains end; the comparison
+  # is the same
+  load_pids=()
+  if [ "${VERIFY_LOAD:-}" = "1" ]; then
+    local n
+    n="$(nproc 2>/dev/null || sysctl -n hw.ncpu)"
+    log "VERIFY_LOAD=1: $n x yes >/dev/null for the two chains"
+    for _ in $(seq 1 "$n"); do yes >/dev/null & load_pids+=("$!"); done
+    trap 'kill "${load_pids[@]}" 2>/dev/null || true' EXIT
+  fi
   # each chain is its own process: a failing step fails the whole pair
   # (errexit is not inherited inside $(...) on bash 3.2)
   bash "$self" chain "$src" "$a" >"$res_a"
   bash "$self" chain "$src" "$b" >"$res_b"
+  if [ "${#load_pids[@]}" -gt 0 ]; then
+    kill "${load_pids[@]}" 2>/dev/null || true
+    wait "${load_pids[@]}" 2>/dev/null || true
+    log "VERIFY_LOAD=1: load stopped"
+  fi
   dir_a="$(sed -n 's/^RUN_DIR=//p' "$res_a")"
   dir_b="$(sed -n 's/^RUN_DIR=//p' "$res_b")"
   for d in "$dir_a" "$dir_b"; do

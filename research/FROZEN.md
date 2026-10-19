@@ -336,6 +336,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/gen_p2_0_1_old_vaults.sh` | `P2-0.1/Y6-pre:` | D-E'nin `ce4cf04` vault üreteci |
 | `research/data/p2_0_1_old_vaults/**` | `P2-0.1/Y6-pre:` | D-E'nin `ce4cf04` vault'ları ve beklenenleri |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0.1/Y6-pre:` | yeniden dondurma P2-0.1/F7: `compare_p2_0_1` regress satırları (geliştirme RUN'ı) |
+| `scripts/verify.sh` | `P2-0.2/X2:` | yeniden dondurma P2-0.2/F1: `pair`'de `VERIFY_LOAD=1` yükü (TASKS X2) |
 <!-- /frozen-table -->
 
 ## Notlar
