@@ -232,9 +232,9 @@ p1b-checks: require-run
 	@# P1-B/P1-B.1 recorders read the P1-B view of it (C1-01..17, C2-01..08:
 	@# 25 entries, level 2 iff all 25 pass with an intact manifest), as
 	@# p1a-checks reads the level-1 view; the full report is kept beside it
-	@# (P1-D.1: C2-10 is outside the P1-B view too; P2-0: C2-11, C2-12 too; P2-0.1: C2-13 too)
+	@# (P1-D.1: C2-10 is outside the P1-B view too; P2-0: C2-11, C2-12 too; P2-0.1: C2-13 too; P2-0.2: C2-14 too)
 	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_full.json
-	jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
+	jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
@@ -337,12 +337,12 @@ p1c-checks: require-run
 	@# iff all 31 pass with an intact manifest) and conformance_p1d1.json the
 	@# full report. P2-0: the report holds C2-11, C2-12, C3-08 too (37
 	@# entries, spec 2.0.0); the P1-C.1 and P1-C views leave them out, and
-	@# conformance_p1d1.json stays the full report (37). P2-0.1: C2-13 too
+	@# conformance_p1d1.json stays the full report (37). P2-0.1: C2-13 too; P2-0.2: C2-14 too
 	@# (38 entries, spec 2.0.1), left out of the same views
 	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_p1d1.json
-	jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C3-08")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14" and .id != "C3-08")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_p1c1.json
-	jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C3-08")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14" and .id != "C3-08")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_full.json
 	cargo test -p rootmark-core --release --test compat_v3final kc01 -- --test-threads=1 \
 	  >research/reports/runs/$(RUN)/c13_tests.log 2>&1 \

@@ -347,6 +347,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/release_local.sh` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F4: uyumluluk 39 |
 | `scripts/release_target.sh` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F4: uyumluluk 39 |
 | `scripts/release_check.sh` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F4: uyumluluk 39 |
+| `scripts/verify.sh` | `P2-0.2/X5-dev:` | yeniden dondurma P2-0.2/F5: P2-0.2 zinciri (`p2-0-2-checks`), sınıflandırıcı `eval.historical_p2_0_2`, `pair` → `compare_p2_0_2 pair`, `compare-p2-0-2`, yük tuzağı |
+| `research/eval/check_compare_fields.py` | `P2-0.2/X5-dev:` | yeniden dondurma P2-0.2/F6: `compare_p2_0_2` |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0.2/X5-dev:` | yeniden dondurma P2-0.2/F6: `compare_p2_0_2` bölümü, alan ve dosya satırları |
+| `research/eval/**` | `P2-0.2/X5-dev:` | yeniden dondurma P2-0.2/F6: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md` (`compare_p2_0_2`); bu commit'te var olan P2-0.2 ölçüm dosyaları (`run_p2_0_2.py`, `datasets/p2_0_2_sets.py`, `compare_p2_0_2.py`, `historical_p2_0_2.py`, `historical_fails_p2_0_2.json`, `run_p2_0_2_checks.py`, `tamper_p2_0_2.py`, `report_p2_0_2.py`) de bu satırla donar |
 <!-- /frozen-table -->
 
 ## Notlar

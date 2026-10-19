@@ -26,3 +26,15 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** C2-14 (F2) toplamı 39 yapar; bu betikler 38'i sabit denetler (P2-0.1/F3'ün aynısı).
 - **Önce/sonra:** değişiklik yalnız sabit; `bash scripts/test_tamper_p1c.sh`, `test_tamper_p1d1.sh` X3 kalite kapılarında koşar (X3.md).
 - **Gözden geçirici onayı:** X3.review.md.
+
+## F5 · X5 · `scripts/verify.sh` — P2-0.2 zinciri, sınıflandırıcı, çift karşılaştırması; yük tuzağı
+- **Ne:** zincir `make p2-0-1-checks` yerine `make p2-0-2-checks`'i koşar (W P2-0'ınki; `rules`, D-E 3 + 2 + 1, D-A, D-A2, D-C (T3), D-B2; gerçek Obsidian'da D-B test-3, D-A′, D-C′; kasıtlı vakalar; P2-0.1 resmi RUN'ına karşı regress; turun sınıflandırıcısı → `p2_0_2_checks.json`); FAIL özeti `eval.historical_p2_0_2` (P2-0.1 resmi RUN'ına karşı); `pair` A ↔ B'yi `eval.compare_p2_0_2 pair` ile karşılaştırır; yeni alt komut `compare-p2-0-2` (`compare-p2-0-1` aynen kalır); `VERIFY_LOAD` yükü durdurulunca `EXIT` tuzağı kaldırılır (`trap - EXIT`; X2 gözden geçirmesi bulgu 4: geri toplanmış PID'lere çıkışta yeniden sinyal gönderilmez); başlık yorumu. Diğer adımlar, sıraları ve çıkış davranışı aynen.
+- **Neden:** TASKS X5; GOAL P2-0.2 "önceki test setleri okunmaz" (P2-0.1'in `p2-0-1-checks`'i D-B test-2'yi her zincirde yeniden koşardı); H-P2-0.2i.
+- **Önce/sonra:** `bash -n` temiz; `git diff scripts/verify.sh` yalnız bu adımlar, `pair`'in karşılaştırıcısı, yeni alt komut, tuzak satırı ve yorumlar. Davranış geliştirme zinciri ve resmi `make verify` ile kaydedilir (X5.md).
+- **Gözden geçirici onayı:** X5.review.md.
+
+## F6 · X5 · `research/eval/check_compare_fields.py`, `research/eval/DETERMINISTIC_FIELDS.md` — `compare_p2_0_2`
+- **Ne:** denetleyicinin karşılaştırıcı listesine `("compare_p2_0_2", "P2_0_2")` ve dosya sabitleri `P2_0_2_FILES`, `P2_0_2_BYTES`; `--runs` kipinde bayt sabiti `P2_0_2_BYTES` JSON olarak okunmaz. Beyana `compare_p2_0_2` bölümü, alan satırları (yedi duvar saati satırı; geliştirme RUN'ından sonra `EXCLUDED` satırları) ve dosya satırları. Başka satır değişmedi.
+- **Neden:** K-E0.2: her karşılaştırıcının karşılaştırmadığı her alan beyan edilir (P2-0.1/F6 emsali).
+- **Önce/sonra:** önce `check_compare_fields: OK (12 comparators, …)`; sonra `OK (13 comparators, 305 declared fields, 24 file constants)` (geliştirme RUN'ından sonra `EXCLUDED` satırlarıyla güncellenir).
+- **Gözden geçirici onayı:** X5.review.md.
