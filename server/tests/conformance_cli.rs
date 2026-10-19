@@ -23,8 +23,8 @@ fn embedded_suite_is_level_3() {
     );
     let r: serde_json::Value = serde_json::from_slice(&out.stdout).unwrap();
     assert_eq!(r["level_claimed"], 3);
-    assert_eq!(r["passed"], 38);
-    assert_eq!(r["total"], 38);
+    assert_eq!(r["passed"], 39);
+    assert_eq!(r["total"], 39);
     assert_eq!(r["fixtures_root_source"], "embedded");
     assert_eq!(r["fixtures_manifest"], "ok");
     assert_eq!(r["spec_version"], rootmarkserver::tools::SPEC_VERSION);

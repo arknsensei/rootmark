@@ -337,6 +337,16 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/data/p2_0_1_old_vaults/**` | `P2-0.1/Y6-pre:` | D-E'nin `ce4cf04` vault'ları ve beklenenleri |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0.1/Y6-pre:` | yeniden dondurma P2-0.1/F7: `compare_p2_0_1` regress satırları (geliştirme RUN'ı) |
 | `scripts/verify.sh` | `P2-0.2/X2:` | yeniden dondurma P2-0.2/F1: `pair`'de `VERIFY_LOAD=1` yükü (TASKS X2) |
+| `core/tests/conformance/eval_c2.rs` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F2: C2-14 (yeniden adlandırma, bağlantı güncellemesi, tavanlar) |
+| `core/tests/conformance.rs` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F2: `LEVEL2` 14, spec 2.0.2 |
+| `core/tests/conformance_c2_gen.rs` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F2: 14 dizin |
+| `index/tests/conformance_c3.rs` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F2: `LOWER_TOTAL` 31 |
+| `spec/fixtures/**` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F3: C2-14 ve MANIFEST |
+| `scripts/test_tamper_p1c.sh` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F4: uyumluluk 39 |
+| `scripts/test_tamper_p1d1.sh` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F4: uyumluluk 39 |
+| `scripts/release_local.sh` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F4: uyumluluk 39 |
+| `scripts/release_target.sh` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F4: uyumluluk 39 |
+| `scripts/release_check.sh` | `P2-0.2/X3:` | yeniden dondurma P2-0.2/F4: uyumluluk 39 |
 <!-- /frozen-table -->
 
 ## Notlar

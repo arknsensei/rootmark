@@ -15,7 +15,7 @@ use std::path::PathBuf;
 fn write_c2_expected() {
     let root = PathBuf::from(std::env::var("ROOTMARK_FIXTURES").expect("ROOTMARK_FIXTURES"));
     let dirs = eval_c2::c2_case_dirs(&root).unwrap();
-    assert_eq!(dirs.len(), 13, "C2-01..C2-13");
+    assert_eq!(dirs.len(), 14, "C2-01..C2-14");
     for d in dirs {
         let v = eval_c2::evaluate_c2(&d).unwrap_or_else(|e| panic!("{}: {e:#}", d.display()));
         let mut text = serde_json::to_string_pretty(&v).unwrap();

@@ -1,0 +1,31 @@
+{
+  "id": "C2-14",
+  "title": "Rename and link update (spec 2.0.2 §7.1 \"Link update\", \"Rename\"; P2-0.2 T1, T2): a rename of a note holding an agent's unverified paragraph, its own links rewritten in the same attestation, carries every block's layer over as it is (human canonical, agent unverified); a Markdown link whose label is the old note's name follows the target in another note's link update, a label that is not the name is refused; a rename attested late raises only what was canonical at the old path",
+  "kind": "governance",
+  "matcher": {
+    "version": "v3",
+    "theta": 0.5,
+    "theta_split": 0.65
+  },
+  "window_ms": 2000,
+  "ops": [
+    {"op": "ingest", "doc": "b.md", "file": "b0.md", "author": "human", "source": "editor"},
+    {"op": "ingest", "doc": "a.md", "file": "a0.md", "author": "human", "source": "editor"},
+    {"op": "unattested_ingest", "doc": "b.md", "file": "b1.md"},
+    {"op": "layers"},
+    {"op": "attest", "doc": "bee.md", "file": "bee1.md", "at_ms": 1000, "renamed_from": "b.md"},
+    {"op": "external", "doc": "bee.md", "file": "bee1.md", "at_ms": 1100},
+    {"op": "layers"},
+    {"op": "attest", "doc": "a.md", "file": "a2.md", "at_ms": 1200, "link_update_of": "bee.md", "link_update_from": "b.md", "expect_err": "denied"},
+    {"op": "attest", "doc": "a.md", "file": "a1.md", "at_ms": 1300, "link_update_of": "bee.md", "link_update_from": "b.md"},
+    {"op": "external", "doc": "a.md", "file": "a1.md", "at_ms": 1400},
+    {"op": "layers"},
+    {"op": "ingest", "doc": "c.md", "file": "c0.md", "author": "human", "source": "editor"},
+    {"op": "unattested_ingest", "doc": "c.md", "file": "c1.md"},
+    {"op": "external", "doc": "c2.md", "file": "c1.md", "at_ms": 5000},
+    {"op": "attest", "doc": "c2.md", "file": "c1.md", "at_ms": 5100, "renamed_from": "c.md"},
+    {"op": "layers"},
+    {"op": "attestations"},
+    {"op": "events"}
+  ]
+}
