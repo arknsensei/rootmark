@@ -308,7 +308,7 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2_0_2` | regress | `p1e/check_compare_fields.json` | `modules/#len` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
 | `compare_p2_0_2` | regress | `p1e/check_compare_fields.json` | `modules/11` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
 | `compare_p2_0_2` | regress | `p1e/check_compare_fields.json` | `modules/12` | karar | P2-0.2/F6: the field audit sees the new comparator compare_p2_0_2 (its module, rows and file constants) |
-| `compare_p2_0_2` | regress | `p1e/client.json` | `bundle_bytes` | karar | K-P2-02.2: the plugin attests every rename (K-P2-02.2): bundle and tests |
+| `compare_p2_0_2` | regress | `p1e/client.json` | `bundle_bytes` | karar | K-P2-02.2: the plugin attests every rename (K-P2-02.2): its bundle size |
 | `compare_p2_0_2` | regress | `p1e/plugin_e2e/plugin_e2e.json` | `steps/0/shows/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
 | `compare_p2_0_2` | regress | `p1e/release/conformance_equiv.json` | `passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
 | `compare_p2_0_2` | regress | `p1e/release/conformance_equiv.json` | `spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
@@ -347,7 +347,7 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2_0_2` | regress | `p1e1_checks.json` | `E1-6/conformance/passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
 | `compare_p2_0_2` | regress | `p1e1_checks.json` | `E1-6/conformance/total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
 | `compare_p2_0_2` | regress | `p1e1_checks.json` | `E1-6/regress_vs_p1e` | karar | K-P2-02.3: E1-6's regress against P1-E sees every P2-0, P2-0.1 and P2-0.2 difference |
-| `compare_p2_0_2` | regress | `p1e_checks.json` | `E-10/bundle_bytes` | karar | K-P2-02.2: the plugin attests every rename (K-P2-02.2): bundle and tests |
+| `compare_p2_0_2` | regress | `p1e_checks.json` | `E-10/bundle_bytes` | karar | K-P2-02.2: the plugin attests every rename (K-P2-02.2): its bundle size |
 | `compare_p2_0_2` | regress | `p1e_checks.json` | `E-7/chain_local_target/conformance/passed` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
 | `compare_p2_0_2` | regress | `p1e_checks.json` | `E-7/chain_local_target/conformance/total` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
 | `compare_p2_0_2` | regress | `p1e_checks.json` | `E-7/chain_local_target/spec_version` | karar | K-P2-02.3: spec 2.0.2 and conformance 39 (C2-14) |
