@@ -9,8 +9,9 @@ Neither P2-0's nor P2-0.1's D-B test set is generated or read here
 (ASSUMPTIONS P2-0.2 X0-3). Writes into `<RUN>/p2_0_2/`:
 
 - `d_c.json` (H-P2-0.2d, i): P2-0's D-C ticks (`p2_0_sets.d_c`, unchanged),
-  the human following the plugin's protocol (file, then `attest` with the
-  saved bytes as `content`), with T3 (X0-9): in `apart` and
+  the human attesting the saved bytes with `content` — after writing the
+  file (the plugin's order) except in `collide` ticks (X2-1, below; the
+  plugin's order under a collision is D-C′'s) — with T3 (X0-9): in `apart` and
   `same_doc_after` ticks the agent writes only once the human's ingest is
   in the log (`wait_ingested`), so the log's order no longer depends on
   which of two files the watcher sees first; in `collide` ticks (ASSUMPTIONS
@@ -48,6 +49,7 @@ import argparse
 import json
 import re
 import shutil
+import subprocess
 import tempfile
 import time
 from pathlib import Path
@@ -234,6 +236,75 @@ def run_d_c(rootmark: str, window_s: float, out: Path, work: Path) -> dict:
     }
 
 
+# ---- H-P2-0.2k: the written rules and the reader ------------------------------------
+
+RULES = {
+    # (file, text that must be in it)
+    "dev_process_stamp_rule": ("docs/DEV_PROCESS.md", "**Spec durum damgası (K-P2-02.3"),
+    "criterion_unknown_field": ("docs/SPEC_EDITS_CRITERION.md", "**Bilinmeyen alan (K-P2-02.3"),
+    "spec_8_reading_rule": (
+        "spec/SPEC.md",
+        "Reading rule (2.0.2, P2-0.2): a reader MUST ignore a field of a line that it does not know",
+    ),
+    "spec_7_1_draft": (
+        "spec/SPEC.md",
+        "### 7.1 Attested writes (2.0.0; Draft until the independent verification of Phase 2 round P2-0.2)",
+    ),
+}
+
+
+def run_rules(rootmark: str, work: Path) -> dict:
+    """H-P2-0.2k (T4): the rules are written, and the current reader opens a
+    vault whose attestation log holds a line with a field it does not know
+    (`x_future`) and refuses one whose known field holds a value outside its
+    definition (`partial: false`, `matched: true`) — end to end, through the
+    `rootmark` binary (opening a vault checks the log, spec §8)."""
+    written = {k: t in (REPO / f).read_text(encoding="utf-8") for k, (f, t) in RULES.items()}
+    work.mkdir(parents=True, exist_ok=True)
+    v = work / "fwd"
+    v.mkdir()
+    (v / "a.md").write_text("# A\n\nHuman text.\n", encoding="utf-8")
+    p0.run([rootmark, "ingest-dir", str(v), str(v)])
+    h = p0.content_hash((v / "a.md").read_bytes())
+    at = 0
+    aid = blake3.blake3(f"a.md\n{h}\n{at}".encode()).hexdigest()[:32]
+    base = {"attestation_id": aid, "doc_path": "a.md", "content_hash": h, "at_seq": at}
+    log = v / ".rootmark/attestations.jsonl"
+
+    def opens(line: dict) -> tuple[bool, bool]:
+        log.write_text(json.dumps(line) + "\n", encoding="utf-8")
+        r = subprocess.run(
+            [rootmark, "blame", str(v), "a.md"], capture_output=True, text=True, check=False
+        )
+        return (
+            r.returncode == 0,
+            "partial is written only as true" in r.stderr
+            or "matched is written only as false" in r.stderr,
+        )
+
+    cases = {
+        "unknown_field_read": ({**base, "x_future": 1}, True),
+        "known_line_read": (base, True),
+        "partial_false_rejected": ({**base, "partial": False}, False),
+        "matched_true_rejected": ({**base, "matched": True}, False),
+    }
+    forward = {}
+    for k, (line, want) in cases.items():
+        ok, err = opens(line)
+        forward[k] = {
+            "opened": ok,
+            "expected_open": want,
+            # a refusal must be for the value, not for anything else
+            "pass": ok == want and (want or err),
+            "refused_for_the_value": err,
+        }
+    return {
+        "written": written,
+        "forward_compatibility": forward,
+        "pass": all(written.values()) and all(x["pass"] for x in forward.values()),
+    }
+
+
 # ---- real Obsidian -----------------------------------------------------------------
 
 
@@ -382,7 +453,7 @@ def run_real(
     return json.loads((o / f"{name}.json").read_text())
 
 
-SETS = ["d_e", "d_a", "d_a2", "d_c", "d_b2", "d_b", "d_a_prime", "d_c_prime"]
+SETS = ["rules", "d_e", "d_a", "d_a2", "d_c", "d_b2", "d_b", "d_a_prime", "d_c_prime"]
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -405,7 +476,9 @@ def main(argv: list[str] | None = None) -> int:
     with tempfile.TemporaryDirectory(prefix="rootmark-p2-0-2-") as w:
         work = Path(w)
         for s in todo:
-            if s == "d_e":
+            if s == "rules":
+                r = run_rules(rootmark, work / "rules")
+            elif s == "d_e":
                 r = run_d_e(rootmark, work)
             elif s == "d_a":
                 r = p0.run_d_a(rootmark, window_s, out, work / "a")
