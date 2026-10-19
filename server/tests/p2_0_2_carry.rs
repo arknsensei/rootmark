@@ -27,6 +27,11 @@ fn rootmark() -> &'static str {
 /// A vault of human notes (`files`: path → text), canonical; the default
 /// policy (`unverified`) with a human id.
 fn vault(name: &str, files: &[(&str, &str)]) -> PathBuf {
+    vault_w(name, files, 2.0)
+}
+
+/// `vault` with the window `window_s`.
+fn vault_w(name: &str, files: &[(&str, &str)], window_s: f64) -> PathBuf {
     let root = std::env::temp_dir().join(format!("rootmark-p202x1-{}-{name}", std::process::id()));
     let _ = std::fs::remove_dir_all(&root);
     let v = root.join("vault");
@@ -45,7 +50,7 @@ fn vault(name: &str, files: &[(&str, &str)]) -> PathBuf {
         String::from_utf8_lossy(&st.stderr)
     );
     let recipe = format!(
-        "{}\n[identity]\nhuman_id = \"ada\"\n\n[attestation]\nwindow_s = 2.0\n",
+        "{}\n[identity]\nhuman_id = \"ada\"\n\n[attestation]\nwindow_s = {window_s:?}\n",
         rootmarkserver::config::default_recipe()
     );
     std::fs::write(v.join(".rootmark/policy.toml"), recipe).unwrap();
@@ -455,4 +460,139 @@ fn a_fake_rename_never_raises() {
     assert!(blocks(&k, "evil2.md")
         .iter()
         .all(|(_, l)| l == "unverified"));
+}
+
+#[test]
+fn a_human_edited_proposal_is_carried_lower_never_higher() {
+    // K-P2-02.2 (2), ASSUMPTIONS X1-1: a proposal whose provenance is human
+    // (the human edited the agent's paragraph; it stays a proposal) cannot
+    // be recorded as a proposal of a new lineage: it is carried unverified;
+    // the agent's untouched heading stays a proposal
+    let v = vault("human-proposal", &[("a.md", "# A\n\nHuman text.\n")]);
+    let k = Kernel::open(&v).unwrap();
+    let s = session(&k);
+    k.call(
+        "propose",
+        &json!({"doc_path": "plan.md", "mode": "create", "reason": "r",
+                "content": "# Plan\n\nAn agent's plan."}),
+        Caller::mcp(Some("agent/1")),
+    )
+    .unwrap();
+    std::fs::write(
+        v.join("plan.md"),
+        "# Plan\n\nAn agent's plan, edited by the human.\n",
+    )
+    .unwrap();
+    attest(&k, &s, &v, "plan.md", json!({})).unwrap();
+    watch(&k, "plan.md");
+    assert_eq!(layer_of(&k, "plan.md", "edited by the human"), "proposal");
+    mv(&v, "plan.md", "plan2.md");
+    attest(&k, &s, &v, "plan2.md", json!({"renamed_from": "plan.md"})).unwrap();
+    watch(&k, "plan2.md");
+    assert_eq!(layer_of(&k, "plan2.md", "# Plan"), "proposal");
+    assert_eq!(
+        layer_of(&k, "plan2.md", "edited by the human"),
+        "unverified"
+    );
+}
+
+#[test]
+fn the_same_block_twice_keeps_each_place_s_layer() {
+    // X1 review R6: the agent copied a human paragraph (same version, its
+    // copy unverified); each place keeps its own layer
+    let para = "Human one about the roast.";
+    let (v, k, s) = with_agent("dup", BH);
+    let t = std::fs::read_to_string(v.join("b.md")).unwrap();
+    std::fs::write(v.join("b.md"), format!("{t}\n{para}\n")).unwrap();
+    watch(&k, "b.md");
+    let before: Vec<String> = blocks(&k, "b.md").into_iter().map(|(_, l)| l).collect();
+    assert_eq!(before.iter().filter(|l| *l == "unverified").count(), 2);
+    mv(&v, "b.md", "bee.md");
+    attest(&k, &s, &v, "bee.md", json!({"renamed_from": "b.md"})).unwrap();
+    watch(&k, "bee.md");
+    let after: Vec<String> = blocks(&k, "bee.md").into_iter().map(|(_, l)| l).collect();
+    assert_eq!(before, after);
+}
+
+#[test]
+fn caps_are_never_lost_while_a_rename_can_match() {
+    // X1 security B1: more than 256 capped attestations after a rename, its
+    // observation still in the window: the agent's block stays unverified
+    let notes: Vec<(String, String)> = (0..260)
+        .map(|i| (format!("n/n{i}.md"), format!("# N{i}\n\nHuman note {i}.\n")))
+        .collect();
+    let mut files: Vec<(&str, &str)> = notes
+        .iter()
+        .map(|(p, t)| (p.as_str(), t.as_str()))
+        .collect();
+    files.push(("b.md", BH));
+    let v = vault_w("evict", &files, 60.0);
+    let k = Kernel::open(&v).unwrap();
+    let s = session(&k);
+    std::fs::write(
+        v.join("b.md"),
+        format!("{BH}\nAgent paragraph written to the file.\n"),
+    )
+    .unwrap();
+    watch(&k, "b.md");
+    mv(&v, "b.md", "bee.md");
+    attest(&k, &s, &v, "bee.md", json!({"renamed_from": "b.md"})).unwrap();
+    for i in 0..260 {
+        let (f, t) = (format!("n/n{i}.md"), format!("m/n{i}.md"));
+        mv(&v, &f, &t);
+        attest(&k, &s, &v, &t, json!({"renamed_from": f})).unwrap();
+    }
+    watch(&k, "bee.md");
+    assert_eq!(layer_of(&k, "bee.md", "Agent paragraph"), "unverified");
+    assert_eq!(layer_of(&k, "bee.md", "Human one"), "canonical");
+}
+
+#[test]
+fn a_copy_is_no_rename() {
+    // X1 security B2: with the old file still on disk, a note's "own link
+    // update" against it (`link_update_from`) is no rename: denied
+    let c = "# C\n\nHuman text, see [c](c.md) and [[c]].\n";
+    let v = vault("copy", &[("c.md", c)]);
+    let k = Kernel::open(&v).unwrap();
+    let s = session(&k);
+    std::fs::write(
+        v.join("x.md"),
+        c.replace("[c](c.md)", "[x](x.md)")
+            .replace("[[c]]", "[[x]]"),
+    )
+    .unwrap();
+    let e = attest(
+        &k,
+        &s,
+        &v,
+        "x.md",
+        json!({"link_update_of": "x.md", "link_update_from": "c.md"}),
+    )
+    .unwrap_err();
+    assert_eq!(code_of(&e), Code::Denied);
+    watch(&k, "x.md");
+    assert!(blocks(&k, "x.md").iter().all(|(_, l)| l == "unverified"));
+}
+
+#[test]
+fn a_plain_attestation_never_lifts_a_rename_s_caps() {
+    // X1 security B3: a plain attestation of the moved bytes beside the
+    // rename attestation (either order): the caps hold
+    for order in ["plain-first", "rename-first"] {
+        let (v, k, s) = with_agent(&format!("lift-{order}"), BH);
+        mv(&v, "b.md", "bee.md");
+        if order == "plain-first" {
+            attest(&k, &s, &v, "bee.md", json!({})).unwrap();
+            attest(&k, &s, &v, "bee.md", json!({"renamed_from": "b.md"})).unwrap();
+        } else {
+            attest(&k, &s, &v, "bee.md", json!({"renamed_from": "b.md"})).unwrap();
+            attest(&k, &s, &v, "bee.md", json!({})).unwrap();
+        }
+        watch(&k, "bee.md");
+        assert_eq!(
+            layer_of(&k, "bee.md", "Agent paragraph"),
+            "unverified",
+            "{order}"
+        );
+    }
 }

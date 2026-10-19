@@ -896,10 +896,11 @@ pub struct IngestResult {
     pub changed_lineages: Vec<String>,
 }
 
-/// Per block version: the provenance, and the declared layer if any, that a
-/// block event creating it carries in `Vault::plan_ingest_carried`
-/// (P2-0.2 T2; `attest::Caps::carried`).
-pub type Carried = HashMap<String, (Provenance, Option<Layer>)>;
+/// Per block version, one entry per place of it in the ingested text, in
+/// document order: the provenance, and the declared layer if any, that the
+/// block event creating it there carries in `Vault::plan_ingest_carried`
+/// (`None`: the ingest's own) (P2-0.2 T2; `attest::Caps::carried`).
+pub type Carried = HashMap<String, Vec<Option<(Provenance, Option<Layer>)>>>;
 
 /// An ingest computed but not written (`Vault::plan_ingest`,
 /// `Vault::commit_plan`).
@@ -1563,11 +1564,30 @@ impl Vault {
             }
         }
         if let Some(c) = carried {
+            // each block's place among the blocks of its version, in
+            // document order: the event creating it there takes that entry
+            let mut seen: HashMap<&str, usize> = HashMap::new();
+            let place: HashMap<&str, usize> = r
+                .blocks
+                .iter()
+                .map(|b| {
+                    let n = seen.entry(b.version_id.as_str()).or_default();
+                    *n += 1;
+                    (b.lineage_id.as_str(), *n - 1)
+                })
+                .collect();
             for ev in events
                 .iter_mut()
                 .filter(|e| matches!(e.kind, EventKind::BlockCreated | EventKind::BlockUpdated))
             {
-                let Some((p, l)) = ev.new_version_ids.first().and_then(|v| c.get(v)) else {
+                let (Some(v), Some(l)) = (ev.new_version_ids.first(), ev.lineage_ids.first())
+                else {
+                    continue;
+                };
+                let entry = place
+                    .get(l.as_str())
+                    .and_then(|n| c.get(v).and_then(|xs| xs.get(*n)));
+                let Some(Some((p, l))) = entry.cloned() else {
                     continue;
                 };
                 if l.is_some_and(|l| l != Layer::Unverified)
