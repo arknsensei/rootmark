@@ -335,6 +335,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `clients/obsidian/e2e/p2_0_1/real.ts` | `P2-0.1/Y6-pre:` | D-A′, D-C′ gerçek Obsidian harness'i |
 | `scripts/gen_p2_0_1_old_vaults.sh` | `P2-0.1/Y6-pre:` | D-E'nin `ce4cf04` vault üreteci |
 | `research/data/p2_0_1_old_vaults/**` | `P2-0.1/Y6-pre:` | D-E'nin `ce4cf04` vault'ları ve beklenenleri |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0.1/Y6-pre:` | yeniden dondurma P2-0.1/F7: `compare_p2_0_1` regress satırları (geliştirme RUN'ı) |
 <!-- /frozen-table -->
 
 ## Notlar
