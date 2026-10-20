@@ -11,3 +11,4 @@ pypi numpy 2.5.4 GH-0/G2-1
 pypi pyarrow 26.0.0 GH-0/G2-1
 pypi ruff 0.17.0 GH-0/G2-1
 pypi torch 2.14.1 GH-0/G2-1
+actions dtolnay/rust-toolchain 1.92.0 K-P2A.3 (a branch named after the pinned toolchain; the toolchain itself is rust-toolchain.toml's)

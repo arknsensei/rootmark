@@ -18,10 +18,13 @@ manifest="$root/models/MANIFEST.json"
 command -v jq >/dev/null || { echo "fetch_model: jq is required" >&2; exit 1; }
 
 sha256() { shasum -a 256 "$1" | cut -d' ' -f1; }
+# jq on Windows ends its lines with CRLF: the `\r` is not part of a value
+# (GH-0 STOP 7: `size 90405214 != manifest 90405214`; P2-A/A3)
+jqr() { jq "$@" | tr -d '\r'; }
 
-name="$(jq -er .name "$manifest")"
-repo="$(jq -er .source "$manifest")"
-rev="$(jq -er .revision "$manifest")"
+name="$(jqr -er .name "$manifest")"
+repo="$(jqr -er .source "$manifest")"
+rev="$(jqr -er .revision "$manifest")"
 dest="$root/models/$name"
 mkdir -p "$dest"
 tmp="$(mktemp -d -t rootmark-model.XXXXXX)"
@@ -44,6 +47,6 @@ while IFS=$'\t' read -r path remote want_sha size; do
   [ "$got_sha" = "$want_sha" ] || { echo "fetch_model: $path sha256 $got_sha != manifest $want_sha" >&2; exit 1; }
   mkdir -p "$(dirname "$out")"
   mv "$tmp/file" "$out"
-done < <(jq -er '.files | to_entries[] | [.key, .value.remote_path, .value.sha256, (.value.size | tostring)] | @tsv' "$manifest")
+done < <(jqr -er '.files | to_entries[] | [.key, .value.remote_path, .value.sha256, (.value.size | tostring)] | @tsv' "$manifest")
 [ "$n" -gt 0 ] || { echo "fetch_model: manifest lists no file" >&2; exit 1; }
 echo "fetch_model: $n files in models/$name (sha256 ok; run \`make models\` for the blake3 manifest check)"

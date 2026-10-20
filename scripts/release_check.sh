@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Checks every item of docs/RELEASE.md (R1–R16, R4a) against the tree and
+# Checks every item of docs/RELEASE.md (R1–R20, R4a) against the tree and
 # the release package built by scripts/release.sh. No pipeline ends in an
 # early-exiting reader (`grep -q`, `head`) under pipefail: a listing is
 # captured first and then searched (P1-E verification V7: R7's `unzip |
@@ -124,6 +124,41 @@ item R15 "real-Obsidian e2e 11/11 and E1-9 (K-E1.3)" "$( [ -f "$re" ] && jq -e '
   "$( [ -f "$re" ] && jq -r 'if .skipped then "skipped: \(.reason)" else "\(.passed)/11, E1-9 \(.e1_9_connection.pass)" end' "$re" || echo "no record (scripts/release.sh runs scripts/plugin_e2e_real.sh)")"
 item R16 "RELEASE.md human step 1 waits for a verification that says Güvenilir" "$( [ "$verdict" = "Güvenilir" ]; echo $?)" \
   "${vrep:-no report named in step 1}: ${verdict:-no verdict}"
+
+# R17–R20 (P2-A/A3, freeze exception P2-A/F3; docs/RELEASE.md "Kurulum")
+# R17: the installers exist, and install.sh installs this package's archive
+# from a local SHA256SUMS (no model download) and refuses a changed archive
+# (nothing installed)
+host_t="$(case "$(uname -s)-$(uname -m)" in (Linux-x86_64) echo x86_64-unknown-linux-gnu ;; (Darwin-arm64) echo aarch64-apple-darwin ;; esac)"
+r17=1; r17d="no archive of this host's target in $dist/bin"
+ha="$(ls "$dist"/bin/rootmark-*-"$host_t".tar.gz 2>/dev/null | head -1 || true)"
+if [ -f packaging/install.sh ] && [ -f packaging/install.ps1 ] && bash -n packaging/install.sh && [ -n "$ha" ]; then
+  mkdir -p "$tmp/inst/src" && cp "$ha" "$tmp/inst/src/"
+  (cd "$tmp/inst/src" && shasum -a 256 "${ha##*/}" >SHA256SUMS)
+  if bash packaging/install.sh --from "$tmp/inst/src" --prefix "$tmp/inst/ok" --no-model >"$tmp/inst/ok.log" 2>&1 \
+    && [ "$("$tmp/inst/ok/bin/rootmark" --version)" = "rootmark $ver" ]; then
+    printf 'x' >>"$tmp/inst/src/${ha##*/}"
+    if ! bash packaging/install.sh --from "$tmp/inst/src" --prefix "$tmp/inst/bad" --no-model >"$tmp/inst/bad.log" 2>&1 \
+      && [ ! -e "$tmp/inst/bad/bin/rootmark" ]; then r17=0; r17d="installed ${ha##*/}; a changed archive refused"
+    else r17d="a changed archive was not refused"; fi
+  else r17d="install.sh failed: $(tail -1 "$tmp/inst/ok.log")"; fi
+fi
+item R17 "installers install.sh / install.ps1 (SHA256SUMS checked, a changed archive refused)" "$r17" "$r17d"
+# R18: release.yml installs each archive with its installer and checks the
+# installed binary; the last job writes SHA256SUMS and attests provenance
+item R18 "CI release.yml: installer per job, SHA256SUMS, build provenance attestation" "$(
+  grep -qF 'bash packaging/install.sh --from' "$wf" && grep -qF './packaging/install.ps1 -From' "$wf" \
+  && grep -qF 'sha256sum rootmark-* >SHA256SUMS' "$wf" \
+  && grep -qE 'uses: actions/attest-build-provenance@v[0-9]+\.[0-9]+\.[0-9]+' "$wf" \
+  && grep -qE '^\s*id-token: write' "$wf" && grep -qE '^\s*attestations: write' "$wf"; echo $?)"
+# R19: code signing and notarization are human steps, written down
+item R19 "RELEASE.md: signing and notarization are written human steps" "$(
+  sed -n '/^## İnsan adımları/,$p' docs/RELEASE.md >"$tmp/human.md"
+  grep -q 'notarization' "$tmp/human.md" && grep -q 'Authenticode' "$tmp/human.md" && grep -q 'gh attestation verify' docs/RELEASE.md; echo $?)"
+# R20: every action of every workflow pinned to a full version (age:
+# scripts/check_dep_age.sh), the toolchain action excepted
+unpinned="$(grep -hoE 'uses: [^ ]+@[^ ]+' .github/workflows/*.yml | grep -vE '@v[0-9]+\.[0-9]+\.[0-9]+$' | grep -v 'dtolnay/rust-toolchain@' | sort -u | tr '\n' ' ' || true)"
+item R20 "workflow actions pinned to full versions" "$( [ -z "$unpinned" ]; echo $?)" "${unpinned:+unpinned: $unpinned}"
 
 printf '%s\n' "${items[@]}" | jq -s '{items: ., passed: ([.[] | select(.ok)] | length), total: length} | .pass = (.passed == .total)' >"$dist/release_check.json"
 jq -r '"release_check: \(.passed)/\(.total)"' "$dist/release_check.json"

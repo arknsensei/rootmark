@@ -362,6 +362,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `server/tests/serve_watch.rs` | `P2-A/A0:` | yeniden dondurma P2-A/F1: `base_recipe()` |
 | `server/tests/contract.rs` | `P2-A/A2:` | yeniden dondurma P2-A/F2: `migration_required` |
 | `scripts/contract_check.sh` | `P2-A/A2:` | yeniden dondurma P2-A/F2: `migration_required`, `stale` durumda `search` |
+| `scripts/release_check.sh` | `P2-A/A3:` | yeniden dondurma P2-A/F3: kurulum maddeleri R17–R20 |
 <!-- /frozen-table -->
 
 ## Notlar
