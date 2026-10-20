@@ -1,0 +1,5 @@
+# The conformance fixtures are byte-exact data (their SHA-256 is in
+# spec/fixtures/MANIFEST.json and `rootmark conformance` embeds them): no
+# line-ending conversion on checkout (a Windows checkout with core.autocrlf
+# turned them into CRLF: fixtures_manifest "mismatch", 31/39; P2-A/A3).
+spec/fixtures/** -text
