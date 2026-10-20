@@ -2,9 +2,9 @@
  "criterion": "A-4",
  "workflow": ".github/workflows/release.yml",
  "dispatch": "workflow_dispatch on p2-a/round (no tag, nothing published; K-GH.4 precedent, K-P2A.3)",
- "run": "https://github.com/arknsensei/rootmark/actions/runs/39442647207",
- "run_id": 39442647207,
- "commit": "e27955eb1f2f16224263126a5af0f9da346788c3",
+ "run": "https://github.com/arknsensei/rootmark/actions/runs/39488669699",
+ "run_id": 39488669699,
+ "commit": "2429cba07b1800864d6f9a71589af1d22e566ba6",
  "jobs": {
   "aarch64-apple-darwin": {
    "ok": true,
@@ -30,7 +30,7 @@
     "total": 39,
     "fixtures_manifest": "ok"
    },
-   "sha256_binary": "98ef74602f80f5a8800f96af4aa9f3580457c1125d8ca825f0e25dfc959ab1ea"
+   "sha256_binary": "d51e029b811692b75c49df53b333435b2a8eeda460bdcfbe6d46e00abc672ee4"
   },
   "x86_64-unknown-linux-gnu": {
    "ok": true,
@@ -79,38 +79,61 @@
   }
  },
  "sha256sums": [
-  "155e8fbe76ac8b18bd628054df0b21bed15408ccdacdb72423b0ae9ba36411bf  rootmark-0.1.0-aarch64-apple-darwin.tar.gz",
-  "2f26bf0e3d63faaa4a75b41b1cf1afbba4a30d3bda6452a93fa684fe790c0d15  rootmark-0.1.0-x86_64-pc-windows-msvc.zip",
-  "05346852c4bfb084f2233627e572c3a3b6599e49d7a01e4ba9c0e39e23d02038  rootmark-0.1.0-x86_64-unknown-linux-gnu.tar.gz"
+  "29e98d9cd3fe58ddea49a1f164d841e98d37f24b1c7b2bb7adff0ba2e1c775ae  rootmark-0.1.0-aarch64-apple-darwin.tar.gz",
+  "a2aebd1c9fb5fba654f4ba1a3955531deaee64ac88875d078426f50eb9c9e0a1  rootmark-0.1.0-x86_64-pc-windows-msvc.zip",
+  "ce9d85ab4bada59b2e31f13e35e192aef42693a95e46abd378dd104a5e11419b  rootmark-0.1.0-x86_64-unknown-linux-gnu.tar.gz",
+  "133cb5b6f3fc46960633547d4ce8e1618c3b0babd4c44627b1e0076cf22d7e73  install.sh",
+  "1c6856a56a4515bc63a30114bd5e03a8fd6e328006d3eafd1ebb71484d46ed66  install.ps1"
  ],
- "sha256sums_check": "shasum -a 256 -c SHA256SUMS: every archive OK",
+ "sha256sums_check": "shasum -a 256 -c SHA256SUMS: every archive and both installers OK",
  "attestations": [
   {
-   "archive": "rootmark-0.1.0-aarch64-apple-darwin.tar.gz",
-   "sha256": "155e8fbe76ac8b18bd628054df0b21bed15408ccdacdb72423b0ae9ba36411bf",
+   "file": "install.ps1",
+   "sha256": "1c6856a56a4515bc63a30114bd5e03a8fd6e328006d3eafd1ebb71484d46ed66",
    "gh_attestation_verify": "ok (exit 0)",
    "predicate_type": "https://slsa.dev/provenance/v1",
    "signer_workflow": "https://github.com/arknsensei/rootmark/.github/workflows/release.yml@refs/heads/p2-a/round",
-   "source_commit": "e27955eb1f2f16224263126a5af0f9da346788c3"
+   "source_commit": "2429cba07b1800864d6f9a71589af1d22e566ba6"
   },
   {
-   "archive": "rootmark-0.1.0-x86_64-pc-windows-msvc.zip",
-   "sha256": "2f26bf0e3d63faaa4a75b41b1cf1afbba4a30d3bda6452a93fa684fe790c0d15",
+   "file": "install.sh",
+   "sha256": "133cb5b6f3fc46960633547d4ce8e1618c3b0babd4c44627b1e0076cf22d7e73",
    "gh_attestation_verify": "ok (exit 0)",
    "predicate_type": "https://slsa.dev/provenance/v1",
    "signer_workflow": "https://github.com/arknsensei/rootmark/.github/workflows/release.yml@refs/heads/p2-a/round",
-   "source_commit": "e27955eb1f2f16224263126a5af0f9da346788c3"
+   "source_commit": "2429cba07b1800864d6f9a71589af1d22e566ba6"
   },
   {
-   "archive": "rootmark-0.1.0-x86_64-unknown-linux-gnu.tar.gz",
-   "sha256": "05346852c4bfb084f2233627e572c3a3b6599e49d7a01e4ba9c0e39e23d02038",
+   "file": "rootmark-0.1.0-aarch64-apple-darwin.tar.gz",
+   "sha256": "29e98d9cd3fe58ddea49a1f164d841e98d37f24b1c7b2bb7adff0ba2e1c775ae",
    "gh_attestation_verify": "ok (exit 0)",
    "predicate_type": "https://slsa.dev/provenance/v1",
    "signer_workflow": "https://github.com/arknsensei/rootmark/.github/workflows/release.yml@refs/heads/p2-a/round",
-   "source_commit": "e27955eb1f2f16224263126a5af0f9da346788c3"
+   "source_commit": "2429cba07b1800864d6f9a71589af1d22e566ba6"
+  },
+  {
+   "file": "rootmark-0.1.0-x86_64-pc-windows-msvc.zip",
+   "sha256": "a2aebd1c9fb5fba654f4ba1a3955531deaee64ac88875d078426f50eb9c9e0a1",
+   "gh_attestation_verify": "ok (exit 0)",
+   "predicate_type": "https://slsa.dev/provenance/v1",
+   "signer_workflow": "https://github.com/arknsensei/rootmark/.github/workflows/release.yml@refs/heads/p2-a/round",
+   "source_commit": "2429cba07b1800864d6f9a71589af1d22e566ba6"
+  },
+  {
+   "file": "rootmark-0.1.0-x86_64-unknown-linux-gnu.tar.gz",
+   "sha256": "ce9d85ab4bada59b2e31f13e35e192aef42693a95e46abd378dd104a5e11419b",
+   "gh_attestation_verify": "ok (exit 0)",
+   "predicate_type": "https://slsa.dev/provenance/v1",
+   "signer_workflow": "https://github.com/arknsensei/rootmark/.github/workflows/release.yml@refs/heads/p2-a/round",
+   "source_commit": "2429cba07b1800864d6f9a71589af1d22e566ba6"
   }
  ],
  "earlier_dispatches": [
+  {
+   "run_id": 39442647207,
+   "commit": "e27955eb1f2f16224263126a5af0f9da346788c3",
+   "result": "all four jobs green; the installers were not yet summed or attested (A3 review)"
+  },
   {
    "run_id": 39439087677,
    "windows": "failure: fetch_model.sh `size 90405214 != manifest 90405214` was fixed (jq CRLF), then `shasum: command not found` (Git Bash)"

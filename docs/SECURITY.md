@@ -43,7 +43,7 @@ Durum: taslak (P1-D.1/D1.0, K-D1.3). Kapsam: tek makinede, tek kullanıcının v
 
 ## Bilinen açık sınırlar
 - **TOCTOU (K-D4-T c):** `propose`'un yol denetimi ile yazımı arasında, vault'a yazma izni olan başka bir yerel süreç bir dizini sembolik bağla değiştirebilir. Tam kapatmak `openat`/`O_NOFOLLOW` zinciri ister (faz 2).
-- **Büyük/küçük harf duyarsız dosya sistemleri:** dosyası silinmiş bir dokümanın harf farklı adıyla yeni doküman yaratılabilir; köken doğru kalır.
+- **Büyük/küçük harf duyarsız dosya sistemleri:** dosyası silinmiş bir dokümanın harf farklı adıyla yeni doküman yaratılabilir; köken doğru kalır. (K-GH.6, P2-A/A4) `propose`'un yazım varyantı reddi NFC + küçük harfle katlar, tam Unicode case folding değildir: `ſ`/`s`, `ς`/`σ` gibi çiftleri macOS'ta işletim sisteminin denetimi (fail closed) yakalar, Linux'ta `ſub/b.md` `sub/`'un yanında ikinci bir dizin açabilir (taşınabilirlik, güvenlik değil).
 - **CLI'nin aktörü beyan edilir:** `rootmark promote --actor human:<id>` komutu çalıştıran kişinin beyanıdır; CLI'yi çalıştırabilen her süreç insan beyan edebilir. Bu, token dosyası varsayımıyla aynı güven düzeyidir.
 - **Bağlantı başvuru tanımları:** ajan kendi başlıklı bölümüne bir Markdown bağlantı başvuru tanımı (`[ad]: url`) ekleyebilir. Bu, aynı adı kullanan canonical bir bloğun görüntülenen bağlantı hedefini değiştirebilir. Bloğun metni, kökeni ve arama birimleri değişmez (`append_only` bunu ölçer). İstemciler, proposal bloklarından gelen başvuru tanımlarını canonical bloklara uygulamamalıdır.
 - **Sunucu dışı eşzamanlı yazar:** sunucu çalışırken aynı vault'a CLI ile yazmak çekirdekte kilitlenmez (ASSUMPTIONS P1-D D1-3). Tek yazar kuyruğu yalnız sunucunun çağrılarını sıralar.
