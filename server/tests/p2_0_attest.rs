@@ -49,7 +49,7 @@ fn vault(name: &str, attestation: &str) -> PathBuf {
     assert!(st.status.success());
     let mut recipe = format!(
         "{}\n[identity]\nhuman_id = \"ada\"\n",
-        rootmarkserver::config::default_recipe()
+        rootmarkserver::config::base_recipe()
     );
     if !attestation.is_empty() {
         recipe.push_str(&format!("\n[attestation]\n{attestation}\n"));
@@ -411,7 +411,7 @@ fn attestation_endpoints_refuse_bad_macs_and_need_the_human() {
     // HTTP without [identity] human_id: denied
     std::fs::write(
         v.join(".rootmark/policy.toml"),
-        rootmarkserver::config::default_recipe(),
+        rootmarkserver::config::base_recipe(),
     )
     .unwrap();
     let e = k.call("attest_session", &json!({}), human()).unwrap_err();

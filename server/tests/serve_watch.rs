@@ -88,7 +88,8 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
     // `unattested = "canonical"` since the default became `unverified`
     std::fs::write(
         vault.join(".rootmark/policy.toml"),
-        rootmarkserver::config::default_recipe() + "\n[attestation]\nunattested = \"canonical\"\n",
+        // (P2-A/F1: the default recipe writes its own `[attestation]` table)
+        rootmarkserver::config::base_recipe() + "\n[attestation]\nunattested = \"canonical\"\n",
     )
     .unwrap();
 

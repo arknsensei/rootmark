@@ -77,6 +77,8 @@ const policyPath = join(vault, ".rootmark/policy.toml");
 let policy = readFileSync(policyPath, "utf8");
 policy = policy.replace("[server]\n", `[server]\nhttp_port = ${String(httpPort)}\n`);
 policy = policy.replace('# [identity]\n# human_id = "<your id>"\n', '[identity]\nhuman_id = "editor"\n');
+// P2-A/F1: the default recipe writes `[attestation] unattested = "canonical"` since P2-A/A0; its table is removed before ours
+policy = policy.replace('[attestation]\nunattested = "canonical"\n', "");
 policy += `\n[attestation]\nunattested = "unverified"\nwindow_s = ${String(windowS)}\n`;
 writeFileSync(policyPath, policy);
 const pd = join(vault, ".obsidian/plugins/rootmark");

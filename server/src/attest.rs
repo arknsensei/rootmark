@@ -119,6 +119,10 @@ pub struct Pending {
     pub observed_ms: u64,
     pub base: rootmarkcore::attest::LinkBase,
     pub observed: Vec<String>,
+    /// the log did not know `doc` before this ingest (its base is empty):
+    /// for the renamed note's own late link update the base is the head of
+    /// the path it was renamed from (P2-A/A0 b, spec §7.1)
+    pub new_doc: bool,
 }
 
 /// The caps of an accepted rename or link-update attestation (P2-0.2 T2),
@@ -264,7 +268,9 @@ impl Attesting {
             .map_err(|_| anyhow::anyhow!("base lock poisoned"))?;
         b.retain(|x| observed_ms.saturating_sub(x.observed_ms) <= w);
         // a new document: an empty base (every block is new, so no link
-        // update of it can raise anything)
+        // update of it can raise anything — except the renamed note's own,
+        // checked against its old path's head: `new_doc`)
+        let new_doc = base.is_none();
         let base = base.unwrap_or(rootmarkcore::attest::LinkBase {
             doc_path: doc.to_string(),
             frontmatter: None,
@@ -276,19 +282,21 @@ impl Attesting {
             observed_ms,
             base,
             observed,
+            new_doc,
         });
         Ok(())
     }
 
     /// The head of `doc` before the oldest unattested ingest of the same
     /// bytes still in its window, if any (the state a late link update is
-    /// checked against).
+    /// checked against), and whether the log knew `doc` before it (`false`:
+    /// a new document, the base is empty).
     pub fn pending_base(
         &self,
         policy: &Policy,
         doc: &str,
         content_hash: &str,
-    ) -> Result<Option<rootmarkcore::attest::LinkBase>> {
+    ) -> Result<Option<(rootmarkcore::attest::LinkBase, bool)>> {
         let now = self.now_ms();
         let w = policy.attestation.window_ms;
         let b = self
@@ -309,7 +317,7 @@ impl Attesting {
             // window raises none, Y1 security review B5)
             bail!("{doc}: these bytes were observed unattested more than once in the window");
         }
-        Ok(m.first().map(|x| x.base.clone()))
+        Ok(m.first().map(|x| (x.base.clone(), !x.new_doc)))
     }
 
     /// Whether an unattested ingest of `doc` with these bytes is still in

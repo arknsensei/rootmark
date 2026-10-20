@@ -340,7 +340,13 @@ pub struct Kernel {
     embedder: Mutex<Option<Arc<OnnxMiniLm>>>,
     /// attestation sessions and window (spec 2.0.0 §7.1), in memory
     attesting: Attesting,
+    /// `rootmark serve --attest-log` (P2-A/A0 c): diagnostic lines outside
+    /// the vault, read by nothing
+    attest_log: Option<crate::attest_log::AttestLog>,
 }
+
+/// An attestation log line's `matched` and `partial` (the diagnostic log).
+type LineMarks = (Option<bool>, Option<bool>);
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -527,7 +533,14 @@ impl Kernel {
             queue: Queue::new(),
             embedder: Mutex::new(None),
             attesting: Attesting::new(),
+            attest_log: None,
         })
+    }
+
+    /// Writes the attestation diagnostic log to `log` (`rootmark serve
+    /// --attest-log`, P2-A/A0 c).
+    pub fn set_attest_log(&mut self, log: crate::attest_log::AttestLog) {
+        self.attest_log = Some(log);
     }
 
     /// The vault's writer queue (K-D1.4): transports take a ticket when a
@@ -684,6 +697,7 @@ impl Kernel {
             let (plan, after) =
                 self.external_plan(v, policy, doc, bytes, source, force_unattested)?;
             let n = plan.events.len();
+            let seq = v.next_seq();
             match &mut store {
                 Some((s, e)) => {
                     let r = s.watch_plan(v, *e, plan)?;
@@ -703,6 +717,22 @@ impl Kernel {
                 }
             }
             events += n;
+            if let (Some(log), true) = (&self.attest_log, n > 0) {
+                let (kind, id) = match &after.ingest {
+                    Ingest::Canonical => ("canonical", None),
+                    Ingest::Attested(id) => ("attested", Some(id.as_str())),
+                    Ingest::Unverified => ("unverified", None),
+                    Ingest::Partial(id, _) => ("partial", Some(id.as_str())),
+                };
+                log.observe(
+                    doc,
+                    &after.hash,
+                    seq,
+                    kind,
+                    id,
+                    policy.attestation.window_ms,
+                )?;
+            }
             let partial = after.partial_hash();
             after.done(self, v, policy)?;
             let Some(saved_hash) = partial else {
@@ -971,29 +1001,49 @@ impl Kernel {
                 "attest: link_update_of {renamed} is not a note of the vault"
             );
         }
+        let known = |d: &str| v.snapshot(d).ok().flatten().is_some();
+        // the client's old path of the renamed note, when the log knows it
+        // and its file is gone, as after a rename (a copy of a note is no
+        // rename of it: X1 security B2)
+        let hint_gone = from_hint.filter(|f| {
+            known(f) && !crate::paths::doc_file(&self.vault, f).is_ok_and(|p| p.exists())
+        });
         let base = match self
             .attesting
             .pending_base(policy, doc, content_hash)
             .code(Code::Denied)?
         {
-            Some(b) => b,
+            Some((b, true)) => b,
+            // the renamed note's own late link update when the watcher saw
+            // the note first under its new path, its links already
+            // rewritten (P2-A/A0 b; P2-0.2 FINAL note 3 (A)): the log did
+            // not know the path before that ingest, so the base is the head
+            // of the path it was renamed from (spec §7.1), not the empty
+            // head before the ingest — from an accepted rename attestation,
+            // else the client's old path
+            Some((b, false)) => {
+                let old = if doc == renamed {
+                    match self.attesting.renamed_from_of(renamed)? {
+                        Some(w) => Some(w),
+                        None => hint_gone.map(str::to_string),
+                    }
+                } else {
+                    None
+                };
+                match old {
+                    Some(o) => rootmarkcore::attest::LinkBase::head(v, &o)?
+                        .with_context(|| format!("attest: {o} is not a document of the log"))
+                        .code(Code::Denied)?,
+                    None => b,
+                }
+            }
             None => {
-                let known = |d: &str| v.snapshot(d).ok().flatten().is_some();
                 let d = match self.attesting.base_of(doc, known) {
                     Ok(d) => d,
                     // the renamed note itself, unknown to the log and with no
-                    // accepted rename: the client's old path (P2-0.2 T2) —
-                    // only when that file is gone, as after a rename (a
-                    // copy of a note is no rename of it: X1 security B2)
-                    Err(_)
-                        if doc == renamed
-                            && from_hint.is_some_and(|f| {
-                                known(f)
-                                    && !crate::paths::doc_file(&self.vault, f)
-                                        .is_ok_and(|p| p.exists())
-                            }) =>
-                    {
-                        from_hint.expect("checked").to_string()
+                    // accepted rename: the client's old path (P2-0.2 T2)
+                    Err(_) if doc == renamed && hint_gone.is_some() => {
+                        hint_gone.expect("checked").to_string()
                     }
                     Err(e) => return Err(e).code(Code::Denied),
                 };
@@ -1054,7 +1104,9 @@ impl Kernel {
     /// Records an attestation (spec 2.0.0 §7.1, §8) after checking its MAC,
     /// and raises the unattested ingests it matches late. In the writer
     /// queue.
-    fn attest(&self, x: AttestArgs) -> Result<Value> {
+    /// Also returns the log line's `matched` and `partial` (the diagnostic
+    /// log, P2-A/A0 c).
+    fn attest(&self, x: AttestArgs) -> Result<(Value, LineMarks)> {
         crate::propose::check_doc_path(&x.doc_path)?;
         rootmarkcore::attest::check_doc_path(&x.doc_path).code(Code::InvalidArguments)?;
         if x.content_hash.len() != 32
@@ -1230,14 +1282,17 @@ impl Kernel {
                 raised.extend(ev.lineage_ids);
             }
         }
-        Ok(json!({
-            "attestation_id": a.attestation_id,
-            "doc_path": a.doc_path,
-            "content_hash": a.content_hash,
-            "at_seq": a.at_seq,
-            "recorded": recorded,
-            "raised": raised,
-        }))
+        Ok((
+            json!({
+                "attestation_id": a.attestation_id,
+                "doc_path": a.doc_path,
+                "content_hash": a.content_hash,
+                "at_seq": a.at_seq,
+                "recorded": recorded,
+                "raised": raised,
+            }),
+            (a.matched, a.partial),
+        ))
     }
 
     /// Moves the hot tier into the cold index if it holds anything
@@ -1538,7 +1593,26 @@ impl Kernel {
             }
             "attest" if caller.channel == Channel::Http => {
                 let x: AttestArgs = args(name, a)?;
-                self.attest(x)
+                let Some(log) = &self.attest_log else {
+                    return self.attest(x).map(|(r, _)| r);
+                };
+                let kind = if x.renamed_from.is_some() {
+                    "rename"
+                } else if x.link_update_of.is_some() {
+                    "link_update"
+                } else {
+                    "plain"
+                };
+                let (doc, hash) = (x.doc_path.clone(), x.content_hash.clone());
+                let r = self.attest(x);
+                let line = r.as_ref().map(|(v, (matched, partial))| {
+                    let mut v = v.clone();
+                    v["matched"] = json!(matched.unwrap_or(true));
+                    v["partial"] = json!(partial.unwrap_or(false));
+                    v
+                });
+                log.attest(&doc, &hash, kind, line)?;
+                r.map(|(v, _)| v)
             }
             "trace" => {
                 let x: TraceArgs = args(name, a)?;

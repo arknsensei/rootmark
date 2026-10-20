@@ -52,7 +52,7 @@ fn policy(v: &Path, extra: &str) {
         v.join(".rootmark/policy.toml"),
         format!(
             "{}{extra}\n[attestation]\nunattested = \"canonical\"\n",
-            rootmarkserver::config::default_recipe()
+            rootmarkserver::config::base_recipe()
         ),
     )
     .unwrap();

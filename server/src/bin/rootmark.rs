@@ -207,6 +207,11 @@ struct ServeArgs {
     /// ingest Markdown files changed under the vault as human content
     #[arg(long)]
     watch: bool,
+    /// append the attestation diagnostic log (one JSON line per attestation
+    /// and per observed change: accepted/refused and why, match distance) to
+    /// this file, which must lie outside the vault (P2-A/A0)
+    #[arg(long)]
+    attest_log: Option<PathBuf>,
 }
 
 #[derive(Subcommand)]
@@ -661,6 +666,7 @@ fn main() {
                         mcp_stdio: a.mcp.is_some(),
                         http: a.http,
                         watch: a.watch,
+                        attest_log: a.attest_log,
                         matcher,
                     })
                 })

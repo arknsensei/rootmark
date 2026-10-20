@@ -35,6 +35,8 @@ pub struct ServeOptions {
     pub mcp_stdio: bool,
     pub http: Option<String>,
     pub watch: bool,
+    /// `--attest-log <file>` (P2-A/A0 c): outside the vault
+    pub attest_log: Option<PathBuf>,
     pub matcher: Option<MatcherVersion>,
 }
 
@@ -239,7 +241,16 @@ pub fn run(o: ServeOptions) -> Result<()> {
     if !o.mcp_stdio && o.http.is_none() && !o.watch {
         bail!("rootmark serve: nothing to serve (--mcp stdio, --http 127.0.0.1:PORT, --watch)");
     }
-    let kernel = Arc::new(Kernel::open_with(&o.vault, o.matcher)?);
+    let mut kernel = Kernel::open_with(&o.vault, o.matcher)?;
+    if let Some(p) = &o.attest_log {
+        let l = crate::attest_log::AttestLog::open(p, &o.vault)?;
+        log(format!(
+            "attestation diagnostic log: {}",
+            l.path().display()
+        ));
+        kernel.set_attest_log(l);
+    }
+    let kernel = Arc::new(kernel);
     let (_policy, cfg, write_policy) = policy_of(&o.vault)?;
     // the HTTP address is checked before anything is written or built
     let http_addr = match &o.http {
