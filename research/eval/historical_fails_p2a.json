@@ -1,5 +1,249 @@
 {
- "about": "P2-A (K-P2A.2): written from the development RUN before the official RUN (A5.md)",
+ "about": "P2-A (K-P2A.2): written from the development RUN 20261020T203735Z-c51159b before the official RUN (A5.md)",
  "reference_run": "reports/rounds/P2-0.2/runs/20261019T212951Z-72fd78f",
- "entries": []
+ "entries": [
+  {
+   "file": "p1b1_checks.json",
+   "criterion": "B1-3",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1c1_checks.json",
+   "criterion": "C1-7",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-11",
+   "decisions": [
+    "K-D1.2",
+    "K-D1.4-T",
+    "K-E0.1"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-3",
+   "decisions": [
+    "K-C8-T",
+    "K-C1.1",
+    "K-C1.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-10",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-12",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-2",
+   "decisions": [
+    "K-D1.1",
+    "K-D1.5",
+    "K-E0.4",
+    "K-D1.4-T"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-7",
+   "decisions": [
+    "K-D1.4-T",
+    "K-D1.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-9",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-8",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "tamper",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-7",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-6",
+   "decisions": [],
+   "why": "E1-6 regresses P1-E.1 against P1-E: its differing fields grow by the contract's new code migration_required (D1-13's contract and server code lists)",
+   "changes": [
+    {
+     "path": "regress_vs_p1e",
+     "decision": "K-P2A.2"
+    }
+   ]
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-9",
+   "decisions": [],
+   "why": "E-9 regresses P1-E against P1-D.1: the excluded D1-13 leaves grow by the new code migration_required",
+   "changes": [
+    {
+     "path": "regress_vs_p1d1",
+     "decision": "K-P2A.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "fail_summary",
+   "decisions": [],
+   "why": "P2-0.2's own classifier (against the P2-0.1 RUN) sees the migration-required FAILs E1-1, E1-4, E1-9, E-14; P2-A's classifier is this one",
+   "changes": [
+    {
+     "path": "counted",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "counted_fails",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2A.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "regress",
+   "decisions": [],
+   "why": "P2-0.2's regress against the P2-0.1 RUN sees P2-A's decisions (contract code, installers, field audit) and the skipped real-Obsidian sets; P2-A's regress is eval.compare_p2a against the P2-0.2 RUN",
+   "changes": [
+    {
+     "path": "differing_fields",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "excluded_differences",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "p2_0_1_sets",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2A.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json",
+   "not_measured": true,
+   "changes": []
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b′",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json",
+   "not_measured": true,
+   "changes": []
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2c",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json",
+   "not_measured": true,
+   "changes": []
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2d",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "D-C′ (real Obsidian) not run in a development round's chain; D-C ran",
+   "changes": [
+    {
+     "path": "d_c_prime",
+     "decision": "K-P2.3"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2.3"
+    }
+   ],
+   "not_measured": true
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2e",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json",
+   "not_measured": true,
+   "changes": []
+  }
+ ]
 }

@@ -59,7 +59,171 @@ P2A_INFO: dict[str, list[tuple]] = {}
 
 # P2-0.2 official RUN → this RUN: `(file, path prefix, decision, why)`;
 # written from the development RUN before the official RUN (A5.md)
-EXCLUDED: list[tuple[str, tuple, str, str]] = []
+EXCLUDED: list[tuple[str, tuple, str, str]] = [
+    ("p1d1/d1_13.json", ("codes",), "K-P2A.2", "the contract's codes: migration_required (12)"),
+    (
+        "p1d1/d1_13.json",
+        ("http",),
+        "K-P2A.2",
+        "contract_check over HTTP: migration_required triggered, stale state's search code, status.migrations fields",
+    ),
+    ("p1d1_checks.json", ("D1-13", "codes"), "K-P2A.2", "D1-13's code count: 12"),
+    (
+        "p1e/check_compare_fields.json",
+        ("file_constants",),
+        "P2-A/F6",
+        "the field audit sees the new comparator compare_p2a",
+    ),
+    (
+        "p1e/check_compare_fields.json",
+        ("modules",),
+        "P2-A/F6",
+        "the field audit sees the new comparator compare_p2a",
+    ),
+    (
+        "p1e/client.json",
+        ("bundle_bytes",),
+        "K-P2A.2",
+        "the plugin's index notice names `rootmark migrate` (view.ts): its bundle size",
+    ),
+    (
+        "p1e/client.json",
+        ("vitest",),
+        "K-P2A.2",
+        "the client's tests: one more (the generated contract's code)",
+    ),
+    (
+        "p1e/e0/e14.json",
+        ("auto_rebuild_false",),
+        "K-P2A.2",
+        "E-14 on the /2 index: search 503 migration_required",
+    ),
+    (
+        "p1e/e0/e14.json",
+        ("pass",),
+        "K-P2A.2",
+        "E-14 on the /2 index: search 503 migration_required",
+    ),
+    (
+        "p1e/e0/e14.json",
+        ("passed",),
+        "K-P2A.2",
+        "E-14 on the /2 index: search 503 migration_required",
+    ),
+    (
+        "p1e1/check_compare_fields.json",
+        ("file_constants",),
+        "P2-A/F6",
+        "the field audit sees the new comparator compare_p2a",
+    ),
+    (
+        "p1e1/check_compare_fields.json",
+        ("modules",),
+        "P2-A/F6",
+        "the field audit sees the new comparator compare_p2a",
+    ),
+    ("p1e1/contract.json", ("codes",), "K-P2A.2", "contract_check: migration_required (12 codes)"),
+    (
+        "p1e1/contract.json",
+        ("http",),
+        "K-P2A.2",
+        "contract_check over HTTP: migration_required, stale state's search code, status.migrations fields",
+    ),
+    (
+        "p1e1/historical.json",
+        ("counted",),
+        "K-P2A.2",
+        "P1-E.1's classifier sees the migration-required FAILs (E1-1, E1-4, E1-9, E-14)",
+    ),
+    (
+        "p1e1/historical.json",
+        ("counted_fails",),
+        "K-P2A.2",
+        "P1-E.1's classifier sees the migration-required FAILs (E1-1, E1-4, E1-9, E-14)",
+    ),
+    (
+        "p1e1/historical.json",
+        ("fails",),
+        "K-P2A.2",
+        "P1-E.1's classifier sees the migration-required FAILs (E1-1, E1-4, E1-9, E-14)",
+    ),
+    (
+        "p1e1/release/plugin_e2e_real.json",
+        ("e1_9_connection",),
+        "K-P2A.2",
+        "the real-Obsidian e2e on the /2 index: migration_required before the rebuild, the notice names `rootmark migrate`",
+    ),
+    (
+        "p1e1/release/plugin_e2e_real.json",
+        ("pass",),
+        "K-P2A.2",
+        "the real-Obsidian e2e on the /2 index (E1-9)",
+    ),
+    (
+        "p1e1/release/release.json",
+        ("commit",),
+        "K-P2A.3",
+        "the release package is built from this round's commit",
+    ),
+    (
+        "p1e1/release/release_check.json",
+        ("items",),
+        "K-P2A.3",
+        "release_check R17–R20 (P2-A/F3); R15 follows E1-9 (K-P2A.2)",
+    ),
+    (
+        "p1e1/release/release_check.json",
+        ("pass",),
+        "K-P2A.3",
+        "release_check R17–R20; R15 follows E1-9",
+    ),
+    (
+        "p1e1/release/release_check.json",
+        ("passed",),
+        "K-P2A.3",
+        "release_check R17–R20; R15 follows E1-9",
+    ),
+    ("p1e1/release/release_check.json", ("total",), "K-P2A.3", "release_check R17–R20 (21 items)"),
+    (
+        "p1e1/status/e1_1.json",
+        ("auto_rebuild_false",),
+        "K-P2A.2",
+        "E1-1 on the /2 index: search 503 migration_required",
+    ),
+    (
+        "p1e1/status/e1_1.json",
+        ("cases",),
+        "K-P2A.2",
+        "E1-1 on the /2 index: search 503 migration_required",
+    ),
+    ("p1e1/status/e1_1.json", ("pass",), "K-P2A.2", "E1-1 on the /2 index"),
+    ("p1e1/status/e1_1.json", ("passed",), "K-P2A.2", "E1-1 on the /2 index"),
+    ("p1e1_checks.json", ("E1-1",), "K-P2A.2", "E1-1: migration required (eval.historical_p2a)"),
+    (
+        "p1e1_checks.json",
+        ("E1-4",),
+        "K-P2A.3",
+        "E1-4: release_check R17–R20 (K-P2A.3) and R15 (E1-9, K-P2A.2)",
+    ),
+    ("p1e1_checks.json", ("E1-6",), "K-P2A.2", "E1-6's regress against P1-E sees the new code"),
+    ("p1e1_checks.json", ("E1-9",), "K-P2A.2", "E1-9: migration required (eval.historical_p2a)"),
+    ("p1e_checks.json", ("E-10", "bundle_bytes"), "K-P2A.2", "the plugin bundle (view.ts notice)"),
+    ("p1e_checks.json", ("E-10", "vitest"), "K-P2A.2", "the client's tests: one more"),
+    ("p1e_checks.json", ("E-14",), "K-P2A.2", "E-14: migration required (eval.historical_p2a)"),
+    ("p1e_checks.json", ("E-9",), "K-P2A.2", "E-9's regress against P1-D.1 sees the new code"),
+    (
+        "p2_0_2_checks.json",
+        ("fail_summary",),
+        "K-P2A.2",
+        "P2-0.2's classifier sees the migration-required FAILs; P2-A's classifier is eval.historical_p2a",
+    ),
+    (
+        "p2_0_2_checks.json",
+        ("regress",),
+        "K-P2A.2",
+        "P2-0.2's regress against P2-0.1; P2-A's regress is this comparison",
+    ),
+]
 
 
 def _excl_match(name: str, path: tuple) -> tuple | None:
