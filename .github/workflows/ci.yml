@@ -26,7 +26,7 @@ jobs:
     name: dependency direction and age
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0   # check_dep_age reads `git blame` of each declaration
       - uses: dtolnay/rust-toolchain@1.92.0
@@ -38,18 +38,18 @@ jobs:
     name: test + lint + conformance (macos-14)
     runs-on: macos-14
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0   # tags v2-final/v3-final/p*-final, ROUND_START shas and prototype history are read by tests and check_frozen
       - uses: dtolnay/rust-toolchain@1.92.0
         with:
           components: rustfmt, clippy
-      - uses: astral-sh/setup-uv@v6
-      - uses: actions/setup-node@v4
+      - uses: astral-sh/setup-uv@v10.2.0
+      - uses: actions/setup-node@v7.0.0
         with:
           node-version: "24"
       # embedder model (models/MANIFEST.json) and the ONNX Runtime download of `ort`
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6.1.0
         with:
           path: |
             models/minilm-l6-v2
@@ -66,18 +66,18 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0   # tags v2-final/v3-final/p*-final, ROUND_START shas and prototype history are read by tests and check_frozen
       - uses: dtolnay/rust-toolchain@1.92.0
         with:
           components: rustfmt, clippy
-      - uses: astral-sh/setup-uv@v6
-      - uses: actions/setup-node@v4
+      - uses: astral-sh/setup-uv@v10.2.0
+      - uses: actions/setup-node@v7.0.0
         with:
           node-version: "24"
       # embedder model (models/MANIFEST.json) and the ONNX Runtime download of `ort`
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6.1.0
         with:
           path: |
             models/minilm-l6-v2

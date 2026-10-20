@@ -10,7 +10,11 @@
 #   - npm: clients/obsidian/package.json dependencies, devDependencies —
 #     registry `time`;
 #   - Python: research/pyproject.toml `name==version` lines (dependencies and
-#     dependency groups) — PyPI's first upload time of that version.
+#     dependency groups) — PyPI's first upload time of that version;
+#   - GitHub Actions (P2-A/A3): every `uses: <owner>/<repo>@<ref>` of
+#     .github/workflows/*.yml — the GitHub release of that tag, else the
+#     commit date of the tag (`git/refs/tags`); a ref that is neither (a
+#     branch) needs an exception. `GITHUB_TOKEN`/`GH_TOKEN` is used when set.
 # Exceptions (e.g. a security fix adopted early) are listed one per line in
 # scripts/dep_age_exceptions.txt as `<ecosystem> <name> <version> <decision>`
 # (`#` comments); an exception without a decision is an error.
@@ -98,6 +102,21 @@ while IFS= read -r line; do
   done
 done <"$pp"
 
+for wf in .github/workflows/*.yml; do
+  n=0
+  while IFS= read -r line; do
+    n=$((n + 1))
+    [[ "$line" =~ uses:[[:space:]]*([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)@([^[:space:]#]+) ]] || continue
+    entries+=("actions	${BASH_REMATCH[1]}	${BASH_REMATCH[2]}	$wf	$n")
+  done <"$wf"
+done
+
+gh_api() { # <path> → JSON (empty on failure)
+  local tok="${GITHUB_TOKEN:-${GH_TOKEN:-}}"
+  if [ -n "$tok" ]; then curl -sf -A "$ua" -H "Authorization: Bearer $tok" "https://api.github.com/$1"
+  else curl -sf -A "$ua" "https://api.github.com/$1"; fi
+}
+
 adopted_at() { # <file> <line> → unix time of the commit that wrote the line (now if uncommitted)
   local b t sha
   b="$(git blame --porcelain -L "$2,$2" -- "$1")" || { echo "check_dep_age: git blame $1:$2 failed" >&2; return 1; }
@@ -113,6 +132,14 @@ published_at() { # <eco> <name> <version> → ISO time or empty
     cargo) curl -sf -A "$ua" "https://crates.io/api/v1/crates/$2/$3" | jq -r '.version.created_at // empty' ;;
     npm) curl -sf "https://registry.npmjs.org/$(printf '%s' "$2" | sed 's#/#%2F#')" | jq -r --arg v "$3" '.time[$v] // empty' ;;
     pypi) curl -sf "https://pypi.org/pypi/$2/$3/json" | jq -r '[.urls[].upload_time_iso_8601] | min // empty' ;;
+    actions)
+      local t sha
+      t="$(gh_api "repos/$2/releases/tags/$3" | jq -r '.published_at // empty' || true)"
+      if [ -z "$t" ]; then
+        sha="$(gh_api "repos/$2/git/refs/tags/$3" | jq -r 'if type == "object" then .object.url // empty else empty end' || true)"
+        [ -n "$sha" ] && t="$(curl -sf -A "$ua" ${GITHUB_TOKEN:+-H "Authorization: Bearer $GITHUB_TOKEN"} "$sha" | jq -r '(.committer.date // .tagger.date // .object.sha) // empty' | grep -E '^[0-9]{4}-' || true)"
+      fi
+      printf '%s' "$t" ;;
   esac
 }
 
@@ -120,6 +147,13 @@ fail=0; missing=0; rows=()
 for e in "${entries[@]}"; do
   IFS=$'\t' read -r eco name ver file line <<<"$e"
   pub="$(published_at "$eco" "$name" "$ver" || true)"
+  if [ -z "$pub" ] && [[ "$exceptions" == *"|$eco $name $ver|"* ]]; then
+    # a ref with no publication time (an action's branch) listed as an exception
+    echo "check_dep_age: ok   $eco $name $ver — no publication time (not a release or tag), exception ($exc_file)"
+    rows+=("$(jq -n --arg e "$eco" --arg n "$name" --arg v "$ver" --arg f "$file:$line" \
+      '{ecosystem: $e, name: $n, version: $v, declared: $f, published: null, ok: true, exception: "no publication time"}')")
+    continue
+  fi
   if [ -z "$pub" ]; then
     echo "check_dep_age: MISSING $eco $name $ver ($file:$line): no publication time from the registry" >&2
     missing=1; continue

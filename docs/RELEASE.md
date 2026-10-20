@@ -2,7 +2,7 @@
 
 **Hedef (K-E1.1):** 0.1.0'ın tek yayım hedefi `aarch64-apple-darwin`'dir. `x86_64-unknown-linux-gnu` ve `x86_64-pc-windows-msvc` CI'da derlenir, `rootmark conformance` koşturulur ve artefakt saklanır, ama yayım kriteri değildir ("CI bilgi"); `x86_64-apple-darwin` hedef değildir. Kurulum paketleri (installer, imzalama, dağıtım kanalları) faz 2'nin konusudur.
 
-Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde kimlikleri R1…R16 ve R4a; betik her biri için `ok`/`FAIL` yazar, çıkış 0 yalnız hepsi geçerse). `scripts/release.sh` paketi `dist/`'e kurar (hedef kayıtları `scripts/release_target.sh` ile, CI'daki kayıtla aynı biçimde; gerçek Obsidian e2e'si `dist/plugin_e2e_real/`); hiçbir şey yayımlamaz, etiket atmaz. Betik hiçbir boru hattını erken çıkan bir okuyucuyla (`grep -q`) bitirmez: liste önce bir dosyaya alınır (P1-E doğrulaması V7, E1-4).
+Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde kimlikleri R1…R20 ve R4a; betik her biri için `ok`/`FAIL` yazar, çıkış 0 yalnız hepsi geçerse). `scripts/release.sh` paketi `dist/`'e kurar (hedef kayıtları `scripts/release_target.sh` ile, CI'daki kayıtla aynı biçimde; gerçek Obsidian e2e'si `dist/plugin_e2e_real/`); hiçbir şey yayımlamaz, etiket atmaz. Betik hiçbir boru hattını erken çıkan bir okuyucuyla (`grep -q`) bitirmez: liste önce bir dosyaya alınır (P1-E doğrulaması V7, E1-4).
 
 | # | Madde | Doğrulama (release_check.sh) |
 |---|---|---|
@@ -22,6 +22,10 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 | R13 | CI derleme | `.github/workflows/release.yml` yalnız `workflow_dispatch` ile tetiklenir; matris `aarch64-apple-darwin` (zorunlu) ve `x86_64-unknown-linux-gnu`, `x86_64-pc-windows-msvc` (`continue-on-error`); `x86_64-apple-darwin` yok; her artefaktta `rootmark conformance` (K-E1.1) |
 | R14 | Etiket insan adımıdır | `v0.1.0` etiketi yok, ya da (P2-0/Z0'dan beri) var ve R16'nın raporu "Güvenilir", etiketin commit'i en yeni `ROUND_START`'ın kendisi ya da atası (etiketi bir tur atmaz; 0.1.0'ı GH-0'da insan attı, K-GH.4) |
 | R15 | Gerçek Obsidian e2e (K-E1.3) | `dist/plugin_e2e_real/plugin_e2e_real.json`: 11/11, E1-9 bağlantı adımı geçti, `pass: true`; Obsidian ikilisi yoksa kayıt `skipped` olur ve R15 FAIL'dir (atlanma yayım için geçme sayılmaz) |
+| R17 | Kurulum betikleri (P2-A/A3) | `packaging/install.sh` (Linux x86_64, macOS arm64) ve `packaging/install.ps1` (Windows x86_64) var; `install.sh` bu paketin arşivini yerel bir `SHA256SUMS` ile (model indirmeden) kurar, kurulan ikili `rootmark <ver>` der; bir baytı değişmiş arşiv reddedilir ve hiçbir şey kurulmaz |
+| R18 | CI kurulum, sağlama, köken (P2-A/A3) | `release.yml`'in her işi kendi arşivini kurulum betiğiyle (`install.sh --from`, `install.ps1 -From`) kurar ve kurulan ikiliyle `--version` + `rootmark conformance` koşturur; son iş bütün arşivlerin `SHA256SUMS`'ını yazar ve `actions/attest-build-provenance` ile köken tasdiki üretir (`id-token: write`, `attestations: write`) |
+| R19 | İmzalama insan adımıdır (P2-A/A3) | aşağıdaki insan adımları Apple notarization'ı ve Windows Authenticode'u adlandırır; köken doğrulaması `gh attestation verify` yazılıdır |
+| R20 | Eylemler sabit (P2-A/A3) | her iş akışının her `uses:`'u tam sürüme sabit (`@vX.Y.Z`; araç zinciri eylemi `dtolnay/rust-toolchain@<toolchain>` hariç); yaşları `scripts/check_dep_age.sh` (≥ 14 gün) |
 | R16 | İnsan adımı 1'in bağı (P2-0/Z0; P1-E.1 doğrulaması öneri 1) | aşağıdaki insan adımı 1'in adını verdiği `reports/rounds/<tur>/VERIFICATION.md` var ve son `**Hüküm: …**` satırı "Güvenilir" |
 
 ## İnsan adımları (betik yapmaz)
@@ -31,3 +35,23 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 4. `git tag -a v0.1.0 -m "rootmark 0.1.0"` ve itme; GitHub release'e arşivleri, wheel'i, eklenti zip'ini ve `SHA256SUMS`'ı ekle. Eklentinin `main.js`, `manifest.json` ve `styles.css` dosyaları release'e **ayrıca** tek tek eklenir (Obsidian BRAT bunları zip'ten değil, release varlıklarından indirir; README "Obsidian (BRAT)").
 5. `dist/homebrew/rootmark.rb`'yi tap'e koy; `cargo binstall rootmark-server` ile dene.
 6. Obsidian community store başvurusu bu yayımın kapsamında değildir (GOAL P1-E).
+
+## Kurulum (P2-A/A3; K-E1.1'in hedefleri değişmez)
+Yayım hedefi yine yalnız `aarch64-apple-darwin`'dir (K-E1.1); Linux `x86_64` ve Windows `x86_64` arşivleri CI'da derlenir, kurulur, sınanır ve artefakt olarak saklanır, kurulum betikleri onlar için de çalışır. Yayımlanabilir paketler (bir yayımda release varlığı olarak eklenir):
+- `rootmark-<ver>-<target>.tar.gz` (Linux, macOS) ve `rootmark-<ver>-x86_64-pc-windows-msvc.zip`; içinde ikili, `LICENSE`, `README.md`, `models/MANIFEST.json` ve `models/fetch_model.sh` (model dosyaları arşivde değildir; kurulum indirir ve manifest'le denetler).
+- `SHA256SUMS` (bütün arşivler) ve her arşivin GitHub köken tasdiki (artifact attestation).
+- `install.sh`: `curl -fsSL https://github.com/arknsensei/rootmark/releases/download/v<ver>/install.sh | bash -s -- --version <ver>` — arşivi ve `SHA256SUMS`'ı indirir, SHA-256'yı denetler, `~/.local/bin/rootmark` ve `~/.local/share/rootmark/models` kurar, modeli indirir; `ROOTMARK_MODELS=~/.local/share/rootmark/models`.
+- `install.ps1`: `powershell -ExecutionPolicy Bypass -File install.ps1 -Version <ver>` — aynısı Windows için (`%LOCALAPPDATA%\rootmark`).
+- `cargo binstall rootmark-server` (`server/Cargo.toml [package.metadata.binstall]`; arşiv adları ve iç dizin düzeniyle eşleşir; yayım ve crates.io insan adımıdır).
+
+**Kurulum doğrulama (betikle: R17, R18; elle):**
+1. `release.yml` koşusunun `release-json` artefaktında her hedefin `<target>.json` (`ok`) ve `<target>.install.json` (`ok`, `conformance` 39/39) kaydı.
+2. `release-files` artefaktı indirilir: `sha256sum -c SHA256SUMS` (macOS: `shasum -a 256 -c`) geçer.
+3. Her arşiv için `gh attestation verify <arşiv> -R arknsensei/rootmark` "Verification succeeded" der.
+4. Temiz bir makinede `install.sh` / `install.ps1` ile kurulum, `rootmark --version`, `rootmark conformance` 39/39.
+
+**İmzalama (insan adımı; bu turda yapılmaz, GOAL P2-A):**
+- **Apple notarization:** Developer ID Application sertifikasıyla `codesign --options runtime --timestamp --sign "Developer ID Application: …" rootmark`, `xcrun notarytool submit rootmark.zip --keychain-profile <profil> --wait`; tek dosyalık bir ikiliye bilet zımbalanamaz (`stapler` yalnız paket/uygulama), Gatekeeper çevrimiçi denetler. Sertifika ve parola hiçbir zaman depoya girmez.
+- **Windows Authenticode:** bir kod imzalama sertifikasıyla (EV ya da Azure Trusted Signing) `signtool sign /fd SHA256 /tr <zaman damgası sunucusu> /td SHA256 rootmark.exe`, ardından zip ve `SHA256SUMS` yeniden üretilir.
+- İmzalama yapılırsa imzalı ikililer yeni arşivlerdir: `SHA256SUMS` ve köken tasdiki imzalı arşivler için yeniden üretilmelidir (CI'da bir insan onaylı iş ya da yerelde), yoksa R6/R18 eşleşmez.
+

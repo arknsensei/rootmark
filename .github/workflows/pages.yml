@@ -26,9 +26,9 @@ jobs:
     name: build the spec site
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - uses: dtolnay/rust-toolchain@1.92.0
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6.1.0
         with:
           path: |
             models/minilm-l6-v2
@@ -50,12 +50,12 @@ jobs:
                color: (if .passed == .total then "2ea44f" else "e05d44" end)}' \
             site/spec/conformance.json >site/spec/badge.json
           printf -- '---\ntitle: rootmark\n---\n\nThe [rootmark specification](spec/) (Apache-2.0).\n' >site/index.md
-      - uses: actions/configure-pages@v5
-      - uses: actions/jekyll-build-pages@v1
+      - uses: actions/configure-pages@v6.0.0
+      - uses: actions/jekyll-build-pages@v1.0.13
         with:
           source: site
           destination: _site
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5.0.0
 
   deploy:
     name: deploy
@@ -66,4 +66,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5.0.1
