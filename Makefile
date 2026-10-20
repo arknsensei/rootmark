@@ -23,7 +23,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps check-compare-fields check-client-types conformance regress verify models c3-quality p1c-checks report-p1c \
         c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e p1e1-checks report-p1e1 \
-        p2-0-harness p2-0-tune p2-0-test p2-0-checks p2-0-1-harness p2-0-1-checks p2-0-2-harness p2-0-2-checks
+        p2-0-harness p2-0-tune p2-0-test p2-0-checks p2-0-1-harness p2-0-1-checks p2-0-2-harness p2-0-2-checks p2a-checks
 
 setup: setup-py build
 
@@ -667,7 +667,7 @@ P2_0_2_DIR = research/reports/runs/$(RUN)/p2_0_2
 p2-0-2-checks: require-run p2-0-2-harness
 	rm -rf $(P2_0_2_DIR)
 	mkdir -p $(P2_0_2_DIR)
-	$(PY) -m eval.run_p2_0_2 --phase test --run $(RUN) --rootmark ../target/release/rootmark
+	$(PY) -m eval.run_p2_0_2 --phase test --run $(RUN) --rootmark ../target/release/rootmark $(P2_0_2_ARGS)
 	$(PY) -m eval.tamper_p2_0_2 --rootmark ../target/release/rootmark --out reports/runs/$(RUN)/p2_0_2/tamper_p2_0_2.json \
 	  || echo "p2-0-2-checks: tamper_p2_0_2 exit $$? (recorded)" >&2
 	@test -f $(P2_0_2_DIR)/tamper_p2_0_2.json || exit 1
@@ -680,6 +680,32 @@ p2-0-2-checks: require-run p2-0-2-harness
 	rc=0; $(PY) -m eval.historical_p2_0_2 --run-dir reports/runs/$(RUN) --out reports/runs/$(RUN)/p2_0_2/historical.json || rc=$$?; \
 	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
 	$(PY) -m eval.run_p2_0_2_checks --run $(RUN)
+
+# P2-A (TASKS A5): the chain's half of the round — P2-0.2's checks again
+# (regress), without the real-Obsidian sets (K-P2.3: a development round
+# runs the real Obsidian only in the existing e2e; P2-0.2's harness records
+# them as skipped without an Obsidian binary, and A0's information
+# measurement is reports/rounds/P2-A/info_d_b_test3.json), then P2-A's sets
+# (eval.run_p2a: the six old vaults' migration and rollback, the /2 index
+# fixture, the deliberate cases, the round's server tests), the regress
+# against the P2-0.2 official RUN (eval.compare_p2a), the round's
+# classifier (p2a/historical.json = the chain's printed summary) and
+# eval.run_p2a_checks → p2a_checks.json. A criterion that fails is
+# recorded, not fatal; a missing result fails.
+P2_0_2_REF_RUN := ../reports/rounds/P2-0.2/runs/20261019T212951Z-72fd78f
+P2A_DIR = research/reports/runs/$(RUN)/p2a
+p2a-checks: require-run
+	$(MAKE) p2-0-2-checks RUN=$(RUN) P2_0_2_ARGS="--obsidian /nonexistent/obsidian"
+	rm -rf $(P2A_DIR)
+	mkdir -p $(P2A_DIR)
+	$(PY) -m eval.run_p2a --run $(RUN) --rootmark ../target/release/rootmark
+	@# exit 3 (a difference) is recorded, not fatal; a missing file/field (1) fails
+	rc=0; $(PY) -m eval.compare_p2a regress $(P2_0_2_REF_RUN) reports/runs/$(RUN) \
+	  --out reports/runs/$(RUN)/regress_vs_p2_0_2.json >/dev/null || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	rc=0; $(PY) -m eval.historical_p2a --run-dir reports/runs/$(RUN) --out reports/runs/$(RUN)/p2a/historical.json || rc=$$?; \
+	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
+	$(PY) -m eval.run_p2a_checks --run $(RUN)
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:
