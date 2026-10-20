@@ -597,7 +597,8 @@ pub fn matrix(vault: &Path) -> Result<Value> {
         "validations": validations,
         "applied": done.iter().map(|r| r.id.clone()).collect::<Vec<_>>(),
         "hint": if required.is_empty() { Value::Null } else {
-            json!(format!("rootmark migrate {}", vault.display()))
+            // stable, like the error's hint (`status.vault` names the path)
+            json!("rootmark migrate <vault>")
         },
     }))
 }
