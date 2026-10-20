@@ -58,13 +58,22 @@ enum Cmd {
     Replay { vault: PathBuf, doc: String },
     /// blake3 of events.jsonl
     EventsHash { vault: PathBuf },
-    /// Migrate a vault written before the rename to rootmark (K-GH.1):
-    /// `--rename-store` renames `<vault>/.mdkernel/` to `<vault>/.rootmark/`;
-    /// every file inside keeps its bytes (events, objects, index)
+    /// Migrate a vault's stored artifacts to this rootmark's formats
+    /// (P2-A): every registered migration that applies, in order, each with
+    /// a rollback record under `.rootmark/migrations/<id>/`; never changes
+    /// `events_hash`. `--rename-store` runs only the rename of
+    /// `<vault>/.mdkernel/` to `<vault>/.rootmark/` (K-GH.1)
     Migrate {
-        /// rename the metadata directory (the one migration there is)
-        #[arg(long)]
+        /// only the rename of the metadata directory
+        #[arg(long, conflicts_with_all = ["dry_run", "rollback"])]
         rename_store: bool,
+        /// print the version matrix and the plan; change nothing
+        #[arg(long, conflicts_with = "rollback")]
+        dry_run: bool,
+        /// undo migration <id> (the newest record) and check every restored
+        /// file is byte-equal to the one before
+        #[arg(long, value_name = "ID")]
+        rollback: Option<String>,
         vault: PathBuf,
     },
     /// Chunks of the head snapshot of a document
@@ -388,17 +397,25 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
         Cmd::EventsHash { vault } => json!({"events_hash": Vault::open(&vault)?.events_hash()?}),
         Cmd::Migrate {
             rename_store,
+            dry_run,
+            rollback,
             vault,
         } => {
-            if !rename_store {
-                bail!("rootmark migrate: nothing to do (the one migration is --rename-store)");
+            use rootmarkserver::migrate;
+            if let Some(id) = rollback {
+                migrate::rollback(&vault, &id)?
+            } else if dry_run {
+                migrate::dry_run(&vault, None)?
+            } else if rename_store {
+                let mut r = migrate::migrate(&vault, Some("rename_store"))?;
+                r["renamed"] = json!({
+                    "from": vault.join(rootmarkcore::meta::LEGACY_META_DIR).display().to_string(),
+                    "to": rootmarkcore::meta::path(&vault).display().to_string(),
+                });
+                r
+            } else {
+                migrate::migrate(&vault, None)?
             }
-            let (from, to) = rootmarkcore::meta::rename_store(&vault)?;
-            json!({
-                "vault": vault.display().to_string(),
-                "renamed": {"from": from.display().to_string(), "to": to.display().to_string()},
-                "events_hash": Vault::open(&vault)?.events_hash()?,
-            })
         }
         Cmd::Chunk {
             vault,

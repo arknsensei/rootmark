@@ -8,6 +8,7 @@ pub mod conformance;
 pub mod error;
 pub mod http;
 pub mod mcp;
+pub mod migrate;
 pub mod paths;
 pub mod propose;
 pub mod queue;
