@@ -1,0 +1,48 @@
+{
+ "criterion": "A-5",
+ "measured": "2026-10-20",
+ "question": "does a version of `ort` ship a prebuilt ONNX Runtime for x86_64-apple-darwin (download-binaries), so that the single-binary build of rootmark compiles there",
+ "pinned": "ort =2.0.0-rc.13 (index/Cargo.toml)",
+ "method": "the prebuilt list of `ort-sys` (`ort-sys/build/download/dist.tsv`, one row per target and feature set) at each release tag of pykeio/ort (GitHub API), and the local rc.13 crate source",
+ "versions": [
+  {
+   "tag": "v2.0.0-rc.12",
+   "published": "2026-03-05",
+   "eligible_14_days": true,
+   "x86_64_apple_darwin_rows": 0,
+   "note": "no `dist.tsv` in the tree at this tag (the list's location differed); not inspected further — older than the pinned rc.13, which P1-E already found without an Intel macOS download"
+  },
+  {
+   "tag": "v2.0.0-rc.13",
+   "published": "2026-07-28",
+   "eligible_14_days": true,
+   "x86_64_apple_darwin_rows": 0,
+   "targets": [
+    "aarch64-apple-darwin",
+    "aarch64-apple-ios",
+    "aarch64-apple-ios-sim",
+    "aarch64-linux-android",
+    "aarch64-pc-windows-msvc",
+    "aarch64-unknown-linux-gnu",
+    "x86_64-pc-windows-msvc",
+    "x86_64-unknown-linux-gnu"
+   ]
+  },
+  {
+   "tag": "v2.0.0-rc.14",
+   "published": "2026-10-12",
+   "eligible_14_days": false,
+   "x86_64_apple_darwin_rows": 0
+  },
+  {
+   "tag": "v2.0.0-rc.15",
+   "published": "2026-10-19",
+   "eligible_14_days": false,
+   "x86_64_apple_darwin_rows": 0
+  }
+ ],
+ "result": "does not build as a single binary: no `ort` version (eligible or not) ships a prebuilt ONNX Runtime for x86_64-apple-darwin; `ort-sys` only knows the vcpkg triplet `x64-osx` for a static link from a self-built ONNX Runtime (`build/static_link`)",
+ "ci_information_target": "not added (nothing to download; a from-source ONNX Runtime build is not in this round's scope)",
+ "release_target": "unchanged (K-E1.1: aarch64-apple-darwin only)",
+ "decision_request": "K-P2A.4-T"
+}

@@ -3,9 +3,10 @@
 # then test + lint + conformance. Required for merging into main (branch
 # protection, GH-0 G3): "dependency direction and age" and "test + lint +
 # conformance (macos-14)" — the platform the suite was validated on and the
-# release target (K-E1.1). The Linux job is information (continue-on-error):
-# a known case-sensitivity difference fails one test there (K-GH.6-T; GH-0
-# ASSUMPTIONS G2-2).
+# release target (K-E1.1). Since P2-A (K-GH.6: `propose` refuses another
+# spelling of an existing directory on every platform) the Linux job is no
+# longer information: it must pass (making it a required check of the
+# ruleset is a human step, docs/rounds/P2-A/progress/STOP.md).
 name: ci
 on:
   pull_request:
@@ -62,9 +63,8 @@ jobs:
       - run: make conformance
 
   test-linux:
-    name: test + lint + conformance (ubuntu-latest, information)
+    name: test + lint + conformance (ubuntu-latest)
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v7.0.1
         with:
