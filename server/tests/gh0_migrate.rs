@@ -107,7 +107,10 @@ fn migrate_rename_store_keeps_every_byte() {
     // the store as the p1d-final binary wrote it, byte for byte
     let old = tree(&fixture().join(".mdkernel"));
     assert!(old.contains_key("events.jsonl") && old.contains_key("index/manifest.json"));
-    assert_eq!(tree(&v.join(".rootmark")), old);
+    // (P2-A/A1: beside the migration's rollback record)
+    let mut now = tree(&v.join(".rootmark"));
+    now.retain(|k, _| !k.starts_with("migrations/"));
+    assert_eq!(now, old);
 
     // the same answers as the p1d-final binary
     let eh: serde_json::Value =
@@ -126,11 +129,14 @@ fn migrate_rename_store_keeps_every_byte() {
         OLD_BLAME_ESPRESSO
     );
 
-    // nothing left to migrate
+    // nothing left to rename; since P2-A a plain `migrate` rebuilds the /2
+    // index (with its record), then has nothing left to do
     let again = rootmark(&["migrate", "--rename-store", vs]);
     assert!(!again.status.success());
-    let none = rootmark(&["migrate", vs]);
-    assert!(!none.status.success());
+    assert!(rootmark(&["migrate", vs]).status.success());
+    let none: serde_json::Value =
+        serde_json::from_slice(&rootmark(&["migrate", vs]).stdout).unwrap();
+    assert_eq!(none["applied"], serde_json::json!([]));
 }
 
 /// A `/3` index written under the old name (what `p1e-final` writes: the
@@ -161,7 +167,9 @@ fn migrated_format_3_index_is_read_as_it_is() {
     std::fs::rename(v.join(".rootmark"), v.join(".mdkernel")).unwrap();
     let o = rootmark(&["migrate", "--rename-store", vs]);
     assert!(o.status.success(), "{}", String::from_utf8_lossy(&o.stderr));
-    assert_eq!(tree(&v.join(".rootmark")), store);
+    let mut now = tree(&v.join(".rootmark"));
+    now.retain(|k, _| !k.starts_with("migrations/0002"));
+    assert_eq!(now, store);
     let st = rootmark(&["index", "status", vs]);
     assert!(
         st.status.success(),
