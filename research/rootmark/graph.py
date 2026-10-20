@@ -5,7 +5,8 @@ Edge kinds and weights; parallel contributions are summed, capped at 1.0:
   `[[D#h]]` → only D's chunks under heading h (whole D if h is not found).
 - hierarchy 0.5 between consecutive chunks of one document; 0.3 between chunks
   of one document with the same parent heading (`heading_path[:-1]`, non-empty).
-- knn 0.3·cos from each chunk to its 5 nearest chunks.
+- knn 0.3·cos from each chunk to its 5 nearest chunks (ties at the 5th
+  similarity broken by key, ascending).
 """
 
 from __future__ import annotations
@@ -94,8 +95,14 @@ def build_graph(index: Index) -> nx.Graph:
             for r in range(sims.shape[0]):
                 i = start + r
                 sims[r, i] = -np.inf
-                top = np.argpartition(-sims[r], k)[:k]
-                for j in sorted(top, key=lambda j: (-sims[r, j], keys[j])):
+                # the k nearest, ties at the k-th similarity broken by key:
+                # `argpartition` alone picks among equal similarities in a
+                # platform-dependent order (P2-A/A4: a different graph on
+                # Linux); without a tie at the boundary the set is the same
+                kth = np.partition(-sims[r], k - 1)[k - 1]
+                cand = np.nonzero(-sims[r] <= kth)[0]
+                top = sorted(cand, key=lambda j: (-sims[r, j], keys[j]))[:k]
+                for j in top:
                     _add(g, keys[i], keys[j], W_KNN * float(sims[r, j]), "knn")
     return g
 

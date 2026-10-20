@@ -70,7 +70,11 @@ def test_unresolvable_heading_falls_back_to_document_and_case_insensitive_target
 def test_hierarchy_edges(small):
     g = G.build_graph(small)
     # consecutive chunks of b.md, and b.md::2 / b.md::3 share parent heading "B"
-    assert g["b.md::1"]["b.md::2"]["kinds"] == {"hierarchy": 1}
+    # (P2-A/A4: with identity vectors every other chunk is a tied knn
+    # candidate at cosine 0; which ones were taken was platform-dependent —
+    # Linux took b.md::2 — and is now the first 5 by key, b.md::2 among them:
+    # a knn edge of weight 0. The hierarchy edge is what this test is about)
+    assert g["b.md::1"]["b.md::2"]["kinds"]["hierarchy"] == 1
     assert g["b.md::1"]["b.md::2"]["weight"] == pytest.approx(G.W_CONSECUTIVE)
     assert g["b.md::2"]["b.md::3"]["weight"] == pytest.approx(G.W_CONSECUTIVE + G.W_SAME_PARENT)
     assert "hierarchy" not in g["b.md::1"].get("b.md::3", {"kinds": {}})["kinds"]
