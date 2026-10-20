@@ -106,6 +106,9 @@ class Served:
         recipe = recipe.replace(
             '# [identity]\n# human_id = "<your id>"\n', '[identity]\nhuman_id = "editor"\n'
         )
+        # P2-A/F1: the default recipe writes `[attestation] unattested =
+        # "canonical"` since P2-A/A0; its table is removed before ours
+        recipe = recipe.replace('[attestation]\nunattested = "canonical"\n', "")
         recipe += f'\n[attestation]\nunattested = "unverified"\nwindow_s = {window_s}\n'
         p.write_text(recipe, encoding="utf-8")
         self.err = (work / "serve.err").open("w")

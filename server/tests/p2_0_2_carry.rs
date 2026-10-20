@@ -51,7 +51,7 @@ fn vault_w(name: &str, files: &[(&str, &str)], window_s: f64) -> PathBuf {
     );
     let recipe = format!(
         "{}\n[identity]\nhuman_id = \"ada\"\n\n[attestation]\nwindow_s = {window_s:?}\n",
-        rootmarkserver::config::default_recipe()
+        rootmarkserver::config::base_recipe()
     );
     std::fs::write(v.join(".rootmark/policy.toml"), recipe).unwrap();
     Kernel::open(&v).unwrap().ensure_index().unwrap();
@@ -595,4 +595,70 @@ fn a_plain_attestation_never_lifts_a_rename_s_caps() {
             "{order}"
         );
     }
+}
+
+#[test]
+fn a_self_linking_note_renamed_then_rewritten_before_the_watcher_saw_it() {
+    // P2-A/A0 b (P2-0.2 FINAL note 3 (A)): the rename attestation is
+    // accepted while the file holds the moved bytes, the note's own links
+    // are rewritten before the watcher sees the new path, the watcher's
+    // first observation of it (unattested: no attestation of those bytes
+    // yet) is a document the log did not know — the late link update is
+    // checked against the head of the path it was renamed from (spec §7.1),
+    // not against the empty head before that ingest, and raises the human
+    // blocks; the agent's stays `unverified`
+    for (name, from_hint) in [("selfA", true), ("selfA-nohint", false)] {
+        let (v, k, s) = with_agent(name, SELF);
+        let moved = std::fs::read_to_string(v.join("b.md")).unwrap();
+        mv(&v, "b.md", "bee.md");
+        attest(&k, &s, &v, "bee.md", json!({"renamed_from": "b.md"})).unwrap();
+        let rewritten = moved
+            .replace("[[b]]", "[[bee]]")
+            .replace("[[b#B]]", "[[bee#B]]")
+            .replace("[b](b.md)", "[bee](bee.md)");
+        std::fs::write(v.join("bee.md"), &rewritten).unwrap();
+        watch(&k, "bee.md");
+        assert_eq!(layer_of(&k, "bee.md", "Human one"), "unverified", "{name}");
+        let extra = if from_hint {
+            json!({"link_update_of": "bee.md", "link_update_from": "b.md"})
+        } else {
+            json!({"link_update_of": "bee.md"})
+        };
+        let r = attest(&k, &s, &v, "bee.md", extra).unwrap();
+        assert!(!r["raised"].as_array().unwrap().is_empty(), "{name}: {r}");
+        assert_eq!(layer_of(&k, "bee.md", "Human one"), "canonical", "{name}");
+        assert_eq!(layer_of(&k, "bee.md", "Human two"), "canonical", "{name}");
+        assert_eq!(
+            layer_of(&k, "bee.md", "Agent paragraph"),
+            "unverified",
+            "{name}"
+        );
+    }
+}
+
+#[test]
+fn a_late_self_link_update_never_vouches_for_new_bytes() {
+    // the (A) base is the old path's head: bytes beyond it (an agent's
+    // paragraph written with the rewrite) make the late link update
+    // `denied`, and nothing is raised
+    let (v, k, s) = with_agent("selfA-agent", SELF);
+    let moved = std::fs::read_to_string(v.join("b.md")).unwrap();
+    mv(&v, "b.md", "bee.md");
+    attest(&k, &s, &v, "bee.md", json!({"renamed_from": "b.md"})).unwrap();
+    let rewritten = format!(
+        "{}\nAnother agent paragraph slipped in.\n",
+        moved.replace("[[b]]", "[[bee]]")
+    );
+    std::fs::write(v.join("bee.md"), &rewritten).unwrap();
+    watch(&k, "bee.md");
+    let e = attest(
+        &k,
+        &s,
+        &v,
+        "bee.md",
+        json!({"link_update_of": "bee.md", "link_update_from": "b.md"}),
+    )
+    .unwrap_err();
+    assert_eq!(code_of(&e), Code::Denied, "{e:#}");
+    assert!(blocks(&k, "bee.md").iter().all(|(_, l)| l == "unverified"));
 }

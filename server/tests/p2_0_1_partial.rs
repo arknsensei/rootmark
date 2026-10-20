@@ -43,7 +43,7 @@ fn vault(name: &str) -> PathBuf {
     assert!(st.status.success());
     let recipe = format!(
         "{}\n[identity]\nhuman_id = \"ada\"\n\n[attestation]\nwindow_s = 2.0\n",
-        rootmarkserver::config::default_recipe()
+        rootmarkserver::config::base_recipe()
     );
     std::fs::write(v.join(".rootmark/policy.toml"), recipe).unwrap();
     Kernel::open(&v).unwrap().ensure_index().unwrap();

@@ -144,8 +144,33 @@ impl ServerConfig {
 
 /// The recipe `rootmark serve` writes into a vault that has none (GOAL P1-D:
 /// the phase-1 default promotion policy is human approval only, K12/K16).
-/// The trigger and journal values are the kernel's built-in ones.
+/// The trigger and journal values are the kernel's built-in ones. Since
+/// P2-A/A0 (K-P2-02.5 (1), option (b)) it writes `[attestation] unattested
+/// = "canonical"` explicitly: the product's default, chosen by the recipe;
+/// spec §7.1's default (`unverified`, when the table is absent) and the
+/// kernel's are unchanged. `unverified` is the opt-in.
 pub fn default_recipe() -> String {
+    format!(
+        "{}\
+         \n\
+         # external edits no client attested (spec §7.1): \"canonical\" (every\n\
+         # file edit counts as the human's; this recipe's choice, K-P2-02.5) or\n\
+         # \"unverified\" (opt-in, spec §7.1's default without this table: an\n\
+         # edit no attested client vouched for, through the Obsidian plugin or\n\
+         # `rootmark attest`, is not knowledge until promoted). To turn it on,\n\
+         # write unattested = \"unverified\" (and optionally window_s = 2.0).\n\
+         {ATTESTATION_DEFAULT}",
+        base_recipe()
+    )
+}
+
+/// The default recipe's `[attestation]` table, as `default_recipe` writes it
+/// (harnesses that set their own table remove these lines first).
+pub const ATTESTATION_DEFAULT: &str = "[attestation]\nunattested = \"canonical\"\n";
+
+/// `default_recipe` without its `[attestation]` table (the kernel's default
+/// then applies): for tests and tools that write their own table.
+pub fn base_recipe() -> String {
     let b = Policy::builtin();
     format!(
         "# written by `rootmark serve` (no policy.toml was present)\n\
@@ -171,13 +196,7 @@ pub fn default_recipe() -> String {
          \n\
          # the human behind the HTTP token; HTTP writes are refused without it\n\
          # [identity]\n\
-         # human_id = \"<your id>\"\n\
-         \n\
-         # external edits no client attested (spec 2.0.0 §7.1): \"unverified\"\n\
-         # (the default) or \"canonical\" (every file edit counts as the human's)\n\
-         # [attestation]\n\
-         # unattested = \"unverified\"\n\
-         # window_s = 2.0\n",
+         # human_id = \"<your id>\"\n",
         b.trigger.idle_ms(),
         b.trigger.min_sim_change(),
         b.retention.hours(),

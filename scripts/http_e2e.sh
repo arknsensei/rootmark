@@ -130,6 +130,9 @@ record H-1 "unknown tool 404, non-object body 400, tool error 422 with message, 
 # watch: a human edit outside the server. P2-0 (spec 2.0.0 §7.1, K-P2-0.4;
 # freeze exception P2-0/F5): the P1-D watcher rule measured here is the
 # policy `unattested = "canonical"` since the default became `unverified`
+# (P2-A/F1: the default recipe writes this table itself since P2-A/A0; it is
+# removed before the same table is appended — the policy is the same)
+sed -i.bak '/^\[attestation\]$/{N;/\nunattested = "canonical"$/d;}' vault/.rootmark/policy.toml && rm vault/.rootmark/policy.toml.bak
 printf '\n[attestation]\nunattested = "canonical"\n' >>vault/.rootmark/policy.toml
 n_before="$(code -X POST -H "Authorization: Bearer $tok" -H 'X-Consumer: http-e2e' -d '{"doc_path":"espresso.md"}' "$base/blame" >/dev/null; jq '.blocks | length' body.json)"
 printf '\nA watched human paragraph about zanzibar crema.\n' >>vault/espresso.md

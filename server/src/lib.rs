@@ -2,6 +2,7 @@
 //! `server`; GOAL P1-D). Depends on `core` and `index` only.
 
 pub mod attest;
+pub mod attest_log;
 pub mod config;
 pub mod conformance;
 pub mod error;

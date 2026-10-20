@@ -37,7 +37,7 @@ fn vault(name: &str, extra: &str) -> PathBuf {
         v.join(".rootmark/policy.toml"),
         format!(
             "{}\n[identity]\nhuman_id = \"ada\"\n",
-            rootmarkserver::config::default_recipe()
+            rootmarkserver::config::base_recipe()
                 .replace("[index]\n", &format!("[index]\n{extra}"))
         ),
     )

@@ -54,7 +54,7 @@ fn external_human_edit_is_not_credited_to_the_agent() {
     // (the default: server/tests/p2_0_attest.rs)
     std::fs::write(
         v.join(".rootmark/policy.toml"),
-        rootmarkserver::config::default_recipe()
+        rootmarkserver::config::base_recipe()
             .replace("policy = \"append_only\"", "policy = \"unrestricted\"")
             + "\n[attestation]\nunattested = \"canonical\"\n",
     )
@@ -130,7 +130,7 @@ fn size_limit_from_policy() {
     k.ensure_index().unwrap();
     std::fs::write(
         v.join(".rootmark/policy.toml"),
-        rootmarkserver::config::default_recipe()
+        rootmarkserver::config::base_recipe()
             .replace("max_propose_bytes = 1048576", "max_propose_bytes = 16"),
     )
     .unwrap();
