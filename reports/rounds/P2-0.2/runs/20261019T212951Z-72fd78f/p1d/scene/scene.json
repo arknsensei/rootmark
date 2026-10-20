@@ -1,0 +1,132 @@
+{
+  "scene": "P1-D agent side (NORTH_STAR first product scene)",
+  "consumer": "scene-agent/1.0",
+  "steps": [
+    {
+      "step": 1,
+      "tool": "status",
+      "shows": {
+        "spec_version": "2.0.2",
+        "level_claimed": 3,
+        "policy": "human_only",
+        "embedder": "minilm-l6-v2/e73168f9"
+      },
+      "pass": true
+    },
+    {
+      "step": 2,
+      "tool": "propose",
+      "shows": {
+        "doc_path": "agent/scene.md",
+        "plain_markdown": true,
+        "blocks": [
+          {
+            "layer": "proposal",
+            "author_kind": "Agent",
+            "source": "scene-agent/1.0"
+          },
+          {
+            "layer": "proposal",
+            "author_kind": "Agent",
+            "source": "scene-agent/1.0"
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 3,
+      "tool": "search",
+      "args": "default",
+      "shows": {
+        "hits_on_doc": 0
+      },
+      "pass": true
+    },
+    {
+      "step": 4,
+      "tool": "search",
+      "args": "include_proposal",
+      "shows": {
+        "hits_on_doc": [
+          {
+            "layer": "proposal"
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 5,
+      "tool": "promote",
+      "shows": {
+        "decision": "denied",
+        "policy": "human_only",
+        "events_written": 0
+      },
+      "pass": true
+    },
+    {
+      "step": 6,
+      "tool": "cli promote --actor human:editor",
+      "shows": [
+        {
+          "kind": "Promoted",
+          "layer": "canonical",
+          "actor": {
+            "id": "editor",
+            "kind": "human"
+          }
+        },
+        {
+          "kind": "Promoted",
+          "layer": "canonical",
+          "actor": {
+            "id": "editor",
+            "kind": "human"
+          }
+        }
+      ],
+      "pass": true
+    },
+    {
+      "step": 7,
+      "tool": "search",
+      "args": "default, after the human approval",
+      "shows": {
+        "hits_on_doc": [
+          {
+            "layer": "canonical"
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 8,
+      "tool": "trace",
+      "shows": {
+        "traces": 3,
+        "returned_from_doc": [
+          0,
+          2,
+          2
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 9,
+      "tool": "checkpoint",
+      "shows": {
+        "checkpoint_id": "e3a3ac4954afb5591fcdf9f69803c84d",
+        "event_seq": 115,
+        "same_as_search_step_7": true
+      },
+      "pass": true
+    }
+  ],
+  "passed": 9,
+  "total": 9,
+  "pass": true
+}

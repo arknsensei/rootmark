@@ -1,0 +1,172 @@
+{
+  "reference_run": "reports/rounds/P1-E/runs/20261017T024341Z-632f29e",
+  "fails": [
+    {
+      "file": "p1b1_checks.json",
+      "criterion": "B1-3",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "spec_version"
+      ]
+    },
+    {
+      "file": "p1c1_checks.json",
+      "criterion": "C1-7",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "spec_version"
+      ]
+    },
+    {
+      "file": "p1c_checks.json",
+      "criterion": "C-11",
+      "label": "historical",
+      "decisions": [
+        "K-D1.2",
+        "K-D1.4-T",
+        "K-E0.1"
+      ],
+      "why": "P1-C's regression against P1-B.1 sees B1-3's spec-version difference",
+      "declared_changes": []
+    },
+    {
+      "file": "p1c_checks.json",
+      "criterion": "C-3",
+      "label": "historical",
+      "decisions": [
+        "K-C8-T",
+        "K-C1.1",
+        "K-C1.2"
+      ],
+      "why": "P1-C's hybrid multi-question nDCG@10 was -0.0136 off v2; closed in P1-C.1 by the declared lexical variant and the Rust quality reference",
+      "declared_changes": []
+    },
+    {
+      "file": "p1d1_checks.json",
+      "criterion": "D1-10",
+      "label": "fail",
+      "why": "not a listed historical FAIL"
+    },
+    {
+      "file": "p1d1_checks.json",
+      "criterion": "D1-12",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "regress_vs_p1d/conformance/spec_version/1"
+      ]
+    },
+    {
+      "file": "p1d_checks.json",
+      "criterion": "D-2",
+      "label": "historical",
+      "decisions": [
+        "K-D1.1",
+        "K-D1.5",
+        "K-E0.4",
+        "K-D1.4-T",
+        "K-E1.2"
+      ],
+      "why": "P1-D's MCP e2e expects agent edits of human blocks to pass (append_only since K-D1.1), the old error codes (K-D1.5, K-E0.4) and spec 1.0.2 in status",
+      "declared_changes": [
+        {
+          "path": "per_tool/status/passed",
+          "decision": "K-E1.2"
+        }
+      ]
+    },
+    {
+      "file": "p1d_checks.json",
+      "criterion": "D-7",
+      "label": "historical",
+      "decisions": [
+        "K-D1.4-T",
+        "K-D1.5"
+      ],
+      "why": "P1-D's HTTP e2e expects spec 1.0.2 (D7-3) and the old status codes of two cases",
+      "declared_changes": []
+    },
+    {
+      "file": "p1d_checks.json",
+      "criterion": "D-9",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "conformance/spec_version/1"
+      ]
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "E1-6",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "E1-8",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "tamper",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e_checks.json",
+      "criterion": "E-7",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "chain_local_target/conformance/passed",
+        "chain_local_target/conformance/total",
+        "chain_local_target/spec_version"
+      ]
+    },
+    {
+      "file": "p1e_checks.json",
+      "criterion": "E-9",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "conformance/passed",
+        "conformance/total",
+        "regress_vs_p1d1/conformance/differing_tests",
+        "regress_vs_p1d1/conformance/differing_tests/0",
+        "regress_vs_p1d1/conformance/differing_tests/1",
+        "regress_vs_p1d1/conformance/differing_tests/2",
+        "regress_vs_p1d1/conformance/differing_tests/3",
+        "regress_vs_p1d1/conformance/differing_tests/4",
+        "regress_vs_p1d1/conformance/equal",
+        "regress_vs_p1d1/conformance/passed/1",
+        "regress_vs_p1d1/conformance/spec_version/1",
+        "regress_vs_p1d1/conformance/tests",
+        "regress_vs_p1d1/differing_fields",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:fixtures_manifest_hash",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:passed",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:spec_version",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:tests›#len",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:tests›27›actual_hash",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:tests›27›expected_hash",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:tests›27›id"
+      ]
+    }
+  ],
+  "historical": 4,
+  "counted_fails": 10,
+  "counted": [
+    "p1b1_checks.json:B1-3",
+    "p1c1_checks.json:C1-7",
+    "p1d1_checks.json:D1-10",
+    "p1d1_checks.json:D1-12",
+    "p1d_checks.json:D-9",
+    "p1e1_checks.json:E1-6",
+    "p1e1_checks.json:E1-8",
+    "p1e1_checks.json:tamper",
+    "p1e_checks.json:E-7",
+    "p1e_checks.json:E-9"
+  ]
+}

@@ -1,0 +1,16 @@
+http_e2e: ok   R-1 refused start (--http 0.0.0.0) writes no policy, token or index
+http_e2e: ok   T-1 token file created, mode 600, 64 hex
+http_e2e: ok   T-2 default recipe written (promotion human_only)
+http_e2e: ok   D7-1 no token → 401
+http_e2e: ok   D7-2 wrong token → 401
+http_e2e: FAIL D7-3 right token → 200 (status: human_only, index built) 200
+http_e2e: ok   D7-4 no / empty X-Consumer → 400
+http_e2e: ok   D7-5 external interface refused; listening only on 127.0.0.1
+http_e2e: FAIL H-1 unknown tool 404, non-object body 400, tool error 422 with message, GET on a tool 405 404 400 404 405
+http_e2e: ok   W-1 external human edit ingested within 2 s: canonical, Human, rootmark-serve-watch
+http_e2e: ok   W-2 index: no stale document, hot tier non-empty
+http_e2e: FAIL W-3 hidden .md files and non-.md files are not ingested blame .dotfile.md 404; logged: 
+http_e2e: ok   S-1 SIGTERM → compact, exit 0, hot tier empty, edit found in the cold index
+http_e2e: ok   T-3 token file mode 644 → refused
+http_e2e: ok   C-1 compaction timer (compact_every_s = 1) empties the hot tier while serving
+http_e2e: D-7 4/5, all 12/15

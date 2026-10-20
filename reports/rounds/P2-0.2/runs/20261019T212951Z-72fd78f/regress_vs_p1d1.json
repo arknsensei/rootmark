@@ -1,0 +1,388 @@
+{
+ "conformance": {
+  "differing_tests": [
+   "C2-11",
+   "C2-12",
+   "C2-13",
+   "C2-14",
+   "C3-08"
+  ],
+  "equal": false,
+  "level_claimed": [
+   3,
+   3
+  ],
+  "passed": [
+   34,
+   39
+  ],
+  "spec_version": [
+   "1.0.3",
+   "2.0.2"
+  ],
+  "tests": 39
+ },
+ "differing_fields": {
+  "conformance_p1d1.json:fixtures_manifest_hash": "inf",
+  "conformance_p1d1.json:passed": 0.1282051282051282,
+  "conformance_p1d1.json:spec_version": "inf",
+  "conformance_p1d1.json:tests›#len": 0.1282051282051282,
+  "conformance_p1d1.json:tests›27›actual_hash": "inf",
+  "conformance_p1d1.json:tests›27›expected_hash": "inf",
+  "conformance_p1d1.json:tests›27›id": "inf",
+  "conformance_p1d1.json:tests›27›level": 0.3333333333333333,
+  "conformance_p1d1.json:tests›27›title": "inf",
+  "conformance_p1d1.json:tests›28›actual_hash": "inf",
+  "conformance_p1d1.json:tests›28›expected_hash": "inf",
+  "conformance_p1d1.json:tests›28›id": "inf",
+  "conformance_p1d1.json:tests›28›level": 0.3333333333333333,
+  "conformance_p1d1.json:tests›28›title": "inf",
+  "conformance_p1d1.json:tests›29›actual_hash": "inf",
+  "conformance_p1d1.json:tests›29›expected_hash": "inf",
+  "conformance_p1d1.json:tests›29›id": "inf",
+  "conformance_p1d1.json:tests›29›level": 0.3333333333333333,
+  "conformance_p1d1.json:tests›29›title": "inf",
+  "conformance_p1d1.json:tests›30›actual_hash": "inf",
+  "conformance_p1d1.json:tests›30›expected_hash": "inf",
+  "conformance_p1d1.json:tests›30›id": "inf",
+  "conformance_p1d1.json:tests›30›level": 0.3333333333333333,
+  "conformance_p1d1.json:tests›30›title": "inf",
+  "conformance_p1d1.json:tests›31›actual_hash": "inf",
+  "conformance_p1d1.json:tests›31›expected_hash": "inf",
+  "conformance_p1d1.json:tests›31›id": "inf",
+  "conformance_p1d1.json:tests›31›title": "inf",
+  "conformance_p1d1.json:tests›32›actual_hash": "inf",
+  "conformance_p1d1.json:tests›32›expected_hash": "inf",
+  "conformance_p1d1.json:tests›32›id": "inf",
+  "conformance_p1d1.json:tests›32›title": "inf",
+  "conformance_p1d1.json:tests›33›actual_hash": "inf",
+  "conformance_p1d1.json:tests›33›expected_hash": "inf",
+  "conformance_p1d1.json:tests›33›id": "inf",
+  "conformance_p1d1.json:tests›33›title": "inf",
+  "conformance_p1d1.json:tests›34›actual_hash": {
+   "a": "absent",
+   "b": "b56b16b3ccc5a4a7afbbbf29211fba85"
+  },
+  "conformance_p1d1.json:tests›34›detail": {
+   "a": "absent",
+   "b": null
+  },
+  "conformance_p1d1.json:tests›34›expected_hash": {
+   "a": "absent",
+   "b": "b56b16b3ccc5a4a7afbbbf29211fba85"
+  },
+  "conformance_p1d1.json:tests›34›id": {
+   "a": "absent",
+   "b": "C3-04"
+  },
+  "conformance_p1d1.json:tests›34›level": {
+   "a": "absent",
+   "b": 3
+  },
+  "conformance_p1d1.json:tests›34›result": {
+   "a": "absent",
+   "b": "pass"
+  },
+  "conformance_p1d1.json:tests›34›title": {
+   "a": "absent",
+   "b": "Retrieval never returns derived as content"
+  },
+  "conformance_p1d1.json:tests›35›actual_hash": {
+   "a": "absent",
+   "b": "cf9fc81f3b2ea5c10cba06f75d7cc984"
+  },
+  "conformance_p1d1.json:tests›35›detail": {
+   "a": "absent",
+   "b": null
+  },
+  "conformance_p1d1.json:tests›35›expected_hash": {
+   "a": "absent",
+   "b": "cf9fc81f3b2ea5c10cba06f75d7cc984"
+  },
+  "conformance_p1d1.json:tests›35›id": {
+   "a": "absent",
+   "b": "C3-05"
+  },
+  "conformance_p1d1.json:tests›35›level": {
+   "a": "absent",
+   "b": 3
+  },
+  "conformance_p1d1.json:tests›35›result": {
+   "a": "absent",
+   "b": "pass"
+  },
+  "conformance_p1d1.json:tests›35›title": {
+   "a": "absent",
+   "b": "With proposal results requested, the canonical prefix equals the result without the request (lexical, flat, hybrid; spec §9, 1.0.2)"
+  },
+  "conformance_p1d1.json:tests›36›actual_hash": {
+   "a": "absent",
+   "b": "10f03eb0e5f58b0829041bb9e2d716c4"
+  },
+  "conformance_p1d1.json:tests›36›detail": {
+   "a": "absent",
+   "b": null
+  },
+  "conformance_p1d1.json:tests›36›expected_hash": {
+   "a": "absent",
+   "b": "10f03eb0e5f58b0829041bb9e2d716c4"
+  },
+  "conformance_p1d1.json:tests›36›id": {
+   "a": "absent",
+   "b": "C3-06"
+  },
+  "conformance_p1d1.json:tests›36›level": {
+   "a": "absent",
+   "b": 3
+  },
+  "conformance_p1d1.json:tests›36›result": {
+   "a": "absent",
+   "b": "pass"
+  },
+  "conformance_p1d1.json:tests›36›title": {
+   "a": "absent",
+   "b": "Canonical invariance: agent writes the default edit policy (append_only) allows never change the canonical ranking of any query, every mode; writes touching canonical blocks or canonical chunks are denied and write nothing (spec §7, §9; 1.0.3)"
+  },
+  "conformance_p1d1.json:tests›37›actual_hash": {
+   "a": "absent",
+   "b": "8b8d319fbf4e73d91ae6b8ac266d3632"
+  },
+  "conformance_p1d1.json:tests›37›detail": {
+   "a": "absent",
+   "b": null
+  },
+  "conformance_p1d1.json:tests›37›expected_hash": {
+   "a": "absent",
+   "b": "8b8d319fbf4e73d91ae6b8ac266d3632"
+  },
+  "conformance_p1d1.json:tests›37›id": {
+   "a": "absent",
+   "b": "C3-07"
+  },
+  "conformance_p1d1.json:tests›37›level": {
+   "a": "absent",
+   "b": 3
+  },
+  "conformance_p1d1.json:tests›37›result": {
+   "a": "absent",
+   "b": "pass"
+  },
+  "conformance_p1d1.json:tests›37›title": {
+   "a": "absent",
+   "b": "Response length with proposal results requested: at most k canonical and at most k proposal hits, at most 2k in total, every mode (spec §9; 1.0.3)"
+  },
+  "conformance_p1d1.json:tests›38›actual_hash": {
+   "a": "absent",
+   "b": "922f40bd3bd93c07f34fb30348fbd6a6"
+  },
+  "conformance_p1d1.json:tests›38›detail": {
+   "a": "absent",
+   "b": null
+  },
+  "conformance_p1d1.json:tests›38›expected_hash": {
+   "a": "absent",
+   "b": "922f40bd3bd93c07f34fb30348fbd6a6"
+  },
+  "conformance_p1d1.json:tests›38›id": {
+   "a": "absent",
+   "b": "C3-08"
+  },
+  "conformance_p1d1.json:tests›38›level": {
+   "a": "absent",
+   "b": 3
+  },
+  "conformance_p1d1.json:tests›38›result": {
+   "a": "absent",
+   "b": "pass"
+  },
+  "conformance_p1d1.json:tests›38›title": {
+   "a": "absent",
+   "b": "unverified in retrieval (spec 2.0.0 §7.1, §9): unverified chunks are excluded by default; with proposal results requested they are ranked with the proposal chunks after every canonical result, labelled unverified, score x0.5, the canonical prefix unchanged, at most k non-canonical results, every mode"
+  },
+  "conformance_p1d1.json:total": 0.1282051282051282,
+  "p1b1_checks.json:criteria›B1-3›spec_version": "inf",
+  "p1b_checks.json:fixtures_manifest_hash": "inf",
+  "p1c1_checks.json:C1-7›spec_version": "inf",
+  "p1c_checks.json:C-1›spec_version": "inf",
+  "p1d/mcp_e2e/mcp_e2e.json:checks›4›pass": "inf",
+  "p1d/mcp_e2e/mcp_e2e.json:per_tool›status›passed": 0.3333333333333333,
+  "p1d/scene/scene.json:steps›0›shows›spec_version": "inf",
+  "p1d1_checks.json:D1-10›pass": "inf",
+  "p1d1_checks.json:D1-10›passed": "inf",
+  "p1d1_checks.json:D1-10›spec_version": "inf",
+  "p1d1_checks.json:D1-12›pass": "inf",
+  "p1d1_checks.json:D1-12›regress_vs_p1d›conformance›spec_version›1": "inf",
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›4›pass": {
+   "a": "absent",
+   "b": "inf"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›equal": "inf",
+  "p1d_checks.json:D-2›per_tool›status›passed": 0.3333333333333333,
+  "p1d_checks.json:D-9›conformance›spec_version›1": "inf"
+ },
+ "equal": false,
+ "excluded_differences": {
+  "p1d1/d1_13.json:codes": {
+   "decision": "K-E0.3",
+   "leaves": 16
+  },
+  "p1d1/d1_13.json:http": {
+   "decision": "F3 (ADDENDUM Ş4)",
+   "leaves": 182
+  },
+  "p1d1/d1_3.json:outcomes/append:denied": {
+   "decision": "K-E0.4",
+   "leaves": 1
+  },
+  "p1d1/d1_3.json:outcomes/append:policy_violation": {
+   "decision": "K-E0.4",
+   "leaves": 1
+  },
+  "p1d1/d1_5.json:propose_denied": {
+   "decision": "K-E0.4",
+   "leaves": 1
+  },
+  "p1d1/d1_5.json:write_responses": {
+   "decision": "K-E0.2 (F1)",
+   "leaves": 1
+  },
+  "p1d1/d1_5.json:write_responses_a_vs_b_equal": {
+   "decision": "K-E0.2 (F1)",
+   "leaves": 1
+  },
+  "p1d1/d1_5.json:write_responses_pipelined_vs_lockstep_equal": {
+   "decision": "K-E0.2 (F1)",
+   "leaves": 1
+  },
+  "p1d1_checks.json:D1-13/codes": {
+   "decision": "K-E0.3",
+   "leaves": 1
+  },
+  "p1d1_checks.json:D1-3/outcomes/append:denied": {
+   "decision": "K-E0.4",
+   "leaves": 1
+  },
+  "p1d1_checks.json:D1-3/outcomes/append:policy_violation": {
+   "decision": "K-E0.4",
+   "leaves": 1
+  }
+ },
+ "exclusions": [
+  {
+   "decision": "K-E0.3",
+   "file": "p1d1/d1_13.json",
+   "path": "codes",
+   "why": "contract §3 and error.rs gain index_stale: 11 codes, the sorted lists shift"
+  },
+  {
+   "decision": "F3 (ADDENDUM Ş4)",
+   "file": "p1d1/d1_13.json",
+   "path": "http",
+   "why": "contract_check.sh's new HTTP step: endpoints, codes, transport rules"
+  },
+  {
+   "decision": "K-E0.4",
+   "file": "p1d1/d1_3.json",
+   "path": "outcomes/append:denied",
+   "why": "a refused heading-less append is policy_violation, no longer denied"
+  },
+  {
+   "decision": "K-E0.4",
+   "file": "p1d1/d1_3.json",
+   "path": "outcomes/append:policy_violation",
+   "why": "the same outcomes, counted under the new code"
+  },
+  {
+   "decision": "K-E0.4",
+   "file": "p1d1/d1_5.json",
+   "path": "propose_denied",
+   "why": "the 8 heading-less appends of D1-5 answer policy_violation (8 → 0 denied)"
+  },
+  {
+   "decision": "K-E0.2 (F1)",
+   "file": "p1d1/d1_5.json",
+   "path": "write_responses",
+   "why": "new field: count of compared responses"
+  },
+  {
+   "decision": "K-E0.2 (F1)",
+   "file": "p1d1/d1_5.json",
+   "path": "write_responses_a_vs_b_equal",
+   "why": "new field: writing and trace-writing responses, pipelined A vs B"
+  },
+  {
+   "decision": "K-E0.2 (F1)",
+   "file": "p1d1/d1_5.json",
+   "path": "write_responses_pipelined_vs_lockstep_equal",
+   "why": "new field: writing and trace-writing responses, pipelined vs lock-step"
+  },
+  {
+   "decision": "K-E0.3",
+   "file": "p1d1_checks.json",
+   "path": "D1-13/codes",
+   "why": "the D1-13 record counts 11 codes"
+  },
+  {
+   "decision": "K-E0.4",
+   "file": "p1d1_checks.json",
+   "path": "D1-3/outcomes/append:denied",
+   "why": "the D1-3 record of the outcomes above"
+  },
+  {
+   "decision": "K-E0.4",
+   "file": "p1d1_checks.json",
+   "path": "D1-3/outcomes/append:policy_violation",
+   "why": "the D1-3 record of the outcomes above"
+  }
+ ],
+ "exclusions_without_difference": [],
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json",
+  "c1_variant.json",
+  "p1c1_checks.json",
+  "p1d_checks.json",
+  "p1d/inspector/inspector.json",
+  "p1d/mcp_e2e/mcp_e2e.json",
+  "p1d/http/http_e2e.json",
+  "p1d/scene/scene.json",
+  "p1d/tamper_p1d.json",
+  "p1d/d10.json",
+  "p1d/sigterm.json",
+  "p1d1_checks.json",
+  "conformance_p1d1.json",
+  "p1d1/p1d1.json",
+  "p1d1/d1_1.json",
+  "p1d1/d1_2.json",
+  "p1d1/d1_3.json",
+  "p1d1/d1_4.json",
+  "p1d1/d1_5.json",
+  "p1d1/d1_6.json",
+  "p1d1/d1_7.json",
+  "p1d1/d1_8.json",
+  "p1d1/d1_9.json",
+  "p1d1/d1_11.json",
+  "p1d1/d1_13.json",
+  "p1d1/v3_compat.json",
+  "p1d1/v3_compat_mixed.json",
+  "p1d1/tamper_p1d1.json"
+ ],
+ "n_fields": 100846,
+ "reference_run": "20261016T124520Z-1527365"
+}

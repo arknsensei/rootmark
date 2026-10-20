@@ -1,0 +1,11 @@
+{
+  "calls": 100,
+  "correct": 100,
+  "criterion": "D1-6",
+  "elapsed_ms_pipelined": 10.478083,
+  "elapsed_ms_serial": 35.783875,
+  "log_and_traces_unchanged": true,
+  "pass": true,
+  "ratio": 0.29281577246734736,
+  "ratio_below_0_6": true
+}

@@ -1,0 +1,177 @@
+{
+  "cases": [
+    {
+      "case": "V2 search mode=bogus",
+      "expected": "invalid_arguments",
+      "http": {
+        "code": "invalid_arguments",
+        "pass": true,
+        "status": 400
+      },
+      "mcp": {
+        "code": "invalid_arguments",
+        "pass": true
+      },
+      "tool": "search"
+    },
+    {
+      "case": "V2 read_block without lineage_id",
+      "expected": "invalid_arguments",
+      "http": {
+        "code": "invalid_arguments",
+        "pass": true,
+        "status": 400
+      },
+      "mcp": {
+        "code": "invalid_arguments",
+        "pass": true
+      },
+      "tool": "read_block"
+    },
+    {
+      "case": "V2 history extra=1",
+      "expected": "invalid_arguments",
+      "http": {
+        "code": "invalid_arguments",
+        "pass": true,
+        "status": 400
+      },
+      "mcp": {
+        "code": "invalid_arguments",
+        "pass": true
+      },
+      "tool": "history"
+    },
+    {
+      "case": "V2 search k=\"abc\"",
+      "expected": "invalid_arguments",
+      "http": {
+        "code": "invalid_arguments",
+        "pass": true,
+        "status": 400
+      },
+      "mcp": {
+        "code": "invalid_arguments",
+        "pass": true
+      },
+      "tool": "search"
+    },
+    {
+      "case": "V2 search k=0",
+      "expected": "invalid_arguments",
+      "http": {
+        "code": "invalid_arguments",
+        "pass": true,
+        "status": 400
+      },
+      "mcp": {
+        "code": "invalid_arguments",
+        "pass": true
+      },
+      "tool": "search"
+    },
+    {
+      "case": "V2 search query=\"\"",
+      "expected": "empty_query",
+      "http": {
+        "code": "empty_query",
+        "pass": true,
+        "status": 400
+      },
+      "mcp": {
+        "code": "empty_query",
+        "pass": true
+      },
+      "tool": "search"
+    },
+    {
+      "case": "V3 ../escape.md",
+      "expected": "path_outside_vault",
+      "http": {
+        "code": "path_outside_vault",
+        "pass": true,
+        "status": 400
+      },
+      "mcp": {
+        "code": "path_outside_vault",
+        "pass": true
+      },
+      "tool": "propose"
+    },
+    {
+      "case": "V3 absolute path outside the vault",
+      "expected": "path_outside_vault",
+      "http": {
+        "code": "path_outside_vault",
+        "pass": true,
+        "status": 400
+      },
+      "mcp": {
+        "code": "path_outside_vault",
+        "pass": true
+      },
+      "tool": "propose"
+    },
+    {
+      "case": "V3 10 MB + 1 byte",
+      "expected": "too_large",
+      "http": {
+        "code": "too_large",
+        "pass": true,
+        "status": 413
+      },
+      "mcp": {
+        "code": "too_large",
+        "pass": true
+      },
+      "tool": "propose"
+    },
+    {
+      "case": "V3 replace_section missing heading",
+      "expected": "heading_not_found",
+      "http": {
+        "code": "heading_not_found",
+        "pass": true,
+        "status": 422
+      },
+      "mcp": {
+        "code": "heading_not_found",
+        "pass": true
+      },
+      "tool": "propose"
+    },
+    {
+      "case": "V3 create over an existing file",
+      "expected": "exists",
+      "http": {
+        "code": "exists",
+        "pass": true,
+        "status": 409
+      },
+      "mcp": {
+        "code": "exists",
+        "pass": true
+      },
+      "tool": "propose"
+    },
+    {
+      "case": "V3 .rootmark/evil.md",
+      "expected": "path_outside_vault",
+      "http": {
+        "code": "path_outside_vault",
+        "pass": true,
+        "status": 400
+      },
+      "mcp": {
+        "code": "path_outside_vault",
+        "pass": true
+      },
+      "tool": "propose"
+    }
+  ],
+  "criterion": "D1-8",
+  "events_unchanged": true,
+  "of": 24,
+  "pass": true,
+  "passed": 24
+}
