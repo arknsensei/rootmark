@@ -52,6 +52,10 @@ P2A_FILES = [
     "p2a/tests.json",
 ]
 SPEC = "2.0.2"
+# wall-clock and informational fields of the P2-A files: none (the sets are
+# deterministic; research/eval/DETERMINISTIC_FIELDS.md)
+P2A_TIMING: dict[str, list[tuple]] = {}
+P2A_INFO: dict[str, list[tuple]] = {}
 
 # P2-0.2 official RUN → this RUN: `(file, path prefix, decision, why)`;
 # written from the development RUN before the official RUN (A5.md)
