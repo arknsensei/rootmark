@@ -1,0 +1,18 @@
+{
+ "criterion": "A-6",
+ "workflow": ".github/workflows/ci.yml",
+ "run": "https://github.com/arknsensei/rootmark/actions/runs/39488665486",
+ "run_id": 39488665486,
+ "commit": "2429cba07b1800864d6f9a71589af1d22e566ba6",
+ "job": "test + lint + conformance (ubuntu-latest)",
+ "job_id": 118855642300,
+ "conclusion": "success",
+ "continue_on_error": false,
+ "test": "server/tests/propose_kernel.rs::other_spellings_of_existing_names_are_refused (in make test: cargo test --workspace)",
+ "also": {
+  "test + lint + conformance (macos-14)": "success",
+  "dependency direction and age": "success"
+ },
+ "on_main": "measured on the round branch (workflow_dispatch); green on main is seen after the PR is merged; making the job required is a human ruleset step (STOP.md 1)",
+ "pass": true
+}

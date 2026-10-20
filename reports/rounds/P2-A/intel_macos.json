@@ -10,7 +10,7 @@
    "published": "2026-03-05",
    "eligible_14_days": true,
    "x86_64_apple_darwin_rows": 0,
-   "note": "no `dist.tsv` in the tree at this tag (the list's location differed); not inspected further — older than the pinned rc.13, which P1-E already found without an Intel macOS download"
+   "note": "the prebuilt list is `ort-sys/build/download/dist.txt` at this tag: 0 rows for x86_64-apple-darwin (A4 review)"
   },
   {
    "tag": "v2.0.0-rc.13",
