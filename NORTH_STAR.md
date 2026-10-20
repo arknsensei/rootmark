@@ -8,6 +8,8 @@ Bu dosya projenin tek sayfalık sabit noktasıdır. Her `/goal` turu, her yeni s
 ## Tek cümlelik vaat
 Bir ajan bilgi tabanına yazdığında, her bloğun kim tarafından, ne zaman, hangi bloktan türeyerek yazıldığı bilinir; onaylanmamış hiçbir şey bilgi sayılmaz; her cevap hangi bloklara dayandığını söyler; dünkü hale blok düzeyinde dönülebilir — ve dosyalar sıradan markdown olarak kalır.
 
+**Ölçülen koşul (P2-0 dizisi, 2026-10-20; K-P2-02.5):** dosya erişimli bir ajanın tasdiksiz doğrudan yazımının `canonical` sayılmaması, `[attestation] unattested = "unverified"` seçildiğinde ve tasdikli bir istemciyle (Obsidian eklentisi ya da `rootmark attest`) geçerlidir; varsayılan politika `canonical`'dır. Ölçülen sınır: kendine bağlantılı büyük notların yeniden adlandırılmasında insan içeriği güvenli tarafta `unverified` kalabilir. Token'ı okuyabilen, insan istemcisini başlatıp sürebilen ya da eklenti dosyalarını yazabilen bir süreç insan kanalındadır (THREAT_MODEL).
+
 ## Biz neyiz, ne değiliz
 - **Değiliz:** vektör veritabanı, ajan hafıza API'si, not uygulaması, ekip wiki'si, LLM çerçevesi.
 - **Biziz:** markdown üzerinde çalışan, bağımsız dağıtılan bir çekirdek (`rootmark`) ve onu konuşan istemciler. Obsidian, VS Code, CLI, MCP istemcileri eşit statüdedir; çekirdek hiçbirini bilmez. Tek uyumluluk sözü: düz markdown + wikilink.
