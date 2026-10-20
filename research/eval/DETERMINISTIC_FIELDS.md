@@ -54,6 +54,9 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 ### `compare_p2_0_2`
 `pair`: `compare_p1e1.pair` + `P2_0_2_FILES` alan alan + `P2_0_2_BYTES` (D-A, D-A2 ve D-C vault'larının `events.jsonl` ve `attestations.jsonl`'i, H-P2-0.2i) bayt bayt; hariç: gerçek Obsidian kümelerinin ve düzenleyici oturumlarının ölçümleri (`P2_0_2_TIMING`, duvar saati: `p2_0_2_checks.json`'da H-P2-0.2b, b′, c, d'nin `d_c_prime` alt ağacı ve `pass`'i, e, f). `p2_0_2/d_b.json`, `d_a_prime.json`, `d_c_prime.json` ve `d_b2.json` bütünüyle duvar saati kayıtlarıdır, dosya listesinde yoktur. `regress`: P2-0.1 resmi RUN'ı, `EXCLUDED` (P2-0.2 kararlarının satırları, resmi RUN'dan önce geliştirme RUN'ından yazıldı), uyumluluk raporu test kimliğiyle (referansın 38 testi eşit, C2-14 geçti, spec 2.0.2) ve P2-0.1'in yeniden koşan kümeleri (D-A ve D-A2 her alan ve `events.jsonl`, D-E'nin beş satırı; D-C: T3 sırayı sabitlediği için `seq` dışında aynı olay çoklu kümesi ve `collide` satırlarındaki `matched: false` dışında aynı tasdik satırları — X2; hariç tutmasız).
 
+### `compare_p2a`
+`pair`: `compare_p2_0_2.pair` (P1-E.1 çift kümesi, P2-0.2 dosyaları ve günlükleri; P2-A zincirinde P2-0.2'nin gerçek Obsidian kümeleri `skipped` kaydedilir, K-P2.3) + `P2A_FILES` alan alan; P2-A kümeleri belirlenimlidir (vault'ların geçici yolu `<vault>` yazılır), hariç tutma yok (`P2A_TIMING`, `P2A_INFO` boş). `regress`: P2-0.2 resmi RUN'ı; dosyalar P1-E.1 çift kümesi ve `P2_0_2_FILES`, `EXCLUDED` (P2-A kararlarının satırları, resmi RUN'dan önce geliştirme RUN'ından yazıldı), uyumluluk raporu test kimliğiyle (39 test eşit, spec 2.0.2) ve D-A, D-A2, D-C günlükleri bayt bayt (`compare_p2_0_2.P2_0_2_BYTES`).
+
 ## Alan tablosu
 <!-- fields-table -->
 | Araç | Kip | Dosya | Yol kalıbı | Sınıf | Gerekçe |
@@ -459,4 +462,5 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2_0_1.P2_0_1_BYTES` | `p2_0_1/d_a/events.jsonl`, `p2_0_1/d_a/attestations.jsonl`, `p2_0_1/d_a2/events.jsonl`, `p2_0_1/d_a2/attestations.jsonl`, `p2_0_1/d_c/events.jsonl`, `p2_0_1/d_c/attestations.jsonl` |
 | `compare_p2_0_2.P2_0_2_FILES` | `p2_0_2_checks.json`, `p2_0_2/rules.json`, `p2_0_2/d_e.json`, `p2_0_2/d_a.json`, `p2_0_2/d_a2.json`, `p2_0_2/d_c.json`, `p2_0_2/tamper_p2_0_2.json` |
 | `compare_p2_0_2.P2_0_2_BYTES` | `p2_0_2/d_a/events.jsonl`, `p2_0_2/d_a/attestations.jsonl`, `p2_0_2/d_a2/events.jsonl`, `p2_0_2/d_a2/attestations.jsonl`, `p2_0_2/d_c/events.jsonl`, `p2_0_2/d_c/attestations.jsonl` |
+| `compare_p2a.P2A_FILES` | `p2a_checks.json`, `p2a/migrate_old.json`, `p2a/fixture.json`, `p2a/tamper.json`, `p2a/tests.json` |
 <!-- /files-table -->

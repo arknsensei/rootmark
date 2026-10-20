@@ -364,6 +364,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/contract_check.sh` | `P2-A/A2:` | yeniden dondurma P2-A/F2: `migration_required`, `stale` durumda `search` |
 | `scripts/release_check.sh` | `P2-A/A3:` | yeniden dondurma P2-A/F3: kurulum maddeleri R17–R20 |
 | `scripts/release_target.sh` | `P2-A/A3:` | yeniden dondurma P2-A/F4: rapor jq'ya dosyayla (Windows komut satırı sınırı) |
+| `scripts/verify.sh` | `P2-A/A5-dev:` | yeniden dondurma P2-A/F5: P2-A zinciri (`p2a-checks`), sınıflandırıcı `eval.historical_p2a`, `pair` → `compare_p2a pair`, `compare-p2a` |
+| `research/eval/check_compare_fields.py` | `P2-A/A5-dev2:` | yeniden dondurma P2-A/F6: `compare_p2a` |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-A/A5-dev2:` | yeniden dondurma P2-A/F6: `compare_p2a` bölümü ve dosya satırı |
+| `research/eval/**` | `P2-A/A5-dev2:` | yeniden dondurma P2-A/F6: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan P2-A ölçüm dosyaları (`run_p2a.py`, `run_p2a_checks.py`, `compare_p2a.py`, `historical_p2a.py`, `historical_fails_p2a.json`, `migration_required_fails.json`, `report_p2a.py`) de bu satırla donar |
 <!-- /frozen-table -->
 
 ## Notlar

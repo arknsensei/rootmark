@@ -31,3 +31,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** TASKS A5 ("göç adımı → conformance → regress (P2-0.2 referansı) → tamper → tek yüksüz çift; `compare_p2a`"); K-P2.3 (geliştirme turunda gerçek Obsidian yalnız mevcut e2e'de: `make p1e1-checks`'in gerçek Obsidian e2e'si koşmaya devam eder; P2-0.2'nin D-B test-3/D-A′/D-C′ kümeleri koşmaz, A0'ın bilgi ölçümü ayrı kayıttır).
 - **Önce/sonra:** zincirin P1-A…P1-E.1 adımları bayt bayt aynı komutlar; değişen adım yeni kaydedicileri ekler. `VERIFY_LOAD`'lu yol aynen. Geliştirme RUN'ı ve resmi çift A5.md'de.
 - **Gözden geçirici onayı:** A5.review.md.
+
+## F6 · A5 · alan denetimi: `research/eval/check_compare_fields.py`, `research/eval/DETERMINISTIC_FIELDS.md` — `compare_p2a`
+- **Ne:** `check_compare_fields.py`: modül listesine `("compare_p2a", "P2A")`, dosya sabitlerine `"compare_p2a": ["P2A_FILES"]`. `DETERMINISTIC_FIELDS.md`: `compare_p2a` bölümü ve dosya tablosu satırı; `compare_p2a.EXCLUDED`'ın alan satırları geliştirme RUN'ından sonra eklenir (aynı istisna, `P2-A/A5-rec`). Başka satır değişmedi.
+- **Neden:** her `compare_*.py` için bir bildirim zorunludur (`check_compare_fields`; P2-0.2/F6 emsali); TASKS A5 `compare_p2a`.
+- **Önce/sonra:** var olan 371 alan satırı ve 24 dosya sabiti aynen eşleşir; `check_compare_fields.sh` çıkış 0 (A5.md). P1-E ve P1-E.1 kaydedicilerinin `check_compare_fields.json`'unda `modules`, `file_constants`, `fields_*` sayıları büyür (yeni karşılaştırıcı): sınıflandırıcıda bu karara bağlı bildirilmiş değişiklik.
+- **Gözden geçirici onayı:** A5.review.md.
