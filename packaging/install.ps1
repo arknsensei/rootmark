@@ -3,7 +3,8 @@
 # SHA-256 against SHA256SUMS, installs rootmark.exe and the embedder model
 # manifest, and fetches the pinned model files, each checked against
 # models/MANIFEST.json (size and SHA-256). Any mismatch or missing file is
-# an error; nothing is installed until every check passed.
+# an error; nothing is installed until the zip passed every check (a failed
+# model download afterwards is an error too and leaves rootmark.exe).
 #
 #   install.ps1 [-Version <x.y.z>] [-Prefix <dir>] [-From <dir>] [-NoModel]
 #
@@ -26,7 +27,7 @@ $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 $repo = "arknsensei/rootmark"
 $target = "x86_64-pc-windows-msvc"
-function Die($m) { Write-Error "install.ps1: $m"; exit 1 }
+function Die($m) { [Console]::Error.WriteLine("install.ps1: $m"); exit 1 }
 
 if (-not [Environment]::Is64BitOperatingSystem -or $env:PROCESSOR_ARCHITECTURE -ne "AMD64") {
   Die "no release archive for $($env:PROCESSOR_ARCHITECTURE) (x86_64 only)"

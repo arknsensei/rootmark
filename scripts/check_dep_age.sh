@@ -134,6 +134,10 @@ published_at() { # <eco> <name> <version> → ISO time or empty
     pypi) curl -sf "https://pypi.org/pypi/$2/$3/json" | jq -r '[.urls[].upload_time_iso_8601] | min // empty' ;;
     actions)
       local t sha
+      # the same action and version is declared in many places: asked once
+      # (a plain string: macOS bash 3.2 has no associative arrays)
+      t="$(printf '%s' "$act_cache" | tr '|' '\n' | awk -v k="$2@$3" 'index($0, k "=") == 1 {print substr($0, length(k) + 2); exit}')"
+      if [ -n "$t" ]; then printf '%s' "$t"; return; fi
       t="$(gh_api "repos/$2/releases/tags/$3" | jq -r '.published_at // empty' || true)"
       if [ -z "$t" ]; then
         sha="$(gh_api "repos/$2/git/refs/tags/$3" | jq -r 'if type == "object" then .object.url // empty else empty end' || true)"
@@ -143,10 +147,12 @@ published_at() { # <eco> <name> <version> → ISO time or empty
   esac
 }
 
+act_cache="|"
 fail=0; missing=0; rows=()
 for e in "${entries[@]}"; do
   IFS=$'\t' read -r eco name ver file line <<<"$e"
   pub="$(published_at "$eco" "$name" "$ver" || true)"
+  if [ "$eco" = actions ] && [ -n "$pub" ]; then act_cache="$act_cache$name@$ver=$pub|"; fi
   if [ -z "$pub" ] && [[ "$exceptions" == *"|$eco $name $ver|"* ]]; then
     # a ref with no publication time (an action's branch) listed as an exception
     echo "check_dep_age: ok   $eco $name $ver — no publication time (not a release or tag), exception ($exc_file)"

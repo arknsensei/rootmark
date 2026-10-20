@@ -4,7 +4,9 @@
 # checks the archive's SHA-256 against SHA256SUMS, installs the binary and
 # the embedder model manifest, and fetches the pinned model files (each
 # checked against models/MANIFEST.json by fetch_model.sh). Any mismatch or
-# missing file is an error; nothing is installed until every check passed.
+# missing file is an error; nothing is installed until the archive passed
+# every check (a failed model download afterwards is an error too, and leaves
+# the installed binary: run fetch_model.sh again).
 #
 #   install.sh [--version <x.y.z>] [--prefix <dir>] [--from <dir>] [--no-model]
 #
