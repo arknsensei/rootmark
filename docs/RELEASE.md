@@ -22,11 +22,11 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 | R13 | CI derleme | `.github/workflows/release.yml` yalnız `workflow_dispatch` ile tetiklenir; matris `aarch64-apple-darwin` (zorunlu) ve `x86_64-unknown-linux-gnu`, `x86_64-pc-windows-msvc` (`continue-on-error`); `x86_64-apple-darwin` yok; her artefaktta `rootmark conformance` (K-E1.1) |
 | R14 | Etiket insan adımıdır | `v0.1.0` etiketi yok, ya da (P2-0/Z0'dan beri) var ve R16'nın raporu "Güvenilir", etiketin commit'i en yeni `ROUND_START`'ın kendisi ya da atası (etiketi bir tur atmaz; 0.1.0'ı GH-0'da insan attı, K-GH.4) |
 | R15 | Gerçek Obsidian e2e (K-E1.3) | `dist/plugin_e2e_real/plugin_e2e_real.json`: 11/11, E1-9 bağlantı adımı geçti, `pass: true`; Obsidian ikilisi yoksa kayıt `skipped` olur ve R15 FAIL'dir (atlanma yayım için geçme sayılmaz) |
+| R16 | İnsan adımı 1'in bağı (P2-0/Z0; P1-E.1 doğrulaması öneri 1) | aşağıdaki insan adımı 1'in adını verdiği `reports/rounds/<tur>/VERIFICATION.md` var ve son `**Hüküm: …**` satırı "Güvenilir" |
 | R17 | Kurulum betikleri (P2-A/A3) | `packaging/install.sh` (Linux x86_64, macOS arm64) ve `packaging/install.ps1` (Windows x86_64) var; `install.sh` bu paketin arşivini yerel bir `SHA256SUMS` ile (model indirmeden) kurar, kurulan ikili `rootmark <ver>` der; bir baytı değişmiş arşiv reddedilir ve hiçbir şey kurulmaz |
 | R18 | CI kurulum, sağlama, köken (P2-A/A3) | `release.yml`'in her işi kendi arşivini kurulum betiğiyle (`install.sh --from`, `install.ps1 -From`) kurar ve kurulan ikiliyle `--version` + `rootmark conformance` koşturur; son iş bütün arşivlerin `SHA256SUMS`'ını yazar ve `actions/attest-build-provenance` ile köken tasdiki üretir (`id-token: write`, `attestations: write`) |
 | R19 | İmzalama insan adımıdır (P2-A/A3) | aşağıdaki insan adımları Apple notarization'ı ve Windows Authenticode'u adlandırır; köken doğrulaması `gh attestation verify` yazılıdır |
 | R20 | Eylemler sabit (P2-A/A3) | her iş akışının her `uses:`'u tam sürüme sabit (`@vX.Y.Z`; araç zinciri eylemi `dtolnay/rust-toolchain@<toolchain>` hariç); yaşları `scripts/check_dep_age.sh` (≥ 14 gün) |
-| R16 | İnsan adımı 1'in bağı (P2-0/Z0; P1-E.1 doğrulaması öneri 1) | aşağıdaki insan adımı 1'in adını verdiği `reports/rounds/<tur>/VERIFICATION.md` var ve son `**Hüküm: …**` satırı "Güvenilir" |
 
 ## İnsan adımları (betik yapmaz)
 1. P1-E.1 bağımsız doğrulaması (`reports/rounds/P1-E.1/VERIFICATION.md`) **"Güvenilir"** demeden hiçbiri yapılmaz (P1-E'nin hükmü "şu koşullarla güvenilir" idi; koşulu P1-E.1 kapattı).

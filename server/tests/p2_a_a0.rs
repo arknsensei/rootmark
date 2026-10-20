@@ -196,12 +196,15 @@ fn the_attest_log_tells_refused_matched_and_unmatched_apart() {
     let p = v.join(".rootmark/policy.toml");
     let t = std::fs::read_to_string(&p).unwrap().replace(
         rootmarkserver::config::ATTESTATION_DEFAULT,
-        "[attestation]\nunattested = \"unverified\"\nwindow_s = 0.3\n",
+        "[attestation]\nunattested = \"unverified\"\nwindow_s = 3.0\n",
     ) + "\n[identity]\nhuman_id = \"ada\"\n";
     std::fs::write(&p, t).unwrap();
     let logp = r.join("attest-diag.jsonl");
     let mut k = Kernel::open(&v).unwrap();
     k.set_attest_log(AttestLog::open(&logp, &v).unwrap());
+    // the embedder loads on the first ingest (seconds on a CI runner):
+    // loaded before the timed steps, so that only the window decides
+    k.embedder().unwrap();
     let s = session(&k);
     let doc = "notes.md";
 
@@ -223,7 +226,7 @@ fn the_attest_log_tells_refused_matched_and_unmatched_apart() {
     let late = format!("{observed}\nObserved after the window.\n");
     std::fs::write(v.join(doc), &late).unwrap();
     attest_bytes(&k, &s, doc, late.as_bytes(), true).unwrap();
-    std::thread::sleep(std::time::Duration::from_millis(500));
+    std::thread::sleep(std::time::Duration::from_millis(3500));
     k.watch_doc(doc, "rootmark-serve-watch").unwrap();
 
     let l = lines(&logp);

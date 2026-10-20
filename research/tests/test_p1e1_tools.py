@@ -92,9 +92,11 @@ def test_unreadable_checks_file_is_an_error(tmp_path):
 
 def test_release_ids_cover_r1_to_r16():
     # P2-0 (K-P2-0.3): R16 (the verification report that RELEASE.md human
-    # step 1 waits for) joins R1..R15 and R4a
+    # step 1 waits for) joins R1..R15 and R4a; P2-A (K-P2A.3, P2-A/F3):
+    # R17..R20 (installers, CI install/sums/provenance, signing, pinned actions)
     ids = run_p1e1_checks.release_ids()
-    assert ids[0] == "R1" and "R4a" in ids and "R15" in ids and "R16" in ids and len(ids) == 17
+    assert ids[0] == "R1" and "R4a" in ids and "R15" in ids and "R16" in ids
+    assert ids[-4:] == ["R17", "R18", "R19", "R20"] and len(ids) == 21
 
 
 def test_unlisted_fail_failing_in_reference_too_counts(tmp_path):
