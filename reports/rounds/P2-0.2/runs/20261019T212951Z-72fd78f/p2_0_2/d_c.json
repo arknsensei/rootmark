@@ -1,0 +1,2754 @@
+{
+ "set": "D-C",
+ "t3": "apart and same_doc_after: the agent writes once the human's ingest is in the log; collide: the attestation before the two writes (X2-1)",
+ "ticks": 160,
+ "modes": {
+  "apart": 139,
+  "same_doc_after": 14,
+  "collide": 7
+ },
+ "blocks": 340,
+ "right": 340,
+ "accuracy": 1.0,
+ "agent_canonical": 0,
+ "accuracy_without_collide": 1.0,
+ "by_mode": {
+  "apart": {
+   "blocks": 298,
+   "right": 298
+  },
+  "same_doc_after": {
+   "blocks": 28,
+   "right": 28
+  },
+  "collide": {
+   "blocks": 14,
+   "right": 14
+  }
+ },
+ "partial_lines": 7,
+ "wrong": [],
+ "records": [
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "4ba6a535714f0f06ea6bed4d71df3d8f",
+   "author": "agent",
+   "tick": "c001",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "5d07eec63fc94b9398b14c163f9b4eb4",
+   "author": "agent",
+   "tick": "c001",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "053a3b624e7b1d3c69503f2778c61df1",
+   "author": "agent",
+   "tick": "c009",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "df63ac5272cb7ac61dc61cbd7a96a35d",
+   "author": "human",
+   "tick": "c010",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "f21d412688a1ba8deb6963a16d3c3e1e",
+   "author": "agent",
+   "tick": "c010",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "5da974078d8196c901ed74dc40686eae",
+   "author": "agent",
+   "tick": "c014",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "ea352b8c458e9ac36b97f0f450cb39f6",
+   "author": "human",
+   "tick": "c015",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "77ae8cd01cf5d395f7a68fc15abf2175",
+   "author": "human",
+   "tick": "c021",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "d0a28bd1701810ef1b48f7b2be082951",
+   "author": "human",
+   "tick": "c022",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "7ce2ec852402ae3709d416498cb09501",
+   "author": "agent",
+   "tick": "c022",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "b0716eedee4a564d2555f5feb4257933",
+   "author": "human",
+   "tick": "c023",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "4a01a144f951d8e118f083a2e5b53b08",
+   "author": "human",
+   "tick": "c039",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "58eb3069a923e0a5a9adad2fbb397009",
+   "author": "human",
+   "tick": "c058",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "67151405e94ad9b5fbcff3a4d413185b",
+   "author": "human",
+   "tick": "c064",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "8e07bd7b7163179ca8dabaa5c4cd49fb",
+   "author": "human",
+   "tick": "c077",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "63f86af2c1567aacba0c20b240338064",
+   "author": "agent",
+   "tick": "c097",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "b570a2fc1f12462e46c3ee05bd0d1b0a",
+   "author": "human",
+   "tick": "c108",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "416907bd4486e4ef2011776a1115d036",
+   "author": "human",
+   "tick": "c122",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "56c2a5493cea76e0e085ca936068353e",
+   "author": "human",
+   "tick": "c134",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c001.md",
+   "lineage_id": "1bbea518aa7d02bb57c5c552f8d88cfb",
+   "author": "agent",
+   "tick": "c134",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "84ae460bae01181e75038f3415f529ea",
+   "author": "agent",
+   "tick": "c003",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "bb9b7edf9f5c1a8fef7d429b27141d2b",
+   "author": "agent",
+   "tick": "c003",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "e52ea61880ff367b316ce06f6d3b36c9",
+   "author": "human",
+   "tick": "c014",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "03d59bc34878fcc2a366b0437a83ef4d",
+   "author": "human",
+   "tick": "c036",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "9448b246f680b469f3526d9bcd044e22",
+   "author": "human",
+   "tick": "c060",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "98a5bad85d53ffc1b74cfdf959b78e94",
+   "author": "agent",
+   "tick": "c060",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "fb9953b9bd895f95359f59c2dd7b7b89",
+   "author": "human",
+   "tick": "c071",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "a44c691febc1f6eb10b69a75f31b3e96",
+   "author": "human",
+   "tick": "c094",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "79191820f6d71d998b572325504d711b",
+   "author": "agent",
+   "tick": "c105",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "b2c2c01d75e361552958c7c769c33913",
+   "author": "human",
+   "tick": "c115",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "65a7c7a0bfd43738b56b32aa8481ff1e",
+   "author": "human",
+   "tick": "c116",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "a49efb3ea5db6e3928610a8236163389",
+   "author": "agent",
+   "tick": "c116",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "990c6e8172cb7e6389ff8c009343eb32",
+   "author": "agent",
+   "tick": "c117",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "3d8602d2c2fb80c5aad150d5e2699bce",
+   "author": "agent",
+   "tick": "c127",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "cd9a8ea3a6b73111ba45719cb3370591",
+   "author": "human",
+   "tick": "c138",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "5a16b4c09b7467361ac17c4d5195e81d",
+   "author": "human",
+   "tick": "c145",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "cc54dd70e9f525c6ce5918f2c9d52a8c",
+   "author": "human",
+   "tick": "c156",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c003.md",
+   "lineage_id": "eddbf9e0542693733cf16ef30077a10f",
+   "author": "agent",
+   "tick": "c156",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "f9570fd8e4e00b8a944f08f879552def",
+   "author": "agent",
+   "tick": "c012",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "ea701014a4a7d3a98f31ee6c7ec7ca1b",
+   "author": "agent",
+   "tick": "c012",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "36b0e7c8eb58159a8f4b1fc394e171e2",
+   "author": "human",
+   "tick": "c016",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "c6f36d2bc4840e963d77491457c092fd",
+   "author": "agent",
+   "tick": "c019",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "e6b5f83a18558c054a40417c0bcb0fac",
+   "author": "agent",
+   "tick": "c036",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "f5d3b6e5318032f72438c293691d2e99",
+   "author": "agent",
+   "tick": "c039",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "941151d3e621e0a9aa5b94439985e9c4",
+   "author": "human",
+   "tick": "c044",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "77b41b3c8af35c34e0329ac9578e996a",
+   "author": "agent",
+   "tick": "c049",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "810e80da1545171421c9e56cc6e34118",
+   "author": "human",
+   "tick": "c059",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "180f7f1fd623cedfc564e8fec80b4696",
+   "author": "agent",
+   "tick": "c061",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "38288695845fc73398d4f8f41b2bdbd8",
+   "author": "human",
+   "tick": "c066",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "5527e65c80c8d750705ae80d698e2ddd",
+   "author": "agent",
+   "tick": "c111",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "4605e78b8bf35bc190b4f2cd4e4b7c88",
+   "author": "agent",
+   "tick": "c113",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "b415e8568d71f0731520da521402427b",
+   "author": "agent",
+   "tick": "c115",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "661a167f653a82424a897d70c833192d",
+   "author": "agent",
+   "tick": "c137",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c012.md",
+   "lineage_id": "15b2259cde919f761d984d5e85abb3d6",
+   "author": "agent",
+   "tick": "c154",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "0aa055b19d3ee2d380d8eebe4563043b",
+   "author": "agent",
+   "tick": "c013",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "fccee376878a4b79c770ac2d0927ed76",
+   "author": "agent",
+   "tick": "c013",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "0b5b07f4369eca98d36db991d651197b",
+   "author": "human",
+   "tick": "c029",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "5f9de516cf3fc16f4d577720f37409a8",
+   "author": "agent",
+   "tick": "c029",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "af5e26b10a63c14341ea94bb6824b3ba",
+   "author": "human",
+   "tick": "c078",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "b6e13bc9233fd18bbc0b51a471ea47b5",
+   "author": "agent",
+   "tick": "c080",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "8d3776ce59722c2b95b26c6762e32511",
+   "author": "human",
+   "tick": "c088",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "b276821fe609c3eeb6071d76891457f8",
+   "author": "agent",
+   "tick": "c088",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "451d59dca83a289870c0a29c38a6603b",
+   "author": "agent",
+   "tick": "c099",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "c1b7c8474ba3cd195a3c4fe7c83720e9",
+   "author": "human",
+   "tick": "c110",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "1ab6a9ca278eb5f4857084e5a5e9c062",
+   "author": "agent",
+   "tick": "c122",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "1758b9f9033934a86e703f97bb48cc1c",
+   "author": "human",
+   "tick": "c127",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "344b13d94347692fb2af44900ddf9406",
+   "author": "human",
+   "tick": "c135",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "26cb410b89fe2bfe795f90d1971a6875",
+   "author": "human",
+   "tick": "c147",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c013.md",
+   "lineage_id": "2b7c28b858bd39e1dff040a6de2805c9",
+   "author": "human",
+   "tick": "c158",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "862b666cfef057e69aa548e1d60bbefa",
+   "author": "agent",
+   "tick": "c018",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "2c2f0328a318163fb496fd32e5532003",
+   "author": "agent",
+   "tick": "c018",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "5c1a5b6851b5e504e23d84e14a0ff73f",
+   "author": "human",
+   "tick": "c035",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "2de59eaa12db1d58adc4a02f31738d40",
+   "author": "human",
+   "tick": "c038",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "f2dbaf028046aa744d54268df8c4738b",
+   "author": "human",
+   "tick": "c043",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "228869881d3185f707edc0ecef32fc29",
+   "author": "agent",
+   "tick": "c047",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "7ee870f9c5d027187c88c578716fe703",
+   "author": "agent",
+   "tick": "c048",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "abd7e52fa9a88a9366e647210908b56c",
+   "author": "agent",
+   "tick": "c050",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "63d15b8681f64b5cb4c475d0bba2bc68",
+   "author": "agent",
+   "tick": "c070",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "f5b7b4a72eb9c3d67d96abb2c0b833ba",
+   "author": "human",
+   "tick": "c086",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "d2e889264f2819bfdb66f81412a24514",
+   "author": "human",
+   "tick": "c093",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "203f621b9b820ccd7a03b1a6ab792646",
+   "author": "human",
+   "tick": "c099",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "3e5ef8886a7aaee77b07118e1e6709e0",
+   "author": "human",
+   "tick": "c107",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "2a379d9e4cc64131f6b0162af2c22af9",
+   "author": "agent",
+   "tick": "c107",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "d2c9bcb363ce9b6ad8124e3009453c1d",
+   "author": "agent",
+   "tick": "c110",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "fceb773a7ff4977214e143ef733ff961",
+   "author": "human",
+   "tick": "c148",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "d764ee70c9759a40bdeafdb73d6b5e51",
+   "author": "agent",
+   "tick": "c148",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c018.md",
+   "lineage_id": "dc2d72571fe1f7932d98cdae864de766",
+   "author": "agent",
+   "tick": "c155",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "9fa096ccfcc5b9fd9724354b3238689b",
+   "author": "agent",
+   "tick": "c023",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "32cd211a78dd9be18b3d4b9d4e2e7d1c",
+   "author": "agent",
+   "tick": "c023",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "e6e0a29ec391fe17bbbba16fad2c2ef4",
+   "author": "human",
+   "tick": "c027",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "33967c0d8bda48fa3bbf8b7043a201ba",
+   "author": "human",
+   "tick": "c034",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "5744041efb5ee098daa0e2eaab8bd9c9",
+   "author": "agent",
+   "tick": "c041",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "7e748f1efe131d2f1daa97220c05938b",
+   "author": "human",
+   "tick": "c051",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "e4416d727c7a21e4e85b9d3b0d86eea8",
+   "author": "agent",
+   "tick": "c052",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "05e064e570d6203bd78679717bb2adc6",
+   "author": "agent",
+   "tick": "c056",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "b02b380a701dfad099ed4932db528805",
+   "author": "agent",
+   "tick": "c077",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "709971f07f77d1302e97a4aabce66f20",
+   "author": "agent",
+   "tick": "c090",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c023.md",
+   "lineage_id": "3163a770fd587da24842e716fa370f92",
+   "author": "agent",
+   "tick": "c092",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "2b94f25e26b27a484ba082cf8b70e637",
+   "author": "agent",
+   "tick": "c025",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "dd0936ce12aefcc058299cc750ae123e",
+   "author": "agent",
+   "tick": "c025",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "1bbc960e4c4b35d09a1b35f32dbf7503",
+   "author": "agent",
+   "tick": "c031",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "90d465a63b126a64c34e0cb844cb9788",
+   "author": "agent",
+   "tick": "c054",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "b7a279c21f2f836a3b411d4546e72105",
+   "author": "agent",
+   "tick": "c064",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "2d488960b34b994709c2617a4390eacd",
+   "author": "human",
+   "tick": "c072",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "8cc2659f1d308d9f03d718e0ccb97cd4",
+   "author": "human",
+   "tick": "c074",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "fd6a86f539440a221b37bdac159a0cff",
+   "author": "agent",
+   "tick": "c075",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "e4069a569d4e5110762c2a77a97b2f11",
+   "author": "agent",
+   "tick": "c087",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "458ec36fdf5b5bdda570a5f99b1fbcfd",
+   "author": "human",
+   "tick": "c092",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "f48147f732fea1777d23894438a78d15",
+   "author": "agent",
+   "tick": "c094",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "d0187ac259ce7b5d6f29929bdcd7e1dc",
+   "author": "human",
+   "tick": "c150",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c025.md",
+   "lineage_id": "0daf978a0349e56d7a22efbdd298f2db",
+   "author": "agent",
+   "tick": "c150",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "b4d8ea3e1bd27da111bfb7ed66de3e11",
+   "author": "agent",
+   "tick": "c040",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "0d7074e84afeb78fe945134d671ca256",
+   "author": "agent",
+   "tick": "c040",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "6675d2e18d621bcb1920c24cfd4411bb",
+   "author": "agent",
+   "tick": "c043",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "68a50e3d8bcb81d846b03c4a70242151",
+   "author": "human",
+   "tick": "c046",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "ee440ea21b43433ed341237c5f82848f",
+   "author": "human",
+   "tick": "c047",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "fd3b65377ded444ed5abfed651de1422",
+   "author": "human",
+   "tick": "c067",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "9a320c43860bd941e8117f827a0f82a3",
+   "author": "human",
+   "tick": "c068",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "5abd7a57aa76235172983670e11d877d",
+   "author": "agent",
+   "tick": "c086",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "fd3b10af809e8e4896eae506f0ffaf16",
+   "author": "human",
+   "tick": "c089",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "f07f84547eb40eff3e30ce76e9207e4b",
+   "author": "human",
+   "tick": "c104",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "c381bd4f8886a3330e04d3e92f8cb754",
+   "author": "agent",
+   "tick": "c106",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "d466bf1c1351ad3a2e9e4a8d3358b3bb",
+   "author": "agent",
+   "tick": "c108",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c040.md",
+   "lineage_id": "2fb76fb1c4acd5b91d95c82750792238",
+   "author": "human",
+   "tick": "c153",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "30aaeaf81e1e1379fbf6a72e82738498",
+   "author": "agent",
+   "tick": "c055",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "b3553623657647ac56c1b2cd8643d8d1",
+   "author": "agent",
+   "tick": "c055",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "c8c4844b9cba5e83425827021c7ea6e7",
+   "author": "human",
+   "tick": "c062",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "66f527039fc6f6e8c5a2a8996361b3ec",
+   "author": "agent",
+   "tick": "c067",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "ffab1bc5716b05ffc234d45b192e3c4d",
+   "author": "agent",
+   "tick": "c078",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "ded8fffaf8c6caae1b493b5988c7b6ad",
+   "author": "human",
+   "tick": "c080",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "97317576fc2fcd7a49132a06b19e4af4",
+   "author": "human",
+   "tick": "c131",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "8bbfc2f41dd4abfdc73a708965ffe229",
+   "author": "human",
+   "tick": "c133",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "d35f7c39b03f2d2eb1f23740a7294986",
+   "author": "human",
+   "tick": "c140",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c055.md",
+   "lineage_id": "e0afd2740182ba2aecec931ce3899153",
+   "author": "agent",
+   "tick": "c140",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c059.md",
+   "lineage_id": "dfcfa5cc1b4a54693055695b670f2f4e",
+   "author": "agent",
+   "tick": "c059",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c059.md",
+   "lineage_id": "3a078c22bd70d61ea000293f05187fad",
+   "author": "agent",
+   "tick": "c059",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c059.md",
+   "lineage_id": "a92e6b93431181d65a61845d8db3c1b5",
+   "author": "agent",
+   "tick": "c073",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c059.md",
+   "lineage_id": "fbc2da1b49e4d2656382515e57659eb1",
+   "author": "agent",
+   "tick": "c101",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c059.md",
+   "lineage_id": "99a480a800bacdaeba2e94a62b5bdf5e",
+   "author": "human",
+   "tick": "c113",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c059.md",
+   "lineage_id": "99b3bafe1207d93c50c76d8a76705afb",
+   "author": "agent",
+   "tick": "c138",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c059.md",
+   "lineage_id": "7769176260b977643cf02044f784d14c",
+   "author": "human",
+   "tick": "c157",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c069.md",
+   "lineage_id": "bedd629380e1662513e506bb305a8035",
+   "author": "agent",
+   "tick": "c069",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c069.md",
+   "lineage_id": "209352e2f71f233587d74f224f33f1a1",
+   "author": "agent",
+   "tick": "c069",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c069.md",
+   "lineage_id": "ef75d39bd94c2bc7f68cf72bf1500aed",
+   "author": "agent",
+   "tick": "c076",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c069.md",
+   "lineage_id": "fbb6d8e4f2b73b85bc8fbc38f636a5e4",
+   "author": "human",
+   "tick": "c101",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c069.md",
+   "lineage_id": "09b7bd4327d652cf20546ca6e95b3812",
+   "author": "agent",
+   "tick": "c114",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "178ae31e0362e51d57973faa7024ebda",
+   "author": "agent",
+   "tick": "c074",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "3c1154f6c5adeb20dbb82dd9d78dfb30",
+   "author": "agent",
+   "tick": "c074",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "620a3f65f9f22f1fad03968f1dcb9959",
+   "author": "human",
+   "tick": "c079",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "17034001abf40eca47f06447663de95f",
+   "author": "agent",
+   "tick": "c082",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "f9e708f5e032632d788a30dbd725e5fe",
+   "author": "human",
+   "tick": "c091",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "5a90c8c0e367e4495d9a6d047212b9c1",
+   "author": "agent",
+   "tick": "c093",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "9e410125d230f568703af396be393a0b",
+   "author": "agent",
+   "tick": "c102",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "ffded9f13c97c40ffcd07109bebb0c0c",
+   "author": "human",
+   "tick": "c123",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "7cbd76e6d937a656c9b3c0cd4d4c03b4",
+   "author": "human",
+   "tick": "c139",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "d958c123c0dd09eecbf0d3ba338971d4",
+   "author": "agent",
+   "tick": "c142",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "5fedf2f76e3d9421c44a7525d862fad6",
+   "author": "agent",
+   "tick": "c151",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c074.md",
+   "lineage_id": "2f86e833d04dba537f30a2f49ff85e14",
+   "author": "human",
+   "tick": "c154",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c083.md",
+   "lineage_id": "25feffdfe1b5bceda317cc49576a2030",
+   "author": "agent",
+   "tick": "c083",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c083.md",
+   "lineage_id": "95ec0d17063f4ceb51183e7dc7d914b7",
+   "author": "agent",
+   "tick": "c083",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c083.md",
+   "lineage_id": "05345603e8f8c48a8270a281dcfcc6e0",
+   "author": "human",
+   "tick": "c096",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c083.md",
+   "lineage_id": "ac07e65378bafad346370ed45fc30747",
+   "author": "human",
+   "tick": "c100",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c083.md",
+   "lineage_id": "94018e8682c14224be46e519b1217dd6",
+   "author": "human",
+   "tick": "c118",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c083.md",
+   "lineage_id": "393143c8570c631245976fd0d9f7ebaf",
+   "author": "human",
+   "tick": "c119",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c083.md",
+   "lineage_id": "0a3373a36c050584209a29c8067b03e1",
+   "author": "human",
+   "tick": "c120",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c083.md",
+   "lineage_id": "c12153a19ccca9fedee04426357c68d7",
+   "author": "human",
+   "tick": "c126",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c083.md",
+   "lineage_id": "65c2e2b7f434385dc05ff77b4b8df6fb",
+   "author": "agent",
+   "tick": "c145",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c096.md",
+   "lineage_id": "a4e8b8b4659c67c7cc2f9baf4c146971",
+   "author": "agent",
+   "tick": "c096",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c096.md",
+   "lineage_id": "d853d373102a11b20b710526cc5e4145",
+   "author": "agent",
+   "tick": "c096",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c096.md",
+   "lineage_id": "03477a64fa01d067d70b1bf91b1c105a",
+   "author": "human",
+   "tick": "c102",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c096.md",
+   "lineage_id": "4a96f8da8df2ed155918b8df1e8034be",
+   "author": "agent",
+   "tick": "c131",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c096.md",
+   "lineage_id": "5a0d7c159b106cb9314bc09366dd1fce",
+   "author": "human",
+   "tick": "c143",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c096.md",
+   "lineage_id": "0d47b8cb361a14c08b6badd1ef12c41f",
+   "author": "human",
+   "tick": "c151",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c123.md",
+   "lineage_id": "090878c79f1864021af4207d3d08cb03",
+   "author": "agent",
+   "tick": "c123",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c123.md",
+   "lineage_id": "dfcffd6335170ee0c046ac183b0ad8c0",
+   "author": "agent",
+   "tick": "c123",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c123.md",
+   "lineage_id": "08f4afed85c33cf5d600eaf485d24b68",
+   "author": "human",
+   "tick": "c130",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c123.md",
+   "lineage_id": "cb5cdfbf08ec8cdf5ee6ad58582965e4",
+   "author": "agent",
+   "tick": "c130",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c123.md",
+   "lineage_id": "8549e7686c2187ab82083c414c28e2fb",
+   "author": "human",
+   "tick": "c132",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c128.md",
+   "lineage_id": "32415e9efbe3fa34304655a75ea0eed6",
+   "author": "agent",
+   "tick": "c128",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c128.md",
+   "lineage_id": "2ec380353aee3173f88611d6577999ae",
+   "author": "agent",
+   "tick": "c128",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c128.md",
+   "lineage_id": "e2263fa64a24d91510e0a813a39a2770",
+   "author": "agent",
+   "tick": "c139",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c128.md",
+   "lineage_id": "fc122d963fca82dbcb0cb52b868f2947",
+   "author": "human",
+   "tick": "c144",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c128.md",
+   "lineage_id": "665a28cf7b316b974de99bc5d0247a1c",
+   "author": "human",
+   "tick": "c152",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c129.md",
+   "lineage_id": "e92340e9566a89a13d208f834c5df37e",
+   "author": "agent",
+   "tick": "c129",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c129.md",
+   "lineage_id": "4488ddaffae6e5605bd29bd1fc341384",
+   "author": "agent",
+   "tick": "c129",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c129.md",
+   "lineage_id": "88a5bf7c2ae11d53d8d0c98698b471cb",
+   "author": "human",
+   "tick": "c149",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c129.md",
+   "lineage_id": "42235930ee48b4aea424d5d2c697d767",
+   "author": "agent",
+   "tick": "c149",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c135.md",
+   "lineage_id": "d115916231fca22f0b2abce491c530cd",
+   "author": "agent",
+   "tick": "c135",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c135.md",
+   "lineage_id": "5d6113c57876c1537a6dbfc2371657a2",
+   "author": "agent",
+   "tick": "c135",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c136.md",
+   "lineage_id": "ea014ba7904d5b733e26778d552cae58",
+   "author": "agent",
+   "tick": "c136",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c136.md",
+   "lineage_id": "fec9c95b163d9cd768696685b4b1147a",
+   "author": "agent",
+   "tick": "c136",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c143.md",
+   "lineage_id": "48fd069f4a00b3d0d2b73cf3b86bef0b",
+   "author": "agent",
+   "tick": "c143",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c143.md",
+   "lineage_id": "045cddff4ba17795b0c3c9e3ac31cb29",
+   "author": "agent",
+   "tick": "c143",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c143.md",
+   "lineage_id": "9f8afed1bc78d39cc0e4a7cf1ef84a0d",
+   "author": "agent",
+   "tick": "c144",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c143.md",
+   "lineage_id": "96863712974225ab4358c43c1f6b53e6",
+   "author": "agent",
+   "tick": "c157",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "agent-c/c143.md",
+   "lineage_id": "02df708d718966e835ae3b8e92eb4ee6",
+   "author": "human",
+   "tick": "c159",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "eb96c4c773d7e748b775ec99927493cc",
+   "author": "human",
+   "tick": "c000",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "9792ec549ab52ec186f1d9c00ff5163d",
+   "author": "human",
+   "tick": "c001",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "22722de572c086be4c733776b664e6aa",
+   "author": "human",
+   "tick": "c007",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "90f607a614d0966e3e3016961ccb5822",
+   "author": "agent",
+   "tick": "c015",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "683fc87b872893ed4324e6690837e684",
+   "author": "agent",
+   "tick": "c033",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "8f4378c68ec8f5b67b0ca0f46576acc0",
+   "author": "human",
+   "tick": "c041",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "2717d3e529633ec19d82d5fc5aff317f",
+   "author": "agent",
+   "tick": "c045",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "0a6f329df3abff266d9cc5af0efa6379",
+   "author": "agent",
+   "tick": "c057",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "a5449ab05608095d17b30b466dec7699",
+   "author": "agent",
+   "tick": "c084",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "de71c2e247ed3c560b92dea3a643dec0",
+   "author": "human",
+   "tick": "c121",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "f1bb5b0cd9f102bcae6cf022195b49ce",
+   "author": "human",
+   "tick": "c136",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "63d607a1b7f0220f0bf4e2ce27a0e5d8",
+   "author": "human",
+   "tick": "c155",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "blends.md",
+   "lineage_id": "aaf8c2e47c89a35a0b737e744b3bc31a",
+   "author": "agent",
+   "tick": "c159",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "8fa646a7c201b454cdf688cd303570b5",
+   "author": "agent",
+   "tick": "c002",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "5cad5903288a6825888f7aaba631c2b6",
+   "author": "agent",
+   "tick": "c007",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "812029ee3f7bc147b4f30e6d33c27994",
+   "author": "human",
+   "tick": "c028",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "5b45f1803e6a5aa7aab84ee601d4aa4f",
+   "author": "agent",
+   "tick": "c028",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "715dec2fe65607fb45fa3cc726f60570",
+   "author": "agent",
+   "tick": "c053",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "61669950b38a65955b497a3ad1cc2a17",
+   "author": "agent",
+   "tick": "c062",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "493773201e17cf588343568fd60b478a",
+   "author": "human",
+   "tick": "c081",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "9f1f6cf8be25d5ee4effd3a727a675f1",
+   "author": "human",
+   "tick": "c095",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "e9047a3f0a24e6a960b4c322c898016f",
+   "author": "agent",
+   "tick": "c118",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "07b0e2fb77a228f366b19c93f204eab8",
+   "author": "agent",
+   "tick": "c119",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "e734907545ccc76a5d0d5f4bed66c312",
+   "author": "human",
+   "tick": "c124",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "ac0a84e2f60d9173944fc2e245dd687f",
+   "author": "agent",
+   "tick": "c126",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "d1115e90b70d59f46f4b7e3d2cc32f78",
+   "author": "agent",
+   "tick": "c132",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "cupping.md",
+   "lineage_id": "7d3e6cb39c65cb1779e4e2b55c68d3c9",
+   "author": "human",
+   "tick": "c137",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "692720bf8de0eaf29cfe4dec4becde64",
+   "author": "human",
+   "tick": "c005",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "3962aba09eb31d1b8e132efd1a96a6ad",
+   "author": "human",
+   "tick": "c006",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "4feb132f4b01b0f10a6c5fe9e207d2b9",
+   "author": "human",
+   "tick": "c017",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "3b935b42b3823c48bc8d84c3a00d8113",
+   "author": "human",
+   "tick": "c031",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "5ae1092a5fca8e65708a80895f65f42d",
+   "author": "human",
+   "tick": "c032",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "05c048de8624a5130eb26127364da33c",
+   "author": "agent",
+   "tick": "c032",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "4a6ac187789e394cfe86f52b19e8af01",
+   "author": "human",
+   "tick": "c033",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "6fef39e814ea3decd59814914a0b348f",
+   "author": "agent",
+   "tick": "c046",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "a02c6a86901bc8b368183a41115550ea",
+   "author": "human",
+   "tick": "c054",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "a607791a4e9af33562c464817e2baf23",
+   "author": "human",
+   "tick": "c056",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "44e810984410179591fb72ee92c5a785",
+   "author": "agent",
+   "tick": "c071",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "da79bed3efbc73997c31294a44c1cfb3",
+   "author": "agent",
+   "tick": "c079",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "23c82e89ddb942693e23a75ff2806389",
+   "author": "human",
+   "tick": "c082",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "33e1f14f9453ba377af8296a11653b8a",
+   "author": "agent",
+   "tick": "c089",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "b2b8a456c39246ff992441b9bb8aa96a",
+   "author": "agent",
+   "tick": "c091",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "ee8219a65790622ddc2bcc8f52701d40",
+   "author": "agent",
+   "tick": "c112",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "espresso.md",
+   "lineage_id": "19e0ec1033e6e53ad15b7f8576bfe1ef",
+   "author": "agent",
+   "tick": "c125",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "f3f08050362f24a4228aa4e58a7d1f51",
+   "author": "human",
+   "tick": "c002",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "5a3b582fa1bf15364e615c5cf90a23e4",
+   "author": "agent",
+   "tick": "c005",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "12487beb620e2a95af294c2ec1df1d4a",
+   "author": "human",
+   "tick": "c024",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "db27709a94aa254e585c094342756eb7",
+   "author": "agent",
+   "tick": "c024",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "76e844a18500e7cd747d4cb429b5b049",
+   "author": "human",
+   "tick": "c026",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "b6f9dd72efa256e637a0e8f9dcdb39c5",
+   "author": "human",
+   "tick": "c042",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "d1c22fecdc2246dca987d3a9b8591899",
+   "author": "agent",
+   "tick": "c044",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "cd76d3ea61130c3bcc37fa1208a57da4",
+   "author": "human",
+   "tick": "c045",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "74996d74b818246870fde5840a72caa4",
+   "author": "human",
+   "tick": "c048",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "b3890b425d3ce48d719291df5dee4ce4",
+   "author": "human",
+   "tick": "c049",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "e33b188f21a8cc0a67e96e612a63a4aa",
+   "author": "agent",
+   "tick": "c072",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "3ecd05dc1f278466ea8f39bf45e4812d",
+   "author": "human",
+   "tick": "c090",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "eb6c01e9dfabbf190e8b53403c71a231",
+   "author": "agent",
+   "tick": "c095",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "430a33e8f3e1f078c8a4a15aaaa9b697",
+   "author": "agent",
+   "tick": "c103",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "bea258a00d6e1741f5c0d76caf3592e9",
+   "author": "human",
+   "tick": "c114",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "filter.md",
+   "lineage_id": "4b4fd5c4d37f2e725f67aee525aeded2",
+   "author": "human",
+   "tick": "c141",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "glossary.md",
+   "lineage_id": "c16982b3239f636fe1a447615af8ce4e",
+   "author": "human",
+   "tick": "c012",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "glossary.md",
+   "lineage_id": "f426b26e0d2e52e710c614757dd13525",
+   "author": "human",
+   "tick": "c040",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "glossary.md",
+   "lineage_id": "7a19319283d23e3cabdca0044e6f5030",
+   "author": "agent",
+   "tick": "c051",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "glossary.md",
+   "lineage_id": "bf8291b68187d0be33dec31d74886da8",
+   "author": "human",
+   "tick": "c061",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "glossary.md",
+   "lineage_id": "93bced055abab93f6742ed7db1db0b2e",
+   "author": "agent",
+   "tick": "c100",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "glossary.md",
+   "lineage_id": "d649cd9a9f80aa1cb7b8ae524af4bcee",
+   "author": "agent",
+   "tick": "c124",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "glossary.md",
+   "lineage_id": "ca4a31193b8733808ef83eb23eb458bc",
+   "author": "agent",
+   "tick": "c133",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "glossary.md",
+   "lineage_id": "5e7e1fcea931b74aa9c6962abd427d35",
+   "author": "agent",
+   "tick": "c146",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "glossary.md",
+   "lineage_id": "f08e2c6788495433766243c201dbad17",
+   "author": "agent",
+   "tick": "c147",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "1f79d5b796774ef34f53e46bf9fe3ed2",
+   "author": "agent",
+   "tick": "c006",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "638e6ef4307f96ce33ec87d6cf7df82c",
+   "author": "human",
+   "tick": "c009",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "6e6f50be918b71b2f13521e33470233d",
+   "author": "agent",
+   "tick": "c016",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "de038a520c622c4c6aca42d4b8c00fa7",
+   "author": "agent",
+   "tick": "c021",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "92b8a3a1e72cdaa5d130ed2167e8bfd7",
+   "author": "agent",
+   "tick": "c037",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "fc76a520661e1e1feb40d7d3dcdc5723",
+   "author": "human",
+   "tick": "c105",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "7c3d7a563a0d554fc2f9db8ba8e5f090",
+   "author": "human",
+   "tick": "c112",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "8af97e95b3752222ffe33d2bad0598bf",
+   "author": "agent",
+   "tick": "c120",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "c643a8e1640fefcc5125ad36dd395e74",
+   "author": "human",
+   "tick": "c125",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "7006820bbede41dd438ff9b8988dd0da",
+   "author": "human",
+   "tick": "c142",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "9a4606ae894e83965e0a87b19a2ab7e5",
+   "author": "agent",
+   "tick": "c153",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "grinders.md",
+   "lineage_id": "1338fc08944eb9bfb9fa1aca00eb03b9",
+   "author": "agent",
+   "tick": "c158",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "maintenance.md",
+   "lineage_id": "b4c3407e10e8eced5d29fb9cf710ac1b",
+   "author": "human",
+   "tick": "c020",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "maintenance.md",
+   "lineage_id": "cea7a018c441eb3196d6270c84eeda3f",
+   "author": "human",
+   "tick": "c065",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "maintenance.md",
+   "lineage_id": "d7f759fd947aafffa6a68d029aaf5a67",
+   "author": "agent",
+   "tick": "c066",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "maintenance.md",
+   "lineage_id": "ba9cf403bff1dd47a9e511d011ba9018",
+   "author": "human",
+   "tick": "c073",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "maintenance.md",
+   "lineage_id": "9f44a687beabe2f52388410d2e7d83a2",
+   "author": "human",
+   "tick": "c075",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "maintenance.md",
+   "lineage_id": "7ecceebaa2a4b77e33ed0856c892c940",
+   "author": "human",
+   "tick": "c085",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "maintenance.md",
+   "lineage_id": "91839ad285df2bcce34b62eb291945aa",
+   "author": "agent",
+   "tick": "c141",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "maintenance.md",
+   "lineage_id": "98fc3c2d589ca582813a7cd0c5116180",
+   "author": "human",
+   "tick": "c146",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "origins.md",
+   "lineage_id": "2a96e8a78e9341a98c46a1617c17165f",
+   "author": "human",
+   "tick": "c018",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "origins.md",
+   "lineage_id": "160001140324fb31faf5c42a76d835db",
+   "author": "agent",
+   "tick": "c027",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "origins.md",
+   "lineage_id": "621edae01bf1fd6efd5f0cf6e432a9c8",
+   "author": "agent",
+   "tick": "c034",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "origins.md",
+   "lineage_id": "f6c542eb8bc0e04f77e7c0f4615045fd",
+   "author": "human",
+   "tick": "c053",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "origins.md",
+   "lineage_id": "6771935e4f34831bef89dd2c20838291",
+   "author": "agent",
+   "tick": "c058",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "origins.md",
+   "lineage_id": "461abaaf866df977394f41fbc58c1a59",
+   "author": "agent",
+   "tick": "c098",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "origins.md",
+   "lineage_id": "cf00bfbc9385a04880e7cc982b88bf19",
+   "author": "human",
+   "tick": "c103",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "origins.md",
+   "lineage_id": "006d8e851299bfe0cc5be7f922ad53b9",
+   "author": "human",
+   "tick": "c111",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "5cbf77cdda22f1d5ab36a19b46f59137",
+   "author": "human",
+   "tick": "c004",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "61fdbc173e0930b40cec2b77f50bf494",
+   "author": "agent",
+   "tick": "c004",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "4eccbf137054f17fa7b21b45289de9f4",
+   "author": "agent",
+   "tick": "c011",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "ee40214744d89d9f6072b5b2c656c87c",
+   "author": "human",
+   "tick": "c013",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "4cc727c487b8682754c05a9ef481f611",
+   "author": "agent",
+   "tick": "c017",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "79b6627cfcf808a6e91e7a0177d2578c",
+   "author": "human",
+   "tick": "c019",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "20a9f19e7687437ce4c498407aa41744",
+   "author": "agent",
+   "tick": "c026",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "6ff0ae4af00645568b3bc89b305ad4a9",
+   "author": "agent",
+   "tick": "c038",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "33dcb1fcdd5d22d2c64c57f57bd75e0a",
+   "author": "agent",
+   "tick": "c042",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "65b680e3e3c903457feb35c9f7d1cb6c",
+   "author": "human",
+   "tick": "c050",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "c1b049d6f100e7cbb7f6557f4bab7e09",
+   "author": "human",
+   "tick": "c055",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "2193169ee1b32ef1eb1c80820f2c4d44",
+   "author": "human",
+   "tick": "c057",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "e77df3d1a5c7cf5352fb6e3787463830",
+   "author": "agent",
+   "tick": "c063",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "e111752596366679eee11545cf060232",
+   "author": "human",
+   "tick": "c070",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "70abb87749146c4b74edfaa4ae179bac",
+   "author": "human",
+   "tick": "c087",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roast-log.md",
+   "lineage_id": "fc225df8149de083c573f0c06cf3b85c",
+   "author": "human",
+   "tick": "c098",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "0a1b10596f8ea904a6b85ab7da473f92",
+   "author": "human",
+   "tick": "c008",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "5d29f1c68884ec67bb611b3ca48bd1d3",
+   "author": "agent",
+   "tick": "c008",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "557f6d40453c6209a2c55fd22ca0a127",
+   "author": "human",
+   "tick": "c025",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "c110456d3c946ff49a14df6b66d55ca5",
+   "author": "human",
+   "tick": "c069",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "a956522efb1368ea3ec72fee902fe851",
+   "author": "human",
+   "tick": "c076",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "1d452f95197fc12de644de682b7922e1",
+   "author": "human",
+   "tick": "c083",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "79f8d08dbe825c3473f7a508351129d9",
+   "author": "human",
+   "tick": "c084",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "829cd8f2c3362203c4dbb2bbff04df48",
+   "author": "agent",
+   "tick": "c085",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "a7eb96fcf4604a59ff6578f168c703b6",
+   "author": "agent",
+   "tick": "c104",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "f9a6e2e41e52277721adfe09db96cf49",
+   "author": "human",
+   "tick": "c109",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "134fe11e42d07f88f430a6490ee14658",
+   "author": "agent",
+   "tick": "c109",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "1c03f0b2e8c00d2f1df511038cb1b5bc",
+   "author": "human",
+   "tick": "c117",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "roasting.md",
+   "lineage_id": "e2f01bf1bf64ced303370374a88ab97a",
+   "author": "agent",
+   "tick": "c152",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "safety.md",
+   "lineage_id": "c3fce0b1bb8de82113346c70197cf5cd",
+   "author": "human",
+   "tick": "c011",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "safety.md",
+   "lineage_id": "d3f0d06b7edb6b54c32f48a364ffc7dc",
+   "author": "human",
+   "tick": "c030",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "safety.md",
+   "lineage_id": "e040ee95db4afa006c9f5a25765bdf3e",
+   "author": "agent",
+   "tick": "c030",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "safety.md",
+   "lineage_id": "013c2167b6941898e756aab53dbd4892",
+   "author": "human",
+   "tick": "c052",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "safety.md",
+   "lineage_id": "ff6bcd3d93a2177300cdf017d7a27f34",
+   "author": "human",
+   "tick": "c097",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "safety.md",
+   "lineage_id": "a94dd71669e7bf07889614c5211a4595",
+   "author": "agent",
+   "tick": "c121",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "safety.md",
+   "lineage_id": "89b76dae1d640a09733127d71f2f9efb",
+   "author": "human",
+   "tick": "c129",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "8ddd353b1f4704e31c8a02a3bca0e9d4",
+   "author": "agent",
+   "tick": "c000",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "f12e2a8b059651882e8c54038ffb2ab6",
+   "author": "human",
+   "tick": "c003",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "d591b5fde50f97271d7c080dc6312f37",
+   "author": "agent",
+   "tick": "c020",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "8205eb875c5512e0ac4798410dfb83f2",
+   "author": "agent",
+   "tick": "c035",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "db6ff8801438561305662e59bdfa1bd3",
+   "author": "human",
+   "tick": "c037",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "7037b3115729fcdcf13c90e5b439c7f7",
+   "author": "human",
+   "tick": "c063",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "c9c6a374b3181f8202d20e56b65b4544",
+   "author": "agent",
+   "tick": "c065",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "28920df0d90b221bfd7a0a612c726804",
+   "author": "agent",
+   "tick": "c068",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "1cfa70ef567d1dfed8e300c25245386b",
+   "author": "agent",
+   "tick": "c081",
+   "layer": "unverified",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "1360b48265202a55db032247a86af3f9",
+   "author": "human",
+   "tick": "c106",
+   "layer": "canonical",
+   "right": true
+  },
+  {
+   "doc": "staff.md",
+   "lineage_id": "5c985db35c1766ce7710dd0b93b1dcbc",
+   "author": "human",
+   "tick": "c128",
+   "layer": "canonical",
+   "right": true
+  }
+ ],
+ "pass": true
+}
