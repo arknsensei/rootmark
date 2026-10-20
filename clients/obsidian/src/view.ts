@@ -74,9 +74,11 @@ export function indexNotice(ix: IndexStatus): { label: string; detail: string } 
   const unavailable = "search is unavailable (index_stale) until then; blame, history, checkpoints and traces work";
   switch (ix.state) {
     case "stale":
+      // an older rootmark's index answers `migration_required` (P2-A); the
+      // migration keeps a rollback record (contract §2.5 status.migrations)
       return {
         label: "index stale",
-        detail: `index stale: format ${ix.format ?? "?"}, this rootmark expects ${ix.expected_format}; ${unavailable}; ${rebuild}, ${restart}`,
+        detail: `index stale: format ${ix.format ?? "?"}, this rootmark expects ${ix.expected_format}; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run \`rootmark migrate <vault>\` (see \`--dry-run\`), or ${rebuild}, ${restart}`,
       };
     case "missing":
       return { label: "index missing", detail: `index missing: no index in the vault; ${unavailable}; ${rebuild}, ${restart}` };

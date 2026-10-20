@@ -35,6 +35,12 @@
 #      that key (HMAC-SHA256, `openssl`) answers 200 with every field of its
 #      row; a wrong MAC answers 403 `denied` (`http.http_only`; a missing one
 #      is `http-only:<name>`).
+#      (P2-A/A2, freeze exception P2-A/F2) `migration_required` (an older
+#      rootmark's index: format aged to `mdkernel-index/2`) is triggered
+#      before `index_stale` (now: a format this rootmark does not know,
+#      `rootmark-index/99`); in the aged (`stale`) state `search` answers 503
+#      `migration_required`, in `damaged` and `missing` 503 `index_stale`;
+#      the `status` row's `migrations {…}` group is among the checked fields.
 #      (P2-0/Z0, P1-E.1 verification recommendation 2) in each of those
 #      states both `status` answers also hold every field of the §2 `status`
 #      row: every top-level name and every name of its `{…}` groups
@@ -238,11 +244,17 @@ code_req() {
     too_large) req POST /v1/propose "{\"doc_path\":\"big.md\",\"content\":\"$(printf 'x%.0s' $(seq 1 100))\",\"reason\":\"r\"}" ;;
     heading_not_found) req POST /v1/propose '{"doc_path":"a.md","mode":"replace_section","heading":"Nope","content":"x","reason":"r"}' ;;
     policy_violation) req POST /v1/propose '{"doc_path":"a.md","mode":"append","content":"x","reason":"r"}' ;;
-    index_stale)
+    migration_required)
       m="$hv/.rootmark/index/manifest.json"
-      # the current index, for `internal` and the status step below
+      # the current index, for `index_stale`, `internal` and the status step below
       rm -rf "$work/index.bak" && cp -R "$hv/.rootmark/index" "$work/index.bak"
       jq -c '.format = "mdkernel-index/2"' "$m" >"$work/m" && cp "$work/m" "$m"
+      req POST /v1/search '{"query":"espresso"}' ;;
+    index_stale)
+      # a format this rootmark does not know (P2-A/F2)
+      m="$hv/.rootmark/index/manifest.json"
+      rm -rf "$hv/.rootmark/index" && cp -R "$work/index.bak" "$hv/.rootmark/index"
+      jq -c '.format = "rootmark-index/99"' "$m" >"$work/m" && cp "$work/m" "$m"
       req POST /v1/search '{"query":"espresso"}' ;;
     internal)
       # an index file that does not match its manifest (blake3)
@@ -253,7 +265,7 @@ code_req() {
   esac
 }
 http_codes="[]"
-order="$(echo "$contract_codes" | awk '$1 != "index_stale" && $1 != "internal"'; echo "$contract_codes" | awk '$1 == "index_stale"'; echo "$contract_codes" | awk '$1 == "internal"')"
+order="$(echo "$contract_codes" | awk '$1 != "index_stale" && $1 != "internal" && $1 != "migration_required"'; echo "$contract_codes" | awk '$1 == "migration_required"'; echo "$contract_codes" | awk '$1 == "index_stale"'; echo "$contract_codes" | awk '$1 == "internal"')"
 while read -r c st; do
   [ -n "$c" ] || continue
   r="$(code_req "$c")"
@@ -295,6 +307,9 @@ index_state_check() { # <state>: status GET/POST 200 with that state; search 503
   sst="${sr%% *}"; scode="$(echo "${sr#* }" | jq -r '.error.code // empty')"
   if [ "$want" = ok ]; then
     [ "$sst" = 200 ] || ok=false
+  elif [ "$want" = stale ]; then
+    # an older rootmark's index (P2-A/F2)
+    { [ "$sst" = 503 ] && [ "$scode" = migration_required ]; } || ok=false
   else
     { [ "$sst" = 503 ] && [ "$scode" = index_stale ]; } || ok=false
   fi

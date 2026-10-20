@@ -63,6 +63,8 @@ fn http_statuses_of_the_codes() {
         (Code::HeadingNotFound, 422),
         (Code::PolicyViolation, 422),
         (Code::IndexStale, 503),
+        // P2-A/F2: an older rootmark's index (P2-A/A2)
+        (Code::MigrationRequired, 503),
         (Code::Internal, 500),
     ];
     assert_eq!(want.len(), Code::ALL.len());
@@ -186,10 +188,19 @@ fn every_code_from_a_real_call() {
         json!({"doc_path": "a.md", "mode": "append", "content": "x", "reason": "r"}),
         Code::PolicyViolation,
     );
-    // K-E0.3: an index of another format is stale, not internal
+    // K-E0.3: an index of another format is stale, not internal; since
+    // P2-A (P2-A/F2) an older rootmark's format is migration_required and
+    // a format this rootmark does not know stays index_stale
     let m = v.join(".rootmark/index/manifest.json");
     let fresh = std::fs::read_to_string(&m).unwrap();
     std::fs::write(&m, fresh.replace("mdkernel-index/3", "mdkernel-index/2")).unwrap();
+    expect_code(
+        &k,
+        "search",
+        json!({"query": "espresso"}),
+        Code::MigrationRequired,
+    );
+    std::fs::write(&m, fresh.replace("mdkernel-index/3", "mdkernel-index/9")).unwrap();
     expect_code(&k, "search", json!({"query": "espresso"}), Code::IndexStale);
     // K-E1.2: an unreadable manifest is index_stale too (only a rebuild recovers it)
     std::fs::write(v.join(".rootmark/index/manifest.json"), "{ not json").unwrap();

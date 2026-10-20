@@ -41,8 +41,16 @@ build:
 
 test: test-rust test-py test-ts
 
+# P2-A/A2 (K-P2A.2): P1-E.1's frozen recorder E1-1 (`p1e1_status.rs`) and
+# P1-E's recorder E-14 (`p1e_e0.rs`) expect `index_stale` for an older
+# rootmark's `/2` index; since P2-A that
+# index is `migration_required` (GOAL A-3). The recorder is not changed
+# (GOAL P2-A 2; they still run in `make p1e1-checks` / `make p1e-checks` and its FAIL is the
+# classifier's "migration required" category); the new behaviour is
+# `server/tests/p2a_status.rs` on the same fixture.
 test-rust:
-	cargo test --workspace --release
+	cargo test --workspace --release -- --skip e1_1_real_old_index_status_and_reads \
+	  --skip e14_stale_index_answers_index_stale_or_is_rebuilt
 
 test-py: setup-py build
 	$(UVR) pytest -q

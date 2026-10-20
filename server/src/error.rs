@@ -34,12 +34,15 @@ pub enum Code {
     /// (`rootmark index build`, or `rootmark serve` with `[index] auto_rebuild`;
     /// K-E0.3)
     IndexStale,
+    /// the vault's index is of an older format a migration brings to this
+    /// one: run `rootmark migrate <vault>` (P2-A; the error carries a `hint`)
+    MigrationRequired,
     /// anything else: a failure of the server or the vault
     Internal,
 }
 
 impl Code {
-    pub const ALL: [Code; 11] = [
+    pub const ALL: [Code; 12] = [
         Code::InvalidArguments,
         Code::EmptyQuery,
         Code::PathOutsideVault,
@@ -50,6 +53,7 @@ impl Code {
         Code::Denied,
         Code::PolicyViolation,
         Code::IndexStale,
+        Code::MigrationRequired,
         Code::Internal,
     ];
 
@@ -65,6 +69,7 @@ impl Code {
             Code::Denied => "denied",
             Code::PolicyViolation => "policy_violation",
             Code::IndexStale => "index_stale",
+            Code::MigrationRequired => "migration_required",
             Code::Internal => "internal",
         }
     }
@@ -80,7 +85,7 @@ impl Code {
             Code::TooLarge => 413,
             Code::HeadingNotFound | Code::PolicyViolation => 422,
             Code::Internal => 500,
-            Code::IndexStale => 503,
+            Code::IndexStale | Code::MigrationRequired => 503,
         }
     }
 }
@@ -202,7 +207,8 @@ mod tests {
             anyhow::Error::new(rootmarkindex::store::IndexStale("old".into())).context("search");
         assert_eq!(code_of(&e), Code::IndexStale);
         let names: Vec<&str> = Code::ALL.iter().map(|c| c.as_str()).collect();
-        assert_eq!(names.len(), 11);
+        // 12 since P2-A (`migration_required`)
+        assert_eq!(names.len(), 12);
         // a hint travels in the JSON; without one there is no key
         let e = coded_hint(Code::PolicyViolation, "no heading", "start with a heading")
             .context("propose");

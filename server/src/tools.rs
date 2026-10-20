@@ -1931,6 +1931,10 @@ impl Kernel {
                 "expected_format": store::FORMAT,
                 "auto_rebuild": cfg.auto_rebuild,
             },
+            // P2-A/A2: the version matrix (never fails `status`: what this
+            // reader cannot describe is `unknown`)
+            "migrations": crate::migrate::matrix(&self.vault)
+                .unwrap_or_else(|e| json!({"error": format!("{e:#}")})),
             "last_checkpoint": v.checkpoints().last(),
             "policy": policy.to_json(),
             "server_policy": cfg.to_json(),
@@ -2005,6 +2009,27 @@ fn index_state(v: &Vault) -> IndexState {
 /// it. Any other damage of the index files stays `internal`.
 fn index_readable(v: &Vault) -> Result<()> {
     let ix = index_state(v);
+    // an older rootmark's index (P2-A/A2): the migration says what to do,
+    // not `index_stale`
+    if ix.state == "stale" {
+        let p = store::index_dir(v).join("manifest.json");
+        let raw: Value = serde_json::from_slice(&std::fs::read(&p)?)?;
+        let lexical =
+            serde_json::from_value::<rootmarkindex::store::LexicalParams>(raw["lexical"].clone())
+                .is_ok_and(|l| l == rootmarkindex::store::LexicalParams::current());
+        let format = ix.format.clone().unwrap_or_default();
+        if crate::migrate::index_needs_migration(&format, lexical) {
+            let vault = v.root().display().to_string();
+            return Err(crate::error::coded_hint(
+                Code::MigrationRequired,
+                format!(
+                    "index format {format:?} (an older rootmark's) needs migration to {:?}",
+                    store::FORMAT
+                ),
+                format!("run `rootmark migrate {vault}` (it keeps a rollback record)"),
+            ));
+        }
+    }
     if let Some(why) = ix.damage {
         bail_code!(
             Code::IndexStale,

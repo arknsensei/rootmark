@@ -437,3 +437,24 @@ fn a_record_cannot_widen_its_migration_s_scope() {
     assert!(!e.status.success());
     assert_eq!(tree(&v), before, "the store was touched");
 }
+
+#[cfg(unix)]
+#[test]
+fn a_rollback_never_follows_a_link_out_of_the_store() {
+    // the index directory replaced by a link to a folder outside the vault
+    // after the migration: the rollback refuses, nothing outside is written
+    let v = legacy("link");
+    let vs = v.to_str().unwrap();
+    ok_json(rootmark(&["migrate", vs]));
+    for id in ["0004-checkpoints", "0003-log_readers"] {
+        ok_json(rootmark(&["migrate", "--rollback", id, vs]));
+    }
+    let out = v.parent().unwrap().join("outside");
+    std::fs::rename(v.join(".rootmark/index"), &out).unwrap();
+    std::os::unix::fs::symlink(&out, v.join(".rootmark/index")).unwrap();
+    let before = tree(&out);
+    let e = rootmark(&["migrate", "--rollback", "0002-index_rebuild", vs]);
+    assert!(!e.status.success());
+    assert!(String::from_utf8_lossy(&e.stderr).contains("symbolic link"));
+    assert_eq!(tree(&out), before);
+}
