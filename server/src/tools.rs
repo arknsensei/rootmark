@@ -2019,14 +2019,15 @@ fn index_readable(v: &Vault) -> Result<()> {
                 .is_ok_and(|l| l == rootmarkindex::store::LexicalParams::current());
         let format = ix.format.clone().unwrap_or_default();
         if crate::migrate::index_needs_migration(&format, lexical) {
-            let vault = v.root().display().to_string();
+            // a stable hint (contract §3: "kararlı bir dizge"): no path of
+            // this machine (A5: the vault's path made two clean chains differ)
             return Err(crate::error::coded_hint(
                 Code::MigrationRequired,
                 format!(
                     "index format {format:?} (an older rootmark's) needs migration to {:?}",
                     store::FORMAT
                 ),
-                format!("run `rootmark migrate {vault}` (it keeps a rollback record)"),
+                "run `rootmark migrate <vault>` (it keeps a rollback record)",
             ));
         }
     }
