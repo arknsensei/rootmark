@@ -273,9 +273,20 @@ pub fn run(o: ServeOptions) -> Result<()> {
         IndexAtStart::Damaged(why) => log(format!(
             "index damaged ({why}); left as it is (never rebuilt over): index tools answer index_stale until `rootmark index build`"
         )),
-        IndexAtStart::Stale(why) => log(format!(
-            "index stale ({why}); [index] auto_rebuild = false: searches answer index_stale until `rootmark index build`"
-        )),
+        IndexAtStart::Stale(why) => {
+            let migrate = crate::migrate::matrix(&o.vault)
+                .is_ok_and(|m| m["required"].as_array().is_some_and(|r| r.iter().any(|x| x == "index_rebuild")));
+            log(if migrate {
+                format!(
+                    "index stale ({why}); [index] auto_rebuild = false: an older rootmark's index — searches answer migration_required until `rootmark migrate {}` (rollback record kept) or `rootmark index build`",
+                    o.vault.display()
+                )
+            } else {
+                format!(
+                    "index stale ({why}); [index] auto_rebuild = false: searches answer index_stale until `rootmark index build`"
+                )
+            })
+        }
     }
     let rt = tokio::runtime::Builder::new_multi_thread()
         .enable_all()

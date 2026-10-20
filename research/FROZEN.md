@@ -360,6 +360,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `clients/obsidian/e2e/p2_0_1/real.ts` | `P2-A/A0:` | yeniden dondurma P2-A/F1 |
 | `scripts/http_e2e.sh` | `P2-A/A0:` | yeniden dondurma P2-A/F1: varsayılan `[attestation]` tablosu eklemeden önce silinir |
 | `server/tests/serve_watch.rs` | `P2-A/A0:` | yeniden dondurma P2-A/F1: `base_recipe()` |
+| `server/tests/contract.rs` | `P2-A/A2:` | yeniden dondurma P2-A/F2: `migration_required` |
+| `scripts/contract_check.sh` | `P2-A/A2:` | yeniden dondurma P2-A/F2: `migration_required`, `stale` durumda `search` |
 <!-- /frozen-table -->
 
 ## Notlar

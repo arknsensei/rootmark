@@ -21,6 +21,7 @@ export const ERROR_STATUS = {
   too_large: 413,
   heading_not_found: 422,
   policy_violation: 422,
+  migration_required: 503,
   index_stale: 503,
   internal: 500,
 } as const;

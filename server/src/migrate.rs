@@ -89,6 +89,9 @@ fn store_of(vault: &Path) -> PathBuf {
 /// none.
 fn files_under(dir: &Path, skip: Option<&str>) -> Result<Vec<String>> {
     let mut out = Vec::new();
+    if std::fs::symlink_metadata(dir).is_ok_and(|m| m.file_type().is_symlink()) {
+        bail!("{}: a symbolic link in the store", dir.display());
+    }
     if !dir.exists() {
         return Ok(out);
     }
@@ -116,6 +119,29 @@ fn files_under(dir: &Path, skip: Option<&str>) -> Result<Vec<String>> {
     }
     out.sort();
     Ok(out)
+}
+
+/// Every component of `vault/<rel>` up to (not including) the last is a
+/// real directory, not a symbolic link (or absent): a record's path cannot
+/// be bent out of the store through a link (automated security review).
+fn no_links(vault: &Path, rel: &str) -> Result<()> {
+    let mut cur = vault.to_path_buf();
+    let parts: Vec<_> = Path::new(rel).components().collect();
+    for c in &parts[..parts.len().saturating_sub(1)] {
+        cur.push(c);
+        match std::fs::symlink_metadata(&cur) {
+            Ok(m) if m.file_type().is_symlink() => {
+                bail!("{}: a symbolic link in the store", cur.display())
+            }
+            Ok(m) if !m.is_dir() => bail!("{}: not a directory", cur.display()),
+            _ => {}
+        }
+    }
+    // the file itself: never a link
+    if std::fs::symlink_metadata(vault.join(rel)).is_ok_and(|m| m.file_type().is_symlink()) {
+        bail!("{rel}: a symbolic link in the store");
+    }
+    Ok(())
 }
 
 /// SHA-256 of every file under `vault/<prefix>` keyed by its vault-relative
@@ -778,8 +804,10 @@ fn restore_files(
         if sha256(&b) != *want || saved.get(rel) != Some(want) {
             bail!("record copy of {rel} does not match its SHA-256");
         }
+        no_links(vault, rel)?;
         let to = vault.join(rel);
         std::fs::create_dir_all(to.parent().expect("a file"))?;
+        no_links(vault, rel)?;
         std::fs::write(&to, &b)?;
     }
     Ok(())
@@ -843,6 +871,9 @@ pub fn rollback(vault: &Path, id: &str) -> Result<Value> {
         bail!("no migration record {id}");
     }
     check_record_paths(rec)?;
+    for p in rec.before.keys().chain(rec.after.keys()) {
+        no_links(vault, p)?;
+    }
     let dir = records_dir(vault).join(id);
     // the record: every copy as its SHA-256 says
     for (rel, h) in &rec.saved {
@@ -897,6 +928,7 @@ pub fn rollback(vault: &Path, id: &str) -> Result<Value> {
             _ => {
                 for rel in rec.after.keys() {
                     if !rec.before.contains_key(rel) {
+                        no_links(vault, rel)?;
                         std::fs::remove_file(vault.join(rel))?;
                     }
                 }
