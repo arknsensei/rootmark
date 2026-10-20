@@ -28,4 +28,3 @@ pub fn normalize(text: &str, is_code: bool) -> String {
 pub fn fold_name(name: &str) -> String {
     name.nfc().collect::<String>().to_lowercase()
 }
-
