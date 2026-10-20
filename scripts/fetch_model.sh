@@ -17,7 +17,11 @@ manifest="$root/models/MANIFEST.json"
 [ -f "$manifest" ] || { echo "fetch_model: $manifest missing" >&2; exit 1; }
 command -v jq >/dev/null || { echo "fetch_model: jq is required" >&2; exit 1; }
 
-sha256() { shasum -a 256 "$1" | cut -d' ' -f1; }
+# shasum (macOS, most Linux) or sha256sum (Git Bash on Windows has no
+# shasum; P2-A/A3)
+if command -v shasum >/dev/null; then sha256() { shasum -a 256 "$1" | cut -d' ' -f1; }
+elif command -v sha256sum >/dev/null; then sha256() { sha256sum "$1" | cut -d' ' -f1 | tr -d '\\'; }
+else echo "fetch_model: shasum or sha256sum is required" >&2; exit 1; fi
 # jq on Windows ends its lines with CRLF: the `\r` is not part of a value
 # (GH-0 STOP 7: `size 90405214 != manifest 90405214`; P2-A/A3)
 jqr() { jq "$@" | tr -d '\r'; }

@@ -34,29 +34,45 @@ pub fn doc_file(vault: &Path, doc: &str) -> Result<PathBuf> {
 }
 
 /// Every component of `doc` that exists under `vault` has a directory
-/// entry with exactly that name (byte for byte). On a case- or Unicode-
+/// entry with exactly that name (byte for byte), and no component is
+/// another spelling of an existing entry — the same name up to case or
+/// Unicode form (`rootmarkcore::normalize::fold_name`). On a case- or
 /// normalization-insensitive file system (macOS) `ESPRESSO.md` or the NFD
 /// form of `café.md` open the file the vault knows as `espresso.md` or the
-/// NFC name; such a spelling is refused, so no write reaches a document
-/// under a doc_path other than its own.
+/// NFC name; on Linux `SUB/b.md` would create a second directory beside
+/// `sub/`. Such a spelling is refused on every platform (K-GH.6: a vault
+/// stays portable between macOS and Linux), so no write reaches a document
+/// or a directory under a name other than its own.
 pub fn exact_on_disk(vault: &Path, doc: &str) -> Result<()> {
     let mut dir =
         std::fs::canonicalize(vault).with_context(|| format!("vault {}", vault.display()))?;
     for c in doc.split('/') {
-        let next = dir.join(c);
-        if std::fs::symlink_metadata(&next).is_err() {
+        if !dir.is_dir() {
             return Ok(()); // from here on nothing exists
         }
-        let found = std::fs::read_dir(&dir)
-            .with_context(|| format!("read {}", dir.display()))?
-            .any(|e| e.is_ok_and(|e| e.file_name().as_encoded_bytes() == c.as_bytes()));
-        if !found {
+        let fold = rootmarkcore::normalize::fold_name(c);
+        let mut exact = false;
+        let mut other: Option<String> = None;
+        for e in std::fs::read_dir(&dir).with_context(|| format!("read {}", dir.display()))? {
+            let name = e?.file_name();
+            if name.as_encoded_bytes() == c.as_bytes() {
+                exact = true;
+            } else if let Some(n) = name.to_str() {
+                if rootmarkcore::normalize::fold_name(n) == fold {
+                    other = Some(n.to_string());
+                }
+            }
+        }
+        if let (false, Some(n)) = (exact, &other) {
             bail!(
-                "doc {doc:?}: {c:?} matches an existing entry of {} only by case or Unicode form; use the name as it is on disk",
+                "doc {doc:?}: {c:?} is another spelling (case or Unicode form) of the existing entry {n:?} of {}; use the name as it is on disk",
                 dir.display()
             );
         }
-        dir = next;
+        if !exact {
+            return Ok(()); // a new name: nothing below it exists
+        }
+        dir = dir.join(c);
     }
     Ok(())
 }
