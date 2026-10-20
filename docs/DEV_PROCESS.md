@@ -17,7 +17,7 @@ Tur başladıktan sonra `GOAL.md` değişmez. Yeni ihtiyaç bir sonraki tura gid
 
 ## 2. Ajan disiplini (kök `CLAUDE.md` bunu uygular)
 - Okuma sırası: `NORTH_STAR.md` → `spec/SPEC.md` → `docs/ARCHITECTURE.md` → `docs/PACKAGES.md` → aktif tur dosyaları → ilgili paketin `CLAUDE.md`'si → `docs/rounds/<id>/progress/`.
-- Görev başı/sonu kayıtları, gözden geçirici alt-ajan (yalnız kabul ölçütleri + değişen dosya listesi ile; kod yazmaz), görev başına commit (`<round>/<task>: ...`).
+- Görev başı/sonu kayıtları, gözden geçirici alt-ajan (yalnız kabul ölçütleri + değişen dosya listesi ile; kod yazmaz), görev başına commit (`<round>/<task>: ...`). Gözden geçirici görev başına en fazla bir tur; ikinci tur yalnız bir kabul ölçütü düştüyse (K-P2.3).
 - Dal ve PR (K-P2.1): `main` korumalıdır (PR + CI, doğrusal geçmiş). Tur tek bir dalda (`<tur-id>/round`) ilerler; görev başına commit dalda, her görev sonunda dal uzağa itilir; tur sonunda READY.md ile tek PR açılır. PR'ı orkestratör birleştirir; doğrulayıcı birleşmiş `main`'i klonlar, VERIFICATION.md ayrı PR ile girer. Bir tur yalnız birleşmiş `main`'den açılır; `ROUND_START` bir `main` commit'ini ya da etiketi gösterir (rebase birleştirmesi dal commit'lerini yeniden yazar, K-P2.2).
 - Park kuralı: yalnız durma koşulunda; bağımlılar işaretlenir; park yerinden devam.
 - Soru sorulmaz; varsayım etiketli (`[spec] [arch] [-]`) olarak `ASSUMPTIONS.md`'ye yazılır. Spesifikasyonla çelişen varsayım yapılmaz; çelişki görülürse görev park edilir ve `DECISIONS.md`'ye karar talebi yazılır.
@@ -37,7 +37,7 @@ Tur başladıktan sonra `GOAL.md` değişmez. Yeni ihtiyaç bir sonraki tura gid
 ## 5. Bağımsız doğrulama
 - Ayrı oturum, temiz klon, ana çalışma dizinine okuma dahil erişim yok.
 - Çift koşturma, kasıtlı bozma testleri, izlenebilirlik, karar kuralının bağımsız türetimi.
-- Çıktı: `reports/rounds/<id>/VERIFICATION.md`; hüküm "güvenilir / şu koşullarla / değil" + en fazla 3 öneri. Öneriler bir sonraki turun `GOAL.md`'sinde ele alınır ya da `DECISIONS.md`'de reddedilme gerekçesiyle kapatılır.
+- Çıktı: `reports/rounds/<id>/VERIFICATION.md`; hüküm "güvenilir / şu koşullarla / değil" + en fazla 3 öneri. Geliştirme turlarında VERIFY "dar kapsam"dır: yalnız kararı belirleyen kriterler, 2–3 saat; hipotez turlarında tam kapsam (K-P2.3). Öneriler bir sonraki turun `GOAL.md`'sinde ele alınır ya da `DECISIONS.md`'de reddedilme gerekçesiyle kapatılır.
 - **Spec durum damgası (K-P2-02.3; P2-0.1 doğrulaması Ö3, K-P2-01.6).** Bir spec bölümünün durum damgası "Validated", bağımsız doğrulamanın **"güvenilir"** hükmünden — ya da "şu koşullarla güvenilir" hükmünün koşulları bir sonraki turda kapanıp bağımsız olarak teyit edildikten sonra — konur. Turun ana ajanı FINAL'de damga koymaz: karar kuralının dalını ve damga önerisini yazar, spec'in damgasını "Draft (<tur>'un doğrulamasına kadar)" bırakır. Damgayı, doğrulamadan sonraki kapanış commit'i (orkestratör) ya da sonraki turun açılış görevi koyar ve `SPEC_EDITS.md`'ye açıklık satırı olarak yazar; doğrulamanın hükmüne atıf zorunludur.
 
 ## 6. Karar kayıtları
