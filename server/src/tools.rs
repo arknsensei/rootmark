@@ -724,14 +724,18 @@ impl Kernel {
                     Ingest::Unverified => ("unverified", None),
                     Ingest::Partial(id, _) => ("partial", Some(id.as_str())),
                 };
-                log.observe(
+                // diagnostic only: a failed write is reported, never a
+                // reason to change or stop the ingest (A0 review K1)
+                if let Err(e) = log.observe(
                     doc,
                     &after.hash,
                     seq,
                     kind,
                     id,
                     policy.attestation.window_ms,
-                )?;
+                ) {
+                    eprintln!("rootmark serve: --attest-log: {e:#}");
+                }
             }
             let partial = after.partial_hash();
             after.done(self, v, policy)?;
@@ -1611,7 +1615,11 @@ impl Kernel {
                     v["partial"] = json!(partial.unwrap_or(false));
                     v
                 });
-                log.attest(&doc, &hash, kind, line)?;
+                // diagnostic only (A0 review K1): the attestation's answer
+                // stands; a failed write is reported on stderr
+                if let Err(e) = log.attest(&doc, &hash, kind, line) {
+                    eprintln!("rootmark serve: --attest-log: {e:#}");
+                }
                 r.map(|(v, _)| v)
             }
             "trace" => {
