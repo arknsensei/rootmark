@@ -353,6 +353,13 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/**` | `P2-0.2/X5-dev:` | yeniden dondurma P2-0.2/F6: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md` (`compare_p2_0_2`); bu commit'te var olan P2-0.2 ölçüm dosyaları (`run_p2_0_2.py`, `datasets/p2_0_2_sets.py`, `compare_p2_0_2.py`, `historical_p2_0_2.py`, `historical_fails_p2_0_2.json`, `run_p2_0_2_checks.py`, `tamper_p2_0_2.py`, `report_p2_0_2.py`) de bu satırla donar |
 | `research/eval/**` | `P2-0.2/X5-rec:` | yeniden dondurma P2-0.2/F7: `tamper_p2_0_2.py` (T2 kontrolünün sırası, ret sebepleri), `compare_p2_0_2.py` (`_d_c` `matched` şartı, iki gerekçe metni), `DETERMINISTIC_FIELDS.md` (iki gerekçe metni) |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-0.2/X5-rec:` | yeniden dondurma P2-0.2/F7: iki `EXCLUDED` gerekçe metni |
+| `research/eval/**` | `P2-A/A0:` | yeniden dondurma P2-A/F1: `run_p2_0.py` tarifin varsayılan `[attestation]` tablosunu kaldırır; bu commit'te var olan yeni `real_retry.py` ve `info_p2a.py` de bu satırla donar |
+| `research/eval/run_p2_0.py` | `P2-A/A0:` | yeniden dondurma P2-A/F1: tarifin varsayılan `[attestation]` tablosu kaldırılır (dosyanın kendi satırları `P2-0/Z5:`, `P2-0/Z5-fix2:`) |
+| `clients/obsidian/e2e/**` | `P2-A/A0:` | yeniden dondurma P2-A/F1: `p2_0/sessions.ts`, `p2_0_1/real.ts`, `p2_0_2/real.ts`, `p2_0_2/sessions.ts` tarifin varsayılan `[attestation]` tablosunu kaldırır |
+| `clients/obsidian/e2e/p2_0/sessions.ts` | `P2-A/A0:` | yeniden dondurma P2-A/F1 |
+| `clients/obsidian/e2e/p2_0_1/real.ts` | `P2-A/A0:` | yeniden dondurma P2-A/F1 |
+| `scripts/http_e2e.sh` | `P2-A/A0:` | yeniden dondurma P2-A/F1: varsayılan `[attestation]` tablosu eklemeden önce silinir |
+| `server/tests/serve_watch.rs` | `P2-A/A0:` | yeniden dondurma P2-A/F1: `base_recipe()` |
 <!-- /frozen-table -->
 
 ## Notlar

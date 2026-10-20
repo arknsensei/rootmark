@@ -291,3 +291,13 @@ fn the_attest_log_must_lie_outside_the_vault() {
     assert!(!v.join("diag.jsonl").exists());
     assert!(!v.join(".rootmark/policy.toml").exists());
 }
+
+#[cfg(unix)]
+#[test]
+fn a_log_name_linking_into_the_vault_is_refused() {
+    let (r, v) = root("link");
+    std::os::unix::fs::symlink(v.join("notes.md"), r.join("diag.jsonl")).unwrap();
+    let e = AttestLog::open(&r.join("diag.jsonl"), &v).err().unwrap();
+    assert!(format!("{e:#}").contains("inside the vault"), "{e:#}");
+    assert_eq!(std::fs::read_to_string(v.join("notes.md")).unwrap(), NOTES);
+}

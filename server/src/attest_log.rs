@@ -62,7 +62,16 @@ impl AttestLog {
         let v = vault
             .canonicalize()
             .with_context(|| format!("vault {}", vault.display()))?;
-        if dir.starts_with(&v) {
+        // the file itself too, when it exists (a link into the vault: A0
+        // review K2)
+        let target = match path.file_name() {
+            Some(n) => dir.join(n),
+            None => bail!("--attest-log {}: not a file name", path.display()),
+        };
+        let inside = target.starts_with(&v)
+            || std::fs::symlink_metadata(&target).is_ok_and(|m| m.file_type().is_symlink())
+                && target.canonicalize().map_or(true, |t| t.starts_with(&v));
+        if inside || dir.starts_with(&v) {
             bail!(
                 "--attest-log {} lies inside the vault; the diagnostic log is written outside it",
                 path.display()
