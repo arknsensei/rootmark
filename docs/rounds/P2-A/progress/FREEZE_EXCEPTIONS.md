@@ -25,3 +25,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** Windows `x86_64` işi (`release.yml` koşusu 39439914476) bu satırda `jq: Argument list too long` (çıkış 126) ile düştü: rapor Windows'un komut satırı sınırını aşar. GOAL P2-A 3, A-4 (Windows artefaktı yeşil).
 - **Önce/sonra bit eşitliği:** aynı ikili ve modelle eski betik (`HEAD`'deki) ile yeni betiğin `check aarch64-apple-darwin` kaydı `cmp` ile **bayt eşit** (A3.md).
 - **Gözden geçirici onayı:** A3.review.md.
+
+## F5 · A5 · `scripts/verify.sh` — P2-A zinciri, sınıflandırıcı, çift karşılaştırması
+- **Ne:** `chain`'de `make p2-0-2-checks` adımı `make p2a-checks` olur (P2-0.2'nin denetimleri gerçek-Obsidian kümeleri olmadan — Makefile `P2_0_2_ARGS`, harness'in "Obsidian ikilisi yok → skipped" yolu —, ardından P2-A kümeleri, P2-0.2 resmi RUN'ına karşı regress, sınıflandırıcı, `p2a_checks.json`); FAIL özeti `eval.historical_p2a`; `pair` → `compare_p2a` (yeni işlev; `compare_p2_0_2` aynen kalır), yeni kip `compare-p2a`, kullanım satırı; başlık yorumu. Başka satır değişmedi (`git diff ROUND_START -- scripts/verify.sh`: yorum bloğu, P2-0.2 adımının yerine P2-A adımı, özet satırı, `pair`'in son satırı, yeni `compare_p2a` işlevi ve iki `case` satırı).
+- **Neden:** TASKS A5 ("göç adımı → conformance → regress (P2-0.2 referansı) → tamper → tek yüksüz çift; `compare_p2a`"); K-P2.3 (geliştirme turunda gerçek Obsidian yalnız mevcut e2e'de: `make p1e1-checks`'in gerçek Obsidian e2e'si koşmaya devam eder; P2-0.2'nin D-B test-3/D-A′/D-C′ kümeleri koşmaz, A0'ın bilgi ölçümü ayrı kayıttır).
+- **Önce/sonra:** zincirin P1-A…P1-E.1 adımları bayt bayt aynı komutlar; değişen adım yeni kaydedicileri ekler. `VERIFY_LOAD`'lu yol aynen. Geliştirme RUN'ı ve resmi çift A5.md'de.
+- **Gözden geçirici onayı:** A5.review.md.

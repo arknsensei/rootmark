@@ -87,6 +87,13 @@
 # pair` (the P1-E.1 pair set plus the P2-0.2 files, the D-A, D-A2 and D-C
 # vault and attestation logs byte for byte, H-P2-0.2i); `compare-p2-0-1` is
 # kept and `compare-p2-0-2` is new.
+# P2-A (re-freeze P2-A/F5): the chain records `make p2a-checks` instead of
+# `make p2-0-2-checks` (p2a-checks runs P2-0.2's checks again without the
+# real-Obsidian sets, K-P2.3, then P2-A's sets → p2a_checks.json); the FAIL
+# summary is the round's classifier (`eval.historical_p2a` against the
+# P2-0.2 official RUN, with its "migration required" category, K-P2A.2);
+# `pair` compares A ↔ B with `eval.compare_p2a pair` (the P2-0.2 pair set
+# plus the P2-A files); `compare-p2-0-2` is kept and `compare-p2a` is new.
 #
 #   scripts/verify.sh chain <source-repo> <workdir>
 #       clone <source-repo> into <workdir>/repo, `make setup`, rebuild and
@@ -190,8 +197,11 @@ chain() {
   # P2-0.2 (P2-0.2/F5): P2-0.1's own checks would run P2-0.1's D-B test set
   # again (GOAL P2-0.2: never read); the round's checks re-measure P2-0's
   # hypotheses with P2-0's W and thresholds on D-B test-3 and the new sets
-  log "P2-0.2 checks (W of P2-0; rules, D-E 3+2+1, D-A, D-A2, D-C (T3), D-B2; real Obsidian D-B test-3, D-A′, D-C′; tamper; regress vs P2-0.1; round classifier)"
-  make p2-0-2-checks RUN="$run"
+  # P2-A (P2-A/F5): P2-0.2's checks without the real-Obsidian sets, then
+  # P2-A's sets (migration of six old vaults, deliberate cases, tests),
+  # regress vs P2-0.2 and the round classifier
+  log "P2-A checks (P2-0.2 sets without real Obsidian; migrate 6 old vaults, /2 fixture, tamper, tests; regress vs P2-0.2; round classifier)"
+  make p2a-checks RUN="$run"
   log "deliberate corruptions (B-7, B-8 and the P1-A cases)"
   bash scripts/test_tamper.sh "research/reports/runs/$run" >"research/reports/runs/$run/tamper.log" 2>&1 \
     || { cat "research/reports/runs/$run/tamper.log" >&2; exit 1; }
@@ -212,8 +222,8 @@ chain() {
   # round's own classifier against the previous official RUN, so its
   # counted FAILs are the round's (eval.historical_p2_0_1; since P2-0.2,
   # P2-0.2/F5, eval.historical_p2_0_2 against the P2-0.1 official RUN)
-  log "FAIL summary (K-E1.4, round classifier eval.historical_p2_0_2)"
-  (cd research && uv run --frozen python -m eval.historical_p2_0_2 --run-dir "reports/runs/$run" --summary || true) >&2
+  log "FAIL summary (K-E1.4, round classifier eval.historical_p2a)"
+  (cd research && uv run --frozen python -m eval.historical_p2a --run-dir "reports/runs/$run" --summary || true) >&2
   log "chain finished in $((SECONDS - t0)) s"
   echo "RUN=$run" >&3
   echo "RUN_DIR=$work/repo/research/reports/runs/$run" >&3
@@ -257,7 +267,20 @@ pair() {
     fi
   done
   cat "$res_a" "$res_b"
-  compare_p2_0_2 "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+  compare_p2a "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+}
+
+compare_p2a() {
+  local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
+  log "compare (P2-A) $dir_a $dir_b"
+  local rc=0
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p2a pair "$dir_a" "$dir_b" \
+    ${out:+--out "$out"}) >&2 || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "error: run comparison failed (compare_p2a pair exit $rc)" >&2
+    exit "$rc"
+  fi
+  log "P2-0.2 pair set and P2-A results equal; D-A, D-A2 and D-C events.jsonl and attestations.jsonl byte-equal"
 }
 
 compare() {
@@ -417,6 +440,7 @@ case "${1:-}" in
   compare-p2-0) compare_p2_0 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p2-0-1) compare_p2_0_1 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p2-0-2) compare_p2_0_2 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
+  compare-p2a) compare_p2a "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t rootmark-verify.XXXXXX)"
@@ -424,7 +448,7 @@ case "${1:-}" in
     pair "$src" "$base/A" "$base/B"
     ;;
   *)
-    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2 <repo> <runA> <runB> [out]]" >&2
+    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2|compare-p2a <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac
