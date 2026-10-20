@@ -1,0 +1,134 @@
+{
+ "criterion": "A-4",
+ "workflow": ".github/workflows/release.yml",
+ "dispatch": "workflow_dispatch on p2-a/round (no tag, nothing published; K-GH.4 precedent, K-P2A.3)",
+ "run": "https://github.com/arknsensei/rootmark/actions/runs/39442647207",
+ "run_id": 39442647207,
+ "commit": "e27955eb1f2f16224263126a5af0f9da346788c3",
+ "jobs": {
+  "aarch64-apple-darwin": {
+   "ok": true,
+   "required": true,
+   "version": "rootmark 0.1.0",
+   "spec_version": "2.0.2",
+   "conformance": {
+    "level_claimed": 3,
+    "passed": 39,
+    "total": 39,
+    "fixtures_manifest": "ok"
+   },
+   "sha256_binary": "5a2e5171ee6816768a0a8564cd131fa2098f83717da5d93813975d4929cf9094"
+  },
+  "x86_64-pc-windows-msvc": {
+   "ok": true,
+   "required": false,
+   "version": "rootmark 0.1.0",
+   "spec_version": "2.0.2",
+   "conformance": {
+    "level_claimed": 3,
+    "passed": 39,
+    "total": 39,
+    "fixtures_manifest": "ok"
+   },
+   "sha256_binary": "98ef74602f80f5a8800f96af4aa9f3580457c1125d8ca825f0e25dfc959ab1ea"
+  },
+  "x86_64-unknown-linux-gnu": {
+   "ok": true,
+   "required": false,
+   "version": "rootmark 0.1.0",
+   "spec_version": "2.0.2",
+   "conformance": {
+    "level_claimed": 3,
+    "passed": 39,
+    "total": 39,
+    "fixtures_manifest": "ok"
+   },
+   "sha256_binary": "8ef9f33b0860b92d573e775f88029f1ec07dcf5979d94deb0182832a8d6ba86a"
+  }
+ },
+ "install": {
+  "aarch64-apple-darwin": {
+   "installer": "packaging/install.sh",
+   "version": "rootmark 0.1.0",
+   "conformance": {
+    "level": 3,
+    "passed": 39,
+    "total": 39
+   },
+   "ok": true
+  },
+  "x86_64-pc-windows-msvc": {
+   "installer": "packaging/install.ps1",
+   "version": "rootmark 0.1.0",
+   "conformance": {
+    "level": 3,
+    "passed": 39,
+    "total": 39
+   },
+   "ok": true
+  },
+  "x86_64-unknown-linux-gnu": {
+   "installer": "packaging/install.sh",
+   "version": "rootmark 0.1.0",
+   "conformance": {
+    "level": 3,
+    "passed": 39,
+    "total": 39
+   },
+   "ok": true
+  }
+ },
+ "sha256sums": [
+  "155e8fbe76ac8b18bd628054df0b21bed15408ccdacdb72423b0ae9ba36411bf  rootmark-0.1.0-aarch64-apple-darwin.tar.gz",
+  "2f26bf0e3d63faaa4a75b41b1cf1afbba4a30d3bda6452a93fa684fe790c0d15  rootmark-0.1.0-x86_64-pc-windows-msvc.zip",
+  "05346852c4bfb084f2233627e572c3a3b6599e49d7a01e4ba9c0e39e23d02038  rootmark-0.1.0-x86_64-unknown-linux-gnu.tar.gz"
+ ],
+ "sha256sums_check": "shasum -a 256 -c SHA256SUMS: every archive OK",
+ "attestations": [
+  {
+   "archive": "rootmark-0.1.0-aarch64-apple-darwin.tar.gz",
+   "sha256": "155e8fbe76ac8b18bd628054df0b21bed15408ccdacdb72423b0ae9ba36411bf",
+   "gh_attestation_verify": "ok (exit 0)",
+   "predicate_type": "https://slsa.dev/provenance/v1",
+   "signer_workflow": "https://github.com/arknsensei/rootmark/.github/workflows/release.yml@refs/heads/p2-a/round",
+   "source_commit": "e27955eb1f2f16224263126a5af0f9da346788c3"
+  },
+  {
+   "archive": "rootmark-0.1.0-x86_64-pc-windows-msvc.zip",
+   "sha256": "2f26bf0e3d63faaa4a75b41b1cf1afbba4a30d3bda6452a93fa684fe790c0d15",
+   "gh_attestation_verify": "ok (exit 0)",
+   "predicate_type": "https://slsa.dev/provenance/v1",
+   "signer_workflow": "https://github.com/arknsensei/rootmark/.github/workflows/release.yml@refs/heads/p2-a/round",
+   "source_commit": "e27955eb1f2f16224263126a5af0f9da346788c3"
+  },
+  {
+   "archive": "rootmark-0.1.0-x86_64-unknown-linux-gnu.tar.gz",
+   "sha256": "05346852c4bfb084f2233627e572c3a3b6599e49d7a01e4ba9c0e39e23d02038",
+   "gh_attestation_verify": "ok (exit 0)",
+   "predicate_type": "https://slsa.dev/provenance/v1",
+   "signer_workflow": "https://github.com/arknsensei/rootmark/.github/workflows/release.yml@refs/heads/p2-a/round",
+   "source_commit": "e27955eb1f2f16224263126a5af0f9da346788c3"
+  }
+ ],
+ "earlier_dispatches": [
+  {
+   "run_id": 39439087677,
+   "windows": "failure: fetch_model.sh `size 90405214 != manifest 90405214` was fixed (jq CRLF), then `shasum: command not found` (Git Bash)"
+  },
+  {
+   "run_id": 39439914476,
+   "windows": "failure: release_target.sh `jq: Argument list too long` (conformance report as an argument; P2-A/F4)"
+  },
+  {
+   "run_id": 39441344576,
+   "windows": "failure: conformance 31/39, fixtures_manifest mismatch (CRLF checkout of spec/fixtures; .gitattributes)"
+  },
+  {
+   "run_id": 39441290305,
+   "note": "cancelled: dispatched before its commit was pushed"
+  }
+ ],
+ "linux_x86_64": "green: built, rootmark conformance 39/39, installed with install.sh, installed binary 39/39",
+ "windows_x86_64": "green: built, rootmark conformance 39/39, installed with install.ps1, installed binary 39/39",
+ "pass": true
+}

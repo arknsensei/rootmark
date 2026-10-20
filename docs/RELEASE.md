@@ -39,8 +39,8 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 ## Kurulum (P2-A/A3; K-E1.1'in hedefleri değişmez)
 Yayım hedefi yine yalnız `aarch64-apple-darwin`'dir (K-E1.1); Linux `x86_64` ve Windows `x86_64` arşivleri CI'da derlenir, kurulur, sınanır ve artefakt olarak saklanır, kurulum betikleri onlar için de çalışır. Yayımlanabilir paketler (bir yayımda release varlığı olarak eklenir):
 - `rootmark-<ver>-<target>.tar.gz` (Linux, macOS) ve `rootmark-<ver>-x86_64-pc-windows-msvc.zip`; içinde ikili, `LICENSE`, `README.md`, `models/MANIFEST.json` ve `models/fetch_model.sh` (model dosyaları arşivde değildir; kurulum indirir ve manifest'le denetler).
-- `SHA256SUMS` (bütün arşivler) ve her arşivin GitHub köken tasdiki (artifact attestation).
-- `install.sh`: `curl -fsSL https://github.com/arknsensei/rootmark/releases/download/v<ver>/install.sh | bash -s -- --version <ver>` — arşivi ve `SHA256SUMS`'ı indirir, SHA-256'yı denetler, `~/.local/bin/rootmark` ve `~/.local/share/rootmark/models` kurar, modeli indirir; `ROOTMARK_MODELS=~/.local/share/rootmark/models`.
+- `SHA256SUMS` (bütün arşivler ve iki kurulum betiği) ve her birinin GitHub köken tasdiki (artifact attestation; `SHA256SUMS` arşivle aynı yerden gelir: bütünlüğü kanıtlar, kökeni tasdik kanıtlar).
+- `install.sh` (önce indir, doğrula, sonra çalıştır: `curl -fsSLO …/v<ver>/install.sh`, `curl -fsSLO …/v<ver>/SHA256SUMS`, `gh attestation verify install.sh -R arknsensei/rootmark`, `grep ' install.sh$' SHA256SUMS | sha256sum -c`, `bash install.sh --version <ver>`; boru ile `curl … | bash` kökeni doğrulamaz) — arşivi ve `SHA256SUMS`'ı indirir, SHA-256'yı denetler, `~/.local/bin/rootmark` ve `~/.local/share/rootmark/models` kurar, modeli indirir; `ROOTMARK_MODELS=~/.local/share/rootmark/models`.
 - `install.ps1`: `powershell -ExecutionPolicy Bypass -File install.ps1 -Version <ver>` — aynısı Windows için (`%LOCALAPPDATA%\rootmark`).
 - `cargo binstall rootmark-server` (`server/Cargo.toml [package.metadata.binstall]`; arşiv adları ve iç dizin düzeniyle eşleşir; yayım ve crates.io insan adımıdır).
 

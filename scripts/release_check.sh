@@ -148,7 +148,7 @@ item R17 "installers install.sh / install.ps1 (SHA256SUMS checked, a changed arc
 # installed binary; the last job writes SHA256SUMS and attests provenance
 item R18 "CI release.yml: installer per job, SHA256SUMS, build provenance attestation" "$(
   grep -qF 'bash packaging/install.sh --from' "$wf" && grep -qF './packaging/install.ps1 -From' "$wf" \
-  && grep -qF 'sha256sum rootmark-* >SHA256SUMS' "$wf" \
+  && grep -qF 'sha256sum rootmark-* install.sh install.ps1 >SHA256SUMS' "$wf" \
   && grep -qE 'uses: actions/attest-build-provenance@v[0-9]+\.[0-9]+\.[0-9]+' "$wf" \
   && grep -qE '^\s*id-token: write' "$wf" && grep -qE '^\s*attestations: write' "$wf"; echo $?)"
 # R19: code signing and notarization are human steps, written down

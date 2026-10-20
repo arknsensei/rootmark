@@ -86,7 +86,7 @@ jobs:
           "$bin" --version
           "$bin" conformance >conf.json || { cat conf.json; exit 1; }
           jq -n --arg t "${{ matrix.target }}" --arg v "$("$bin" --version)" --slurpfile c conf.json \
-            '{target: $t, installer: "packaging/install.sh", version: $v, conformance: {level: $c[0].level_claimed, passed: $c[0].passed, total: $c[0].total}, ok: ($c[0].passed == $c[0].total)}' \
+            '{target: $t, installer: "packaging/install.sh", version: $v, conformance: {level: $c[0].level_claimed, passed: $c[0].passed, total: $c[0].total}, ok: ($c[0].level_claimed == 3 and $c[0].passed == 39 and $c[0].total == 39 and $c[0].fixtures_manifest == "ok")}' \
             >dist/bin/${{ matrix.target }}.install.json
           cat dist/bin/${{ matrix.target }}.install.json
           jq -e .ok dist/bin/${{ matrix.target }}.install.json
@@ -106,7 +106,7 @@ jobs:
           & $bin conformance | Set-Content -Encoding utf8 conf.json
           if ($LASTEXITCODE -ne 0) { Get-Content conf.json; exit 1 }
           $c = Get-Content conf.json -Raw | ConvertFrom-Json
-          $rec = [ordered]@{ target = "${{ matrix.target }}"; installer = "packaging/install.ps1"; version = $v; conformance = [ordered]@{ level = $c.level_claimed; passed = $c.passed; total = $c.total }; ok = ($c.passed -eq $c.total) }
+          $rec = [ordered]@{ target = "${{ matrix.target }}"; installer = "packaging/install.ps1"; version = $v; conformance = [ordered]@{ level = $c.level_claimed; passed = $c.passed; total = $c.total }; ok = ($c.level_claimed -eq 3 -and $c.passed -eq 39 -and $c.total -eq 39 -and $c.fixtures_manifest -eq "ok") }
           $rec | ConvertTo-Json -Depth 4 | Set-Content -Encoding utf8 dist/bin/${{ matrix.target }}.install.json
           Get-Content dist/bin/${{ matrix.target }}.install.json
           if (-not $rec.ok) { exit 1 }
@@ -155,8 +155,9 @@ jobs:
           mkdir -p release
           find artefacts -type f \( -name 'rootmark-*.tar.gz' -o -name 'rootmark-*.zip' \) -exec cp {} release/ \;
           ls release | grep -q . || { echo "no archive to sum" >&2; exit 1; }
-          (cd release && sha256sum rootmark-* >SHA256SUMS && cat SHA256SUMS && sha256sum -c SHA256SUMS)
           cp packaging/install.sh packaging/install.ps1 release/
+          # the installers are summed and attested with the archives (A3 review)
+          (cd release && sha256sum rootmark-* install.sh install.ps1 >SHA256SUMS && cat SHA256SUMS && sha256sum -c SHA256SUMS)
           find artefacts -name '*.install.json' -exec cp {} dist/bin/ \;
       - name: build provenance of the archives (GitHub artifact attestations)
         uses: actions/attest-build-provenance@v4.2.2
@@ -164,6 +165,8 @@ jobs:
           subject-path: |
             release/rootmark-*.tar.gz
             release/rootmark-*.zip
+            release/install.sh
+            release/install.ps1
       - uses: actions/upload-artifact@v7.0.1
         if: always()
         with:

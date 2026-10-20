@@ -34,6 +34,8 @@ jobs:
       - run: bash scripts/check_deps.sh
       - run: bash scripts/test_check_deps.sh
       - run: bash scripts/check_dep_age.sh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}   # the actions' release dates (API rate limit)
 
   test:
     name: test + lint + conformance (macos-14)
