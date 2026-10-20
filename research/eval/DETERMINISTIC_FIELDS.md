@@ -432,6 +432,44 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2_0_1` | regress | `p1e1/historical.json` | `counted_fails` | karar | K-P2-01.3: eval.historical (reference P1-E) sees the FAILs P2-0 and P2-0.1 decisions cause; eval.historical_p2_0_1 classifies them |
 | `compare_p2_0_1` | regress | `p1e1/historical.json` | `counted` | karar | K-P2-01.3: eval.historical (reference P1-E) sees the FAILs P2-0 and P2-0.1 decisions cause; eval.historical_p2_0_1 classifies them |
 | `compare_p2_0_1` | regress | `p1e1/historical.json` | `fails` | karar | K-P2-01.3: eval.historical (reference P1-E) sees the FAILs P2-0 and P2-0.1 decisions cause; eval.historical_p2_0_1 classifies them |
+| `compare_p2a` | regress | `p1d1/d1_13.json` | `codes` | karar | K-P2A.2: the contract's codes: migration_required (12) |
+| `compare_p2a` | regress | `p1d1/d1_13.json` | `http` | karar | K-P2A.2: contract_check over HTTP: migration_required triggered, stale state's search code, status.migrations fields |
+| `compare_p2a` | regress | `p1d1_checks.json` | `D1-13/codes` | karar | K-P2A.2: D1-13's code count: 12 |
+| `compare_p2a` | regress | `p1e/check_compare_fields.json` | `file_constants` | karar | P2-A/F6: the field audit sees the new comparator compare_p2a |
+| `compare_p2a` | regress | `p1e/check_compare_fields.json` | `modules` | karar | P2-A/F6: the field audit sees the new comparator compare_p2a |
+| `compare_p2a` | regress | `p1e/client.json` | `bundle_bytes` | karar | K-P2A.2: the plugin's index notice names `rootmark migrate` (view.ts): its bundle size |
+| `compare_p2a` | regress | `p1e/client.json` | `vitest` | karar | K-P2A.2: the client's tests: one more (the generated contract's code) |
+| `compare_p2a` | regress | `p1e/e0/e14.json` | `auto_rebuild_false` | karar | K-P2A.2: E-14 on the /2 index: search 503 migration_required |
+| `compare_p2a` | regress | `p1e/e0/e14.json` | `pass` | karar | K-P2A.2: E-14 on the /2 index: search 503 migration_required |
+| `compare_p2a` | regress | `p1e/e0/e14.json` | `passed` | karar | K-P2A.2: E-14 on the /2 index: search 503 migration_required |
+| `compare_p2a` | regress | `p1e1/check_compare_fields.json` | `file_constants` | karar | P2-A/F6: the field audit sees the new comparator compare_p2a |
+| `compare_p2a` | regress | `p1e1/check_compare_fields.json` | `modules` | karar | P2-A/F6: the field audit sees the new comparator compare_p2a |
+| `compare_p2a` | regress | `p1e1/contract.json` | `codes` | karar | K-P2A.2: contract_check: migration_required (12 codes) |
+| `compare_p2a` | regress | `p1e1/contract.json` | `http` | karar | K-P2A.2: contract_check over HTTP: migration_required, stale state's search code, status.migrations fields |
+| `compare_p2a` | regress | `p1e1/historical.json` | `counted` | karar | K-P2A.2: P1-E.1's classifier sees the migration-required FAILs (E1-1, E1-4, E1-9, E-14) |
+| `compare_p2a` | regress | `p1e1/historical.json` | `counted_fails` | karar | K-P2A.2: P1-E.1's classifier sees the migration-required FAILs (E1-1, E1-4, E1-9, E-14) |
+| `compare_p2a` | regress | `p1e1/historical.json` | `fails` | karar | K-P2A.2: P1-E.1's classifier sees the migration-required FAILs (E1-1, E1-4, E1-9, E-14) |
+| `compare_p2a` | regress | `p1e1/release/plugin_e2e_real.json` | `e1_9_connection` | karar | K-P2A.2: the real-Obsidian e2e on the /2 index: migration_required before the rebuild, the notice names `rootmark migrate` |
+| `compare_p2a` | regress | `p1e1/release/plugin_e2e_real.json` | `pass` | karar | K-P2A.2: the real-Obsidian e2e on the /2 index (E1-9) |
+| `compare_p2a` | regress | `p1e1/release/release.json` | `commit` | karar | K-P2A.3: the release package is built from this round's commit |
+| `compare_p2a` | regress | `p1e1/release/release_check.json` | `items` | karar | K-P2A.3: release_check R17–R20 (P2-A/F3); R15 follows E1-9 (K-P2A.2) |
+| `compare_p2a` | regress | `p1e1/release/release_check.json` | `pass` | karar | K-P2A.3: release_check R17–R20; R15 follows E1-9 |
+| `compare_p2a` | regress | `p1e1/release/release_check.json` | `passed` | karar | K-P2A.3: release_check R17–R20; R15 follows E1-9 |
+| `compare_p2a` | regress | `p1e1/release/release_check.json` | `total` | karar | K-P2A.3: release_check R17–R20 (21 items) |
+| `compare_p2a` | regress | `p1e1/status/e1_1.json` | `auto_rebuild_false` | karar | K-P2A.2: E1-1 on the /2 index: search 503 migration_required |
+| `compare_p2a` | regress | `p1e1/status/e1_1.json` | `cases` | karar | K-P2A.2: E1-1 on the /2 index: search 503 migration_required |
+| `compare_p2a` | regress | `p1e1/status/e1_1.json` | `pass` | karar | K-P2A.2: E1-1 on the /2 index |
+| `compare_p2a` | regress | `p1e1/status/e1_1.json` | `passed` | karar | K-P2A.2: E1-1 on the /2 index |
+| `compare_p2a` | regress | `p1e1_checks.json` | `E1-1` | karar | K-P2A.2: E1-1: migration required (eval.historical_p2a) |
+| `compare_p2a` | regress | `p1e1_checks.json` | `E1-4` | karar | K-P2A.3: E1-4: release_check R17–R20 (K-P2A.3) and R15 (E1-9, K-P2A.2) |
+| `compare_p2a` | regress | `p1e1_checks.json` | `E1-6` | karar | K-P2A.2: E1-6's regress against P1-E sees the new code |
+| `compare_p2a` | regress | `p1e1_checks.json` | `E1-9` | karar | K-P2A.2: E1-9: migration required (eval.historical_p2a) |
+| `compare_p2a` | regress | `p1e_checks.json` | `E-10/bundle_bytes` | karar | K-P2A.2: the plugin bundle (view.ts notice) |
+| `compare_p2a` | regress | `p1e_checks.json` | `E-10/vitest` | karar | K-P2A.2: the client's tests: one more |
+| `compare_p2a` | regress | `p1e_checks.json` | `E-14` | karar | K-P2A.2: E-14: migration required (eval.historical_p2a) |
+| `compare_p2a` | regress | `p1e_checks.json` | `E-9` | karar | K-P2A.2: E-9's regress against P1-D.1 sees the new code |
+| `compare_p2a` | regress | `p2_0_2_checks.json` | `fail_summary` | karar | K-P2A.2: P2-0.2's classifier sees the migration-required FAILs; P2-A's classifier is eval.historical_p2a |
+| `compare_p2a` | regress | `p2_0_2_checks.json` | `regress` | karar | K-P2A.2: P2-0.2's regress against P2-0.1; P2-A's regress is this comparison |
 <!-- /fields-table -->
 
 ## Dosya tablosu

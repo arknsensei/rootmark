@@ -17,6 +17,10 @@ Three labels:
   listed path that differs holds the listed new value** (`expect`, e.g.
   `migration_required`) in this RUN. The K-E1.4 listing does not grow: the
   category has its own data file;
+- a listed criterion with `not_measured: true` whose record is `{measured:
+  false, skipped: true, pass: null}` — or `pass: null` with every other
+  difference from the reference under its declared `changes` (partly
+  measured) — is `historical` too (a set not run by a decision, K-P2.3);
 - `fail` — anything else (absent from the reference, listed in neither,
   differing elsewhere, or a listed path not holding the expected value): a
   new failure, never hidden; a listed criterion whose checks file is
@@ -60,11 +64,16 @@ def decided(f: str, cid: str, doc_has_criteria: bool, excl: list) -> list[tuple[
     return out
 
 
-def holds(rec: dict, path: str, expect: str) -> bool:
-    """Whether the leaf at `path` of `rec` (or every leaf below it) is the
-    value `expect` (A2 review: equality, not a substring)."""
+def holds(rec: dict, spec: dict) -> bool:
+    """Whether the leaf at `spec["path"]` of `rec` (or every leaf below it)
+    is the value `spec["expect"]` (A2 review: equality, not a substring),
+    or — `spec["prefix"]`, for a message that names this run's temporary
+    directory — a string starting with it."""
+    path = spec["path"]
     vals = [v for p, v in leaves(rec) if "/".join(p) == path or "/".join(p).startswith(path + "/")]
-    return bool(vals) and all(v == expect for v in vals)
+    if "prefix" in spec:
+        return bool(vals) and all(isinstance(v, str) and v.startswith(spec["prefix"]) for v in vals)
+    return bool(vals) and all(v == spec["expect"] for v in vals)
 
 
 def differs_under(a: dict, b: dict, path: str) -> bool:
@@ -112,6 +121,32 @@ def classify(
             if rec.get("pass") is True:
                 continue
             row = {"file": f, "criterion": cid}
+            e0 = entries.get((f, cid))
+            ref_path0 = ref_dir / f
+            ref0 = criteria(load(ref_path0)).get(cid) if ref_path0.is_file() else None
+            if (
+                rec.get("pass") is None
+                and e0 is not None
+                and e0.get("not_measured") is True
+                and (
+                    (rec.get("measured") is False and rec.get("skipped") is True)
+                    # partly measured: what ran equals the reference, what did
+                    # not run is a declared change
+                    or (
+                        ref0 is not None
+                        and not differing(
+                            rec, ref0, ["pass"] + [c["path"] for c in e0.get("changes", [])]
+                        )
+                    )
+                )
+            ):
+                # not measured in this chain by a decision (K-P2.3: the real
+                # Obsidian sets of a hypothesis round are not a development
+                # round's): listed, its record says so
+                rows.append(
+                    {**row, "label": "historical", "decisions": e0["decisions"], "why": e0["why"]}
+                )
+                continue
             if not isinstance(rec.get("pass"), bool):
                 rows.append(
                     {**row, "label": "fail", "why": f"pass is not a boolean ({rec.get('pass')!r})"}
@@ -131,7 +166,7 @@ def classify(
                 # every listed path that differs from the reference holds
                 # the expected new value
                 changed = [p for p in m["paths"] if differs_under(rec, ref, p["path"])]
-                wrong = [p["path"] for p in changed if not holds(rec, p["path"], p["expect"])]
+                wrong = [p["path"] for p in changed if not holds(rec, p)]
                 if diff or wrong:
                     rows.append(
                         {

@@ -368,6 +368,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/check_compare_fields.py` | `P2-A/A5-dev2:` | yeniden dondurma P2-A/F6: `compare_p2a` |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-A/A5-dev2:` | yeniden dondurma P2-A/F6: `compare_p2a` bölümü ve dosya satırı |
 | `research/eval/**` | `P2-A/A5-dev2:` | yeniden dondurma P2-A/F6: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan P2-A ölçüm dosyaları (`run_p2a.py`, `run_p2a_checks.py`, `compare_p2a.py`, `historical_p2a.py`, `historical_fails_p2a.json`, `migration_required_fails.json`, `report_p2a.py`) de bu satırla donar |
+| `research/eval/**` | `P2-A/A5-rec:` | yeniden dondurma P2-A/F7: `historical_p2a.py`, `historical_fails_p2a.json`, `migration_required_fails.json`, `compare_p2a.py` (`EXCLUDED`), `run_p2a.py`, `DETERMINISTIC_FIELDS.md` (geliştirme RUN'ı) |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-A/A5-rec:` | yeniden dondurma P2-A/F7: `compare_p2a` dışlama satırları |
 <!-- /frozen-table -->
 
 ## Notlar

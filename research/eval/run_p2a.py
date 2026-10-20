@@ -347,7 +347,7 @@ def run_tamper(rm: str, work: Path) -> dict:
 
 
 def run_tests() -> dict:
-    args = ["cargo", "test", "-q", "-p", "rootmark-server", "--release"]
+    args = ["cargo", "test", "-p", "rootmark-server", "--release"]
     for t in TESTS:
         args += ["--test", t]
     r = run([*args, "--", "--test-threads=1"], cwd=REPO)

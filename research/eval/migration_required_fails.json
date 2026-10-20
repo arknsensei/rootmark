@@ -1,5 +1,143 @@
 {
- "about": "P2-A (K-P2A.2): written from the development RUN before the official RUN (A5.md)",
+ "about": "P2-A (K-P2A.2): written from the development RUN 20261020T203735Z-c51159b before the official RUN (A5.md); the 'göç gerekli' category: a recorder measured an older format version's behaviour",
  "reference_run": "reports/rounds/P2-0.2/runs/20261019T212951Z-72fd78f",
- "entries": []
+ "entries": [
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-1",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "the /2 index (an older rootmark's) answers search 503 migration_required, not index_stale (K-P2A.2); the other 7 cases unchanged",
+   "paths": [
+    {
+     "path": "cases/search 503 index_stale",
+     "expect": false
+    },
+    {
+     "path": "passed",
+     "expect": "7/8"
+    }
+   ]
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-14",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "auto_rebuild = false on the /2 index: search 503 migration_required, not index_stale (K-P2A.2); auto_rebuild = true unchanged",
+   "paths": [
+    {
+     "path": "passed",
+     "expect": "1/2"
+    }
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-9",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "the real-Obsidian e2e on the /2 index: the plugin's search before the rebuild gets migration_required and its tooltip names `rootmark migrate` (K-P2A.2)",
+   "paths": [
+    {
+     "path": "connection_step/search_before_rebuild/error",
+     "prefix": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\""
+    },
+    {
+     "path": "connection_step/tooltip",
+     "expect": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+    }
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-4",
+   "decisions": [
+    "K-P2A.2",
+    "K-P2A.3"
+   ],
+   "why": "release_check: R15 fails because the real-Obsidian e2e's /2 index step expects index_stale (E1-9, K-P2A.2); the checklist and the script gain R17–R20 (K-P2A.3)",
+   "paths": [
+    {
+     "path": "failed/0",
+     "expect": "R15"
+    },
+    {
+     "path": "release_check",
+     "expect": "20/21"
+    },
+    {
+     "path": "release_md_items/17",
+     "expect": "R17"
+    },
+    {
+     "path": "release_md_items/18",
+     "expect": "R18"
+    },
+    {
+     "path": "release_md_items/19",
+     "expect": "R19"
+    },
+    {
+     "path": "release_md_items/20",
+     "expect": "R20"
+    },
+    {
+     "path": "script_items/10",
+     "expect": "R19"
+    },
+    {
+     "path": "script_items/11",
+     "expect": "R2"
+    },
+    {
+     "path": "script_items/12",
+     "expect": "R20"
+    },
+    {
+     "path": "script_items/13",
+     "expect": "R3"
+    },
+    {
+     "path": "script_items/14",
+     "expect": "R4"
+    },
+    {
+     "path": "script_items/15",
+     "expect": "R4a"
+    },
+    {
+     "path": "script_items/16",
+     "expect": "R5"
+    },
+    {
+     "path": "script_items/17",
+     "expect": "R6"
+    },
+    {
+     "path": "script_items/18",
+     "expect": "R7"
+    },
+    {
+     "path": "script_items/19",
+     "expect": "R8"
+    },
+    {
+     "path": "script_items/20",
+     "expect": "R9"
+    },
+    {
+     "path": "script_items/8",
+     "expect": "R17"
+    },
+    {
+     "path": "script_items/9",
+     "expect": "R18"
+    }
+   ]
+  }
+ ]
 }
