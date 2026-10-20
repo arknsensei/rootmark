@@ -19,3 +19,9 @@ Prosedür: docs/DEV_PROCESS.md §4 — (a) girdi (ne, neden, diff), (b) önce/so
 - **Neden:** TASKS A3 ("kurulum doğrulama maddeleri (`release_check.sh` yeni maddeler)"); GOAL P2-A 3.
 - **Önce/sonra:** var olan maddelerin komutları bayt bayt aynı (`git diff ROUND_START -- scripts/release_check.sh`: yalnız başlık satırı ve yeni blok); yeni blok ayrı denendi (A3.md: R17 kurulum + bozuk arşiv reddi, R18–R20). Bu betik P1-E.1'in kaydedicisinin (`make p1e1-checks`) parçasıdır: kaydının `items`'ına dört madde eklenir; zincirde sınıflandırıcı bunu karar K-P2A.3 ile bildirilen değişiklik olarak etiketler (A5).
 - **Gözden geçirici onayı:** A3.review.md.
+
+## F4 · A3 · `scripts/release_target.sh` — uyumluluk raporu jq'ya dosyayla
+- **Ne:** `check`'te `rootmark conformance` çıktısı `--arg c "$c"` yerine geçici bir dosyadan `--rawfile c "$cf"` ile okunur, dosya sonra silinir. Başka satır değişmedi.
+- **Neden:** Windows `x86_64` işi (`release.yml` koşusu 39439914476) bu satırda `jq: Argument list too long` (çıkış 126) ile düştü: rapor Windows'un komut satırı sınırını aşar. GOAL P2-A 3, A-4 (Windows artefaktı yeşil).
+- **Önce/sonra bit eşitliği:** aynı ikili ve modelle eski betik (`HEAD`'deki) ile yeni betiğin `check aarch64-apple-darwin` kaydı `cmp` ile **bayt eşit** (A3.md).
+- **Gözden geçirici onayı:** A3.review.md.

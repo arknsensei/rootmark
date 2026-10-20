@@ -33,13 +33,17 @@ case "${1:-}" in
     v="$("$@" --version 2>&1 | tr -d '\r' || true)"
     s="$("$@" --spec-version 2>&1 | tr -d '\r' || true)"
     rc=0
-    c="$("$@" conformance 2>/dev/null | tr -d '\r')" || rc=$?
-    jq -n --arg t "$t" --argjson req "$req" --arg h "$(sha "$bin")" --arg v "$v" --arg s "$s" --argjson rc "$rc" --arg c "$c" --arg ver "$ver" --arg spec "$spec" '
+    # the report goes to jq through a file: as an argument it exceeds the
+    # Windows command-line limit ("Argument list too long"; P2-A/F4)
+    cf="$(mktemp)"
+    "$@" conformance 2>/dev/null | tr -d '\r' >"$cf" || rc=$?
+    jq -n --arg t "$t" --argjson req "$req" --arg h "$(sha "$bin")" --arg v "$v" --arg s "$s" --argjson rc "$rc" --rawfile c "$cf" --arg ver "$ver" --arg spec "$spec" '
       ($c | try fromjson catch null) as $r
       | {target: $t, required: $req, built: true, sha256: $h, version: $v, spec_version: $s,
          conformance: (if $r == null then {error: ($c | .[0:400])} else {level_claimed: $r.level_claimed, passed: $r.passed, total: $r.total, fixtures_manifest: $r.fixtures_manifest} end),
          conformance_exit: $rc,
          ok: ($v == ("rootmark " + $ver) and $s == $spec and $r != null and $r.level_claimed == 3 and $r.passed == 39 and $r.total == 39)}' >"$out"
+    rm -f "$cf"
     jq -r '"release_target: \(if .ok then "ok  " else "FAIL" end) \(.target) \(.version) spec \(.spec_version) conformance \(.conformance.passed // "-")/\(.conformance.total // "-")"' "$out"
     ;;
   skipped)

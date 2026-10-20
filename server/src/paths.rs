@@ -69,6 +69,15 @@ pub fn exact_on_disk(vault: &Path, doc: &str) -> Result<()> {
                 dir.display()
             );
         }
+        // fail closed (automated security review): whatever the file system
+        // folds that this fold does not, a name the OS resolves to an entry
+        // of another spelling is refused too
+        if !exact && std::fs::symlink_metadata(dir.join(c)).is_ok() {
+            bail!(
+                "doc {doc:?}: {c:?} matches an existing entry of {} only by case or Unicode form; use the name as it is on disk",
+                dir.display()
+            );
+        }
         if !exact {
             return Ok(()); // a new name: nothing below it exists
         }
