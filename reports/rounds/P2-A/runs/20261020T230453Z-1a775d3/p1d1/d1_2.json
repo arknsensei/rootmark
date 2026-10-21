@@ -1,0 +1,12 @@
+{
+  "accepted": true,
+  "code": null,
+  "criterion": "D1-2",
+  "file_ends_with_new_text": true,
+  "pass": true,
+  "section_layers": [
+    "proposal",
+    "proposal"
+  ],
+  "setup_events": 3
+}

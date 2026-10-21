@@ -1,0 +1,217 @@
+{
+ "A-7": 3,
+ "compiled_theta_split": 0.65,
+ "grid": [
+  {
+   "H1-H1": 1.0,
+   "H1-H2": 0.0,
+   "H1-H3": 0.9857142857142858,
+   "H1-H3_detail": {
+    "f1": 0.9857142857142858,
+    "n_pred": 276,
+    "n_truth": 284,
+    "precision": 1.0,
+    "recall": 0.971830985915493,
+    "tp": 276
+   },
+   "H1-H4": 1.0,
+   "objective": 3.9857142857142858,
+   "per_variant": {
+    "both_edited": {
+     "event_precision": 1.0,
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 120
+    },
+    "heavy": {
+     "event_precision": 1.0,
+     "event_recall": 0.9420289855072463,
+     "retention": 1.0,
+     "steps": 138
+    },
+    "short_piece": {
+     "event_precision": 1.0,
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 26
+    }
+   },
+   "theta": 0.5,
+   "theta_split": 0.45
+  },
+  {
+   "H1-H1": 1.0,
+   "H1-H2": 0.0,
+   "H1-H3": 0.9857142857142858,
+   "H1-H3_detail": {
+    "f1": 0.9857142857142858,
+    "n_pred": 276,
+    "n_truth": 284,
+    "precision": 1.0,
+    "recall": 0.971830985915493,
+    "tp": 276
+   },
+   "H1-H4": 1.0,
+   "objective": 3.9857142857142858,
+   "per_variant": {
+    "both_edited": {
+     "event_precision": 1.0,
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 120
+    },
+    "heavy": {
+     "event_precision": 1.0,
+     "event_recall": 0.9420289855072463,
+     "retention": 1.0,
+     "steps": 138
+    },
+    "short_piece": {
+     "event_precision": 1.0,
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 26
+    }
+   },
+   "theta": 0.5,
+   "theta_split": 0.55
+  },
+  {
+   "H1-H1": 1.0,
+   "H1-H2": 0.0,
+   "H1-H3": 0.9857142857142858,
+   "H1-H3_detail": {
+    "f1": 0.9857142857142858,
+    "n_pred": 276,
+    "n_truth": 284,
+    "precision": 1.0,
+    "recall": 0.971830985915493,
+    "tp": 276
+   },
+   "H1-H4": 1.0,
+   "objective": 3.9857142857142858,
+   "per_variant": {
+    "both_edited": {
+     "event_precision": 1.0,
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 120
+    },
+    "heavy": {
+     "event_precision": 1.0,
+     "event_recall": 0.9420289855072463,
+     "retention": 1.0,
+     "steps": 138
+    },
+    "short_piece": {
+     "event_precision": 1.0,
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 26
+    }
+   },
+   "theta": 0.5,
+   "theta_split": 0.65
+  },
+  {
+   "H1-H1": 1.0,
+   "H1-H2": 0.0,
+   "H1-H3": 0.982078853046595,
+   "H1-H3_detail": {
+    "f1": 0.982078853046595,
+    "n_pred": 274,
+    "n_truth": 284,
+    "precision": 1.0,
+    "recall": 0.9647887323943662,
+    "tp": 274
+   },
+   "H1-H4": 1.0,
+   "objective": 3.982078853046595,
+   "per_variant": {
+    "both_edited": {
+     "event_precision": 1.0,
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 120
+    },
+    "heavy": {
+     "event_precision": 1.0,
+     "event_recall": 0.927536231884058,
+     "retention": 1.0,
+     "steps": 138
+    },
+    "short_piece": {
+     "event_precision": 1.0,
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 26
+    }
+   },
+   "theta": 0.5,
+   "theta_split": 0.75
+  },
+  {
+   "H1-H1": 1.0,
+   "H1-H2": 0.0,
+   "H1-H3": 0.9784172661870503,
+   "H1-H3_detail": {
+    "f1": 0.9784172661870503,
+    "n_pred": 272,
+    "n_truth": 284,
+    "precision": 1.0,
+    "recall": 0.9577464788732394,
+    "tp": 272
+   },
+   "H1-H4": 1.0,
+   "objective": 3.9784172661870505,
+   "per_variant": {
+    "both_edited": {
+     "event_precision": 1.0,
+     "event_recall": 0.9916666666666667,
+     "retention": 1.0,
+     "steps": 120
+    },
+    "heavy": {
+     "event_precision": 1.0,
+     "event_recall": 0.9202898550724637,
+     "retention": 1.0,
+     "steps": 138
+    },
+    "short_piece": {
+     "event_precision": 1.0,
+     "event_recall": 1.0,
+     "retention": 1.0,
+     "steps": 26
+    }
+   },
+   "theta": 0.5,
+   "theta_split": 0.85
+  }
+ ],
+ "matcher": "v3",
+ "n_docs": 60,
+ "n_steps": 360,
+ "note": "information only; no constant is selected or written",
+ "realised_ops": {
+  "n_scored": 360,
+  "rates": {
+   "dup_delete_adjacent": 0.211111,
+   "merge_edit/heavy": 0.383333,
+   "split_edit/both_edited": 0.333333,
+   "split_edit/short_piece": 0.072222
+  }
+ },
+ "set": "d1sh",
+ "substring_check": {
+  "split_pieces_checked": 292,
+  "substring_pieces": 0
+ },
+ "theta": 0.5,
+ "theta_splits": [
+  0.45,
+  0.55,
+  0.65,
+  0.75,
+  0.85
+ ]
+}

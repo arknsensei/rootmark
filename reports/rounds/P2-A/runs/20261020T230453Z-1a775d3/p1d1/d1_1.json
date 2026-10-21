@@ -1,0 +1,56 @@
+{
+  "cases": [
+    {
+      "case": "full section",
+      "code": "denied",
+      "heading": "Fire",
+      "reason": "propose: denied by edit policy append_only: policy append_only: replace_section only replaces a section made of proposal blocks; this section holds 67204e60d9400dd875e361ef954c78e3 (canonical), 62000ab37145af370ad43b1928469a16 (canonical), 3f2a7598cf368cf394c3b3d59c092a9d (canonical), 3949af93da4772c238a627260e1bbb26 (canonical), 271f47262be6281b510ac04a8d4a8c04 (canonical)",
+      "section_holds": "canonical paragraphs and a canonical subsection, all replaced"
+    },
+    {
+      "case": "partial",
+      "code": "denied",
+      "heading": "Drills",
+      "reason": "propose: denied by edit policy append_only: policy append_only: replace_section only replaces a section made of proposal blocks; this section holds 3949af93da4772c238a627260e1bbb26 (canonical), 271f47262be6281b510ac04a8d4a8c04 (canonical)",
+      "section_holds": "a canonical paragraph kept verbatim plus agent text"
+    },
+    {
+      "case": "heading",
+      "code": "denied",
+      "heading": "Notes",
+      "reason": "propose: denied by edit policy append_only: policy append_only: replace_section only replaces a section made of proposal blocks; this section holds a038b71a4a6b1f1308d51ec6d00fa591 (canonical)",
+      "section_holds": "only a canonical heading (empty body)"
+    },
+    {
+      "case": "mixed canonical+proposal",
+      "code": "denied",
+      "heading": "Water",
+      "reason": "propose: denied by edit policy append_only: policy append_only: replace_section only replaces a section made of proposal blocks; this section holds b72c15e5d0e337d99cf87a2ead2ee16e (canonical), 67595716511579bf2ba400b6d3f72959 (canonical)",
+      "section_holds": "canonical heading and paragraph plus the agent's proposal subsection"
+    },
+    {
+      "case": "nested heading",
+      "code": "denied",
+      "heading": "Fire",
+      "reason": "propose: denied by edit policy append_only: policy append_only: replace_section only replaces a section made of proposal blocks; this section holds 67204e60d9400dd875e361ef954c78e3 (canonical), 62000ab37145af370ad43b1928469a16 (canonical), 3f2a7598cf368cf394c3b3d59c092a9d (canonical), 3949af93da4772c238a627260e1bbb26 (canonical), 271f47262be6281b510ac04a8d4a8c04 (canonical)",
+      "section_holds": "a canonical section, replaced by text with nested headings"
+    },
+    {
+      "case": "whole human document",
+      "code": "denied",
+      "heading": "Safety",
+      "reason": "propose: denied by edit policy append_only: policy append_only: replace_section only replaces a section made of proposal blocks; this section holds bb8b0566f9ce5c808e46d86398c7257b (canonical), 4bc453cd9dd18698fd3d53a9e38b9c87 (canonical), 67204e60d9400dd875e361ef954c78e3 (canonical), 62000ab37145af370ad43b1928469a16 (canonical), 3f2a7598cf368cf394c3b3d59c092a9d (canonical), 3949af93da4772c238a627260e1bbb26 (canonical), 271f47262be6281b510ac04a8d4a8c04 (canonical), a038b71a4a6b1f1308d51ec6d00fa591 (canonical), b72c15e5d0e337d99cf87a2ead2ee16e (canonical), 67595716511579bf2ba400b6d3f72959 (canonical)",
+      "section_holds": "the whole human document"
+    }
+  ],
+  "criterion": "D1-1",
+  "denied": 6,
+  "files_and_events_unchanged": true,
+  "pass": true,
+  "water_layers_after_setup": [
+    "canonical",
+    "canonical",
+    "proposal",
+    "proposal"
+  ]
+}

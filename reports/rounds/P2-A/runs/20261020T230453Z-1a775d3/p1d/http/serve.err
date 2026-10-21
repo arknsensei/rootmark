@@ -1,0 +1,10 @@
+rootmark serve: no policy.toml: wrote the default recipe (promotion human_only) to vault/.rootmark/policy.toml
+rootmark serve: no index: built one (33 records, 12 snapshots, minilm-l6-v2/e73168f9)
+rootmark serve: token Created (vault/.rootmark/server.token)
+rootmark serve: http listening on 127.0.0.1:64210
+rootmark serve: watching vault
+rootmark serve: watch: espresso.md ingested (2 events, 1 chunks embedded, snapshot c25ef9a9571f60ef611ac9354318927c)
+rootmark serve: watch: filter.md ingested (2 events, 1 chunks embedded, snapshot f93e2fa84a4e1a31f69e29f9ebda3031)
+rootmark serve: stopping (SIGTERM)
+rootmark serve: compact (shutdown): 35 records, 14 snapshots, 2 moved from the hot tier
+rootmark serve: stopped

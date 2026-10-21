@@ -1,0 +1,6 @@
+bash scripts/verify.sh
+RUN=20261020T230453Z-1a775d3
+RUN_DIR=/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.zb7V4oXCD2/A/repo/research/reports/runs/20261020T230453Z-1a775d3
+RUN=20261020T234853Z-1a775d3
+RUN_DIR=/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.zb7V4oXCD2/B/repo/research/reports/runs/20261020T234853Z-1a775d3
+exit 0

@@ -1,0 +1,12 @@
+plugin-e2e: ok   1 human connect (status)
+plugin-e2e: ok   2 human nameCheckpoint before
+plugin-e2e: ok   3 agent MCP propose
+plugin-e2e: ok   4 human blameOf + listProposals
+plugin-e2e: ok   5 human runSearch default
+plugin-e2e: ok   6 human promoteAll (reason) + promoteAll (no reason)
+plugin-e2e: ok   7 human runSearch default
+plugin-e2e: ok   8 human recentTraces
+plugin-e2e: ok   9 human runSearch at + blameAt
+plugin-e2e: ok   10 agent MCP propose replace_section + heading-less append
+plugin-e2e: ok   11 human blameOf + runSearch
+plugin-e2e: 11/11; E-3 true; E-4 outside contract 0 of 30 requests

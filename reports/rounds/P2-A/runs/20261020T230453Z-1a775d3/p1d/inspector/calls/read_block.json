@@ -1,0 +1,45 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"block\":{\"block\":{\"block_type\":\"Heading\",\"heading_level\":1,\"heading_path\":[],\"layer\":\"canonical\",\"lineage_id\":\"74ecb4d582f0ffede4479a044f078542\",\"normalized_text\":\"# Espresso\",\"parents\":[],\"provenance\":{\"author_kind\":\"Human\",\"source\":\"\"},\"text\":\"# Espresso\",\"version_id\":\"89d0a18e79e31ff49018e502401250e4\"},\"doc_path\":\"espresso.md\",\"inactive\":false},\"checkpoint_id\":\"9a1342342e600fdca482ac2c60fcfa3c\",\"trace\":{\"at_seq\":2,\"checkpoint_id\":\"9a1342342e600fdca482ac2c60fcfa3c\",\"consumer\":\"inspector-cli/2.9.0\",\"query_hash\":\"b1f6228f03fe40b515a050bf4a8237ec\",\"returned\":[{\"doc_path\":\"espresso.md\",\"lineage_id\":\"74ecb4d582f0ffede4479a044f078542\",\"version_id\":\"89d0a18e79e31ff49018e502401250e4\"}],\"trace_id\":\"f79c778656aa1dbfb9cf5e2692c6b5d8\"}}"
+    }
+  ],
+  "structuredContent": {
+    "block": {
+      "block": {
+        "block_type": "Heading",
+        "heading_level": 1,
+        "heading_path": [],
+        "layer": "canonical",
+        "lineage_id": "74ecb4d582f0ffede4479a044f078542",
+        "normalized_text": "# Espresso",
+        "parents": [],
+        "provenance": {
+          "author_kind": "Human",
+          "source": ""
+        },
+        "text": "# Espresso",
+        "version_id": "89d0a18e79e31ff49018e502401250e4"
+      },
+      "doc_path": "espresso.md",
+      "inactive": false
+    },
+    "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+    "trace": {
+      "at_seq": 2,
+      "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+      "consumer": "inspector-cli/2.9.0",
+      "query_hash": "b1f6228f03fe40b515a050bf4a8237ec",
+      "returned": [
+        {
+          "doc_path": "espresso.md",
+          "lineage_id": "74ecb4d582f0ffede4479a044f078542",
+          "version_id": "89d0a18e79e31ff49018e502401250e4"
+        }
+      ],
+      "trace_id": "f79c778656aa1dbfb9cf5e2692c6b5d8"
+    }
+  },
+  "isError": false
+}
