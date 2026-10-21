@@ -37,6 +37,8 @@ Her madde `scripts/release_check.sh [<dist>]` ile betikle doğrulanır (madde ki
 6. Obsidian community store başvurusu bu yayımın kapsamında değildir (GOAL P1-E).
 
 ## Kurulum (P2-A/A3; K-E1.1'in hedefleri değişmez)
+**Durum (P2-A FINAL, karar kuralının "hepsi geçti" dalı):** kurulum paketleri **yayımlanabilir** — `release.yml` koşusu 39488669699'da (`2429cba`) üç hedef, kurulum betikleri, `SHA256SUMS` ve köken tasdikleri yeşil (`reports/rounds/P2-A/release_dispatch.json`). Etiket ve GitHub release insan adımıdır (yukarıdaki insan adımları; önce bağımsız doğrulama).
+
 Yayım hedefi yine yalnız `aarch64-apple-darwin`'dir (K-E1.1); Linux `x86_64` ve Windows `x86_64` arşivleri CI'da derlenir, kurulur, sınanır ve artefakt olarak saklanır, kurulum betikleri onlar için de çalışır. Yayımlanabilir paketler (bir yayımda release varlığı olarak eklenir):
 - `rootmark-<ver>-<target>.tar.gz` (Linux, macOS) ve `rootmark-<ver>-x86_64-pc-windows-msvc.zip`; içinde ikili, `LICENSE`, `README.md`, `models/MANIFEST.json` ve `models/fetch_model.sh` (model dosyaları arşivde değildir; kurulum indirir ve manifest'le denetler).
 - `SHA256SUMS` (bütün arşivler ve iki kurulum betiği) ve her birinin GitHub köken tasdiki (artifact attestation; `SHA256SUMS` arşivle aynı yerden gelir: bütünlüğü kanıtlar, kökeni tasdik kanıtlar).
