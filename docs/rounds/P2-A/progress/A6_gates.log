@@ -1,0 +1,16 @@
+# quality gates at d26c2e4 (runtime code as at 1a775d3: git diff --stat 1a775d3 HEAD -- core index server bindings clients research/eval scripts Makefile)
+## make test
+exit 0
+1x test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.09s
+1x test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 44.06s
+1x test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.81s
+1x test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.04s
+2x test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+5x test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+## make lint
+exit 0
+check_frozen: OK
+bash scripts/check_compare_fields.sh >/dev/null
+check_compare_fields: OK (14 comparators, 409 declared fields, 25 file constants)
+## make conformance
+conformance: level 3, 39/39 (reports/conformance.json)
