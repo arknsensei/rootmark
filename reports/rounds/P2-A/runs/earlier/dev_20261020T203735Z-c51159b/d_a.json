@@ -1,0 +1,3051 @@
+{
+ "set": "D-A",
+ "scenarios": 200,
+ "new_blocks": 518,
+ "canonical_leak": 0,
+ "pass_0a": false,
+ "scenarios_0a_prime": 200,
+ "scenarios_with_canonical_changed": 16,
+ "new_blocks_not_unverified": 0,
+ "canonical_changed": 52,
+ "pass_0a_prime": true,
+ "by_kind": {
+  "new_file": 29,
+  "append_human": 29,
+  "replace_section": 29,
+  "overwrite": 29,
+  "rename": 28,
+  "rapid5": 28,
+  "anywhere": 28
+ },
+ "rows": [
+  {
+   "id": "a000",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n001.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a001",
+   "kind": "rename",
+   "documents": [
+    "renamed/a001-roasting.md",
+    "roasting.md"
+   ],
+   "new_blocks": 10,
+   "unverified": 10,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a002",
+   "kind": "overwrite",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 6,
+   "preserved": 6,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a003",
+   "kind": "replace_section",
+   "documents": [
+    "renamed/a001-roasting.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a004",
+   "kind": "anywhere",
+   "documents": [
+    "misc/archive/f002.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a005",
+   "kind": "append_human",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a006",
+   "kind": "rapid5",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a007",
+   "kind": "rapid5",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a008",
+   "kind": "rename",
+   "documents": [
+    "misc/archive/f002.md",
+    "renamed/a008-f002.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a009",
+   "kind": "append_human",
+   "documents": [
+    "filter.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a010",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n003.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a011",
+   "kind": "append_human",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a012",
+   "kind": "overwrite",
+   "documents": [
+    "roast-log.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 5,
+   "preserved": 5,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a013",
+   "kind": "rapid5",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a014",
+   "kind": "replace_section",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a015",
+   "kind": "replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 3,
+   "preserved": 3,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a016",
+   "kind": "replace_section",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a017",
+   "kind": "anywhere",
+   "documents": [
+    "misc/archive/f004.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a018",
+   "kind": "replace_section",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a019",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n005.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a020",
+   "kind": "anywhere",
+   "documents": [
+    "deep/a/f006.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a021",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n007.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a022",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n008.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a023",
+   "kind": "rename",
+   "documents": [
+    "renamed/a023-roast-log.md",
+    "roast-log.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a024",
+   "kind": "overwrite",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 6,
+   "preserved": 6,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a025",
+   "kind": "append_human",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a026",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n009.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a027",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n010.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a028",
+   "kind": "replace_section",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 3,
+   "preserved": 3,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a029",
+   "kind": "append_human",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a030",
+   "kind": "rename",
+   "documents": [
+    "misc/archive/f004.md",
+    "renamed/a030-f004.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a031",
+   "kind": "append_human",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a032",
+   "kind": "rapid5",
+   "documents": [
+    "agent-notes/n003.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a033",
+   "kind": "anywhere",
+   "documents": [
+    "misc/archive/f011.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a034",
+   "kind": "overwrite",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 9,
+   "preserved": 9,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a035",
+   "kind": "anywhere",
+   "documents": [
+    "x/y/z/f012.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a036",
+   "kind": "append_human",
+   "documents": [
+    "filter.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a037",
+   "kind": "anywhere",
+   "documents": [
+    "deep/a/f013.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a038",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n014.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a039",
+   "kind": "overwrite",
+   "documents": [
+    "agent-notes/n010.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a040",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n015.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a041",
+   "kind": "rapid5",
+   "documents": [
+    "agent-notes/n010.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a042",
+   "kind": "rename",
+   "documents": [
+    "renamed/a042-f012.md",
+    "x/y/z/f012.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a043",
+   "kind": "replace_section",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a044",
+   "kind": "rapid5",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a045",
+   "kind": "overwrite",
+   "documents": [
+    "agent-notes/n005.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a046",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n016.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a047",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n017.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a048",
+   "kind": "rename",
+   "documents": [
+    "agent-notes/n014.md",
+    "renamed/a048-n014.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a049",
+   "kind": "anywhere",
+   "documents": [
+    "misc/archive/f018.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a050",
+   "kind": "rename",
+   "documents": [
+    "agent-notes/n016.md",
+    "renamed/a050-n016.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a051",
+   "kind": "rename",
+   "documents": [
+    "agent-notes/n003.md",
+    "renamed/a051-n003.md"
+   ],
+   "new_blocks": 7,
+   "unverified": 7,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a052",
+   "kind": "replace_section",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a053",
+   "kind": "replace_section",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a054",
+   "kind": "overwrite",
+   "documents": [
+    "agent-notes/n001.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a055",
+   "kind": "append_human",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a056",
+   "kind": "rapid5",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a057",
+   "kind": "append_human",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a058",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n019.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a059",
+   "kind": "replace_section",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a060",
+   "kind": "overwrite",
+   "documents": [
+    "agent-notes/n007.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a061",
+   "kind": "rename",
+   "documents": [
+    "misc/archive/f011.md",
+    "renamed/a061-f011.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a062",
+   "kind": "rapid5",
+   "documents": [
+    "renamed/a051-n003.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a063",
+   "kind": "rename",
+   "documents": [
+    "filter.md",
+    "renamed/a063-filter.md"
+   ],
+   "new_blocks": 9,
+   "unverified": 9,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a064",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n020.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a065",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n021.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a066",
+   "kind": "rename",
+   "documents": [
+    "deep/a/f006.md",
+    "renamed/a066-f006.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a067",
+   "kind": "overwrite",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 5,
+   "preserved": 5,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a068",
+   "kind": "append_human",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a069",
+   "kind": "rename",
+   "documents": [
+    "misc/archive/f018.md",
+    "renamed/a069-f018.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a070",
+   "kind": "rename",
+   "documents": [
+    "renamed/a042-f012.md",
+    "renamed/a070-a042-f012.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a071",
+   "kind": "rapid5",
+   "documents": [
+    "renamed/a030-f004.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a072",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n022.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a073",
+   "kind": "rename",
+   "documents": [
+    "glossary.md",
+    "renamed/a073-glossary.md"
+   ],
+   "new_blocks": 8,
+   "unverified": 8,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a074",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n023.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a075",
+   "kind": "overwrite",
+   "documents": [
+    "agent-notes/n017.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a076",
+   "kind": "anywhere",
+   "documents": [
+    "misc/archive/f024.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a077",
+   "kind": "rapid5",
+   "documents": [
+    "renamed/a061-f011.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a078",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n025.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a079",
+   "kind": "overwrite",
+   "documents": [
+    "agent-notes/n001.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a080",
+   "kind": "anywhere",
+   "documents": [
+    "deep/a/f026.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a081",
+   "kind": "rapid5",
+   "documents": [
+    "agent-notes/n001.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a082",
+   "kind": "rename",
+   "documents": [
+    "agent-notes/n022.md",
+    "renamed/a082-n022.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a083",
+   "kind": "anywhere",
+   "documents": [
+    "x/y/z/f027.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a084",
+   "kind": "replace_section",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a085",
+   "kind": "rapid5",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a086",
+   "kind": "anywhere",
+   "documents": [
+    "x/y/z/f028.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a087",
+   "kind": "append_human",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a088",
+   "kind": "rapid5",
+   "documents": [
+    "agent-notes/n015.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a089",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n029.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a090",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n030.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a091",
+   "kind": "anywhere",
+   "documents": [
+    "misc/archive/f031.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a092",
+   "kind": "append_human",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a093",
+   "kind": "overwrite",
+   "documents": [
+    "renamed/a050-n016.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a094",
+   "kind": "anywhere",
+   "documents": [
+    "x/y/z/f032.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a095",
+   "kind": "rename",
+   "documents": [
+    "agent-notes/n008.md",
+    "renamed/a095-n008.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a096",
+   "kind": "anywhere",
+   "documents": [
+    "drafts/f033.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a097",
+   "kind": "append_human",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a098",
+   "kind": "anywhere",
+   "documents": [
+    "deep/a/f034.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a099",
+   "kind": "rapid5",
+   "documents": [
+    "agent-notes/n029.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a100",
+   "kind": "anywhere",
+   "documents": [
+    "drafts/f035.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a101",
+   "kind": "append_human",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a102",
+   "kind": "rename",
+   "documents": [
+    "renamed/a095-n008.md",
+    "renamed/a102-a095-n008.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a103",
+   "kind": "anywhere",
+   "documents": [
+    "drafts/f036.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a104",
+   "kind": "replace_section",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a105",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n037.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a106",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n038.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a107",
+   "kind": "anywhere",
+   "documents": [
+    "drafts/f039.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a108",
+   "kind": "replace_section",
+   "documents": [
+    "renamed/a063-filter.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a109",
+   "kind": "rapid5",
+   "documents": [
+    "deep/a/f034.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a110",
+   "kind": "replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 3,
+   "preserved": 3,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a111",
+   "kind": "append_human",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a112",
+   "kind": "append_human",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a113",
+   "kind": "append_human",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a114",
+   "kind": "anywhere",
+   "documents": [
+    "drafts/f040.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a115",
+   "kind": "overwrite",
+   "documents": [
+    "agent-notes/n007.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a116",
+   "kind": "rename",
+   "documents": [
+    "deep/a/f026.md",
+    "renamed/a116-f026.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a117",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n041.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a118",
+   "kind": "rapid5",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a119",
+   "kind": "rapid5",
+   "documents": [
+    "renamed/a102-a095-n008.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a120",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n042.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a121",
+   "kind": "append_human",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a122",
+   "kind": "overwrite",
+   "documents": [
+    "drafts/f035.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a123",
+   "kind": "anywhere",
+   "documents": [
+    "misc/archive/f043.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a124",
+   "kind": "overwrite",
+   "documents": [
+    "drafts/f039.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a125",
+   "kind": "append_human",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a126",
+   "kind": "overwrite",
+   "documents": [
+    "renamed/a001-roasting.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a127",
+   "kind": "replace_section",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a128",
+   "kind": "anywhere",
+   "documents": [
+    "deep/a/f044.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a129",
+   "kind": "overwrite",
+   "documents": [
+    "x/y/z/f028.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a130",
+   "kind": "replace_section",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 5,
+   "preserved": 5,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a131",
+   "kind": "append_human",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a132",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n045.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a133",
+   "kind": "anywhere",
+   "documents": [
+    "misc/archive/f046.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a134",
+   "kind": "anywhere",
+   "documents": [
+    "deep/a/f047.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a135",
+   "kind": "anywhere",
+   "documents": [
+    "x/y/z/f048.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a136",
+   "kind": "replace_section",
+   "documents": [
+    "renamed/a063-filter.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a137",
+   "kind": "replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a138",
+   "kind": "overwrite",
+   "documents": [
+    "agent-notes/n007.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a139",
+   "kind": "anywhere",
+   "documents": [
+    "x/y/z/f049.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a140",
+   "kind": "append_human",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a141",
+   "kind": "append_human",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a142",
+   "kind": "rapid5",
+   "documents": [
+    "x/y/z/f048.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a143",
+   "kind": "append_human",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a144",
+   "kind": "overwrite",
+   "documents": [
+    "renamed/a102-a095-n008.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a145",
+   "kind": "overwrite",
+   "documents": [
+    "misc/archive/f046.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a146",
+   "kind": "replace_section",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a147",
+   "kind": "rename",
+   "documents": [
+    "agent-notes/n005.md",
+    "renamed/a147-n005.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a148",
+   "kind": "rapid5",
+   "documents": [
+    "agent-notes/n030.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a149",
+   "kind": "overwrite",
+   "documents": [
+    "renamed/a001-roasting.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a150",
+   "kind": "replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a151",
+   "kind": "rapid5",
+   "documents": [
+    "agent-notes/n029.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a152",
+   "kind": "rename",
+   "documents": [
+    "misc/archive/f043.md",
+    "renamed/a152-f043.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a153",
+   "kind": "rename",
+   "documents": [
+    "renamed/a066-f006.md",
+    "renamed/a153-a066-f006.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a154",
+   "kind": "rapid5",
+   "documents": [
+    "deep/a/f034.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a155",
+   "kind": "append_human",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a156",
+   "kind": "anywhere",
+   "documents": [
+    "deep/a/f050.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a157",
+   "kind": "rapid5",
+   "documents": [
+    "renamed/a147-n005.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a158",
+   "kind": "append_human",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a159",
+   "kind": "overwrite",
+   "documents": [
+    "renamed/a023-roast-log.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a160",
+   "kind": "replace_section",
+   "documents": [
+    "renamed/a063-filter.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a161",
+   "kind": "overwrite",
+   "documents": [
+    "renamed/a069-f018.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a162",
+   "kind": "overwrite",
+   "documents": [
+    "misc/archive/f031.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a163",
+   "kind": "rapid5",
+   "documents": [
+    "renamed/a116-f026.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a164",
+   "kind": "replace_section",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a165",
+   "kind": "replace_section",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a166",
+   "kind": "append_human",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a167",
+   "kind": "replace_section",
+   "documents": [
+    "renamed/a063-filter.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a168",
+   "kind": "rename",
+   "documents": [
+    "deep/a/f047.md",
+    "renamed/a168-f047.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a169",
+   "kind": "overwrite",
+   "documents": [
+    "drafts/f033.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a170",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n051.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a171",
+   "kind": "overwrite",
+   "documents": [
+    "agent-notes/n037.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a172",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n052.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a173",
+   "kind": "rename",
+   "documents": [
+    "agent-notes/n029.md",
+    "renamed/a173-n029.md"
+   ],
+   "new_blocks": 12,
+   "unverified": 12,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a174",
+   "kind": "rename",
+   "documents": [
+    "deep/a/f013.md",
+    "renamed/a174-f013.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a175",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n053.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a176",
+   "kind": "rename",
+   "documents": [
+    "renamed/a051-n003.md",
+    "renamed/a176-a051-n003.md"
+   ],
+   "new_blocks": 12,
+   "unverified": 12,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a177",
+   "kind": "replace_section",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a178",
+   "kind": "rename",
+   "documents": [
+    "renamed/a178-staff.md",
+    "staff.md"
+   ],
+   "new_blocks": 13,
+   "unverified": 13,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a179",
+   "kind": "append_human",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a180",
+   "kind": "anywhere",
+   "documents": [
+    "deep/a/f054.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a181",
+   "kind": "append_human",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a182",
+   "kind": "overwrite",
+   "documents": [
+    "renamed/a069-f018.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a183",
+   "kind": "rapid5",
+   "documents": [
+    "renamed/a008-f002.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a184",
+   "kind": "rename",
+   "documents": [
+    "origins.md",
+    "renamed/a184-origins.md"
+   ],
+   "new_blocks": 13,
+   "unverified": 13,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a185",
+   "kind": "rapid5",
+   "documents": [
+    "deep/a/f054.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a186",
+   "kind": "append_human",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a187",
+   "kind": "replace_section",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a188",
+   "kind": "rapid5",
+   "documents": [
+    "renamed/a063-filter.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a189",
+   "kind": "anywhere",
+   "documents": [
+    "x/y/z/f055.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a190",
+   "kind": "rapid5",
+   "documents": [
+    "agent-notes/n017.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a191",
+   "kind": "replace_section",
+   "documents": [
+    "renamed/a063-filter.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a192",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n056.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a193",
+   "kind": "new_file",
+   "documents": [
+    "agent-notes/n057.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a194",
+   "kind": "replace_section",
+   "documents": [
+    "renamed/a063-filter.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a195",
+   "kind": "overwrite",
+   "documents": [
+    "renamed/a102-a095-n008.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a196",
+   "kind": "overwrite",
+   "documents": [
+    "x/y/z/f027.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a197",
+   "kind": "rapid5",
+   "documents": [
+    "agent-notes/n041.md"
+   ],
+   "new_blocks": 5,
+   "unverified": 5,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a198",
+   "kind": "rename",
+   "documents": [
+    "drafts/f040.md",
+    "renamed/a198-f040.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  },
+  {
+   "id": "a199",
+   "kind": "replace_section",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true
+  }
+ ]
+}
