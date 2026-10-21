@@ -1,0 +1,182 @@
+[
+  {
+    "method": "GET",
+    "path": "/v1/status",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/checkpoint",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/search",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/promote",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 400
+  },
+  {
+    "method": "POST",
+    "path": "/v1/promote",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/promote",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/search",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/trace",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/search",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 404
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/search",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/blame",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  },
+  {
+    "method": "POST",
+    "path": "/v1/search",
+    "consumer": "rootmark-obsidian/0.1.0",
+    "status": 200
+  }
+]

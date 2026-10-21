@@ -1,0 +1,243 @@
+{
+ "reference_run": "reports/rounds/P2-0.2/runs/20261019T212951Z-72fd78f",
+ "fails": [
+  {
+   "file": "p1b1_checks.json",
+   "criterion": "B1-3",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1c1_checks.json",
+   "criterion": "C1-7",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-11",
+   "label": "historical",
+   "decisions": [
+    "K-D1.2",
+    "K-D1.4-T",
+    "K-E0.1"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-3",
+   "label": "historical",
+   "decisions": [
+    "K-C8-T",
+    "K-C1.1",
+    "K-C1.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-10",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-12",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-2",
+   "label": "historical",
+   "decisions": [
+    "K-D1.1",
+    "K-D1.5",
+    "K-E0.4",
+    "K-D1.4-T"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-7",
+   "label": "historical",
+   "decisions": [
+    "K-D1.4-T",
+    "K-D1.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-9",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-1",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "the /2 index (an older rootmark's) answers search 503 migration_required, not index_stale (K-P2A.2); the other 7 cases unchanged"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-4",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2",
+    "K-P2A.3"
+   ],
+   "why": "release_check: R15 fails because the real-Obsidian e2e's /2 index step expects index_stale (E1-9, K-P2A.2); the checklist and the script gain R17–R20 (K-P2A.3)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-6",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "E1-6 regresses P1-E.1 against P1-E: its differing fields grow by the contract's new code migration_required (D1-13's contract and server code lists)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-8",
+   "label": "historical",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-9",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "the real-Obsidian e2e on the /2 index: the plugin's search before the rebuild gets migration_required and its tooltip names `rootmark migrate` (K-P2A.2)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "tamper",
+   "label": "historical",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-14",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "auto_rebuild = false on the /2 index: search 503 migration_required, not index_stale (K-P2A.2); auto_rebuild = true unchanged"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-7",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-9",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "E-9 regresses P1-E against P1-D.1: the excluded D1-13 leaves grow by the new code migration_required"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b′",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2c",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2d",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "D-C′ (real Obsidian) not run in a development round's chain; D-C ran"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2e",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "fail_summary",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "P2-0.2's own classifier (against the P2-0.1 RUN) sees the migration-required FAILs E1-1, E1-4, E1-9, E-14; P2-A's classifier is this one"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "regress",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "P2-0.2's regress against the P2-0.1 RUN sees P2-A's decisions (contract code, installers, field audit) and the skipped real-Obsidian sets; P2-A's regress is eval.compare_p2a against the P2-0.2 RUN"
+  }
+ ],
+ "historical": 21,
+ "migration_required": 4,
+ "counted_fails": 0,
+ "counted": []
+}

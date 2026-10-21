@@ -1,0 +1,22 @@
+{
+ "H4-1": {
+  "equal": true,
+  "manifest_hash": "7335baebefba377c84574928dd4cc05c",
+  "rebuilt_hash": "7335baebefba377c84574928dd4cc05c"
+ },
+ "docs_equal": true,
+ "matcher": "v3",
+ "rev": "fbc07769235bca514f88be79a523311d72c7cafd",
+ "stats": {
+  "docs": 1012,
+  "structural_chunks": 5998,
+  "wikilink_docs": 534,
+  "wikilink_share": 0.527668
+ },
+ "v2_fields_equal": true,
+ "v2_log": {
+  "equal": true,
+  "manifest_hash": "e6945bbc2da9c47376e017e815d7e51b",
+  "rebuilt_hash": "e6945bbc2da9c47376e017e815d7e51b"
+ }
+}
