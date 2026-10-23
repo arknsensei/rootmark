@@ -94,6 +94,11 @@
 # P2-0.2 official RUN, with its "migration required" category, K-P2A.2);
 # `pair` compares A ↔ B with `eval.compare_p2a pair` (the P2-0.2 pair set
 # plus the P2-A files); `compare-p2-0-2` is kept and `compare-p2a` is new.
+# P2-0.3 (re-freeze P2-0.3/F1): after `make p2a-checks` the chain records
+# `make p2-0-3-checks` (P2-0.2's real-Obsidian sets with P2-0.2's code: D-B
+# test-4 with the round's pre-registered seed, D-A′, D-C′ → <RUN>/p2_0_3/;
+# p2_0_3_checks.json). Nothing else changes: the steps, the classifier,
+# `pair`, `compare_p2a` and VERIFY_LOAD are as in P2-A.
 #
 #   scripts/verify.sh chain <source-repo> <workdir>
 #       clone <source-repo> into <workdir>/repo, `make setup`, rebuild and
@@ -202,6 +207,8 @@ chain() {
   # regress vs P2-0.2 and the round classifier
   log "P2-A checks (P2-0.2 sets without real Obsidian; migrate 6 old vaults, /2 fixture, tamper, tests; regress vs P2-0.2; round classifier)"
   make p2a-checks RUN="$run"
+  log "P2-0.3 checks (real Obsidian: D-B test-4 with the new seed, D-A′, D-C′; p2_0_3_checks)"
+  make p2-0-3-checks RUN="$run"
   log "deliberate corruptions (B-7, B-8 and the P1-A cases)"
   bash scripts/test_tamper.sh "research/reports/runs/$run" >"research/reports/runs/$run/tamper.log" 2>&1 \
     || { cat "research/reports/runs/$run/tamper.log" >&2; exit 1; }

@@ -23,7 +23,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps check-compare-fields check-client-types conformance regress verify models c3-quality p1c-checks report-p1c \
         c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e p1e1-checks report-p1e1 \
-        p2-0-harness p2-0-tune p2-0-test p2-0-checks p2-0-1-harness p2-0-1-checks p2-0-2-harness p2-0-2-checks p2a-checks
+        p2-0-harness p2-0-tune p2-0-test p2-0-checks p2-0-1-harness p2-0-1-checks p2-0-2-harness p2-0-2-checks p2a-checks p2-0-3-checks
 
 setup: setup-py build
 
@@ -706,6 +706,23 @@ p2a-checks: require-run
 	rc=0; $(PY) -m eval.historical_p2a --run-dir reports/runs/$(RUN) --out reports/runs/$(RUN)/p2a/historical.json || rc=$$?; \
 	  [ $$rc -eq 0 ] || [ $$rc -eq 3 ]
 	$(PY) -m eval.run_p2a_checks --run $(RUN)
+
+# P2-0.3 (TASKS R0, R1): the hypothesis round's half of the chain, after
+# p2a-checks (whose P2-0.2 sets without real Obsidian are this round's
+# rules, D-E, D-A, D-A2, D-C, D-B2): eval.run_p2_0_3 test runs P2-0.2's
+# real-Obsidian sets with P2-0.2's code — D-B test-4 (the test-3 generator,
+# the seed pre-registered in docs/rounds/P2-0.3/progress/ASSUMPTIONS.md
+# R0-2), D-A′, D-C′ — into <RUN>/p2_0_3/; eval.run_p2_0_3 checks →
+# p2_0_3_checks.json (P2-0.2's thresholds, the seed check, the D-A, D-A2,
+# D-C logs against the P2-A official RUN). Without an Obsidian binary the
+# sets are recorded as skipped. A criterion that fails is recorded, not
+# fatal; a missing result fails.
+P2_0_3_DIR = research/reports/runs/$(RUN)/p2_0_3
+p2-0-3-checks: require-run p2-0-2-harness
+	rm -rf $(P2_0_3_DIR)
+	mkdir -p $(P2_0_3_DIR)
+	$(PY) -m eval.run_p2_0_3 test --run $(RUN) --rootmark ../target/release/rootmark $(P2_0_3_ARGS)
+	$(PY) -m eval.run_p2_0_3 checks --run $(RUN)
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
 verify:
