@@ -1,0 +1,49 @@
+{
+  "expected": 10,
+  "pass": true,
+  "per_tool": {
+    "blame": {
+      "error": null,
+      "valid": true
+    },
+    "checkpoint": {
+      "error": null,
+      "valid": true
+    },
+    "checkpoints": {
+      "error": null,
+      "valid": true
+    },
+    "history": {
+      "error": null,
+      "valid": true
+    },
+    "promote": {
+      "error": null,
+      "valid": true
+    },
+    "propose": {
+      "error": null,
+      "valid": true
+    },
+    "read_block": {
+      "error": null,
+      "valid": true
+    },
+    "search": {
+      "error": null,
+      "valid": true
+    },
+    "status": {
+      "error": null,
+      "valid": true
+    },
+    "trace": {
+      "error": null,
+      "valid": true
+    }
+  },
+  "source": "/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.PHwbsN5evD/A/repo/research/reports/runs/20261024T000230Z-5632b3b/p1d/inspector/tools_list.json",
+  "tools": 10,
+  "valid": 10
+}

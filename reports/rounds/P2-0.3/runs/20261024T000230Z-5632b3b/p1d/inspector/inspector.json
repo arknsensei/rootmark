@@ -1,0 +1,51 @@
+{
+  "inspector": "@modelcontextprotocol/inspector@2.9.0",
+  "tools_listed": 10,
+  "tools_expected": 10,
+  "schemas_valid": 10,
+  "schema_check_pass": true,
+  "calls_ok": 10,
+  "calls": [
+    {
+      "tool": "status",
+      "ok": true
+    },
+    {
+      "tool": "search",
+      "ok": true
+    },
+    {
+      "tool": "read_block",
+      "ok": true
+    },
+    {
+      "tool": "history",
+      "ok": true
+    },
+    {
+      "tool": "blame",
+      "ok": true
+    },
+    {
+      "tool": "propose",
+      "ok": true
+    },
+    {
+      "tool": "promote",
+      "ok": true
+    },
+    {
+      "tool": "checkpoint",
+      "ok": true
+    },
+    {
+      "tool": "checkpoints",
+      "ok": true
+    },
+    {
+      "tool": "trace",
+      "ok": true
+    }
+  ],
+  "pass": true
+}

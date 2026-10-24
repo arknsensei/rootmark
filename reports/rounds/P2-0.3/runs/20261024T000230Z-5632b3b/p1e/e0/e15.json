@@ -1,0 +1,27 @@
+{
+  "cases": 2,
+  "criterion": "E-15",
+  "no_heading_http": {
+    "code": "policy_violation",
+    "hint": "start the appended text with a heading",
+    "nothing_written": true,
+    "status": 422
+  },
+  "no_heading_mcp_kernel": {
+    "code": "policy_violation",
+    "hint": "start the appended text with a heading",
+    "message": "propose: denied by edit policy append_only: policy append_only: the edit would change canonical retrieval units (chunks removed: 1; added: 0); text added to a section of canonical blocks joins their chunk — start it with a heading of its own",
+    "nothing_written": true
+  },
+  "pass": true,
+  "passed": 2,
+  "with_heading": {
+    "accepted": true,
+    "edit_policy": "append_only",
+    "human_layers_canonical": true,
+    "new_layers": [
+      "proposal",
+      "proposal"
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+ "set": "tamper (A5)",
+ "cases": {
+  "damaged_record_refused": {
+   "exit": 1,
+   "message": "error: record 0002-index_rebuild: the copy of .rootmark/index/manifest.json does not match its SHA-256; nothing rolled back",
+   "pass": true
+  },
+  "changed_vault_refused": {
+   "exit": 1,
+   "message": "error: .rootmark/index/ changed since migration 0002-index_rebuild; nothing rolled back",
+   "pass": true
+  },
+  "old_index_migration_required": {
+   "index_format": "mdkernel-index/2",
+   "search_status": 503,
+   "search_code": "migration_required",
+   "search_hint": "run `rootmark migrate <vault>` (it keeps a rollback record)",
+   "status_status": 200,
+   "status_index_state": "stale",
+   "matrix_index_state": "migration_required",
+   "serve_log_says_migrate": true,
+   "pass": true
+  }
+ },
+ "pass": true
+}

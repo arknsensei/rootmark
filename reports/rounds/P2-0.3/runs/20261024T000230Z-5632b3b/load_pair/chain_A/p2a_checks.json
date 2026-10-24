@@ -1,0 +1,575 @@
+{
+ "A-1": {
+  "fixture": {
+   "applied": [
+    "rename_store",
+    "index_rebuild",
+    "log_readers",
+    "checkpoints"
+   ],
+   "checks": {
+    "applied_in_order": true,
+    "byte_equal_after_rollback": true,
+    "index_migrated": true,
+    "required_empty_after": true,
+    "rollback_all": true
+   }
+  },
+  "migration_tests": {
+   "pass": true,
+   "passed": 9,
+   "tests": {
+    "a_migration_that_would_change_events_hash_stops": true,
+    "a_record_cannot_widen_its_migration_s_scope": true,
+    "a_record_naming_paths_outside_its_scope_is_refused": true,
+    "a_rollback_never_follows_a_link_out_of_the_store": true,
+    "a_rollback_refuses_a_damaged_record_or_a_changed_vault": true,
+    "dry_run_changes_nothing_and_names_the_plan": true,
+    "rename_store_and_index_rebuild_forward_and_back": true,
+    "the_legacy_flag_still_renames_only": true,
+    "validations_record_and_roll_back_without_a_byte_changed": true
+   },
+   "total": 9
+  },
+  "pass": true,
+  "source": "p2a/fixture.json, p2a/tests.json (p2a_migrate)"
+ },
+ "A-2": {
+  "conformance": {
+   "exit": 0,
+   "level_claimed": 3,
+   "pass": true,
+   "passed": 39,
+   "total": 39
+  },
+  "pass": true,
+  "passed": "6/6",
+  "source": "p2a/migrate_old.json",
+  "threshold": "6/6",
+  "vaults": [
+   {
+    "applied": [
+     "0001-log_readers",
+     "0002-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "v0.1.0/e2e"
+   },
+   {
+    "applied": [
+     "0001-log_readers",
+     "0002-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "v0.1.0/mixed"
+   },
+   {
+    "applied": [
+     "0001-log_readers",
+     "0002-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "v0.1.0/scene"
+   },
+   {
+    "applied": [
+     "0001-log_readers",
+     "0002-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "ce4cf04/attested"
+   },
+   {
+    "applied": [
+     "0001-log_readers",
+     "0002-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "ce4cf04/bulk"
+   },
+   {
+    "applied": [
+     "0001-log_readers",
+     "0002-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "21b16ea/partial"
+   }
+  ]
+ },
+ "A-3": {
+  "contract_check": {
+   "missing": [],
+   "pass": true
+  },
+  "pass": true,
+  "source": "p2a/tests.json (p2a_status, contract), p1e1/contract.json",
+  "status_tests": {
+   "pass": true,
+   "passed": 4,
+   "tests": {
+    "an_older_index_is_migration_required_until_migrated": true,
+    "an_unknown_format_stays_index_stale": true,
+    "every_code_from_a_real_call": true,
+    "http_statuses_of_the_codes": true
+   },
+   "total": 4
+  }
+ },
+ "A-4": {
+  "attestations_verified": 5,
+  "commit": "2429cba07b1800864d6f9a71589af1d22e566ba6",
+  "install": {
+   "aarch64-apple-darwin": {
+    "conformance": {
+     "level": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "installer": "packaging/install.sh",
+    "ok": true,
+    "version": "rootmark 0.1.0"
+   },
+   "x86_64-pc-windows-msvc": {
+    "conformance": {
+     "level": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "installer": "packaging/install.ps1",
+    "ok": true,
+    "version": "rootmark 0.1.0"
+   },
+   "x86_64-unknown-linux-gnu": {
+    "conformance": {
+     "level": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "installer": "packaging/install.sh",
+    "ok": true,
+    "version": "rootmark 0.1.0"
+   }
+  },
+  "jobs": {
+   "aarch64-apple-darwin": {
+    "conformance": {
+     "fixtures_manifest": "ok",
+     "level_claimed": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "ok": true
+   },
+   "x86_64-pc-windows-msvc": {
+    "conformance": {
+     "fixtures_manifest": "ok",
+     "level_claimed": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "ok": true
+   },
+   "x86_64-unknown-linux-gnu": {
+    "conformance": {
+     "fixtures_manifest": "ok",
+     "level_claimed": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "ok": true
+   }
+  },
+  "pass": true,
+  "run": "https://github.com/arknsensei/rootmark/actions/runs/39488669699",
+  "source": "reports/rounds/P2-A/release_dispatch.json",
+  "threshold": "2/2 (x86_64-unknown-linux-gnu, x86_64-pc-windows-msvc)"
+ },
+ "A-5": {
+  "decision_request": "K-P2A.4-T",
+  "pass": true,
+  "result": "does not build as a single binary: no `ort` version (eligible or not) ships a prebuilt ONNX Runtime for x86_64-apple-darwin; `ort-sys` only knows the vcpkg triplet `x64-osx` for a static link from a self-built ONNX Runtime (`build/static_link`)",
+  "source": "reports/rounds/P2-A/intel_macos.json",
+  "threshold": "rapor"
+ },
+ "A-6": {
+  "linux_ci": {
+   "commit": "2429cba07b1800864d6f9a71589af1d22e566ba6",
+   "conclusion": "success",
+   "job": "test + lint + conformance (ubuntu-latest)",
+   "run": "https://github.com/arknsensei/rootmark/actions/runs/39488665486",
+   "test": "server/tests/propose_kernel.rs::other_spellings_of_existing_names_are_refused (in make test: cargo test --workspace)"
+  },
+  "pass": true,
+  "source": "p2a/tests.json (propose_kernel), reports/rounds/P2-A/ci_linux.json",
+  "this_machine": {
+   "pass": true,
+   "passed": 1,
+   "tests": {
+    "other_spellings_of_existing_names_are_refused": true
+   },
+   "total": 1
+  }
+ },
+ "A-7": {
+  "information": {
+   "commit": "4fdce51b913755fafce283e2216931fb473815d6",
+   "new_blocks": 2743,
+   "threshold": null,
+   "unverified_after_window": 19,
+   "value_0_2b": 0.006926722566532993
+  },
+  "pass": true,
+  "source": "p2a/tests.json (p2_a_a0, p2_0_2_carry), reports/rounds/P2-A/info_d_b_test3.json",
+  "tests": {
+   "pass": true,
+   "passed": 8,
+   "tests": {
+    "a_late_self_link_update_never_vouches_for_new_bytes": true,
+    "a_log_name_linking_into_the_vault_is_refused": true,
+    "a_policy_without_the_table_keeps_the_kernel_default": true,
+    "a_self_linking_note_renamed_then_rewritten_before_the_watcher_saw_it": true,
+    "serve_writes_the_canonical_policy_explicitly": true,
+    "the_attest_log_must_lie_outside_the_vault": true,
+    "the_attest_log_tells_refused_matched_and_unmatched_apart": true,
+    "unverified_is_the_opt_in_and_behaves_as_in_p2_0_2": true
+   },
+   "total": 8
+  }
+ },
+ "A-8": {
+  "check_deps": {
+   "exit": 0,
+   "last_line": "check_deps: OK (core ← index ← server ← clients; research → bindings/python)"
+  },
+  "check_frozen": {
+   "exit": 0,
+   "last_line": "check_frozen: OK"
+  },
+  "conformance": {
+   "level_claimed": 3,
+   "passed": 39,
+   "spec_version": "2.0.2",
+   "total": 39
+  },
+  "pair": "A ↔ B: pair_compare.json (eval.compare_p2a pair), read by the report",
+  "pass": true,
+  "source": "conformance_p1d1.json, scripts/check_frozen.sh, scripts/check_deps.sh"
+ },
+ "fail_summary": {
+  "counted": [],
+  "counted_fails": 0,
+  "historical": 21,
+  "migration_required": 4,
+  "pass": true,
+  "reference_run": "reports/rounds/P2-0.2/runs/20261019T212951Z-72fd78f",
+  "source": "p2a/historical.json (eval.historical_p2a = the chain's summary)"
+ },
+ "regress": {
+  "conformance": {
+   "differing_tests": [],
+   "equal": true,
+   "level_claimed": [
+    3,
+    3
+   ],
+   "passed": [
+    39,
+    39
+   ],
+   "reference_tests": 39,
+   "spec_version": [
+    "2.0.2",
+    "2.0.2"
+   ],
+   "tests": 39
+  },
+  "differing_fields": {
+   "p1e/check_compare_fields.json:fields_declared": 0.09290953545232274,
+   "p1e/check_compare_fields.json:fields_in_code": 0.09290953545232274,
+   "p1e1/check_compare_fields.json:fields_declared": 0.09290953545232274,
+   "p1e1/check_compare_fields.json:fields_in_code": 0.09290953545232274
+  },
+  "excluded_differences": {
+   "p1d1/d1_13.json:codes": {
+    "decision": "K-P2A.2",
+    "leaves": 12
+   },
+   "p1d1/d1_13.json:http": {
+    "decision": "K-P2A.2",
+    "leaves": 31
+   },
+   "p1d1_checks.json:D1-13/codes": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:file_constants": {
+    "decision": "P2-A/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules": {
+    "decision": "P2-A/F6",
+    "leaves": 3
+   },
+   "p1e/client.json:bundle_bytes": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e/client.json:vitest": {
+    "decision": "K-P2A.2",
+    "leaves": 2
+   },
+   "p1e/e0/e14.json:auto_rebuild_false": {
+    "decision": "K-P2A.2",
+    "leaves": 2
+   },
+   "p1e/e0/e14.json:pass": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e/e0/e14.json:passed": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:file_constants": {
+    "decision": "P2-A/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules": {
+    "decision": "P2-A/F6",
+    "leaves": 3
+   },
+   "p1e1/contract.json:codes": {
+    "decision": "K-P2A.2",
+    "leaves": 12
+   },
+   "p1e1/contract.json:http": {
+    "decision": "K-P2A.2",
+    "leaves": 31
+   },
+   "p1e1/historical.json:counted": {
+    "decision": "K-P2A.2",
+    "leaves": 10
+   },
+   "p1e1/historical.json:counted_fails": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/historical.json:fails": {
+    "decision": "K-P2A.2",
+    "leaves": 76
+   },
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection": {
+    "decision": "K-P2A.2",
+    "leaves": 3
+   },
+   "p1e1/release/plugin_e2e_real.json:pass": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:commit": {
+    "decision": "K-P2A.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items": {
+    "decision": "K-P2A.3",
+    "leaves": 22
+   },
+   "p1e1/release/release_check.json:pass": {
+    "decision": "K-P2A.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:passed": {
+    "decision": "K-P2A.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:total": {
+    "decision": "K-P2A.3",
+    "leaves": 1
+   },
+   "p1e1/status/e1_1.json:auto_rebuild_false": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/status/e1_1.json:cases": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/status/e1_1.json:pass": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/status/e1_1.json:passed": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-1": {
+    "decision": "K-P2A.2",
+    "leaves": 3
+   },
+   "p1e1_checks.json:E1-4": {
+    "decision": "K-P2A.3",
+    "leaves": 23
+   },
+   "p1e1_checks.json:E1-6": {
+    "decision": "K-P2A.2",
+    "leaves": 51
+   },
+   "p1e1_checks.json:E1-9": {
+    "decision": "K-P2A.2",
+    "leaves": 3
+   },
+   "p1e_checks.json:E-10/bundle_bytes": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-10/vitest": {
+    "decision": "K-P2A.2",
+    "leaves": 2
+   },
+   "p1e_checks.json:E-14": {
+    "decision": "K-P2A.2",
+    "leaves": 2
+   },
+   "p1e_checks.json:E-9": {
+    "decision": "K-P2A.2",
+    "leaves": 2
+   },
+   "p2_0_2_checks.json:fail_summary": {
+    "decision": "K-P2A.2",
+    "leaves": 7
+   },
+   "p2_0_2_checks.json:regress": {
+    "decision": "K-P2A.2",
+    "leaves": 173
+   }
+  },
+  "exclusions_without_difference": [],
+  "n_fields": 108847,
+  "p2_0_2_bytes": {
+   "equal": true,
+   "files": {
+    "p2_0_2/d_a/attestations.jsonl": {
+     "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+     "bytes": 0,
+     "equal": true
+    },
+    "p2_0_2/d_a/events.jsonl": {
+     "blake3": "8969047e33d23e6a80f2ae799c5a341f",
+     "bytes": 428018,
+     "equal": true
+    },
+    "p2_0_2/d_a2/attestations.jsonl": {
+     "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+     "bytes": 0,
+     "equal": true
+    },
+    "p2_0_2/d_a2/events.jsonl": {
+     "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+     "bytes": 253173,
+     "equal": true
+    },
+    "p2_0_2/d_c/attestations.jsonl": {
+     "blake3": "768213cc89bbe2ce8dcb882696b484f8",
+     "bytes": 24237,
+     "equal": true
+    },
+    "p2_0_2/d_c/events.jsonl": {
+     "blake3": "01bc1eee5373f844dc5263d4377d57e0",
+     "bytes": 476847,
+     "equal": true
+    }
+   }
+  },
+  "pass": false,
+  "reference_run": "20261019T212951Z-72fd78f",
+  "source": "regress_vs_p2_0_2.json"
+ },
+ "tamper": {
+  "cases": {
+   "changed_vault_refused": true,
+   "damaged_record_refused": true,
+   "old_index_migration_required": true
+  },
+  "pass": true,
+  "source": "p2a/tamper.json"
+ }
+}

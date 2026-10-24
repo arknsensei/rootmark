@@ -1,0 +1,20 @@
+{
+  "format": "mdkernel-index/3",
+  "chunking": "structural",
+  "lexical": {
+    "variant": "lucene-bm25",
+    "idf": "ln(1 + (N - n + 0.5) / (n + 0.5))",
+    "k1": 1.2,
+    "b": 0.75,
+    "tokenizer": "mdk_lower_alnum",
+    "dl": "exact token count, f64, no fieldnorm quantization"
+  },
+  "embedder_id": "minilm-l6-v2/e73168f9",
+  "dim": 384,
+  "records": 34,
+  "snapshots": 13,
+  "records_blake3": "e78571655deb27faef9f3fab8d2437c3daf297196cfa5882686ade5d89c7285e",
+  "snapshots_blake3": "a28709de619b5e933e1beb8810a99e7ab6e95535b5adff8c794890ce368d5145",
+  "vectors_blake3": "879a0c5691e12f8f38a400cc6798d446bd71afe5ebce5944cde4b2d80da73358",
+  "embedders_blake3": "8daeb9a8b914ded0284bb85894bb24652cf8aceab31d2d5f63f71aa63331081f"
+}
