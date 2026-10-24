@@ -1,0 +1,46 @@
+
+running 3 tests
+. 1/3
+e14_stale_index_answers_index_stale_or_is_rebuilt --- FAILED
+.
+failures:
+
+---- e14_stale_index_answers_index_stale_or_is_rebuilt stdout ----
+
+thread 'e14_stale_index_answers_index_stale_or_is_rebuilt' (96498033) panicked at server/tests/p1e_e0.rs:206:5:
+assertion `left == right` failed: {
+  "auto_rebuild_false": {
+    "blame_status": 200,
+    "code": "migration_required",
+    "events_unchanged": true,
+    "index_format_after": "mdkernel-index/2",
+    "message": "index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\"",
+    "start_log_says_stale": true,
+    "status": 503
+  },
+  "auto_rebuild_true": {
+    "first_hit_doc": "safety.md",
+    "hits": 3,
+    "index_format_after": "mdkernel-index/3",
+    "start_log_says_rebuilt": true,
+    "status": 200
+  },
+  "cases": 2,
+  "criterion": "E-14",
+  "missing_index_kernel": {
+    "code": "index_stale"
+  },
+  "pass": false,
+  "passed": 1
+}
+  left: Bool(false)
+ right: true
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    e14_stale_index_answers_index_stale_or_is_rebuilt
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.69s
+
+error: test failed, to rerun pass `-p rootmark-server --test p1e_e0`

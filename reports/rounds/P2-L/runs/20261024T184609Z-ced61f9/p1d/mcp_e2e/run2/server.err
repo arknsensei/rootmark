@@ -1,0 +1,4 @@
+rootmark serve: no policy.toml: wrote the default recipe (promotion human_only) to vault/.rootmark/policy.toml
+rootmark serve: stopping (end of the MCP stream)
+rootmark serve: compact (shutdown): 36 records, 15 snapshots, 2 moved from the hot tier
+rootmark serve: stopped

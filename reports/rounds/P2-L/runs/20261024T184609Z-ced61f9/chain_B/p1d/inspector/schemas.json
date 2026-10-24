@@ -1,0 +1,49 @@
+{
+  "expected": 10,
+  "pass": true,
+  "per_tool": {
+    "blame": {
+      "error": null,
+      "valid": true
+    },
+    "checkpoint": {
+      "error": null,
+      "valid": true
+    },
+    "checkpoints": {
+      "error": null,
+      "valid": true
+    },
+    "history": {
+      "error": null,
+      "valid": true
+    },
+    "promote": {
+      "error": null,
+      "valid": true
+    },
+    "propose": {
+      "error": null,
+      "valid": true
+    },
+    "read_block": {
+      "error": null,
+      "valid": true
+    },
+    "search": {
+      "error": null,
+      "valid": true
+    },
+    "status": {
+      "error": null,
+      "valid": true
+    },
+    "trace": {
+      "error": null,
+      "valid": true
+    }
+  },
+  "source": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/pair/B/repo/research/reports/runs/20261024T194908Z-ced61f9/p1d/inspector/tools_list.json",
+  "tools": 10,
+  "valid": 10
+}

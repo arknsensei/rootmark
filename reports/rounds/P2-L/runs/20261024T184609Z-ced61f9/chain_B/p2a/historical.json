@@ -1,0 +1,267 @@
+{
+ "reference_run": "reports/rounds/P2-0.2/runs/20261019T212951Z-72fd78f",
+ "fails": [
+  {
+   "file": "p1b1_checks.json",
+   "criterion": "B1-3",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "spec_version"
+   ]
+  },
+  {
+   "file": "p1c1_checks.json",
+   "criterion": "C1-7",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "spec_version"
+   ]
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-11",
+   "label": "historical",
+   "decisions": [
+    "K-D1.2",
+    "K-D1.4-T",
+    "K-E0.1"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-3",
+   "label": "historical",
+   "decisions": [
+    "K-C8-T",
+    "K-C1.1",
+    "K-C1.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-10",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "spec_version"
+   ]
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-12",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "regress_vs_p1d/conformance/spec_version/1"
+   ]
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-2",
+   "label": "historical",
+   "decisions": [
+    "K-D1.1",
+    "K-D1.5",
+    "K-E0.4",
+    "K-D1.4-T"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-7",
+   "label": "historical",
+   "decisions": [
+    "K-D1.4-T",
+    "K-D1.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-9",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "conformance/spec_version/1"
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-1",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "the /2 index (an older rootmark's) answers search 503 migration_required, not index_stale (K-P2A.2); the other 7 cases unchanged"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-4",
+   "label": "fail",
+   "why": "listed as migration required, but a listed path does not hold the expected value",
+   "differing": [
+    "failed/0"
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-5",
+   "label": "fail",
+   "why": "not a listed historical FAIL"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-6",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "E1-6 regresses P1-E.1 against P1-E: its differing fields grow by the contract's new code migration_required (D1-13's contract and server code lists)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-8",
+   "label": "historical",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "tamper",
+   "label": "historical",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-14",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "auto_rebuild = false on the /2 index: search 503 migration_required, not index_stale (K-P2A.2); auto_rebuild = true unchanged"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-7",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "chain_local_target/spec_version",
+    "chain_local_target/version"
+   ]
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-9",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "E-9 regresses P1-E against P1-D.1: the excluded D1-13 leaves grow by the new code migration_required"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b′",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2c",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2d",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "D-C′ (real Obsidian) not run in a development round's chain; D-C ran"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2e",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2j",
+   "label": "fail",
+   "why": "not a listed historical FAIL"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2k",
+   "label": "fail",
+   "why": "not a listed historical FAIL"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "fail_summary",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "historical"
+   ]
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "regress",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "conformance/equal",
+    "conformance/spec_version/1",
+    "n_fields"
+   ]
+  }
+ ],
+ "historical": 13,
+ "migration_required": 2,
+ "counted_fails": 12,
+ "counted": [
+  "p1b1_checks.json:B1-3",
+  "p1c1_checks.json:C1-7",
+  "p1d1_checks.json:D1-10",
+  "p1d1_checks.json:D1-12",
+  "p1d_checks.json:D-9",
+  "p1e1_checks.json:E1-4",
+  "p1e1_checks.json:E1-5",
+  "p1e_checks.json:E-7",
+  "p2_0_2_checks.json:H-P2-0.2j",
+  "p2_0_2_checks.json:H-P2-0.2k",
+  "p2_0_2_checks.json:fail_summary",
+  "p2_0_2_checks.json:regress"
+ ]
+}

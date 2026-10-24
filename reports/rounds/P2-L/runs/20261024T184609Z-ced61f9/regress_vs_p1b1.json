@@ -1,0 +1,81 @@
+{
+ "C-11_equal": false,
+ "H4-2_equal": false,
+ "allowed_fields": [
+  "p1b1_checks.json:tests_seen",
+  "p1b_checks.json:fixtures_manifest_hash"
+ ],
+ "differing_excluded": [
+  "p1b1_checks.json:tests_seen",
+  "p1b_checks.json:fixtures_manifest_hash"
+ ],
+ "differing_fields": {
+  "p1b1_checks.json:criteria›B1-3›pass": "inf",
+  "p1b1_checks.json:criteria›B1-3›spec_version": "inf",
+  "p1b1_checks.json:tests_seen": 0.13636363636363635,
+  "p1b_checks.json:fixtures_manifest_hash": "inf"
+ },
+ "differing_outside_exclusions": [
+  "p1b1_checks.json:criteria›B1-3›pass",
+  "p1b1_checks.json:criteria›B1-3›spec_version"
+ ],
+ "excluded_latency_paths": {
+  "h2.json": [
+   "H2-3",
+   "latency_ms"
+  ],
+  "h3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ],
+  "h3_v3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ]
+ },
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json"
+ ],
+ "max_relative_difference": "inf",
+ "n_fields": 2274,
+ "per_file": {
+  "governance/governance.json": 0.0,
+  "h1r.json": 0.0,
+  "h1r_v3.json": 0.0,
+  "h1s.json": 0.0,
+  "h1s_tuning.json": 0.0,
+  "h1s_v3.json": 0.0,
+  "h1s_v3_tuning.json": 0.0,
+  "h3_v3.json": 0.0,
+  "h4_v2repro.json": 0.0,
+  "h4_v3.json": 0.0,
+  "holdout.json": 0.0,
+  "holdout_split.json": 0.0,
+  "p1b1_checks.json": "inf",
+  "p1b_checks.json": "inf",
+  "split_grid.json": 0.0
+ },
+ "reference_run": "20261014T212243Z-226b511",
+ "run_a": "../reports/rounds/P1-B.1/runs/20261014T212243Z-226b511",
+ "run_b": "reports/runs/20261024T184609Z-ced61f9"
+}

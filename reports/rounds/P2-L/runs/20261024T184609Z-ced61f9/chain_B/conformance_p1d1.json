@@ -1,0 +1,364 @@
+{
+  "fixtures_manifest": "ok",
+  "fixtures_manifest_hash": "7eade95799e2c6df9cd8a62aa86735e0",
+  "fixtures_manifest_problems": [],
+  "fixtures_root": "/private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/pair/B/repo/spec/fixtures",
+  "fixtures_root_source": "ROOTMARK_FIXTURES",
+  "level_claimed": 3,
+  "passed": 39,
+  "spec_version": "2.0.3",
+  "tests": [
+    {
+      "actual_hash": "0baed808727516e78e29d13a15ffa6aa",
+      "detail": null,
+      "expected_hash": "0baed808727516e78e29d13a15ffa6aa",
+      "id": "C1-01",
+      "level": 1,
+      "result": "pass",
+      "title": "Normalization: NFC, line endings, whitespace, code block preservation"
+    },
+    {
+      "actual_hash": "e28d522cdb2b4dca6f733da557ce15dd",
+      "detail": null,
+      "expected_hash": "e28d522cdb2b4dca6f733da557ce15dd",
+      "id": "C1-02",
+      "level": 1,
+      "result": "pass",
+      "title": "Block boundaries for every block type, front matter, nested list, empty paragraph"
+    },
+    {
+      "actual_hash": "9f79428a27f043004f4c76bd5df6d83d",
+      "detail": null,
+      "expected_hash": "9f79428a27f043004f4c76bd5df6d83d",
+      "id": "C1-03",
+      "level": 1,
+      "result": "pass",
+      "title": "Wikilink forms (4)"
+    },
+    {
+      "actual_hash": "21cc694288fe49651b6709a25d371304",
+      "detail": null,
+      "expected_hash": "21cc694288fe49651b6709a25d371304",
+      "id": "C1-04",
+      "level": 1,
+      "result": "pass",
+      "title": "version_id stable across runs and machines"
+    },
+    {
+      "actual_hash": "d2aadd29a9a14203ebf454fb5e5fecfb",
+      "detail": null,
+      "expected_hash": "d2aadd29a9a14203ebf454fb5e5fecfb",
+      "id": "C1-05",
+      "level": 1,
+      "result": "pass",
+      "title": "lineage_id formula incl. duplicate ordinal k"
+    },
+    {
+      "actual_hash": "a2ac1ce6d6a4c691a6fb3e6d14acb97b",
+      "detail": null,
+      "expected_hash": "a2ac1ce6d6a4c691a6fb3e6d14acb97b",
+      "id": "C1-06",
+      "level": 1,
+      "result": "pass",
+      "title": "Object store: identical write is no-op; conflicting write fails"
+    },
+    {
+      "actual_hash": "a05fba62a1f2a9cfa6762669e236be5e",
+      "detail": null,
+      "expected_hash": "a05fba62a1f2a9cfa6762669e236be5e",
+      "id": "C1-07",
+      "level": 1,
+      "result": "pass",
+      "title": "Event log replay reproduces latest snapshot ids"
+    },
+    {
+      "actual_hash": "f5627f977cf37d9cfff42245b52b7aec",
+      "detail": null,
+      "expected_hash": "f5627f977cf37d9cfff42245b52b7aec",
+      "id": "C1-08",
+      "level": 1,
+      "result": "pass",
+      "title": "Matcher: exact + move (LIS)"
+    },
+    {
+      "actual_hash": "cf0d74806534e82c3708075c251a465e",
+      "detail": null,
+      "expected_hash": "cf0d74806534e82c3708075c251a465e",
+      "id": "C1-09",
+      "level": 1,
+      "result": "pass",
+      "title": "Matcher: duplicate blocks, context anchor then ordinal"
+    },
+    {
+      "actual_hash": "ff2f90b1c13c75acc55cc8a83712ea0b",
+      "detail": null,
+      "expected_hash": "ff2f90b1c13c75acc55cc8a83712ea0b",
+      "id": "C1-10",
+      "level": 1,
+      "result": "pass",
+      "title": "Matcher: split 2/3 pieces, dominant-piece rule"
+    },
+    {
+      "actual_hash": "bd030cb4e6203695740b1e748f58c1c7",
+      "detail": null,
+      "expected_hash": "bd030cb4e6203695740b1e748f58c1c7",
+      "id": "C1-11",
+      "level": 1,
+      "result": "pass",
+      "title": "Matcher: merge 2/3 blocks, dominant rule"
+    },
+    {
+      "actual_hash": "eee7d45ff4860869c04941458dcacd03",
+      "detail": null,
+      "expected_hash": "eee7d45ff4860869c04941458dcacd03",
+      "id": "C1-12",
+      "level": 1,
+      "result": "pass",
+      "title": "Matcher: similarity update"
+    },
+    {
+      "actual_hash": "f3f534eab105b4a89b6f89efc1d9caf5",
+      "detail": null,
+      "expected_hash": "f3f534eab105b4a89b6f89efc1d9caf5",
+      "id": "C1-13",
+      "level": 1,
+      "result": "pass",
+      "title": "Matcher: residual checks (split and merge direction)"
+    },
+    {
+      "actual_hash": "e08796ff352d1a1fa2bf72158b08dcd1",
+      "detail": null,
+      "expected_hash": "e08796ff352d1a1fa2bf72158b08dcd1",
+      "id": "C1-14",
+      "level": 1,
+      "result": "pass",
+      "title": "Matcher: create/delete remainder"
+    },
+    {
+      "actual_hash": "95d280f9ade16eab65f0fc51e0434291",
+      "detail": null,
+      "expected_hash": "95d280f9ade16eab65f0fc51e0434291",
+      "id": "C1-15",
+      "level": 1,
+      "result": "pass",
+      "title": "Mixed matcher versions in one vault rejected"
+    },
+    {
+      "actual_hash": "4d29824584b6e01f2d33ca2ccfd6e2b6",
+      "detail": null,
+      "expected_hash": "4d29824584b6e01f2d33ca2ccfd6e2b6",
+      "id": "C1-16",
+      "level": 1,
+      "result": "pass",
+      "title": "Chunk rebuild changes no lineage and emits no events"
+    },
+    {
+      "actual_hash": "3b506d3d4e0273f500046a04487b2b7e",
+      "detail": null,
+      "expected_hash": "3b506d3d4e0273f500046a04487b2b7e",
+      "id": "C1-17",
+      "level": 1,
+      "result": "pass",
+      "title": "Whole-vault determinism: fixture vault ingested twice -> identical events.jsonl bytes"
+    },
+    {
+      "actual_hash": "406aa930fd34aae3a8378e76b41862da",
+      "detail": null,
+      "expected_hash": "406aa930fd34aae3a8378e76b41862da",
+      "id": "C2-01",
+      "level": 2,
+      "result": "pass",
+      "title": "Default layer by author_kind"
+    },
+    {
+      "actual_hash": "2ec313f7fc685f09f3b204476e0975bb",
+      "detail": null,
+      "expected_hash": "2ec313f7fc685f09f3b204476e0975bb",
+      "id": "C2-02",
+      "level": 2,
+      "result": "pass",
+      "title": "Promoted event requires actor, reason, policy_version"
+    },
+    {
+      "actual_hash": "cdc42577813ee9fcd24b0c863b30f453",
+      "detail": null,
+      "expected_hash": "cdc42577813ee9fcd24b0c863b30f453",
+      "id": "C2-03",
+      "level": 2,
+      "result": "pass",
+      "title": "Kernel refuses to promote without a hook decision"
+    },
+    {
+      "actual_hash": "14df52c87ab9f864e98adcccc788dce4",
+      "detail": null,
+      "expected_hash": "14df52c87ab9f864e98adcccc788dce4",
+      "id": "C2-04",
+      "level": 2,
+      "result": "pass",
+      "title": "Demote/prune marks inactive, deletes nothing"
+    },
+    {
+      "actual_hash": "002d962be0862d298afeb3566cc0e408",
+      "detail": null,
+      "expected_hash": "002d962be0862d298afeb3566cc0e408",
+      "id": "C2-05",
+      "level": 2,
+      "result": "pass",
+      "title": "Checkpoint id formula, immutability"
+    },
+    {
+      "actual_hash": "05523a35c3c89e9d83b08570d29ed53e",
+      "detail": null,
+      "expected_hash": "05523a35c3c89e9d83b08570d29ed53e",
+      "id": "C2-06",
+      "level": 2,
+      "result": "pass",
+      "title": "Query as of checkpoint ignores later events"
+    },
+    {
+      "actual_hash": "03f9907946bb4e238ae6937604c33e58",
+      "detail": null,
+      "expected_hash": "03f9907946bb4e238ae6937604c33e58",
+      "id": "C2-07",
+      "level": 2,
+      "result": "pass",
+      "title": "Consumption trace written for every retrieval; id formula"
+    },
+    {
+      "actual_hash": "ff1b278b0372fa2576503d0be0e853c2",
+      "detail": null,
+      "expected_hash": "ff1b278b0372fa2576503d0be0e853c2",
+      "id": "C2-08",
+      "level": 2,
+      "result": "pass",
+      "title": "Layer transitions replayable from events"
+    },
+    {
+      "actual_hash": "049261befc1a3632972a510f85052545",
+      "detail": null,
+      "expected_hash": "049261befc1a3632972a510f85052545",
+      "id": "C2-09",
+      "level": 2,
+      "result": "pass",
+      "title": "Invalid trace input (query_hash not 32 lowercase hex: 31, 33, non-hex, uppercase; consumer with a newline) rejected on open"
+    },
+    {
+      "actual_hash": "a55ce0f73a076251cd8da905103d5bc9",
+      "detail": null,
+      "expected_hash": "a55ce0f73a076251cd8da905103d5bc9",
+      "id": "C2-10",
+      "level": 2,
+      "result": "pass",
+      "title": "Provenance of events: change and delete events of an attributed ingest carry meta.actor and meta.source; events without them replay; malformed or unpaired values are rejected when the vault is opened (spec §7, 1.0.3)"
+    },
+    {
+      "actual_hash": "ca10c932e6c02699eba2f8de76a77ca8",
+      "detail": null,
+      "expected_hash": "ca10c932e6c02699eba2f8de76a77ca8",
+      "id": "C2-11",
+      "level": 2,
+      "result": "pass",
+      "title": "unverified by default (spec 2.0.0 §7, §7.1): a store written by 0.1.0 (spec 1.0.3) opens with its layers and fingerprint; an unattested external change of a canonical document is ingested unverified (meta.layer, actor unattested_fs, LayerChanged); the same change attested (or under unattested = canonical) is human, canonical; misplaced layer or actor values are rejected when the vault is opened"
+    },
+    {
+      "actual_hash": "82ae549668dc6be3a8f76f30a35f6bdd",
+      "detail": null,
+      "expected_hash": "82ae549668dc6be3a8f76f30a35f6bdd",
+      "id": "C2-12",
+      "level": 2,
+      "result": "pass",
+      "title": "Attestation matching (spec 2.0.0 §7.1, §8): with explicit times and W = 2000 ms (edges: exactly W before and after counts, W + 1 ms does not), an attestation within W before the observation → canonical; within W after → unverified, then LayerChanged cause late_attestation to the layer an attested ingest gives (canonical; proposal for a proposal the change touched); beyond W, or of other bytes → unverified stays; a bulk attestation (late = false) raises nothing; attestation_id formula and the log as written; invalid attestation lines, and a late LayerChanged without its attestation, are rejected when the vault is opened"
+    },
+    {
+      "actual_hash": "456c53ca45c8230bbe161e52014f38e3",
+      "detail": null,
+      "expected_hash": "456c53ca45c8230bbe161e52014f38e3",
+      "id": "C2-13",
+      "level": 2,
+      "result": "pass",
+      "title": "Partial match (spec 2.0.1 §7.1, §8; P2-0.1 T2): an attestation carrying the saved bytes (content), observed together with an agent's append in one change: the attested bytes are ingested as an attested change (canonical), the line partial: true, then the rest unattested (unverified); attested late: only the attested lineages are raised; an exact match with content is an ordinary match; an agent's copy of an existing human block stays unverified; content that is not the attested bytes is refused; an observation without the attested blocks stays unverified; partial is written only as true; a save made after a pending agent change is never a late partial match — the file holding the attested bytes (on_disk), or saved bytes lacking a block the change kept"
+    },
+    {
+      "actual_hash": "070059900593f44c10364fa9d8a00c87",
+      "detail": null,
+      "expected_hash": "070059900593f44c10364fa9d8a00c87",
+      "id": "C2-14",
+      "level": 2,
+      "result": "pass",
+      "title": "Rename and link update (spec 2.0.2 §7.1 \"Link update\", \"Rename\"; P2-0.2 T1, T2): a rename of a note holding an agent's unverified paragraph, its own links rewritten in the same attestation, carries every block's layer over as it is (human canonical, agent unverified); a Markdown link whose label is the old note's name follows the target in another note's link update, a label that is not the name is refused; a rename attested late raises only what was canonical at the old path"
+    },
+    {
+      "actual_hash": "2dbb903cfdcba779e86f3d625d98c26a",
+      "detail": null,
+      "expected_hash": "2dbb903cfdcba779e86f3d625d98c26a",
+      "id": "C3-01",
+      "level": 3,
+      "result": "pass",
+      "title": "Lexical index present; proposal excluded by default, down-weighted and labelled with include_proposal"
+    },
+    {
+      "actual_hash": "93e48fb2139015e2750073570258dad8",
+      "detail": null,
+      "expected_hash": "93e48fb2139015e2750073570258dad8",
+      "id": "C3-02",
+      "level": 3,
+      "result": "pass",
+      "title": "Hybrid fusion deterministic: same checkpoint and query give an identical ranking over 10 runs"
+    },
+    {
+      "actual_hash": "de899fab9dd3784ec6703f024ee616d8",
+      "detail": null,
+      "expected_hash": "de899fab9dd3784ec6703f024ee616d8",
+      "id": "C3-03",
+      "level": 3,
+      "result": "pass",
+      "title": "Index rebuild from a checkpoint yields identical rankings, also after later content was indexed"
+    },
+    {
+      "actual_hash": "b56b16b3ccc5a4a7afbbbf29211fba85",
+      "detail": null,
+      "expected_hash": "b56b16b3ccc5a4a7afbbbf29211fba85",
+      "id": "C3-04",
+      "level": 3,
+      "result": "pass",
+      "title": "Retrieval never returns derived as content"
+    },
+    {
+      "actual_hash": "cf9fc81f3b2ea5c10cba06f75d7cc984",
+      "detail": null,
+      "expected_hash": "cf9fc81f3b2ea5c10cba06f75d7cc984",
+      "id": "C3-05",
+      "level": 3,
+      "result": "pass",
+      "title": "With proposal results requested, the canonical prefix equals the result without the request (lexical, flat, hybrid; spec §9, 1.0.2)"
+    },
+    {
+      "actual_hash": "10f03eb0e5f58b0829041bb9e2d716c4",
+      "detail": null,
+      "expected_hash": "10f03eb0e5f58b0829041bb9e2d716c4",
+      "id": "C3-06",
+      "level": 3,
+      "result": "pass",
+      "title": "Canonical invariance: agent writes the default edit policy (append_only) allows never change the canonical ranking of any query, every mode; writes touching canonical blocks or canonical chunks are denied and write nothing (spec §7, §9; 1.0.3)"
+    },
+    {
+      "actual_hash": "8b8d319fbf4e73d91ae6b8ac266d3632",
+      "detail": null,
+      "expected_hash": "8b8d319fbf4e73d91ae6b8ac266d3632",
+      "id": "C3-07",
+      "level": 3,
+      "result": "pass",
+      "title": "Response length with proposal results requested: at most k canonical and at most k proposal hits, at most 2k in total, every mode (spec §9; 1.0.3)"
+    },
+    {
+      "actual_hash": "922f40bd3bd93c07f34fb30348fbd6a6",
+      "detail": null,
+      "expected_hash": "922f40bd3bd93c07f34fb30348fbd6a6",
+      "id": "C3-08",
+      "level": 3,
+      "result": "pass",
+      "title": "unverified in retrieval (spec 2.0.0 §7.1, §9): unverified chunks are excluded by default; with proposal results requested they are ranked with the proposal chunks after every canonical result, labelled unverified, score x0.5, the canonical prefix unchanged, at most k non-canonical results, every mode"
+    }
+  ],
+  "total": 39
+}

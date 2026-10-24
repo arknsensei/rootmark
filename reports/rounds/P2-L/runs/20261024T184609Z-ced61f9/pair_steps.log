@@ -1,0 +1,120 @@
+[verify 18:42:50] clone /Users/arkns/Works/mdkernel/.claude/worktrees/P2-L-impl -> /private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/pair/A/repo
+[verify 18:42:52] commit ced61f979eee6e36ac18c080fc6482724b697b6c
+[verify 18:42:52] setup
+[verify 18:43:37] models (fetch + manifest check)
+[verify 18:43:49] datasets (d2 d3 d1 d1k4 d1h d1ho d1sh d1hs, manifests verified)
+[verify 18:44:50] freeze-check (v2), freeze-check-v3, check_frozen
+[verify 18:45:51] conformance (level 3)
+[verify 18:46:09] RUN=20261024T184609Z-ced61f9
+[verify 18:46:09] holdout (P1-A A-2) and THETA_SPLIT grid (A-7)
+[verify 18:46:35] regress (v2 + v3 phases vs v3-final; holdout + split grid vs P1-A; holdout-split)
+[verify 18:52:30] A-1 / A-5 / A-6 into the RUN (level-1 view)
+[verify 18:52:52] governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)
+[verify 18:53:35] P1-B.1 checks (B1-1..B1-6 recorded again; C-11 input)
+[verify 18:53:37] P1-C checks (C-1..C-13; D3 determinism vault under /private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/pair/A/p1c_work)
+[verify 19:02:18] P1-C deliberate corruptions (model manifest, embedder_id, fixtures)
+[verify 19:02:40] P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)
+[verify 19:03:42] P1-D checks (D-1..D-11: Inspector, MCP e2e, HTTP/service, watch, scene, tamper; D-9 vs P1-C.1)
+[verify 19:05:12] P1-D.1 checks (D1-1..D1-13: criteria tests, p1d-final vaults, contract, tamper; D1-12 vs P1-D)
+[verify 19:07:42] P1-E checks (E-1..E-10, E-12..E-16: E0 tests, scene, plugin e2e, client, local release, tamper, field audit; E-9 vs P1-D.1)
+[verify 19:09:03] P1-E.1 checks (E1-1..E1-9: status on the /2 index, contract status step, tamper, release package + real Obsidian e2e, E1-6 vs P1-E)
+[verify 19:11:33] P2-A checks (P2-0.2 sets without real Obsidian; migrate 6 old vaults, /2 fixture, tamper, tests; regress vs P2-0.2; round classifier)
+[verify 19:25:15] P2-0.3 checks (real Obsidian: D-B test-4 with the new seed, D-A′, D-C′; p2_0_3_checks)
+[verify 19:37:04] P2-L checks (round tests by criterion; D-TR 12 cells, English reference, L-8 three vaults)
+[verify 19:43:12] deliberate corruptions (B-7, B-8 and the P1-A cases)
+[verify 19:45:50] FAIL summary (K-E1.4, round classifier eval.historical_p2l)
+[verify summary] `p1b1_checks.json` B1-3: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version
+[verify summary] `p1c1_checks.json` C1-7: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version
+[verify summary] `p1c_checks.json` C-11: tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1c_checks.json` C-3: tarihsel, karar K-C8-T, K-C1.1, K-C1.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1d1_checks.json` D1-10: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version
+[verify summary] `p1d1_checks.json` D1-12: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-D RUN)
+[verify summary] `p1d_checks.json` D-2: tarihsel, karar K-D1.1, K-D1.5, K-E0.4, K-D1.4-T ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1d_checks.json` D-7: tarihsel, karar K-D1.4-T, K-D1.5 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1d_checks.json` D-9: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-C.1 RUN)
+[verify summary] `p1e1_checks.json` E1-1: göç gerekli, karar K-P2A.2 — the /2 index (an older rootmark's) answers search 503 migration_required, not index_stale (K-P2A.2); the other 7 cases unchanged
+[verify summary] `p1e1_checks.json` E1-4: tarihsel, karar K-P2A.6, K-P2L.1 ile kapandı — release_check's one FAIL is R4: the required Linux record is skipped in the chain (ROOTMARK_RELEASE_LINUX=0; K-P2A.6); R15 passes since P2-L/F2 (E1-9 expects migration_required, K-P2A.2), so the entry left the migration-required listing
+[verify summary] `p1e1_checks.json` E1-5: tarihsel, karar K-P2A.6, K-P2L.1, K-P2L.2 ile kapandı — Linux x86_64 is a required release target since 0.2.0 (K-P2A.6) and the chain runs scripts/release.sh with ROOTMARK_RELEASE_LINUX=0: the required Linux record is skipped; rootmark 0.2.0, spec 2.0.3
+[verify summary] `p1e1_checks.json` E1-6: tarihsel, karar K-P2A.2 ile kapandı — E1-6 regresses P1-E.1 against P1-E: its differing fields grow by the contract's new code migration_required (D1-13's contract and server code lists)
+[verify summary] `p1e1_checks.json` E1-8: tarihsel, karar K-P2-0.5 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1e1_checks.json` tamper: tarihsel, karar K-P2-0.5 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1e_checks.json` E-14: göç gerekli, karar K-P2A.2 — auto_rebuild = false on the /2 index: search 503 migration_required, not index_stale (K-P2A.2); auto_rebuild = true unchanged
+[verify summary] `p1e_checks.json` E-7: tarihsel, karar K-P2-01.3, K-P2L.1, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: the local release binary is rootmark 0.2.0, spec 2.0.3 (K-P2L.1, K-P2L.2)
+[verify summary] `p1e_checks.json` E-9: tarihsel, karar K-P2A.2 ile kapandı — E-9 regresses P1-E against P1-D.1: the excluded D1-13 leaves grow by the new code migration_required
+[verify summary] `p2_0_2_checks.json` H-P2-0.2b: tarihsel, karar K-P2.3 ile kapandı — a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json
+[verify summary] `p2_0_2_checks.json` H-P2-0.2b′: tarihsel, karar K-P2.3 ile kapandı — a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json
+[verify summary] `p2_0_2_checks.json` H-P2-0.2c: tarihsel, karar K-P2.3 ile kapandı — a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json
+[verify summary] `p2_0_2_checks.json` H-P2-0.2d: tarihsel, karar K-P2.3 ile kapandı — D-C′ (real Obsidian) not run in a development round's chain; D-C ran
+[verify summary] `p2_0_2_checks.json` H-P2-0.2e: tarihsel, karar K-P2.3 ile kapandı — a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json
+[verify summary] `p2_0_2_checks.json` H-P2-0.2j: tarihsel, karar K-P2L.2 ile kapandı — spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.2's recorder expects 2.0.2; 39/39 and level 3 unchanged
+[verify summary] `p2_0_2_checks.json` H-P2-0.2k: tarihsel, karar K-P2L.2 ile kapandı — spec §7.1's Draft status no longer cites 'the independent verification of Phase 2 round P2-0.2' (SPEC_EDITS P2-L E3, K-P2-03.1 (4)): the frozen check looks for that phrase; the status is Draft
+[verify summary] `p2_0_2_checks.json` fail_summary: tarihsel, karar K-P2L.2, K-P2A.2 ile kapandı — P2-0.2's own classifier (against the P2-0.1 RUN) sees the migration-required FAILs E1-1, E1-4, E1-9, E-14; P2-A's classifier is this one; P2-L: P2-0.2's own classifier sees P2-L's decisions
+[verify summary] `p2_0_2_checks.json` regress: tarihsel, karar K-P2L.2, K-P2A.2 ile kapandı — P2-0.2's regress against the P2-0.1 RUN sees P2-A's decisions (contract code, installers, field audit) and the skipped real-Obsidian sets; P2-A's regress is eval.compare_p2a against the P2-0.2 RUN; P2-L: P2-0.2's regress against the P2-0.1 RUN sees P2-L's decisions (spec 2.0.3, 0.2.0, the round's comparator)
+[verify summary] `p2_0_3_checks.json` H-P2-0.3b: tarihsel, karar K-P2-03.1 ile kapandı — P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run
+[verify summary] `p2_0_3_checks.json` H-P2-0.3b-yük: tarihsel, karar K-P2-03.1 ile kapandı — P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run
+[verify summary] `p2_0_3_checks.json` H-P2-0.3b′: tarihsel, karar K-P2-03.1 ile kapandı — P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run; informational (pass null by design)
+[verify summary] `p2_0_3_checks.json` H-P2-0.3j: tarihsel, karar K-P2L.2 ile kapandı — spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.3's recorder expects 2.0.2
+[verify summary] `p2_0_3_checks.json` rules: tarihsel, karar K-P2L.2 ile kapandı — as H-P2-0.2k (SPEC_EDITS P2-L E3)
+[verify summary] 30 historical and 2 migration-required FAIL(s) not counted; counted FAILs 0 (eval.historical_p2l against reports/rounds/P2-0.3/runs/20261024T000230Z-5632b3b)
+[verify 19:45:51] chain finished in 3781 s
+[verify 19:45:51] clone /Users/arkns/Works/mdkernel/.claude/worktrees/P2-L-impl -> /private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/pair/B/repo
+[verify 19:45:53] commit ced61f979eee6e36ac18c080fc6482724b697b6c
+[verify 19:45:53] setup
+[verify 19:46:37] models (fetch + manifest check)
+[verify 19:46:49] datasets (d2 d3 d1 d1k4 d1h d1ho d1sh d1hs, manifests verified)
+[verify 19:47:48] freeze-check (v2), freeze-check-v3, check_frozen
+[verify 19:48:51] conformance (level 3)
+[verify 19:49:08] RUN=20261024T194908Z-ced61f9
+[verify 19:49:08] holdout (P1-A A-2) and THETA_SPLIT grid (A-7)
+[verify 19:49:35] regress (v2 + v3 phases vs v3-final; holdout + split grid vs P1-A; holdout-split)
+[verify 19:55:31] A-1 / A-5 / A-6 into the RUN (level-1 view)
+[verify 19:55:53] governance: conformance, v3-final compat, policy bounds, fuzz, scenario (p1b_checks)
+[verify 19:56:37] P1-B.1 checks (B1-1..B1-6 recorded again; C-11 input)
+[verify 19:56:38] P1-C checks (C-1..C-13; D3 determinism vault under /private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/pair/B/p1c_work)
+[verify 20:05:20] P1-C deliberate corruptions (model manifest, embedder_id, fixtures)
+[verify 20:05:42] P1-C.1 checks (C1-1..C1-9; CLI deliberate tests: lock file, empty query, manifest fields)
+[verify 20:06:45] P1-D checks (D-1..D-11: Inspector, MCP e2e, HTTP/service, watch, scene, tamper; D-9 vs P1-C.1)
+[verify 20:08:15] P1-D.1 checks (D1-1..D1-13: criteria tests, p1d-final vaults, contract, tamper; D1-12 vs P1-D)
+[verify 20:10:47] P1-E checks (E-1..E-10, E-12..E-16: E0 tests, scene, plugin e2e, client, local release, tamper, field audit; E-9 vs P1-D.1)
+[verify 20:12:08] P1-E.1 checks (E1-1..E1-9: status on the /2 index, contract status step, tamper, release package + real Obsidian e2e, E1-6 vs P1-E)
+[verify 20:14:41] P2-A checks (P2-0.2 sets without real Obsidian; migrate 6 old vaults, /2 fixture, tamper, tests; regress vs P2-0.2; round classifier)
+[verify 20:28:24] P2-0.3 checks (real Obsidian: D-B test-4 with the new seed, D-A′, D-C′; p2_0_3_checks)
+[verify 20:40:41] P2-L checks (round tests by criterion; D-TR 12 cells, English reference, L-8 three vaults)
+[verify 20:46:51] deliberate corruptions (B-7, B-8 and the P1-A cases)
+[verify 20:49:31] FAIL summary (K-E1.4, round classifier eval.historical_p2l)
+[verify summary] `p1b1_checks.json` B1-3: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version
+[verify summary] `p1c1_checks.json` C1-7: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version
+[verify summary] `p1c_checks.json` C-11: tarihsel, karar K-D1.2, K-D1.4-T, K-E0.1 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1c_checks.json` C-3: tarihsel, karar K-C8-T, K-C1.1, K-C1.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1d1_checks.json` D1-10: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version
+[verify summary] `p1d1_checks.json` D1-12: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-D RUN)
+[verify summary] `p1d_checks.json` D-2: tarihsel, karar K-D1.1, K-D1.5, K-E0.4, K-D1.4-T ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1d_checks.json` D-7: tarihsel, karar K-D1.4-T, K-D1.5 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1d_checks.json` D-9: tarihsel, karar K-P2-01.3, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-C.1 RUN)
+[verify summary] `p1e1_checks.json` E1-1: göç gerekli, karar K-P2A.2 — the /2 index (an older rootmark's) answers search 503 migration_required, not index_stale (K-P2A.2); the other 7 cases unchanged
+[verify summary] `p1e1_checks.json` E1-4: tarihsel, karar K-P2A.6, K-P2L.1 ile kapandı — release_check's one FAIL is R4: the required Linux record is skipped in the chain (ROOTMARK_RELEASE_LINUX=0; K-P2A.6); R15 passes since P2-L/F2 (E1-9 expects migration_required, K-P2A.2), so the entry left the migration-required listing
+[verify summary] `p1e1_checks.json` E1-5: tarihsel, karar K-P2A.6, K-P2L.1, K-P2L.2 ile kapandı — Linux x86_64 is a required release target since 0.2.0 (K-P2A.6) and the chain runs scripts/release.sh with ROOTMARK_RELEASE_LINUX=0: the required Linux record is skipped; rootmark 0.2.0, spec 2.0.3
+[verify summary] `p1e1_checks.json` E1-6: tarihsel, karar K-P2A.2 ile kapandı — E1-6 regresses P1-E.1 against P1-E: its differing fields grow by the contract's new code migration_required (D1-13's contract and server code lists)
+[verify summary] `p1e1_checks.json` E1-8: tarihsel, karar K-P2-0.5 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1e1_checks.json` tamper: tarihsel, karar K-P2-0.5 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference)
+[verify summary] `p1e_checks.json` E-14: göç gerekli, karar K-P2A.2 — auto_rebuild = false on the /2 index: search 503 migration_required, not index_stale (K-P2A.2); auto_rebuild = true unchanged
+[verify summary] `p1e_checks.json` E-7: tarihsel, karar K-P2-01.3, K-P2L.1, K-P2L.2 ile kapandı — historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: the local release binary is rootmark 0.2.0, spec 2.0.3 (K-P2L.1, K-P2L.2)
+[verify summary] `p1e_checks.json` E-9: tarihsel, karar K-P2A.2 ile kapandı — E-9 regresses P1-E against P1-D.1: the excluded D1-13 leaves grow by the new code migration_required
+[verify summary] `p2_0_2_checks.json` H-P2-0.2b: tarihsel, karar K-P2.3 ile kapandı — a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json
+[verify summary] `p2_0_2_checks.json` H-P2-0.2b′: tarihsel, karar K-P2.3 ile kapandı — a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json
+[verify summary] `p2_0_2_checks.json` H-P2-0.2c: tarihsel, karar K-P2.3 ile kapandı — a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json
+[verify summary] `p2_0_2_checks.json` H-P2-0.2d: tarihsel, karar K-P2.3 ile kapandı — D-C′ (real Obsidian) not run in a development round's chain; D-C ran
+[verify summary] `p2_0_2_checks.json` H-P2-0.2e: tarihsel, karar K-P2.3 ile kapandı — a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json
+[verify summary] `p2_0_2_checks.json` H-P2-0.2j: tarihsel, karar K-P2L.2 ile kapandı — spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.2's recorder expects 2.0.2; 39/39 and level 3 unchanged
+[verify summary] `p2_0_2_checks.json` H-P2-0.2k: tarihsel, karar K-P2L.2 ile kapandı — spec §7.1's Draft status no longer cites 'the independent verification of Phase 2 round P2-0.2' (SPEC_EDITS P2-L E3, K-P2-03.1 (4)): the frozen check looks for that phrase; the status is Draft
+[verify summary] `p2_0_2_checks.json` fail_summary: tarihsel, karar K-P2L.2, K-P2A.2 ile kapandı — P2-0.2's own classifier (against the P2-0.1 RUN) sees the migration-required FAILs E1-1, E1-4, E1-9, E-14; P2-A's classifier is this one; P2-L: P2-0.2's own classifier sees P2-L's decisions
+[verify summary] `p2_0_2_checks.json` regress: tarihsel, karar K-P2L.2, K-P2A.2 ile kapandı — P2-0.2's regress against the P2-0.1 RUN sees P2-A's decisions (contract code, installers, field audit) and the skipped real-Obsidian sets; P2-A's regress is eval.compare_p2a against the P2-0.2 RUN; P2-L: P2-0.2's regress against the P2-0.1 RUN sees P2-L's decisions (spec 2.0.3, 0.2.0, the round's comparator)
+[verify summary] `p2_0_3_checks.json` H-P2-0.3b: tarihsel, karar K-P2-03.1 ile kapandı — P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run
+[verify summary] `p2_0_3_checks.json` H-P2-0.3b-yük: tarihsel, karar K-P2-03.1 ile kapandı — P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run
+[verify summary] `p2_0_3_checks.json` H-P2-0.3b′: tarihsel, karar K-P2-03.1 ile kapandı — P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run; informational (pass null by design)
+[verify summary] `p2_0_3_checks.json` H-P2-0.3j: tarihsel, karar K-P2L.2 ile kapandı — spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.3's recorder expects 2.0.2
+[verify summary] `p2_0_3_checks.json` rules: tarihsel, karar K-P2L.2 ile kapandı — as H-P2-0.2k (SPEC_EDITS P2-L E3)
+[verify summary] 30 historical and 2 migration-required FAIL(s) not counted; counted FAILs 0 (eval.historical_p2l against reports/rounds/P2-0.3/runs/20261024T000230Z-5632b3b)
+[verify 20:49:31] chain finished in 3820 s
+[verify 20:49:31] compare (P2-L) /private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/pair/A/repo/research/reports/runs/20261024T184609Z-ced61f9 /private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/pair/B/repo/research/reports/runs/20261024T194908Z-ced61f9
+[verify 20:49:32] P2-A pair set and P2-L results equal; D-A, D-A2 and D-C events.jsonl and attestations.jsonl byte-equal

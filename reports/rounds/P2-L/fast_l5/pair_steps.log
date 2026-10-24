@@ -1,0 +1,21 @@
+[A] [verify 18:29:38] fast: clone /Users/arkns/Works/mdkernel/.claude/worktrees/P2-L-impl -> /private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/fast4/A/repo
+[A] [verify 18:29:41] fast: commit ced61f979eee6e36ac18c080fc6482724b697b6c
+[A] [verify 18:31:15] fast: D3 (manifest verified)
+[A] [verify 18:31:49] fast: check_frozen, check_deps
+[A] [verify 18:32:29] RUN=20261024T183229Z-ced61f9
+[A] [verify 18:32:29] fast: conformance (make conformance, rootmark conformance)
+[A] [verify 18:33:04] fast: C-3 quality (D3 + D4 test split)
+[A] [verify 18:34:20] fast: regress (quality reference, conformance vs the last official RUN)
+[A] [verify 18:34:20] fast: round checks (make p2l-checks p2l-quality)
+[A] [verify 18:41:52] fast chain finished in 734 s
+[B] [verify 18:29:38] fast: clone /Users/arkns/Works/mdkernel/.claude/worktrees/P2-L-impl -> /private/tmp/claude-501/-Users-arkns-Works-mdkernel/049d4ba7-fe5c-454a-8f0b-8c5d1638f40c/scratchpad/fast4/B/repo
+[B] [verify 18:29:41] fast: commit ced61f979eee6e36ac18c080fc6482724b697b6c
+[B] [verify 18:31:15] fast: D3 (manifest verified)
+[B] [verify 18:31:49] fast: check_frozen, check_deps
+[B] [verify 18:32:29] RUN=20261024T183229Z-ced61f9
+[B] [verify 18:32:29] fast: conformance (make conformance, rootmark conformance)
+[B] [verify 18:33:05] fast: C-3 quality (D3 + D4 test split)
+[B] [verify 18:34:20] fast: regress (quality reference, conformance vs the last official RUN)
+[B] [verify 18:34:20] fast: round checks (make p2l-checks p2l-quality)
+[B] [verify 18:41:50] fast chain finished in 732 s
+[verify 18:41:53] fast pair equal (82789 fields) in 735 s
