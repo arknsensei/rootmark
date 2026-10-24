@@ -1,0 +1,1 @@
+{"tests":142,"bundle_bytes":59066,"runtime_dependencies":[],"bundle_requires":["@codemirror/state","@codemirror/view","obsidian"],"pass":true}

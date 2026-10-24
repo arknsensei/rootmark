@@ -1,0 +1,1896 @@
+{
+ "H3-1": {
+  "n": 200,
+  "p50_ms": 17.028562491759658,
+  "p95_ms": 23.210230557015155
+ },
+ "H3-2": {
+  "gained": 0,
+  "lost": 0
+ },
+ "latency": {
+  "hit_at_10_rate": 0.96,
+  "hit_at_1_rate": 0.81,
+  "latencies_ms": [
+   95.28083400800824,
+   14.796583913266659,
+   19.036791985854506,
+   14.717749902047217,
+   18.659583060070872,
+   17.772666993550956,
+   19.345915992744267,
+   17.022292013280094,
+   20.565667073242366,
+   13.464541989378631,
+   14.703750028274953,
+   18.585999961942434,
+   13.676167000085115,
+   15.27566707227379,
+   13.809332973323762,
+   17.056999960914254,
+   12.347667012363672,
+   14.65525000821799,
+   19.10179201513529,
+   12.862165924161673,
+   19.42883396986872,
+   14.803375001065433,
+   14.44699999410659,
+   12.16775004286319,
+   16.9262089766562,
+   18.773082992993295,
+   18.407125025987625,
+   17.709249979816377,
+   21.457000053487718,
+   18.104542046785355,
+   18.17945798393339,
+   18.08058295864612,
+   16.40387496445328,
+   14.622792019508779,
+   18.37445900309831,
+   16.72449999023229,
+   13.18508293479681,
+   16.39475009869784,
+   16.213000053539872,
+   18.443542066961527,
+   14.439166989177465,
+   18.861458054743707,
+   15.616709017194808,
+   10.379957966506481,
+   11.862875078804791,
+   17.034832970239222,
+   12.807458057068288,
+   19.46712494827807,
+   12.550999992527068,
+   19.129292108118534,
+   17.975250026211143,
+   20.36141697317362,
+   17.44516601320356,
+   15.612583956681192,
+   22.61799992993474,
+   15.577833051793277,
+   16.850832966156304,
+   18.938624998554587,
+   17.092749942094088,
+   12.1157499961555,
+   14.58066701889038,
+   20.19075001589954,
+   18.4052080148831,
+   16.614124993793666,
+   16.368999960832298,
+   23.741082986816764,
+   15.599500038661063,
+   18.60658300574869,
+   16.017915913835168,
+   13.124500052072108,
+   11.525999987497926,
+   15.83529100753367,
+   21.342459018342197,
+   14.112208969891071,
+   17.44670793414116,
+   11.765582952648401,
+   16.590000013820827,
+   15.471457969397306,
+   15.839375089854002,
+   15.387541032396257,
+   19.149916945025325,
+   17.885749926790595,
+   18.520165933296084,
+   14.107875060290098,
+   16.860708012245595,
+   16.385208000428975,
+   13.45958304591477,
+   16.122540924698114,
+   11.865917011164129,
+   12.650999939069152,
+   18.019666080363095,
+   15.665709041059017,
+   32.85166702698916,
+   32.135083922185004,
+   20.420874934643507,
+   18.55000003706664,
+   17.912208917550743,
+   16.39499992597848,
+   15.70729201193899,
+   17.604874912649393,
+   23.18229095544666,
+   16.631542006507516,
+   18.234499963000417,
+   16.584083903580904,
+   19.343834021128714,
+   15.959542011842132,
+   14.053125050850213,
+   17.822750029154122,
+   22.730999975465238,
+   13.33312492351979,
+   18.544165999628603,
+   17.33900001272559,
+   14.755625044927001,
+   17.63404195662588,
+   15.373707981780171,
+   28.078125091269612,
+   19.740874995477498,
+   11.796207982115448,
+   18.780041951686144,
+   18.586542108096182,
+   14.848958002403378,
+   17.159707960672677,
+   20.297667011618614,
+   14.002832933329046,
+   21.32079191505909,
+   13.086625025607646,
+   20.379583002068102,
+   17.168874968774617,
+   12.342417030595243,
+   25.677249999716878,
+   13.758375076577067,
+   20.818250020965934,
+   17.29758398141712,
+   15.132457949221134,
+   14.626707998104393,
+   19.088750006631017,
+   18.999749911017716,
+   16.62937505170703,
+   16.814833972603083,
+   19.201708026230335,
+   19.083666033111513,
+   15.255374950356781,
+   13.033957919105887,
+   12.98233401030302,
+   12.417166028171778,
+   13.612583046779037,
+   20.83074999973178,
+   22.740375017747283,
+   15.471166931092739,
+   15.314875054173172,
+   13.413666980341077,
+   18.089541932567954,
+   19.387583015486598,
+   12.078708969056606,
+   15.450707986019552,
+   21.39845897909254,
+   18.621707917191088,
+   15.565457986667752,
+   12.017042026855052,
+   18.465499975718558,
+   11.98570802807808,
+   15.608124900609255,
+   17.49454194214195,
+   17.703125020489097,
+   19.78695800062269,
+   14.452375005930662,
+   18.373208004049957,
+   16.10058406367898,
+   15.95320797059685,
+   17.725541023537517,
+   20.434042089618742,
+   18.28662503976375,
+   18.85054202284664,
+   15.189457917585969,
+   17.241292051039636,
+   20.549209089949727,
+   13.46570800524205,
+   14.54962498974055,
+   16.808458021841943,
+   16.7796250898391,
+   18.1530830450356,
+   25.234540924429893,
+   23.045249981805682,
+   19.925124943256378,
+   20.484874956309795,
+   22.182874963618815,
+   18.750541959889233,
+   12.74062495213002,
+   17.92383403517306,
+   13.566917041316628,
+   15.223207999952137,
+   28.97600003052503,
+   28.935707989148796,
+   26.188457966782153,
+   17.288082977756858,
+   18.549124943092465,
+   13.052124995738268,
+   13.967083999887109,
+   17.71391707006842,
+   15.885583008639514
+  ],
+  "n_edits": 200,
+  "rows": [
+   {
+    "doc_path": "dendron.ref.config.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 25.84345906507224,
+    "reembedded_chunks": 1,
+    "warmup": true
+   },
+   {
+    "doc_path": "dendron.ref.config.vscode-config.deprecated.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.578417038545012,
+    "reembedded_chunks": 1,
+    "warmup": true
+   },
+   {
+    "doc_path": "dendron.topic.publish.config.logoPath.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.769583009183407,
+    "reembedded_chunks": 1,
+    "warmup": true
+   },
+   {
+    "doc_path": "changelog.past-versions.0-1-x.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 59.251916012726724,
+    "reembedded_chunks": 1,
+    "warmup": true
+   },
+   {
+    "doc_path": "changelog.release.2021-09-28.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 21.330667077563703,
+    "reembedded_chunks": 1,
+    "warmup": true
+   },
+   {
+    "doc_path": "changelog.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 95.28083400800824,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-01-04.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.796583913266659,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.crop.2022.06.15.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.036791985854506,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.cheatsheet.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.717749902047217,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2020-09-13.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.659583060070872,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.navigation.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.772666993550956,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2020-12-07.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.345915992744267,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tags.blue.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.022292013280094,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.features.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 20.565667073242366,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.ref.commands.open-link.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.464541989378631,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.tasks.commands.set-task-status.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.703750028274953,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.doctor.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.585999961942434,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod-v2.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.676167000085115,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.special-notes.commands.create-daily-journal-note.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.27566707227379,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.roadmap.project.n.2020.multi-vault.xvault-wikilinks.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 13.809332973323762,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2021.12.21.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.056999960914254,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "careers.what-we-run-on.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.347667012363672,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-09-07.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.65525000821799,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.refactoring.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.10179201513529,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.trouble.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.862165924161673,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.09.13.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 19.42883396986872,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.guides.troubleshooting.manual-migration.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.803375001065433,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "careers.senior-webdev.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.44699999410659,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.config.ga.tracking.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.16775004286319,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.note-reference.concepts.block-anchors.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.9262089766562,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.concepts.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.773082992993295,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.crop.2022.04.20.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 18.407125025987625,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod-v2.config.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.709249979816377,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-07-05.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 21.457000053487718,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.01.25.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 18.104542046785355,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2020-08-09.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.17945798393339,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.guides.best-practices.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.08058295864612,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish-legacy.quickstart.preview-your-site.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.40387496445328,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.08.01.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.622792019508779,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.special-notes.commands.create-journal-note.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.37445900309831,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod.builtin.markdown.import.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.72449999023229,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish-legacy.quickstart.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.18508293479681,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.contribute.dev.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 16.39475009869784,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod.builtin.json.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.213000053539872,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.config.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.443542066961527,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2022.02.16.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.439166989177465,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-10-19.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 18.861458054743707,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.03.15.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.616709017194808,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.ref.commercial-support.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 10.379957966506481,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tags.scope.common.lookup.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 11.862875078804791,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish-legacy.features.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.034832970239222,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tags.example.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.807458057068288,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.07.04.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.46712494827807,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.tasks.config.todo-integration.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.550999992527068,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.02.01.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.129292108118534,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2020-12-21.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 17.975250026211143,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.main.conclusion.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 20.36141697317362,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.ref.config.vscode-config.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.44516601320356,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.teams.quickstart.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.612583956681192,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.roadmap.project.n.2020.multi-vault.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 22.61799992993474,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.guides.workflows.academics.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.577833051793277,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.special-notes.daily-journal-note.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.850832966156304,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.roadmap.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.938624998554587,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish-legacy.advanced.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.092749942094088,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.sidebar.tree-view.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.1157499961555,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.roadmap.project.n.2020.git.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.58066701889038,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 20.19075001589954,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.11.14.md",
+    "hit_at_1": false,
+    "hit_at_10": false,
+    "ms": 18.4052080148831,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.09.24.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.614124993793666,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.cook.github-with-custom-domain.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.368999960832298,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2020-11-01.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 23.741082986816764,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.roadmap.project.n.2020.server-migration.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.599500038661063,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.roadmap.project.n.backlog.color-tabs.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.60658300574869,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.vaults.config.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.017915913835168,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.124500052072108,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.config.github.editViewMode.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 11.525999987497926,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-07-05.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 15.83529100753367,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.cook.github.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 21.342459018342197,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.sidebar.backlinks.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.112208969891071,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.crop.2022.03.09.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.44670793414116,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.config.github.editRepository.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 11.765582952648401,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-10-12.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.590000013820827,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.special-notes.journal-note.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.471457969397306,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.theme.preview.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.839375089854002,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.links.file-link.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.387541032396257,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.tasks.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.149916945025325,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.10.11.md",
+    "hit_at_1": false,
+    "hit_at_10": false,
+    "ms": 17.885749926790595,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-06-21.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.520165933296084,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.refactoring.commands.rename-header.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.107875060290098,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.tasks.config.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.860708012245595,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.09.05.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.385208000428975,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.config.github.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.45958304591477,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.crop.2022.01.26.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.122540924698114,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.tasks.config.name.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 11.865917011164129,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.preview.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.650999939069152,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.03.01.md",
+    "hit_at_1": false,
+    "hit_at_10": false,
+    "ms": 18.019666080363095,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.original.user-interface.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.665709041059017,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.ref.commands.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 32.85166702698916,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.past-versions.0-3-x.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 32.135083922185004,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.new-user-tuesdays.2022.02.22.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 20.420874934643507,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.contribute.first-dev.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.55000003706664,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.alternatives.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.912208917550743,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.09.06.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 16.39499992597848,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.01.04.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.70729201193899,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.sidebar.tree-view.config.nav_order.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.604874912649393,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-07-26.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 23.18229095544666,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.traits.api.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.631542006507516,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.special-notes.meeting-note.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 18.234499963000417,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod-v2.cli.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.584083903580904,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.crop.2022.06.01.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 19.343834021128714,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2021.11.09.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.959542011842132,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "meet.reading.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.053125050850213,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.no-refactor.linking-notes.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 17.822750029154122,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-05-10.md",
+    "hit_at_1": false,
+    "hit_at_10": false,
+    "ms": 22.730999975465238,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.teams.ref.public-private-workspace.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.33312492351979,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.06.21.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.544165999628603,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.07.18.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 17.33900001272559,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.links.commands.go-to-note.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.755625044927001,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.05.24.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.63404195662588,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.config.writeStubs.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.373707981780171,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2020-09-20.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 28.078125091269612,
+    "reembedded_chunks": 2,
+    "warmup": false
+   },
+   {
+    "doc_path": "careers.head-of-content.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.740874995477498,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.config.enableNoteTitleForLink.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 11.796207982115448,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-03-08.md",
+    "hit_at_1": false,
+    "hit_at_10": false,
+    "ms": 18.780041951686144,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.multi-vault.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.586542108096182,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.workspace.commands.sync.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.848958002403378,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-07-12.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.159707960672677,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod-v2.ref.builtin.airtable.export.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 20.297667011618614,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.config.enableHierarchyDisplay.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.002832933329046,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-12-28.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 21.32079191505909,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.guides.workflows.bullet-journal.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.086625025607646,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-08-16.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 20.379583002068102,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.lookup.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.168874968774617,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.notes.cli.write.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.342417030595243,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.greenhouse.2021-07-30-cerebrarium-showcase.transcript.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 25.677249999716878,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish.quickstart.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.758375076577067,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-06-14.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 20.818250020965934,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.showcase.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.29758398141712,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-07-19.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.132457949221134,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod.builtin.airtable.export.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.626707998104393,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2020-08-02.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.088750006631017,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.hooks.examples.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.999749911017716,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.refactoring.commands.archive-hierarchy.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.62937505170703,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.links.backlink.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.814833972603083,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.ref.config.commands.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.201708026230335,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-09-06.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 19.083666033111513,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.contribute.documentation.tutorial.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 15.255374950356781,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.workspace.cli.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.033957919105887,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.hierarchies.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.98233401030302,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron._ref.command-prompt.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.417166028171778,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.templates.template-variables.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.612583046779037,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-11-22.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 20.83074999973178,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-06-21.md",
+    "hit_at_1": false,
+    "hit_at_10": false,
+    "ms": 22.740375017747283,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.publish-legacy.changelogs.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.471166931092739,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod-v2.upgrade.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.314875054173172,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.hooks.quickstart.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.413666980341077,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.no-refactor.user-interface.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.089541932567954,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.local-config-override.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.387583015486598,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.links.markdown-link.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.078708969056606,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod.builtin.google-docs.import.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.450707986019552,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.no-refactor.conclusion.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 21.39845897909254,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.links.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.621707917191088,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.frontmatter.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.565457986667752,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.guides.upgrading.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.017042026855052,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.12.06.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.465499975718558,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.main.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 11.98570802807808,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.contribute.financial.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.608124900609255,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.original.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 17.49454194214195,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.08.15.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 17.703125020489097,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-03-01.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.78695800062269,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.05.02.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.452375005930662,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.original.taking-notes.md",
+    "hit_at_1": false,
+    "hit_at_10": false,
+    "ms": 18.373208004049957,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.new-user-tuesdays.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 16.10058406367898,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.search.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.95320797059685,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.original.conclusion.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 17.725541023537517,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.seeds.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 20.434042089618742,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-09-13.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 18.28662503976375,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.roadmap.project.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.85054202284664,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.navigation.commands.go-previous-sibling.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.189457917585969,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.notes.cli.get.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 17.241292051039636,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-02-01.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 20.549209089949727,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron._ref.intellisense.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.46570800524205,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.note-reference.commands.copy-note-ref.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 14.54962498974055,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.03.29.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.808458021841943,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.special-notes.commands.create-meeting-note.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 16.7796250898391,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.1530830450356,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-10-25.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 25.234540924429893,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2021-08-24.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 23.045249981805682,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod.builtin.airtable.publish.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 19.925124943256378,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.main.rich-formatting.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 20.484874956309795,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2022-03-15.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 22.182874963618815,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.reading-series.2022.10.25.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 18.750541959889233,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod-v2.connections.notion.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 12.74062495213002,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "changelog.release.2020-07-25.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.92383403517306,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.guides.workflows.crm.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.566917041316628,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.contribute.documentation.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.223207999952137,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "tutorial.no-refactor.taking-notes.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 28.97600003052503,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.06.06.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 28.935707989148796,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.05.09.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 26.188457966782153,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.crop.2022.02.09.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 17.288082977756858,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.pod-v2.ref.builtin.md",
+    "hit_at_1": false,
+    "hit_at_10": true,
+    "ms": 18.549124943092465,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.traits.commands.create-note-with-trait.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.052124995738268,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.roadmap.project.n.2020.qol.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 13.967083999887109,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "community.events.office-hours.2021.06.27.md",
+    "hit_at_1": false,
+    "hit_at_10": false,
+    "ms": 17.71391707006842,
+    "reembedded_chunks": 1,
+    "warmup": false
+   },
+   {
+    "doc_path": "dendron.topic.links.commands.paste-link.md",
+    "hit_at_1": true,
+    "hit_at_10": true,
+    "ms": 15.885583008639514,
+    "reembedded_chunks": 1,
+    "warmup": false
+   }
+  ],
+  "warmup": 5
+ },
+ "matcher": "v3",
+ "rechunk": {
+  "events_hash_after": "7335baebefba377c84574928dd4cc05c",
+  "events_hash_before": "7335baebefba377c84574928dd4cc05c",
+  "fixed_to_structural": {
+   "A": 19790,
+   "B": 19790,
+   "gained": 0,
+   "lost": 0
+  },
+  "fixed_vs_snapshot": {
+   "A": 19790,
+   "B": 19790,
+   "gained": 0,
+   "lost": 0
+  },
+  "gained": 0,
+  "lineages": 19790,
+  "log_equal": true,
+  "lost": 0,
+  "structural_vs_snapshot": {
+   "A": 19790,
+   "B": 19790,
+   "gained": 0,
+   "lost": 0
+  }
+ },
+ "summary": {
+  "gained": 0,
+  "log_equal": true,
+  "lost": 0,
+  "n": 200,
+  "p50": 17.028562491759658,
+  "p95": 23.210230557015155
+ }
+}

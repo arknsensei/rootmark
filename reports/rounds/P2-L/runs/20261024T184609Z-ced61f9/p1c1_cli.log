@@ -1,0 +1,46 @@
+p1c1: ok: search flat default at t0 
+p1c1: ok: search flat default at head 
+p1c1: ok: search flat --include-proposal at t0 
+p1c1: ok: search flat --include-proposal at head 
+p1c1: ok: search lexical default at t0 
+p1c1: ok: search lexical default at head 
+p1c1: ok: search lexical --include-proposal at t0 
+p1c1: ok: search lexical --include-proposal at head 
+p1c1: ok: search hybrid default at t0 
+p1c1: ok: search hybrid default at head 
+p1c1: ok: search hybrid --include-proposal at t0 
+p1c1: ok: search hybrid --include-proposal at head 
+p1c1: ok: index status 
+p1c1: ok: C1-4 diff -r index after searches: equal 
+p1c1: ok: C1-4 no lock file in the index (0) 
+p1c1: ok: C1-4 control: diff -r reports a lock file (exit 1) 
+p1c1: ok: C1-5 empty query '' flat (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query '' lexical (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query '' hybrid (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query \  flat (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query \  lexical (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query \  hybrid (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query $'\t\n ' flat (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query $'\t\n ' lexical (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query $'\t\n ' hybrid (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query $'�\200\200' flat (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query $'�\200\200' lexical (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 empty query $'�\200\200' hybrid (exit 1) error: empty query: a query must hold a non-whitespace character (spec §9)
+p1c1: ok: C1-5 traces, events, checkpoints unchanged 
+p1c1: ok: C1-5 control: a query searches 
+p1c1: ok: C1-5 control: one trace line 
+p1c1: ok: C1-6 manifest holds lexical.{variant,idf,k1,b,tokenizer,dl} 
+p1c1: ok: C1-6 lexical.variant removed: index status (exit 1) error: index manifest.json: missing field `variant`
+p1c1: ok: C1-6 lexical.variant removed: search (exit 1) error: index manifest.json: missing field `variant`
+p1c1: ok: C1-6 lexical.idf removed: index status (exit 1) error: index manifest.json: missing field `idf`
+p1c1: ok: C1-6 lexical.idf removed: search (exit 1) error: index manifest.json: missing field `idf`
+p1c1: ok: C1-6 lexical.k1 removed: index status (exit 1) error: index manifest.json: missing field `k1`
+p1c1: ok: C1-6 lexical.k1 removed: search (exit 1) error: index manifest.json: missing field `k1`
+p1c1: ok: C1-6 lexical.b removed: index status (exit 1) error: index manifest.json: missing field `b`
+p1c1: ok: C1-6 lexical.b removed: search (exit 1) error: index manifest.json: missing field `b`
+p1c1: ok: C1-6 lexical.tokenizer removed: index status (exit 1) error: index manifest.json: missing field `tokenizer`
+p1c1: ok: C1-6 lexical.tokenizer removed: search (exit 1) error: index manifest.json: missing field `tokenizer`
+p1c1: ok: C1-6 lexical removed: index status (exit 1) error: index manifest.json: missing field `lexical`
+p1c1: ok: C1-6 lexical.k1 changed: index status (exit 1) error: index lexical record LexicalParams { variant: "lucene-bm25", idf: "ln(1 + (N - n + 0.5) / (n + 0.5))", k1: 1.5, b: 0.75, tokenizer: "
+p1c1: ok: C1-6 restored manifest: index status 
+p1c1: 45/45 cases as expected

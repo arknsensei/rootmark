@@ -1,0 +1,921 @@
+{
+ "H-P2-0.2a": {
+  "d_a": {
+   "canonical_leak": 0,
+   "new_blocks": 525,
+   "scenarios": 200
+  },
+  "d_a2": {
+   "by_path": {
+    "atomic_rename": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "cat": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "cp_rsync": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "git_apply": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "python": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "sed": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    }
+   },
+   "canonical_leak": 0,
+   "new_blocks": 210,
+   "scenarios": 120
+  },
+  "pass": true,
+  "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+ },
+ "H-P2-0.2a′": {
+  "canonical_changed": 52,
+  "pass": true,
+  "scenarios": "200/200",
+  "source": "p2_0_2/d_a.json"
+ },
+ "H-P2-0.2b": {
+  "measured": false,
+  "pass": null,
+  "reason": "no Obsidian binary at /nonexistent/obsidian",
+  "skipped": true,
+  "source": "p2_0_2/d_b.json"
+ },
+ "H-P2-0.2b′": {
+  "measured": false,
+  "pass": null,
+  "skipped": true,
+  "source": "p2_0_2/d_b.json"
+ },
+ "H-P2-0.2c": {
+  "measured": false,
+  "pass": null,
+  "skipped": true,
+  "source": "p2_0_2/d_b.json"
+ },
+ "H-P2-0.2d": {
+  "d_c": {
+   "accuracy": 1.0,
+   "agent_canonical": 0,
+   "blocks": 340,
+   "by_mode": {
+    "apart": {
+     "blocks": 298,
+     "right": 298
+    },
+    "collide": {
+     "blocks": 14,
+     "right": 14
+    },
+    "same_doc_after": {
+     "blocks": 28,
+     "right": 28
+    }
+   },
+   "partial_lines": 7,
+   "pass": true,
+   "right": 340,
+   "ticks": 160
+  },
+  "d_c_prime": {
+   "measured": false,
+   "pass": null,
+   "reason": "no Obsidian binary at /nonexistent/obsidian",
+   "skipped": true
+  },
+  "pass": null,
+  "source": "p2_0_2/d_c.json, p2_0_2/d_c_prime.json"
+ },
+ "H-P2-0.2e": {
+  "measured": false,
+  "pass": null,
+  "reason": "no Obsidian binary at /nonexistent/obsidian",
+  "skipped": true,
+  "source": "p2_0_2/d_a_prime.json"
+ },
+ "H-P2-0.2f": {
+  "by_kind": {
+   "append": {
+    "new_blocks": 20,
+    "sessions": 20,
+    "unverified_after_window": 0
+   },
+   "atomic": {
+    "new_blocks": 50,
+    "sessions": 50,
+    "unverified_after_window": 0
+   },
+   "inplace": {
+    "new_blocks": 30,
+    "sessions": 30,
+    "unverified_after_window": 0
+   },
+   "mv": {
+    "new_blocks": 459,
+    "sessions": 30,
+    "unverified_after_window": 0
+   },
+   "rapid": {
+    "new_blocks": 71,
+    "sessions": 20,
+    "unverified_after_window": 0
+   }
+  },
+  "false_unverified_rate": 0.0,
+  "latency_p95_ms": 133.2,
+  "latency_unsettled": 0,
+  "new_blocks": 630,
+  "pass": true,
+  "sessions": 150,
+  "source": "p2_0_2/d_b2.json",
+  "unverified_after_window": 0
+ },
+ "H-P2-0.2h": {
+  "failed": [],
+  "pass": true,
+  "source": "p2_0_2/d_e.json",
+  "vaults": "6/6"
+ },
+ "H-P2-0.2j": {
+  "level_claimed": 3,
+  "new": {
+   "C2-14": "pass"
+  },
+  "pass": false,
+  "passed": 39,
+  "source": "conformance_p1d1.json",
+  "spec_version": "2.0.3",
+  "total": 39
+ },
+ "H-P2-0.2k": {
+  "forward_compatibility": {
+   "known_line_read": {
+    "expected_open": true,
+    "opened": true,
+    "pass": true,
+    "refused_for_the_value": false
+   },
+   "matched_true_rejected": {
+    "expected_open": false,
+    "opened": false,
+    "pass": true,
+    "refused_for_the_value": true
+   },
+   "partial_false_rejected": {
+    "expected_open": false,
+    "opened": false,
+    "pass": true,
+    "refused_for_the_value": true
+   },
+   "unknown_field_read": {
+    "expected_open": true,
+    "opened": true,
+    "pass": true,
+    "refused_for_the_value": false
+   }
+  },
+  "pass": false,
+  "source": "p2_0_2/rules.json",
+  "written": {
+   "criterion_unknown_field": true,
+   "dev_process_stamp_rule": true,
+   "spec_7_1_draft": false,
+   "spec_8_reading_rule": true
+  }
+ },
+ "fail_summary": {
+  "counted": [
+   "p1e1_checks.json:E1-1",
+   "p1e1_checks.json:E1-4",
+   "p1e1_checks.json:E1-5",
+   "p1e_checks.json:E-14",
+   "p1e_checks.json:E-7"
+  ],
+  "counted_fails": 5,
+  "historical": 13,
+  "pass": false,
+  "reference_run": "reports/rounds/P2-0.1/runs/20261019T001516Z-21b16ea",
+  "source": "p2_0_2/historical.json (eval.historical_p2_0_2 = the chain's summary)"
+ },
+ "regress": {
+  "conformance": {
+   "differing_tests": [],
+   "equal": false,
+   "level_claimed": [
+    3,
+    3
+   ],
+   "new_tests_passed": {
+    "C2-14": true
+   },
+   "passed": [
+    38,
+    39
+   ],
+   "reference_tests": 38,
+   "spec_version": [
+    "2.0.1",
+    "2.0.3"
+   ],
+   "tests": 39,
+   "unexpected_new_tests": []
+  },
+  "differing_fields": {
+   "p1d1/d1_13.json:codes›contract›#len": 0.08333333333333333,
+   "p1d1/d1_13.json:codes›contract›10": "inf",
+   "p1d1/d1_13.json:codes›contract›11": {
+    "a": "absent",
+    "b": "too_large 413"
+   },
+   "p1d1/d1_13.json:codes›contract›7": "inf",
+   "p1d1/d1_13.json:codes›contract›8": "inf",
+   "p1d1/d1_13.json:codes›contract›9": "inf",
+   "p1d1/d1_13.json:codes›server›#len": 0.08333333333333333,
+   "p1d1/d1_13.json:codes›server›10": "inf",
+   "p1d1/d1_13.json:codes›server›11": {
+    "a": "absent",
+    "b": "too_large 413"
+   },
+   "p1d1/d1_13.json:codes›server›7": "inf",
+   "p1d1/d1_13.json:codes›server›8": "inf",
+   "p1d1/d1_13.json:codes›server›9": "inf",
+   "p1d1/d1_13.json:http›codes›#len": 0.08333333333333333,
+   "p1d1/d1_13.json:http›codes›10›code": "inf",
+   "p1d1/d1_13.json:http›codes›10›contract_status": 0.005964214711729622,
+   "p1d1/d1_13.json:http›codes›10›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›10›status": 0.005964214711729622,
+   "p1d1/d1_13.json:http›codes›11›code": {
+    "a": "absent",
+    "b": "internal"
+   },
+   "p1d1/d1_13.json:http›codes›11›contract_status": {
+    "a": "absent",
+    "b": 500
+   },
+   "p1d1/d1_13.json:http›codes›11›error_code": {
+    "a": "absent",
+    "b": "internal"
+   },
+   "p1d1/d1_13.json:http›codes›11›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1/d1_13.json:http›codes›11›status": {
+    "a": "absent",
+    "b": 500
+   },
+   "p1d1/d1_13.json:http›codes›9›code": "inf",
+   "p1d1/d1_13.json:http›codes›9›error_code": "inf",
+   "p1d1/d1_13.json:http›status_fields›#len": 0.19230769230769232,
+   "p1d1/d1_13.json:http›status_fields›10": "inf",
+   "p1d1/d1_13.json:http›status_fields›11": "inf",
+   "p1d1/d1_13.json:http›status_fields›12": "inf",
+   "p1d1/d1_13.json:http›status_fields›13": "inf",
+   "p1d1/d1_13.json:http›status_fields›14": "inf",
+   "p1d1/d1_13.json:http›status_fields›15": "inf",
+   "p1d1/d1_13.json:http›status_fields›16": "inf",
+   "p1d1/d1_13.json:http›status_fields›17": "inf",
+   "p1d1/d1_13.json:http›status_fields›18": "inf",
+   "p1d1/d1_13.json:http›status_fields›19": "inf",
+   "p1d1/d1_13.json:http›status_fields›20": "inf",
+   "p1d1/d1_13.json:http›status_fields›21": {
+    "a": "absent",
+    "b": "attestation.window_s"
+   },
+   "p1d1/d1_13.json:http›status_fields›22": {
+    "a": "absent",
+    "b": "attestation.stage"
+   },
+   "p1d1/d1_13.json:http›status_fields›23": {
+    "a": "absent",
+    "b": "attestation.pending"
+   },
+   "p1d1/d1_13.json:http›status_fields›24": {
+    "a": "absent",
+    "b": "attestation.link_updates"
+   },
+   "p1d1/d1_13.json:http›status_fields›25": {
+    "a": "absent",
+    "b": "attestation.unmatched"
+   },
+   "p1d1/d1_13.json:http›status_fields›9": "inf",
+   "p1d1/d1_13.json:http›status_index›1›search_code": "inf",
+   "p1d1_checks.json:D1-13›codes": 0.08333333333333333,
+   "p1e/check_compare_fields.json:modules›13": {
+    "a": "absent",
+    "b": "compare_p2l"
+   },
+   "p1e/check_compare_fields.json:modules›14": {
+    "a": "absent",
+    "b": "compare_runs"
+   },
+   "p1e/client.json:vitest›passed": 0.007042253521126761,
+   "p1e/client.json:vitest›tests": 0.007042253521126761,
+   "p1e/e0/e14.json:auto_rebuild_false›code": "inf",
+   "p1e/e0/e14.json:auto_rebuild_false›message": "inf",
+   "p1e/e0/e14.json:pass": "inf",
+   "p1e/e0/e14.json:passed": 0.5,
+   "p1e/release/conformance_rootmark.json:mdk_version": "inf",
+   "p1e/release/release_local.json:version": "inf",
+   "p1e1/check_compare_fields.json:modules›13": {
+    "a": "absent",
+    "b": "compare_p2l"
+   },
+   "p1e1/check_compare_fields.json:modules›14": {
+    "a": "absent",
+    "b": "compare_runs"
+   },
+   "p1e1/contract.json:codes›contract›#len": 0.08333333333333333,
+   "p1e1/contract.json:codes›contract›10": "inf",
+   "p1e1/contract.json:codes›contract›11": {
+    "a": "absent",
+    "b": "too_large 413"
+   },
+   "p1e1/contract.json:codes›contract›7": "inf",
+   "p1e1/contract.json:codes›contract›8": "inf",
+   "p1e1/contract.json:codes›contract›9": "inf",
+   "p1e1/contract.json:codes›server›#len": 0.08333333333333333,
+   "p1e1/contract.json:codes›server›10": "inf",
+   "p1e1/contract.json:codes›server›11": {
+    "a": "absent",
+    "b": "too_large 413"
+   },
+   "p1e1/contract.json:codes›server›7": "inf",
+   "p1e1/contract.json:codes›server›8": "inf",
+   "p1e1/contract.json:codes›server›9": "inf",
+   "p1e1/contract.json:http›codes›#len": 0.08333333333333333,
+   "p1e1/contract.json:http›codes›10›code": "inf",
+   "p1e1/contract.json:http›codes›10›contract_status": 0.005964214711729622,
+   "p1e1/contract.json:http›codes›10›error_code": "inf",
+   "p1e1/contract.json:http›codes›10›status": 0.005964214711729622,
+   "p1e1/contract.json:http›codes›11›code": {
+    "a": "absent",
+    "b": "internal"
+   },
+   "p1e1/contract.json:http›codes›11›contract_status": {
+    "a": "absent",
+    "b": 500
+   },
+   "p1e1/contract.json:http›codes›11›error_code": {
+    "a": "absent",
+    "b": "internal"
+   },
+   "p1e1/contract.json:http›codes›11›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/contract.json:http›codes›11›status": {
+    "a": "absent",
+    "b": 500
+   },
+   "p1e1/contract.json:http›codes›9›code": "inf",
+   "p1e1/contract.json:http›codes›9›error_code": "inf",
+   "p1e1/contract.json:http›status_fields›#len": 0.19230769230769232,
+   "p1e1/contract.json:http›status_fields›10": "inf",
+   "p1e1/contract.json:http›status_fields›11": "inf",
+   "p1e1/contract.json:http›status_fields›12": "inf",
+   "p1e1/contract.json:http›status_fields›13": "inf",
+   "p1e1/contract.json:http›status_fields›14": "inf",
+   "p1e1/contract.json:http›status_fields›15": "inf",
+   "p1e1/contract.json:http›status_fields›16": "inf",
+   "p1e1/contract.json:http›status_fields›17": "inf",
+   "p1e1/contract.json:http›status_fields›18": "inf",
+   "p1e1/contract.json:http›status_fields›19": "inf",
+   "p1e1/contract.json:http›status_fields›20": "inf",
+   "p1e1/contract.json:http›status_fields›21": {
+    "a": "absent",
+    "b": "attestation.window_s"
+   },
+   "p1e1/contract.json:http›status_fields›22": {
+    "a": "absent",
+    "b": "attestation.stage"
+   },
+   "p1e1/contract.json:http›status_fields›23": {
+    "a": "absent",
+    "b": "attestation.pending"
+   },
+   "p1e1/contract.json:http›status_fields›24": {
+    "a": "absent",
+    "b": "attestation.link_updates"
+   },
+   "p1e1/contract.json:http›status_fields›25": {
+    "a": "absent",
+    "b": "attestation.unmatched"
+   },
+   "p1e1/contract.json:http›status_fields›9": "inf",
+   "p1e1/contract.json:http›status_index›1›search_code": "inf",
+   "p1e1/historical.json:counted_fails": 0.2857142857142857,
+   "p1e1/historical.json:counted›#len": 0.2857142857142857,
+   "p1e1/historical.json:counted›10": {
+    "a": "absent",
+    "b": "p1e1_checks.json:tamper"
+   },
+   "p1e1/historical.json:counted›11": {
+    "a": "absent",
+    "b": "p1e_checks.json:E-14"
+   },
+   "p1e1/historical.json:counted›12": {
+    "a": "absent",
+    "b": "p1e_checks.json:E-7"
+   },
+   "p1e1/historical.json:counted›13": {
+    "a": "absent",
+    "b": "p1e_checks.json:E-9"
+   },
+   "p1e1/historical.json:counted›5": "inf",
+   "p1e1/historical.json:counted›6": "inf",
+   "p1e1/historical.json:counted›7": "inf",
+   "p1e1/historical.json:counted›8": "inf",
+   "p1e1/historical.json:counted›9": "inf",
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection›shows›search_before_rebuild›error": "inf",
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection›shows›status_bar": "inf",
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection›shows›status_bar_after_rebuild": "inf",
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection›shows›tooltip": "inf",
+   "p1e1/release/plugin_e2e_real.json:steps›0›shows›text": "inf",
+   "p1e1/release/release.json:required_ok": "inf",
+   "p1e1/release/release.json:required_targets›#len": 0.5,
+   "p1e1/release/release.json:required_targets›1": {
+    "a": "absent",
+    "b": "x86_64-unknown-linux-gnu"
+   },
+   "p1e1/release/release.json:targets›0›version": "inf",
+   "p1e1/release/release.json:targets›2›required": "inf",
+   "p1e1/release/release.json:version": "inf",
+   "p1e1/release/release_check.json:items›#len": 0.19047619047619047,
+   "p1e1/release/release_check.json:items›0›detail": "inf",
+   "p1e1/release/release_check.json:items›0›item": "inf",
+   "p1e1/release/release_check.json:items›13›item": "inf",
+   "p1e1/release/release_check.json:items›14›item": "inf",
+   "p1e1/release/release_check.json:items›16›detail": "inf",
+   "p1e1/release/release_check.json:items›17›detail": {
+    "a": "absent",
+    "b": "installed rootmark-0.2.0-aarch64-apple-darwin.tar.gz; a changed archive refused"
+   },
+   "p1e1/release/release_check.json:items›17›id": {
+    "a": "absent",
+    "b": "R17"
+   },
+   "p1e1/release/release_check.json:items›17›item": {
+    "a": "absent",
+    "b": "installers install.sh / install.ps1 (SHA256SUMS checked, a changed archive refused)"
+   },
+   "p1e1/release/release_check.json:items›17›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/release/release_check.json:items›18›detail": {
+    "a": "absent",
+    "b": ""
+   },
+   "p1e1/release/release_check.json:items›18›id": {
+    "a": "absent",
+    "b": "R18"
+   },
+   "p1e1/release/release_check.json:items›18›item": {
+    "a": "absent",
+    "b": "CI release.yml: installer per job, SHA256SUMS, build provenance attestation"
+   },
+   "p1e1/release/release_check.json:items›18›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/release/release_check.json:items›19›detail": {
+    "a": "absent",
+    "b": ""
+   },
+   "p1e1/release/release_check.json:items›19›id": {
+    "a": "absent",
+    "b": "R19"
+   },
+   "p1e1/release/release_check.json:items›19›item": {
+    "a": "absent",
+    "b": "RELEASE.md: signing and notarization are written human steps"
+   },
+   "p1e1/release/release_check.json:items›19›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/release/release_check.json:items›20›detail": {
+    "a": "absent",
+    "b": ""
+   },
+   "p1e1/release/release_check.json:items›20›id": {
+    "a": "absent",
+    "b": "R20"
+   },
+   "p1e1/release/release_check.json:items›20›item": {
+    "a": "absent",
+    "b": "workflow actions pinned to full versions"
+   },
+   "p1e1/release/release_check.json:items›20›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/release/release_check.json:items›4›detail": "inf",
+   "p1e1/release/release_check.json:items›4›ok": "inf",
+   "p1e1/release/release_check.json:items›7›detail": "inf",
+   "p1e1/release/release_check.json:pass": "inf",
+   "p1e1/release/release_check.json:passed": 0.15,
+   "p1e1/release/release_check.json:total": 0.19047619047619047,
+   "p1e1/status/e1_1.json:auto_rebuild_false›search›code": "inf",
+   "p1e1/status/e1_1.json:cases›search 503 index_stale": "inf",
+   "p1e1/status/e1_1.json:pass": "inf",
+   "p1e1/status/e1_1.json:passed": "inf",
+   "p1e1_checks.json:E1-1›cases›search 503 index_stale": "inf",
+   "p1e1_checks.json:E1-1›pass": "inf",
+   "p1e1_checks.json:E1-1›passed": "inf",
+   "p1e1_checks.json:E1-4›failed›#len": 1.0,
+   "p1e1_checks.json:E1-4›failed›0": {
+    "a": "absent",
+    "b": "R4"
+   },
+   "p1e1_checks.json:E1-4›pass": "inf",
+   "p1e1_checks.json:E1-4›release_check": "inf",
+   "p1e1_checks.json:E1-4›release_md_items›#len": 0.19047619047619047,
+   "p1e1_checks.json:E1-4›release_md_items›17": {
+    "a": "absent",
+    "b": "R17"
+   },
+   "p1e1_checks.json:E1-4›release_md_items›18": {
+    "a": "absent",
+    "b": "R18"
+   },
+   "p1e1_checks.json:E1-4›release_md_items›19": {
+    "a": "absent",
+    "b": "R19"
+   },
+   "p1e1_checks.json:E1-4›release_md_items›20": {
+    "a": "absent",
+    "b": "R20"
+   },
+   "p1e1_checks.json:E1-4›script_items›#len": 0.19047619047619047,
+   "p1e1_checks.json:E1-4›script_items›10": "inf",
+   "p1e1_checks.json:E1-4›script_items›11": "inf",
+   "p1e1_checks.json:E1-4›script_items›12": "inf",
+   "p1e1_checks.json:E1-4›script_items›13": "inf",
+   "p1e1_checks.json:E1-4›script_items›14": "inf",
+   "p1e1_checks.json:E1-4›script_items›15": "inf",
+   "p1e1_checks.json:E1-4›script_items›16": "inf",
+   "p1e1_checks.json:E1-4›script_items›17": {
+    "a": "absent",
+    "b": "R6"
+   },
+   "p1e1_checks.json:E1-4›script_items›18": {
+    "a": "absent",
+    "b": "R7"
+   },
+   "p1e1_checks.json:E1-4›script_items›19": {
+    "a": "absent",
+    "b": "R8"
+   },
+   "p1e1_checks.json:E1-4›script_items›20": {
+    "a": "absent",
+    "b": "R9"
+   },
+   "p1e1_checks.json:E1-4›script_items›8": "inf",
+   "p1e1_checks.json:E1-4›script_items›9": "inf",
+   "p1e1_checks.json:E1-5›other_targets›x86_64-unknown-linux-gnu": {
+    "a": "skipped",
+    "b": "absent"
+   },
+   "p1e1_checks.json:E1-5›pass": "inf",
+   "p1e1_checks.json:E1-5›required_targets›#len": 0.5,
+   "p1e1_checks.json:E1-5›required_targets›1": {
+    "a": "absent",
+    "b": "x86_64-unknown-linux-gnu"
+   },
+   "p1e1_checks.json:E1-5›required›version": "inf",
+   "p1e1_checks.json:E1-9›connection_step›search_before_rebuild›error": "inf",
+   "p1e1_checks.json:E1-9›connection_step›status_bar": "inf",
+   "p1e1_checks.json:E1-9›connection_step›status_bar_after_rebuild": "inf",
+   "p1e1_checks.json:E1-9›connection_step›tooltip": "inf",
+   "p1e_checks.json:E-10›vitest›passed": 0.007042253521126761,
+   "p1e_checks.json:E-10›vitest›tests": 0.007042253521126761,
+   "p1e_checks.json:E-14›pass": "inf",
+   "p1e_checks.json:E-14›passed": "inf",
+   "p1e_checks.json:E-7›chain_local_target›version": "inf"
+  },
+  "excluded_differences": {
+   "conformance_p1d1.json:fixtures_manifest_hash": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "conformance_p1d1.json:passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "conformance_p1d1.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "conformance_p1d1.json:tests": {
+    "decision": "K-P2-02.3",
+    "leaves": 41
+   },
+   "conformance_p1d1.json:total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1b1_checks.json:criteria/B1-3/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1b_checks.json:fixtures_manifest_hash": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1c1_checks.json:C1-7/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1c_checks.json:C-1/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d/scene/scene.json:steps/0/shows/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d1_checks.json:D1-10/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d1_checks.json:D1-10/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d1_checks.json:D1-12/regress_vs_p1d/conformance/spec_version/1": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d_checks.json:D-9/conformance/spec_version/1": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:fields_declared": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:fields_in_code": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:file_constants": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules/#len": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules/11": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules/12": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/client.json:bundle_bytes": {
+    "decision": "K-P2-02.2",
+    "leaves": 1
+   },
+   "p1e/plugin_e2e/plugin_e2e.json:steps/0/shows/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/conformance_equiv.json:passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 2
+   },
+   "p1e/release/conformance_equiv.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 2
+   },
+   "p1e/release/conformance_equiv.json:total": {
+    "decision": "K-P2-02.3",
+    "leaves": 2
+   },
+   "p1e/release/conformance_rootmark.json:fixtures_manifest_hash": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/conformance_rootmark.json:passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/conformance_rootmark.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/conformance_rootmark.json:tests": {
+    "decision": "K-P2-02.3",
+    "leaves": 41
+   },
+   "p1e/release/conformance_rootmark.json:total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/release_local.json:conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/release_local.json:conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/release_local.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/scene/scene.json:steps/0/shows/mcp_spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/scene/scene.json:steps/0/shows/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:fields_declared": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:fields_in_code": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:file_constants": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules/#len": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules/11": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules/12": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/historical.json:fails": {
+    "decision": "K-P2-02.3",
+    "leaves": 77
+   },
+   "p1e1/release/release.json:commit": {
+    "decision": "K-P2-02.1",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:targets/0/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:targets/0/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:targets/0/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/1/item": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/14/detail": {
+    "decision": "K-P2-02.1",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/3/item": {
+    "decision": "K-P2-02.1",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/4/item": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/8/detail": {
+    "decision": "K-P2-02.2",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/9/item": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-5/required/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-5/required/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-5/required/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/regress_vs_p1e": {
+    "decision": "K-P2-02.3",
+    "leaves": 155
+   },
+   "p1e_checks.json:E-10/bundle_bytes": {
+    "decision": "K-P2-02.2",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-7/chain_local_target/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-7/chain_local_target/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-7/chain_local_target/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-9/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-9/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-9/regress_vs_p1d1": {
+    "decision": "K-P2-02.3",
+    "leaves": 35
+   }
+  },
+  "exclusions_without_difference": [],
+  "n_fields": 102495,
+  "p2_0_1_sets": {
+   "d_a": {
+    "differing": [],
+    "equal": true,
+    "events_equal": true
+   },
+   "d_a2": {
+    "differing": [],
+    "equal": true,
+    "events_equal": true
+   },
+   "d_c": {
+    "attestations_equal_but_matched": true,
+    "collide_ticks": 7,
+    "equal": true,
+    "events_same_multiset": true,
+    "matched_false_lines": 7,
+    "matched_other_lines": 0
+   },
+   "d_e_p2_0_1": {
+    "equal": true
+   },
+   "equal": true
+  },
+  "pass": false,
+  "reference_run": "20261019T001516Z-21b16ea",
+  "source": "regress_vs_p2_0_1.json"
+ },
+ "tamper": {
+  "controls": "4/4",
+  "pass": true,
+  "rejected": "12/12",
+  "source": "p2_0_2/tamper_p2_0_2.json"
+ },
+ "window": {
+  "source": "manifest.json (p2_0_2_test window_s)",
+  "window_s": 0.5
+ }
+}
