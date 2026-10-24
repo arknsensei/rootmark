@@ -6,6 +6,7 @@
 //! embedder per index, recorded as `embedder_id` with every vector.
 
 pub mod cli;
+pub mod config;
 pub mod embed;
 pub mod lexical;
 pub mod models;

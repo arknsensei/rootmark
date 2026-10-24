@@ -1,0 +1,1509 @@
+{
+  "id": "C3-07",
+  "output": [
+    {
+      "op": "ingest_dir",
+      "result": {
+        "documents": 12
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "snapshot_id": "d286f2e9e35ea6f863b350c3cc23f1f6"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "snapshot_id": "021c16773a19d1656ebd96c7974b6c6f"
+      }
+    },
+    {
+      "op": "ingest",
+      "result": {
+        "snapshot_id": "6520e3391c7a6fc877c371bd51631164"
+      }
+    },
+    {
+      "op": "checkpoint",
+      "result": {
+        "checkpoint_id": "b10c012a2b2e63119e4fe04297c948b4"
+      }
+    },
+    {
+      "op": "build",
+      "result": {
+        "records": 60,
+        "snapshots": 15
+      }
+    },
+    {
+      "op": "view",
+      "result": {
+        "canonical": 33,
+        "proposal": 27
+      }
+    },
+    {
+      "op": "search",
+      "result": {
+        "derived_hits": 0,
+        "include_proposal": true,
+        "lengths": {
+          "k": 3,
+          "max_canonical": 3,
+          "max_proposal": 3,
+          "max_total": 6,
+          "within_bounds": true
+        },
+        "mode": "lexical",
+        "proposals_after_canonical": true,
+        "rankings": [
+          {
+            "query": "espresso grinder routine",
+            "ranking": [
+              [
+                "filter.md",
+                "28cced32e3ed618241f345149b1f1fa3",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "1267cec336ac47bb936b22edc988ae67",
+                "canonical"
+              ],
+              [
+                "blends.md",
+                "970dcdaa33a4e6cbf6f9b975624fd664",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "1c7e358dbab151dfc4a940cabba3b374",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "dd67a16061bbfe7067ee95f1456bbb29",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "a9df42b61ceb174c1d32f4211cee43a1",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "milk and water temperature",
+            "ranking": [
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "filter.md",
+                "b54aedf70c6a2863447e95a5a762f994",
+                "canonical"
+              ],
+              [
+                "roasting.md",
+                "1085aebb5a903c8508c6c4e11114510a",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "1c3529493d3360dd9ebf52ea24b2518e",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "342244180bc6e1c4caf7dc939b276bac",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "7e837db28e85ddc2a80392b6130d5252",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "roast and cupping notes",
+            "ranking": [
+              [
+                "roasting.md",
+                "1085aebb5a903c8508c6c4e11114510a",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "17c51c275f2400c8a123451b7768dc08",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "57d21cd2875a6d55446c9bb8be4deb47",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "4a2dc9a7f87fee99a4c8c098acb91d2e",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "214ca7b80022bf719fa3f2443ed219f4",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "299e0db45d7dbbc35974c90c8300bf8e",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "descaling the machine every month",
+            "ranking": [
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "af07e4e6ed2aaf03dd1a7d666314c9cf",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "c36c971e0bcc44dcb2015a1a45e84f01",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "3fa1e31132e4d3371d4cf01dba83986a",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "f509d4b467c24eee2c8c096f93b5339a",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "house blend recipe",
+            "ranking": [
+              [
+                "blends.md",
+                "88e495b8ab86f8778ea62e0ea0da47ad",
+                "canonical"
+              ],
+              [
+                "origins.md",
+                "5838f63499556e694a7bd934d735b0ed",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "341ef477749c8ca2c59d041408dbbcf9",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "f4915bc959d04b0350806cddcbb95959",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "3d4f99d65b1cc17423453e426cc34864",
+                "proposal"
+              ]
+            ]
+          }
+        ],
+        "runs": 1,
+        "runs_equal": true
+      }
+    },
+    {
+      "op": "search",
+      "result": {
+        "derived_hits": 0,
+        "include_proposal": true,
+        "lengths": {
+          "k": 3,
+          "max_canonical": 3,
+          "max_proposal": 3,
+          "max_total": 6,
+          "within_bounds": true
+        },
+        "mode": "flat",
+        "proposals_after_canonical": true,
+        "rankings": [
+          {
+            "query": "espresso grinder routine",
+            "ranking": [
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "1267cec336ac47bb936b22edc988ae67",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "f4915bc959d04b0350806cddcbb95959",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "dd67a16061bbfe7067ee95f1456bbb29",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "3d4f99d65b1cc17423453e426cc34864",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "milk and water temperature",
+            "ranking": [
+              [
+                "roast-log.md",
+                "a38f7786c420c06fd068a3942852b261",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "filter.md",
+                "b54aedf70c6a2863447e95a5a762f994",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "1c3529493d3360dd9ebf52ea24b2518e",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "342244180bc6e1c4caf7dc939b276bac",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "7e837db28e85ddc2a80392b6130d5252",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "roast and cupping notes",
+            "ranking": [
+              [
+                "cupping.md",
+                "17c51c275f2400c8a123451b7768dc08",
+                "canonical"
+              ],
+              [
+                "roast-log.md",
+                "a38f7786c420c06fd068a3942852b261",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "ae84f0a687c619e7dc36c3349d085db0",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "214ca7b80022bf719fa3f2443ed219f4",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "9f16e8a323c54ed3c92f65a755287536",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "descaling the machine every month",
+            "ranking": [
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "af07e4e6ed2aaf03dd1a7d666314c9cf",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "3fa1e31132e4d3371d4cf01dba83986a",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "f509d4b467c24eee2c8c096f93b5339a",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "c36c971e0bcc44dcb2015a1a45e84f01",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "house blend recipe",
+            "ranking": [
+              [
+                "blends.md",
+                "88e495b8ab86f8778ea62e0ea0da47ad",
+                "canonical"
+              ],
+              [
+                "blends.md",
+                "17927d5509eda6a71ee9b0345472608d",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "f4915bc959d04b0350806cddcbb95959",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "3d4f99d65b1cc17423453e426cc34864",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "341ef477749c8ca2c59d041408dbbcf9",
+                "proposal"
+              ]
+            ]
+          }
+        ],
+        "runs": 1,
+        "runs_equal": true
+      }
+    },
+    {
+      "op": "search",
+      "result": {
+        "derived_hits": 0,
+        "include_proposal": true,
+        "lengths": {
+          "k": 3,
+          "max_canonical": 3,
+          "max_proposal": 3,
+          "max_total": 6,
+          "within_bounds": true
+        },
+        "mode": "hybrid",
+        "proposals_after_canonical": true,
+        "rankings": [
+          {
+            "query": "espresso grinder routine",
+            "ranking": [
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "1267cec336ac47bb936b22edc988ae67",
+                "canonical"
+              ],
+              [
+                "blends.md",
+                "970dcdaa33a4e6cbf6f9b975624fd664",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "dd67a16061bbfe7067ee95f1456bbb29",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "1c7e358dbab151dfc4a940cabba3b374",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "a9df42b61ceb174c1d32f4211cee43a1",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "milk and water temperature",
+            "ranking": [
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "filter.md",
+                "b54aedf70c6a2863447e95a5a762f994",
+                "canonical"
+              ],
+              [
+                "roast-log.md",
+                "a38f7786c420c06fd068a3942852b261",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "1c3529493d3360dd9ebf52ea24b2518e",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "342244180bc6e1c4caf7dc939b276bac",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "7e837db28e85ddc2a80392b6130d5252",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "roast and cupping notes",
+            "ranking": [
+              [
+                "cupping.md",
+                "17c51c275f2400c8a123451b7768dc08",
+                "canonical"
+              ],
+              [
+                "roasting.md",
+                "1085aebb5a903c8508c6c4e11114510a",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "57d21cd2875a6d55446c9bb8be4deb47",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "214ca7b80022bf719fa3f2443ed219f4",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "ae84f0a687c619e7dc36c3349d085db0",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "4a2dc9a7f87fee99a4c8c098acb91d2e",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "descaling the machine every month",
+            "ranking": [
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "af07e4e6ed2aaf03dd1a7d666314c9cf",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "3fa1e31132e4d3371d4cf01dba83986a",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "c36c971e0bcc44dcb2015a1a45e84f01",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "f509d4b467c24eee2c8c096f93b5339a",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "house blend recipe",
+            "ranking": [
+              [
+                "blends.md",
+                "88e495b8ab86f8778ea62e0ea0da47ad",
+                "canonical"
+              ],
+              [
+                "origins.md",
+                "5838f63499556e694a7bd934d735b0ed",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "f4915bc959d04b0350806cddcbb95959",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "341ef477749c8ca2c59d041408dbbcf9",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "3d4f99d65b1cc17423453e426cc34864",
+                "proposal"
+              ]
+            ]
+          }
+        ],
+        "runs": 1,
+        "runs_equal": true
+      }
+    },
+    {
+      "op": "search",
+      "result": {
+        "derived_hits": 0,
+        "include_proposal": true,
+        "lengths": {
+          "k": 5,
+          "max_canonical": 5,
+          "max_proposal": 5,
+          "max_total": 10,
+          "within_bounds": true
+        },
+        "mode": "lexical",
+        "proposals_after_canonical": true,
+        "rankings": [
+          {
+            "query": "espresso grinder routine",
+            "ranking": [
+              [
+                "filter.md",
+                "28cced32e3ed618241f345149b1f1fa3",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "1267cec336ac47bb936b22edc988ae67",
+                "canonical"
+              ],
+              [
+                "blends.md",
+                "970dcdaa33a4e6cbf6f9b975624fd664",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "grinders.md",
+                "cde621bcb59f58d8e6460823c1b0a7fa",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "1c7e358dbab151dfc4a940cabba3b374",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "dd67a16061bbfe7067ee95f1456bbb29",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "a9df42b61ceb174c1d32f4211cee43a1",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "9025ad0ad11a2021b25f9baf78527985",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "9340cc033f65703c83a0f9d7ce0433d3",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "milk and water temperature",
+            "ranking": [
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "filter.md",
+                "b54aedf70c6a2863447e95a5a762f994",
+                "canonical"
+              ],
+              [
+                "roasting.md",
+                "1085aebb5a903c8508c6c4e11114510a",
+                "canonical"
+              ],
+              [
+                "glossary.md",
+                "8f7cb256bdb20a28c16547ca1a194ad1",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "2a453ed2e065e0efcbb78add9ed8c8c4",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "1c3529493d3360dd9ebf52ea24b2518e",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "342244180bc6e1c4caf7dc939b276bac",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "7e837db28e85ddc2a80392b6130d5252",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "b343bc026e0a82de34fb2ce98f1c7927",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "972123c0597e7af0e0e078e1e50664e3",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "roast and cupping notes",
+            "ranking": [
+              [
+                "roasting.md",
+                "1085aebb5a903c8508c6c4e11114510a",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "17c51c275f2400c8a123451b7768dc08",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "57d21cd2875a6d55446c9bb8be4deb47",
+                "canonical"
+              ],
+              [
+                "roasting.md",
+                "326e58dcb8319def7ccc49476d4aa3ea",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "4a2dc9a7f87fee99a4c8c098acb91d2e",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "214ca7b80022bf719fa3f2443ed219f4",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "299e0db45d7dbbc35974c90c8300bf8e",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "d3152b47059098dac2db4ba3448a4938",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "ae84f0a687c619e7dc36c3349d085db0",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "descaling the machine every month",
+            "ranking": [
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "af07e4e6ed2aaf03dd1a7d666314c9cf",
+                "canonical"
+              ],
+              [
+                "roasting.md",
+                "326e58dcb8319def7ccc49476d4aa3ea",
+                "canonical"
+              ],
+              [
+                "roast-log.md",
+                "a38f7786c420c06fd068a3942852b261",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "c36c971e0bcc44dcb2015a1a45e84f01",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "3fa1e31132e4d3371d4cf01dba83986a",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "f509d4b467c24eee2c8c096f93b5339a",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "1c3529493d3360dd9ebf52ea24b2518e",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "1c7e358dbab151dfc4a940cabba3b374",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "house blend recipe",
+            "ranking": [
+              [
+                "blends.md",
+                "88e495b8ab86f8778ea62e0ea0da47ad",
+                "canonical"
+              ],
+              [
+                "origins.md",
+                "5838f63499556e694a7bd934d735b0ed",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "2049c05833d7f1af7b92a08d1783e92b",
+                "canonical"
+              ],
+              [
+                "blends.md",
+                "17927d5509eda6a71ee9b0345472608d",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "341ef477749c8ca2c59d041408dbbcf9",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "f4915bc959d04b0350806cddcbb95959",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "3d4f99d65b1cc17423453e426cc34864",
+                "proposal"
+              ]
+            ]
+          }
+        ],
+        "runs": 1,
+        "runs_equal": true
+      }
+    },
+    {
+      "op": "search",
+      "result": {
+        "derived_hits": 0,
+        "include_proposal": true,
+        "lengths": {
+          "k": 5,
+          "max_canonical": 5,
+          "max_proposal": 5,
+          "max_total": 10,
+          "within_bounds": true
+        },
+        "mode": "flat",
+        "proposals_after_canonical": true,
+        "rankings": [
+          {
+            "query": "espresso grinder routine",
+            "ranking": [
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "1267cec336ac47bb936b22edc988ae67",
+                "canonical"
+              ],
+              [
+                "staff.md",
+                "22f6acd71ac5c2f8dfe202ac5bb20a9b",
+                "canonical"
+              ],
+              [
+                "grinders.md",
+                "cde621bcb59f58d8e6460823c1b0a7fa",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "f4915bc959d04b0350806cddcbb95959",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "dd67a16061bbfe7067ee95f1456bbb29",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "3d4f99d65b1cc17423453e426cc34864",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "1c7e358dbab151dfc4a940cabba3b374",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "9340cc033f65703c83a0f9d7ce0433d3",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "milk and water temperature",
+            "ranking": [
+              [
+                "roast-log.md",
+                "a38f7786c420c06fd068a3942852b261",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "filter.md",
+                "b54aedf70c6a2863447e95a5a762f994",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "af07e4e6ed2aaf03dd1a7d666314c9cf",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "17c51c275f2400c8a123451b7768dc08",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "1c3529493d3360dd9ebf52ea24b2518e",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "342244180bc6e1c4caf7dc939b276bac",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "7e837db28e85ddc2a80392b6130d5252",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "b343bc026e0a82de34fb2ce98f1c7927",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "972123c0597e7af0e0e078e1e50664e3",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "roast and cupping notes",
+            "ranking": [
+              [
+                "cupping.md",
+                "17c51c275f2400c8a123451b7768dc08",
+                "canonical"
+              ],
+              [
+                "roast-log.md",
+                "a38f7786c420c06fd068a3942852b261",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "57d21cd2875a6d55446c9bb8be4deb47",
+                "canonical"
+              ],
+              [
+                "roasting.md",
+                "1085aebb5a903c8508c6c4e11114510a",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "ae84f0a687c619e7dc36c3349d085db0",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "214ca7b80022bf719fa3f2443ed219f4",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "9f16e8a323c54ed3c92f65a755287536",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "299e0db45d7dbbc35974c90c8300bf8e",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "d3152b47059098dac2db4ba3448a4938",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "descaling the machine every month",
+            "ranking": [
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "af07e4e6ed2aaf03dd1a7d666314c9cf",
+                "canonical"
+              ],
+              [
+                "grinders.md",
+                "65d4e0b68b539be8256b1e9441a3dc60",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "2a453ed2e065e0efcbb78add9ed8c8c4",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "3fa1e31132e4d3371d4cf01dba83986a",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "f509d4b467c24eee2c8c096f93b5339a",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "c36c971e0bcc44dcb2015a1a45e84f01",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "b343bc026e0a82de34fb2ce98f1c7927",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "1c3529493d3360dd9ebf52ea24b2518e",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "house blend recipe",
+            "ranking": [
+              [
+                "blends.md",
+                "88e495b8ab86f8778ea62e0ea0da47ad",
+                "canonical"
+              ],
+              [
+                "blends.md",
+                "17927d5509eda6a71ee9b0345472608d",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "origins.md",
+                "5838f63499556e694a7bd934d735b0ed",
+                "canonical"
+              ],
+              [
+                "blends.md",
+                "970dcdaa33a4e6cbf6f9b975624fd664",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "f4915bc959d04b0350806cddcbb95959",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "3d4f99d65b1cc17423453e426cc34864",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "341ef477749c8ca2c59d041408dbbcf9",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "214ca7b80022bf719fa3f2443ed219f4",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "972123c0597e7af0e0e078e1e50664e3",
+                "proposal"
+              ]
+            ]
+          }
+        ],
+        "runs": 1,
+        "runs_equal": true
+      }
+    },
+    {
+      "op": "search",
+      "result": {
+        "derived_hits": 0,
+        "include_proposal": true,
+        "lengths": {
+          "k": 5,
+          "max_canonical": 5,
+          "max_proposal": 5,
+          "max_total": 10,
+          "within_bounds": true
+        },
+        "mode": "hybrid",
+        "proposals_after_canonical": true,
+        "rankings": [
+          {
+            "query": "espresso grinder routine",
+            "ranking": [
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "1267cec336ac47bb936b22edc988ae67",
+                "canonical"
+              ],
+              [
+                "blends.md",
+                "970dcdaa33a4e6cbf6f9b975624fd664",
+                "canonical"
+              ],
+              [
+                "grinders.md",
+                "cde621bcb59f58d8e6460823c1b0a7fa",
+                "canonical"
+              ],
+              [
+                "filter.md",
+                "28cced32e3ed618241f345149b1f1fa3",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "dd67a16061bbfe7067ee95f1456bbb29",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "1c7e358dbab151dfc4a940cabba3b374",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "a9df42b61ceb174c1d32f4211cee43a1",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "9340cc033f65703c83a0f9d7ce0433d3",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "9025ad0ad11a2021b25f9baf78527985",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "milk and water temperature",
+            "ranking": [
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "filter.md",
+                "b54aedf70c6a2863447e95a5a762f994",
+                "canonical"
+              ],
+              [
+                "roast-log.md",
+                "a38f7786c420c06fd068a3942852b261",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "af07e4e6ed2aaf03dd1a7d666314c9cf",
+                "canonical"
+              ],
+              [
+                "glossary.md",
+                "8f7cb256bdb20a28c16547ca1a194ad1",
+                "canonical"
+              ],
+              [
+                "agent/a0.md",
+                "1c3529493d3360dd9ebf52ea24b2518e",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "342244180bc6e1c4caf7dc939b276bac",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "7e837db28e85ddc2a80392b6130d5252",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "b343bc026e0a82de34fb2ce98f1c7927",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "972123c0597e7af0e0e078e1e50664e3",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "roast and cupping notes",
+            "ranking": [
+              [
+                "cupping.md",
+                "17c51c275f2400c8a123451b7768dc08",
+                "canonical"
+              ],
+              [
+                "roasting.md",
+                "1085aebb5a903c8508c6c4e11114510a",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "57d21cd2875a6d55446c9bb8be4deb47",
+                "canonical"
+              ],
+              [
+                "cupping.md",
+                "9f71b7d8de8e520d3ac5c5fda997e783",
+                "canonical"
+              ],
+              [
+                "roast-log.md",
+                "a38f7786c420c06fd068a3942852b261",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "214ca7b80022bf719fa3f2443ed219f4",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "ae84f0a687c619e7dc36c3349d085db0",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "4a2dc9a7f87fee99a4c8c098acb91d2e",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "299e0db45d7dbbc35974c90c8300bf8e",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "9f16e8a323c54ed3c92f65a755287536",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "descaling the machine every month",
+            "ranking": [
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "5f8b580cb276953d269434eec9a68dc4",
+                "canonical"
+              ],
+              [
+                "maintenance.md",
+                "af07e4e6ed2aaf03dd1a7d666314c9cf",
+                "canonical"
+              ],
+              [
+                "roast-log.md",
+                "a38f7786c420c06fd068a3942852b261",
+                "canonical"
+              ],
+              [
+                "safety.md",
+                "21e976f4b4f5e5d4896bec0ac3b1069e",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "3fa1e31132e4d3371d4cf01dba83986a",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "c36c971e0bcc44dcb2015a1a45e84f01",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "f509d4b467c24eee2c8c096f93b5339a",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "1c3529493d3360dd9ebf52ea24b2518e",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "b343bc026e0a82de34fb2ce98f1c7927",
+                "proposal"
+              ]
+            ]
+          },
+          {
+            "query": "house blend recipe",
+            "ranking": [
+              [
+                "blends.md",
+                "88e495b8ab86f8778ea62e0ea0da47ad",
+                "canonical"
+              ],
+              [
+                "origins.md",
+                "5838f63499556e694a7bd934d735b0ed",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "e1ab6ef6e655bf02b4c0b39c2f3da810",
+                "canonical"
+              ],
+              [
+                "blends.md",
+                "17927d5509eda6a71ee9b0345472608d",
+                "canonical"
+              ],
+              [
+                "espresso.md",
+                "2049c05833d7f1af7b92a08d1783e92b",
+                "canonical"
+              ],
+              [
+                "agent/a1.md",
+                "f4915bc959d04b0350806cddcbb95959",
+                "proposal"
+              ],
+              [
+                "agent/a0.md",
+                "341ef477749c8ca2c59d041408dbbcf9",
+                "proposal"
+              ],
+              [
+                "agent/a2.md",
+                "3d4f99d65b1cc17423453e426cc34864",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "214ca7b80022bf719fa3f2443ed219f4",
+                "proposal"
+              ],
+              [
+                "agent/a1.md",
+                "972123c0597e7af0e0e078e1e50664e3",
+                "proposal"
+              ]
+            ]
+          }
+        ],
+        "runs": 1,
+        "runs_equal": true
+      }
+    }
+  ]
+}

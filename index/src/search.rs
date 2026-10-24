@@ -24,7 +24,6 @@
 //! error (spec §9, K-C1.5).
 
 use crate::store::{Store, BM25_B, BM25_K1};
-use crate::tokenize::tokens;
 use anyhow::{bail, Context, Result};
 use rootmarkcore::{Checkpoint, Layer, Vault};
 use serde::{Deserialize, Serialize};
@@ -178,7 +177,7 @@ pub fn bm25_with(
     scored: &[(usize, Layer)],
     query: &str,
 ) -> Result<Vec<Scored>> {
-    let q = tokens(query);
+    let q = store.tokenizer().tokens(query);
     if q.is_empty() || scored.is_empty() {
         return Ok(Vec::new());
     }

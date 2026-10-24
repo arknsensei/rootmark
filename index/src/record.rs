@@ -68,6 +68,16 @@ fn record_id(
 
 /// Structural chunks of `blocks` (one snapshot of `doc`) as records.
 pub fn chunk_records(doc: &str, blocks: &[Block]) -> Result<Vec<ChunkRecord>> {
+    chunk_records_with(doc, blocks, crate::tokenize::Variant::default())
+}
+
+/// `chunk_records` with the lexical variant `tok` (its token count is the
+/// record's `lexical_len`; P2-L/L1).
+pub fn chunk_records_with(
+    doc: &str,
+    blocks: &[Block],
+    tok: crate::tokenize::Variant,
+) -> Result<Vec<ChunkRecord>> {
     let mut out = Vec::new();
     let mut i = 0;
     for c in structural(doc, blocks) {
@@ -89,7 +99,7 @@ pub fn chunk_records(doc: &str, blocks: &[Block]) -> Result<Vec<ChunkRecord>> {
                 version_id: b.version_id.clone(),
             })
             .collect();
-        let lexical_len = u32::try_from(crate::tokenize::tokens(&c.text).len())?;
+        let lexical_len = u32::try_from(tok.tokens(&c.text).len())?;
         out.push(ChunkRecord {
             record_id: record_id(doc, &c.chunk_id, &c.heading_path, &refs, &c.text)?,
             doc_path: doc.to_string(),
@@ -136,7 +146,11 @@ pub fn build_snapshots(vault: &Vault) -> Result<BTreeMap<(String, String), Snaps
     Ok(out)
 }
 
-/// Records of one snapshot.
-pub fn snapshot_records(vault: &Vault, snap: &Snapshot) -> Result<Vec<ChunkRecord>> {
-    chunk_records(&snap.doc_path, &vault.snapshot_blocks(snap)?)
+/// Records of one snapshot (lexical variant `tok`).
+pub fn snapshot_records(
+    vault: &Vault,
+    snap: &Snapshot,
+    tok: crate::tokenize::Variant,
+) -> Result<Vec<ChunkRecord>> {
+    chunk_records_with(&snap.doc_path, &vault.snapshot_blocks(snap)?, tok)
 }

@@ -24,6 +24,7 @@
 use crate::embed::Embedder;
 use crate::lexical::{self, Lexical};
 use crate::record::{build_snapshots, snapshot_records, ChunkRecord, SnapshotChunks};
+use crate::tokenize::Variant;
 use crate::vectors::{self, VectorMeta};
 use anyhow::{bail, Context, Result};
 use rootmarkcore::Vault;
@@ -59,23 +60,42 @@ pub struct LexicalParams {
     pub k1: f64,
     pub b: f64,
     /// tokenizer id (`crate::tokenize::TOKENIZER_NAME`: lower case, maximal
-    /// runs of `[a-z0-9]`)
+    /// runs of `[a-z0-9]`; P2-L/L1: or `uni_fold_tr`, `[index] tokenizer`)
     pub tokenizer: String,
     /// document length (`BM25_DL`; K-D1.7)
     pub dl: String,
 }
 
 impl LexicalParams {
-    /// The record of this build of the index.
+    /// The record of this build of the index with the default variant.
     pub fn current() -> LexicalParams {
+        LexicalParams::of(Variant::default())
+    }
+
+    /// The record with the lexical variant `tok` (P2-L/L1): only
+    /// `tokenizer` differs.
+    pub fn of(tok: Variant) -> LexicalParams {
         LexicalParams {
             variant: BM25_VARIANT.into(),
             idf: BM25_IDF.into(),
             k1: BM25_K1,
             b: BM25_B,
-            tokenizer: crate::tokenize::TOKENIZER_NAME.into(),
+            tokenizer: tok.name().into(),
             dl: BM25_DL.into(),
         }
+    }
+
+    /// The record a vault's index must hold: its `[index] tokenizer`
+    /// (`crate::config`).
+    pub fn of_vault(vault: &Vault) -> Result<LexicalParams> {
+        Ok(LexicalParams::of(
+            crate::config::IndexConfig::of_vault(vault.root())?.tokenizer,
+        ))
+    }
+
+    /// The variant this record names (`None`: none this build knows).
+    pub fn tokenizer(&self) -> Option<Variant> {
+        Variant::of_name(&self.tokenizer).filter(|&t| *self == LexicalParams::of(t))
     }
 }
 
@@ -144,10 +164,18 @@ pub struct BuildReport {
 /// Chunk records of every snapshot an index build covers, deduplicated and
 /// in storage order, plus the snapshot → records map.
 pub fn collect(vault: &Vault) -> Result<(Vec<ChunkRecord>, Vec<SnapshotChunks>)> {
+    collect_with(vault, Variant::default())
+}
+
+/// `collect` with the lexical variant `tok` (records' `lexical_len`).
+pub fn collect_with(
+    vault: &Vault,
+    tok: Variant,
+) -> Result<(Vec<ChunkRecord>, Vec<SnapshotChunks>)> {
     let mut records: BTreeMap<String, ChunkRecord> = BTreeMap::new();
     let mut snaps = Vec::new();
     for ((doc, sid), snap) in build_snapshots(vault)? {
-        let recs = snapshot_records(vault, &snap)?;
+        let recs = snapshot_records(vault, &snap, tok)?;
         let mut seen = std::collections::HashSet::new();
         for r in &recs {
             if !seen.insert(r.chunk_id.clone()) {
@@ -199,7 +227,8 @@ impl std::error::Error for IndexStale {}
 /// manifest is of this format and lexical record. Reads `manifest.json`
 /// only; the full check is `Store::open`.
 pub fn staleness(vault: &Vault) -> Result<Option<IndexStale>> {
-    match manifest_of(&index_dir(vault)) {
+    let want = LexicalParams::of_vault(vault)?;
+    match manifest_of(&index_dir(vault), Some(&want)) {
         Ok(_) => Ok(None),
         Err(e) => match e.downcast::<IndexStale>() {
             Ok(s) => Ok(Some(s)),
@@ -209,8 +238,10 @@ pub fn staleness(vault: &Vault) -> Result<Option<IndexStale>> {
 }
 
 /// `manifest.json` of `dir`, checked for format and lexical record first
-/// (an index of another format says so: `IndexStale`).
-fn manifest_of(dir: &Path) -> Result<Manifest> {
+/// (an index of another format says so: `IndexStale`). The lexical record
+/// must be `want` (the vault's, `LexicalParams::of_vault`); with `None`,
+/// that of any variant this build knows (vector reuse across variants).
+fn manifest_of(dir: &Path, want: Option<&LexicalParams>) -> Result<Manifest> {
     let stale = |m: String| anyhow::Error::new(IndexStale(m));
     if !dir.join("manifest.json").is_file() {
         return Err(stale(format!(
@@ -228,18 +259,26 @@ fn manifest_of(dir: &Path) -> Result<Manifest> {
         )));
     }
     let manifest: Manifest = serde_json::from_value(raw).context("index manifest.json")?;
-    if manifest.lexical != LexicalParams::current() {
-        return Err(stale(format!(
-            "index lexical record {:?} != this implementation's {:?}; rebuild it",
-            manifest.lexical,
-            LexicalParams::current()
-        )));
+    match want {
+        Some(w) if manifest.lexical != *w => {
+            return Err(stale(format!(
+                "index lexical record {:?} != this implementation's {:?}; rebuild it",
+                manifest.lexical, w
+            )));
+        }
+        None if manifest.lexical.tokenizer().is_none() => {
+            return Err(stale(format!(
+                "index lexical record {:?} is none this implementation knows; rebuild it",
+                manifest.lexical
+            )));
+        }
+        _ => {}
     }
     Ok(manifest)
 }
 
-fn load(dir: &Path) -> Result<Loaded> {
-    let manifest = manifest_of(dir)?;
+fn load(dir: &Path, want: Option<&LexicalParams>) -> Result<Loaded> {
+    let manifest = manifest_of(dir, want)?;
     let (records, rh): (Vec<ChunkRecord>, String) = read_jsonl(&dir.join("records.jsonl"))?;
     let (snaps, sh): (Vec<SnapshotChunks>, String) = read_jsonl(&dir.join("snapshots.jsonl"))?;
     let (metas, eh): (Vec<VectorMeta>, String) = read_jsonl(&dir.join("vectors/embedders.jsonl"))?;
@@ -294,7 +333,8 @@ fn reusable(dir: &Path, embedder_id: &str, dim: usize) -> (HashMap<String, Vec<f
     if !dir.exists() {
         return (HashMap::new(), "none: no previous index".into());
     }
-    match load(dir) {
+    // vectors do not depend on the lexical variant (P2-L/L1)
+    match load(dir, None) {
         Err(e) => (
             HashMap::new(),
             format!("none: previous index invalid: {e:#}"),
@@ -332,6 +372,7 @@ fn write_cold(
     vecs: &[Vec<f32>],
     embedder_id: &str,
     dim: usize,
+    lexical_params: &LexicalParams,
 ) -> Result<()> {
     if records
         .windows(2)
@@ -357,7 +398,10 @@ fn write_cold(
     let snap_bytes = jsonl(snaps)?;
     fs::write(tmp.join("records.jsonl"), &rec_bytes)?;
     fs::write(tmp.join("snapshots.jsonl"), &snap_bytes)?;
-    lexical::write(&tmp.join("lexical"), records)?;
+    let tok = lexical_params
+        .tokenizer()
+        .with_context(|| format!("unknown lexical record {lexical_params:?}"))?;
+    lexical::write_variant(&tmp.join("lexical"), records, tok)?;
     let vec_bytes = vectors::encode(vecs, dim)?;
     fs::create_dir_all(tmp.join("vectors"))?;
     fs::write(tmp.join("vectors/vectors.f32"), &vec_bytes)?;
@@ -366,7 +410,7 @@ fn write_cold(
     let manifest = Manifest {
         format: FORMAT.into(),
         chunking: "structural".into(),
-        lexical: LexicalParams::current(),
+        lexical: lexical_params.clone(),
         embedder_id: embedder_id.to_string(),
         dim,
         records: records.len(),
@@ -392,7 +436,9 @@ fn install(vault: &Vault, tmp: &Path) -> Result<()> {
 /// Rebuilds `<vault>/.rootmark/index/` from the vault (the hot tier is
 /// dropped: every head and checkpoint snapshot is in the new cold index).
 pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
-    let (records, snaps) = collect(vault)?;
+    let lexical_params = LexicalParams::of_vault(vault)?;
+    let tok = lexical_params.tokenizer().context("lexical variant")?;
+    let (records, snaps) = collect_with(vault, tok)?;
     let dir = index_dir(vault);
     let (mut have, reuse) = reusable(&dir, embedder.id(), embedder.dim());
     let missing: Vec<&ChunkRecord> = records
@@ -408,7 +454,15 @@ pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
         .map(|r| have.remove(&r.record_id).context("vector"))
         .collect::<Result<_>>()?;
     let tmp = vault.store_dir().join("index.build");
-    write_cold(&tmp, &records, &snaps, &vecs, embedder.id(), embedder.dim())?;
+    write_cold(
+        &tmp,
+        &records,
+        &snaps,
+        &vecs,
+        embedder.id(),
+        embedder.dim(),
+        &lexical_params,
+    )?;
     install(vault, &tmp)?;
     Ok(BuildReport {
         records: records.len(),
@@ -521,6 +575,9 @@ pub struct Store {
     /// a hot append failed part-way: the files may be misaligned, no
     /// further append (reopen to get the error, rebuild to repair)
     poisoned: bool,
+    /// the lexical variant of the index (manifest `lexical.tokenizer`):
+    /// queries and hot records are tokenized with it
+    tok: Variant,
 }
 
 impl Store {
@@ -533,7 +590,8 @@ impl Store {
             mut records,
             snaps,
             mut vecs,
-        } = load(&dir)?;
+        } = load(&dir, Some(&LexicalParams::of_vault(vault)?))?;
+        let tok = manifest.lexical.tokenizer().context("lexical variant")?;
         if manifest.embedder_id != embedder.id() || manifest.dim != embedder.dim() {
             bail!(
                 "index embedder_id {} (dim {}) != query embedder {} (dim {}): rebuild the index",
@@ -574,6 +632,7 @@ impl Store {
             lexical,
             hot_postings: HashMap::new(),
             poisoned: false,
+            tok,
         };
         for (r, v) in records.into_iter().zip(vecs) {
             store.add_record(r, v)?;
@@ -584,6 +643,11 @@ impl Store {
         Ok(store)
     }
 
+    /// The lexical variant queries of this index are tokenized with.
+    pub fn tokenizer(&self) -> Variant {
+        self.tok
+    }
+
     fn add_record(&mut self, r: ChunkRecord, v: Vec<f32>) -> Result<usize> {
         let i = self.records.len();
         if self.by_id.insert(r.record_id.clone(), i).is_some() {
@@ -591,7 +655,7 @@ impl Store {
         }
         if i >= self.cold_len {
             let mut tf: BTreeMap<String, u32> = BTreeMap::new();
-            for t in crate::tokenize::tokens(&r.text) {
+            for t in self.tok.tokens(&r.text) {
                 *tf.entry(t).or_insert(0) += 1;
             }
             for (t, n) in tf {
@@ -759,7 +823,7 @@ impl Store {
             report.chunks = self.snapshot(doc_path, &snap.snapshot_id)?.len();
             return Ok(report);
         }
-        let recs = snapshot_records(vault, &snap)?;
+        let recs = snapshot_records(vault, &snap, self.tok)?;
         report.chunks = recs.len();
         let new: Vec<&ChunkRecord> = recs
             .iter()
@@ -870,6 +934,7 @@ pub fn compact(vault: &Vault, embedder: &dyn Embedder) -> Result<CompactReport> 
         &vecs,
         &s.manifest.embedder_id,
         s.manifest.dim,
+        &s.manifest.lexical,
     )?;
     drop(s);
     install(vault, &tmp)?;
