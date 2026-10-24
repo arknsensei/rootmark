@@ -9,7 +9,7 @@ Her tur `docs/rounds/<id>/` altında dört dosya ile tanımlanır:
 - `VERIFY.md` — bağımsız doğrulayıcı yönergesi (temiz klon, çift koşturma, kasıtlı bozma).
 - `PROMPT.md` — ana ajan ve doğrulayıcı için kopyala-yapıştır `/goal` istemleri.
 
-Tur başladıktan sonra `GOAL.md` değişmez. Yeni ihtiyaç bir sonraki tura gider ve `docs/DECISIONS.md`'ye yazılır.
+İki tür tur vardır (K-P2.4): **hipotez turu** (NORTH_STAR düzeyinde bir iddia; prototip disiplini: D-set, önceden kayıtlı eşik, tam çift koşturma, tam bağımsız doğrulama) ve **geliştirme turu** (birim/entegrasyon testleri, kalite kapıları, önceden kayıtlı çıkış kriterleri; D-set yok; gerçek Obsidian yalnız e2e). Geliştirme turları bloklar halinde ilerler; bağımsız doğrulama blok sonunda bir kez, dar kapsam. Tur başladıktan sonra `GOAL.md` değişmez. Yeni ihtiyaç bir sonraki tura gider ve `docs/DECISIONS.md`'ye yazılır.
 
 `GOAL.md` yazım kuralları (K-D1.9, P1-D.1):
 - **Spec sürümü öngörülmez.** Bir GOAL spec düzenlemesi isterse sürüm numarası yazmaz, yalnız "sürüm `docs/SPEC_EDITS_CRITERION.md` kuralıyla" der. Sürümü, düzenlemeler yapıldıktan sonra CRITERION belirler ve `SPEC_EDITS.md` kaydeder.
@@ -17,7 +17,7 @@ Tur başladıktan sonra `GOAL.md` değişmez. Yeni ihtiyaç bir sonraki tura gid
 
 ## 2. Ajan disiplini (kök `CLAUDE.md` bunu uygular)
 - Okuma sırası: `NORTH_STAR.md` → `spec/SPEC.md` → `docs/ARCHITECTURE.md` → `docs/PACKAGES.md` → aktif tur dosyaları → ilgili paketin `CLAUDE.md`'si → `docs/rounds/<id>/progress/`.
-- Görev başı/sonu kayıtları, gözden geçirici alt-ajan (yalnız kabul ölçütleri + değişen dosya listesi ile; kod yazmaz), görev başına commit (`<round>/<task>: ...`). Gözden geçirici görev başına en fazla bir tur; ikinci tur yalnız bir kabul ölçütü düştüyse (K-P2.3).
+- Görev başı/sonu kayıtları, gözden geçirici alt-ajan (yalnız kabul ölçütleri + değişen dosya listesi ile; kod yazmaz), görev başına commit (`<round>/<task>: ...`). Gözden geçirici: hipotez turlarında görev başına en fazla bir tur (K-P2.3); geliştirme turlarında tur sonunda tek tur, READY öncesi (K-P2.4).
 - Dal ve PR (K-P2.1): `main` korumalıdır (PR + CI, doğrusal geçmiş). Tur tek bir dalda (`<tur-id>/round`) ilerler; görev başına commit dalda, her görev sonunda dal uzağa itilir; tur sonunda READY.md ile tek PR açılır. PR'ı orkestratör birleştirir; doğrulayıcı birleşmiş `main`'i klonlar, VERIFICATION.md ayrı PR ile girer. Bir tur yalnız birleşmiş `main`'den açılır; `ROUND_START` bir `main` commit'ini ya da etiketi gösterir (rebase birleştirmesi dal commit'lerini yeniden yazar, K-P2.2).
 - Park kuralı: yalnız durma koşulunda; bağımlılar işaretlenir; park yerinden devam.
 - Soru sorulmaz; varsayım etiketli (`[spec] [arch] [-]`) olarak `ASSUMPTIONS.md`'ye yazılır. Spesifikasyonla çelişen varsayım yapılmaz; çelişki görülürse görev park edilir ve `DECISIONS.md`'ye karar talebi yazılır.
@@ -25,7 +25,7 @@ Tur başladıktan sonra `GOAL.md` değişmez. Yeni ihtiyaç bir sonraki tura gid
 ## 3. Kalite kapıları (her tur, her commit)
 - `cargo test`, `cargo clippy -D warnings`, `cargo fmt --check`; Python için `pytest`, `ruff`; TypeScript için `tsc`, `eslint`, `vitest`.
 - `make conformance` — claim edilen seviyeye kadar tüm uyumluluk testleri.
-- `make verify` — temiz klon, iki bağımsız dizin, determinizm karşılaştırması; sıfır olmayan çıkış kodu başarısızlıktır.
+- `make verify` — temiz klon, iki bağımsız dizin, determinizm karşılaştırması; sıfır olmayan çıkış kodu başarısızlıktır. Tur içi kapı `make verify FAST=1` (yalnız aktif tur + uyumluluk + son RUN'a regresyon + tek çift, ≤ 20 dk); tam zincir haftalık CI'da ve blok sonunda (K-P2.4).
 - Kalite regresyonu: `research/` içindeki holdout sentetik set ve v2 `hybrid` sayıları her turda yeniden koşturulur; sayı değişiyorsa açıklanmak zorundadır.
 - Sessiz başarısızlık yasak: çözülemeyen referans, eksik dosya, manifest uyuşmazlığı → hata.
 
