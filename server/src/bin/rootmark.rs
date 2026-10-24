@@ -136,6 +136,10 @@ enum Cmd {
         actor: String,
         #[arg(long)]
         reason: String,
+        /// the channel's label, recorded as the event's `meta.source` (spec
+        /// 2.0.3 §7; e.g. the bot that relayed the approval); none: no field
+        #[arg(long)]
+        source: Option<String>,
     },
     /// Demote a lineage to a lower layer through the vault's promotion policy
     Demote {
@@ -148,6 +152,10 @@ enum Cmd {
         /// target layer (canonical|proposal|derived); one layer lower when omitted
         #[arg(long)]
         to: Option<String>,
+        /// the channel's label, recorded as the event's `meta.source` (spec
+        /// 2.0.3 §7); none: no field
+        #[arg(long)]
+        source: Option<String>,
     },
     /// Mark a proposal lineage inactive (deletes nothing) through the policy
     Prune {
@@ -338,6 +346,7 @@ fn transition(
     actor: &str,
     reason: &str,
     to: Option<&str>,
+    source: Option<&str>,
 ) -> Result<Value> {
     let (mut v, policy) = open_governed(vault)?;
     let actor = Actor::parse(actor)?;
@@ -345,7 +354,7 @@ fn transition(
     let ev = match kind {
         TransitionKind::Promote => {
             let req = v.request(kind, lineage, Layer::Canonical, actor, reason)?;
-            v.promote(&req, hook)?
+            v.promote_from(&req, hook, source)?
         }
         TransitionKind::Demote => {
             let to = match to {
@@ -358,7 +367,7 @@ fn transition(
                 },
             };
             let req = v.request(kind, lineage, to, actor, reason)?;
-            v.demote(&req, hook)?
+            v.demote_from(&req, hook, source)?
         }
         TransitionKind::Prune => v.prune_inactive(lineage, actor, reason, hook)?,
     };
@@ -503,6 +512,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             lineage,
             actor,
             reason,
+            source,
         } => transition(
             &vault,
             TransitionKind::Promote,
@@ -510,6 +520,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             &actor,
             &reason,
             None,
+            source.as_deref(),
         )?,
         Cmd::Demote {
             vault,
@@ -517,6 +528,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             actor,
             reason,
             to,
+            source,
         } => transition(
             &vault,
             TransitionKind::Demote,
@@ -524,6 +536,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             &actor,
             &reason,
             to.as_deref(),
+            source.as_deref(),
         )?,
         Cmd::Prune {
             vault,
@@ -536,6 +549,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             &lineage,
             &actor,
             &reason,
+            None,
             None,
         )?,
         Cmd::Checkpoint(c) => match c {

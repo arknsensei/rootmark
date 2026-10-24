@@ -1560,7 +1560,13 @@ impl Kernel {
                                 x.lineage_id
                             );
                         }
-                        let ev = v.promote(&req, hook)?;
+                        // spec 2.0.3 §7 (P2-P/P3): a human's promotion over
+                        // HTTP carries its channel label, the `X-Consumer`
+                        let source = match caller.channel {
+                            Channel::Http => consumer,
+                            Channel::Mcp | Channel::Cli => None,
+                        };
+                        let ev = v.promote_from(&req, hook, source)?;
                         Ok(json!({
                             "decision": "promoted",
                             "policy": hook.name(),
@@ -1636,7 +1642,8 @@ impl Kernel {
                                 x.lineage_id
                             );
                         }
-                        let ev = v.demote(&req, hook)?;
+                        // spec 2.0.3 §7 (P2-P/P3): the `X-Consumer`
+                        let ev = v.demote_from(&req, hook, consumer)?;
                         Ok(json!({
                             "decision": "demoted",
                             "policy": hook.name(),
