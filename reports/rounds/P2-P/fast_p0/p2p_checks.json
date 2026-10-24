@@ -1,0 +1,34 @@
+{
+ "P0": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_p_p0",
+    "tests": {
+     "a2_a_copy_back_is_no_base": "ok",
+     "a2_a_hint_alone_is_no_base": "ok",
+     "a2_a_lower_layer_base_raises_nothing": "ok",
+     "a_broken_recipe_or_record_is_an_error_in_status_migrations": "ok",
+     "a_filtered_trace_is_not_written_without_its_filter": "ok",
+     "a_recipe_changed_after_the_migration_is_not_rolled_back": "ok",
+     "a_recipe_with_the_table_and_no_recipe_are_left_alone": "ok",
+     "policy_attestation_1_on_the_three_0_1_0_vaults": "ok",
+     "serve_warns_about_a_tableless_recipe": "ok"
+    }
+   },
+   {
+    "exit": 0,
+    "package": "rootmark-index",
+    "pass": true,
+    "target": "p2_l_conformance",
+    "tests": {
+     "level_3_with_both_lexical_variants": "ok"
+    }
+   }
+  ]
+ },
+ "pass": true
+}
