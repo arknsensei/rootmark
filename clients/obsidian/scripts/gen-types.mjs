@@ -48,7 +48,8 @@ if (missing.length || codes.length === 0) {
 const pascal = (s) => s.replace(/(^|_)([a-z])/g, (_, __, c) => c.toUpperCase());
 function tsType(name, key, s) {
   const where = `${name}.${key}`;
-  const known = new Set(["type", "description", "enum", "minLength", "minimum", "maximum"]);
+  // arrays of a simple type (P2-L/L3: `search.path_prefix`)
+  const known = new Set(["type", "description", "enum", "minLength", "minimum", "maximum", "items", "minItems", "maxItems"]);
   for (const k of Object.keys(s)) if (!known.has(k)) throw new Error(`${where}: unknown schema key ${k}`);
   if (s.enum) {
     if (s.type !== "string") throw new Error(`${where}: non-string enum`);
@@ -62,6 +63,9 @@ function tsType(name, key, s) {
       return "number";
     case "boolean":
       return "boolean";
+    case "array":
+      if (!s.items || s.items.type === "array") throw new Error(`${where}: an array needs items of a simple type`);
+      return `${tsType(name, `${key}[]`, s.items)}[]`;
     default:
       throw new Error(`${where}: unknown type ${s.type}`);
   }
