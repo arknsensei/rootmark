@@ -5,6 +5,17 @@
 //! promotion = "human_only"          # "deny" | "human_only"; or the table
 //!                                   # [promotion] policy = "human_only"
 //!
+//! # P2-P/P1: declarative promotion rules (only with the table form)
+//! # [promotion]
+//! # policy = "human_only"            # manual promotion, unchanged
+//! # version = "2026-10-25"           # required with rules: Promoted.meta.policy_version
+//! # [[promotion.rules]]
+//! # id = "official"                  # [a-z0-9_-]{1,64}, unique
+//! # actor = "agent:collector"        # exact match; agent:<id> only
+//! # source = "collector"             # optional; propose's source, exact match
+//! # path_prefix = "sources/official" # vault-relative (spec §8's filter rule)
+//! # to = "canonical"                 # the only value
+//!
 //! [version_trigger]
 //! idle_ms = 30000                   # >= 0
 //! min_sim_change = 0.2              # in [0, 1]
@@ -35,7 +46,9 @@
 //! the built-in recipe applies (`Policy::builtin`, promotion `deny`), and
 //! `Policy::source` says so.
 
-use crate::governance::{AppendOnly, Deny, EditPolicy, HumanOnly, PromotionPolicy, Unrestricted};
+use crate::governance::{
+    Actor, ActorKind, AppendOnly, Deny, EditPolicy, HumanOnly, PromotionPolicy, Unrestricted,
+};
 use crate::journal::{IdleOrDistance, JournalRetention};
 use anyhow::{bail, Context, Result};
 use serde::Deserialize;
@@ -96,9 +109,104 @@ pub enum PolicySource {
     Builtin,
 }
 
+/// One declarative promotion rule (P2-P/P1, `[[promotion.rules]]`): the
+/// `server` matches it against the lineages a `propose` call wrote; the
+/// kernel only loads and checks it (it decides nothing, spec §7).
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+pub struct PromotionRule {
+    /// `[a-z0-9_-]{1,64}`, unique in the recipe
+    pub id: String,
+    /// `agent:<id>`, matched exactly against the caller's actor
+    pub actor: Actor,
+    /// matched exactly against `propose`'s source, when given
+    pub source: Option<String>,
+    /// normalized (`crate::pathprefix`)
+    pub path_prefix: String,
+    /// always `canonical`
+    pub to: crate::model::Layer,
+}
+
+impl PromotionRule {
+    /// Whether the rule covers a `propose` by `actor` with `source` into
+    /// `doc_path` (exact actor, exact source when set, path under the prefix).
+    pub fn matches(&self, actor: &Actor, source: &str, doc_path: &str) -> bool {
+        self.actor == *actor
+            && self.source.as_deref().is_none_or(|s| s == source)
+            && crate::pathprefix::matches(&self.path_prefix, doc_path)
+    }
+}
+
+/// The rule id form: `[a-z0-9_-]{1,64}`.
+fn rule_id_ok(id: &str) -> bool {
+    (1..=64).contains(&id.len())
+        && id
+            .bytes()
+            .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || b == b'_' || b == b'-')
+}
+
+/// `[[promotion.rules]]` entry `i` (1-based in messages).
+fn rule_of(i: usize, v: &toml::Value) -> Result<PromotionRule> {
+    let at = format!("[[promotion.rules]] #{i}");
+    let Some(t) = v.as_table() else {
+        bail!("{at}: must be a table");
+    };
+    let at = match t.get("id").and_then(|v| v.as_str()) {
+        Some(id) => format!("{at} (id {id:?})"),
+        None => at,
+    };
+    if let Some(k) = t
+        .keys()
+        .find(|k| !matches!(k.as_str(), "id" | "actor" | "source" | "path_prefix" | "to"))
+    {
+        bail!("{at}: unknown field `{k}` (id, actor, source, path_prefix, to)");
+    }
+    let s = |k: &str| -> Result<Option<String>> {
+        match t.get(k) {
+            None => Ok(None),
+            Some(toml::Value::String(x)) => Ok(Some(x.clone())),
+            Some(_) => bail!("{at}: {k} must be a string"),
+        }
+    };
+    let need =
+        |k: &str| -> Result<String> { s(k)?.with_context(|| format!("{at}: missing field `{k}`")) };
+    let id = need("id")?;
+    if !rule_id_ok(&id) {
+        bail!("{at}: id {id:?} must match [a-z0-9_-]{{1,64}}");
+    }
+    let actor_s = need("actor")?;
+    let actor = match Actor::parse(&actor_s) {
+        Ok(a) if a.kind == ActorKind::Agent && a.id == a.id.trim() => a,
+        _ => bail!(
+            "{at}: actor {actor_s:?} must be agent:<id> (a rule never promotes for a human, a policy or unattested_fs)"
+        ),
+    };
+    let source = s("source")?;
+    if source.as_deref().is_some_and(|x| x.trim().is_empty()) {
+        bail!("{at}: source must not be empty (omit it to match any source)");
+    }
+    let raw = need("path_prefix")?;
+    let path_prefix = crate::pathprefix::normalize(&raw).with_context(|| at.clone())?;
+    let to = need("to")?;
+    if to != "canonical" {
+        bail!("{at}: to {to:?} must be \"canonical\" (the only value)");
+    }
+    Ok(PromotionRule {
+        id,
+        actor,
+        source,
+        path_prefix,
+        to: crate::model::Layer::Canonical,
+    })
+}
+
 #[derive(Debug, Clone, PartialEq)]
 pub struct Policy {
     pub promotion: Promotion,
+    /// `[promotion] version` (P2-P/P1): required with rules, the
+    /// `policy_version` of a rule's `Promoted`
+    pub promotion_version: Option<String>,
+    /// `[[promotion.rules]]` (P2-P/P1), in recipe order (the first match wins)
+    pub promotion_rules: Vec<PromotionRule>,
     pub trigger: IdleOrDistance,
     pub retention: JournalRetention,
     pub source: PolicySource,
@@ -221,19 +329,55 @@ enum RawPromotion {
     Table(toml::Table),
 }
 
+/// `[promotion]`: the manual policy's name, `version` and `rules` (P2-P/P1).
+type PromotionParts<'a> = (&'a str, Option<String>, Vec<PromotionRule>);
+
 impl RawPromotion {
-    fn name(&self) -> Result<&str> {
+    fn parts(&self) -> Result<PromotionParts<'_>> {
         match self {
-            RawPromotion::Name(n) => Ok(n),
+            RawPromotion::Name(n) => Ok((n, None, Vec::new())),
             RawPromotion::Table(t) => {
-                if let Some(k) = t.keys().find(|k| k.as_str() != "policy") {
-                    bail!("[promotion]: unknown field `{k}`, expected `policy`");
+                if let Some(k) = t
+                    .keys()
+                    .find(|k| !matches!(k.as_str(), "policy" | "version" | "rules"))
+                {
+                    bail!("[promotion]: unknown field `{k}` (policy, version, rules)");
                 }
-                match t.get("policy") {
-                    Some(toml::Value::String(n)) => Ok(n),
+                let name = match t.get("policy") {
+                    Some(toml::Value::String(n)) => n.as_str(),
                     Some(_) => bail!("[promotion] policy must be a string"),
                     None => bail!("[promotion]: missing field `policy`"),
+                };
+                let version = match t.get("version") {
+                    None => None,
+                    Some(toml::Value::String(v)) if !v.trim().is_empty() => Some(v.clone()),
+                    Some(toml::Value::String(_)) => bail!("[promotion] version must not be empty"),
+                    Some(_) => bail!("[promotion] version must be a string"),
+                };
+                let rules = match t.get("rules") {
+                    None => Vec::new(),
+                    Some(toml::Value::Array(a)) => a
+                        .iter()
+                        .enumerate()
+                        .map(|(i, v)| rule_of(i + 1, v))
+                        .collect::<Result<Vec<_>>>()?,
+                    Some(_) => {
+                        bail!("[promotion] rules must be an array of tables ([[promotion.rules]])")
+                    }
+                };
+                let mut seen = std::collections::BTreeSet::new();
+                for r in &rules {
+                    if !seen.insert(r.id.as_str()) {
+                        bail!(
+                            "[[promotion.rules]]: id {:?} is given twice (ids are unique)",
+                            r.id
+                        );
+                    }
                 }
+                if !rules.is_empty() && version.is_none() {
+                    bail!("[promotion]: missing field `version` (required with [[promotion.rules]]; the policy_version of a rule's promotion)");
+                }
+                Ok((name, version, rules))
             }
         }
     }
@@ -260,6 +404,8 @@ impl Policy {
             promotion: Promotion::Deny,
             trigger: IdleOrDistance::new(30_000, 0.2).expect("built-in trigger within bounds"),
             retention: JournalRetention::new(168).expect("built-in retention within bounds"),
+            promotion_version: None,
+            promotion_rules: Vec::new(),
             source: PolicySource::Builtin,
             server: None,
             index: None,
@@ -289,8 +435,11 @@ impl Policy {
 
     pub fn parse(text: &str, source: PolicySource) -> Result<Policy> {
         let raw: RawPolicy = toml::from_str(text).context("invalid policy.toml")?;
+        let (name, promotion_version, promotion_rules) = raw.promotion.parts()?;
         Ok(Policy {
-            promotion: Promotion::parse(raw.promotion.name()?)?,
+            promotion: Promotion::parse(name)?,
+            promotion_version,
+            promotion_rules,
             trigger: IdleOrDistance::new(
                 raw.version_trigger.idle_ms,
                 raw.version_trigger.min_sim_change,
@@ -307,7 +456,7 @@ impl Policy {
 
     pub fn to_json(&self) -> serde_json::Value {
         let hook = self.promotion.hook();
-        serde_json::json!({
+        let mut out = serde_json::json!({
             "source": match &self.source {
                 PolicySource::File(p) => p.display().to_string(),
                 PolicySource::Builtin => "builtin".to_string(),
@@ -321,6 +470,21 @@ impl Policy {
             "journal": {"retention_hours": self.retention.hours()},
             "edit": self.edit.hook().name(),
             "edit_version": self.edit.hook().version(),
-        })
+        });
+        // P2-P/P1: only a recipe with rules shows them (the output of every
+        // other recipe is unchanged)
+        if !self.promotion_rules.is_empty() {
+            out["promotion_rules"] = serde_json::json!({
+                "version": self.promotion_version,
+                "rules": self.promotion_rules.iter().map(|r| serde_json::json!({
+                    "id": r.id,
+                    "actor": format!("agent:{}", r.actor.id),
+                    "source": r.source,
+                    "path_prefix": r.path_prefix,
+                    "to": r.to.as_str(),
+                })).collect::<Vec<_>>(),
+            });
+        }
+        out
     }
 }

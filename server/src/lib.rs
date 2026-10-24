@@ -12,6 +12,7 @@ pub mod migrate;
 pub mod paths;
 pub mod propose;
 pub mod queue;
+pub mod rules;
 pub mod serve;
 pub mod token;
 pub mod tools;

@@ -74,7 +74,7 @@ L0  Markdown dosyaları      (tek gerçek kaynak; Obsidian/git uyumlu)
 | Pipeline zenginleştirici | Sunucu/yerel iş | chunker, embedder, varlık çıkarıcı, reranker | Girdi/çıktı Arrow/JSON; içerik-adresli önbellek zorunlu |
 | Karar/politika | Hook noktaları | terfi kararı, budama, ağırlıklandırma, sürüm tetikleyici | Çekirdek sınırları içinde parametrik tarif; sınır dışı → ret |
 
-Hook noktaları: `on_block_event`, `on_version_trigger`, `on_promotion_request`, `on_search_rank`, `on_compaction`, `on_prune`.
+Hook noktaları: `on_block_event`, `on_version_trigger`, `on_promotion_request`, `on_search_rank`, `on_compaction`, `on_prune`. Faz 2'nin ilk bildirimsel terfi politikası (P2-P, K-Q.1 (2)): `policy.toml`'un `[[promotion.rules]]` listesi (aktör, kaynak, yol öneki tam eşleşmesi; joker/regex/zaman yok); eşleyici `server`'da yalnız `propose`'ta koşar ve `Promoted`'ı çekirdeğin `on_promotion_request` kancasından (`PromotionPolicy`) yazar — çekirdek karar vermez; genişleme WASM politikasıyla (P2-D).
 
 ### 4.5 L5 — Sync ve tenant (faz 2)
 - Blok içi canlı düzenleme CRDT; blok sürümleri arası git-benzeri nesne alışverişi; türev indeksler asla senkronize edilmez, her replika yeniden üretir.
