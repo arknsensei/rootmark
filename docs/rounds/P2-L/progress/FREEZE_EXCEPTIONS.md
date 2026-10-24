@@ -43,3 +43,9 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Neden:** L-9 (tam çift: iki varyant ve iki embedder ile 12 hücre fark 0) ve hızlı kipin aynı dosyaları karşılaştırması.
 - **Önce/sonra:** `compare_p2l.py`'de yalnız iki liste uzadı; `python -m eval.check_compare_fields` geçer (15 karşılaştırıcı, `unmatched: 0`).
 - **Gözden geçirici onayı:** L5.review.md.
+
+## F8 · L5 · `research/eval/historical_fails_p2l.json`, `research/eval/migration_required_fails_p2l.json` — P2-L kararlarının girdileri
+- **Ne:** geliştirme zincirinden (RUN `20261024T171833Z-46c3a29`, `46c3a29`; L5.md) resmi çiftten önce yazılan girdiler: spec 2.0.3'ün dondurulmuş kaydedicilerdeki `spec_version`'ı (B1-3, C1-7, D1-10, D1-12, D-9, H-P2-0.2j, H-P2-0.3j; K-P2L.2), §7.1'in eskimiş atfının düzeltilmesi (H-P2-0.2k, `rules`; SPEC_EDITS E3), 0.2.0 sürümü ve Linux zorunlu hedefi (E-7, E1-5, E1-4; K-P2L.1, K-P2A.6 — E1-4 göç listesinden çıktı: R15'i P2-L/F2 kapattı, tek FAIL'i R4), P2-0.2'nin kendi sınıflandırıcısı ve regress'i, P2-0.3'ün yarışa bağlı ölçülen değerleri (H-P2-0.3b, b-yük, b′; K-P2-03.1). Her değişiklik yolu kararıyla.
+- **Neden:** K-E1.4 düzeni; sayılan FAIL'ler turun kendi FAIL'leri olsun. Geliştirme zincirinin tek kalan sayılan FAIL'i (`p1e` `tamper`: "untouched generated types") gerçek bir eksikti ve `P2-L/L3-fix:` ile düzeltildi, listeye girmedi.
+- **Önce/sonra:** sınıflandırıcının kendisi (`historical_p2l.py`) değişmedi; geliştirme RUN'ında sayılan FAIL 18 → 1 (`tamper`, düzeltildi).
+- **Gözden geçirici onayı:** L5.review.md.
