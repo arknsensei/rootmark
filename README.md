@@ -51,6 +51,10 @@ rootmark --spec-version       # 2.0.2
 rootmark conformance          # Levels 1–3 on the embedded fixtures: 39/39 (spec 2.0.2)
 ```
 
+**Turkish vaults** (P2-L, K-P2L-T2): set `[index] tokenizer = "uni_fold_tr"` and `[index] embedder = "multilingual-minilm-l12-v2"` in `.rootmark/policy.toml` (`make models-multilingual` fetches the model; `rootmark migrate <vault>` rebuilds the index). On P2-L's Turkish set this gave hybrid nDCG@10 0.8801 against 0.8029 with the defaults, which stay `mdk_lower_alnum` and `minilm-l6-v2` (the gain was below the round's threshold; a new measurement comes with R-1).
+
+**Upgrading a 0.1.0 vault:** its recipe has no `[attestation]` table and is read as `unattested = "unverified"`; `rootmark status` shows `attestation.implicit: true` and `rootmark serve` warns. `rootmark migrate <vault>` appends `unattested = "canonical"` (the default; rollback record kept, `--dry-run` shows the plan).
+
 A vault written by a build from before the project's rename is opened after `rootmark migrate --rename-store <vault>`, which moves its metadata directory to `.rootmark/` and changes no byte inside it (same event log, same `events_hash`, same index).
 
 ### Obsidian (BRAT)

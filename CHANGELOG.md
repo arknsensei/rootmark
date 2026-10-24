@@ -4,6 +4,41 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
+## Unreleased
+
+Rounds P2-L and P2-P (block 1 of phase 2). Spec 2.0.3 (Draft sections only).
+
+### Upgrading from 0.1.0
+- A vault set up by 0.1.0 has a `.rootmark/policy.toml` without an
+  `[attestation]` table; this rootmark still reads such a recipe as
+  `unattested = "unverified"` (the kernel's reading is unchanged), but now
+  says so: `status.attestation.implicit` is `true`,
+  `status.migrations.artifacts.policy` is `recipe/implicit`, and
+  `rootmark serve` writes a warning line at start. `rootmark migrate <vault>`
+  runs the new migration `policy_attestation_1`, which appends
+  `[attestation]` / `unattested = "canonical"` to the recipe (every other byte
+  kept, a rollback record under `.rootmark/migrations/`, planned by
+  `--dry-run`); it is recommended (`status.migrations.recommended`), never
+  `migration_required`. A recipe that has the table, or no recipe, is left
+  alone. Decision K-P2L-T1, option (a) (K-P2P.1).
+
+### Turkish vaults (P2-L, K-P2L-T2)
+- Recommended configuration for a Turkish or Turkish/English vault:
+  `[index] tokenizer = "uni_fold_tr"` and
+  `[index] embedder = "multilingual-minilm-l12-v2"` (`make models-multilingual`,
+  then `rootmark migrate` rebuilds the index). Measured on P2-L's D-TR set
+  (400 documents, 800 queries): hybrid nDCG@10 0.8801 against 0.8029 with
+  the defaults; the defaults (`mdk_lower_alnum`, `minilm-l6-v2`) are
+  unchanged.
+
+### Fixes (P2-P/P0)
+- The lexical-variant knob `ROOTMARK_DEFAULT_TOKENIZER` (P2-L's conformance
+  test) is gone: no environment variable of a released binary chooses the
+  tokenizer.
+- A filtered search's filter line is written before its trace line (and taken
+  back if the trace cannot be written); `status.migrations` reports an error
+  instead of empty lists when a rollback record cannot be read.
+
 ## 0.2.0 — 2026-10-24 (phase 2: attested writes, migrations, installers)
 
 Phase 2 rounds P2-0, P2-0.1, P2-0.2, P2-0.3 (attested writes) and P2-A

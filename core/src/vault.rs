@@ -2193,6 +2193,31 @@ impl Vault {
         query_hash: &str,
         returned: Vec<crate::governance::TraceEntry>,
     ) -> Result<crate::governance::Trace> {
+        self.record_trace_filtered(checkpoint_id, consumer, query_hash, returned, None)
+    }
+
+    /// `.rootmark/trace_filters.jsonl` (P2-L/L3): the search filter of a
+    /// trace, one line per filtered search, append-only. Beside
+    /// `traces.jsonl`, not in it: a trace line keeps the fields of spec §8
+    /// (its `query_hash` covers the filter).
+    pub fn trace_filters_path(&self) -> PathBuf {
+        self.meta_dir.join("trace_filters.jsonl")
+    }
+
+    /// `record_trace` with the search filter of the trace (P2-L/L3): the
+    /// filter line `{trace_id, at_seq, filter}` is written **before** the
+    /// trace line, and taken back (the file cut to its former length) if the
+    /// trace line cannot be written — a filtered search never leaves a
+    /// trace without its filter (P2-P/P0 a4). A filter line that cannot be
+    /// taken back is an error naming it (the reader then refuses the file).
+    pub fn record_trace_filtered(
+        &mut self,
+        checkpoint_id: &str,
+        consumer: &str,
+        query_hash: &str,
+        returned: Vec<crate::governance::TraceEntry>,
+        filter: Option<&serde_json::Value>,
+    ) -> Result<crate::governance::Trace> {
         if consumer.trim().is_empty() || query_hash.trim().is_empty() {
             bail!("a trace requires a consumer and a query hash");
         }
@@ -2230,47 +2255,63 @@ impl Vault {
         };
         let mut line = serde_json::to_vec(&t)?;
         line.push(b'\n');
-        let mut f = fs::OpenOptions::new()
+        let fp = self.trace_filters_path();
+        let undo_len = match filter {
+            None => None,
+            Some(filter) => {
+                let len = match fs::metadata(&fp) {
+                    Ok(m) => m.len(),
+                    Err(e) if e.kind() == std::io::ErrorKind::NotFound => 0,
+                    Err(e) => {
+                        return Err(e).with_context(|| format!("read {}", fp.display()));
+                    }
+                };
+                let fl = serde_json::json!({
+                    "trace_id": t.trace_id,
+                    "at_seq": t.at_seq,
+                    "filter": filter,
+                });
+                let mut bytes = serde_json::to_vec(&fl)?;
+                bytes.push(b'\n');
+                let mut f = fs::OpenOptions::new()
+                    .create(true)
+                    .append(true)
+                    .open(&fp)
+                    .with_context(|| format!("open {}", fp.display()))?;
+                std::io::Write::write_all(&mut f, &bytes)
+                    .and_then(|_| f.sync_data())
+                    .with_context(|| format!("write {}", fp.display()))?;
+                Some(len)
+            }
+        };
+        let written = fs::OpenOptions::new()
             .create(true)
             .append(true)
-            .open(self.traces_path())?;
-        std::io::Write::write_all(&mut f, &line)?;
-        f.sync_data()?;
+            .open(self.traces_path())
+            .and_then(|mut f| {
+                std::io::Write::write_all(&mut f, &line)?;
+                f.sync_data()
+            });
+        if let Err(e) = written {
+            let e =
+                anyhow::Error::from(e).context(format!("write {}", self.traces_path().display()));
+            if let Some(len) = undo_len {
+                let undo = fs::OpenOptions::new()
+                    .write(true)
+                    .open(&fp)
+                    .and_then(|f| f.set_len(len).and_then(|_| f.sync_data()));
+                if let Err(u) = undo {
+                    return Err(e.context(format!(
+                        "and taking back the filter line of trace {} in {} failed too: {u}",
+                        t.trace_id,
+                        fp.display()
+                    )));
+                }
+            }
+            return Err(e);
+        }
         self.next_trace += 1;
         Ok(t)
-    }
-
-    /// `.rootmark/trace_filters.jsonl` (P2-L/L3): the search filter of a
-    /// trace, one line per filtered search, append-only, written right after
-    /// the trace line it names. Beside `traces.jsonl`, not in it: a trace
-    /// line keeps the fields of spec §8 (its `query_hash` covers the filter).
-    pub fn trace_filters_path(&self) -> PathBuf {
-        self.meta_dir.join("trace_filters.jsonl")
-    }
-
-    /// Appends `{trace_id, at_seq, filter}` for the trace just recorded.
-    pub fn record_trace_filter(
-        &mut self,
-        trace: &crate::governance::Trace,
-        filter: &serde_json::Value,
-    ) -> Result<()> {
-        if trace.at_seq + 1 != self.next_trace {
-            bail!("a trace filter names the trace just recorded");
-        }
-        let line = serde_json::json!({
-            "trace_id": trace.trace_id,
-            "at_seq": trace.at_seq,
-            "filter": filter,
-        });
-        let mut bytes = serde_json::to_vec(&line)?;
-        bytes.push(b'\n');
-        let mut f = fs::OpenOptions::new()
-            .create(true)
-            .append(true)
-            .open(self.trace_filters_path())?;
-        std::io::Write::write_all(&mut f, &bytes)?;
-        f.sync_data()?;
-        Ok(())
     }
 
     /// The filters of `trace_filters.jsonl` by `trace_id`; every line must

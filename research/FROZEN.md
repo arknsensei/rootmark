@@ -390,6 +390,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-L/L5-dev:` | yeniden dondurma P2-L/F7: `compare_p2l` dosya satırları |
 | `research/eval/**` | `P2-L/L5-dev:` | yeniden dondurma P2-L/F7: `compare_p2l.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni `historical_p2l.py` ve iki listesi (`historical_fails_p2l.json`, `migration_required_fails_p2l.json`; P2-A'nın girdileri, P2-0.3 referansıyla) de bu satırla donar |
 | `research/eval/**` | `P2-L/L5-rec:` | yeniden dondurma P2-L/F8: `historical_fails_p2l.json`, `migration_required_fails_p2l.json` (geliştirme zincirinden, resmi çiftten önce) |
+| `scripts/release_check.sh` | `P2-P/P0:` | yeniden dondurma P2-P/F1: R16 geçici dosyaları betiğin `mktemp -d` dizininde (P2-L gözden geçirici bulgusu (c)) |
 <!-- /frozen-table -->
 
 ## Notlar

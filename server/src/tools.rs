@@ -2000,6 +2000,9 @@ impl Kernel {
             // spec 2.0.0 §7.1 (P2-0): the policy in force and the key stage
             "attestation": {
                 "unattested": policy.attestation.unattested(),
+                // P2-P/P0 (K-P2L-T1): no `[attestation]` table — the
+                // kernel's reading, not a choice (`rootmark migrate`)
+                "implicit": policy.attestation.implicit,
                 "window_s": policy.attestation.window_s(),
                 "stage": 1,
                 "pending": self.attesting.pending()?,

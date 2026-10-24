@@ -739,7 +739,7 @@ p2-0-3-checks: require-run p2-0-2-harness
 # regression is against the last official RUN (P2-0.3); the active round's
 # checks are `ROUND_CHECKS` (a round sets its own).
 FAST_REF_RUN := ../reports/rounds/P2-0.3/runs/20261024T000230Z-5632b3b
-ROUND_CHECKS := p2l-checks p2l-quality
+ROUND_CHECKS := p2l-checks p2l-quality p2p-checks
 fast-regress: require-run
 	$(PY) -m eval.fast_regress --run $(RUN) --ref $(FAST_REF_RUN)
 
@@ -768,6 +768,12 @@ p2l-quality: require-run models-multilingual
 	$(PY) -m eval.datasets.d_tr --check
 	$(PY) -m eval.run_p2l --run $(RUN)
 	$(PY) -m eval.run_p2l_migrate --run $(RUN) --rootmark ../target/release/rootmark
+
+# P2-P criteria into the RUN (TASKS P0–P5): p2p_checks.json; each task adds
+# its criterion's test targets here
+P2P_TESTS := --tests P0=rootmark-server:p2_p_p0,rootmark-index:p2_l_conformance
+p2p-checks: require-run
+	$(PY) -m eval.run_p2p_checks --run $(RUN) $(P2P_TESTS)
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared);
 # `make verify FAST=1`: the fast pair (scripts/verify.sh, P2-L/F3)

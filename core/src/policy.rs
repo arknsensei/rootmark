@@ -121,6 +121,10 @@ pub struct Attestation {
     pub unverified: bool,
     /// `window_s` in milliseconds
     pub window_ms: u64,
+    /// no `[attestation]` table (or no recipe): `unattested` is the kernel's
+    /// reading of a recipe without the setting, not a choice (K-P2L-T1;
+    /// `rootmark migrate` adds the table, migration `policy_attestation_1`)
+    pub implicit: bool,
 }
 
 impl Default for Attestation {
@@ -128,6 +132,7 @@ impl Default for Attestation {
         Attestation {
             unverified: true,
             window_ms: crate::attest::DEFAULT_WINDOW_MS,
+            implicit: true,
         }
     }
 }
@@ -153,6 +158,7 @@ fn attestation_of(t: Option<&toml::Table>) -> Result<Attestation> {
     let Some(t) = t else {
         return Ok(a);
     };
+    a.implicit = false;
     for (k, v) in t {
         match k.as_str() {
             "unattested" => {

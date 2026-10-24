@@ -251,7 +251,7 @@ pub fn run(o: ServeOptions) -> Result<()> {
         kernel.set_attest_log(l);
     }
     let kernel = Arc::new(kernel);
-    let (_policy, cfg, write_policy) = policy_of(&o.vault)?;
+    let (policy, cfg, write_policy) = policy_of(&o.vault)?;
     // the HTTP address is checked before anything is written or built
     let http_addr = match &o.http {
         Some(s) => Some(crate::http::parse_addr(s, cfg.http_port)?),
@@ -259,6 +259,14 @@ pub fn run(o: ServeOptions) -> Result<()> {
     };
     if write_policy {
         write_default_policy(&o.vault)?;
+    } else if policy.attestation.implicit {
+        // P2-P/P0 (K-P2L-T1): a recipe without `[attestation]` (an older
+        // rootmark's) is read as `unverified`, not the default `canonical`
+        log(format!(
+            "warning: {} has no [attestation] table: unattested changes are read as \"unverified\" (an older rootmark's recipe; the default is \"canonical\"); `rootmark migrate {}` adds `unattested = \"canonical\"` (rollback record kept), or write the table yourself",
+            Policy::path(&o.vault).display(),
+            o.vault.display()
+        ));
     }
     match kernel.start_index(cfg.auto_rebuild)? {
         IndexAtStart::Current => {}

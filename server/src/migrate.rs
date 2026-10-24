@@ -20,12 +20,18 @@
 //! The registered migrations, in order: `rename_store` (`.mdkernel/` →
 //! `.rootmark/`, K-GH.1: the directory is renamed, every byte kept),
 //! `index_rebuild` (an index of an older format or lexical record → this
-//! format, rebuilt; the old index is kept in the record), `log_readers`
+//! format, rebuilt; the old index is kept in the record),
+//! `policy_attestation_1` (P2-P/P0, K-P2L-T1: a recipe without an
+//! `[attestation]` table gets `[attestation] unattested = "canonical"`
+//! appended, every other byte kept; recommended, not required), `log_readers`
 //! (the event and attestation logs read by this reader, spec 2.0.2: no
 //! byte changes, a validation) and `checkpoints` (their format is unchanged:
 //! a record only). Only the first two change bytes; they are the ones a
 //! vault *requires* (`status.migrations.required`), the last two are
-//! recorded validations.
+//! recorded validations. `policy_attestation_1` changes bytes but a vault
+//! does not require it (`status.migrations.recommended`): a recipe without
+//! the table is read as the kernel always read it (`unverified`), and never
+//! answers `migration_required`.
 
 use anyhow::{bail, Context, Result};
 use rootmarkcore::meta;
@@ -148,6 +154,19 @@ fn no_links(vault: &Path, rel: &str) -> Result<()> {
 /// path (`skip` relative to the prefix).
 fn hashes(vault: &Path, prefix: &str, skip: Option<&str>) -> Result<BTreeMap<String, String>> {
     let mut out = BTreeMap::new();
+    // a scope that is one file (`policy_attestation_1`): that file, if any
+    let p = vault.join(prefix);
+    match std::fs::symlink_metadata(&p) {
+        Ok(m) if m.file_type().is_symlink() => {
+            bail!("{}: a symbolic link in the store", p.display())
+        }
+        Ok(m) if m.is_file() => {
+            let b = std::fs::read(&p).with_context(|| format!("read {}", p.display()))?;
+            out.insert(prefix.to_string(), sha256(&b));
+            return Ok(out);
+        }
+        _ => {}
+    }
     for rel in files_under(&vault.join(prefix), skip)? {
         let p = vault.join(prefix).join(&rel);
         let b = std::fs::read(&p).with_context(|| format!("read {}", p.display()))?;
@@ -186,8 +205,14 @@ pub struct Plan {
 /// A registered migration.
 pub trait Migration {
     fn id(&self) -> &'static str;
-    /// whether it changes bytes (a vault in its `from` format requires it)
+    /// whether it changes bytes (a vault in its `from` format requires it,
+    /// unless it is `recommended`)
     fn required(&self) -> bool;
+    /// a migration that changes bytes but that no vault requires (P2-P/P0):
+    /// listed in `status.migrations.recommended`, never `migration_required`
+    fn recommended(&self) -> bool {
+        false
+    }
     /// whether the vault is in the format this migration starts from (and,
     /// for a validation, not yet validated)
     fn applies(&self, vault: &Path, done: &[Record]) -> Result<bool>;
@@ -245,6 +270,7 @@ pub struct Record {
 
 pub struct RenameStore;
 pub struct IndexRebuild;
+pub struct PolicyAttestation;
 pub struct LogReaders;
 pub struct CheckpointsRecord;
 
@@ -374,6 +400,82 @@ fn validated(done: &[Record], id: &str) -> bool {
     done.iter().any(|r| r.migration == id)
 }
 
+/// The recipe, vault-relative (`policy_attestation_1`'s scope).
+pub fn policy_rel() -> String {
+    format!("{}/policy.toml", meta::META_DIR)
+}
+
+/// The recipe's state for `policy_attestation_1`: `None` without a recipe,
+/// else whether it has an `[attestation]` table. A recipe that is not TOML
+/// is an error (never read as "no table").
+fn policy_has_attestation(vault: &Path) -> Result<Option<bool>> {
+    let p = vault.join(policy_rel());
+    if std::fs::symlink_metadata(&p).is_err() {
+        return Ok(None);
+    }
+    let text = std::fs::read_to_string(&p).with_context(|| format!("read {}", p.display()))?;
+    let t: toml::Table =
+        toml::from_str(&text).with_context(|| format!("{}: not a TOML table", p.display()))?;
+    Ok(Some(t.contains_key("attestation")))
+}
+
+/// The table `policy_attestation_1` appends (K-P2L-T1, option (a)).
+pub const POLICY_ATTESTATION_TABLE: &str = crate::config::ATTESTATION_DEFAULT;
+
+impl Migration for PolicyAttestation {
+    fn id(&self) -> &'static str {
+        "policy_attestation_1"
+    }
+    fn required(&self) -> bool {
+        true
+    }
+    fn recommended(&self) -> bool {
+        true
+    }
+    fn applies(&self, vault: &Path, _: &[Record]) -> Result<bool> {
+        Ok(meta::check(vault).is_ok() && policy_has_attestation(vault)? == Some(false))
+    }
+    fn plan(&self, vault: &Path) -> Result<Plan> {
+        let rel = policy_rel();
+        let before = hashes(vault, &rel, None)?;
+        Ok(Plan {
+            migration: self.id(),
+            required: true,
+            from: "recipe without [attestation] (read as unattested = \"unverified\")".into(),
+            to: "recipe with [attestation] unattested = \"canonical\" (K-P2L-T1)".into(),
+            steps: vec![
+                "keep policy.toml in the record".into(),
+                "append `[attestation]` / `unattested = \"canonical\"` to policy.toml; every other byte is kept".into(),
+            ],
+            bytes: bytes_of(vault, &before),
+            touches: before.into_keys().collect(),
+            scope: Some(rel),
+        })
+    }
+    fn apply(&self, vault: &Path, save: &mut Saver) -> Result<()> {
+        let rel = policy_rel();
+        no_links(vault, &rel)?;
+        save.save(vault, &rel)?;
+        let p = vault.join(&rel);
+        let old = std::fs::read(&p).with_context(|| format!("read {}", p.display()))?;
+        let mut new = old.clone();
+        if !new.is_empty() && !new.ends_with(b"\n") {
+            new.push(b'\n');
+        }
+        new.push(b'\n');
+        new.extend_from_slice(POLICY_ATTESTATION_TABLE.as_bytes());
+        // the result must be a recipe the kernel loads, with the table
+        let text = String::from_utf8(new.clone()).context("policy.toml is not UTF-8")?;
+        let pol = rootmarkcore::Policy::parse(&text, rootmarkcore::PolicySource::File(p.clone()))
+            .context("policy_attestation_1: the recipe with the table does not load")?;
+        if pol.attestation.unverified || pol.attestation.implicit {
+            bail!("policy_attestation_1: the appended table is not read as unattested = \"canonical\"");
+        }
+        crate::paths::replace_file(&p, &new)?;
+        Ok(())
+    }
+}
+
 impl Migration for LogReaders {
     fn id(&self) -> &'static str {
         "log_readers"
@@ -462,6 +564,7 @@ pub fn registry() -> Vec<Box<dyn Migration>> {
     vec![
         Box::new(RenameStore),
         Box::new(IndexRebuild),
+        Box::new(PolicyAttestation),
         Box::new(LogReaders),
         Box::new(CheckpointsRecord),
     ]
@@ -516,7 +619,9 @@ fn row(format: Option<String>, expected: &str, state: &str, note: Option<String>
 /// `unknown`.
 pub fn matrix(vault: &Path) -> Result<Value> {
     let legacy = meta::check(vault).is_err();
-    let done = records(vault).unwrap_or_default();
+    // P2-P/P0 a4: a record or a chain this reader cannot build is an error
+    // (`status.migrations.error`), never an empty list
+    let done = records(vault)?;
     let store = if legacy {
         row(
             Some(LEGACY_STORE_FORMAT.into()),
@@ -591,10 +696,36 @@ pub fn matrix(vault: &Path) -> Result<Value> {
         "ok",
         None,
     );
+    // P2-P/P0 (K-P2L-T1): the recipe's `[attestation]` table
+    let policy = match policy_has_attestation(vault) {
+        _ if legacy => row(
+            None,
+            "recipe/attestation",
+            "ok",
+            Some("read after rename_store".into()),
+        ),
+        Ok(None) => row(None, "recipe/attestation", "ok", Some("no policy.toml".into())),
+        Ok(Some(true)) => row(
+            Some("recipe/attestation".into()),
+            "recipe/attestation",
+            "ok",
+            None,
+        ),
+        Ok(Some(false)) => row(
+            Some("recipe/implicit".into()),
+            "recipe/attestation",
+            "ok",
+            Some("no [attestation] table: read as unattested = \"unverified\"; `rootmark migrate` adds unattested = \"canonical\" (policy_attestation_1, recommended; K-P2L-T1)".into()),
+        ),
+        Err(e) => row(None, "recipe/attestation", "unknown", Some(format!("{e:#}"))),
+    };
     let mut required = Vec::new();
+    let mut recommended = Vec::new();
     let mut validations = Vec::new();
-    for (m, _) in chain(vault, None, false).unwrap_or_default() {
-        if m.required() {
+    for (m, _) in chain(vault, None, false)? {
+        if m.recommended() {
+            recommended.push(m.id());
+        } else if m.required() {
             required.push(m.id());
         } else {
             validations.push(m.id());
@@ -603,9 +734,10 @@ pub fn matrix(vault: &Path) -> Result<Value> {
     Ok(json!({
         "artifacts": {
             "store": store, "events": events, "attestations": attestations,
-            "index": index, "checkpoints": checkpoints,
+            "index": index, "checkpoints": checkpoints, "policy": policy,
         },
         "required": required,
+        "recommended": recommended,
         "validations": validations,
         "applied": done.iter().map(|r| r.id.clone()).collect::<Vec<_>>(),
         "hint": if required.is_empty() { Value::Null } else {
@@ -718,7 +850,14 @@ fn copy_tree(from: &Path, to: &Path) -> Result<()> {
 pub fn dry_run(vault: &Path, only: Option<&str>) -> Result<Value> {
     let plans = chain(vault, only, true)?
         .into_iter()
-        .map(|(_, p)| serde_json::to_value(p.expect("planned")))
+        .map(|(m, p)| {
+            let mut v = serde_json::to_value(p.expect("planned"))?;
+            // P2-P/P0: a migration no vault requires says so (only then)
+            if m.recommended() {
+                v["recommended"] = json!(true);
+            }
+            Ok(v)
+        })
         .collect::<serde_json::Result<Vec<_>>>()?;
     Ok(json!({
         "vault": vault.display().to_string(),
@@ -1093,6 +1232,22 @@ fn check_record_paths(rec: &Record) -> Result<()> {
             (s.to_string(), meta::LEGACY_META_DIR.to_string())
         }
         ("index_rebuild", "files", Some(s)) if s == index => (s.to_string(), s.to_string()),
+        // one file, the recipe (P2-P/P0): every path is that file
+        ("policy_attestation_1", "files", Some(s)) if s == policy_rel() => {
+            if rec
+                .before
+                .keys()
+                .chain(rec.saved.keys())
+                .chain(rec.after.keys())
+                .any(|p| *p != s)
+            {
+                bail!(
+                    "record {}: a path other than {s}; nothing rolled back",
+                    rec.id
+                );
+            }
+            return Ok(());
+        }
         ("log_readers" | "checkpoints", "files", None)
             if rec.before.is_empty() && rec.after.is_empty() && rec.saved.is_empty() =>
         {

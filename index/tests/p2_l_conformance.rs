@@ -3,21 +3,21 @@
 //! (`conformance/eval_c3.rs`, included as it is):
 //! - `mdk_lower_alnum` (no knob): every case's output equals its committed
 //!   `expected.json` — the 39 tests of `make conformance` are unchanged;
-//! - `uni_fold_tr` (`ROOTMARK_DEFAULT_TOKENIZER`, the evaluator's scratch
+//! - `uni_fold_tr` (`set_conformance_default_tokenizer`, the evaluator's scratch
 //!   vaults have no recipe): every case's output equals the new fixture
 //!   `spec/fixtures_variants/uni_fold_tr/<case>/expected.json`, written by
 //!   `write_uni_fold_tr_expected` (ignored; `make fixtures-variants`) from
 //!   this implementation; a build under the knob records `uni_fold_tr`.
 //!   (Measured: the eight English cases rank the same with either variant.)
 //!
-//! One test function: the knob is a process environment variable.
+//! One test function: the conformance default is process-wide.
 //!
 //! Needs the model files (`make models`).
 
 #[path = "conformance/eval_c3.rs"]
 mod eval_c3;
 
-use rootmarkindex::config::DEFAULT_TOKENIZER_ENV;
+use rootmarkindex::config::set_conformance_default_tokenizer as knob;
 use serde_json::Value;
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -41,7 +41,7 @@ fn read(p: &Path) -> Value {
 fn level_3_with_both_lexical_variants() {
     let dirs = eval_c3::c3_case_dirs(&fixtures()).unwrap();
     assert_eq!(dirs.len(), 8, "C3-01..C3-08");
-    std::env::remove_var(DEFAULT_TOKENIZER_ENV);
+    knob(None).unwrap();
     let mut default = Vec::new();
     for d in &dirs {
         let got = eval_c3::evaluate_c3(d).unwrap_or_else(|e| panic!("{}: {e:#}", d.display()));
@@ -53,7 +53,7 @@ fn level_3_with_both_lexical_variants() {
         );
         default.push(got);
     }
-    std::env::set_var(DEFAULT_TOKENIZER_ENV, "uni_fold_tr");
+    knob(Some("uni_fold_tr")).unwrap();
     let mut differ = 0;
     for (d, base) in dirs.iter().zip(&default) {
         let got = eval_c3::evaluate_c3(d).unwrap_or_else(|e| panic!("{}: {e:#}", d.display()));
@@ -78,12 +78,26 @@ fn level_3_with_both_lexical_variants() {
     rootmarkindex::store::build(&v, &e).unwrap();
     let m = read(&root.join(".rootmark/index/manifest.json"));
     assert_eq!(m["lexical"]["tokenizer"], "uni_fold_tr");
-    std::env::set_var(DEFAULT_TOKENIZER_ENV, "turkish");
     assert!(
-        eval_c3::evaluate_c3(&dirs[0]).is_err(),
+        knob(Some("turkish")).is_err(),
         "an unknown variant is an error"
     );
-    std::env::remove_var(DEFAULT_TOKENIZER_ENV);
+    // the environment variable of P2-L no longer reaches any build (P2-P/P0 a1)
+    knob(None).unwrap();
+    std::env::set_var("ROOTMARK_DEFAULT_TOKENIZER", "uni_fold_tr");
+    let root2 = std::env::temp_dir().join(format!("rootmark-p2l10b-{}", std::process::id()));
+    let _ = fs::remove_dir_all(&root2);
+    let mut v2 = rootmarkcore::Vault::open(&root2).unwrap();
+    v2.ingest_dir(
+        &fixtures().join("mini_vault"),
+        rootmarkcore::MatcherVersion::V3,
+    )
+    .unwrap();
+    rootmarkindex::store::build(&v2, &e).unwrap();
+    let m2 = read(&root2.join(".rootmark/index/manifest.json"));
+    assert_eq!(m2["lexical"]["tokenizer"], "mdk_lower_alnum");
+    std::env::remove_var("ROOTMARK_DEFAULT_TOKENIZER");
+    knob(None).unwrap();
     eprintln!(
         "uni_fold_tr: {differ} of {} case outputs differ from mdk_lower_alnum's",
         dirs.len()
@@ -94,7 +108,7 @@ fn level_3_with_both_lexical_variants() {
 #[ignore = "fixture generator: make fixtures-variants"]
 fn write_uni_fold_tr_expected() {
     let dirs = eval_c3::c3_case_dirs(&fixtures()).unwrap();
-    std::env::set_var(DEFAULT_TOKENIZER_ENV, "uni_fold_tr");
+    knob(Some("uni_fold_tr")).unwrap();
     for d in &dirs {
         let v = eval_c3::evaluate_c3(d).unwrap_or_else(|e| panic!("{}: {e:#}", d.display()));
         let out = variant_dir(d);
@@ -104,5 +118,5 @@ fn write_uni_fold_tr_expected() {
         fs::write(out.join("expected.json"), text).unwrap();
         eprintln!("wrote {}", out.join("expected.json").display());
     }
-    std::env::remove_var(DEFAULT_TOKENIZER_ENV);
+    knob(None).unwrap();
 }
