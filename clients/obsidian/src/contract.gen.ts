@@ -41,6 +41,8 @@ export interface SearchArgs {
   k?: number;
   /** retrieval mode (default hybrid) */
   mode?: "hybrid" | "lexical" | "flat";
+  /** only documents whose vault-relative path is one of these or lies under it ('/' separated; no absolute path, no '..'); applied before ranking, recorded in the trace */
+  path_prefix?: string[];
   /** the query text (not empty, not only whitespace) */
   query: string;
 }
