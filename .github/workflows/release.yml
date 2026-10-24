@@ -1,13 +1,13 @@
-# The rootmark release binaries (K-E1.1; GOAL P1-E.1 E1-5; docs/RELEASE.md R4,
-# R13). Started by a human only (workflow_dispatch): it builds, checks and
-# keeps artefacts, and publishes, tags and releases nothing (the v0.1.0 tag
-# and the GitHub release are human steps, docs/RELEASE.md).
+# The rootmark release binaries (K-E1.1, K-P2A.6; GOAL P1-E.1 E1-5;
+# docs/RELEASE.md R4, R13). Started by a human only (workflow_dispatch): it builds, checks and
+# keeps artefacts, and publishes, tags and releases nothing (the version
+# tag and the GitHub release are human steps, docs/RELEASE.md).
 #
-# One release target: aarch64-apple-darwin (required: its job must pass).
-# x86_64-unknown-linux-gnu and x86_64-pc-windows-msvc are CI information
-# (continue-on-error): built, checked and kept when they can be, recorded as
-# skipped when not; never a release criterion. Intel macOS is not a
-# target. Each job runs `rootmark --version`, `--spec-version` and `rootmark
+# Release targets (since 0.2.0, K-P2A.6): aarch64-apple-darwin and
+# x86_64-unknown-linux-gnu (required: their jobs must pass).
+# x86_64-pc-windows-msvc is CI information (continue-on-error): built,
+# checked and kept when it can be, recorded as skipped when not; never a
+# release criterion. Intel macOS is not a target (K-P2A.5). Each job runs `rootmark --version`, `--spec-version` and `rootmark
 # conformance` (Levels 1–3 on the embedded fixtures; 39/39 since spec 2.0.2)
 # through scripts/release_target.sh — the same record as scripts/release.sh
 # writes locally — and the last job assembles dist/release.json from every
@@ -35,7 +35,7 @@ jobs:
       matrix:
         include:
           - { target: aarch64-apple-darwin, os: macos-14, archive: tar.gz, required: true }
-          - { target: x86_64-unknown-linux-gnu, os: ubuntu-24.04, archive: tar.gz, required: false }
+          - { target: x86_64-unknown-linux-gnu, os: ubuntu-24.04, archive: tar.gz, required: true }
           - { target: x86_64-pc-windows-msvc, os: windows-latest, archive: zip, required: false }
     defaults:
       run:
@@ -138,7 +138,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist/bin
-          for t in aarch64-apple-darwin:true x86_64-unknown-linux-gnu:false x86_64-pc-windows-msvc:false; do
+          for t in aarch64-apple-darwin:true x86_64-unknown-linux-gnu:true x86_64-pc-windows-msvc:false; do
             target="${t%%:*}"; req="${t#*:}"
             # the record sits under dist/bin/ in the artefact, or at its root
             # when the job stopped before packaging (upload-artifact keeps
