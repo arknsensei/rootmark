@@ -205,7 +205,7 @@ impl Vault {
         author_kind: &str,
         source: &str,
     ) -> PyResult<Py<PyAny>> {
-        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let e = rootmarkindex::OnnxMiniLm::for_vault(self.inner.root()).map_err(err)?;
         let mut store = rootmarkindex::store::Store::open(&self.inner, &e).map_err(err)?;
         let prov = Provenance {
             author_kind: author(author_kind)?,
@@ -219,7 +219,7 @@ impl Vault {
 
     /// `index compact` (P1-C): the hot tier moved into a new cold index.
     fn index_compact(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
-        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let e = rootmarkindex::OnnxMiniLm::for_vault(self.inner.root()).map_err(err)?;
         to_py(
             py,
             &rootmarkindex::store::compact(&self.inner, &e).map_err(err)?,
@@ -228,7 +228,7 @@ impl Vault {
 
     /// `index status` (P1-C).
     fn index_status(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
-        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let e = rootmarkindex::OnnxMiniLm::for_vault(self.inner.root()).map_err(err)?;
         let store = rootmarkindex::store::Store::open(&self.inner, &e).map_err(err)?;
         to_py(py, &store.status(&self.inner).map_err(err)?)
     }
@@ -243,7 +243,7 @@ impl Vault {
     /// `index build` (P1-C): `<root>/.rootmark/index/` from every head and
     /// checkpoint snapshot, with the manifest-verified ONNX embedder.
     fn index_build(&self, py: Python<'_>) -> PyResult<Py<PyAny>> {
-        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let e = rootmarkindex::OnnxMiniLm::for_vault(self.inner.root()).map_err(err)?;
         to_py(
             py,
             &rootmarkindex::store::build(&self.inner, &e).map_err(err)?,
@@ -272,7 +272,7 @@ impl Vault {
         for q in &queries {
             rootmarkindex::search::check_query(q).map_err(err)?;
         }
-        let e = rootmarkindex::OnnxMiniLm::load_default().map_err(err)?;
+        let e = rootmarkindex::OnnxMiniLm::for_vault(self.inner.root()).map_err(err)?;
         let store = rootmarkindex::store::Store::open(&self.inner, &e).map_err(err)?;
         let mode = rootmarkindex::search::Mode::parse(mode).map_err(err)?;
         let mut se = rootmarkindex::search::Searcher::new(&store, &e, consumer).map_err(err)?;

@@ -1,0 +1,32 @@
+{
+  "name": "multilingual-minilm-l12-v2",
+  "source": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "embedder_id_rule": "\"multilingual-minilm-l12-v2/\" + blake3(model.onnx)[:8]",
+  "files": {
+    "model.onnx": {
+      "remote_path": "onnx/model.onnx",
+      "size": 470301610,
+      "sha256": "10f7a088420252b26caf819236ca2c9d2987afd0fc06fec7553b542a5655a05a",
+      "blake3": "ca55a866a17f2850393a45e191ee913ece8b2d9b9113d284ac8cdce9d2415741"
+    },
+    "tokenizer.json": {
+      "remote_path": "tokenizer.json",
+      "size": 9081518,
+      "sha256": "2c3387be76557bd40970cec13153b3bbf80407865484b209e655e5e4729076b8",
+      "blake3": "fbe61980d218854e1bd62160382749d786ee9ba7bb59659ff2db1a79cd934ca7"
+    },
+    "sentence_bert_config.json": {
+      "remote_path": "sentence_bert_config.json",
+      "size": 53,
+      "sha256": "70f4448f31320443fe3557cacea5abf2dcc4915dda8c80646bec9f3bb0aa5a1f",
+      "blake3": "850a86d7bd0e91afbf0f77a44497208fc5f797908da5c718ed24a9f9ac5a08ba"
+    },
+    "1_Pooling/config.json": {
+      "remote_path": "1_Pooling/config.json",
+      "size": 190,
+      "sha256": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+      "blake3": "0d9e82f4655c407da9ffaef0fe5b236ae493ff8fbdc2b25a024df4aae86a7fe6"
+    }
+  }
+}

@@ -341,7 +341,7 @@ impl Migration for IndexRebuild {
             save.save(vault, f)?;
         }
         let v = rootmarkcore::Vault::open(vault)?;
-        let e = rootmarkindex::embed::OnnxMiniLm::load_default()?;
+        let e = rootmarkindex::embed::OnnxMiniLm::for_vault(vault)?;
         rootmarkindex::store::build(&v, &e)?;
         Ok(())
     }

@@ -71,7 +71,21 @@ pub fn models_root() -> PathBuf {
 }
 
 pub fn read_manifest(root: &Path) -> Result<Manifest> {
-    let p = root.join("MANIFEST.json");
+    read_manifest_file(&root.join("MANIFEST.json"))
+}
+
+/// The manifest file of the model `name` (P2-L/L2, `[index] embedder`):
+/// `MANIFEST.json` for the default model, `MANIFEST.<name>.json` for another.
+pub fn manifest_file(name: &str) -> String {
+    if name == crate::config::EMBEDDER_DEFAULT {
+        "MANIFEST.json".to_string()
+    } else {
+        format!("MANIFEST.{name}.json")
+    }
+}
+
+fn read_manifest_file(p: &Path) -> Result<Manifest> {
+    let p = p.to_path_buf();
     let text = std::fs::read_to_string(&p).with_context(|| format!("read {}", p.display()))?;
     let m: Manifest =
         serde_json::from_str(&text).with_context(|| format!("parse {}", p.display()))?;
@@ -96,7 +110,27 @@ pub fn read_manifest(root: &Path) -> Result<Manifest> {
 
 /// Checks every manifest file (size, blake3) under `<root>/<name>/`.
 pub fn verify(root: &Path) -> Result<VerifiedModel> {
-    let manifest = read_manifest(root)?;
+    verify_manifest(root, read_manifest(root)?)
+}
+
+/// `verify` for the model `name` (one of `crate::config::EMBEDDERS`): its
+/// own manifest (`manifest_file`), whose `name` must be `name`.
+pub fn verify_named(root: &Path, name: &str) -> Result<VerifiedModel> {
+    if !crate::config::EMBEDDERS.contains(&name) {
+        bail!(
+            "unknown embedder {name:?}: one of {:?}",
+            crate::config::EMBEDDERS
+        );
+    }
+    let p = root.join(manifest_file(name));
+    let m = read_manifest_file(&p)?;
+    if m.name != name {
+        bail!("{}: name {:?} != {name:?}", p.display(), m.name);
+    }
+    verify_manifest(root, m)
+}
+
+fn verify_manifest(root: &Path, manifest: Manifest) -> Result<VerifiedModel> {
     let dir = root.join(&manifest.name);
     for (name, e) in &manifest.files {
         let p = dir.join(name);

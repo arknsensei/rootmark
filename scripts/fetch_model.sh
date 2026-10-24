@@ -2,7 +2,10 @@
 # Fetches the embedder model files pinned in models/MANIFEST.json from
 # HuggingFace (GOAL P1-C "Embedder"; TASKS C0) into models/<name>/ (git-ignored).
 #
-#   scripts/fetch_model.sh [<repo-root>]
+#   scripts/fetch_model.sh [<repo-root>] [<manifest>]
+#
+# <manifest> (P2-L/L2) names another pinned model's manifest under models/
+# (`MANIFEST.<name>.json`, `[index] embedder`); the default is MANIFEST.json.
 #
 # Every file is downloaded from the manifest's `source` repository at its
 # pinned `revision`; a file already present is kept only if its sha256
@@ -13,7 +16,7 @@
 set -euo pipefail
 
 root="$(cd "${1:-$(dirname "${BASH_SOURCE[0]}")/..}" && pwd)"
-manifest="$root/models/MANIFEST.json"
+manifest="$root/models/${2:-MANIFEST.json}"
 [ -f "$manifest" ] || { echo "fetch_model: $manifest missing" >&2; exit 1; }
 command -v jq >/dev/null || { echo "fetch_model: jq is required" >&2; exit 1; }
 

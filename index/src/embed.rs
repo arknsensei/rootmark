@@ -51,6 +51,20 @@ impl OnnxMiniLm {
         OnnxMiniLm::load(&models::verify(&models::models_root())?)
     }
 
+    /// Loads the manifest-verified model `name` (`[index] embedder`; P2-L/L2):
+    /// `minilm-l6-v2` (the default, `models/MANIFEST.json`) or
+    /// `multilingual-minilm-l12-v2` (`models/MANIFEST.multilingual-minilm-l12-v2.json`;
+    /// `make models-multilingual`). Both are 384-d mean-pooled BERT models
+    /// with the same inputs, run the same way.
+    pub fn load_named(name: &str) -> Result<OnnxMiniLm> {
+        OnnxMiniLm::load(&models::verify_named(&models::models_root(), name)?)
+    }
+
+    /// The embedder the vault at `root` names (`crate::config`).
+    pub fn for_vault(root: &std::path::Path) -> Result<OnnxMiniLm> {
+        OnnxMiniLm::load_named(&crate::config::IndexConfig::of_vault(root)?.embedder)
+    }
+
     pub fn load(model: &VerifiedModel) -> Result<OnnxMiniLm> {
         let st = read_json(model, models::ST_CONFIG_FILE)?;
         let max_len = st["max_seq_length"]
