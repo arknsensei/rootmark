@@ -60,6 +60,9 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 ### `compare_p2l`
 `fast` (P2-L/L0 d, `make verify FAST=1`, K-P2.4 (3)): hızlı zincirin dosyaları (`P2L_FAST_FILES`: `fast/` altındaki uyumluluk raporları, `conformance_equiv` çıkışı ve `regress.json`, `c3_quality.json`, `p2l_checks.json`; L5'ten beri P2-L'nin ölçüm dosyaları `p2l_quality.json`, `p2l/{d_tr,english,migrate}.json` de) alan alan; hariç: `fast/conformance.json`'ın `fixtures_root`'u (`P2L_INFO`, ortam: zincirin klonunun mutlak yolu). `pair`: `compare_p2a.pair` + `P2L_FILES` (`p2l_checks.json`, `p2l_quality.json`, `p2l/{d_tr,english,migrate}.json`) alan alan, aynı hariçle; P2-L'nin ölçümleri belirlenimlidir (iz kimlikleri içerikten, vault yolları geçici dizinde ama kayda yazılmaz). `regress` kipi yok (`EXCLUDED` boş): hızlı zincirin son resmi RUN'a karşı regresyonu `eval.fast_regress`'tir.
 
+### `compare_p2p`
+`fast` (P2-P/P5, `make verify FAST=1`): `compare_p2l`'nin hızlı dosyaları ve `p2p_checks.json` (`P2P_FAST_FILES`) alan alan; hariç: `fast/conformance.json`'ın `fixtures_root`'u (`P2P_INFO`, ortam; P2-L'ninki). `pair`: `compare_p2l.pair` (P2-A çift kümesi ve P2-L dosyaları) + `P2P_FILES` (`p2p_checks.json`: turun testleri ölçüt başına, ad ve sonuç; duvar saati ve yol yok) alan alan. `regress` kipi yok (`EXCLUDED` boş).
+
 ## Alan tablosu
 <!-- fields-table -->
 | Araç | Kip | Dosya | Yol kalıbı | Sınıf | Gerekçe |
@@ -474,6 +477,7 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2a` | regress | `p2_0_2_checks.json` | `fail_summary` | karar | K-P2A.2: P2-0.2's classifier sees the migration-required FAILs; P2-A's classifier is eval.historical_p2a |
 | `compare_p2a` | regress | `p2_0_2_checks.json` | `regress` | karar | K-P2A.2: P2-0.2's regress against P2-0.1; P2-A's regress is this comparison |
 | `compare_p2l` | hepsi | `fast/conformance.json` | `fixtures_root` | ortam | zincirin klonunun mutlak fixture yolu |
+| `compare_p2p` | hepsi | `fast/conformance.json` | `fixtures_root` | ortam | zincirin klonunun mutlak fixture yolu |
 <!-- /fields-table -->
 
 ## Dosya tablosu
@@ -507,4 +511,6 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2a.P2A_FILES` | `p2a_checks.json`, `p2a/migrate_old.json`, `p2a/fixture.json`, `p2a/tamper.json`, `p2a/tests.json` |
 | `compare_p2l.P2L_FAST_FILES` | `fast/conformance.json`, `fast/conformance_rootmark.json`, `fast/conformance_equiv.json`, `fast/regress.json`, `c3_quality.json`, `p2l_checks.json`, `p2l_quality.json`, `p2l/d_tr.json`, `p2l/english.json`, `p2l/migrate.json` |
 | `compare_p2l.P2L_FILES` | `p2l_checks.json`, `p2l_quality.json`, `p2l/d_tr.json`, `p2l/english.json`, `p2l/migrate.json` |
+| `compare_p2p.P2P_FAST_FILES` | `fast/conformance.json`, `fast/conformance_rootmark.json`, `fast/conformance_equiv.json`, `fast/regress.json`, `c3_quality.json`, `p2l_checks.json`, `p2l_quality.json`, `p2l/d_tr.json`, `p2l/english.json`, `p2l/migrate.json`, `p2p_checks.json` |
+| `compare_p2p.P2P_FILES` | `p2p_checks.json` |
 <!-- /files-table -->

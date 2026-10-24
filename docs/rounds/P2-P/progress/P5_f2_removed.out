@@ -1,0 +1,7 @@
+<   log "FAIL summary (K-E1.4, round classifier eval.historical_p2l)"
+<   (cd research && uv run --frozen python -m eval.historical_p2l --run-dir "reports/runs/$run" --summary || true) >&2
+<   log "compare (P2-L fast) $dir_a $dir_b"
+<   (cd "$repo/research" && uv run --frozen python -m eval.compare_p2l fast "$dir_a" "$dir_b" \
+<     echo "error: fast comparison failed (compare_p2l fast exit $rc; $dir_a/fast_pair_compare.json)" >&2
+<   compare_p2l "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+<     echo "usage: [FAST=1] $0 [chain|chain-fast <src> <dir> | pair|pair-fast <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2|compare-p2a|compare-p2l <repo> <runA> <runB> [out]]" >&2
