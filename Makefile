@@ -760,6 +760,14 @@ P2L_TESTS := --tests L0=rootmark-server:p2_l_l0,rootmark-server:p2a_migrate \
 p2l-checks: require-run models-multilingual
 	$(PY) -m eval.run_p2l_checks --run $(RUN) $(P2L_TESTS)
 
+# P2-L/L4, L5 (GOAL L-2..L-6, L-8): D-TR — pinned, pre-registered,
+# rebuilt and checked against data/MANIFEST.d_tr.json — in 12 cells, the
+# English reference with both lexical variants (D3), and L-8's three vaults
+p2l-quality: require-run models-multilingual
+	$(PY) -m eval.datasets.d_tr --check
+	$(PY) -m eval.run_p2l --run $(RUN)
+	$(PY) -m eval.run_p2l_migrate --run $(RUN) --rootmark ../target/release/rootmark
+
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared);
 # `make verify FAST=1`: the fast pair (scripts/verify.sh, P2-L/F3)
 verify:

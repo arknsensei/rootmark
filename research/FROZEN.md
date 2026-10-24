@@ -381,6 +381,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-L/L0:` | yeniden dondurma P2-L/F4: `compare_p2l` bölümü, alan ve dosya satırları |
 | `research/eval/**` | `P2-L/L0:` | yeniden dondurma P2-L/F4: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni P2-L dosyaları (`compare_p2l.py`, `fast_regress.py`, `run_p2l_checks.py`) de bu satırla donar |
 | `core/tests/conformance.rs` | `P2-L/L0:` | yeniden dondurma P2-L/F5: `spec_version` 2.0.3 |
+| `research/eval/datasets/d_tr.py` | `P2-L/L4-pre:` | D-TR üreteci (kaynak, revizyon, sha256, seçim kuralları, tohum; ölçümden önce) |
+| `research/data/MANIFEST.d_tr.json` | `P2-L/L4-pre:` | D-TR manifest'i (belge ve sorgu hash'leri; ölçümden önce) |
+| `research/eval/run_p2l.py` | `P2-L/L4-pre:` | L-2..L-6 ölçücüsü (12 hücre, İngilizce referans; kriter okumaları ölçümden önce) |
+| `research/eval/run_p2l_migrate.py` | `P2-L/L4-pre:` | L-8 ölçücüsü (üç vault) |
 <!-- /frozen-table -->
 
 ## Notlar
