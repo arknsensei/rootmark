@@ -129,11 +129,28 @@ pub struct PromotionRule {
 impl PromotionRule {
     /// Whether the rule covers a `propose` by `actor` with `source` into
     /// `doc_path` (exact actor, exact source when set, path under the prefix).
+    /// The agent's name is its identity, not its version: an MCP client's
+    /// actor id and source are `<clientInfo.name>/<clientInfo.version>`
+    /// (K-D1.3), so `agent:collector` covers `agent:collector` (CLI
+    /// `--source collector`) and `agent:collector/<version>` — one more
+    /// component without `/` — and nothing else (`collector/x/1`,
+    /// `collector2/1`, `collectorx` do not match). P2-P/P4, ASSUMPTIONS P4-1.
     pub fn matches(&self, actor: &Actor, source: &str, doc_path: &str) -> bool {
-        self.actor == *actor
-            && self.source.as_deref().is_none_or(|s| s == source)
+        actor.kind == self.actor.kind
+            && same_agent(&self.actor.id, &actor.id)
+            && self.source.as_deref().is_none_or(|s| same_agent(s, source))
             && crate::pathprefix::matches(&self.path_prefix, doc_path)
     }
+}
+
+/// `got` is `want`, or `want/<version>` with a version that is not empty
+/// and holds no `/` (an MCP client's `<name>/<version>`).
+fn same_agent(want: &str, got: &str) -> bool {
+    got == want
+        || got
+            .strip_prefix(want)
+            .and_then(|r| r.strip_prefix('/'))
+            .is_some_and(|v| !v.is_empty() && !v.contains('/'))
 }
 
 /// The rule id form: `[a-z0-9_-]{1,64}`.
