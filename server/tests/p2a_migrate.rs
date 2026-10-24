@@ -117,9 +117,32 @@ fn dry_run_changes_nothing_and_names_the_plan() {
         .iter()
         .map(|p| p["migration"].as_str().unwrap())
         .collect();
-    // the index migration is planned after the rename: from the legacy
-    // store it is only named once the store has its new name
-    assert_eq!(plan, ["rename_store"], "{r:#}");
+    // the plan is the chain `migrate` runs (P2-L/L0 c; P2-A verification F1:
+    // it listed `rename_store` only, though `migrate` rebuilt the index
+    // too): each migration as the ones before it leave the vault
+    assert_eq!(
+        plan,
+        [
+            "rename_store",
+            "index_rebuild",
+            "log_readers",
+            "checkpoints"
+        ],
+        "{r:#}"
+    );
+    assert_eq!(
+        r["matrix"]["required"],
+        serde_json::json!(["rename_store", "index_rebuild"])
+    );
+    // the index plan names the files under the store's new name
+    let ix = r["plan"][1]["touches"].as_array().unwrap();
+    assert!(
+        !ix.is_empty()
+            && ix
+                .iter()
+                .all(|f| f.as_str().unwrap().starts_with(".rootmark/index/"))
+    );
+    assert_eq!(r["plan"][1]["from"], "mdkernel-index/2");
     assert_eq!(
         r["matrix"]["artifacts"]["store"]["state"],
         "migration_required"

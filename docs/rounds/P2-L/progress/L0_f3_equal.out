@@ -1,0 +1,7 @@
+verify.sh functions but chain_fast/pair_fast: main 9f49f2ba8fa13a58f04320a9487eae9dd7a765e1b72e0a2f4560c265223a028c, tree 9f49f2ba8fa13a58f04320a9487eae9dd7a765e1b72e0a2f4560c265223a028c, equal true
+verify.sh lines removed since main: 2 (the dispatcher's default branch and usage line)
+-    pair "$src" "$base/A" "$base/B"
+-    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2|compare-p2a <repo> <runA> <runB> [out]]" >&2
+check_compare_fields.py lines removed since main: 0
++        ("compare_p2l", "P2L"),
++        "compare_p2l": ["P2L_FAST_FILES", "P2L_FILES"],

@@ -99,6 +99,16 @@
 # test-4 with the round's pre-registered seed, D-A′, D-C′ → <RUN>/p2_0_3/;
 # p2_0_3_checks.json). Nothing else changes: the steps, the classifier,
 # `pair`, `compare_p2a` and VERIFY_LOAD are as in P2-A.
+# P2-L (re-freeze P2-L/F3; K-P2.4 (3)): a fast mode for the rounds' own
+# quality gate. `FAST=1 scripts/verify.sh` (`make verify FAST=1`) runs two
+# fast chains side by side (`chain-fast`: a clean clone, `make setup`,
+# models and D3, check_frozen and check_deps, `make conformance` and
+# `rootmark conformance`, C-3 quality, `make fast-regress` — the English
+# quality reference's 618 values and the conformance report by test id
+# against the last official RUN —, then the active round's checks,
+# `make $(ROUND_CHECKS)`) and compares them with `eval.compare_p2l fast`;
+# it writes the elapsed time beside the comparison. Without FAST the full
+# chain below runs, unchanged.
 #
 #   scripts/verify.sh chain <source-repo> <workdir>
 #       clone <source-repo> into <workdir>/repo, `make setup`, rebuild and
@@ -234,6 +244,102 @@ chain() {
   log "chain finished in $((SECONDS - t0)) s"
   echo "RUN=$run" >&3
   echo "RUN_DIR=$work/repo/research/reports/runs/$run" >&3
+}
+
+# P2-L/F3: the fast chain (K-P2.4 (3)); the same clone, setup and RUN as
+# `chain`, then only what the fast gate checks
+chain_fast() {
+  local src="$1" work="$2"
+  exec 3>&1 1>&2
+  mkdir -p "$work"
+  work="$(cd "$work" && pwd)"
+  if [ -e "$work/repo" ]; then
+    echo "error: $work/repo already exists; use an empty directory" >&2
+    exit 1
+  fi
+  local t0=$SECONDS
+  if [ -n "$(git -C "$src" status --porcelain --untracked-files=no 2>/dev/null)" ]; then
+    log "warning: $src has uncommitted changes; only its committed HEAD is verified"
+  fi
+  log "fast: clone $src -> $work/repo"
+  git clone --quiet "$src" "$work/repo"
+  cd "$work/repo"
+  log "fast: commit $(git rev-parse HEAD)"
+  make setup >"$work/setup.log" 2>&1 || { tail -40 "$work/setup.log" >&2; exit 1; }
+  make models >"$work/models.log" 2>&1 || { tail -20 "$work/models.log" >&2; exit 1; }
+  log "fast: D3 (manifest verified)"
+  make d3 >"$work/d3.log" 2>&1 || { tail -20 "$work/d3.log" >&2; exit 1; }
+  log "fast: check_frozen, check_deps"
+  bash scripts/check_frozen.sh
+  bash scripts/check_deps.sh
+  local run
+  run="$(cd research && uv run --frozen python -m eval.runinfo)"
+  log "RUN=$run"
+  local fd="research/reports/runs/$run/fast"
+  mkdir -p "$fd"
+  log "fast: conformance (make conformance, rootmark conformance)"
+  make conformance
+  cp reports/conformance.json "$fd/conformance.json"
+  ROOTMARK_MODELS="$work/repo/models" target/release/rootmark conformance >"$fd/conformance_rootmark.json"
+  local erc=0
+  bash scripts/conformance_equiv.sh reports/conformance.json "$fd/conformance_rootmark.json" >"$fd/conformance_equiv.log" 2>&1 || erc=$?
+  jq -n --argjson e "$erc" '{exit: $e}' >"$fd/conformance_equiv.json"
+  log "fast: C-3 quality (D3 + D4 test split)"
+  make c3-quality RUN="$run" >"$fd/c3_quality.log" 2>&1 || { tail -20 "$fd/c3_quality.log" >&2; exit 1; }
+  log "fast: regress (quality reference, conformance vs the last official RUN)"
+  make fast-regress RUN="$run"
+  log "fast: round checks (make $(make -s print-round-checks))"
+  make round-checks RUN="$run"
+  local dirty
+  dirty="$(jq -r '.phases | to_entries[] | select(.value.worktree_clean != true) | .key' \
+    "research/reports/runs/$run/manifest.json")"
+  if [ -n "$dirty" ] || [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+    echo "error: the fast chain ran on a dirty work tree: $(echo $dirty)" >&2
+    git status --porcelain --untracked-files=all >&2
+    exit 1
+  fi
+  log "fast chain finished in $((SECONDS - t0)) s"
+  echo "RUN=$run" >&3
+  echo "RUN_DIR=$work/repo/research/reports/runs/$run" >&3
+}
+
+# P2-L/F3: two fast chains side by side, then `compare_p2l fast`
+pair_fast() {
+  local src="$1" a="$2" b="$3"
+  local self res_a res_b dir_a dir_b pa pb rca=0 rcb=0 t0=$SECONDS
+  self="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
+  res_a="$(mktemp -t rootmark-verify-fa.XXXXXX)"
+  res_b="$(mktemp -t rootmark-verify-fb.XXXXXX)"
+  bash "$self" chain-fast "$src" "$a" >"$res_a" 2>"$res_a.log" & pa=$!
+  bash "$self" chain-fast "$src" "$b" >"$res_b" 2>"$res_b.log" & pb=$!
+  wait "$pa" || rca=$?
+  wait "$pb" || rcb=$?
+  sed 's/^/[A] /' "$res_a.log" >&2
+  sed 's/^/[B] /' "$res_b.log" >&2
+  if [ "$rca" -ne 0 ] || [ "$rcb" -ne 0 ]; then
+    echo "error: a fast chain failed (A exit $rca, B exit $rcb)" >&2
+    exit 1
+  fi
+  dir_a="$(sed -n 's/^RUN_DIR=//p' "$res_a")"
+  dir_b="$(sed -n 's/^RUN_DIR=//p' "$res_b")"
+  for d in "$dir_a" "$dir_b"; do
+    if [ -z "$d" ] || [ ! -f "$d/manifest.json" ]; then
+      echo "error: chain produced no run directory ($d)" >&2
+      exit 1
+    fi
+  done
+  cat "$res_a" "$res_b"
+  local repo rc=0
+  repo="$(cd "$a" && pwd)/repo"
+  log "compare (P2-L fast) $dir_a $dir_b"
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p2l fast "$dir_a" "$dir_b" \
+    --out "$dir_a/fast_pair_compare.json") >/dev/null || rc=$?
+  jq -n --argjson s "$((SECONDS - t0))" '{elapsed_s: $s}' >"$dir_a/fast_pair_time.json"
+  if [ "$rc" -ne 0 ]; then
+    echo "error: fast comparison failed (compare_p2l fast exit $rc; $dir_a/fast_pair_compare.json)" >&2
+    exit "$rc"
+  fi
+  log "fast pair equal ($(jq -r .n_fields "$dir_a/fast_pair_compare.json") fields) in $((SECONDS - t0)) s"
 }
 
 pair() {
@@ -435,6 +541,8 @@ compare_p1b() {
 
 case "${1:-}" in
   chain) chain "${2:?source repo}" "${3:?workdir}" ;;
+  chain-fast) chain_fast "${2:?source repo}" "${3:?workdir}" ;;
+  pair-fast) pair_fast "${2:?source repo}" "${3:?workdir A}" "${4:?workdir B}" ;;
   pair) pair "${2:?source repo}" "${3:?workdir A}" "${4:?workdir B}" ;;
   compare) compare "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p1b) compare_p1b "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
@@ -452,10 +560,14 @@ case "${1:-}" in
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t rootmark-verify.XXXXXX)"
     log "workdirs under $base"
-    pair "$src" "$base/A" "$base/B"
+    if [ "${FAST:-}" = "1" ]; then
+      pair_fast "$src" "$base/A" "$base/B"
+    else
+      pair "$src" "$base/A" "$base/B"
+    fi
     ;;
   *)
-    echo "usage: $0 [chain <src> <dir> | pair <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2|compare-p2a <repo> <runA> <runB> [out]]" >&2
+    echo "usage: [FAST=1] $0 [chain|chain-fast <src> <dir> | pair|pair-fast <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2|compare-p2a <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac

@@ -1,0 +1,4133 @@
+{
+ "window_s": 0.5,
+ "records": [
+  {
+   "edit": 0,
+   "op": "type",
+   "how": "command",
+   "doc": "atlas.md",
+   "role": "edited",
+   "blocks": 67,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Yeni bir paragraf, atlas'a eklendi."
+   ],
+   "latency_ms": 296,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "atlas-v2.md",
+   "role": "renamed",
+   "blocks": 67,
+   "new_blocks": 67,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Atlas",
+    "Bu not kendine bağlanır: [[atlas-v2]]",
+    "## Bölüm 1",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (101).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (102). Bkz. [[atlas-v2#Bölüm 3]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (103).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (104).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (105).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (106).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (107).",
+    "## Bölüm 2",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (108).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (109). Bkz. [Atlas](atlas-v2.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (110).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (111).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (112).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (113).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (114).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (115).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (116). Bkz. [[atlas-v2|bu atlas]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (117).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (118).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (119).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (120).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (121).",
+    "## Bölüm 4",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (122).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (123).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (124).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (125).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (126).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (127).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (128).",
+    "## Bölüm 5",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (129).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (130).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (131).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (132).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (133).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (134).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (135).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (136).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (137).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (138).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (139).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (140).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (141).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (142).",
+    "## Bölüm 7",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (143).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (144).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (145).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (146).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (147).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (148).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (149).",
+    "## Bölüm 8",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (150).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (151).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (152).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (153).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (154).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (155).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (156).",
+    "Yeni bir paragraf, atlas'a eklendi."
+   ],
+   "latency_ms": 327,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not00.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas-v2]] ve ![[atlas-v2#Bölüm 5]]."
+   ],
+   "latency_ms": 393,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not01.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas-v2|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "latency_ms": 426,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not02.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas-v2#Bölüm 2]] ve ![[plan]]."
+   ],
+   "latency_ms": 458,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not03.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: ![[atlas-v2#Bölüm 5]] ve [[atlas-v2#Bölüm 2]]."
+   ],
+   "latency_ms": 493,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not04.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [atlas-v2](atlas-v2.md) ve [[gunluk|günlüğüm]]."
+   ],
+   "latency_ms": 528,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not05.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [Büyük atlas](atlas-v2.md) ve [[plan#Bölüm 6|altıncı]]."
+   ],
+   "latency_ms": 561,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not06.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk]] ve [[atlas-v2|haritalar]]."
+   ],
+   "latency_ms": 596,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not09.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [gunluk](gunluk.md) ve [[atlas-v2]]."
+   ],
+   "latency_ms": 702,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not10.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [Plan belgesi](proje/plan.md) ve [Büyük atlas](atlas-v2.md)."
+   ],
+   "latency_ms": 738,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not13.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: ![[plan]] ve [atlas-v2](atlas-v2.md)."
+   ],
+   "new_texts": [
+    "İlgili: ![[plan]] ve [atlas-v2](atlas-v2.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not16.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas-v2]] ve ![[atlas-v2#Bölüm 5]]."
+   ],
+   "latency_ms": 732,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not17.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[atlas-v2|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "new_texts": [
+    "İlgili: [[atlas-v2|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not18.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[atlas-v2#Bölüm 2]] ve ![[plan]]."
+   ],
+   "new_texts": [
+    "İlgili: [[atlas-v2#Bölüm 2]] ve ![[plan]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "how": null,
+   "doc": "not19.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: ![[atlas-v2#Bölüm 5]] ve [[atlas-v2#Bölüm 2]]."
+   ],
+   "latency_ms": 736,
+   "written": true
+  },
+  {
+   "edit": 2,
+   "op": "type",
+   "how": "autosave",
+   "doc": "atlas-v2.md",
+   "role": "edited",
+   "blocks": 68,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Yeniden adlandırmadan sonra eklenen satır."
+   ],
+   "latency_ms": 112,
+   "written": true
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "how": null,
+   "doc": "gunluk-2026.md",
+   "role": "renamed",
+   "blocks": 65,
+   "new_blocks": 65,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Günlük",
+    "Bu not kendine bağlanır: [[gunluk-2026|bu günlük]]",
+    "## Bölüm 1",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (301).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (302). Bkz. [[gunluk-2026#Bölüm 2]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (303).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (304).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (305).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (306).",
+    "## Bölüm 2",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (307).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (308). Bkz. [[gunluk-2026]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (309).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (310).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (311).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (312).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (313).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (314).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (315).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (316).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (317).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (318).",
+    "## Bölüm 4",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (319).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (320).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (321).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (322).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (323).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (324).",
+    "## Bölüm 5",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (325).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (326).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (327).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (328).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (329).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (330).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (331).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (332).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (333).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (334).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (335).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (336).",
+    "## Bölüm 7",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (337).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (338).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (339).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (340).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (341).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (342).",
+    "## Bölüm 8",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (343).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (344).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (345).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (346).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (347).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (348).",
+    "## Bölüm 9",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (349).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (350).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (351).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (352).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (353).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (354).\n"
+   ],
+   "latency_ms": 492,
+   "written": true
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "how": null,
+   "doc": "not01.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas-v2|haritalar]] ve [[gunluk-2026#Bölüm 4]]."
+   ],
+   "latency_ms": 523,
+   "written": true
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "how": null,
+   "doc": "not04.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [atlas-v2](atlas-v2.md) ve [[gunluk-2026|günlüğüm]]."
+   ],
+   "latency_ms": 526,
+   "written": true
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "how": null,
+   "doc": "not06.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk-2026]] ve [[atlas-v2|haritalar]]."
+   ],
+   "latency_ms": 528,
+   "written": true
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "how": null,
+   "doc": "not07.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk-2026|günlüğüm]] ve [[gunluk-2026]]."
+   ],
+   "latency_ms": 529,
+   "written": true
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "how": null,
+   "doc": "not08.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk-2026#Bölüm 4]] ve [[plan]]."
+   ],
+   "latency_ms": 529,
+   "written": true
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "how": null,
+   "doc": "not09.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [gunluk-2026](gunluk-2026.md) ve [[atlas-v2]]."
+   ],
+   "latency_ms": 530,
+   "written": true
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "how": null,
+   "doc": "not14.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[tarif]] ve [gunluk-2026](gunluk-2026.md)."
+   ],
+   "latency_ms": 531,
+   "written": true
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "how": null,
+   "doc": "not17.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[atlas-v2|haritalar]] ve [[gunluk-2026#Bölüm 4]]."
+   ],
+   "new_texts": [
+    "İlgili: [[atlas-v2|haritalar]] ve [[gunluk-2026#Bölüm 4]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 4,
+   "op": "type",
+   "how": "blur",
+   "doc": "gunluk-2026.md",
+   "role": "edited",
+   "blocks": 66,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Bugün iki fincan içtim."
+   ],
+   "latency_ms": 112,
+   "written": true
+  },
+  {
+   "edit": 5,
+   "op": "rename",
+   "how": null,
+   "doc": "not10.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [Plan belgesi](plan.md) ve [Büyük atlas](atlas-v2.md)."
+   ],
+   "new_texts": [
+    "İlgili: [Plan belgesi](plan.md) ve [Büyük atlas](atlas-v2.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 5,
+   "op": "rename",
+   "how": null,
+   "doc": "not11.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[plan]] ve [Plan belgesi](plan.md)."
+   ],
+   "new_texts": [
+    "İlgili: [[plan]] ve [Plan belgesi](plan.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 5,
+   "op": "rename",
+   "how": null,
+   "doc": "plan.md",
+   "role": "renamed",
+   "blocks": 65,
+   "new_blocks": 65,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Plan",
+    "Bu not kendine bağlanır: [[plan]]",
+    "## Bölüm 1",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (501).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (502). Bkz. [Plan](plan.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (503).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (504).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (505).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (506).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (507).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (508).",
+    "## Bölüm 2",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (509).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (510). Bkz. ![[plan#Bölüm 1]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (511).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (512).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (513).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (514).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (515).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (516).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (517).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (518).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (519).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (520).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (521).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (522).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (523).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (524).",
+    "## Bölüm 4",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (525).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (526).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (527).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (528).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (529).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (530).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (531).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (532).",
+    "## Bölüm 5",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (533).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (534).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (535).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (536).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (537).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (538).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (539).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (540).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (541).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (542).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (543).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (544).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (545).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (546).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (547).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (548).",
+    "## Bölüm 7",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (549).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (550).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (551).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (552).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (553).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (554).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (555).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (556).\n"
+   ],
+   "latency_ms": 308,
+   "written": true
+  },
+  {
+   "edit": 6,
+   "op": "type",
+   "how": "command",
+   "doc": "plan.md",
+   "role": "edited",
+   "blocks": 66,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Plan klasör dışında."
+   ],
+   "latency_ms": 116,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not00.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas]] ve ![[atlas#Bölüm 5]]."
+   ],
+   "latency_ms": 576,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not01.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas|haritalar]] ve [[gunluk-2026#Bölüm 4]]."
+   ],
+   "latency_ms": 577,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not02.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas#Bölüm 2]] ve ![[plan]]."
+   ],
+   "latency_ms": 577,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not03.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: ![[atlas#Bölüm 5]] ve [[atlas#Bölüm 2]]."
+   ],
+   "latency_ms": 578,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not04.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [atlas](atlas.md) ve [[gunluk-2026|günlüğüm]]."
+   ],
+   "latency_ms": 580,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not05.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [Büyük atlas](atlas.md) ve [[plan#Bölüm 6|altıncı]]."
+   ],
+   "latency_ms": 580,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not06.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk-2026]] ve [[atlas|haritalar]]."
+   ],
+   "latency_ms": 582,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not09.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [gunluk-2026](gunluk-2026.md) ve [[atlas]]."
+   ],
+   "latency_ms": 586,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not10.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [Plan belgesi](plan.md) ve [Büyük atlas](atlas.md)."
+   ],
+   "new_texts": [
+    "İlgili: [Plan belgesi](plan.md) ve [Büyük atlas](atlas.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not13.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: ![[plan]] ve [atlas](atlas.md)."
+   ],
+   "new_texts": [
+    "İlgili: ![[plan]] ve [atlas](atlas.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not16.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas]] ve ![[atlas#Bölüm 5]]."
+   ],
+   "latency_ms": 577,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not17.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[atlas|haritalar]] ve [[gunluk-2026#Bölüm 4]]."
+   ],
+   "new_texts": [
+    "İlgili: [[atlas|haritalar]] ve [[gunluk-2026#Bölüm 4]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not18.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[atlas#Bölüm 2]] ve ![[plan]]."
+   ],
+   "new_texts": [
+    "İlgili: [[atlas#Bölüm 2]] ve ![[plan]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "not19.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: ![[atlas#Bölüm 5]] ve [[atlas#Bölüm 2]]."
+   ],
+   "latency_ms": 582,
+   "written": true
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "how": null,
+   "doc": "arsiv/atlas.md",
+   "role": "renamed",
+   "blocks": 68,
+   "new_blocks": 68,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Atlas",
+    "Bu not kendine bağlanır: [[atlas]]",
+    "## Bölüm 1",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (101).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (102). Bkz. [[atlas#Bölüm 3]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (103).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (104).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (105).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (106).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (107).",
+    "## Bölüm 2",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (108).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (109). Bkz. [Atlas](atlas.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (110).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (111).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (112).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (113).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (114).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (115).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (116). Bkz. [[atlas|bu atlas]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (117).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (118).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (119).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (120).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (121).",
+    "## Bölüm 4",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (122).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (123).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (124).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (125).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (126).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (127).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (128).",
+    "## Bölüm 5",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (129).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (130).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (131).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (132).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (133).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (134).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (135).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (136).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (137).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (138).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (139).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (140).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (141).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (142).",
+    "## Bölüm 7",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (143).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (144).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (145).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (146).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (147).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (148).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (149).",
+    "## Bölüm 8",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (150).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (151).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (152).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (153).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (154).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (155).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (156).",
+    "Yeni bir paragraf, atlas'a eklendi.",
+    "Yeniden adlandırmadan sonra eklenen satır."
+   ],
+   "latency_ms": 587,
+   "written": true
+  },
+  {
+   "edit": 8,
+   "op": "rename",
+   "how": null,
+   "doc": "not12.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[plan#Bölüm 6|altıncı]] ve [Tarif](tarifler.md)."
+   ],
+   "latency_ms": 322,
+   "written": true
+  },
+  {
+   "edit": 8,
+   "op": "rename",
+   "how": null,
+   "doc": "not14.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[tarifler]] ve [gunluk-2026](gunluk-2026.md)."
+   ],
+   "latency_ms": 325,
+   "written": true
+  },
+  {
+   "edit": 8,
+   "op": "rename",
+   "how": null,
+   "doc": "not15.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [Tarif](tarifler.md) ve [[tarifler]]."
+   ],
+   "latency_ms": 326,
+   "written": true
+  },
+  {
+   "edit": 8,
+   "op": "rename",
+   "how": null,
+   "doc": "tarifler.md",
+   "role": "renamed",
+   "blocks": 22,
+   "new_blocks": 22,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Tarif",
+    "Bu not kendine bağlanır: [[tarifler]]",
+    "## Bölüm 1",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (701).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (702). Bkz. [[tarifler#Bölüm 1|ilk bölüm]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (703).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (704).",
+    "## Bölüm 2",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (705).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (706).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (707).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (708).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (709).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (710).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (711).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (712).",
+    "## Bölüm 4",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (713).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (714).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (715).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (716).\n"
+   ],
+   "latency_ms": 336,
+   "written": true
+  },
+  {
+   "edit": 9,
+   "op": "type",
+   "how": "command",
+   "doc": "tarifler.md",
+   "role": "edited",
+   "blocks": 23,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Tarife not: [[tarifler]] kendine bağlı."
+   ],
+   "latency_ms": 117,
+   "written": true
+  },
+  {
+   "edit": 10,
+   "op": "type",
+   "how": "command",
+   "doc": "not00.md",
+   "role": "edited",
+   "blocks": 7,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Düzenleme 0: [[atlas]]"
+   ],
+   "latency_ms": 113,
+   "written": true
+  },
+  {
+   "edit": 11,
+   "op": "type",
+   "how": "blur",
+   "doc": "not02.md",
+   "role": "edited",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Düzenleme 2: [[atlas#Bölüm 2]]"
+   ],
+   "latency_ms": 98,
+   "written": true
+  },
+  {
+   "edit": 12,
+   "op": "type",
+   "how": "autosave",
+   "doc": "not04.md",
+   "role": "edited",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Düzenleme 4: [atlas](atlas.md)"
+   ],
+   "latency_ms": 108,
+   "written": true
+  },
+  {
+   "edit": 13,
+   "op": "type",
+   "how": "command",
+   "doc": "not06.md",
+   "role": "edited",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Düzenleme 6: [[gunluk]]"
+   ],
+   "latency_ms": 109,
+   "written": true
+  },
+  {
+   "edit": 14,
+   "op": "type",
+   "how": "blur",
+   "doc": "not08.md",
+   "role": "edited",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Düzenleme 8: [[gunluk#Bölüm 4]]"
+   ],
+   "latency_ms": 108,
+   "written": true
+  },
+  {
+   "edit": 15,
+   "op": "type",
+   "how": "autosave",
+   "doc": "not10.md",
+   "role": "edited",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [Plan belgesi](plan.md) ve [Büyük atlas](atlas.md)."
+   ],
+   "new_texts": [
+    "Düzenleme 10: [Plan belgesi](proje/plan.md)"
+   ],
+   "latency_ms": 116,
+   "written": true
+  },
+  {
+   "edit": 16,
+   "op": "type",
+   "how": "command",
+   "doc": "not12.md",
+   "role": "edited",
+   "blocks": 7,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Düzenleme 12: [[plan#Bölüm 6|altıncı]]"
+   ],
+   "latency_ms": 110,
+   "written": true
+  },
+  {
+   "edit": 17,
+   "op": "type",
+   "how": "blur",
+   "doc": "not14.md",
+   "role": "edited",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Düzenleme 14: [[tarif]]"
+   ],
+   "latency_ms": 113,
+   "written": true
+  },
+  {
+   "edit": 18,
+   "op": "type",
+   "how": "autosave",
+   "doc": "not16.md",
+   "role": "edited",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Düzenleme 16: [[atlas]]"
+   ],
+   "latency_ms": 110,
+   "written": true
+  },
+  {
+   "edit": 19,
+   "op": "type",
+   "how": "command",
+   "doc": "not18.md",
+   "role": "edited",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[atlas#Bölüm 2]] ve ![[plan]]."
+   ],
+   "new_texts": [
+    "Düzenleme 18: [[atlas#Bölüm 2]]"
+   ],
+   "latency_ms": 109,
+   "written": true
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "how": null,
+   "doc": "not01.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "latency_ms": 473,
+   "written": true
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "how": null,
+   "doc": "not04.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [atlas](atlas.md) ve [[gunluk|günlüğüm]]."
+   ],
+   "latency_ms": 478,
+   "written": true
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "how": null,
+   "doc": "not06.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk]] ve [[atlas|haritalar]]."
+   ],
+   "latency_ms": 481,
+   "written": true
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "how": null,
+   "doc": "not07.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk|günlüğüm]] ve [[gunluk]]."
+   ],
+   "latency_ms": 482,
+   "written": true
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "how": null,
+   "doc": "not08.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk#Bölüm 4]] ve [[plan]]."
+   ],
+   "latency_ms": 483,
+   "written": true
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "how": null,
+   "doc": "not09.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [gunluk](gunluk.md) ve [[atlas]]."
+   ],
+   "latency_ms": 484,
+   "written": true
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "how": null,
+   "doc": "not14.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[tarifler]] ve [gunluk](gunluk.md)."
+   ],
+   "latency_ms": 494,
+   "written": true
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "how": null,
+   "doc": "not17.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[atlas|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "new_texts": [
+    "İlgili: [[atlas|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "how": null,
+   "doc": "proje/gunluk.md",
+   "role": "renamed",
+   "blocks": 66,
+   "new_blocks": 66,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Günlük",
+    "Bu not kendine bağlanır: [[gunluk|bu günlük]]",
+    "## Bölüm 1",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (301).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (302). Bkz. [[gunluk#Bölüm 2]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (303).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (304).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (305).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (306).",
+    "## Bölüm 2",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (307).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (308). Bkz. [[gunluk]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (309).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (310).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (311).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (312).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (313).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (314).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (315).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (316).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (317).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (318).",
+    "## Bölüm 4",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (319).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (320).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (321).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (322).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (323).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (324).",
+    "## Bölüm 5",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (325).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (326).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (327).",
+    "Bugün iki fincan içtim.",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (328).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (329).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (330).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (331).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (332).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (333).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (334).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (335).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (336).",
+    "## Bölüm 7",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (337).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (338).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (339).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (340).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (341).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (342).",
+    "## Bölüm 8",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (343).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (344).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (345).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (346).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (347).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (348).",
+    "## Bölüm 9",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (349).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (350).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (351).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (352).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (353).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (354).\n"
+   ],
+   "latency_ms": 505,
+   "written": true
+  },
+  {
+   "edit": 21,
+   "op": "type",
+   "how": "command",
+   "doc": "proje/gunluk.md",
+   "role": "edited",
+   "blocks": 69,
+   "new_blocks": 3,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Klasöre taşındı.",
+    "İkinci paragraf.",
+    "Üçüncü paragraf."
+   ],
+   "latency_ms": 125,
+   "written": true
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "how": null,
+   "doc": "not02.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[atlas#Bölüm 2]] ve ![[plan-son]]."
+   ],
+   "latency_ms": 573,
+   "written": true
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "how": null,
+   "doc": "not05.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [Büyük atlas](atlas.md) ve [[plan-son#Bölüm 6|altıncı]]."
+   ],
+   "latency_ms": 579,
+   "written": true
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "how": null,
+   "doc": "not08.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk#Bölüm 4]] ve [[plan-son]]."
+   ],
+   "latency_ms": 584,
+   "written": true
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "how": null,
+   "doc": "not10.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [Plan belgesi](plan-son.md) ve [Büyük atlas](atlas.md)."
+   ],
+   "new_texts": [
+    "İlgili: [Plan belgesi](plan-son.md) ve [Büyük atlas](atlas.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "how": null,
+   "doc": "not11.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[plan-son]] ve [Plan belgesi](plan-son.md)."
+   ],
+   "new_texts": [
+    "İlgili: [[plan-son]] ve [Plan belgesi](plan-son.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "how": null,
+   "doc": "not12.md",
+   "role": "side",
+   "blocks": 7,
+   "new_blocks": 2,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[plan-son#Bölüm 6|altıncı]] ve [Tarif](tarifler.md).",
+    "Düzenleme 12: [[plan-son#Bölüm 6|altıncı]]"
+   ],
+   "latency_ms": 591,
+   "written": true
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "how": null,
+   "doc": "not13.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: ![[plan-son]] ve [atlas](atlas.md)."
+   ],
+   "new_texts": [
+    "İlgili: ![[plan-son]] ve [atlas](atlas.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "how": null,
+   "doc": "not18.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[atlas#Bölüm 2]] ve ![[plan-son]]."
+   ],
+   "new_texts": [
+    "İlgili: [[atlas#Bölüm 2]] ve ![[plan-son]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "how": null,
+   "doc": "proje/plan-son.md",
+   "role": "renamed",
+   "blocks": 66,
+   "new_blocks": 66,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Plan",
+    "Bu not kendine bağlanır: [[plan-son]]",
+    "## Bölüm 1",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (501).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (502). Bkz. [Plan](plan-son.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (503).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (504).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (505).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (506).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (507).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (508).",
+    "## Bölüm 2",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (509).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (510). Bkz. ![[plan-son#Bölüm 1]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (511).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (512).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (513).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (514).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (515).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (516).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (517).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (518).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (519).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (520).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (521).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (522).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (523).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (524).",
+    "## Bölüm 4",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (525).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (526).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (527).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (528).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (529).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (530).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (531).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (532).",
+    "## Bölüm 5",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (533).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (534).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (535).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (536).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (537).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (538).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (539).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (540).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (541).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (542).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (543).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (544).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (545).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (546).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (547).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (548).",
+    "## Bölüm 7",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (549).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (550).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (551).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (552).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (553).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (554).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (555).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (556).",
+    "Plan klasör dışında."
+   ],
+   "latency_ms": 606,
+   "written": true
+  },
+  {
+   "edit": 23,
+   "op": "type",
+   "how": "autosave",
+   "doc": "arsiv/atlas.md",
+   "role": "edited",
+   "blocks": 69,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Ortaya eklenen paragraf."
+   ],
+   "latency_ms": 125,
+   "written": true
+  },
+  {
+   "edit": 24,
+   "op": "rename",
+   "how": null,
+   "doc": "atlas.md",
+   "role": "renamed",
+   "blocks": 69,
+   "new_blocks": 69,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Atlas",
+    "Bu not kendine bağlanır: [[atlas]]",
+    "## Bölüm 1",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (101).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (102). Bkz. [[atlas#Bölüm 3]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (103).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (104).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (105).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (106).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (107).",
+    "## Bölüm 2",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (108).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (109). Bkz. [Atlas](atlas.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (110).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (111).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (112).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (113).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (114).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (115).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (116). Bkz. [[atlas|bu atlas]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (117).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (118).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (119).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (120).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (121).",
+    "## Bölüm 4",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (122).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (123).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (124).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (125).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (126).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (127).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (128).",
+    "## Bölüm 5",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (129).",
+    "Ortaya eklenen paragraf.",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (130).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (131).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (132).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (133).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (134).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (135).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (136).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (137).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (138).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (139).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (140).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (141).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (142).",
+    "## Bölüm 7",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (143).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (144).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (145).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (146).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (147).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (148).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (149).",
+    "## Bölüm 8",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (150).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (151).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (152).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (153).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (154).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (155).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (156).",
+    "Yeni bir paragraf, atlas'a eklendi.",
+    "Yeniden adlandırmadan sonra eklenen satır."
+   ],
+   "latency_ms": 129,
+   "written": true
+  },
+  {
+   "edit": 25,
+   "op": "rename",
+   "how": null,
+   "doc": "not00.md",
+   "role": "side",
+   "blocks": 7,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Komşu: [[not01-yeni]] ve [Komşu](not02.md)"
+   ],
+   "latency_ms": 138,
+   "written": true
+  },
+  {
+   "edit": 25,
+   "op": "rename",
+   "how": null,
+   "doc": "not01-yeni.md",
+   "role": "renamed",
+   "blocks": 4,
+   "new_blocks": 4,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Not 1",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (901).",
+    "İlgili: [[atlas|haritalar]] ve [[gunluk#Bölüm 4]].",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (951).\n"
+   ],
+   "latency_ms": 141,
+   "written": true
+  },
+  {
+   "edit": 26,
+   "op": "rename",
+   "how": null,
+   "doc": "not03.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Komşu: [[not04]] ve [Komşu](not05-yeni.md)"
+   ],
+   "latency_ms": 148,
+   "written": true
+  },
+  {
+   "edit": 26,
+   "op": "rename",
+   "how": null,
+   "doc": "not05-yeni.md",
+   "role": "renamed",
+   "blocks": 4,
+   "new_blocks": 4,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Not 5",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (905).",
+    "İlgili: [Büyük atlas](atlas.md) ve [[plan-son#Bölüm 6|altıncı]].",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (955).\n"
+   ],
+   "latency_ms": 154,
+   "written": true
+  },
+  {
+   "edit": 27,
+   "op": "rename",
+   "how": null,
+   "doc": "not09-yeni.md",
+   "role": "renamed",
+   "blocks": 5,
+   "new_blocks": 5,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Not 9",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (909).",
+    "İlgili: [gunluk](gunluk.md) ve [[atlas]].",
+    "Komşu: [[not10]] ve [Komşu](not11.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (959).\n"
+   ],
+   "latency_ms": 126,
+   "written": true
+  },
+  {
+   "edit": 28,
+   "op": "rename",
+   "how": null,
+   "doc": "not12.md",
+   "role": "side",
+   "blocks": 7,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Komşu: [[not13-yeni]] ve [Komşu](not14.md)"
+   ],
+   "latency_ms": 164,
+   "written": true
+  },
+  {
+   "edit": 28,
+   "op": "rename",
+   "how": null,
+   "doc": "not13-yeni.md",
+   "role": "renamed",
+   "blocks": 4,
+   "new_blocks": 4,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: ![[plan-son]] ve [atlas](atlas.md)."
+   ],
+   "new_texts": [
+    "# Not 13",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (913).",
+    "İlgili: ![[plan-son]] ve [atlas](atlas.md).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (963).\n"
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 29,
+   "op": "rename",
+   "how": null,
+   "doc": "not15.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Komşu: [[not16]] ve [Komşu](not17-yeni.md)"
+   ],
+   "latency_ms": 189,
+   "written": true
+  },
+  {
+   "edit": 29,
+   "op": "rename",
+   "how": null,
+   "doc": "not17-yeni.md",
+   "role": "renamed",
+   "blocks": 4,
+   "new_blocks": 4,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[atlas|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "new_texts": [
+    "# Not 17",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (917).",
+    "İlgili: [[atlas|haritalar]] ve [[gunluk#Bölüm 4]].",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (967).\n"
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 30,
+   "op": "type",
+   "how": "blur",
+   "doc": "proje/plan-son.md",
+   "role": "edited",
+   "blocks": 67,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Son plan notu."
+   ],
+   "latency_ms": 122,
+   "written": true
+  },
+  {
+   "edit": 31,
+   "op": "rename",
+   "how": null,
+   "doc": "gunluk.md",
+   "role": "renamed",
+   "blocks": 69,
+   "new_blocks": 69,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Günlük",
+    "Bu not kendine bağlanır: [[gunluk|bu günlük]]",
+    "## Bölüm 1",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (301).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (302). Bkz. [[gunluk#Bölüm 2]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (303).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (304).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (305).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (306).",
+    "## Bölüm 2",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (307).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (308). Bkz. [[gunluk]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (309).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (310).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (311).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (312).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (313).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (314).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (315).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (316).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (317).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (318).",
+    "## Bölüm 4",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (319).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (320).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (321).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (322).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (323).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (324).",
+    "## Bölüm 5",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (325).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (326).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (327).",
+    "Bugün iki fincan içtim.",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (328).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (329).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (330).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (331).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (332).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (333).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (334).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (335).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (336).",
+    "## Bölüm 7",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (337).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (338).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (339).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (340).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (341).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (342).",
+    "## Bölüm 8",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (343).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (344).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (345).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (346).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (347).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (348).",
+    "## Bölüm 9",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (349).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (350).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (351).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (352).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (353).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (354).",
+    "Klasöre taşındı.",
+    "İkinci paragraf.",
+    "Üçüncü paragraf."
+   ],
+   "latency_ms": 139,
+   "written": true
+  },
+  {
+   "edit": 32,
+   "op": "rename",
+   "how": null,
+   "doc": "not12.md",
+   "role": "side",
+   "blocks": 7,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[plan-son#Bölüm 6|altıncı]] ve [Tarif](tarif.md)."
+   ],
+   "latency_ms": 336,
+   "written": true
+  },
+  {
+   "edit": 32,
+   "op": "rename",
+   "how": null,
+   "doc": "not14.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[tarif]] ve [gunluk](gunluk.md)."
+   ],
+   "latency_ms": 338,
+   "written": true
+  },
+  {
+   "edit": 32,
+   "op": "rename",
+   "how": null,
+   "doc": "not15.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [Tarif](tarif.md) ve [[tarif]]."
+   ],
+   "latency_ms": 339,
+   "written": true
+  },
+  {
+   "edit": 32,
+   "op": "rename",
+   "how": null,
+   "doc": "proje/tarif.md",
+   "role": "renamed",
+   "blocks": 23,
+   "new_blocks": 23,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Tarif",
+    "Bu not kendine bağlanır: [[tarif]]",
+    "## Bölüm 1",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (701).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (702). Bkz. [[tarif#Bölüm 1|ilk bölüm]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (703).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (704).",
+    "## Bölüm 2",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (705).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (706).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (707).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (708).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (709).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (710).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (711).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (712).",
+    "## Bölüm 4",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (713).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (714).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (715).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (716).",
+    "Tarife not: [[tarif]] kendine bağlı."
+   ],
+   "latency_ms": 351,
+   "written": true
+  },
+  {
+   "edit": 33,
+   "op": "type",
+   "how": "command",
+   "doc": "not03.md",
+   "role": "edited",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Kısa ek 3."
+   ],
+   "latency_ms": 104,
+   "written": true
+  },
+  {
+   "edit": 34,
+   "op": "type",
+   "how": "command",
+   "doc": "not07.md",
+   "role": "edited",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Kısa ek 7."
+   ],
+   "latency_ms": 110,
+   "written": true
+  },
+  {
+   "edit": 35,
+   "op": "type",
+   "how": "command",
+   "doc": "not11.md",
+   "role": "edited",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[plan-son]] ve [Plan belgesi](plan-son.md)."
+   ],
+   "new_texts": [
+    "Kısa ek 11."
+   ],
+   "latency_ms": 107,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "dunya-atlasi.md",
+   "role": "renamed",
+   "blocks": 69,
+   "new_blocks": 69,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Atlas",
+    "Bu not kendine bağlanır: [[dunya-atlasi]]",
+    "## Bölüm 1",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (101).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (102). Bkz. [[dunya-atlasi#Bölüm 3]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (103).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (104).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (105).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (106).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (107).",
+    "## Bölüm 2",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (108).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (109). Bkz. [Atlas](dunya-atlasi.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (110).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (111).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (112).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (113).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (114).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (115).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (116). Bkz. [[dunya-atlasi|bu atlas]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (117).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (118).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (119).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (120).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (121).",
+    "## Bölüm 4",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (122).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (123).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (124).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (125).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (126).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (127).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (128).",
+    "## Bölüm 5",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (129).",
+    "Ortaya eklenen paragraf.",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (130).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (131).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (132).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (133).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (134).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (135).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (136).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (137).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (138).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (139).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (140).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (141).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (142).",
+    "## Bölüm 7",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (143).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (144).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (145).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (146).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (147).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (148).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (149).",
+    "## Bölüm 8",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (150).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (151).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (152).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (153).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (154).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (155).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (156).",
+    "Yeni bir paragraf, atlas'a eklendi.",
+    "Yeniden adlandırmadan sonra eklenen satır."
+   ],
+   "latency_ms": 900,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not00.md",
+   "role": "side",
+   "blocks": 7,
+   "new_blocks": 2,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi]] ve ![[dunya-atlasi#Bölüm 5]].",
+    "Düzenleme 0: [[dunya-atlasi]]"
+   ],
+   "latency_ms": 915,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not01-yeni.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "latency_ms": 906,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not02.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 2,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi#Bölüm 2]] ve ![[plan-son]].",
+    "Düzenleme 2: [[dunya-atlasi#Bölüm 2]]"
+   ],
+   "latency_ms": 919,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not03.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: ![[dunya-atlasi#Bölüm 5]] ve [[dunya-atlasi#Bölüm 2]]."
+   ],
+   "latency_ms": 920,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not04.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 2,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [dunya-atlasi](dunya-atlasi.md) ve [[gunluk|günlüğüm]].",
+    "Düzenleme 4: [dunya-atlasi](dunya-atlasi.md)"
+   ],
+   "latency_ms": 922,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not05-yeni.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [Büyük atlas](dunya-atlasi.md) ve [[plan-son#Bölüm 6|altıncı]]."
+   ],
+   "latency_ms": 911,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not06.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk]] ve [[dunya-atlasi|haritalar]]."
+   ],
+   "latency_ms": 926,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not09-yeni.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [gunluk](gunluk.md) ve [[dunya-atlasi]]."
+   ],
+   "latency_ms": 919,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not10.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [Plan belgesi](plan-son.md) ve [Büyük atlas](dunya-atlasi.md)."
+   ],
+   "new_texts": [
+    "İlgili: [Plan belgesi](plan-son.md) ve [Büyük atlas](dunya-atlasi.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not13-yeni.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: ![[plan-son]] ve [dunya-atlasi](dunya-atlasi.md)."
+   ],
+   "new_texts": [
+    "İlgili: ![[plan-son]] ve [dunya-atlasi](dunya-atlasi.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not16.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 2,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi]] ve ![[dunya-atlasi#Bölüm 5]].",
+    "Düzenleme 16: [[dunya-atlasi]]"
+   ],
+   "latency_ms": 855,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not17-yeni.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[dunya-atlasi|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi|haritalar]] ve [[gunluk#Bölüm 4]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not18.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 2,
+   "unverified_new": 2,
+   "unverified_all": 2,
+   "unverified_texts": [
+    "İlgili: [[dunya-atlasi#Bölüm 2]] ve ![[plan-son]].",
+    "Düzenleme 18: [[dunya-atlasi#Bölüm 2]]"
+   ],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi#Bölüm 2]] ve ![[plan-son]].",
+    "Düzenleme 18: [[dunya-atlasi#Bölüm 2]]"
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "how": null,
+   "doc": "not19.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: ![[dunya-atlasi#Bölüm 5]] ve [[dunya-atlasi#Bölüm 2]]."
+   ],
+   "latency_ms": 863,
+   "written": true
+  },
+  {
+   "edit": 37,
+   "op": "type",
+   "how": "command",
+   "doc": "dunya-atlasi.md",
+   "role": "edited",
+   "blocks": 70,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Son ek."
+   ],
+   "latency_ms": 109,
+   "written": true
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "how": null,
+   "doc": "not02.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi#Bölüm 2]] ve ![[plan]]."
+   ],
+   "latency_ms": 508,
+   "written": true
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "how": null,
+   "doc": "not05-yeni.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [Büyük atlas](dunya-atlasi.md) ve [[plan#Bölüm 6|altıncı]]."
+   ],
+   "latency_ms": 509,
+   "written": true
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "how": null,
+   "doc": "not08.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunluk#Bölüm 4]] ve [[plan]]."
+   ],
+   "latency_ms": 340,
+   "written": true
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "how": null,
+   "doc": "not10.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [Plan belgesi](plan.md) ve [Büyük atlas](dunya-atlasi.md)."
+   ],
+   "new_texts": [
+    "İlgili: [Plan belgesi](plan.md) ve [Büyük atlas](dunya-atlasi.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "how": null,
+   "doc": "not11.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[plan]] ve [Plan belgesi](plan.md)."
+   ],
+   "new_texts": [
+    "İlgili: [[plan]] ve [Plan belgesi](plan.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "how": null,
+   "doc": "not12.md",
+   "role": "side",
+   "blocks": 7,
+   "new_blocks": 2,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[plan#Bölüm 6|altıncı]] ve [Tarif](tarif.md).",
+    "Düzenleme 12: [[plan#Bölüm 6|altıncı]]"
+   ],
+   "latency_ms": 439,
+   "written": true
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "how": null,
+   "doc": "not13-yeni.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: ![[plan]] ve [dunya-atlasi](dunya-atlasi.md)."
+   ],
+   "new_texts": [
+    "İlgili: ![[plan]] ve [dunya-atlasi](dunya-atlasi.md)."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "how": null,
+   "doc": "not18.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 2,
+   "unverified_texts": [
+    "İlgili: [[dunya-atlasi#Bölüm 2]] ve ![[plan]].",
+    "Düzenleme 18: [[dunya-atlasi#Bölüm 2]]"
+   ],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi#Bölüm 2]] ve ![[plan]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "how": null,
+   "doc": "plan.md",
+   "role": "renamed",
+   "blocks": 67,
+   "new_blocks": 67,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Plan",
+    "Bu not kendine bağlanır: [[plan]]",
+    "## Bölüm 1",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (501).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (502). Bkz. [Plan](plan.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (503).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (504).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (505).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (506).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (507).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (508).",
+    "## Bölüm 2",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (509).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (510). Bkz. ![[plan#Bölüm 1]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (511).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (512).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (513).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (514).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (515).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (516).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (517).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (518).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (519).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (520).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (521).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (522).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (523).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (524).",
+    "## Bölüm 4",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (525).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (526).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (527).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (528).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (529).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (530).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (531).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (532).",
+    "## Bölüm 5",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (533).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (534).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (535).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (536).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (537).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (538).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (539).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (540).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (541).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (542).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (543).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (544).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (545).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (546).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (547).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (548).",
+    "## Bölüm 7",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (549).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (550).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (551).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (552).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (553).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (554).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (555).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (556).",
+    "Plan klasör dışında.",
+    "Son plan notu."
+   ],
+   "latency_ms": 546,
+   "written": true
+  },
+  {
+   "edit": 39,
+   "op": "type",
+   "how": "autosave",
+   "doc": "gunluk.md",
+   "role": "edited",
+   "blocks": 70,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Akşam notu."
+   ],
+   "latency_ms": 128,
+   "written": true
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "how": null,
+   "doc": "gunce.md",
+   "role": "renamed",
+   "blocks": 70,
+   "new_blocks": 70,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Günlük",
+    "Bu not kendine bağlanır: [[gunce|bu günlük]]",
+    "## Bölüm 1",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (301).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (302). Bkz. [[gunce#Bölüm 2]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (303).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (304).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (305).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (306).",
+    "## Bölüm 2",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (307).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (308). Bkz. [[gunce]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (309).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (310).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (311).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (312).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (313).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (314).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (315).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (316).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (317).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (318).",
+    "## Bölüm 4",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (319).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (320).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (321).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (322).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (323).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (324).",
+    "## Bölüm 5",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (325).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (326).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (327).",
+    "Bugün iki fincan içtim.",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (328).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (329).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (330).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (331).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (332).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (333).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (334).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (335).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (336).",
+    "## Bölüm 7",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (337).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (338).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (339).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (340).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (341).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (342).",
+    "## Bölüm 8",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (343).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (344).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (345).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (346).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (347).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (348).",
+    "## Bölüm 9",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (349).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (350).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (351).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (352).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (353).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (354).",
+    "Klasöre taşındı.",
+    "İkinci paragraf.",
+    "Üçüncü paragraf.",
+    "Akşam notu."
+   ],
+   "latency_ms": 624,
+   "written": true
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "how": null,
+   "doc": "not01-yeni.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi|haritalar]] ve [[gunce#Bölüm 4]]."
+   ],
+   "latency_ms": 638,
+   "written": true
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "how": null,
+   "doc": "not04.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [dunya-atlasi](dunya-atlasi.md) ve [[gunce|günlüğüm]]."
+   ],
+   "latency_ms": 651,
+   "written": true
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "how": null,
+   "doc": "not06.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 2,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunce]] ve [[dunya-atlasi|haritalar]].",
+    "Düzenleme 6: [[gunce]]"
+   ],
+   "latency_ms": 655,
+   "written": true
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "how": null,
+   "doc": "not07.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunce|günlüğüm]] ve [[gunce]]."
+   ],
+   "latency_ms": 656,
+   "written": true
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "how": null,
+   "doc": "not08.md",
+   "role": "side",
+   "blocks": 6,
+   "new_blocks": 2,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[gunce#Bölüm 4]] ve [[plan]].",
+    "Düzenleme 8: [[gunce#Bölüm 4]]"
+   ],
+   "latency_ms": 658,
+   "written": true
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "how": null,
+   "doc": "not09-yeni.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [gunce](gunce.md) ve [[dunya-atlasi]]."
+   ],
+   "latency_ms": 658,
+   "written": true
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "how": null,
+   "doc": "not14.md",
+   "role": "side",
+   "blocks": 5,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "İlgili: [[tarif]] ve [gunce](gunce.md)."
+   ],
+   "latency_ms": 579,
+   "written": true
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "how": null,
+   "doc": "not17-yeni.md",
+   "role": "side",
+   "blocks": 4,
+   "new_blocks": 1,
+   "unverified_new": 1,
+   "unverified_all": 1,
+   "unverified_texts": [
+    "İlgili: [[dunya-atlasi|haritalar]] ve [[gunce#Bölüm 4]]."
+   ],
+   "new_texts": [
+    "İlgili: [[dunya-atlasi|haritalar]] ve [[gunce#Bölüm 4]]."
+   ],
+   "latency_ms": null,
+   "written": true
+  },
+  {
+   "edit": 41,
+   "op": "rename",
+   "how": null,
+   "doc": "proje/not04.md",
+   "role": "renamed",
+   "blocks": 6,
+   "new_blocks": 6,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Not 4",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (904).",
+    "İlgili: [dunya-atlasi](dunya-atlasi.md) ve [[gunce|günlüğüm]].",
+    "Kendine bağlantı: [[not04]]",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (954).",
+    "Düzenleme 4: [dunya-atlasi](dunya-atlasi.md)"
+   ],
+   "latency_ms": 210,
+   "written": true
+  },
+  {
+   "edit": 42,
+   "op": "rename",
+   "how": null,
+   "doc": "proje/not08.md",
+   "role": "renamed",
+   "blocks": 6,
+   "new_blocks": 6,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Not 8",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (908).",
+    "İlgili: [[gunce#Bölüm 4]] ve [[plan]].",
+    "Kendine bağlantı: [[not08]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (958).",
+    "Düzenleme 8: [[gunce#Bölüm 4]]"
+   ],
+   "latency_ms": 213,
+   "written": true
+  },
+  {
+   "edit": 43,
+   "op": "type",
+   "how": "blur",
+   "doc": "dunya-atlasi.md",
+   "role": "edited",
+   "blocks": 71,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Kapanış paragrafı."
+   ],
+   "latency_ms": 119,
+   "written": true
+  },
+  {
+   "edit": 44,
+   "op": "rename",
+   "how": null,
+   "doc": "tarif.md",
+   "role": "renamed",
+   "blocks": 23,
+   "new_blocks": 23,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Tarif",
+    "Bu not kendine bağlanır: [[tarif]]",
+    "## Bölüm 1",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (701).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (702). Bkz. [[tarif#Bölüm 1|ilk bölüm]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (703).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (704).",
+    "## Bölüm 2",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (705).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (706).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (707).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (708).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (709).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (710).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (711).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (712).",
+    "## Bölüm 4",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (713).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (714).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (715).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (716).",
+    "Tarife not: [[tarif]] kendine bağlı."
+   ],
+   "latency_ms": 211,
+   "written": true
+  },
+  {
+   "edit": 45,
+   "op": "type",
+   "how": "autosave",
+   "doc": "tarif.md",
+   "role": "edited",
+   "blocks": 24,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Tarif kök dizine döndü."
+   ],
+   "latency_ms": 113,
+   "written": true
+  },
+  {
+   "edit": 46,
+   "op": "rename",
+   "how": null,
+   "doc": "proje/plan.md",
+   "role": "renamed",
+   "blocks": 67,
+   "new_blocks": 67,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Plan",
+    "Bu not kendine bağlanır: [[plan]]",
+    "## Bölüm 1",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (501).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (502). Bkz. [Plan](plan.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (503).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (504).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (505).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (506).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (507).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (508).",
+    "## Bölüm 2",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (509).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (510). Bkz. ![[plan#Bölüm 1]]",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (511).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (512).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (513).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (514).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (515).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (516).",
+    "## Bölüm 3",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (517).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (518).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (519).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (520).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (521).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (522).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (523).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (524).",
+    "## Bölüm 4",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (525).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (526).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (527).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (528).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (529).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (530).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (531).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (532).",
+    "## Bölüm 5",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (533).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (534).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (535).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (536).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (537).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (538).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (539).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (540).",
+    "## Bölüm 6",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (541).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (542).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (543).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (544).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (545).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (546).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (547).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (548).",
+    "## Bölüm 7",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (549).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (550).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (551).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (552).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (553).",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (554).",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (555).",
+    "Oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal kurutma çekirdek öğütme oranı gövde yükselti doğal (556).",
+    "Plan klasör dışında.",
+    "Son plan notu."
+   ],
+   "latency_ms": 223,
+   "written": true
+  },
+  {
+   "edit": 47,
+   "op": "type",
+   "how": "command",
+   "doc": "proje/plan.md",
+   "role": "edited",
+   "blocks": 68,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Plan klasörüne geri döndü."
+   ],
+   "latency_ms": 136,
+   "written": true
+  },
+  {
+   "edit": 48,
+   "op": "rename",
+   "how": null,
+   "doc": "not06-b.md",
+   "role": "renamed",
+   "blocks": 6,
+   "new_blocks": 6,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "# Not 6",
+    "Kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit bölge yıkanmış fermantasyon kavrulmuş sıcaklığı demleme asit (906).",
+    "İlgili: [[gunce]] ve [[dunya-atlasi|haritalar]].",
+    "Komşu: [[not07]] ve [Komşu](not08.md)",
+    "Işleme bal depolama su süresi aroma hasat işleme bal depolama su süresi aroma hasat işleme bal depolama su (956).",
+    "Düzenleme 6: [[gunce]]"
+   ],
+   "latency_ms": 193,
+   "written": true
+  },
+  {
+   "edit": 49,
+   "op": "type",
+   "how": "blur",
+   "doc": "not06-b.md",
+   "role": "edited",
+   "blocks": 7,
+   "new_blocks": 1,
+   "unverified_new": 0,
+   "unverified_all": 0,
+   "unverified_texts": [],
+   "new_texts": [
+    "Yeni adla düzenlendi."
+   ],
+   "latency_ms": 114,
+   "written": true
+  }
+ ],
+ "edits": [
+  {
+   "edit": 0,
+   "op": "type",
+   "doc": "atlas.md",
+   "text": "\n\nYeni bir paragraf, atlas'a eklendi.",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "atlas.md"
+   ],
+   "vault_unverified_after": 0,
+   "writes": 5
+  },
+  {
+   "edit": 1,
+   "op": "rename",
+   "doc": "atlas.md",
+   "to": "atlas-v2.md",
+   "changed": [
+    "atlas-v2.md",
+    "not00.md",
+    "not01.md",
+    "not02.md",
+    "not03.md",
+    "not04.md",
+    "not05.md",
+    "not06.md",
+    "not09.md",
+    "not10.md",
+    "not13.md",
+    "not16.md",
+    "not17.md",
+    "not18.md",
+    "not19.md"
+   ],
+   "vault_unverified_after": 3,
+   "writes": 17
+  },
+  {
+   "edit": 2,
+   "op": "type",
+   "doc": "atlas-v2.md",
+   "text": "\n\nYeniden adlandırmadan sonra eklenen satır.",
+   "how": "autosave",
+   "where": "end",
+   "changed": [
+    "atlas-v2.md"
+   ],
+   "vault_unverified_after": 3,
+   "writes": 1
+  },
+  {
+   "edit": 3,
+   "op": "rename",
+   "doc": "gunluk.md",
+   "to": "gunluk-2026.md",
+   "changed": [
+    "gunluk-2026.md",
+    "not01.md",
+    "not04.md",
+    "not06.md",
+    "not07.md",
+    "not08.md",
+    "not09.md",
+    "not14.md",
+    "not17.md"
+   ],
+   "vault_unverified_after": 3,
+   "writes": 11
+  },
+  {
+   "edit": 4,
+   "op": "type",
+   "doc": "gunluk-2026.md",
+   "text": "\n\nBugün iki fincan içtim.",
+   "how": "blur",
+   "where": "middle",
+   "changed": [
+    "gunluk-2026.md"
+   ],
+   "vault_unverified_after": 3,
+   "writes": 2
+  },
+  {
+   "edit": 5,
+   "op": "rename",
+   "doc": "proje/plan.md",
+   "to": "plan.md",
+   "changed": [
+    "not10.md",
+    "not11.md",
+    "plan.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 4
+  },
+  {
+   "edit": 6,
+   "op": "type",
+   "doc": "plan.md",
+   "text": "\n\nPlan klasör dışında.",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "plan.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 7,
+   "op": "rename",
+   "doc": "atlas-v2.md",
+   "to": "arsiv/atlas.md",
+   "changed": [
+    "not00.md",
+    "not01.md",
+    "not02.md",
+    "not03.md",
+    "not04.md",
+    "not05.md",
+    "not06.md",
+    "not09.md",
+    "not10.md",
+    "not13.md",
+    "not16.md",
+    "not17.md",
+    "not18.md",
+    "not19.md",
+    "arsiv/atlas.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 17
+  },
+  {
+   "edit": 8,
+   "op": "rename",
+   "doc": "tarif.md",
+   "to": "tarifler.md",
+   "changed": [
+    "not12.md",
+    "not14.md",
+    "not15.md",
+    "tarifler.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 6
+  },
+  {
+   "edit": 9,
+   "op": "type",
+   "doc": "tarifler.md",
+   "text": "\n\nTarife not: [[tarifler]] kendine bağlı.",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "tarifler.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 10,
+   "op": "type",
+   "doc": "not00.md",
+   "text": "\n\nDüzenleme 0: [[atlas]]",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "not00.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 11,
+   "op": "type",
+   "doc": "not02.md",
+   "text": "\n\nDüzenleme 2: [[atlas#Bölüm 2]]",
+   "how": "blur",
+   "where": "end",
+   "changed": [
+    "not02.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 12,
+   "op": "type",
+   "doc": "not04.md",
+   "text": "\n\nDüzenleme 4: [atlas](atlas.md)",
+   "how": "autosave",
+   "where": "end",
+   "changed": [
+    "not04.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 13,
+   "op": "type",
+   "doc": "not06.md",
+   "text": "\n\nDüzenleme 6: [[gunluk]]",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "not06.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 14,
+   "op": "type",
+   "doc": "not08.md",
+   "text": "\n\nDüzenleme 8: [[gunluk#Bölüm 4]]",
+   "how": "blur",
+   "where": "end",
+   "changed": [
+    "not08.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 15,
+   "op": "type",
+   "doc": "not10.md",
+   "text": "\n\nDüzenleme 10: [Plan belgesi](proje/plan.md)",
+   "how": "autosave",
+   "where": "end",
+   "changed": [
+    "not10.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 16,
+   "op": "type",
+   "doc": "not12.md",
+   "text": "\n\nDüzenleme 12: [[plan#Bölüm 6|altıncı]]",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "not12.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 17,
+   "op": "type",
+   "doc": "not14.md",
+   "text": "\n\nDüzenleme 14: [[tarif]]",
+   "how": "blur",
+   "where": "end",
+   "changed": [
+    "not14.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 18,
+   "op": "type",
+   "doc": "not16.md",
+   "text": "\n\nDüzenleme 16: [[atlas]]",
+   "how": "autosave",
+   "where": "end",
+   "changed": [
+    "not16.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 19,
+   "op": "type",
+   "doc": "not18.md",
+   "text": "\n\nDüzenleme 18: [[atlas#Bölüm 2]]",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "not18.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 20,
+   "op": "rename",
+   "doc": "gunluk-2026.md",
+   "to": "proje/gunluk.md",
+   "changed": [
+    "not01.md",
+    "not04.md",
+    "not06.md",
+    "not07.md",
+    "not08.md",
+    "not09.md",
+    "not14.md",
+    "not17.md",
+    "proje/gunluk.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 11
+  },
+  {
+   "edit": 21,
+   "op": "type",
+   "doc": "proje/gunluk.md",
+   "text": "\n\nKlasöre taşındı.\n\nİkinci paragraf.\n\nÜçüncü paragraf.",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "proje/gunluk.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 22,
+   "op": "rename",
+   "doc": "plan.md",
+   "to": "proje/plan-son.md",
+   "changed": [
+    "not02.md",
+    "not05.md",
+    "not08.md",
+    "not10.md",
+    "not11.md",
+    "not12.md",
+    "not13.md",
+    "not18.md",
+    "proje/plan-son.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 11
+  },
+  {
+   "edit": 23,
+   "op": "type",
+   "doc": "arsiv/atlas.md",
+   "text": "\n\nOrtaya eklenen paragraf.",
+   "how": "autosave",
+   "where": "middle",
+   "changed": [
+    "arsiv/atlas.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 24,
+   "op": "rename",
+   "doc": "arsiv/atlas.md",
+   "to": "atlas.md",
+   "changed": [
+    "atlas.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 25,
+   "op": "rename",
+   "doc": "not01.md",
+   "to": "not01-yeni.md",
+   "changed": [
+    "not00.md",
+    "not01-yeni.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 3
+  },
+  {
+   "edit": 26,
+   "op": "rename",
+   "doc": "not05.md",
+   "to": "not05-yeni.md",
+   "changed": [
+    "not03.md",
+    "not05-yeni.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 3
+  },
+  {
+   "edit": 27,
+   "op": "rename",
+   "doc": "not09.md",
+   "to": "not09-yeni.md",
+   "changed": [
+    "not09-yeni.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 28,
+   "op": "rename",
+   "doc": "not13.md",
+   "to": "not13-yeni.md",
+   "changed": [
+    "not12.md",
+    "not13-yeni.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 3
+  },
+  {
+   "edit": 29,
+   "op": "rename",
+   "doc": "not17.md",
+   "to": "not17-yeni.md",
+   "changed": [
+    "not15.md",
+    "not17-yeni.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 3
+  },
+  {
+   "edit": 30,
+   "op": "type",
+   "doc": "proje/plan-son.md",
+   "text": "\n\nSon plan notu.",
+   "how": "blur",
+   "where": "end",
+   "changed": [
+    "proje/plan-son.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 31,
+   "op": "rename",
+   "doc": "proje/gunluk.md",
+   "to": "gunluk.md",
+   "changed": [
+    "gunluk.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 32,
+   "op": "rename",
+   "doc": "tarifler.md",
+   "to": "proje/tarif.md",
+   "changed": [
+    "not12.md",
+    "not14.md",
+    "not15.md",
+    "proje/tarif.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 6
+  },
+  {
+   "edit": 33,
+   "op": "type",
+   "doc": "not03.md",
+   "text": "\n\nKısa ek 3.",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "not03.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 34,
+   "op": "type",
+   "doc": "not07.md",
+   "text": "\n\nKısa ek 7.",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "not07.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 35,
+   "op": "type",
+   "doc": "not11.md",
+   "text": "\n\nKısa ek 11.",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "not11.md"
+   ],
+   "vault_unverified_after": 5,
+   "writes": 2
+  },
+  {
+   "edit": 36,
+   "op": "rename",
+   "doc": "atlas.md",
+   "to": "dunya-atlasi.md",
+   "changed": [
+    "dunya-atlasi.md",
+    "not00.md",
+    "not01-yeni.md",
+    "not02.md",
+    "not03.md",
+    "not04.md",
+    "not05-yeni.md",
+    "not06.md",
+    "not09-yeni.md",
+    "not10.md",
+    "not13-yeni.md",
+    "not16.md",
+    "not17-yeni.md",
+    "not18.md",
+    "not19.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 17
+  },
+  {
+   "edit": 37,
+   "op": "type",
+   "doc": "dunya-atlasi.md",
+   "text": "\n\nSon ek.",
+   "how": "command",
+   "where": "end",
+   "changed": [
+    "dunya-atlasi.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 38,
+   "op": "rename",
+   "doc": "proje/plan-son.md",
+   "to": "plan.md",
+   "changed": [
+    "not02.md",
+    "not05-yeni.md",
+    "not08.md",
+    "not10.md",
+    "not11.md",
+    "not12.md",
+    "not13-yeni.md",
+    "not18.md",
+    "plan.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 11
+  },
+  {
+   "edit": 39,
+   "op": "type",
+   "doc": "gunluk.md",
+   "text": "\n\nAkşam notu.",
+   "how": "autosave",
+   "where": "end",
+   "changed": [
+    "gunluk.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 40,
+   "op": "rename",
+   "doc": "gunluk.md",
+   "to": "gunce.md",
+   "changed": [
+    "gunce.md",
+    "not01-yeni.md",
+    "not04.md",
+    "not06.md",
+    "not07.md",
+    "not08.md",
+    "not09-yeni.md",
+    "not14.md",
+    "not17-yeni.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 11
+  },
+  {
+   "edit": 41,
+   "op": "rename",
+   "doc": "not04.md",
+   "to": "proje/not04.md",
+   "changed": [
+    "proje/not04.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 42,
+   "op": "rename",
+   "doc": "not08.md",
+   "to": "proje/not08.md",
+   "changed": [
+    "proje/not08.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 43,
+   "op": "type",
+   "doc": "dunya-atlasi.md",
+   "text": "\n\nKapanış paragrafı.",
+   "how": "blur",
+   "where": "middle",
+   "changed": [
+    "dunya-atlasi.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 44,
+   "op": "rename",
+   "doc": "proje/tarif.md",
+   "to": "tarif.md",
+   "changed": [
+    "tarif.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 45,
+   "op": "type",
+   "doc": "tarif.md",
+   "text": "\n\nTarif kök dizine döndü.",
+   "how": "autosave",
+   "where": "end",
+   "changed": [
+    "tarif.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 46,
+   "op": "rename",
+   "doc": "plan.md",
+   "to": "proje/plan.md",
+   "changed": [
+    "proje/plan.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 47,
+   "op": "type",
+   "doc": "proje/plan.md",
+   "text": "\n\nPlan klasörüne geri döndü.",
+   "how": "command",
+   "where": "middle",
+   "changed": [
+    "proje/plan.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 48,
+   "op": "rename",
+   "doc": "not06.md",
+   "to": "not06-b.md",
+   "changed": [
+    "not06-b.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  },
+  {
+   "edit": 49,
+   "op": "type",
+   "doc": "not06-b.md",
+   "text": "\n\nYeni adla düzenlendi.",
+   "how": "blur",
+   "where": "end",
+   "changed": [
+    "not06-b.md"
+   ],
+   "vault_unverified_after": 6,
+   "writes": 2
+  }
+ ],
+ "errors": [],
+ "obsidian_link_settings": {
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false
+ },
+ "obsidian_version": "1.13.4",
+ "plugin_status": [
+  "0 backlinks",
+  "0 properties",
+  "",
+  "57 words422 characters",
+  "",
+  "rootmark 0.1.0 · human:verifier",
+  "attested 128 · unattested 24"
+ ],
+ "attestation_lines": 128
+}

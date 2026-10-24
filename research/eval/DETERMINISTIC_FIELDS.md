@@ -57,6 +57,9 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 ### `compare_p2a`
 `pair`: `compare_p2_0_2.pair` (P1-E.1 çift kümesi, P2-0.2 dosyaları ve günlükleri; P2-A zincirinde P2-0.2'nin gerçek Obsidian kümeleri `skipped` kaydedilir, K-P2.3) + `P2A_FILES` alan alan; P2-A kümeleri belirlenimlidir (vault'ların geçici yolu `<vault>` yazılır), hariç tutma yok (`P2A_TIMING`, `P2A_INFO` boş). `regress`: P2-0.2 resmi RUN'ı; dosyalar P1-E.1 çift kümesi ve `P2_0_2_FILES`, `EXCLUDED` (P2-A kararlarının satırları, resmi RUN'dan önce geliştirme RUN'ından yazıldı), uyumluluk raporu test kimliğiyle (39 test eşit, spec 2.0.2) ve D-A, D-A2, D-C günlükleri bayt bayt (`compare_p2_0_2.P2_0_2_BYTES`).
 
+### `compare_p2l`
+`fast` (P2-L/L0 d, `make verify FAST=1`, K-P2.4 (3)): hızlı zincirin dosyaları (`P2L_FAST_FILES`: `fast/` altındaki uyumluluk raporları, `conformance_equiv` çıkışı ve `regress.json`, `c3_quality.json`, `p2l_checks.json`) alan alan; hariç: `fast/conformance.json`'ın `fixtures_root`'u (`P2L_INFO`, ortam: zincirin klonunun mutlak yolu). `pair`: `compare_p2a.pair` + `P2L_FILES` alan alan, aynı hariçle. `regress` kipi yok (`EXCLUDED` boş): hızlı zincirin son resmi RUN'a karşı regresyonu `eval.fast_regress`'tir.
+
 ## Alan tablosu
 <!-- fields-table -->
 | Araç | Kip | Dosya | Yol kalıbı | Sınıf | Gerekçe |
@@ -470,6 +473,7 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2a` | regress | `p1e_checks.json` | `E-9` | karar | K-P2A.2: E-9's regress against P1-D.1 sees the new code |
 | `compare_p2a` | regress | `p2_0_2_checks.json` | `fail_summary` | karar | K-P2A.2: P2-0.2's classifier sees the migration-required FAILs; P2-A's classifier is eval.historical_p2a |
 | `compare_p2a` | regress | `p2_0_2_checks.json` | `regress` | karar | K-P2A.2: P2-0.2's regress against P2-0.1; P2-A's regress is this comparison |
+| `compare_p2l` | hepsi | `fast/conformance.json` | `fixtures_root` | ortam | zincirin klonunun mutlak fixture yolu |
 <!-- /fields-table -->
 
 ## Dosya tablosu
@@ -501,4 +505,6 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2_0_2.P2_0_2_FILES` | `p2_0_2_checks.json`, `p2_0_2/rules.json`, `p2_0_2/d_e.json`, `p2_0_2/d_a.json`, `p2_0_2/d_a2.json`, `p2_0_2/d_c.json`, `p2_0_2/tamper_p2_0_2.json` |
 | `compare_p2_0_2.P2_0_2_BYTES` | `p2_0_2/d_a/events.jsonl`, `p2_0_2/d_a/attestations.jsonl`, `p2_0_2/d_a2/events.jsonl`, `p2_0_2/d_a2/attestations.jsonl`, `p2_0_2/d_c/events.jsonl`, `p2_0_2/d_c/attestations.jsonl` |
 | `compare_p2a.P2A_FILES` | `p2a_checks.json`, `p2a/migrate_old.json`, `p2a/fixture.json`, `p2a/tamper.json`, `p2a/tests.json` |
+| `compare_p2l.P2L_FAST_FILES` | `fast/conformance.json`, `fast/conformance_rootmark.json`, `fast/conformance_equiv.json`, `fast/regress.json`, `c3_quality.json`, `p2l_checks.json` |
+| `compare_p2l.P2L_FILES` | `p2l_checks.json` |
 <!-- /files-table -->

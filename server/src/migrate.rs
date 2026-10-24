@@ -579,13 +579,11 @@ pub fn matrix(vault: &Path) -> Result<Value> {
     );
     let mut required = Vec::new();
     let mut validations = Vec::new();
-    for m in registry() {
-        if m.applies(vault, &done).unwrap_or(false) {
-            if m.required() {
-                required.push(m.id());
-            } else {
-                validations.push(m.id());
-            }
+    for (m, _) in chain(vault, None, false).unwrap_or_default() {
+        if m.required() {
+            required.push(m.id());
+        } else {
+            validations.push(m.id());
         }
     }
     Ok(json!({
@@ -603,20 +601,111 @@ pub fn matrix(vault: &Path) -> Result<Value> {
     }))
 }
 
+/// A migration of the chain and, when asked, its plan.
+type Planned = (Box<dyn Migration>, Option<Plan>);
+
+/// The migrations `rootmark migrate` would run, in order, with their plans:
+/// each evaluated on the vault as the ones before it leave it, not as it is
+/// now (P2-L/L0 c; P2-A verification F1: a store under its old name only
+/// listed `rename_store`, though `migrate` then rebuilt its index too).
+/// With `plans`, each one's plan (it hashes the files it touches: not for
+/// `status`). Read-only: after `rename_store` the later migrations are evaluated on a
+/// view of the vault whose `.rootmark/` is the old store (a symbolic link,
+/// or a copy where links need privileges), outside the vault, removed after.
+fn chain(vault: &Path, only: Option<&str>, plans: bool) -> Result<Vec<Planned>> {
+    let mut out = Vec::new();
+    let mut view: Option<View> = None;
+    for m in registry() {
+        let at = view.as_ref().map_or(vault, |v| v.root.as_path());
+        let done = records(at)?;
+        if !m.applies(at, &done)? {
+            continue;
+        }
+        let renames = m.id() == "rename_store";
+        if only.is_none_or(|o| o == m.id()) {
+            let plan = if plans { Some(m.plan(at)?) } else { None };
+            out.push((m, plan));
+        }
+        if renames && view.is_none() {
+            view = Some(View::renamed(vault)?);
+        }
+    }
+    Ok(out)
+}
+
+/// A temporary vault whose `.rootmark/` is a vault's `.mdkernel/` (what
+/// `rename_store` leaves), for planning only; removed when dropped.
+struct View {
+    root: PathBuf,
+}
+
+impl View {
+    fn renamed(vault: &Path) -> Result<View> {
+        // a new directory of an unpredictable name, owner-only, that must
+        // not exist yet: a path another user created first is never used,
+        // nor removed (a shared temporary directory)
+        let mut root = None;
+        for _ in 0..8 {
+            let mut r = [0u8; 16];
+            getrandom::fill(&mut r).map_err(|e| anyhow::anyhow!("getrandom: {e}"))?;
+            let name: String = r.iter().map(|b| format!("{b:02x}")).collect();
+            let p = std::env::temp_dir().join(format!("rootmark-migrate-plan-{name}"));
+            let mut b = std::fs::DirBuilder::new();
+            #[cfg(unix)]
+            std::os::unix::fs::DirBuilderExt::mode(&mut b, 0o700);
+            match b.create(&p) {
+                Ok(()) => {
+                    root = Some(p);
+                    break;
+                }
+                Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => continue,
+                Err(e) => return Err(e).with_context(|| format!("{}", p.display())),
+            }
+        }
+        let root = root.context("no free temporary directory for the migration plan")?;
+        let view = View { root };
+        let old = std::fs::canonicalize(vault.join(meta::LEGACY_META_DIR))
+            .with_context(|| format!("{}/{}", vault.display(), meta::LEGACY_META_DIR))?;
+        let new = view.root.join(meta::META_DIR);
+        #[cfg(unix)]
+        std::os::unix::fs::symlink(&old, &new)
+            .with_context(|| format!("link {} → {}", new.display(), old.display()))?;
+        #[cfg(not(unix))]
+        copy_tree(&old, &new)?;
+        Ok(view)
+    }
+}
+
+impl Drop for View {
+    fn drop(&mut self) {
+        // the link (or the copy) only: the vault's store is never touched
+        let _ = std::fs::remove_dir_all(&self.root);
+    }
+}
+
+#[cfg(not(unix))]
+fn copy_tree(from: &Path, to: &Path) -> Result<()> {
+    std::fs::create_dir_all(to)?;
+    for e in std::fs::read_dir(from)? {
+        let e = e?;
+        let t = to.join(e.file_name());
+        if e.file_type()?.is_dir() {
+            copy_tree(&e.path(), &t)?;
+        } else {
+            std::fs::copy(e.path(), &t)?;
+        }
+    }
+    Ok(())
+}
+
 // ---- running ------------------------------------------------------------------
 
 /// `rootmark migrate --dry-run`: the matrix and the plan; nothing is written.
 pub fn dry_run(vault: &Path, only: Option<&str>) -> Result<Value> {
-    let done = records(vault)?;
-    let mut plans = Vec::new();
-    for m in registry() {
-        if only.is_some_and(|o| o != m.id()) {
-            continue;
-        }
-        if m.applies(vault, &done)? {
-            plans.push(serde_json::to_value(m.plan(vault)?)?);
-        }
-    }
+    let plans = chain(vault, only, true)?
+        .into_iter()
+        .map(|(_, p)| serde_json::to_value(p.expect("planned")))
+        .collect::<serde_json::Result<Vec<_>>>()?;
     Ok(json!({
         "vault": vault.display().to_string(),
         "dry_run": true,

@@ -32,7 +32,7 @@ use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
 /// Spec version this build implements (spec/SPEC.md title).
-pub const SPEC_VERSION: &str = "2.0.2";
+pub const SPEC_VERSION: &str = "2.0.3";
 /// Conformance level the reference implementation claims (spec §12;
 /// `make conformance`).
 pub const LEVEL_CLAIMED: u8 = 3;
@@ -1066,15 +1066,42 @@ impl Kernel {
             Some(w) => Some(w),
             None => from_hint.map(str::to_string),
         };
-        let (changed, caps) =
-            rootmarkcore::attest::check_link_update(&base, text, renamed, was.as_deref())
-                .map_err(|e| {
-                    anyhow::anyhow!(
-                        "attest: {doc} is not a link update of {} for {renamed}: {e:#}",
-                        base.doc_path
-                    )
-                })
-                .code(Code::Denied)?;
+        // the renamed note's own link update on a path whose earlier head
+        // the log keeps (the note held it before; the watcher does not
+        // ingest removals): that head is not what the accepted rename moved
+        // here, so the head of the path it was renamed from — gone from
+        // disk, as after a rename — is tried too (P2-L/L0 b; P2-0.3
+        // verification Ö3: else the rewrite is `denied`, ingested
+        // unattested, and a block new since that earlier head drops)
+        let moved_from = match (&was, doc == renamed) {
+            (Some(w), true)
+                if *w != base.doc_path
+                    && known(w)
+                    && !crate::paths::doc_file(&self.vault, w).is_ok_and(|p| p.exists())
+                    && self.attesting.renamed_from_of(renamed)?.as_deref() == Some(w) =>
+            {
+                rootmarkcore::attest::LinkBase::head(v, w)?
+            }
+            _ => None,
+        };
+        let checked = rootmarkcore::attest::check_link_update(&base, text, renamed, was.as_deref());
+        let (base, checked) = match (checked, moved_from) {
+            (Err(e), Some(m)) => {
+                match rootmarkcore::attest::check_link_update(&m, text, renamed, was.as_deref()) {
+                    Ok(c) => (m, Ok(c)),
+                    Err(_) => (base, Err(e)),
+                }
+            }
+            (c, _) => (base, c),
+        };
+        let (changed, caps) = checked
+            .map_err(|e| {
+                anyhow::anyhow!(
+                    "attest: {doc} is not a link update of {} for {renamed}: {e:#}",
+                    base.doc_path
+                )
+            })
+            .code(Code::Denied)?;
         if changed == 0 {
             // a link update changes a link (Y1 security review B2)
             bail_code!(
