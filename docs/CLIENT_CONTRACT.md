@@ -115,6 +115,15 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
 - **Kısmi eşleşme** (P2-0.1, spec §7.1 "Partial match"): izleyicinin gördüğü baytlar hiçbir tasdikle birebir eşleşmez ama pencere içindeki `content`'li bir tasdikin bloklarını (sürüm çoklu kümesi olarak) içerirse, önce tasdik edilen baytlar tasdikli alım (`canonical`) olarak alınır, günlüğe `{…, partial: true}` satırı düşer, sonra gözlenen baytlar tasdiksiz alım (`unverified`) olarak alınır: aynı gözleme düşen insan kaydı ve ajan yazımı ayrılır. Tasdik değişiklikten sonra gelirse (geç), dosya tasdik edilen baytları o an tutmuyorsa, pencerede o blokları içeren tek bir tasdiksiz alım varsa ve kaydedilen baytlar o alımın olduğu gibi bıraktığı blokların hepsini tutuyorsa yalnız tasdik edilen bloklara karşılık gelen soylar yükselir (`raised`), tasdik satırı `partial: true` taşır. Eklenti ve CLI `content` gönderir (CLI `--all` hariç).
 - Bir tasdik en çok bir değişiklikle eşleşir (P2-0.1, spec §7.1 "One match per attestation"): eşleştiğinde tüketilir; belgenin tasdiksiz bir alımı, ondan önce kaydedilmiş tasdikleri geçersiz kılar. Aynı baytları yeniden kaydeden istemci yeniden tasdik eder.
 
+### 2.7 `demote` — yalnız HTTP (P2-P; K-E2-T (a), K-P2P.3)
+İnsanın bir terfiyi (kuralla terfi dahil, §2.1) geri alma ucu. Araç değildir: MCP `tools/list`'te yoktur, MCP'den çağrı bilinmeyen araçtır (`not_found`); token ve `[identity] human_id` ister (yoksa 403 `denied`), yazan çağrılar gibi kuyruktan geçer.
+
+| Uç | Gövde | Yanıt |
+|---|---|---|
+| `POST /v1/demote` | `{lineage_id, reason, to?}` (`to`: `proposal`\|`unverified`\|`derived`; yoksa bir alt katman: `canonical` → `proposal`, `proposal`/`unverified` → `derived`) | `promote` gibi: `decision: "demoted"` + `event` (`Demoted`, `meta.actor {kind: human, id}`, `reason`, `from`, `to`, `policy`, `policy_version`) ve yeni `layer`; politikanın reddi (`deny`) `decision: "denied"`, olay yok; bilinmeyen ya da canlı olmayan soy `not_found`; alçaltmayan `to` ya da budanmış soy `invalid_arguments`. |
+
+Karar `[promotion] policy` kancasınındır (`human_only`: insan; `deny`: kimse). `Demoted` soyu `proposal`'a indirir: varsayılan aramada görünmez, `include_proposal` ile etiketli döner; `history` iki olayı da gösterir.
+
 ## 3. Hata kodları (K-D1.5)
 Başarısız bir araç çağrısı şu biçimlerde döner:
 - **MCP:** `result.isError: true`, `content[0].text` = `"error: <mesaj>"` ve `structuredContent = {"error": {"code": "<kod>", "message": "<mesaj>"}}`.
