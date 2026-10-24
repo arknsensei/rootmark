@@ -140,6 +140,7 @@ def in_code() -> dict:
         ("compare_p2_0_2", "P2_0_2"),
         ("compare_p2a", "P2A"),
         ("compare_p2l", "P2L"),
+        ("compare_p2p", "P2P"),
     ):
         if name in mods:
             m = mods[name]
@@ -162,6 +163,7 @@ def in_code() -> dict:
         "compare_p2_0_2": ["P2_0_2_FILES", "P2_0_2_BYTES"],
         "compare_p2a": ["P2A_FILES"],
         "compare_p2l": ["P2L_FAST_FILES", "P2L_FILES"],
+        "compare_p2p": ["P2P_FAST_FILES", "P2P_FILES"],
     }
     for mod, names in consts.items():
         if mod not in mods:

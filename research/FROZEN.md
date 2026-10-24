@@ -391,6 +391,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/**` | `P2-L/L5-dev:` | yeniden dondurma P2-L/F7: `compare_p2l.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni `historical_p2l.py` ve iki listesi (`historical_fails_p2l.json`, `migration_required_fails_p2l.json`; P2-A'nın girdileri, P2-0.3 referansıyla) de bu satırla donar |
 | `research/eval/**` | `P2-L/L5-rec:` | yeniden dondurma P2-L/F8: `historical_fails_p2l.json`, `migration_required_fails_p2l.json` (geliştirme zincirinden, resmi çiftten önce) |
 | `scripts/release_check.sh` | `P2-P/P0:` | yeniden dondurma P2-P/F1: R16 geçici dosyaları betiğin `mktemp -d` dizininde (P2-L gözden geçirici bulgusu (c)) |
+| `scripts/verify.sh` | `P2-P/P5-dev:` | yeniden dondurma P2-P/F2: P2-P adımı (`p2p-checks`), sınıflandırıcı `eval.historical_p2p`, `pair` ve hızlı çift → `compare_p2p`, `compare-p2p` |
+| `research/eval/check_compare_fields.py` | `P2-P/P5-dev:` | yeniden dondurma P2-P/F3: `compare_p2p` |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-P/P5-dev:` | yeniden dondurma P2-P/F3: `compare_p2p` bölümü, alan ve dosya satırları |
+| `research/eval/**` | `P2-P/P5-dev:` | yeniden dondurma P2-P/F3: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni P2-P dosyaları (`run_p2p_checks.py`, `compare_p2p.py`, `historical_p2p.py`, `historical_fails_p2p.json`, `migration_required_fails_p2p.json`) de bu satırla donar |
 <!-- /frozen-table -->
 
 ## Notlar

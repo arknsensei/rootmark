@@ -1,0 +1,56 @@
+{
+ "about": "P2-P (TASKS P5): P2-L's listing as it is, against the P2-L official RUN (which holds these FAILs); P2-P's entries are added from the development RUN before the official pair (P5.md). Earlier text: P2-L (eval.historical_p2l, against the P2-0.3 official RUN): P2-A's entries carried over, then the P2-L decisions' entries, written from a development RUN before the official RUN (docs/rounds/P2-L/progress/L5.md). Before: P2-A (K-P2A.2): written from the development RUN 20261020T203735Z-c51159b before the official RUN (A5.md); the 'göç gerekli' category: a recorder measured an older format version's behaviour",
+ "reference_run": "reports/rounds/P2-L/runs/20261024T184609Z-ced61f9",
+ "entries": [
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-1",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "the /2 index (an older rootmark's) answers search 503 migration_required, not index_stale (K-P2A.2); the other 7 cases unchanged",
+   "paths": [
+    {
+     "path": "cases/search 503 index_stale",
+     "expect": false
+    },
+    {
+     "path": "passed",
+     "expect": "7/8"
+    }
+   ]
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-14",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "auto_rebuild = false on the /2 index: search 503 migration_required, not index_stale (K-P2A.2); auto_rebuild = true unchanged",
+   "paths": [
+    {
+     "path": "passed",
+     "expect": "1/2"
+    }
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-9",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "the real-Obsidian e2e on the /2 index: the plugin's search before the rebuild gets migration_required and its tooltip names `rootmark migrate` (K-P2A.2)",
+   "paths": [
+    {
+     "path": "connection_step/search_before_rebuild/error",
+     "prefix": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\""
+    },
+    {
+     "path": "connection_step/tooltip",
+     "expect": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+    }
+   ]
+  }
+ ]
+}
