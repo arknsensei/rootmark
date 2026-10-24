@@ -1955,7 +1955,7 @@ impl Kernel {
             "index": {
                 "state": ix.state,
                 "format": ix.format,
-                "expected_format": store::FORMAT,
+                "expected_format": ix.expected_format,
                 "auto_rebuild": cfg.auto_rebuild,
             },
             // P2-A/A2: the version matrix (never fails `status`: what this
@@ -1991,11 +1991,26 @@ impl Kernel {
 /// `stale` and `missing` are `index_stale` (K-E0.3).
 struct IndexState {
     state: &'static str,
-    /// `format` of the manifest on disk
+    /// `format` of the manifest on disk, with `+<tokenizer>` when its
+    /// lexical record names a variant other than the default (P2-L/L1)
     format: Option<String>,
+    /// this `rootmark`'s format for the vault: `store::FORMAT`, with
+    /// `+<tokenizer>` when `[index] tokenizer` is not the default
+    expected_format: String,
     /// `embedder_id` of the manifest on disk (not of a damaged one)
     embedder: Option<String>,
     damage: Option<String>,
+}
+
+/// `format` as `status` shows it: the default tokenizer adds nothing (the
+/// output of a vault without `[index] tokenizer` is unchanged), another adds
+/// `+<name>` (P2-L/L1).
+fn with_tokenizer(format: &str, tokenizer: &str) -> String {
+    if tokenizer == rootmarkindex::tokenize::TOKENIZER_NAME {
+        format.to_string()
+    } else {
+        format!("{format}+{tokenizer}")
+    }
 }
 
 fn index_state(v: &Vault) -> IndexState {
@@ -2003,6 +2018,12 @@ fn index_state(v: &Vault) -> IndexState {
     let mut ix = IndexState {
         state: "missing",
         format: None,
+        expected_format: with_tokenizer(
+            store::FORMAT,
+            rootmarkindex::config::IndexConfig::of_vault(v.root())
+                .map(|c| c.tokenizer.name())
+                .unwrap_or("?"),
+        ),
         embedder: None,
         damage: None,
     };
@@ -2016,7 +2037,14 @@ fn index_state(v: &Vault) -> IndexState {
                 .with_context(|| format!("{} is not JSON", p.display()))
         });
     if let Ok(raw) = &raw {
-        ix.format = raw["format"].as_str().map(str::to_string);
+        ix.format = raw["format"].as_str().map(|f| {
+            with_tokenizer(
+                f,
+                raw["lexical"]["tokenizer"]
+                    .as_str()
+                    .unwrap_or(rootmarkindex::tokenize::TOKENIZER_NAME),
+            )
+        });
     }
     match raw.and_then(|raw| store::staleness(v).map(|s| (raw, s))) {
         Ok((raw, s)) => {
@@ -2041,19 +2069,30 @@ fn index_readable(v: &Vault) -> Result<()> {
     if ix.state == "stale" {
         let p = store::index_dir(v).join("manifest.json");
         let raw: Value = serde_json::from_slice(&std::fs::read(&p)?)?;
-        let lexical =
+        // the vault's lexical record (P2-L/L1: its `[index] tokenizer`)
+        let want = rootmarkindex::store::LexicalParams::of_vault(v)?;
+        let found =
             serde_json::from_value::<rootmarkindex::store::LexicalParams>(raw["lexical"].clone())
-                .is_ok_and(|l| l == rootmarkindex::store::LexicalParams::current());
-        let format = ix.format.clone().unwrap_or_default();
+                .ok();
+        let lexical = found.as_ref() == Some(&want);
+        let format = raw["format"].as_str().unwrap_or_default().to_string();
         if crate::migrate::index_needs_migration(&format, lexical) {
             // a stable hint (contract §3: "kararlı bir dizge"): no path of
             // this machine (A5: the vault's path made two clean chains differ)
-            return Err(crate::error::coded_hint(
-                Code::MigrationRequired,
-                format!(
+            let why = match found.filter(|_| format == store::FORMAT) {
+                // this format, the other lexical variant (P2-L/L1)
+                Some(l) => format!(
+                    "index tokenizer {:?} is not the vault's [index] tokenizer {:?}: the index needs migration",
+                    l.tokenizer, want.tokenizer
+                ),
+                None => format!(
                     "index format {format:?} (an older rootmark's) needs migration to {:?}",
                     store::FORMAT
                 ),
+            };
+            return Err(crate::error::coded_hint(
+                Code::MigrationRequired,
+                why,
                 "run `rootmark migrate <vault>` (it keeps a rollback record)",
             ));
         }

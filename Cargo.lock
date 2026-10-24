@@ -2023,6 +2023,8 @@ dependencies = [
  "serde_json",
  "tantivy",
  "tokenizers",
+ "toml",
+ "unicode-normalization",
 ]
 
 [[package]]

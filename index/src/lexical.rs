@@ -27,7 +27,7 @@
 //! place, so a reader needs no lock against a writer).
 
 use crate::record::ChunkRecord;
-use crate::tokenize::{RootmarkTokenizer, TOKENIZER_NAME};
+use crate::tokenize::{Variant, VariantTokenizer};
 use anyhow::{bail, Context, Result};
 use std::fs;
 use std::io;
@@ -58,11 +58,11 @@ const BUDGET_FLOOR: usize = 200_000_000;
 pub const WRITER_BUDGET_MIN: usize = 15_000_000;
 pub const WRITER_BUDGET_MAX: usize = u32::MAX as usize - 1_000_000;
 
-fn schema() -> (Schema, Field, Field) {
+fn schema(tok: Variant) -> (Schema, Field, Field) {
     let mut sb = Schema::builder();
     let opts = TextOptions::default().set_indexing_options(
         TextFieldIndexing::default()
-            .set_tokenizer(TOKENIZER_NAME)
+            .set_tokenizer(tok.name())
             .set_index_option(IndexRecordOption::WithFreqs)
             .set_fieldnorms(false),
     );
@@ -71,11 +71,14 @@ fn schema() -> (Schema, Field, Field) {
     (sb.build(), text, ord)
 }
 
+/// Every variant under its name: the index's schema names the one it uses.
 fn register(index: &Index) {
-    index.tokenizers().register(
-        TOKENIZER_NAME,
-        tantivy::tokenizer::TextAnalyzer::from(RootmarkTokenizer),
-    );
+    for v in Variant::ALL {
+        index.tokenizers().register(
+            v.name(),
+            tantivy::tokenizer::TextAnalyzer::from(VariantTokenizer(v)),
+        );
+    }
 }
 
 /// Writer budget for `records`: `BUDGET_PER_TEXT_BYTE` × text bytes, at
@@ -96,19 +99,28 @@ pub fn budget_for(records: &[ChunkRecord]) -> Result<usize> {
 }
 
 /// Writes the tantivy index of `records` (storage order) into the empty or
-/// missing directory `dir`, then canonicalizes it.
+/// missing directory `dir`, then canonicalizes it (the default variant).
 pub fn write(dir: &Path, records: &[ChunkRecord]) -> Result<()> {
-    write_with_budget(dir, records, budget_for(records)?)
+    write_variant(dir, records, Variant::default())
+}
+
+/// `write` with the lexical variant `tok` (P2-L/L1).
+pub fn write_variant(dir: &Path, records: &[ChunkRecord], tok: Variant) -> Result<()> {
+    write_with(dir, records, budget_for(records)?, tok)
 }
 
 /// `write` with an explicit writer budget (tests force intermediate
 /// segments with it): anything but one segment in storage order is an error.
 pub fn write_with_budget(dir: &Path, records: &[ChunkRecord], budget: usize) -> Result<()> {
+    write_with(dir, records, budget, Variant::default())
+}
+
+fn write_with(dir: &Path, records: &[ChunkRecord], budget: usize, tok: Variant) -> Result<()> {
     if dir.exists() && fs::read_dir(dir)?.next().is_some() {
         bail!("{} is not empty", dir.display());
     }
     fs::create_dir_all(dir)?;
-    let (schema, text, ord) = schema();
+    let (schema, text, ord) = schema(tok);
     let index = Index::create_in_dir(dir, schema)?;
     register(&index);
     let mut w = index.writer_with_num_threads::<TantivyDocument>(1, budget)?;

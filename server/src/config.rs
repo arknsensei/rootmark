@@ -106,10 +106,15 @@ impl ServerConfig {
                         };
                         c.auto_rebuild = b;
                     }
-                    _ => bail!("[index]: unknown field `{k}` (compact_every_s, auto_rebuild)"),
+                    // P2-L/L1, L2: the index's own settings (`rootmarkindex::config`)
+                    "tokenizer" | "embedder" => {}
+                    _ => bail!("[index]: unknown field `{k}` (compact_every_s, auto_rebuild, tokenizer, embedder)"),
                 }
             }
         }
+        // their values are checked here too: a recipe the index would
+        // refuse is refused at start (P2-L/L1, L2)
+        rootmarkindex::config::IndexConfig::of_table(policy.index.as_ref())?;
         if let Some(t) = &policy.identity {
             for (k, v) in t {
                 match k.as_str() {

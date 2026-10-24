@@ -22,4 +22,6 @@ ort = { version = "=2.0.0-rc.13", default-features = false, features = ["std", "
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
 tantivy = { version = "=0.26.2", default-features = false, features = ["mmap"] }
+unicode-normalization = "0.1.25"
+toml = "0.8.23"
 tokenizers = { version = "=0.23.2", default-features = false, features = ["fancy-regex"] }

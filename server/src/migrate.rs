@@ -281,15 +281,21 @@ impl Migration for RenameStore {
     }
 }
 
-/// The index manifest's `format` and whether its lexical record is this
-/// implementation's (`None`: no manifest or not readable).
+/// The index manifest's `format` and whether its lexical record is the one
+/// this implementation builds for the vault — its `[index] tokenizer`
+/// (P2-L/L1: an index of the other variant is migrated by `index_rebuild`;
+/// a recipe that cannot be read counts as not current, and the rebuild then
+/// fails on it) (`None`: no manifest or not readable).
 fn index_manifest(vault: &Path) -> Option<(String, bool)> {
     let p = store_of(vault).join("index/manifest.json");
     let raw: Value = serde_json::from_slice(&std::fs::read(p).ok()?).ok()?;
     let format = raw["format"].as_str()?.to_string();
+    let want = rootmarkindex::config::IndexConfig::of_vault(vault)
+        .ok()
+        .map(|c| rootmarkindex::store::LexicalParams::of(c.tokenizer));
     let lexical =
         serde_json::from_value::<rootmarkindex::store::LexicalParams>(raw["lexical"].clone())
-            .is_ok_and(|l| l == rootmarkindex::store::LexicalParams::current());
+            .is_ok_and(|l| Some(l) == want);
     Some((format, lexical))
 }
 
@@ -558,12 +564,20 @@ pub fn matrix(vault: &Path) -> Result<Value> {
         Some((f, l)) if f == rootmarkindex::store::FORMAT && l => {
             row(Some(f), rootmarkindex::store::FORMAT, "ok", None)
         }
-        Some((f, l)) if index_needs_migration(&f, l) => row(
-            Some(f),
-            rootmarkindex::store::FORMAT,
-            "migration_required",
-            Some("an older rootmark's index (migration index_rebuild)".into()),
-        ),
+        Some((f, l)) if index_needs_migration(&f, l) => {
+            let note = if f == rootmarkindex::store::FORMAT {
+                // P2-L/L1: this format, another lexical variant
+                "the index's lexical variant is not the vault's [index] tokenizer (migration index_rebuild)"
+            } else {
+                "an older rootmark's index (migration index_rebuild)"
+            };
+            row(
+                Some(f),
+                rootmarkindex::store::FORMAT,
+                "migration_required",
+                Some(note.into()),
+            )
+        }
         Some((f, _)) => row(
             Some(f),
             rootmarkindex::store::FORMAT,
