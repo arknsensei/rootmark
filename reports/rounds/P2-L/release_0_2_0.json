@@ -1,0 +1,142 @@
+{
+ "release": "v0.2.0",
+ "version": "0.2.0",
+ "spec_version": "2.0.2",
+ "tag_commit": "fc645edcdc39ea829606f8534708289c1e904a84",
+ "pr": "https://github.com/arknsensei/rootmark/pull/22",
+ "github_release": "https://github.com/arknsensei/rootmark/releases/tag/v0.2.0",
+ "release_yml_run": "https://github.com/arknsensei/rootmark/actions/runs/40113904549",
+ "release_yml_conclusion": "success",
+ "required_targets": [
+  "aarch64-apple-darwin",
+  "x86_64-unknown-linux-gnu"
+ ],
+ "required_ok": true,
+ "targets": [
+  {
+   "target": "aarch64-apple-darwin",
+   "required": true,
+   "ok": true,
+   "version": "rootmark 0.2.0",
+   "spec_version": "2.0.2",
+   "sha256": "33edd8cd1cd889f2a381023368d940b95fd0b4cec13bbbc132dbf1856319d18d",
+   "conformance": {
+    "level_claimed": 3,
+    "passed": 39,
+    "total": 39,
+    "fixtures_manifest": "ok"
+   }
+  },
+  {
+   "target": "x86_64-pc-windows-msvc",
+   "required": false,
+   "ok": true,
+   "version": "rootmark 0.2.0",
+   "spec_version": "2.0.2",
+   "sha256": "8edd8a22574f2b01ddd7781e427539d20fba73d57b7f060be3a353ba771454da",
+   "conformance": {
+    "level_claimed": 3,
+    "passed": 39,
+    "total": 39,
+    "fixtures_manifest": "ok"
+   }
+  },
+  {
+   "target": "x86_64-unknown-linux-gnu",
+   "required": true,
+   "ok": true,
+   "version": "rootmark 0.2.0",
+   "spec_version": "2.0.2",
+   "sha256": "41b1fbd1de536e80e33d545e90a5f0ee284f9ce56787804f46dea6d46176746f",
+   "conformance": {
+    "level_claimed": 3,
+    "passed": 39,
+    "total": 39,
+    "fixtures_manifest": "ok"
+   }
+  }
+ ],
+ "installed": {
+  "aarch64-apple-darwin": {
+   "ok": true,
+   "version": "rootmark 0.2.0",
+   "conformance": {
+    "level": 3,
+    "passed": 39,
+    "total": 39
+   }
+  },
+  "x86_64-pc-windows-msvc": {
+   "ok": true,
+   "version": "rootmark 0.2.0",
+   "conformance": {
+    "level": 3,
+    "passed": 39,
+    "total": 39
+   }
+  },
+  "x86_64-unknown-linux-gnu": {
+   "ok": true,
+   "version": "rootmark 0.2.0",
+   "conformance": {
+    "level": 3,
+    "passed": 39,
+    "total": 39
+   }
+  }
+ },
+ "sha256sums_check": "5/5 OK (shasum -a 256 -c SHA256SUMS)",
+ "attestations_verified": [
+  "rootmark-0.2.0-aarch64-apple-darwin.tar.gz",
+  "rootmark-0.2.0-x86_64-pc-windows-msvc.zip",
+  "rootmark-0.2.0-x86_64-unknown-linux-gnu.tar.gz",
+  "install.sh",
+  "install.ps1"
+ ],
+ "provenance": "5/5 (gh attestation verify -R arknsensei/rootmark)",
+ "assets": {
+  "SHA256SUMS": "092f1c313d79650a1ad6b5a2c49f474c115b7a2cffd13ce24fa338e07fdc5c5a",
+  "SHA256SUMS.local": "b46ee9ee21bc05499c83edf592f1a78b137b65d4b4c4f4bba8d8046c8b766784",
+  "install.ps1": "1c6856a56a4515bc63a30114bd5e03a8fd6e328006d3eafd1ebb71484d46ed66",
+  "install.sh": "2634a619c81c36ca4ed2a5f1e03a862a8019f5cecd8eca6ae50514a1d6b9a104",
+  "main.js": "b65b631503ad2de071aff90e995efdd1c697b5b49899947fde78069ac4183e43",
+  "manifest.json": "55b6dc2c03c6c5aff958adc8b182fea8465bfb8b700c9d49ed36e9691fd4e3ce",
+  "rootmark-0.2.0-aarch64-apple-darwin.tar.gz": "66d775346dbdfccccca1aba90b5b024e0ae87feffe0c13824ab784c88107a848",
+  "rootmark-0.2.0-x86_64-pc-windows-msvc.zip": "0af10599ad7dcddf51d6d40d72a47a2f29b4da65267832be6da8f52e11a4a446",
+  "rootmark-0.2.0-x86_64-unknown-linux-gnu.tar.gz": "2872312dd5ebb6c4d8e46f0b72187050bdbf04860872aec200316fb25933eccf",
+  "rootmark-0.2.0.zip": "0d441b1e319e2d026937bdc3128fdf13a307722b64f35ecba415764d842258a4",
+  "rootmark_bindings-0.2.0-cp311-abi3-macosx_11_0_arm64.whl": "b5b33a22a71cd8ed5f3b6ba7c05a8670d924b71f832924f21aa4b52a34975142",
+  "styles.css": "9090681f2540cc41711c0fb678ee6853ee4fb127d2145095b39a41297d39e8b3"
+ },
+ "local_assets_built_by": "scripts/release.sh at fc645ed (wheel, Obsidian plugin); hashes in SHA256SUMS.local",
+ "release_check": {
+  "at": "fc645ed with docs/rounds/P2-L/progress/ROUND_START = fc645ed",
+  "passed": 21,
+  "total": 21,
+  "pass": true,
+  "items": {
+   "R1": true,
+   "R2": true,
+   "R3": true,
+   "R4a": true,
+   "R4": true,
+   "R5": true,
+   "R6": true,
+   "R7": true,
+   "R8": true,
+   "R9": true,
+   "R10": true,
+   "R11": true,
+   "R12": true,
+   "R13": true,
+   "R14": true,
+   "R15": true,
+   "R16": true,
+   "R17": true,
+   "R18": true,
+   "R19": true,
+   "R20": true
+  }
+ },
+ "signing": "none (K-P2.4)"
+}
