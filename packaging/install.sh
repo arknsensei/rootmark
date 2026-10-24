@@ -17,6 +17,11 @@
 #              GitHub release (CI checks the artefacts this way)
 #   --no-model do not download the model files (search needs them)
 #
+# Requires: bash, tar, sha256sum (or shasum), curl (unless --from) and, for
+# the model files (unless --no-model), jq — checked before anything is
+# downloaded or installed (P2-A verification F2: a bare Ubuntu has no jq, and
+# fetch_model.sh failed only after the binary was installed).
+#
 # Provenance: `gh attestation verify <archive> -R arknsensei/rootmark`
 # checks the archive's build attestation (GitHub artifact attestations).
 set -euo pipefail
@@ -43,6 +48,15 @@ esac
 if command -v sha256sum >/dev/null; then sha() { sha256sum "$1" | cut -d' ' -f1; }
 elif command -v shasum >/dev/null; then sha() { shasum -a 256 "$1" | cut -d' ' -f1; }
 else die "sha256sum or shasum is required"; fi
+# every prerequisite before anything is downloaded or installed (P2-A F2)
+missing=""
+for c in tar install; do command -v "$c" >/dev/null || missing="$missing $c"; done
+[ -n "$from" ] || command -v curl >/dev/null || missing="$missing curl"
+if $model; then
+  command -v curl >/dev/null || case "$missing" in (*curl*) ;; (*) missing="$missing curl" ;; esac
+  command -v jq >/dev/null || missing="$missing jq"
+fi
+[ -z "$missing" ] || die "missing:$missing (Debian/Ubuntu: sudo apt-get install$missing; macOS: brew install$missing); --no-model skips the model download and its jq"
 
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT

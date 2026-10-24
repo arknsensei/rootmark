@@ -37,17 +37,18 @@ The full contract (every tool, field and error code) is [docs/CLIENT_CONTRACT.md
 
 ## Install
 
-Release target of 0.1.0: macOS on Apple silicon (`aarch64-apple-darwin`). Linux x86_64 and Windows x86_64 are built and checked in CI for information (K-E1.1).
+Release targets of 0.2.0: macOS on Apple silicon (`aarch64-apple-darwin`) and Linux x86_64 (`x86_64-unknown-linux-gnu`). Windows x86_64 is built, installed and checked in CI for information (K-E1.1, K-P2A.6).
 
-- **Release archive:** download `rootmark-0.1.0-aarch64-apple-darwin.tar.gz` from the [releases](https://github.com/arknsensei/rootmark/releases), check it against `SHA256SUMS`, put `rootmark` on your `PATH`. The embedder model is fetched and checked by `models/fetch_model.sh` in the archive (pinned revision, sha256 and blake3).
+- **Installer:** download `install.sh` and `SHA256SUMS` from the [release](https://github.com/arknsensei/rootmark/releases), check them (`gh attestation verify install.sh -R arknsensei/rootmark`, `grep ' install.sh$' SHA256SUMS | sha256sum -c`), then `bash install.sh --version 0.2.0` (needs `tar`, `sha256sum` or `shasum`, `curl` and `jq`); Windows: `install.ps1`. Details: [docs/RELEASE.md](docs/RELEASE.md) "Kurulum".
+- **Release archive:** download `rootmark-0.2.0-<target>.tar.gz` from the [releases](https://github.com/arknsensei/rootmark/releases), check it against `SHA256SUMS`, put `rootmark` on your `PATH`. The embedder model is fetched and checked by `models/fetch_model.sh` in the archive (pinned revision, sha256 and blake3).
 - **cargo-binstall:** `cargo binstall rootmark-server` (installs the `rootmark` binary from the release archive; works once the crate is published).
 - **Homebrew:** a formula draft is in [`packaging/homebrew/rootmark.rb.in`](packaging/homebrew/rootmark.rb.in) (filled by `scripts/release.sh`); there is no tap yet.
 - **From source:** Rust 1.92.0, `cargo build --release -p rootmark-server --bin rootmark`, then `make models`.
 
 ```sh
-rootmark --version            # rootmark 0.1.0
-rootmark --spec-version       # 2.0.0
-rootmark conformance          # Levels 1–3 on the embedded fixtures: 37/37 (spec 2.0.0)
+rootmark --version            # rootmark 0.2.0
+rootmark --spec-version       # 2.0.2
+rootmark conformance          # Levels 1–3 on the embedded fixtures: 39/39 (spec 2.0.2)
 ```
 
 A vault written by a build from before the project's rename is opened after `rootmark migrate --rename-store <vault>`, which moves its metadata directory to `.rootmark/` and changes no byte inside it (same event log, same `events_hash`, same index).
@@ -59,7 +60,7 @@ The Obsidian client is not in the community store yet. With [BRAT](https://githu
 1. Install and enable BRAT in Obsidian.
 2. BRAT → *Add beta plugin* → `arknsensei/rootmark` (the release assets carry `main.js`, `manifest.json`, `styles.css`).
 3. Enable **rootmark**. In your vault set `[server] http_port` and `[identity] human_id` in `.rootmark/policy.toml` and run `rootmark serve --vault <vault> --http 127.0.0.1:<port>`.
-4. The status bar says `rootmark 0.1.0 · human:<you>`. A stale or damaged index is shown there with the way to rebuild it.
+4. The status bar says `rootmark 0.2.0 · human:<you>`. A stale or damaged index is shown there with the way to rebuild it.
 
 ## Specification
 

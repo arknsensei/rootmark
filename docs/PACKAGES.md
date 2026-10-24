@@ -29,7 +29,7 @@ rootmark/
 | `spec` | Markdown + fixture | normatif tanım, uyumluluk testleri | — | v1.0 §1–6 donmuş, §7/§8/§11 doğrulandı (P1-B), §9–10 taslak | yayım (Apache-2.0) |
 | `core` | Rust | parser, blok, soy (matcher v3), olay günlüğü, nesne deposu, chunk, katman/terfi, kontrol noktası, tüketim izi, sürüm tetikleyici sınırları, politika hook'ları | `pulldown-cmark`, `blake3`, `strsim`, `serde` | **nihai** | crates.io |
 | `index` | Rust | sözcüksel (tantivy), vektör deposu + kesin arama, embedder trait + ONNX varsayılan (`ort`), hibrit RRF, kontrol noktasına göre sorgu, sıcak katman | `core`, `tantivy`, `ort` | **nihai** | crates.io |
-| `server` | Rust | `rootmark` CLI, MCP sunucusu (`rmcp`), HTTP API, dosya izleyici, politika tarif dosyası yükleyici | `core`, `index` | **nihai** | tek ikili; 0.1.0 yayım hedefi yalnız macOS `aarch64` (K-E1.1), Linux/Windows CI'da derlenir (bilgi), kurulum paketleri faz 2; Homebrew/cargo-binstall |
+| `server` | Rust | `rootmark` CLI, MCP sunucusu (`rmcp`), HTTP API, dosya izleyici, politika tarif dosyası yükleyici | `core`, `index` | **nihai** | tek ikili; yayım hedefleri macOS `aarch64` ve (0.2.0'dan itibaren) Linux `x86_64` (K-E1.1, K-P2A.6), Windows CI'da derlenir ve kurulur (bilgi); kurulum betikleri `install.sh`/`install.ps1` (P2-A); Homebrew/cargo-binstall |
 | `bindings/python` | Rust→Python | `research` ve Python kullanıcıları için `core`+`index` yüzeyi | `core`, `index` | nihai | wheel (PyPI) |
 | `bindings/node` | Rust→Node | istemciler için yerel bağlama (MCP/HTTP yetmezse) | `core` | faz 2 | npm |
 | `clients/obsidian` | TypeScript | blame paneli, proposal görünümü, promote/demote, checkpoint seçici, trace görüntüleyici; çekirdeğe MCP/HTTP ile | `server` | faz 1 minimal | community plugin |

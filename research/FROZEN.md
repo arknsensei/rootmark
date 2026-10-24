@@ -372,6 +372,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-A/A5-rec:` | yeniden dondurma P2-A/F7: `compare_p2a` dışlama satırları |
 | `scripts/verify.sh` | `P2-0.3/R0:` | yeniden dondurma P2-0.3/F1: P2-0.3 adımı (`make p2-0-3-checks`), yalnız ekleme |
 | `research/eval/**` | `P2-0.3/R0:` | yeniden dondurma P2-0.3/F1: bu commit'te var olan yeni P2-0.3 sarmalayıcıları (`run_p2_0_3.py`, `report_p2_0_3.py`) bu satırla donar; var olan dosyalar değişmedi |
+| `scripts/release_check.sh` | `P2-L/L0-release:` | yeniden dondurma P2-L/F1: R1 sürüm CHANGELOG'dan, R4/R13 Linux zorunlu (K-P2A.6), R16 koşulu kapatılmış hüküm |
+| `scripts/release.sh` | `P2-L/L0-release:` | yeniden dondurma P2-L/F1: Linux kaydı zorunlu (K-P2A.6) |
+| `clients/obsidian/e2e/**` | `P2-L/L0-release:` | yeniden dondurma P2-L/F2: `real/run.ts` durum çubuğu sürümü ikiliden, E1-9 `migration_required` (K-P2A.2) |
+| `clients/obsidian/e2e/real/**` | `P2-L/L0-release:` | yeniden dondurma P2-L/F2: durum çubuğu sürümü ikiliden, E1-9 `migration_required` (K-P2A.2) |
 <!-- /frozen-table -->
 
 ## Notlar

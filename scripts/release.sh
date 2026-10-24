@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# The 0.1.0 release package (GOAL P1-E "0.1.0 yayım paketi"; TASKS E5),
-# built locally into dist/ (git-ignored). Tags nothing and publishes
-# nothing: docs/RELEASE.md lists the human steps (the v0.1.0 tag is set
-# only after the independent verification says "Güvenilir").
+# The release package (GOAL P1-E "0.1.0 yayım paketi"; TASKS E5; 0.2.0:
+# GOAL P2-L L0 e), built locally into dist/ (git-ignored). Tags nothing and
+# publishes nothing: docs/RELEASE.md lists the human steps (the version tag
+# is set only after the verification human step 1 names).
 #
 #   scripts/release.sh [<dist-dir>]        (default dist/)
 #
@@ -20,10 +20,11 @@
 #   release.json                    every target's record
 #                                   (scripts/release_target.sh assemble)
 #   plugin_e2e_real/                the real-Obsidian e2e (K-E1.3)
-# Targets (K-E1.1): aarch64-apple-darwin (native) is the one release
-# target; x86_64-unknown-linux-gnu (cross-compiled in a named Debian trixie
-# container, run in a named amd64 container) and x86_64-pc-windows-msvc
-# (CI only: .github/workflows/release.yml) are CI information. A target
+# Targets (K-E1.1, K-P2A.6): aarch64-apple-darwin (native) and, since
+# 0.2.0, x86_64-unknown-linux-gnu (cross-compiled in a named Debian trixie
+# container, run in a named amd64 container) are the release targets;
+# x86_64-pc-windows-msvc (CI only: .github/workflows/release.yml) is CI
+# information. A target
 # that cannot be built is recorded with its reason, never silently skipped.
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -49,29 +50,29 @@ pack() { # pack <target> <binary>
   (cd "$dist/bin" && tar -czf "rootmark-$ver-$t.tar.gz" "rootmark-$ver-$t" && rm -rf "rootmark-$ver-$t")
 }
 
-# ---- aarch64-apple-darwin (native): the one release target (K-E1.1)
+# ---- aarch64-apple-darwin (native): a release target (K-E1.1)
 cargo build -q --release --locked -p rootmark-server --bin rootmark
 ROOTMARK_MODELS="$models" bash "$rt" check aarch64-apple-darwin true "$dist/bin/aarch64-apple-darwin.json" "$root/target/release/rootmark"
 pack aarch64-apple-darwin "$root/target/release/rootmark"
 
-# ---- x86_64-unknown-linux-gnu (CI info, not a release criterion; K-E1.1):
+# ---- x86_64-unknown-linux-gnu (a release target since 0.2.0, K-P2A.6):
 # cross-compiled in a named arm64 Debian trixie container (the prebuilt
 # onnxruntime needs glibc >= 2.38), run in a named amd64 container; only
 # containers this script starts are touched. ROOTMARK_RELEASE_LINUX=0 skips it.
 lt="$root/target/docker-linux-trixie"
 if [ "${ROOTMARK_RELEASE_LINUX:-1}" = 0 ]; then
-  bash "$rt" skipped x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" "not attempted here (ROOTMARK_RELEASE_LINUX=0); built and checked by .github/workflows/release.yml"
+  bash "$rt" skipped x86_64-unknown-linux-gnu true "$dist/bin/x86_64-unknown-linux-gnu.json" "not attempted here (ROOTMARK_RELEASE_LINUX=0); built and checked by .github/workflows/release.yml"
 elif command -v docker >/dev/null && docker run --rm --name "rootmark-release-linux-build-$$" --platform linux/arm64 \
     -v "$root":/src:ro -v "$lt":/target -v rootmark-cargo-home-arm:/usr/local/cargo/registry \
     -v "$root/scripts/linux_cross_build.sh":/cross.sh:ro -w /src -e CARGO_TARGET_DIR=/target -e RUSTUP_TOOLCHAIN=1.92.0 \
     rust:1.92.0-trixie bash /cross.sh >"$dist/bin/x86_64-unknown-linux-gnu.log" 2>&1; then
   lb="$lt/x86_64-unknown-linux-gnu/release/rootmark"
-  bash "$rt" check x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" "$lb" \
+  bash "$rt" check x86_64-unknown-linux-gnu true "$dist/bin/x86_64-unknown-linux-gnu.json" "$lb" \
     docker run --rm --name "rootmark-release-linux-run-$$" --platform linux/amd64 -v "$lb":/rootmark:ro -v "$models":/models:ro \
     -e ROOTMARK_MODELS=/models debian:trixie-slim /rootmark
   pack x86_64-unknown-linux-gnu "$lb"
 else
-  bash "$rt" skipped x86_64-unknown-linux-gnu false "$dist/bin/x86_64-unknown-linux-gnu.json" \
+  bash "$rt" skipped x86_64-unknown-linux-gnu true "$dist/bin/x86_64-unknown-linux-gnu.json" \
     "$(grep -m1 -E 'error' "$dist/bin/x86_64-unknown-linux-gnu.log" 2>/dev/null || echo 'docker unavailable')"
 fi
 

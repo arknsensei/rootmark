@@ -41,6 +41,10 @@ const DOC = "agent/scene.md";
 const TEXT = "# Grind notes\n\nAn agent recommends a coarser grind for the kalimba roast.\n";
 const AGENT = { name: "real-agent", version: "1.0" };
 const REASON = "approved in Obsidian";
+// the status bar names the server's version: `rootmark --version` of the
+// binary under test (P2-L/F2; the version was written out until 0.2.0)
+const VERSION = spawnSync(rootmark, ["--version"], { encoding: "utf8" }).stdout.trim();
+if (!/^rootmark \d+\.\d+\.\d+$/.test(VERSION)) throw new Error(`rootmark --version: ${JSON.stringify(VERSION)}`);
 const sleep = (ms: number): Promise<void> => new Promise((ok) => setTimeout(ok, ms));
 const work = mkdtempSync(join(tmpdir(), "rootmark-real-e2e-"));
 
@@ -125,7 +129,7 @@ try {
   // 1. the connection status
   const sb1 = await pg.ev<{ text: string; title: string }>("__rootmark.statusBar()");
   snap();
-  steps.push({ step: 1, actor: "human", command: "status bar", shows: { text: sb1.text }, pass: sb1.text === "rootmark 0.1.0 · human:editor" });
+  steps.push({ step: 1, actor: "human", command: "status bar", shows: { text: sb1.text }, pass: sb1.text === `${VERSION} · human:editor` });
 
   // 2. checkpoint panel: name the state "before"
   await cmd("checkpoints");
@@ -358,11 +362,12 @@ const oldLog: { method: string; path: string; consumer: string | null; status: n
         status_bar: sb.text, tooltip: sb.title, notice_shown: notices.some((n) => n.includes("index stale") && n.includes("rootmark index build")),
         search_before_rebuild: before, status_bar_after_rebuild: sbAfter.text, search_after_rebuild: after,
       },
-      pass: sb.text === "rootmark 0.1.0 · human:editor · index stale"
+      pass: sb.text === `${VERSION} · human:editor · index stale`
         && sb.title.includes("mdkernel-index/2") && sb.title.includes("mdkernel-index/3") && sb.title.includes("rootmark index build") && sb.title.includes("auto_rebuild = true")
         && notices.some((n) => n.includes("index stale") && n.includes("rootmark index build"))
-        && before.error !== null && before.error.startsWith("index_stale: ") && before.hits === 0
-        && sbAfter.text === "rootmark 0.1.0 · human:editor" && after.error === null && after.hits > 0,
+        // an older-format index answers migration_required since K-P2A.2 (P2-L/F2)
+        && before.error !== null && before.error.startsWith("migration_required: ") && before.hits === 0
+        && sbAfter.text === `${VERSION} · human:editor` && after.error === null && after.hits > 0,
     };
   } catch (e) {
     connection = { ...connection, shows: { error: e instanceof Error ? e.message : String(e) }, pass: false };

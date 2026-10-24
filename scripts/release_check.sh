@@ -22,7 +22,10 @@ t() { "$@" >/dev/null 2>&1; echo $?; }
 ver="$(sed -n 's/^version = "\(.*\)"$/\1/p' Cargo.toml | head -1)"
 spec="$(sed -n 's/^pub const SPEC_VERSION: &str = "\(.*\)";$/\1/p' server/src/tools.rs)"
 vers="$(for f in core/Cargo.toml index/Cargo.toml server/Cargo.toml bindings/python/Cargo.toml; do sed -n 's/^version = "\(.*\)"$/\1/p' "$f" | head -1; done; jq -r .version clients/obsidian/package.json clients/obsidian/manifest.json)"
-item R1 "one version $ver" "$( [ "$ver" = 0.1.0 ] && [ "$(echo "$vers" | sort -u)" = "$ver" ]; echo $?)" "$(echo $vers)"
+# R1 (P2-L/F1): one version, the release CHANGELOG.md's newest heading names
+# (0.1.0 was written out here until 0.2.0)
+newest="$(sed -n 's/^## \([0-9][^ ]*\) .*/\1/p' CHANGELOG.md | head -1)"
+item R1 "one version $ver" "$( [ -n "$ver" ] && [ "$ver" = "$newest" ] && [ "$(echo "$vers" | sort -u)" = "$ver" ]; echo $?)" "$(echo $vers); CHANGELOG $newest"
 spec_head="$(sed -n 1p spec/SPEC.md)"
 item R2 "spec version $spec" "$( grep -q "\"spec_version\": \"$spec\"" core/tests/conformance.rs && grep -q "v$spec\$" <<<"$spec_head"; echo $?)"
 rootmark="$root/target/release/rootmark"
@@ -39,13 +42,15 @@ if [ -f "$dist/release.json" ]; then
   if [ -z "$pc" ] || ! git cat-file -e "$pc^{commit}" 2>/dev/null; then why="${why:+$why; }unknown commit ${pc:-none}"
   elif ! git diff --quiet "$pc" HEAD -- "${INPUTS[@]}"; then why="${why:+$why; }inputs changed since ${pc:0:7}: $(git diff --name-only "$pc" HEAD -- "${INPUTS[@]}" | head -3 | tr '\n' ' ')"; fi
   item R4a "release package fresh (inputs of ${pc:0:7} = HEAD, clean tree, version)" "$( [ -z "$why" ]; echo $?)" "$why"
-  # K-E1.1: the required target (aarch64-apple-darwin) passes with its hash;
-  # the other targets are information (recorded, or recorded as skipped)
-  item R4 "release binary aarch64-apple-darwin: --version, --spec-version, rootmark conformance 39/39, sha256" \
-    "$(jq -e --arg ver "$ver" --arg spec "$spec" '.required_ok == true and .required_targets == ["aarch64-apple-darwin"]
+  # K-E1.1, K-P2A.6 (P2-L/F1): the required targets (aarch64-apple-darwin
+  # and, since 0.2.0, x86_64-unknown-linux-gnu) pass with their hashes; the
+  # other targets are information (recorded, or recorded as skipped)
+  item R4 "release binaries aarch64-apple-darwin, x86_64-unknown-linux-gnu: --version, --spec-version, rootmark conformance 39/39, sha256" \
+    "$(jq -e --arg ver "$ver" --arg spec "$spec" '.required_ok == true
+      and .required_targets == ["aarch64-apple-darwin", "x86_64-unknown-linux-gnu"]
       and all(.targets[]; .ok or .skipped == true or .required == false)
-      and (.targets[] | select(.target == "aarch64-apple-darwin")
-        | .ok and .version == ("rootmark " + $ver) and .spec_version == $spec and (.sha256 | test("^[0-9a-f]{64}$"))
+      and all(.targets[] | select(.required);
+        .ok and .version == ("rootmark " + $ver) and .spec_version == $spec and (.sha256 | test("^[0-9a-f]{64}$"))
           and .conformance.passed == 39 and .conformance.total == 39)' "$dist/release.json" >/dev/null; echo $?)" \
     "$(jq -r '[.targets[] | "\(.target)\(if .required then "" else " (CI info)" end): \(if .ok then "ok" elif .built then "built, check failed" else "skipped" end)"] | join("; ")' "$dist/release.json")"
 else
@@ -78,16 +83,16 @@ item R9 "spec publication dist/spec-$spec" "$( for f in SPEC.md CONFORMANCE.md L
 item R10 "LICENSE Apache-2.0" "$( grep -q 'Apache License' LICENSE && grep -q 'Version 2.0, January 2004' LICENSE && for a in "$dist"/bin/*.tar.gz; do tar -tzf "$a" >"$tmp/tar.list" && grep -q '/LICENSE$' "$tmp/tar.list" || exit 1; done; echo $?)"
 item R11 "CHANGELOG, THREAT_MODEL, RELEASE" "$( grep -q "^## $ver" CHANGELOG.md && [ -f docs/THREAT_MODEL.md ] && [ -f docs/RELEASE.md ]; echo $?)"
 item R12 "cargo-binstall metadata, Homebrew draft" "$( grep -q '^\[package.metadata.binstall\]' server/Cargo.toml && grep -q "version \"$ver\"" "$dist/homebrew/rootmark.rb" && ! grep -q '@SHA256' "$dist/homebrew/rootmark.rb"; echo $?)"
-# R13 (K-E1.1): started by hand only; aarch64-apple-darwin required, Linux
-# and Windows CI information (continue-on-error), no Intel macOS; every job
+# R13 (K-E1.1, K-P2A.6; P2-L/F1): started by hand only; aarch64-apple-darwin
+# and Linux required, Windows CI information (continue-on-error), no Intel macOS; every job
 # checks through release_target.sh (rootmark conformance) and dist/release.json
 # is assembled
 wf=.github/workflows/release.yml
 on_block="$(sed -n '/^on:/,/^jobs:/p' "$wf" | grep -vE '^(on:|jobs:)$' | grep -vE '^\s*(#.*)?$' | tr -d ' ')"
-item R13 "CI release.yml: workflow_dispatch only, aarch64 required, Linux/Windows continue-on-error, rootmark conformance per job" "$(
+item R13 "CI release.yml: workflow_dispatch only, aarch64 and Linux required, Windows continue-on-error, rootmark conformance per job" "$(
   [ "$on_block" = "workflow_dispatch:" ] \
   && grep -qE '^\s*- \{ target: aarch64-apple-darwin, .*required: true \}' "$wf" \
-  && grep -qE '^\s*- \{ target: x86_64-unknown-linux-gnu, .*required: false \}' "$wf" \
+  && grep -qE '^\s*- \{ target: x86_64-unknown-linux-gnu, .*required: true \}' "$wf" \
   && grep -qE '^\s*- \{ target: x86_64-pc-windows-msvc, .*required: false \}' "$wf" \
   && ! grep -q 'x86_64-apple-darwin' "$wf" \
   && grep -qF 'continue-on-error: ${{ !matrix.required }}' "$wf" \
@@ -101,6 +106,34 @@ vrep="$(grep -oE 'reports/rounds/[^/` ]+/VERIFICATION\.md' <<<"$step1" | head -1
 verdict=""
 if [ -n "$vrep" ] && [ -f "$vrep" ]; then
   verdict="$(grep -oE '^\*\*Hüküm: [^*]+\*\*' "$vrep" | tail -1 | sed -E 's/^\*\*Hüküm: //; s/\.?\*\*$//' || true)"
+fi
+# (P2-L/F1; 0.2.0) the verdict of a report under a `## Hüküm` heading (its
+# first bold line), and a verdict "Şu koşullarla güvenilir" whose
+# conditions a decision closed: step 1 names each report with the decision
+# — "`reports/rounds/<r>/VERIFICATION.md` (koşulu K-… kapattı)" — and that
+# decision's entry in docs/DECISIONS.md cites the report. Every report step
+# 1 names must pass; the verdict is then "Güvenilir".
+verdict_of() { # verdict_of <report> → its verdict, either form
+  local v
+  v="$(grep -oE '^\*\*Hüküm: [^*]+\*\*' "$1" | tail -1 | sed -E 's/^\*\*Hüküm: //; s/\.?\*\*$//' || true)"
+  [ -n "$v" ] || v="$(sed -n '/^## Hüküm/,/^## /p' "$1" | grep -oE '^\*\*[^*]+\*\*' | head -1 | sed -E 's/^\*\*//; s/\.?\*\*$//' || true)"
+  printf '%s' "$v"
+}
+grep -oE 'reports/rounds/[^/` ]+/VERIFICATION\.md`?( \(koşulu K-[A-Za-z0-9.-]+ kapattı\))?' <<<"$step1" >"${TMPDIR:-/tmp}/rootmark-r16.$$" || true
+named="$(cat "${TMPDIR:-/tmp}/rootmark-r16.$$")"; rm -f "${TMPDIR:-/tmp}/rootmark-r16.$$"
+if [ -n "$named" ]; then
+  verdict="Güvenilir"; vrep="$(grep -oE 'reports/rounds/[^/` ]+/VERIFICATION\.md' <<<"$named" | tr '\n' ' ' | sed 's/ $//')"
+  while IFS= read -r line; do
+    r="$(grep -oE 'reports/rounds/[^/` ]+/VERIFICATION\.md' <<<"$line")"
+    k="$(grep -oE 'K-[A-Za-z0-9.-]+' <<<"$line" || true)"
+    v=""; [ -f "$r" ] && v="$(verdict_of "$r")"
+    if [ "$v" = "Güvenilir" ]; then continue; fi
+    if [ "$v" = "Şu koşullarla güvenilir" ] && [ -n "$k" ] \
+      && grep -E "^- \*\*$k · " docs/DECISIONS.md >"${TMPDIR:-/tmp}/rootmark-r16k.$$" 2>/dev/null \
+      && grep -qF "$r" "${TMPDIR:-/tmp}/rootmark-r16k.$$"; then rm -f "${TMPDIR:-/tmp}/rootmark-r16k.$$"; continue; fi
+    rm -f "${TMPDIR:-/tmp}/rootmark-r16k.$$"
+    verdict="$r: ${v:-no verdict}${k:+, $k does not close it}"; break
+  done <<<"$named"
 fi
 # R14: the tag is a human step (RELEASE.md step 4): absent, or set after
 # that verification said "Güvenilir" and not by the active round (the tag's
