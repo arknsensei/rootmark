@@ -4,7 +4,6 @@
 //! longer through a second process; K-C6.1). Every command returns JSON; a
 //! failure is an `Err`.
 
-use crate::embed::Embedder;
 use crate::models;
 use crate::search::{Mode, Searcher};
 use crate::store::{self, Store};
@@ -54,9 +53,10 @@ pub enum IndexCmd {
     /// snapshots; the hot tier is dropped)
     Build {
         vault: PathBuf,
-        /// the embedder (only one exists: minilm-l6-v2)
-        #[arg(long, default_value = "minilm-l6-v2")]
-        embedder: String,
+        /// the embedder: the vault's `[index] embedder` (default
+        /// minilm-l6-v2); given, it must be that one (P2-L/L2)
+        #[arg(long)]
+        embedder: Option<String>,
     },
     /// Cold and hot record counts; documents whose head is not indexed
     Status { vault: PathBuf },
@@ -76,18 +76,30 @@ pub enum IndexCmd {
 #[derive(Subcommand)]
 pub enum ModelsCmd {
     /// Check every model file against the manifest (size, blake3)
-    Verify,
+    Verify {
+        /// the model (P2-L/L2): minilm-l6-v2 (default) or
+        /// multilingual-minilm-l12-v2
+        #[arg(long, default_value = crate::config::EMBEDDER_DEFAULT)]
+        embedder: String,
+    },
 }
 
-fn embedder(name: &str) -> Result<OnnxMiniLm> {
-    let e = OnnxMiniLm::load_default()?;
-    if !e.id().starts_with(&format!("{name}/")) {
-        bail!(
-            "unknown embedder {name:?} (the only embedder is {})",
-            e.id()
-        );
+/// The vault's embedder (`[index] embedder`, P2-L/L2); a name given on the
+/// command line must be that one.
+fn embedder(vault: &std::path::Path, name: Option<&str>) -> Result<OnnxMiniLm> {
+    let want = crate::config::IndexConfig::of_vault(vault)?.embedder;
+    if let Some(n) = name {
+        if !crate::config::EMBEDDERS.contains(&n) {
+            bail!(
+                "unknown embedder {n:?} (one of {:?})",
+                crate::config::EMBEDDERS
+            );
+        }
+        if n != want {
+            bail!("--embedder {n:?}: the vault's [index] embedder is {want:?} (set it in .rootmark/policy.toml)");
+        }
     }
-    Ok(e)
+    OnnxMiniLm::load_named(&want)
 }
 
 /// `<vault>/<doc>` for a vault-relative `/`-separated document path.
@@ -119,16 +131,16 @@ pub fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<serde_json::Valu
             embedder: name,
         }) => {
             let v = Vault::open(&vault)?;
-            serde_json::to_value(store::build(&v, &embedder(&name)?)?)?
+            serde_json::to_value(store::build(&v, &embedder(&vault, name.as_deref())?)?)?
         }
         Cmd::Index(IndexCmd::Status { vault }) => {
             let v = Vault::open(&vault)?;
-            let s = Store::open(&v, &embedder("minilm-l6-v2")?)?;
+            let s = Store::open(&v, &embedder(&vault, None)?)?;
             serde_json::to_value(s.status(&v)?)?
         }
         Cmd::Index(IndexCmd::Compact { vault }) => {
             let v = Vault::open(&vault)?;
-            serde_json::to_value(store::compact(&v, &embedder("minilm-l6-v2")?)?)?
+            serde_json::to_value(store::compact(&v, &embedder(&vault, None)?)?)?
         }
         Cmd::Index(IndexCmd::Watch {
             vault,
@@ -137,7 +149,7 @@ pub fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<serde_json::Valu
             source,
         }) => {
             let mut v = Vault::open(&vault)?;
-            let e = embedder("minilm-l6-v2")?;
+            let e = embedder(&vault, None)?;
             let mut s = Store::open(&v, &e)?;
             let p = doc_file(&vault, &doc)?;
             let text =
@@ -164,7 +176,7 @@ pub fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<serde_json::Valu
             // before the vault is opened: an empty query touches nothing (K-C1.5)
             crate::search::check_query(&query)?;
             let mut v = Vault::open(&vault)?;
-            let e = embedder("minilm-l6-v2")?;
+            let e = embedder(&vault, None)?;
             let s = Store::open(&v, &e)?;
             let mut se = Searcher::new(&s, &e, &consumer)?;
             serde_json::to_value(se.search(
@@ -176,9 +188,9 @@ pub fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<serde_json::Valu
                 include_proposal,
             )?)?
         }
-        Cmd::Models(ModelsCmd::Verify) => {
+        Cmd::Models(ModelsCmd::Verify { embedder }) => {
             let root = models::models_root();
-            let m = models::verify(&root)?;
+            let m = models::verify_named(&root, &embedder)?;
             json!({
                 "ok": true,
                 "root": root.display().to_string(),

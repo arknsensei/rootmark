@@ -56,10 +56,12 @@ jobs:
         with:
           path: |
             models/minilm-l6-v2
+            models/multilingual-minilm-l12-v2
             ~/.cache/ort.pyke.io
             ~/Library/Caches/ort.pyke.io
-          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST.json', 'Cargo.lock') }}
-      - run: make models
+          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST*.json', 'Cargo.lock') }}
+      # P2-L/L2: the multilingual embedder option's tests need its model too
+      - run: make models models-multilingual
       - run: make test
       - run: make lint
       - run: make conformance
@@ -83,10 +85,12 @@ jobs:
         with:
           path: |
             models/minilm-l6-v2
+            models/multilingual-minilm-l12-v2
             ~/.cache/ort.pyke.io
             ~/Library/Caches/ort.pyke.io
-          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST.json', 'Cargo.lock') }}
-      - run: make models
+          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST*.json', 'Cargo.lock') }}
+      # P2-L/L2: the multilingual embedder option's tests need its model too
+      - run: make models models-multilingual
       - run: make test
       - run: make lint
       - run: make conformance

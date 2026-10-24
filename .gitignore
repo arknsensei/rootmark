@@ -45,6 +45,8 @@ node_modules/
 # embedder model files (scripts/fetch_model.sh; pinned by models/MANIFEST.json)
 /models/*
 !/models/MANIFEST.json
+# P2-L/L2: further pinned models (`[index] embedder`), one manifest each
+!/models/MANIFEST.*.json
 dist/
 # P2-0 D-E: vaults written by rootmark 0.1.0 (scripts/gen_p2_0_old_vaults.sh)
 !/research/data/p2_0_old_vaults/

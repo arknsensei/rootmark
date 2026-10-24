@@ -319,6 +319,17 @@ models:
 	bash scripts/fetch_model.sh
 	cargo run -q --release -p rootmark-index --bin rootmark-index -- models verify
 
+# P2-L/L-10: the C3 cases' expected outputs with the `uni_fold_tr` variant
+# (spec/fixtures_variants/uni_fold_tr/), from the current implementation
+fixtures-variants:
+	cargo test -p rootmark-index --release -q --test p2_l_conformance -- --ignored --nocapture
+
+# P2-L/L2: the multilingual embedder option (`[index] embedder =
+# "multilingual-minilm-l12-v2"`; models/MANIFEST.multilingual-minilm-l12-v2.json)
+models-multilingual:
+	bash scripts/fetch_model.sh . MANIFEST.multilingual-minilm-l12-v2.json
+	cargo run -q --release -p rootmark-index --bin rootmark-index -- models verify --embedder multilingual-minilm-l12-v2
+
 # P1-C C-3 (TASKS C8): D3 copy → checkpoint → index build → D4 test split,
 # hybrid and flat (structural, k 10) vs the v2-final hybrid cells; writes
 # c3_quality.json into the RUN (needs `make models`, `make d3`).

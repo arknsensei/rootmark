@@ -337,7 +337,8 @@ pub struct Kernel {
     matcher: Option<MatcherVersion>,
     queue: Arc<Queue>,
     /// loaded on first use, then shared (ONNX session behind a mutex)
-    embedder: Mutex<Option<Arc<OnnxMiniLm>>>,
+    /// the vault's `[index] embedder` (P2-L/L2), loaded once per name
+    embedder: Mutex<Option<(String, Arc<OnnxMiniLm>)>>,
     /// attestation sessions and window (spec 2.0.0 §7.1), in memory
     attesting: Attesting,
     /// `rootmark serve --attest-log` (P2-A/A0 c): diagnostic lines outside
@@ -555,10 +556,11 @@ impl Kernel {
             .embedder
             .lock()
             .map_err(|_| anyhow::anyhow!("embedder lock poisoned"))?;
-        if e.is_none() {
-            *e = Some(Arc::new(OnnxMiniLm::load_default()?));
+        let name = rootmarkindex::config::IndexConfig::of_vault(&self.vault)?.embedder;
+        if e.as_ref().is_none_or(|(n, _)| *n != name) {
+            *e = Some((name.clone(), Arc::new(OnnxMiniLm::load_named(&name)?)));
         }
-        Ok(e.as_ref().expect("set above").clone())
+        Ok(e.as_ref().expect("set above").1.clone())
     }
 
     fn matcher_for(&self, v: &Vault) -> MatcherVersion {
