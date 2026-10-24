@@ -1,0 +1,49 @@
+{
+ "dataset": "wikimedia/wikipedia",
+ "docs": 400,
+ "docs_blake3": "f8af37cb6e11c17163946caa5d094fa36f83c16d7a0de6e8a4fe11f1156a7f06",
+ "generator": {
+  "file": "research/eval/datasets/d_tr.py",
+  "sha256": "788a3fc3055235e0ebd54a4953149c99a4771f20e3f2240fac242a4a9f8c0aeb"
+ },
+ "langs": {
+  "en": 56,
+  "tr": 744
+ },
+ "license": "CC BY-SA 3.0 and GFDL (Wikipedia; attribution by url)",
+ "queries": 800,
+ "queries_blake3": "675c46b91134ba6217fc18833d744bc5a9992555256fe807da1f26acb63d9a78",
+ "revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+ "round": "P2-L",
+ "rules": {
+  "k_chunks": 50,
+  "lead_chars": 1200,
+  "lead_max_paragraphs": 6,
+  "min_chars": 2000,
+  "min_paragraphs": 4,
+  "min_sentence_words": 8,
+  "n_mix": 100,
+  "n_tr": 300,
+  "window_words": [
+   4,
+   7
+  ]
+ },
+ "seed": 3775637042,
+ "seed_text": "P2-L/D-TR",
+ "set": "D-TR",
+ "shards": {
+  "en": {
+   "file": "20231101.en/train-00000-of-00041.parquet",
+   "sha256": "382e7f6f09e488b24793a7f7cfc659879d5a22da2cf2efec6491665f0c019677"
+  },
+  "tr": {
+   "file": "20231101.tr/train-00000-of-00002.parquet",
+   "sha256": "6994014607c0920f049ff62c3ea03bfaa218848fa31fa331b6ad1e17ef8f393a"
+  }
+ },
+ "types": {
+  "sentence": 400,
+  "title": 400
+ }
+}
