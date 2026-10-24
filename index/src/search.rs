@@ -632,7 +632,7 @@ impl<'a> Searcher<'a> {
 
     /// `search` with a path filter (P2-L/L3): applied before the ranking;
     /// the trace's `query_hash` is `query_hash_filtered`, and the filter is
-    /// recorded beside the trace (`Vault::record_trace_filter`).
+    /// recorded beside the trace, before it (`Vault::record_trace_filtered`).
     #[allow(clippy::too_many_arguments)]
     pub fn search_filtered(
         &mut self,
@@ -695,10 +695,14 @@ impl<'a> Searcher<'a> {
             })
             .collect();
         let qh = query_hash_filtered(query, filter);
-        let trace = vault.record_trace(&cp.checkpoint_id, &self.consumer, &qh, returned)?;
-        if let Some(f) = filter {
-            vault.record_trace_filter(&trace, &f.to_json())?;
-        }
+        let fj = filter.map(PathFilter::to_json);
+        let trace = vault.record_trace_filtered(
+            &cp.checkpoint_id,
+            &self.consumer,
+            &qh,
+            returned,
+            fj.as_ref(),
+        )?;
         Ok(SearchResult {
             checkpoint_id: cp.checkpoint_id,
             mode,

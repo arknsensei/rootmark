@@ -119,8 +119,8 @@ verdict_of() { # verdict_of <report> → its verdict, either form
   [ -n "$v" ] || v="$(sed -n '/^## Hüküm/,/^## /p' "$1" | grep -oE '^\*\*[^*]+\*\*' | head -1 | sed -E 's/^\*\*//; s/\.?\*\*$//' || true)"
   printf '%s' "$v"
 }
-grep -oE 'reports/rounds/[^/` ]+/VERIFICATION\.md`?( \(koşulu K-[A-Za-z0-9.-]+ kapattı\))?' <<<"$step1" >"${TMPDIR:-/tmp}/rootmark-r16.$$" || true
-named="$(cat "${TMPDIR:-/tmp}/rootmark-r16.$$")"; rm -f "${TMPDIR:-/tmp}/rootmark-r16.$$"
+grep -oE 'reports/rounds/[^/` ]+/VERIFICATION\.md`?( \(koşulu K-[A-Za-z0-9.-]+ kapattı\))?' <<<"$step1" >"$tmp/r16" || true
+named="$(cat "$tmp/r16")"; rm -f "$tmp/r16"
 if [ -n "$named" ]; then
   verdict="Güvenilir"; vrep="$(grep -oE 'reports/rounds/[^/` ]+/VERIFICATION\.md' <<<"$named" | tr '\n' ' ' | sed 's/ $//')"
   while IFS= read -r line; do
@@ -129,9 +129,9 @@ if [ -n "$named" ]; then
     v=""; [ -f "$r" ] && v="$(verdict_of "$r")"
     if [ "$v" = "Güvenilir" ]; then continue; fi
     if [ "$v" = "Şu koşullarla güvenilir" ] && [ -n "$k" ] \
-      && grep -E "^- \*\*$k · " docs/DECISIONS.md >"${TMPDIR:-/tmp}/rootmark-r16k.$$" 2>/dev/null \
-      && grep -qF "$r" "${TMPDIR:-/tmp}/rootmark-r16k.$$"; then rm -f "${TMPDIR:-/tmp}/rootmark-r16k.$$"; continue; fi
-    rm -f "${TMPDIR:-/tmp}/rootmark-r16k.$$"
+      && grep -E "^- \*\*$k · " docs/DECISIONS.md >"$tmp/r16k" 2>/dev/null \
+      && grep -qF "$r" "$tmp/r16k"; then rm -f "$tmp/r16k"; continue; fi
+    rm -f "$tmp/r16k"
     verdict="$r: ${v:-no verdict}${k:+, $k does not close it}"; break
   done <<<"$named"
 fi

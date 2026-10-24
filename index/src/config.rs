@@ -14,13 +14,41 @@ use crate::tokenize::Variant;
 use anyhow::{bail, Result};
 use std::path::Path;
 
-/// The conformance knob of the lexical variant (P2-L/L1, L-10): consulted
-/// only when the recipe names no `[index] tokenizer`, so that the frozen C3
-/// evaluator (whose scratch vaults have no recipe) can run its cases with
-/// `uni_fold_tr` (`index/tests/p2_l_conformance.rs`). The index manifest
-/// records the variant used, and a vault is opened against the same rule,
-/// so the knob never mixes variants silently; an unknown value is an error.
-pub const DEFAULT_TOKENIZER_ENV: &str = "ROOTMARK_DEFAULT_TOKENIZER";
+/// The conformance default of the lexical variant (P2-L/L1, L-10; P2-P/P0
+/// a1): consulted only when the recipe names no `[index] tokenizer`, so that
+/// the frozen C3 evaluator (whose scratch vaults have no recipe) can run its
+/// cases with `uni_fold_tr` (`index/tests/p2_l_conformance.rs`). It is set
+/// only through `set_conformance_default_tokenizer`, a library call: no
+/// environment variable or setting of a released binary reaches it (P2-L
+/// review finding (a); until P2-P it was `ROOTMARK_DEFAULT_TOKENIZER`). The
+/// index manifest records the variant used, and a vault is opened against
+/// the same rule, so it never mixes variants silently.
+static CONFORMANCE_DEFAULT: std::sync::Mutex<Option<Variant>> = std::sync::Mutex::new(None);
+
+/// Sets (`Some(name)`) or clears (`None`) the conformance default of the
+/// lexical variant for this process; an unknown name is an error and
+/// changes nothing. For conformance tests only.
+#[doc(hidden)]
+pub fn set_conformance_default_tokenizer(name: Option<&str>) -> Result<()> {
+    let v = match name {
+        Some(n) => Some(Variant::of_name(n).ok_or_else(|| {
+            anyhow::anyhow!(
+                "conformance tokenizer {n:?}: one of \"mdk_lower_alnum\", \"uni_fold_tr\""
+            )
+        })?),
+        None => None,
+    };
+    *CONFORMANCE_DEFAULT
+        .lock()
+        .map_err(|_| anyhow::anyhow!("conformance tokenizer: poisoned lock"))? = v;
+    Ok(())
+}
+
+fn conformance_default() -> Result<Option<Variant>> {
+    Ok(*CONFORMANCE_DEFAULT
+        .lock()
+        .map_err(|_| anyhow::anyhow!("conformance tokenizer: poisoned lock"))?)
+}
 
 /// `[index] embedder`: the default model.
 pub const EMBEDDER_DEFAULT: &str = "minilm-l6-v2";
@@ -49,11 +77,8 @@ impl IndexConfig {
     pub fn of_table(t: Option<&toml::Table>) -> Result<IndexConfig> {
         let mut c = IndexConfig::default();
         if t.is_none_or(|t| !t.contains_key("tokenizer")) {
-            if let Some(v) = std::env::var_os(DEFAULT_TOKENIZER_ENV) {
-                let name = v.to_string_lossy();
-                c.tokenizer = Variant::of_name(&name).ok_or_else(|| {
-                    anyhow::anyhow!("{DEFAULT_TOKENIZER_ENV}={name:?}: one of \"mdk_lower_alnum\", \"uni_fold_tr\"")
-                })?;
+            if let Some(v) = conformance_default()? {
+                c.tokenizer = v;
             }
         }
         let Some(t) = t else {
