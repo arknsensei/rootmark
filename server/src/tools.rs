@@ -164,7 +164,12 @@ pub fn specs() -> Vec<ToolSpec> {
                 with a heading\"; `replace_section` is allowed only on a section made of \
                 proposals. Change and delete events name the actor (spec §4.3). Nothing but the \
                 agent's text is written to the file (no ids, no metadata). `reason` is recorded \
-                beside the vault (`.rootmark/proposals.jsonl`). \
+                beside the vault (`.rootmark/proposals.jsonl`). Promotion rules (P2-P): when the \
+                vault's `[[promotion.rules]]` name this agent (and source) and the path lies \
+                under a rule's `path_prefix`, the first such rule promotes the lineages this \
+                call wrote to `canonical` at once — one `Promoted` event each (actor \
+                policy:<rule>, reason \"rule:<rule>\"), returned in `promoted` and counted in \
+                `events`; a human can demote them. \
                 The path must stay inside the vault (no `..`, no absolute path, no hidden \
                 directory) and the text may not exceed the server's `max_propose_bytes`.",
             input_schema: object_schema(
@@ -191,7 +196,9 @@ pub fn specs() -> Vec<ToolSpec> {
                 HTTP the vault's human human:<[identity] human_id>. Under `human_only` (the \
                 default) an agent's request is denied: the answer is `decision: denied` with the \
                 policy and its reason, not an error, and no event is written; a human's request \
-                writes a `Promoted` event (`decision: promoted`). `deny` refuses everyone.",
+                writes a `Promoted` event (`decision: promoted`). `deny` refuses everyone. \
+                This governs manual promotion only; the vault's declarative rules \
+                (`[[promotion.rules]]`) promote in `propose`, never here.",
             input_schema: object_schema(
                 json!({
                     "lineage_id": {"type": "string", "minLength": 1,
@@ -1875,6 +1882,19 @@ impl Kernel {
                 edit.name()
             );
         }
+        // P2-P/P1: the lineages this call writes — their version is new in
+        // it (a moved block keeps its version) — for the promotion rules
+        let before: std::collections::HashSet<&str> = plan
+            .blocks_before
+            .iter()
+            .map(|b| b.version_id.as_str())
+            .collect();
+        let wrote: Vec<String> = plan
+            .blocks_after
+            .iter()
+            .filter(|b| !before.contains(b.version_id.as_str()))
+            .map(|b| b.lineage_id.clone())
+            .collect();
         // write: directories this call creates are remembered (and removed
         // again if the ingest fails); the file goes through a fresh hidden
         // temporary file (never a symbolic link) and a rename
@@ -1957,8 +1977,33 @@ impl Kernel {
                     rp.display()
                 )
             })?;
+        // P2-P/P1: the declarative promotion rules, after the call's
+        // `SnapshotCommitted` and only here (crate::rules); the first rule
+        // covering the call promotes each lineage it wrote that is a live
+        // proposal, one `Promoted` per lineage, in lineage-id order
+        let promoted = match crate::rules::first_match(
+            &policy.promotion_rules,
+            actor,
+            source,
+            &x.doc_path,
+        ) {
+            Some(rule) => {
+                let version = policy
+                    .promotion_version
+                    .as_deref()
+                    .context("rules without [promotion] version")?;
+                crate::rules::promote_written(&mut v, rule, version, &x.doc_path, wrote)
+                    .with_context(|| {
+                        format!(
+                            "propose: {} was written and ingested (snapshot {snapshot_id}), but its promotion by rule {} failed",
+                            x.doc_path, rule.id
+                        )
+                    })?
+            }
+            None => Vec::new(),
+        };
         let blocks = v.blame(&x.doc_path, None)?;
-        Ok(json!({
+        let mut out = json!({
             "doc_path": x.doc_path,
             "mode": mode.as_str(),
             "bytes": new.len(),
@@ -1966,11 +2011,16 @@ impl Kernel {
             "edit_policy": edit.name(),
             "actor": actor,
             "snapshot_id": snapshot_id,
-            "events": events,
+            "events": events + promoted.len(),
             "chunks_embedded": embedded,
             "blocks": blocks,
             "events_hash": v.events_hash()?,
-        }))
+        });
+        // only when a rule promoted (a vault without rules answers as before)
+        if !promoted.is_empty() {
+            out["promoted"] = serde_json::to_value(&promoted)?;
+        }
+        Ok(out)
     }
 
     fn status(&self) -> Result<Value> {

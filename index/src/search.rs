@@ -379,11 +379,10 @@ pub struct PathFilter {
 }
 
 pub const MAX_PREFIXES: usize = 64;
-pub const MAX_PREFIX_BYTES: usize = 1024;
+pub const MAX_PREFIX_BYTES: usize = rootmarkcore::pathprefix::MAX_PREFIX_BYTES;
 
 impl PathFilter {
     pub fn new(raw: &[String]) -> Result<PathFilter> {
-        use unicode_normalization::UnicodeNormalization;
         if raw.is_empty() {
             bail!("path_prefix: no prefix (omit it to search every document)");
         }
@@ -395,27 +394,8 @@ impl PathFilter {
         }
         let mut out = Vec::with_capacity(raw.len());
         for r in raw {
-            let p: String = r.nfc().collect();
-            let p = p.strip_suffix('/').unwrap_or(&p).to_string();
-            if p.is_empty() {
-                bail!("path_prefix {r:?}: empty");
-            }
-            if p.len() > MAX_PREFIX_BYTES {
-                bail!(
-                    "path_prefix: a prefix of {} bytes (at most {MAX_PREFIX_BYTES})",
-                    p.len()
-                );
-            }
-            if p.starts_with('/') || p.contains('\\') || p.chars().nth(1) == Some(':') {
-                bail!("path_prefix {r:?}: not a vault-relative path ('/' separated, not absolute)");
-            }
-            if p.chars().any(char::is_control) {
-                bail!("path_prefix {r:?}: a control character");
-            }
-            if p.split('/').any(|c| c.is_empty() || c == "." || c == "..") {
-                bail!("path_prefix {r:?}: an empty, '.' or '..' component");
-            }
-            out.push(p);
+            // one rule with the promotion rules' prefixes (P2-P/P1)
+            out.push(rootmarkcore::pathprefix::normalize(r)?);
         }
         out.sort();
         out.dedup();
@@ -427,12 +407,9 @@ impl PathFilter {
     }
 
     pub fn matches(&self, doc_path: &str) -> bool {
-        self.prefixes.iter().any(|p| {
-            doc_path == p
-                || (doc_path.len() > p.len()
-                    && doc_path.starts_with(p.as_str())
-                    && doc_path.as_bytes()[p.len()] == b'/')
-        })
+        self.prefixes
+            .iter()
+            .any(|p| rootmarkcore::pathprefix::matches(p, doc_path))
     }
 
     /// The filter as the trace and the query hash carry it:

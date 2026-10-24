@@ -40,6 +40,20 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
 - **İstemci kuralı:** insan yazımı bir bölümün sonuna eklenen metin o bölümün chunk'ına katılır ve reddedilir. Eklenecek metin kendi başlığıyla başlamalıdır (`## Öneri: …`; §4.1 ajan yönergesi). Başlıksız böyle bir `append` `policy_violation` (422) ve `hint` ile döner (K-E0.4); başlıkla başlayan ama yine canonical içeriğe dokunan yazım `denied`'dır. Yalnız proposal bloklardan oluşan bölüm (ajanın kendi önerisi) `replace_section` ile düzeltilebilir.
 - `[edit] policy = "unrestricted"` yalnız açıkça yazılırsa her yazıma izin verir. O zaman da silme ve değiştirme olayları aktörü taşır.
 - Sunucunun dışında yapılmış, henüz alınmamış bir düzenleme varsa, politika kararından önce insan yazımı olarak alınır (`synced_external_events`). Ret durumunda da insanın yazdığı olarak `events.jsonl`'de kalır. Bu olaylar ajanın değil, insanındır.
+- **Bildirimsel terfi kuralları (P2-P/P1, K-Q.1 (2)).** `policy.toml`'un `[promotion]` tablosu isteğe bağlı bir kural listesi taşıyabilir:
+  ```toml
+  [promotion]
+  policy = "human_only"          # elle terfi için aynen
+  version = "2026-10-25"         # kurallar varsa zorunlu, boş olmayan dize
+  [[promotion.rules]]
+  id = "official"                # [a-z0-9_-]{1,64}, tekil
+  actor = "agent:collector"      # tam eşleşme; yalnız agent:<id>
+  source = "collector"           # isteğe bağlı; propose'un köken source'u, tam eşleşme
+  path_prefix = "sources/official/"  # vault-göreli; search.path_prefix'in kuralı (NFC, sondaki '/' atılır; '..', mutlak yol, boş önek reddedilir)
+  to = "canonical"               # tek değer
+  ```
+  Kural eşleyici **yalnız `propose`'ta** (MCP, HTTP, `rootmark propose`) ve çağrının `SnapshotCommitted`'ından sonra koşar: çağrının yazdığı (sürümü bu çağrıda yeni olan) ve canlı, budanmamış `proposal` olan her soy, soy kimliği sırasıyla, çağrıyı kapsayan **ilk** kurala (tarifteki sıra) göre tek bir `Promoted` olayı alır: `meta.actor = {kind: "policy", id: "<kural>"}`, `meta.reason = "rule:<kural>"`, `meta.policy = "rules"`, `meta.policy_version` = `[promotion] version`, `meta.from = "proposal"`, `meta.to = "canonical"`. Yanıtın `events` sayısı bu olayları da sayar ve yanıt onları `promoted` (olay dizisi) alanında taşır; kural terfi ettirmediyse `promoted` alanı yoktur (kuralsız tarifin yanıtı ve `events_hash`'i değişmez). İzleyicinin aldığı dış değişiklikler (tasdikli ya da tasdiksiz), geç tasdik ve elle `promote` kural eşleyiciyi çalıştırmaz: `unverified` içerik ve tasdiksiz dosya yazımı hiçbir kuralla terfi etmez. İnsanın (HTTP) `propose`'u eşleşmez (kural yalnız `agent:<id>`). Edit politikasının reddettiği yazım (`denied`, `policy_violation`) hiçbir şey yazmadığı için terfi de etmez. Geri alma: insan `demote` ile (§2.4).
+  Yükleme hataları (alanı adlandırır): `actor` `agent:<id>` değil (`human:…`, `policy:…`, `unattested_fs`), `to` `canonical` değil, `id` biçimi ya da çakışması, kurallar varken `version` eksik ya da boş, geçersiz `path_prefix`, bilinmeyen alan. Hatalı tarifle `rootmark serve` başlamaz ve her araç `policy_violation` döner; `rootmark policy lint <vault>` tarifi `serve`'ün yüklediği gibi yükler, kuralları (normalize edilmiş) listeler, hatada çıkış 1. Kuralları olan tarifin `status.policy`'si `promotion_rules {version, rules}` taşır (kuralsız tarifte alan yoktur).
 
 ### 2.2 `search` ve `include_proposal` (spec §9, K-C1.3, K-D1.8)
 - Varsayılan yanıtta yalnız `canonical` sonuçlar vardır, `derived` hiçbir zaman dönmez.
@@ -69,6 +83,7 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
 - HTTP'den gelen istek (`human_id` ayarlı), `human_only` altında → `decision: "promoted"` ve bir `Promoted` olayı (`meta.actor {kind: human, id}`).
 - Politikanın izin verdiği bir istek `proposal` ya da `unverified` olmayan, veya budanmış bir soy içinse → `invalid_arguments` (HTTP 400). `unverified` bir soyun terfisi `Promoted` olayında `meta.from = "unverified"` taşır (spec 2.0.0 §7).
 - Bir chunk, bloklarının en düşük katmanını alır. Bir belgeyi aramada görünür kılmak için chunk'ın bütün soyları terfi ettirilir.
+- **Kuralla terfi (P2-P/P1).** `[promotion] policy` (`human_only`/`deny`) yalnız elle terfiyi (bu araç) yönetir; bildirimsel kuralların terfisi `propose`'ta olur (§2.1). Kuralla terfi eden bir soyun `Promoted` olayı kuralı taşır (`meta.actor {kind: policy, id: <kural>}`, `meta.reason "rule:<kural>"`, `meta.policy "rules"`, `meta.policy_version`); `history` onu gösterir (yeni alan yok). Çekirdeğin okuma kuralı: `policy` aktörlü bir `Promoted`'ın `reason`'ı `rule:<kural>` biçimindedir ve `policy_version`'ı boş değildir; aksi vault açılırken reddedilir.
 
 ### 2.5 Yanıtların istemcinin dayandığı iç alanları (P1-E/E1)
 §2 tablosunun ana alanlarının iç yapısı. Bunlar P1-D.1'in davranışıdır (yeni bir şey değil); istemci yalnız buradakilere dayanır ve her yanıtta denetler (eksik ya da yanlış tipte alan → istemcide `bad_response`, sessiz kabul yok). Burada yazmayan alanlar gelebilir; istemci onlara dayanmaz.

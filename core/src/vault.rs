@@ -275,6 +275,26 @@ fn check_builtin_policy(ev: &Event, m: &TransitionMeta) -> Result<()> {
     }
 }
 
+/// The reference implementation's reading rule of a policy's promotion
+/// (P2-P/P1, declarative promotion rules): a `Promoted` whose actor is a
+/// `policy` carries the rule that allowed it — `meta.reason` starts with
+/// `rule:` followed by the rule id — and a non-empty `policy_version`
+/// (`transition_meta` requires it). Checked on write and on replay; the
+/// kernel decides nothing, it only refuses an event of another shape.
+fn check_policy_promotion(ev: &Event, m: &TransitionMeta) -> Result<()> {
+    if ev.kind == EventKind::Promoted && m.actor.kind == ActorKind::Policy {
+        let rule = m.reason.strip_prefix("rule:").unwrap_or_default();
+        if rule.trim().is_empty() {
+            bail!(
+                "event seq {}: a Promoted by a policy actor names its rule: meta.reason \"rule:<id>\", not {:?}",
+                ev.seq,
+                m.reason
+            );
+        }
+    }
+    Ok(())
+}
+
 pub fn transition_meta(ev: &Event) -> Result<TransitionMeta> {
     let req = |k: &str| -> Result<String> {
         let s = meta_str(ev, k)
@@ -591,6 +611,7 @@ pub fn apply_event(st: &mut DocState, ev: &Event) -> Result<()> {
             }
             let m = transition_meta(ev)?;
             check_builtin_policy(ev, &m)?;
+            check_policy_promotion(ev, &m)?;
             let cur = st.layer_of(l, ev)?;
             check_transition(ev.kind, &m, cur, st.inactive.contains(l))
                 .with_context(|| format!("event seq {}: {l}", ev.seq))?;
@@ -1987,6 +2008,8 @@ impl Vault {
                 policy.version()
             ),
         }
+        // what the hook allowed is still read back by replay's rule
+        check_policy_promotion(&ev, &transition_meta(&ev)?)?;
         let mut out = self.commit_inner(&[], vec![ev])?;
         Ok(out.remove(0))
     }

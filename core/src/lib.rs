@@ -12,6 +12,7 @@ pub mod meta;
 pub mod model;
 pub mod normalize;
 pub mod parse;
+pub mod pathprefix;
 pub mod policy;
 pub mod store;
 pub mod vault;
@@ -35,7 +36,9 @@ pub use model::{
 };
 pub use normalize::normalize;
 pub use parse::parse_document;
-pub use policy::{Attestation as AttestationPolicy, Edit, Policy, PolicySource, Promotion};
+pub use policy::{
+    Attestation as AttestationPolicy, Edit, Policy, PolicySource, Promotion, PromotionRule,
+};
 pub use store::BlockObject;
 pub use vault::{
     snapshot_id, BlameLine, Carried, IngestPlan, IngestResult, ReadBlock, Snapshot, Vault,

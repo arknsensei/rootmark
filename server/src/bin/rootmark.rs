@@ -292,6 +292,10 @@ enum JournalCmd {
 enum PolicyCmd {
     /// Load and print the recipe (an invalid recipe is an error)
     Show { vault: PathBuf },
+    /// Check the recipe as `rootmark serve` loads it — the kernel's fields,
+    /// the server's tables, the promotion rules (P2-P/P1) — and list the
+    /// rules; exit 1 with the field named on any error
+    Lint { vault: PathBuf },
 }
 
 fn ingest_one(v: &mut Vault, doc: &str, path: &Path, m: MatcherVersion) -> Result<Value> {
@@ -619,6 +623,18 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             }
         },
         Cmd::Policy(PolicyCmd::Show { vault }) => Policy::load(&vault)?.to_json(),
+        Cmd::Policy(PolicyCmd::Lint { vault }) => {
+            let p = Policy::load(&vault)?;
+            rootmarkserver::config::ServerConfig::from_policy(&p)
+                .with_context(|| format!("policy {} rejected", Policy::path(&vault).display()))?;
+            json!({
+                "ok": true,
+                "source": p.to_json()["source"],
+                "promotion": p.promotion.hook().name(),
+                "promotion_version": p.promotion_version,
+                "rules": p.promotion_rules,
+            })
+        }
     })
 }
 
