@@ -774,7 +774,8 @@ p2l-quality: require-run models-multilingual
 P2P_TESTS := --tests P0=rootmark-server:p2_p_p0,rootmark-index:p2_l_conformance \
   --tests P-2/P-3=rootmark-server:p2_p_rules \
   --tests P-4/P-5=rootmark-server:promotion_rules \
-  --tests P-7=rootmark-server:p2_p_channel
+  --tests P-7=rootmark-server:p2_p_channel \
+  --tests P-3/P-6=rootmark-server:scene_collector
 p2p-checks: require-run
 	$(PY) -m eval.run_p2p_checks --run $(RUN) $(P2P_TESTS)
 

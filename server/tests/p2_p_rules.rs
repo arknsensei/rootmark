@@ -408,3 +408,40 @@ fn status_shows_the_rules() {
     );
     let _ = Path::new("");
 }
+
+/// The agent's name is its identity, not its version (P2-P/P4, ASSUMPTIONS
+/// P4-1): `agent:collector` covers the CLI's `agent:collector` and an MCP
+/// client's `agent:collector/<version>`, nothing else; the same for `source`.
+#[test]
+fn a_rule_names_the_agent_not_its_version() {
+    let text = recipe(
+        Some("1"),
+        &rule("r", "agent:collector", Some("collector"), "sources"),
+    );
+    let v = vault("names", &text);
+    let k = Kernel::open(&v).unwrap();
+    for (i, (who, want)) in [
+        ("collector", true),
+        ("collector/1.0", true),
+        ("collector/2.3.1-beta", true),
+        ("collector/", false),
+        ("collector/x/1", false),
+        ("collector2/1.0", false),
+        ("collectorx", false),
+        ("Collector/1.0", false),
+        ("xcollector/1.0", false),
+    ]
+    .into_iter()
+    .enumerate()
+    {
+        let doc = format!("sources/n{i}.md");
+        let r = k
+            .call(
+                "propose",
+                &json!({"doc_path": doc, "content": "# N\n\nmetin.\n", "reason": "r"}),
+                Caller::mcp(Some(who)),
+            )
+            .unwrap();
+        assert_eq!(r.get("promoted").is_some(), want, "{who}: {r}");
+    }
+}
