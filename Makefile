@@ -751,8 +751,13 @@ print-round-checks:
 
 # P2-L criteria into the RUN (TASKS L0–L5): p2l_checks.json; each task adds
 # its criterion's test targets here
-P2L_TESTS := --tests L0=rootmark-server:p2_l_l0,rootmark-server:p2a_migrate
-p2l-checks: require-run
+P2L_TESTS := --tests L0=rootmark-server:p2_l_l0,rootmark-server:p2a_migrate \
+  --tests L-1=rootmark-index:p2_l_tokenize \
+  --tests L-8=rootmark-server:p2_l_l1 \
+  --tests L2=rootmark-index:p2_l_embed \
+  --tests L-7=rootmark-server:p2_l_l3 \
+  --tests L-10=rootmark-index:p2_l_conformance
+p2l-checks: require-run models-multilingual
 	$(PY) -m eval.run_p2l_checks --run $(RUN) $(P2L_TESTS)
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared);

@@ -364,6 +364,100 @@ fn pass(
     })
 }
 
+/// A search filter by document path (P2-L/L3; contract §2.2): vault-relative
+/// path prefixes, NFC, `/`-separated. A document matches a prefix `p` when
+/// its path is `p` or lies under `p/`; it matches the filter when it matches
+/// one of its prefixes. Normalized when built: Unicode NFC, a trailing `/`
+/// dropped, the prefixes sorted and each kept once. Refused (never widened
+/// or narrowed silently): no prefix, more than `MAX_PREFIXES`, an empty one,
+/// a longer one than `MAX_PREFIX_BYTES`, an absolute path (`/…`, `\…`, a
+/// drive `C:`), a `\`, an empty, `.` or `..` component, a control
+/// character. A prefix therefore never addresses anything outside the vault.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PathFilter {
+    prefixes: Vec<String>,
+}
+
+pub const MAX_PREFIXES: usize = 64;
+pub const MAX_PREFIX_BYTES: usize = 1024;
+
+impl PathFilter {
+    pub fn new(raw: &[String]) -> Result<PathFilter> {
+        use unicode_normalization::UnicodeNormalization;
+        if raw.is_empty() {
+            bail!("path_prefix: no prefix (omit it to search every document)");
+        }
+        if raw.len() > MAX_PREFIXES {
+            bail!(
+                "path_prefix: {} prefixes (at most {MAX_PREFIXES})",
+                raw.len()
+            );
+        }
+        let mut out = Vec::with_capacity(raw.len());
+        for r in raw {
+            let p: String = r.nfc().collect();
+            let p = p.strip_suffix('/').unwrap_or(&p).to_string();
+            if p.is_empty() {
+                bail!("path_prefix {r:?}: empty");
+            }
+            if p.len() > MAX_PREFIX_BYTES {
+                bail!(
+                    "path_prefix: a prefix of {} bytes (at most {MAX_PREFIX_BYTES})",
+                    p.len()
+                );
+            }
+            if p.starts_with('/') || p.contains('\\') || p.chars().nth(1) == Some(':') {
+                bail!("path_prefix {r:?}: not a vault-relative path ('/' separated, not absolute)");
+            }
+            if p.chars().any(char::is_control) {
+                bail!("path_prefix {r:?}: a control character");
+            }
+            if p.split('/').any(|c| c.is_empty() || c == "." || c == "..") {
+                bail!("path_prefix {r:?}: an empty, '.' or '..' component");
+            }
+            out.push(p);
+        }
+        out.sort();
+        out.dedup();
+        Ok(PathFilter { prefixes: out })
+    }
+
+    pub fn prefixes(&self) -> &[String] {
+        &self.prefixes
+    }
+
+    pub fn matches(&self, doc_path: &str) -> bool {
+        self.prefixes.iter().any(|p| {
+            doc_path == p
+                || (doc_path.len() > p.len()
+                    && doc_path.starts_with(p.as_str())
+                    && doc_path.as_bytes()[p.len()] == b'/')
+        })
+    }
+
+    /// The filter as the trace and the query hash carry it:
+    /// `{"path_prefix": [<normalized prefixes>]}`.
+    pub fn to_json(&self) -> serde_json::Value {
+        serde_json::json!({ "path_prefix": self.prefixes })
+    }
+
+    fn keep(&self, store: &Store, v: Vec<(usize, Layer)>) -> Vec<(usize, Layer)> {
+        v.into_iter()
+            .filter(|(i, _)| self.matches(&store.records[*i].doc_path))
+            .collect()
+    }
+}
+
+/// `query_hash` of a filtered search (P2-L/L3): `H(query + "\n" + filter)`,
+/// the filter as `PathFilter::to_json` writes it; without a filter it is
+/// `query_hash(query)`, unchanged.
+pub fn query_hash_filtered(query: &str, filter: Option<&PathFilter>) -> String {
+    match filter {
+        None => query_hash(query),
+        Some(f) => rootmarkcore::hash32(&format!("{query}\n{}", f.to_json())),
+    }
+}
+
 /// Unweighted ranking of `view` for `mode` (the one implementation behind
 /// `flat`, `lexical`, `hybrid` and `Searcher`): the canonical pass, then,
 /// with `include_proposal`, the proposal pass with the canonical statistics
@@ -376,15 +470,43 @@ pub fn ranked(
     query: &str,
     include_proposal: bool,
 ) -> Result<Vec<Scored>> {
+    ranked_filtered(store, embedder, view, mode, query, include_proposal, None)
+}
+
+/// `ranked` with a path filter (P2-L/L3): only the records of matching
+/// documents are ranked, in both passes; the statistics stay those of every
+/// `canonical` record of the checkpoint (spec §9), so a filtered ranking is
+/// the unfiltered one's order among the documents it keeps (for `lexical`
+/// and `flat`; `hybrid` fuses the top `CANDIDATES` of the filtered sides).
+pub fn ranked_filtered(
+    store: &Store,
+    embedder: &dyn crate::embed::Embedder,
+    view: &View,
+    mode: Mode,
+    query: &str,
+    include_proposal: bool,
+    filter: Option<&PathFilter>,
+) -> Result<Vec<Scored>> {
     check_query(query)?;
     let qv = match mode {
         Mode::Lexical => None,
         Mode::Flat | Mode::Hybrid => Some(query_vector(embedder, store, query)?),
     };
     let canon = view.layer(Layer::Canonical);
-    let mut out = pass(store, &canon, &canon, mode, query, qv.as_deref())?;
+    let keep = |v: Vec<(usize, Layer)>| match filter {
+        Some(f) => f.keep(store, v),
+        None => v,
+    };
+    let mut out = pass(
+        store,
+        &canon,
+        &keep(canon.clone()),
+        mode,
+        query,
+        qv.as_deref(),
+    )?;
     if include_proposal {
-        let prop = view.proposal_pass();
+        let prop = keep(view.proposal_pass());
         out.extend(pass(store, &canon, &prop, mode, query, qv.as_deref())?);
     }
     Ok(out)
@@ -454,6 +576,10 @@ pub struct SearchResult {
     pub query_hash: String,
     pub trace_id: String,
     pub hits: Vec<Hit>,
+    /// the path filter (P2-L/L3), only when one was given: the response of
+    /// an unfiltered search is unchanged
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub filter: Option<serde_json::Value>,
 }
 
 /// `query_hash = H(query)` (spec §3 hash: blake3, 32 lowercase hex).
@@ -501,6 +627,23 @@ impl<'a> Searcher<'a> {
         at: Option<&str>,
         include_proposal: bool,
     ) -> Result<SearchResult> {
+        self.search_filtered(vault, mode, query, k, at, include_proposal, None)
+    }
+
+    /// `search` with a path filter (P2-L/L3): applied before the ranking;
+    /// the trace's `query_hash` is `query_hash_filtered`, and the filter is
+    /// recorded beside the trace (`Vault::record_trace_filter`).
+    #[allow(clippy::too_many_arguments)]
+    pub fn search_filtered(
+        &mut self,
+        vault: &mut Vault,
+        mode: Mode,
+        query: &str,
+        k: usize,
+        at: Option<&str>,
+        include_proposal: bool,
+        filter: Option<&PathFilter>,
+    ) -> Result<SearchResult> {
         // before the checkpoint lookup: an empty query writes nothing (K-C1.5)
         check_query(query)?;
         let cp = match at {
@@ -512,13 +655,14 @@ impl<'a> Searcher<'a> {
             self.views.insert(cp.checkpoint_id.clone(), v);
         }
         let view = &self.views[&cp.checkpoint_id];
-        let ranked = ranked(
+        let ranked = ranked_filtered(
             self.store,
             self.embedder,
             view,
             mode,
             query,
             include_proposal,
+            filter,
         )?;
         let picked = finalize_ix(self.store, ranked, k);
         // spec §9 (1.0.3, K-D1.8): at most `k` canonical and `k` others
@@ -550,8 +694,11 @@ impl<'a> Searcher<'a> {
                 })
             })
             .collect();
-        let qh = query_hash(query);
+        let qh = query_hash_filtered(query, filter);
         let trace = vault.record_trace(&cp.checkpoint_id, &self.consumer, &qh, returned)?;
+        if let Some(f) = filter {
+            vault.record_trace_filter(&trace, &f.to_json())?;
+        }
         Ok(SearchResult {
             checkpoint_id: cp.checkpoint_id,
             mode,
@@ -559,6 +706,7 @@ impl<'a> Searcher<'a> {
             query_hash: qh,
             trace_id: trace.trace_id,
             hits: picked.into_iter().map(|(_, h)| h).collect(),
+            filter: filter.map(PathFilter::to_json),
         })
     }
 }

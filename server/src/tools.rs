@@ -76,6 +76,9 @@ pub fn specs() -> Vec<ToolSpec> {
                 ranked apart with the canonical statistics, labelled `proposal` with their score \
                 multiplied by 0.5, follow the unchanged canonical hits (spec §7, §9). `derived` is \
                 never returned. Records one consumption trace for the calling consumer (spec §8). \
+                With `path_prefix`, only documents under those vault-relative prefixes are \
+                ranked (the statistics stay the checkpoint's); the trace and the response carry \
+                the filter, and its `query_hash` covers it. \
                 An empty or whitespace-only query is an error and records nothing.",
             input_schema: object_schema(
                 json!({
@@ -89,6 +92,9 @@ pub fn specs() -> Vec<ToolSpec> {
                         "description": "checkpoint id or name (default: the current state's)"},
                     "include_proposal": {"type": "boolean",
                         "description": "also return labelled proposal chunks (default false)"},
+                    "path_prefix": {"type": "array", "minItems": 1, "maxItems": 64,
+                        "items": {"type": "string", "minLength": 1},
+                        "description": "only documents whose vault-relative path is one of these or lies under it ('/' separated; no absolute path, no '..'); applied before ranking, recorded in the trace"},
                 }),
                 &["query"],
             ),
@@ -389,6 +395,8 @@ struct SearchArgs {
     mode: Option<String>,
     at: Option<String>,
     include_proposal: Option<bool>,
+    /// P2-L/L3: vault-relative path prefixes (contract §2.2)
+    path_prefix: Option<Vec<String>>,
 }
 
 #[derive(Deserialize)]
@@ -1407,6 +1415,13 @@ impl Kernel {
                 }
                 let mode = Mode::parse(x.mode.as_deref().unwrap_or("hybrid"))
                     .code(Code::InvalidArguments)?;
+                // P2-L/L3: refused before anything is opened or recorded
+                let filter = x
+                    .path_prefix
+                    .as_deref()
+                    .map(rootmarkindex::search::PathFilter::new)
+                    .transpose()
+                    .code(Code::InvalidArguments)?;
                 let mut v = open_vault(&self.vault)?;
                 if let Some(at) = &x.at {
                     checkpoint_at(&v, at)?;
@@ -1415,13 +1430,14 @@ impl Kernel {
                 let e = self.embedder()?;
                 let s = Store::open(&v, e.as_ref())?;
                 let mut se = Searcher::new(&s, e.as_ref(), consumer)?;
-                let r = se.search(
+                let r = se.search_filtered(
                     &mut v,
                     mode,
                     &x.query,
                     k,
                     x.at.as_deref(),
                     x.include_proposal.unwrap_or(false),
+                    filter.as_ref(),
                 )?;
                 Ok(serde_json::to_value(r)?)
             }
@@ -1653,11 +1669,25 @@ impl Kernel {
             }
             "trace" => {
                 let x: TraceArgs = args(name, a)?;
-                let v = open_vault(&self.vault)?;
-                let mut traces = v.traces(x.since_seq.unwrap_or(0))?;
                 if let Some(c) = &x.consumer {
                     non_empty(name, "consumer", c)?;
-                    traces.retain(|t| &t.consumer == c);
+                }
+                let v = open_vault(&self.vault)?;
+                let all = v.traces(0)?;
+                // P2-L/L3: a filtered search's trace carries its filter
+                let filters = v.trace_filters(&all)?;
+                let since = x.since_seq.unwrap_or(0);
+                let mut traces: Vec<Value> = Vec::new();
+                for t in all.into_iter().filter(|t| t.at_seq >= since) {
+                    if x.consumer.as_ref().is_some_and(|c| &t.consumer != c) {
+                        continue;
+                    }
+                    let f = filters.get(&t.trace_id).cloned();
+                    let mut j = serde_json::to_value(t)?;
+                    if let Some(f) = f {
+                        j["filter"] = f;
+                    }
+                    traces.push(j);
                 }
                 Ok(json!({"traces": traces}))
             }

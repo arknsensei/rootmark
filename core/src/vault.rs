@@ -2240,6 +2240,89 @@ impl Vault {
         Ok(t)
     }
 
+    /// `.rootmark/trace_filters.jsonl` (P2-L/L3): the search filter of a
+    /// trace, one line per filtered search, append-only, written right after
+    /// the trace line it names. Beside `traces.jsonl`, not in it: a trace
+    /// line keeps the fields of spec §8 (its `query_hash` covers the filter).
+    pub fn trace_filters_path(&self) -> PathBuf {
+        self.meta_dir.join("trace_filters.jsonl")
+    }
+
+    /// Appends `{trace_id, at_seq, filter}` for the trace just recorded.
+    pub fn record_trace_filter(
+        &mut self,
+        trace: &crate::governance::Trace,
+        filter: &serde_json::Value,
+    ) -> Result<()> {
+        if trace.at_seq + 1 != self.next_trace {
+            bail!("a trace filter names the trace just recorded");
+        }
+        let line = serde_json::json!({
+            "trace_id": trace.trace_id,
+            "at_seq": trace.at_seq,
+            "filter": filter,
+        });
+        let mut bytes = serde_json::to_vec(&line)?;
+        bytes.push(b'\n');
+        let mut f = fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(self.trace_filters_path())?;
+        std::io::Write::write_all(&mut f, &bytes)?;
+        f.sync_data()?;
+        Ok(())
+    }
+
+    /// The filters of `trace_filters.jsonl` by `trace_id`; every line must
+    /// name a trace of `traces` (every trace of the log, `traces(0)`; same
+    /// `at_seq`), in increasing `at_seq`, once.
+    pub fn trace_filters(
+        &self,
+        traces: &[crate::governance::Trace],
+    ) -> Result<BTreeMap<String, serde_json::Value>> {
+        let p = self.trace_filters_path();
+        let mut out = BTreeMap::new();
+        if !p.exists() {
+            return Ok(out);
+        }
+        let by_id: BTreeMap<&str, u64> = traces
+            .iter()
+            .map(|t| (t.trace_id.as_str(), t.at_seq))
+            .collect();
+        let text = fs::read_to_string(&p).with_context(|| format!("read {}", p.display()))?;
+        let mut last: Option<u64> = None;
+        for (i, line) in text.lines().enumerate() {
+            let v: serde_json::Value = serde_json::from_str(line)
+                .with_context(|| format!("trace_filters.jsonl line {}", i + 1))?;
+            let (Some(id), Some(at), Some(filter)) = (
+                v["trace_id"].as_str(),
+                v["at_seq"].as_u64(),
+                v.get("filter"),
+            ) else {
+                bail!(
+                    "trace_filters.jsonl line {}: trace_id, at_seq and filter required",
+                    i + 1
+                );
+            };
+            if last.is_some_and(|l| at <= l) {
+                bail!(
+                    "trace_filters.jsonl line {}: at_seq {at} not increasing",
+                    i + 1
+                );
+            }
+            last = Some(at);
+            match by_id.get(id) {
+                Some(&a) if a == at => {}
+                _ => bail!(
+                    "trace_filters.jsonl line {}: no trace {id} at_seq {at}",
+                    i + 1
+                ),
+            }
+            out.insert(id.to_string(), filter.clone());
+        }
+        Ok(out)
+    }
+
     /// Reads blocks by lineage as of a checkpoint and records one trace
     /// (spec §8, C2-07). `derived` content is never returned (spec §7):
     /// asking for it is an error; proposals are returned labelled.
