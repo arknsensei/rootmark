@@ -1,0 +1,127 @@
+{
+ "criteria": {
+  "B1-1": {
+   "pass": true,
+   "tests": {
+    "agent_only": "ok",
+    "agent_then_human_keeps_proposal": "ok",
+    "human_then_agent_derives_the_drop": "ok",
+    "human_then_synthetic": "ok",
+    "human_then_transcript_derives_the_drop": "ok",
+    "mixed_four_document_vault": "ok",
+    "synthetic_only": "ok",
+    "synthetic_then_agent_derives_the_drop": "ok",
+    "transcript_only": "ok"
+   },
+   "v3_compat_mixed": {
+    "passed": 9,
+    "scenarios": [
+     {
+      "blame_equal": 1,
+      "docs": 1,
+      "pass": true,
+      "scenario": "agent_only"
+     },
+     {
+      "blame_equal": 1,
+      "docs": 1,
+      "pass": true,
+      "scenario": "transcript_only"
+     },
+     {
+      "blame_equal": 1,
+      "docs": 1,
+      "pass": true,
+      "scenario": "synthetic_only"
+     },
+     {
+      "blame_equal": 1,
+      "docs": 1,
+      "pass": true,
+      "scenario": "human_synthetic"
+     },
+     {
+      "blame_equal": 1,
+      "docs": 1,
+      "pass": true,
+      "scenario": "agent_human"
+     },
+     {
+      "blame_equal": 1,
+      "docs": 1,
+      "pass": true,
+      "scenario": "human_agent"
+     },
+     {
+      "blame_equal": 1,
+      "docs": 1,
+      "pass": true,
+      "scenario": "human_transcript"
+     },
+     {
+      "blame_equal": 1,
+      "docs": 1,
+      "pass": true,
+      "scenario": "synthetic_agent"
+     },
+     {
+      "blame_equal": 4,
+      "docs": 4,
+      "pass": true,
+      "scenario": "mixed_vault"
+     }
+    ],
+    "total": 9
+   }
+  },
+  "B1-2": {
+   "pass": true,
+   "tests": {
+    "deleted_layer_changed_line_is_an_error": "ok",
+    "missing_layer_changed_in_a_layered_log_is_an_error": "ok",
+    "missing_second_layer_changed_is_an_error": "ok"
+   }
+  },
+  "B1-3": {
+   "C1": "17/17",
+   "C2": "8/8",
+   "C2-07_expected_hash": "03f9907946bb4e238ae6937604c33e58",
+   "fixtures_manifest": "ok",
+   "level_claimed": 2,
+   "pass": false,
+   "spec_version": "2.0.2"
+  },
+  "B1-4": {
+   "pass": true,
+   "tests": {
+    "invalid_inputs_are_refused": "ok",
+    "invalid_trace_lines_are_refused_on_open": "ok"
+   }
+  },
+  "B1-5": {
+   "pass": true,
+   "tests": {
+    "formula_has_separators": "ok",
+    "shifted_fields_get_different_ids": "ok"
+   }
+  },
+  "B1-6": {
+   "bytes": {
+    "governance/vault/.rootmark/checkpoints/": true,
+    "governance/vault/.rootmark/events.jsonl": true,
+    "governance/vault/.rootmark/traces.jsonl": false
+   },
+   "differing_excluded": [
+    "governance/governance.json:traces_sha256",
+    "p1b_checks.json:B-1›tests›6›actual_hash",
+    "p1b_checks.json:B-1›tests›6›expected_hash",
+    "p1b_checks.json:fixtures_manifest_hash",
+    "p1b_checks.json:governance›traces_sha256"
+   ],
+   "differing_outside_exclusions": [],
+   "n_fields": 2195,
+   "pass": true
+  }
+ },
+ "tests_seen": 22
+}

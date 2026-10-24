@@ -1,0 +1,36 @@
+   Compiling rootmark-core v0.1.0 (/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.PHwbsN5evD/A/repo/core)
+    Finished `release` profile [optimized] target(s) in 0.58s
+     Running tests/compat_v3final.rs (target/release/deps/compat_v3final-d992459c45253b39)
+
+running 18 tests
+test agent_only ... ok
+test agent_then_human_keeps_proposal ... ok
+test current_core_continues_a_v3_final_vault ... ok
+test deleted_layer_changed_line_is_an_error ... ok
+test first_of_two_layer_changed_removed_reads_as_derived_prefix ... ok
+test human_then_agent_derives_the_drop ... ok
+test human_then_synthetic ... ok
+test human_then_transcript_derives_the_drop ... ok
+test kc01_first_of_two_drops_in_one_snapshot_removed_is_an_error_human ... ok
+test kc01_first_of_two_drops_in_one_snapshot_removed_is_an_error_synthetic ... ok
+test kc01_single_drop_removed_opens_as_derived_prefix ... ok
+test missing_layer_changed_in_a_layered_log_is_an_error ... ok
+test missing_second_layer_changed_is_an_error ... ok
+test mixed_four_document_vault ... ok
+test only_layer_event_removed_reads_as_v3_final_and_is_marked_derived ... ok
+test synthetic_only ... ok
+test synthetic_then_agent_derives_the_drop ... ok
+test transcript_only ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+     Running tests/trace_id_v101.rs (target/release/deps/trace_id_v101-dd0f2b13bbefe256)
+
+running 4 tests
+test formula_has_separators ... ok
+test invalid_inputs_are_refused ... ok
+test invalid_trace_lines_are_refused_on_open ... ok
+test shifted_fields_get_different_ids ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+

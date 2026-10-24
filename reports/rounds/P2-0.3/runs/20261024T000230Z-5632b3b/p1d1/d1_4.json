@@ -1,0 +1,16 @@
+{
+  "criterion": "D1-4",
+  "deleted_lineage": "67595716511579bf2ba400b6d3f72959",
+  "edit_policy": "unrestricted",
+  "event_actor": {
+    "id": "criteria-agent/1.0",
+    "kind": "agent"
+  },
+  "event_source": "criteria-agent/1.0",
+  "history_actor": {
+    "id": "criteria-agent/1.0",
+    "kind": "agent"
+  },
+  "history_last_kind": "BlockDeleted",
+  "pass": true
+}
