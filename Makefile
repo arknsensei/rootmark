@@ -764,6 +764,7 @@ p2l-checks: require-run models-multilingual
 # rebuilt and checked against data/MANIFEST.d_tr.json — in 12 cells, the
 # English reference with both lexical variants (D3), and L-8's three vaults
 p2l-quality: require-run models-multilingual
+	mkdir -p research/reports/runs/$(RUN)
 	$(PY) -m eval.datasets.d_tr --check
 	$(PY) -m eval.run_p2l --run $(RUN)
 	$(PY) -m eval.run_p2l_migrate --run $(RUN) --rootmark ../target/release/rootmark
