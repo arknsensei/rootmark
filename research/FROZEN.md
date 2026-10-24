@@ -385,6 +385,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/data/MANIFEST.d_tr.json` | `P2-L/L4-pre:` | D-TR manifest'i (belge ve sorgu hash'leri; ölçümden önce) |
 | `research/eval/run_p2l.py` | `P2-L/L4-pre:` | L-2..L-6 ölçücüsü (12 hücre, İngilizce referans; kriter okumaları ölçümden önce) |
 | `research/eval/run_p2l_migrate.py` | `P2-L/L4-pre:` | L-8 ölçücüsü (üç vault) |
+| `scripts/verify.sh` | `P2-L/L5-dev:` | yeniden dondurma P2-L/F6: P2-L adımı (`p2l-checks`, `p2l-quality`), sınıflandırıcı `eval.historical_p2l`, `pair` → `compare_p2l pair`, `compare-p2l` |
+| `research/eval/compare_p2l.py` | `P2-L/L5-dev:` | yeniden dondurma P2-L/F7: P2-L ölçüm dosyaları |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-L/L5-dev:` | yeniden dondurma P2-L/F7: `compare_p2l` dosya satırları |
+| `research/eval/**` | `P2-L/L5-dev:` | yeniden dondurma P2-L/F7: `compare_p2l.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni `historical_p2l.py` ve iki listesi (`historical_fails_p2l.json`, `migration_required_fails_p2l.json`; P2-A'nın girdileri, P2-0.3 referansıyla) de bu satırla donar |
 <!-- /frozen-table -->
 
 ## Notlar

@@ -36,8 +36,18 @@ P2L_FAST_FILES = [
     "fast/regress.json",
     "c3_quality.json",
     "p2l_checks.json",
+    "p2l_quality.json",
+    "p2l/d_tr.json",
+    "p2l/english.json",
+    "p2l/migrate.json",
 ]
-P2L_FILES = ["p2l_checks.json"]
+P2L_FILES = [
+    "p2l_checks.json",
+    "p2l_quality.json",
+    "p2l/d_tr.json",
+    "p2l/english.json",
+    "p2l/migrate.json",
+]
 # wall-clock fields of the P2-L files: none
 P2L_TIMING: dict[str, list[tuple]] = {}
 # the absolute fixture path of the chain's clone (research/eval/DETERMINISTIC_FIELDS.md)

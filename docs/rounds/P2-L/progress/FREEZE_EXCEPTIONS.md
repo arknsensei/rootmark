@@ -31,3 +31,15 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Neden:** spec 2.0.3 (SPEC_EDITS E1, E2; CRITERION "yama"); R2 `SPEC_VERSION` = `core/tests/conformance.rs` `spec_version` = `spec/SPEC.md` başlığı ister. Emsal P2-0/F7, P2-0.1/F1, P2-0.2/F2.
 - **Önce/sonra:** `git diff main -- core/tests/conformance.rs` tek satır; `make conformance` 39/39 seviye 3, her testin sonucu ve hash'leri son resmi RUN'ınkiyle eşit (`fast/regress.json` `conformance.differing` boş; spec sürümü test kimliğiyle karşılaştırmaya girmez).
 - **Gözden geçirici onayı:** L5.review.md.
+
+## F6 · L5 · `scripts/verify.sh` — P2-L adımı, sınıflandırıcı, çift karşılaştırıcısı
+- **Ne:** tam zincire `make p2-0-3-checks`'ten sonra iki adım (`make p2l-checks`, `make p2l-quality`); FAIL özeti `eval.historical_p2a` yerine `eval.historical_p2l` (P2-0.3'ün resmi RUN'ına karşı); `pair` `compare_p2a` yerine yeni `compare_p2l` işlevi (`compare_p2l pair`: P2-A çift kümesi + P2-L dosyaları); `compare-p2l` alt komutu; başlık yorumu. Hızlı kipin işlevleri değişmedi.
+- **Neden:** TASKS L5 ("`verify.sh`: P2-L adımı (L-8 üç vault, L-9 tam çift bir kez, L-10), `compare_p2l` belirlenimli alanlar"); emsal P2-A/F5, P2-0.3/F1.
+- **Önce/sonra:** `L5_f6_removed.out`: L0 sürümünden silinen satırlar yalnız sınıflandırıcının iki satırı, `pair`'in karşılaştırıcı çağrısı ve kullanım satırı; öteki adımlar bayt bayt aynı (yalnız ekleme). `compare_p2a` işlevi ve `compare-p2a` alt komutu korunur.
+- **Gözden geçirici onayı:** L5.review.md.
+
+## F7 · L5 · `research/eval/compare_p2l.py`, `research/eval/DETERMINISTIC_FIELDS.md` — P2-L ölçüm dosyaları
+- **Ne:** `P2L_FAST_FILES` ve `P2L_FILES`'a `p2l_quality.json`, `p2l/d_tr.json`, `p2l/english.json`, `p2l/migrate.json`; `DETERMINISTIC_FIELDS.md`'nin `compare_p2l` bölümü ve dosya satırları. Hariç alan eklenmedi (ölçümler belirlenimlidir). `Makefile` `ROUND_CHECKS` `p2l-checks p2l-quality` (hızlı kip turun ölçümünü de koşar; TASKS L4 "`make verify FAST=1` adımı").
+- **Neden:** L-9 (tam çift: iki varyant ve iki embedder ile 12 hücre fark 0) ve hızlı kipin aynı dosyaları karşılaştırması.
+- **Önce/sonra:** `compare_p2l.py`'de yalnız iki liste uzadı; `python -m eval.check_compare_fields` geçer (15 karşılaştırıcı, `unmatched: 0`).
+- **Gözden geçirici onayı:** L5.review.md.
