@@ -289,7 +289,7 @@ impl<'a> Caller<'a> {
 pub fn is_writer(tool: &str) -> bool {
     matches!(
         tool,
-        "search" | "read_block" | "propose" | "promote" | "checkpoint" | "attest"
+        "search" | "read_block" | "propose" | "promote" | "checkpoint" | "attest" | "demote"
     )
 }
 
@@ -299,14 +299,16 @@ pub fn is_writer(tool: &str) -> bool {
 pub fn needs_human_id(tool: &str) -> bool {
     matches!(
         tool,
-        "propose" | "promote" | "checkpoint" | "attest_session" | "attest"
+        "propose" | "promote" | "checkpoint" | "attest_session" | "attest" | "demote"
     )
 }
 
 /// Endpoints of the human channel only (CLIENT_CONTRACT §2.6; spec 2.0.0
-/// §7.1): `POST /v1/attest_session`, `POST /v1/attest`. They are not tools:
-/// MCP lists and serves neither (an agent's channel never attests).
-pub const HTTP_ONLY: [&str; 2] = ["attest_session", "attest"];
+/// §7.1): `POST /v1/attest_session`, `POST /v1/attest`; and (P2-P,
+/// CLIENT_CONTRACT §2.7) `POST /v1/demote`, the human's undo of a promotion
+/// (a rule's included). They are not tools: MCP lists and serves none (an
+/// agent's channel never attests, nor demotes).
+pub const HTTP_ONLY: [&str; 3] = ["attest_session", "attest", "demote"];
 
 /// Whether `name` is an HTTP-only endpoint.
 pub fn is_http_only(name: &str) -> bool {
@@ -429,6 +431,16 @@ pub struct ProposeArgs {
 struct PromoteArgs {
     lineage_id: String,
     reason: String,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct DemoteArgs {
+    lineage_id: String,
+    reason: String,
+    /// `proposal` | `unverified` | `derived`; one layer down by default
+    /// (`canonical` → `proposal`, `proposal`/`unverified` → `derived`)
+    to: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -1551,6 +1563,82 @@ impl Kernel {
                         let ev = v.promote(&req, hook)?;
                         Ok(json!({
                             "decision": "promoted",
+                            "policy": hook.name(),
+                            "policy_version": hook.version(),
+                            "lineage_id": x.lineage_id,
+                            "layer": v.layer_of(&x.lineage_id)?,
+                            "event": ev,
+                        }))
+                    }
+                }
+            }
+            "demote" if caller.channel == Channel::Http => {
+                // P2-P (CLIENT_CONTRACT §2.7): the human's undo of a promotion,
+                // through the vault's promotion policy (`human_only`: the
+                // human; `deny`: no one), like `promote`
+                let x: DemoteArgs = args(name, a)?;
+                non_empty(name, "lineage_id", &x.lineage_id)?;
+                if x.reason.trim().is_empty() {
+                    bail_code!(Code::InvalidArguments, "demote: reason must not be empty");
+                }
+                let actor = self.actor(name, &caller)?;
+                let (policy, _) = self.policy()?;
+                let hook = policy.promotion.hook();
+                let mut v = open_vault(&self.vault)?;
+                let from = v.layer_of(&x.lineage_id).code(Code::NotFound)?;
+                let to = match x.to.as_deref() {
+                    Some(t) => rootmarkcore::Layer::parse(t).code(Code::InvalidArguments)?,
+                    None => match from {
+                        rootmarkcore::Layer::Canonical => rootmarkcore::Layer::Proposal,
+                        rootmarkcore::Layer::Proposal | rootmarkcore::Layer::Unverified => {
+                            rootmarkcore::Layer::Derived
+                        }
+                        rootmarkcore::Layer::Derived => bail_code!(
+                            Code::InvalidArguments,
+                            "demote: lineage {} is derived: no lower layer",
+                            x.lineage_id
+                        ),
+                    },
+                };
+                let req = v
+                    .request(
+                        rootmarkcore::TransitionKind::Demote,
+                        &x.lineage_id,
+                        to,
+                        actor.clone(),
+                        &x.reason,
+                    )
+                    .code(Code::InvalidArguments)?;
+                match hook.decide(&req) {
+                    rootmarkcore::Decision::Deny(why) => Ok(json!({
+                        "decision": "denied",
+                        "policy": hook.name(),
+                        "policy_version": hook.version(),
+                        "reason": why,
+                        "lineage_id": x.lineage_id,
+                        "layer": req.from,
+                        "actor": actor,
+                    })),
+                    rootmarkcore::Decision::Allow => {
+                        if to >= from {
+                            bail_code!(
+                                Code::InvalidArguments,
+                                "demote: lineage {} is {}; {} is not lower",
+                                x.lineage_id,
+                                from.as_str(),
+                                to.as_str()
+                            );
+                        }
+                        if v.is_inactive(&x.lineage_id).code(Code::Internal)? {
+                            bail_code!(
+                                Code::InvalidArguments,
+                                "demote: lineage {} is inactive (pruned)",
+                                x.lineage_id
+                            );
+                        }
+                        let ev = v.demote(&req, hook)?;
+                        Ok(json!({
+                            "decision": "demoted",
                             "policy": hook.name(),
                             "policy_version": hook.version(),
                             "lineage_id": x.lineage_id,
