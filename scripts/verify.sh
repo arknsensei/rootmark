@@ -99,6 +99,15 @@
 # test-4 with the round's pre-registered seed, D-A′, D-C′ → <RUN>/p2_0_3/;
 # p2_0_3_checks.json). Nothing else changes: the steps, the classifier,
 # `pair`, `compare_p2a` and VERIFY_LOAD are as in P2-A.
+# P2-L (re-freeze P2-L/F6): after `make p2-0-3-checks` the chain records
+# `make p2l-checks` (the round's tests by criterion → p2l_checks.json) and
+# `make p2l-quality` (D-TR in 12 cells, the English reference with both
+# lexical variants, L-8's three vaults → p2l_quality.json, p2l/); the FAIL
+# summary is the round's classifier (`eval.historical_p2l` against the
+# P2-0.3 official RUN); `pair` compares A ↔ B with `eval.compare_p2l pair`
+# (the P2-A pair set plus the P2-L files); `compare-p2a` is kept and
+# `compare-p2l` is new.
+#
 # P2-L (re-freeze P2-L/F3; K-P2.4 (3)): a fast mode for the rounds' own
 # quality gate. `FAST=1 scripts/verify.sh` (`make verify FAST=1`) runs two
 # fast chains side by side (`chain-fast`: a clean clone, `make setup`,
@@ -219,6 +228,9 @@ chain() {
   make p2a-checks RUN="$run"
   log "P2-0.3 checks (real Obsidian: D-B test-4 with the new seed, D-A′, D-C′; p2_0_3_checks)"
   make p2-0-3-checks RUN="$run"
+  log "P2-L checks (round tests by criterion; D-TR 12 cells, English reference, L-8 three vaults)"
+  make p2l-checks RUN="$run"
+  make p2l-quality RUN="$run"
   log "deliberate corruptions (B-7, B-8 and the P1-A cases)"
   bash scripts/test_tamper.sh "research/reports/runs/$run" >"research/reports/runs/$run/tamper.log" 2>&1 \
     || { cat "research/reports/runs/$run/tamper.log" >&2; exit 1; }
@@ -239,8 +251,8 @@ chain() {
   # round's own classifier against the previous official RUN, so its
   # counted FAILs are the round's (eval.historical_p2_0_1; since P2-0.2,
   # P2-0.2/F5, eval.historical_p2_0_2 against the P2-0.1 official RUN)
-  log "FAIL summary (K-E1.4, round classifier eval.historical_p2a)"
-  (cd research && uv run --frozen python -m eval.historical_p2a --run-dir "reports/runs/$run" --summary || true) >&2
+  log "FAIL summary (K-E1.4, round classifier eval.historical_p2l)"
+  (cd research && uv run --frozen python -m eval.historical_p2l --run-dir "reports/runs/$run" --summary || true) >&2
   log "chain finished in $((SECONDS - t0)) s"
   echo "RUN=$run" >&3
   echo "RUN_DIR=$work/repo/research/reports/runs/$run" >&3
@@ -380,7 +392,20 @@ pair() {
     fi
   done
   cat "$res_a" "$res_b"
-  compare_p2a "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+  compare_p2l "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+}
+
+compare_p2l() {
+  local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
+  log "compare (P2-L) $dir_a $dir_b"
+  local rc=0
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p2l pair "$dir_a" "$dir_b" \
+    ${out:+--out "$out"}) >&2 || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "error: run comparison failed (compare_p2l pair exit $rc)" >&2
+    exit "$rc"
+  fi
+  log "P2-A pair set and P2-L results equal; D-A, D-A2 and D-C events.jsonl and attestations.jsonl byte-equal"
 }
 
 compare_p2a() {
@@ -556,6 +581,7 @@ case "${1:-}" in
   compare-p2-0-1) compare_p2_0_1 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p2-0-2) compare_p2_0_2 "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p2a) compare_p2a "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
+  compare-p2l) compare_p2l "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t rootmark-verify.XXXXXX)"
@@ -567,7 +593,7 @@ case "${1:-}" in
     fi
     ;;
   *)
-    echo "usage: [FAST=1] $0 [chain|chain-fast <src> <dir> | pair|pair-fast <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2|compare-p2a <repo> <runA> <runB> [out]]" >&2
+    echo "usage: [FAST=1] $0 [chain|chain-fast <src> <dir> | pair|pair-fast <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2|compare-p2a|compare-p2l <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac
