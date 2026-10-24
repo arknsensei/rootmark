@@ -255,6 +255,9 @@ pub struct TransitionMeta {
     pub from: Layer,
     pub to: Layer,
     pub prune: bool,
+    /// `meta.source` (spec 2.0.3 §7, P2-P/P3): the channel's label of the
+    /// request (the human channel's consumer); optional, never empty
+    pub source: Option<String>,
 }
 
 /// Built-in policies whose decision replay can re-check from the event
@@ -321,8 +324,20 @@ pub fn transition_meta(ev: &Event) -> Result<TransitionMeta> {
             .as_bool()
             .with_context(|| format!("event seq {}: meta.prune is not a boolean", ev.seq))?,
     };
+    // spec 2.0.3 §7: absent is accepted (every log before it); present, a
+    // non-empty string
+    let source = match ev.meta.get("source") {
+        None => None,
+        Some(serde_json::Value::String(x)) if !x.trim().is_empty() => Some(x.clone()),
+        Some(_) => bail!(
+            "event seq {}: {:?} meta.source must be a non-empty string",
+            ev.seq,
+            ev.kind
+        ),
+    };
     Ok(TransitionMeta {
         actor,
+        source,
         reason: req("reason")?,
         policy: req("policy")?,
         policy_version: req("policy_version")?,
@@ -1908,10 +1923,21 @@ impl Vault {
         req: &crate::governance::PromotionRequest,
         policy: &dyn crate::governance::PromotionPolicy,
     ) -> Result<Event> {
+        self.promote_from(req, policy, None)
+    }
+
+    /// `promote` whose event carries `meta.source` (spec 2.0.3 §7): the
+    /// channel's label of the request (`None`: no field, as `promote`).
+    pub fn promote_from(
+        &mut self,
+        req: &crate::governance::PromotionRequest,
+        policy: &dyn crate::governance::PromotionPolicy,
+        source: Option<&str>,
+    ) -> Result<Event> {
         if req.kind != crate::governance::TransitionKind::Promote {
             bail!("promote takes a promote request, not {:?}", req.kind);
         }
-        self.transition(EventKind::Promoted, req, policy)
+        self.transition(EventKind::Promoted, req, policy, source)
     }
 
     /// `Demoted` to a lower layer if `policy` allows `req`.
@@ -1920,10 +1946,20 @@ impl Vault {
         req: &crate::governance::PromotionRequest,
         policy: &dyn crate::governance::PromotionPolicy,
     ) -> Result<Event> {
+        self.demote_from(req, policy, None)
+    }
+
+    /// `demote` whose event carries `meta.source` (spec 2.0.3 §7).
+    pub fn demote_from(
+        &mut self,
+        req: &crate::governance::PromotionRequest,
+        policy: &dyn crate::governance::PromotionPolicy,
+        source: Option<&str>,
+    ) -> Result<Event> {
         if req.kind != crate::governance::TransitionKind::Demote {
             bail!("demote takes a demote request, not {:?}", req.kind);
         }
-        self.transition(EventKind::Demoted, req, policy)
+        self.transition(EventKind::Demoted, req, policy, source)
     }
 
     /// Marks a proposal (or derived) lineage inactive if `policy` allows it: a
@@ -1944,7 +1980,7 @@ impl Vault {
             actor,
             reason,
         )?;
-        self.transition(EventKind::Demoted, &req, policy)
+        self.transition(EventKind::Demoted, &req, policy, None)
     }
 
     fn transition(
@@ -1952,6 +1988,7 @@ impl Vault {
         kind: EventKind,
         req: &crate::governance::PromotionRequest,
         policy: &dyn crate::governance::PromotionPolicy,
+        source: Option<&str>,
     ) -> Result<Event> {
         use crate::governance::{Decision, TransitionKind};
         if req.reason.trim().is_empty() {
@@ -1975,6 +2012,9 @@ impl Vault {
         });
         if prune {
             meta["prune"] = serde_json::json!(true);
+        }
+        if let Some(src) = source {
+            meta["source"] = serde_json::json!(src);
         }
         let ev = Event {
             seq: 0,
