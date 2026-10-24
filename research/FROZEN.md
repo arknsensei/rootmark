@@ -376,6 +376,11 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/release.sh` | `P2-L/L0-release:` | yeniden dondurma P2-L/F1: Linux kaydı zorunlu (K-P2A.6) |
 | `clients/obsidian/e2e/**` | `P2-L/L0-release:` | yeniden dondurma P2-L/F2: `real/run.ts` durum çubuğu sürümü ikiliden, E1-9 `migration_required` (K-P2A.2) |
 | `clients/obsidian/e2e/real/**` | `P2-L/L0-release:` | yeniden dondurma P2-L/F2: durum çubuğu sürümü ikiliden, E1-9 `migration_required` (K-P2A.2) |
+| `scripts/verify.sh` | `P2-L/L0:` | yeniden dondurma P2-L/F3: hızlı kip (`chain_fast`, `pair_fast`), yalnız ekleme |
+| `research/eval/check_compare_fields.py` | `P2-L/L0:` | yeniden dondurma P2-L/F4: `compare_p2l` |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-L/L0:` | yeniden dondurma P2-L/F4: `compare_p2l` bölümü, alan ve dosya satırları |
+| `research/eval/**` | `P2-L/L0:` | yeniden dondurma P2-L/F4: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni P2-L dosyaları (`compare_p2l.py`, `fast_regress.py`, `run_p2l_checks.py`) de bu satırla donar |
+| `core/tests/conformance.rs` | `P2-L/L0:` | yeniden dondurma P2-L/F5: `spec_version` 2.0.3 |
 <!-- /frozen-table -->
 
 ## Notlar

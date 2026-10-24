@@ -194,7 +194,7 @@ fn conformance_levels_1_and_2() {
         (true, false, false) => 2,
     };
     let report = json!({
-        "spec_version": "2.0.2",
+        "spec_version": "2.0.3",
         "level_claimed": level,
         "fixtures_root": root.to_str().expect("UTF-8 fixture root"),
         "fixtures_root_source": root_source,

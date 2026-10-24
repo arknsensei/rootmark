@@ -1,0 +1,39 @@
+{
+ "L0": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_l_l0",
+    "tests": {
+     "a_block_survives_a_rename_back_to_an_earlier_path": "ok",
+     "a_late_raised_block_stays_canonical_through_a_late_rename": "ok",
+     "a_late_raised_block_stays_canonical_through_a_plain_rename": "ok",
+     "a_late_raised_block_stays_canonical_through_a_rename": "ok",
+     "a_self_link_update_back_on_an_earlier_path_keeps_every_layer": "ok",
+     "a_self_link_update_back_on_an_earlier_path_never_vouches_for_other_bytes": "ok"
+    }
+   },
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2a_migrate",
+    "tests": {
+     "a_migration_that_would_change_events_hash_stops": "ok",
+     "a_record_cannot_widen_its_migration_s_scope": "ok",
+     "a_record_naming_paths_outside_its_scope_is_refused": "ok",
+     "a_rollback_never_follows_a_link_out_of_the_store": "ok",
+     "a_rollback_refuses_a_damaged_record_or_a_changed_vault": "ok",
+     "dry_run_changes_nothing_and_names_the_plan": "ok",
+     "rename_store_and_index_rebuild_forward_and_back": "ok",
+     "the_legacy_flag_still_renames_only": "ok",
+     "validations_record_and_roll_back_without_a_byte_changed": "ok"
+    }
+   }
+  ]
+ },
+ "pass": true
+}

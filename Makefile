@@ -724,6 +724,27 @@ p2-0-3-checks: require-run p2-0-2-harness
 	$(PY) -m eval.run_p2_0_3 test --run $(RUN) --rootmark ../target/release/rootmark $(P2_0_3_ARGS)
 	$(PY) -m eval.run_p2_0_3 checks --run $(RUN)
 
-# Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared)
+# P2-L (GOAL P2-L L0 d, K-P2.4 (3)): the fast verification's steps. Its
+# regression is against the last official RUN (P2-0.3); the active round's
+# checks are `ROUND_CHECKS` (a round sets its own).
+FAST_REF_RUN := ../reports/rounds/P2-0.3/runs/20261024T000230Z-5632b3b
+ROUND_CHECKS := p2l-checks
+fast-regress: require-run
+	$(PY) -m eval.fast_regress --run $(RUN) --ref $(FAST_REF_RUN)
+
+round-checks: require-run
+	$(MAKE) $(ROUND_CHECKS) RUN=$(RUN)
+
+print-round-checks:
+	@echo $(ROUND_CHECKS)
+
+# P2-L criteria into the RUN (TASKS L0–L5): p2l_checks.json; each task adds
+# its criterion's test targets here
+P2L_TESTS := --tests L0=rootmark-server:p2_l_l0,rootmark-server:p2a_migrate
+p2l-checks: require-run
+	$(PY) -m eval.run_p2l_checks --run $(RUN) $(P2L_TESTS)
+
+# Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared);
+# `make verify FAST=1`: the fast pair (scripts/verify.sh, P2-L/F3)
 verify:
-	bash scripts/verify.sh
+	FAST="$(FAST)" bash scripts/verify.sh
