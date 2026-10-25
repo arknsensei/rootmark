@@ -1,0 +1,1 @@
+{"version_id":"f4173aeaa5a70b50ca09732821ed142f","block_type":"Code","normalized_text":"```python\ndef ratio(dose, yield_):\n    return yield_ / dose  # 1:2 is the house standard\n```","heading_level":null}

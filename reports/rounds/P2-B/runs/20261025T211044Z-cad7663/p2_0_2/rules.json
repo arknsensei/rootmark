@@ -1,0 +1,35 @@
+{
+ "written": {
+  "dev_process_stamp_rule": true,
+  "criterion_unknown_field": true,
+  "spec_8_reading_rule": true,
+  "spec_7_1_draft": false
+ },
+ "forward_compatibility": {
+  "unknown_field_read": {
+   "opened": true,
+   "expected_open": true,
+   "pass": true,
+   "refused_for_the_value": false
+  },
+  "known_line_read": {
+   "opened": true,
+   "expected_open": true,
+   "pass": true,
+   "refused_for_the_value": false
+  },
+  "partial_false_rejected": {
+   "opened": false,
+   "expected_open": false,
+   "pass": true,
+   "refused_for_the_value": true
+  },
+  "matched_true_rejected": {
+   "opened": false,
+   "expected_open": false,
+   "pass": true,
+   "refused_for_the_value": true
+  }
+ },
+ "pass": false
+}

@@ -1,0 +1,960 @@
+{
+ "H-P2-0.3a": {
+  "d_a": {
+   "canonical_leak": 0,
+   "new_blocks": 525,
+   "scenarios": 200
+  },
+  "d_a2": {
+   "by_path": {
+    "atomic_rename": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "cat": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "cp_rsync": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "git_apply": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "python": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "sed": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    }
+   },
+   "canonical_leak": 0,
+   "new_blocks": 210,
+   "scenarios": 120
+  },
+  "pass": true,
+  "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+ },
+ "H-P2-0.3a′": {
+  "canonical_changed": 52,
+  "pass": true,
+  "scenarios": "200/200",
+  "source": "p2_0_2/d_a.json"
+ },
+ "H-P2-0.3b": {
+  "by_kind": {
+   "char": {
+    "new_blocks": 22,
+    "saves": 22,
+    "unverified": 0
+   },
+   "focus": {
+    "new_blocks": 21,
+    "saves": 21,
+    "unverified": 0
+   },
+   "move_folder": {
+    "new_blocks": 350,
+    "saves": 15,
+    "unverified": 37
+   },
+   "multi": {
+    "new_blocks": 56,
+    "saves": 56,
+    "unverified": 0
+   },
+   "paragraph": {
+    "new_blocks": 22,
+    "saves": 22,
+    "unverified": 0
+   },
+   "paste": {
+    "new_blocks": 270,
+    "saves": 21,
+    "unverified": 0
+   },
+   "rapid": {
+    "new_blocks": 77,
+    "saves": 22,
+    "unverified": 0
+   },
+   "rename": {
+    "new_blocks": 1038,
+    "saves": 173,
+    "unverified": 121
+   },
+   "rename_again": {
+    "new_blocks": 372,
+    "saves": 61,
+    "unverified": 5
+   }
+  },
+  "coverage": {
+   "link_counts": {
+    "embed": 7,
+    "md_label": 7,
+    "md_name": 8,
+    "md_path": 4,
+    "self_md": 2,
+    "self_wiki": 2,
+    "self_wiki_heading": 2,
+    "wiki": 8,
+    "wiki_alias": 7,
+    "wiki_heading": 8
+   },
+   "ok": true,
+   "rename_facts": {
+    "in_folder": 39,
+    "incoming_md": 45,
+    "renames": 70,
+    "self_link": 35,
+    "self_link_by_kind": {
+     "move_folder": 10,
+     "rename": 17,
+     "rename_again": 8
+    }
+   },
+   "seed": 2671050228,
+   "session_kinds": {
+    "char": 22,
+    "focus": 21,
+    "move_folder": 15,
+    "multi": 22,
+    "paragraph": 22,
+    "paste": 21,
+    "rapid": 22,
+    "rename": 40,
+    "rename_again": 15
+   },
+   "zero": []
+  },
+  "false_unverified_rate": 0.07315978456014363,
+  "link_settings": {
+   "alwaysUpdateLinks": true,
+   "newLinkFormat": "shortest",
+   "useMarkdownLinks": false
+  },
+  "new_blocks": 2228,
+  "pass": false,
+  "saves": 413,
+  "seed": 2671050228,
+  "sessions": 200,
+  "set": "D-B test-4",
+  "side_notes": 179,
+  "source": "p2_0_3/d_b.json",
+  "unverified_after_window": 163
+ },
+ "H-P2-0.3b-yük": {
+  "false_unverified_rate": 0.07315978456014363,
+  "pass": false,
+  "source": "p2_0_3/d_b.json",
+  "threshold": 0.02
+ },
+ "H-P2-0.3b′": {
+  "by_class": {
+   "embed": {
+    "blocks": 35,
+    "unverified": 5
+   },
+   "md_label": {
+    "blocks": 26,
+    "unverified": 2
+   },
+   "md_name": {
+    "blocks": 44,
+    "unverified": 5
+   },
+   "none": {
+    "blocks": 1541,
+    "unverified": 143
+   },
+   "self": {
+    "blocks": 35,
+    "unverified": 4
+   },
+   "wiki": {
+    "blocks": 42,
+    "unverified": 4
+   },
+   "wiki_alias": {
+    "blocks": 24,
+    "unverified": 0
+   },
+   "wiki_heading": {
+    "blocks": 50,
+    "unverified": 4
+   }
+  },
+  "by_kind": {
+   "move_folder": {
+    "blocks": 350,
+    "records": 15,
+    "unverified": 37
+   },
+   "rename": {
+    "blocks": 1038,
+    "records": 173,
+    "unverified": 121
+   },
+   "rename_again": {
+    "blocks": 372,
+    "records": 61,
+    "unverified": 5
+   }
+  },
+  "false_unverified_rate": 0.09261363636363637,
+  "new_blocks": 1760,
+  "pass": null,
+  "records": 249,
+  "sessions": 70,
+  "source": "p2_0_3/d_b.json (renames)",
+  "unverified_after_window": 163
+ },
+ "H-P2-0.3c": {
+  "latency_measured": 164,
+  "latency_p95_ms": 276,
+  "latency_p95_over_window": false,
+  "latency_unsettled": 0,
+  "no_write": 249,
+  "pass": true,
+  "source": "p2_0_3/d_b.json"
+ },
+ "H-P2-0.3d": {
+  "d_c": {
+   "accuracy": 1.0,
+   "agent_canonical": 0,
+   "blocks": 340,
+   "by_mode": {
+    "apart": {
+     "blocks": 298,
+     "right": 298
+    },
+    "collide": {
+     "blocks": 14,
+     "right": 14
+    },
+    "same_doc_after": {
+     "blocks": 28,
+     "right": 28
+    }
+   },
+   "partial_lines": 7,
+   "pass": true,
+   "right": 340,
+   "ticks": 160
+  },
+  "d_c_prime": {
+   "agent_canonical": 0,
+   "by_delay": {
+    "0": {
+     "agent_canonical": 0,
+     "human_blocks": 10,
+     "human_canonical": 10,
+     "ticks": 10
+    },
+    "100": {
+     "agent_canonical": 0,
+     "human_blocks": 10,
+     "human_canonical": 10,
+     "ticks": 10
+    },
+    "20": {
+     "agent_canonical": 0,
+     "human_blocks": 10,
+     "human_canonical": 10,
+     "ticks": 10
+    },
+    "50": {
+     "agent_canonical": 0,
+     "human_blocks": 10,
+     "human_canonical": 10,
+     "ticks": 10
+    }
+   },
+   "human_accuracy": 1,
+   "human_blocks": 40,
+   "human_canonical": 40,
+   "pass": true,
+   "ticks": 40
+  },
+  "pass": true,
+  "source": "p2_0_2/d_c.json, p2_0_3/d_c_prime.json"
+ },
+ "H-P2-0.3e": {
+  "agent_blocks": 50,
+  "agent_canonical": 0,
+  "by_kind": {
+   "carry": {
+    "agent_canonical": 0,
+    "scenarios": 10
+   },
+   "in_agent_block": {
+    "agent_canonical": 0,
+    "scenarios": 25
+   },
+   "in_human_block": {
+    "agent_canonical": 0,
+    "scenarios": 15
+   },
+   "unobserved": {
+    "agent_canonical": 0,
+    "scenarios": 10
+   }
+  },
+  "carry_agent_blocks": 10,
+  "carry_agent_canonical": 0,
+  "carry_human_canonical_after": 76,
+  "carry_human_canonical_before": 90,
+  "carry_scenarios": 10,
+  "fakes": 10,
+  "fakes_denied": 10,
+  "link_settings": {
+   "alwaysUpdateLinks": true,
+   "newLinkFormat": "shortest",
+   "useMarkdownLinks": false
+  },
+  "links_rewritten": 47,
+  "pass": true,
+  "scenarios": 50,
+  "source": "p2_0_3/d_a_prime.json"
+ },
+ "H-P2-0.3f": {
+  "by_kind": {
+   "append": {
+    "new_blocks": 20,
+    "sessions": 20,
+    "unverified_after_window": 0
+   },
+   "atomic": {
+    "new_blocks": 50,
+    "sessions": 50,
+    "unverified_after_window": 0
+   },
+   "inplace": {
+    "new_blocks": 30,
+    "sessions": 30,
+    "unverified_after_window": 0
+   },
+   "mv": {
+    "new_blocks": 459,
+    "sessions": 30,
+    "unverified_after_window": 0
+   },
+   "rapid": {
+    "new_blocks": 71,
+    "sessions": 20,
+    "unverified_after_window": 0
+   }
+  },
+  "false_unverified_rate": 0.0,
+  "latency_p95_ms": 136.3,
+  "latency_unsettled": 0,
+  "new_blocks": 630,
+  "pass": true,
+  "sessions": 150,
+  "source": "p2_0_2/d_b2.json",
+  "unverified_after_window": 0
+ },
+ "H-P2-0.3h": {
+  "failed": [],
+  "pass": true,
+  "source": "p2_0_2/d_e.json",
+  "vaults": "6/6"
+ },
+ "H-P2-0.3j": {
+  "level_claimed": 3,
+  "new": {
+   "C2-14": "pass"
+  },
+  "pass": false,
+  "passed": 39,
+  "source": "conformance_p1d1.json",
+  "spec_version": "2.0.3",
+  "total": 39
+ },
+ "logs_vs_p2a": {
+  "logs": {
+   "d_a/attestations.jsonl": {
+    "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "equal": true
+   },
+   "d_a/events.jsonl": {
+    "blake3": "8969047e33d23e6a80f2ae799c5a341f",
+    "equal": true
+   },
+   "d_a2/attestations.jsonl": {
+    "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "equal": true
+   },
+   "d_a2/events.jsonl": {
+    "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+    "equal": true
+   },
+   "d_c/attestations.jsonl": {
+    "blake3": "768213cc89bbe2ce8dcb882696b484f8",
+    "equal": true
+   },
+   "d_c/events.jsonl": {
+    "blake3": "01bc1eee5373f844dc5263d4377d57e0",
+    "equal": true
+   }
+  },
+  "pass": true,
+  "reference_run": "reports/rounds/P2-A/runs/20261020T230453Z-1a775d3"
+ },
+ "p2a_recorders": {
+  "fail_summary": {
+   "counted": [
+    "p1b1_checks.json:B1-3",
+    "p1c1_checks.json:C1-7",
+    "p1d1_checks.json:D1-10",
+    "p1d1_checks.json:D1-12",
+    "p1d1_checks.json:D1-13",
+    "p1d1_checks.json:tamper",
+    "p1d_checks.json:D-2",
+    "p1d_checks.json:D-9",
+    "p1e1_checks.json:E1-4",
+    "p1e1_checks.json:E1-5",
+    "p1e1_checks.json:E1-8",
+    "p1e1_checks.json:E1-9",
+    "p1e1_checks.json:tamper",
+    "p1e_checks.json:E-16",
+    "p1e_checks.json:E-7",
+    "p1e_checks.json:tamper",
+    "p2_0_2_checks.json:H-P2-0.2j",
+    "p2_0_2_checks.json:H-P2-0.2k",
+    "p2_0_2_checks.json:fail_summary",
+    "p2_0_2_checks.json:regress"
+   ],
+   "counted_fails": 20,
+   "historical": 10,
+   "migration_required": 2,
+   "pass": false,
+   "reference_run": "reports/rounds/P2-0.2/runs/20261019T212951Z-72fd78f",
+   "source": "p2a/historical.json (eval.historical_p2a = the chain's summary)"
+  },
+  "regress": {
+   "conformance": {
+    "differing_tests": [],
+    "equal": false,
+    "level_claimed": [
+     3,
+     3
+    ],
+    "passed": [
+     39,
+     39
+    ],
+    "reference_tests": 39,
+    "spec_version": [
+     "2.0.2",
+     "2.0.3"
+    ],
+    "tests": 39
+   },
+   "differing_fields": {
+    "conformance_p1d1.json:spec_version": "inf",
+    "p1b1_checks.json:criteria›B1-3›spec_version": "inf",
+    "p1c1_checks.json:C1-7›spec_version": "inf",
+    "p1c_checks.json:C-1›spec_version": "inf",
+    "p1d/inspector/inspector.json:calls_ok": 0.09090909090909091,
+    "p1d/inspector/inspector.json:calls›#len": 0.09090909090909091,
+    "p1d/inspector/inspector.json:calls›10›ok": {
+     "a": "absent",
+     "b": true
+    },
+    "p1d/inspector/inspector.json:calls›10›tool": {
+     "a": "absent",
+     "b": "events"
+    },
+    "p1d/inspector/inspector.json:schemas_valid": 0.09090909090909091,
+    "p1d/inspector/inspector.json:tools_expected": 0.09090909090909091,
+    "p1d/inspector/inspector.json:tools_listed": 0.09090909090909091,
+    "p1d/mcp_e2e/mcp_e2e.json:checks›1›pass": "inf",
+    "p1d/mcp_e2e/mcp_e2e.json:handshake_pass": "inf",
+    "p1d/mcp_e2e/mcp_e2e.json:per_tool›handshake›passed": 0.5,
+    "p1d/scene/scene.json:steps›0›shows›spec_version": "inf",
+    "p1d1/d1_13.json:missing›#len": 1.0,
+    "p1d1/d1_13.json:missing›0": {
+     "a": "absent",
+     "b": "tool:events"
+    },
+    "p1d1/d1_13.json:missing›1": {
+     "a": "absent",
+     "b": "http-endpoint:POST /v1/events (no request in this script)"
+    },
+    "p1d1/d1_13.json:pass": "inf",
+    "p1d1/d1_13.json:tools›contract›#len": 0.09090909090909091,
+    "p1d1/d1_13.json:tools›contract›10": {
+     "a": "absent",
+     "b": "trace"
+    },
+    "p1d1/d1_13.json:tools›contract›3": "inf",
+    "p1d1/d1_13.json:tools›contract›4": "inf",
+    "p1d1/d1_13.json:tools›contract›5": "inf",
+    "p1d1/d1_13.json:tools›contract›6": "inf",
+    "p1d1/d1_13.json:tools›contract›7": "inf",
+    "p1d1/d1_13.json:tools›contract›8": "inf",
+    "p1d1/d1_13.json:tools›contract›9": "inf",
+    "p1d1/d1_13.json:tools›server›#len": 0.09090909090909091,
+    "p1d1/d1_13.json:tools›server›10": {
+     "a": "absent",
+     "b": "trace"
+    },
+    "p1d1/d1_13.json:tools›server›3": "inf",
+    "p1d1/d1_13.json:tools›server›4": "inf",
+    "p1d1/d1_13.json:tools›server›5": "inf",
+    "p1d1/d1_13.json:tools›server›6": "inf",
+    "p1d1/d1_13.json:tools›server›7": "inf",
+    "p1d1/d1_13.json:tools›server›8": "inf",
+    "p1d1/d1_13.json:tools›server›9": "inf",
+    "p1d1/p1d1.json:criteria›D1-13": "inf",
+    "p1d1/p1d1.json:pass": "inf",
+    "p1d1/tamper_p1d1.json:cases›0›as_expected": "inf",
+    "p1d1/tamper_p1d1.json:cases›0›got": "inf",
+    "p1d1/tamper_p1d1.json:controls_ok": 0.2,
+    "p1d1/tamper_p1d1.json:pass": "inf",
+    "p1d1_checks.json:D1-10›spec_version": "inf",
+    "p1d1_checks.json:D1-12›regress_vs_p1d›conformance›spec_version›1": "inf",
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls_ok": {
+     "a": "absent",
+     "b": 0.09090909090909091
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›#len": {
+     "a": "absent",
+     "b": 0.09090909090909091
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›ok›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›ok›b": {
+     "a": "absent",
+     "b": true
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›tool›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›tool›b": {
+     "a": "absent",
+     "b": "events"
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:schemas_valid": {
+     "a": "absent",
+     "b": 0.09090909090909091
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:tools_expected": {
+     "a": "absent",
+     "b": 0.09090909090909091
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:tools_listed": {
+     "a": "absent",
+     "b": 0.09090909090909091
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›1›pass": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:handshake_pass": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›handshake›passed": {
+     "a": "absent",
+     "b": 0.5
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›inspector_calls_ok": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›schemas_valid": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›tools_listed": {
+     "a": "absent",
+     "b": 0.09090909090909091
+    },
+    "p1d1_checks.json:D1-12›regress_vs_p1d›excluded_differences›p1d_checks·json:D-2›leaves": 0.3333333333333333,
+    "p1d1_checks.json:D1-13›missing›#len": 1.0,
+    "p1d1_checks.json:D1-13›missing›0": {
+     "a": "absent",
+     "b": "tool:events"
+    },
+    "p1d1_checks.json:D1-13›missing›1": {
+     "a": "absent",
+     "b": "http-endpoint:POST /v1/events (no request in this script)"
+    },
+    "p1d1_checks.json:D1-13›pass": "inf",
+    "p1d1_checks.json:D1-13›tools": 0.09090909090909091,
+    "p1d1_checks.json:tamper›controls": "inf",
+    "p1d1_checks.json:tamper›pass": "inf",
+    "p1d_checks.json:D-1›inspector_calls_ok": "inf",
+    "p1d_checks.json:D-1›schemas_valid": "inf",
+    "p1d_checks.json:D-1›tools_listed": 0.09090909090909091,
+    "p1d_checks.json:D-2›handshake": "inf",
+    "p1d_checks.json:D-2›per_tool›handshake›passed": 0.5,
+    "p1d_checks.json:D-9›conformance›spec_version›1": "inf",
+    "p1e/check_compare_fields.json:fields_declared": 0.09951456310679611,
+    "p1e/check_compare_fields.json:fields_in_code": 0.09951456310679611,
+    "p1e/plugin_e2e/plugin_e2e.json:steps›0›shows›spec_version": "inf",
+    "p1e/release/conformance_equiv.json:spec_version›0": "inf",
+    "p1e/release/conformance_equiv.json:spec_version›1": "inf",
+    "p1e/release/conformance_rootmark.json:mdk_version": "inf",
+    "p1e/release/conformance_rootmark.json:spec_version": "inf",
+    "p1e/release/release_local.json:spec_version": "inf",
+    "p1e/release/release_local.json:version": "inf",
+    "p1e/scene/scene.json:steps›0›shows›mcp_spec_version": "inf",
+    "p1e/scene/scene.json:steps›0›shows›spec_version": "inf",
+    "p1e/tamper_p1e.json:cases›0›as_expected": "inf",
+    "p1e/tamper_p1e.json:cases›0›got": "inf",
+    "p1e/tamper_p1e.json:controls_ok": 0.2,
+    "p1e/tamper_p1e.json:pass": "inf",
+    "p1e1/check_compare_fields.json:fields_declared": 0.09951456310679611,
+    "p1e1/check_compare_fields.json:fields_in_code": 0.09951456310679611,
+    "p1e1/contract.json:missing›#len": 1.0,
+    "p1e1/contract.json:missing›0": {
+     "a": "absent",
+     "b": "tool:events"
+    },
+    "p1e1/contract.json:missing›1": {
+     "a": "absent",
+     "b": "http-endpoint:POST /v1/events (no request in this script)"
+    },
+    "p1e1/contract.json:pass": "inf",
+    "p1e1/contract.json:tools›contract›#len": 0.09090909090909091,
+    "p1e1/contract.json:tools›contract›10": {
+     "a": "absent",
+     "b": "trace"
+    },
+    "p1e1/contract.json:tools›contract›3": "inf",
+    "p1e1/contract.json:tools›contract›4": "inf",
+    "p1e1/contract.json:tools›contract›5": "inf",
+    "p1e1/contract.json:tools›contract›6": "inf",
+    "p1e1/contract.json:tools›contract›7": "inf",
+    "p1e1/contract.json:tools›contract›8": "inf",
+    "p1e1/contract.json:tools›contract›9": "inf",
+    "p1e1/contract.json:tools›server›#len": 0.09090909090909091,
+    "p1e1/contract.json:tools›server›10": {
+     "a": "absent",
+     "b": "trace"
+    },
+    "p1e1/contract.json:tools›server›3": "inf",
+    "p1e1/contract.json:tools›server›4": "inf",
+    "p1e1/contract.json:tools›server›5": "inf",
+    "p1e1/contract.json:tools›server›6": "inf",
+    "p1e1/contract.json:tools›server›7": "inf",
+    "p1e1/contract.json:tools›server›8": "inf",
+    "p1e1/contract.json:tools›server›9": "inf",
+    "p1e1/historical.json:historical": 0.25,
+    "p1e1/release/plugin_e2e_real.json:steps›0›shows›text": "inf",
+    "p1e1/release/release.json:required_ok": "inf",
+    "p1e1/release/release.json:required_targets›#len": 0.5,
+    "p1e1/release/release.json:required_targets›1": {
+     "a": "absent",
+     "b": "x86_64-unknown-linux-gnu"
+    },
+    "p1e1/release/release.json:spec_version": "inf",
+    "p1e1/release/release.json:targets›0›spec_version": "inf",
+    "p1e1/release/release.json:targets›0›version": "inf",
+    "p1e1/release/release.json:targets›2›required": "inf",
+    "p1e1/release/release.json:version": "inf",
+    "p1e1/tamper_p1e1.json:cases›0›as_expected": "inf",
+    "p1e1/tamper_p1e1.json:cases›0›got": "inf",
+    "p1e1/tamper_p1e1.json:cases›1›detail›tools_equal": "inf",
+    "p1e1/tamper_p1e1.json:controls_ok": 0.5,
+    "p1e1_checks.json:E1-5›other_targets›x86_64-unknown-linux-gnu": {
+     "a": "skipped",
+     "b": "absent"
+    },
+    "p1e1_checks.json:E1-5›pass": "inf",
+    "p1e1_checks.json:E1-5›required_targets›#len": 0.5,
+    "p1e1_checks.json:E1-5›required_targets›1": {
+     "a": "absent",
+     "b": "x86_64-unknown-linux-gnu"
+    },
+    "p1e1_checks.json:E1-5›required›spec_version": "inf",
+    "p1e1_checks.json:E1-5›required›version": "inf",
+    "p1e1_checks.json:E1-8›contract_check_pass": "inf",
+    "p1e1_checks.json:E1-8›deliberate›0›as_expected": "inf",
+    "p1e1_checks.json:tamper›controls": "inf",
+    "p1e_checks.json:E-16›pass": "inf",
+    "p1e_checks.json:E-7›chain_local_target›spec_version": "inf",
+    "p1e_checks.json:E-7›chain_local_target›version": "inf",
+    "p1e_checks.json:tamper›controls": "inf",
+    "p1e_checks.json:tamper›pass": "inf",
+    "p2_0_2/rules.json:pass": "inf",
+    "p2_0_2/rules.json:written›spec_7_1_draft": "inf",
+    "p2_0_2/tamper_p2_0_2.json:cases›13›detail›tools": 0.09090909090909091,
+    "p2_0_2_checks.json:H-P2-0·2j›pass": "inf",
+    "p2_0_2_checks.json:H-P2-0·2j›spec_version": "inf",
+    "p2_0_2_checks.json:H-P2-0·2k›pass": "inf",
+    "p2_0_2_checks.json:H-P2-0·2k›written›spec_7_1_draft": "inf"
+   },
+   "excluded_differences": {
+    "p1d1/d1_13.json:codes": {
+     "decision": "K-P2A.2",
+     "leaves": 12
+    },
+    "p1d1/d1_13.json:http": {
+     "decision": "K-P2A.2",
+     "leaves": 33
+    },
+    "p1d1_checks.json:D1-13/codes": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e/check_compare_fields.json:file_constants": {
+     "decision": "P2-A/F6",
+     "leaves": 1
+    },
+    "p1e/check_compare_fields.json:modules": {
+     "decision": "P2-A/F6",
+     "leaves": 6
+    },
+    "p1e/client.json:bundle_bytes": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e/client.json:vitest": {
+     "decision": "K-P2A.2",
+     "leaves": 3
+    },
+    "p1e/e0/e14.json:auto_rebuild_false": {
+     "decision": "K-P2A.2",
+     "leaves": 2
+    },
+    "p1e/e0/e14.json:pass": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e/e0/e14.json:passed": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e1/check_compare_fields.json:file_constants": {
+     "decision": "P2-A/F6",
+     "leaves": 1
+    },
+    "p1e1/check_compare_fields.json:modules": {
+     "decision": "P2-A/F6",
+     "leaves": 6
+    },
+    "p1e1/contract.json:codes": {
+     "decision": "K-P2A.2",
+     "leaves": 12
+    },
+    "p1e1/contract.json:http": {
+     "decision": "K-P2A.2",
+     "leaves": 33
+    },
+    "p1e1/historical.json:counted": {
+     "decision": "K-P2A.2",
+     "leaves": 17
+    },
+    "p1e1/historical.json:counted_fails": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e1/historical.json:fails": {
+     "decision": "K-P2A.2",
+     "leaves": 151
+    },
+    "p1e1/release/plugin_e2e_real.json:e1_9_connection": {
+     "decision": "K-P2A.2",
+     "leaves": 4
+    },
+    "p1e1/release/release.json:commit": {
+     "decision": "K-P2A.3",
+     "leaves": 1
+    },
+    "p1e1/release/release_check.json:items": {
+     "decision": "K-P2A.3",
+     "leaves": 31
+    },
+    "p1e1/release/release_check.json:pass": {
+     "decision": "K-P2A.3",
+     "leaves": 1
+    },
+    "p1e1/release/release_check.json:passed": {
+     "decision": "K-P2A.3",
+     "leaves": 1
+    },
+    "p1e1/release/release_check.json:total": {
+     "decision": "K-P2A.3",
+     "leaves": 1
+    },
+    "p1e1/status/e1_1.json:auto_rebuild_false": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e1/status/e1_1.json:cases": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e1/status/e1_1.json:pass": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e1/status/e1_1.json:passed": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e1_checks.json:E1-1": {
+     "decision": "K-P2A.2",
+     "leaves": 3
+    },
+    "p1e1_checks.json:E1-4": {
+     "decision": "K-P2A.3",
+     "leaves": 23
+    },
+    "p1e1_checks.json:E1-6": {
+     "decision": "K-P2A.2",
+     "leaves": 192
+    },
+    "p1e1_checks.json:E1-9": {
+     "decision": "K-P2A.2",
+     "leaves": 6
+    },
+    "p1e_checks.json:E-10/bundle_bytes": {
+     "decision": "K-P2A.2",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-10/vitest": {
+     "decision": "K-P2A.2",
+     "leaves": 3
+    },
+    "p1e_checks.json:E-14": {
+     "decision": "K-P2A.2",
+     "leaves": 2
+    },
+    "p1e_checks.json:E-9": {
+     "decision": "K-P2A.2",
+     "leaves": 67
+    },
+    "p2_0_2_checks.json:fail_summary": {
+     "decision": "K-P2A.2",
+     "leaves": 18
+    },
+    "p2_0_2_checks.json:regress": {
+     "decision": "K-P2A.2",
+     "leaves": 320
+    }
+   },
+   "exclusions_without_difference": [
+    "p1e1/release/plugin_e2e_real.json:pass"
+   ],
+   "n_fields": 108846,
+   "p2_0_2_bytes": {
+    "equal": true,
+    "files": {
+     "p2_0_2/d_a/attestations.jsonl": {
+      "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+      "bytes": 0,
+      "equal": true
+     },
+     "p2_0_2/d_a/events.jsonl": {
+      "blake3": "8969047e33d23e6a80f2ae799c5a341f",
+      "bytes": 428018,
+      "equal": true
+     },
+     "p2_0_2/d_a2/attestations.jsonl": {
+      "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+      "bytes": 0,
+      "equal": true
+     },
+     "p2_0_2/d_a2/events.jsonl": {
+      "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+      "bytes": 253173,
+      "equal": true
+     },
+     "p2_0_2/d_c/attestations.jsonl": {
+      "blake3": "768213cc89bbe2ce8dcb882696b484f8",
+      "bytes": 24237,
+      "equal": true
+     },
+     "p2_0_2/d_c/events.jsonl": {
+      "blake3": "01bc1eee5373f844dc5263d4377d57e0",
+      "bytes": 476847,
+      "equal": true
+     }
+    }
+   },
+   "pass": false,
+   "reference_run": "20261019T212951Z-72fd78f",
+   "source": "regress_vs_p2_0_2.json"
+  },
+  "source": "p2a_checks.json (make p2a-checks, same chain)",
+  "tamper": {
+   "cases": {
+    "changed_vault_refused": true,
+    "damaged_record_refused": true,
+    "old_index_migration_required": true
+   },
+   "pass": true,
+   "source": "p2a/tamper.json"
+  }
+ },
+ "rules": {
+  "forward_compatibility": {
+   "known_line_read": {
+    "expected_open": true,
+    "opened": true,
+    "pass": true,
+    "refused_for_the_value": false
+   },
+   "matched_true_rejected": {
+    "expected_open": false,
+    "opened": false,
+    "pass": true,
+    "refused_for_the_value": true
+   },
+   "partial_false_rejected": {
+    "expected_open": false,
+    "opened": false,
+    "pass": true,
+    "refused_for_the_value": true
+   },
+   "unknown_field_read": {
+    "expected_open": true,
+    "opened": true,
+    "pass": true,
+    "refused_for_the_value": false
+   }
+  },
+  "pass": false,
+  "pass_is_criterion": false,
+  "source": "p2_0_2/rules.json",
+  "written": {
+   "criterion_unknown_field": true,
+   "dev_process_stamp_rule": true,
+   "spec_7_1_draft": false,
+   "spec_8_reading_rule": true
+  }
+ },
+ "seed": {
+  "derivation": "int(blake3(\"P2-0.3/D-B\")[:8], 16)",
+  "not_reused": [
+   1793744460
+  ],
+  "pass": true,
+  "recorded": 2671050228,
+  "seed": 2671050228
+ },
+ "window": {
+  "p2_0_3_window_s": 0.5,
+  "source": "manifest.json (p2_0_2_test window_s)",
+  "window_s": 0.5
+ }
+}

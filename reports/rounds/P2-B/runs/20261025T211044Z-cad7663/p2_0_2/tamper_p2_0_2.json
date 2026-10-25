@@ -1,0 +1,205 @@
+{
+ "cases": [
+  {
+   "group": "control",
+   "case": "link update with a Markdown label that is the old name (T1)",
+   "expected": "accepted",
+   "got": "accepted",
+   "detail": {
+    "status": 200,
+    "layers": [
+     "canonical",
+     "canonical"
+    ]
+   },
+   "as_expected": true
+  },
+  {
+   "group": "link_update",
+   "case": "a label changed to something that is not the new name, and a word",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 403,
+    "layers": [
+     "unverified"
+    ],
+    "reason": "{\"error\":{\"code\":\"denied\",\"message\":\"attest: links2.md is not a link update of links2.md for kiln.md: block 1: the text differs outside link targets\"}}"
+   },
+   "as_expected": true
+  },
+  {
+   "group": "control",
+   "case": "a self-linking note renamed with its own links (carry: agent unverified)",
+   "expected": "accepted",
+   "got": "accepted",
+   "detail": {
+    "status": 200,
+    "layers": {
+     "# Selfnote": "canonical",
+     "See [[self2]] and [self2](self2.md).": "canonical",
+     "A second human line.": "canonical",
+     "An agent paragraph written to the file.": "unverified"
+    }
+   },
+   "as_expected": true
+  },
+  {
+   "group": "carry",
+   "case": "a fake rename carrying an agent paragraph",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 403,
+    "layers": {
+     "# Espresso": "unverified",
+     "Espresso is brewed with nine bars of pressure for about 28 seconds.": "unverified",
+     "## Recipe": "unverified",
+     "- Dose: 18 g": "unverified",
+     "- Yield: 36 g": "unverified",
+     "- Time: 26 to 30 seconds - Under 24 seconds tastes sour. - Over 32 seconds tastes bitter.": "unverified",
+     "## Equipment": "unverified",
+     "The shop uses a two-group machine that is descaled every month according to [[maintenance]].": "unverified",
+     "```python\ndef ratio(dose, yield_):\n    return yield_ / dose  # 1:2 is the house standard\n```": "unverified",
+     "The house blend is defined in [[blends]].": "unverified",
+     "An agent paragraph riding a fake rename.": "unverified"
+    },
+    "reason": "{\"error\":{\"code\":\"denied\",\"message\":\"attest: fake.md is not a rename of the content of espresso.md: 11 blocks against 10 in espresso.md\"}}"
+   },
+   "as_expected": true
+  },
+  {
+   "group": "carry",
+   "case": "a rename of the agent's unverified note raises nothing",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 200,
+    "layers": {
+     "# Espresso": "unverified",
+     "Espresso is brewed with nine bars of pressure for about 28 seconds.": "unverified",
+     "## Recipe": "unverified",
+     "- Dose: 18 g": "unverified",
+     "- Yield: 36 g": "unverified",
+     "- Time: 26 to 30 seconds - Under 24 seconds tastes sour. - Over 32 seconds tastes bitter.": "unverified",
+     "## Equipment": "unverified",
+     "The shop uses a two-group machine that is descaled every month according to [[maintenance]].": "unverified",
+     "```python\ndef ratio(dose, yield_):\n    return yield_ / dose  # 1:2 is the house standard\n```": "unverified",
+     "The house blend is defined in [[blends]].": "unverified",
+     "An agent paragraph riding a fake rename.": "unverified"
+    }
+   },
+   "as_expected": true
+  },
+  {
+   "group": "link_update",
+   "case": "fake link update (a paragraph beyond the link targets)",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 403,
+    "layers": [
+     "unverified"
+    ]
+   },
+   "as_expected": true
+  },
+  {
+   "group": "content",
+   "case": "content that does not hash to content_hash",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 400
+   },
+   "as_expected": true
+  },
+  {
+   "group": "partial",
+   "case": "an attest body carrying partial: true",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 400
+   },
+   "as_expected": true
+  },
+  {
+   "group": "link_update",
+   "case": "link_update_from without link_update_of",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "status": 400
+   },
+   "as_expected": true
+  },
+  {
+   "group": "control",
+   "case": "the untouched vault opens",
+   "expected": "accepted",
+   "got": "accepted",
+   "detail": null,
+   "as_expected": true
+  },
+  {
+   "group": "control",
+   "case": "a log line with x_future: 1",
+   "expected": "accepted",
+   "got": "accepted",
+   "detail": null,
+   "as_expected": true
+  },
+  {
+   "group": "log",
+   "case": "a log line with partial: false",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": null,
+   "as_expected": true
+  },
+  {
+   "group": "log",
+   "case": "a log line with matched: true",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": null,
+   "as_expected": true
+  },
+  {
+   "group": "mcp",
+   "case": "tools/list holds no attestation tool",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "tools": 11
+   },
+   "as_expected": true
+  },
+  {
+   "group": "mcp",
+   "case": "tools/call attest",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "code": -32602
+   },
+   "as_expected": true
+  },
+  {
+   "group": "mcp",
+   "case": "tools/call attest_session",
+   "expected": "rejected",
+   "got": "rejected",
+   "detail": {
+    "code": -32602
+   },
+   "as_expected": true
+  }
+ ],
+ "rejected": 12,
+ "rejected_total": 12,
+ "controls_ok": 4,
+ "controls_total": 4,
+ "pass": true
+}

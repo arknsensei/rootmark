@@ -1,0 +1,80 @@
+{
+  "v3_final_sha": "71c244e551258601bfd5550b61d1aa7335a938fa",
+  "scenarios": [
+    {
+      "scenario": "agent_only",
+      "docs": 1,
+      "blame_equal": 1,
+      "events_hash_v3_final": "14221c1e416930ea068821407907b2df",
+      "events_hash_current": "14221c1e416930ea068821407907b2df",
+      "pass": true
+    },
+    {
+      "scenario": "transcript_only",
+      "docs": 1,
+      "blame_equal": 1,
+      "events_hash_v3_final": "0b852f09a2f4d2fe053df6815044a19d",
+      "events_hash_current": "0b852f09a2f4d2fe053df6815044a19d",
+      "pass": true
+    },
+    {
+      "scenario": "synthetic_only",
+      "docs": 1,
+      "blame_equal": 1,
+      "events_hash_v3_final": "cb1a16f0699620d17c4042a58d1e1179",
+      "events_hash_current": "cb1a16f0699620d17c4042a58d1e1179",
+      "pass": true
+    },
+    {
+      "scenario": "human_synthetic",
+      "docs": 1,
+      "blame_equal": 1,
+      "events_hash_v3_final": "4db6c0aecf8eece44081ef8fb997a7b3",
+      "events_hash_current": "4db6c0aecf8eece44081ef8fb997a7b3",
+      "pass": true
+    },
+    {
+      "scenario": "agent_human",
+      "docs": 1,
+      "blame_equal": 1,
+      "events_hash_v3_final": "a41b000dba92cf1fe06039be441f94f8",
+      "events_hash_current": "a41b000dba92cf1fe06039be441f94f8",
+      "pass": true
+    },
+    {
+      "scenario": "human_agent",
+      "docs": 1,
+      "blame_equal": 1,
+      "events_hash_v3_final": "2d5bedfa0fcfd07906464dd72996d1b7",
+      "events_hash_current": "2d5bedfa0fcfd07906464dd72996d1b7",
+      "pass": true
+    },
+    {
+      "scenario": "human_transcript",
+      "docs": 1,
+      "blame_equal": 1,
+      "events_hash_v3_final": "60719e79574c834de90325d183cca64c",
+      "events_hash_current": "60719e79574c834de90325d183cca64c",
+      "pass": true
+    },
+    {
+      "scenario": "synthetic_agent",
+      "docs": 1,
+      "blame_equal": 1,
+      "events_hash_v3_final": "5528ff4d643fcefa703fc6c0793daf47",
+      "events_hash_current": "5528ff4d643fcefa703fc6c0793daf47",
+      "pass": true
+    },
+    {
+      "scenario": "mixed_vault",
+      "docs": 4,
+      "blame_equal": 4,
+      "events_hash_v3_final": "15617bb7fde8f94728acffeef41f4b8e",
+      "events_hash_current": "15617bb7fde8f94728acffeef41f4b8e",
+      "pass": true
+    }
+  ],
+  "passed": 9,
+  "total": 9,
+  "pass": true
+}

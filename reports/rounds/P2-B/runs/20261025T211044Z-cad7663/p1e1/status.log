@@ -1,0 +1,131 @@
+
+running 2 tests
+e1_1_real_old_index_status_and_reads --- FAILED
+.
+failures:
+
+---- e1_1_real_old_index_status_and_reads stdout ----
+
+thread 'e1_1_real_old_index_status_and_reads' (111174197) panicked at server/tests/p1e1_status.rs:303:5:
+assertion `left == right` failed: {
+  "auto_rebuild_false": {
+    "blame": {
+      "blocks": 4,
+      "http": 200
+    },
+    "checkpoints": {
+      "http": 200
+    },
+    "search": {
+      "code": "migration_required",
+      "hits": null,
+      "http": 503
+    },
+    "status_get": {
+      "http": 200,
+      "index": {
+        "auto_rebuild": false,
+        "expected_format": "mdkernel-index/3",
+        "format": "mdkernel-index/2",
+        "state": "stale"
+      }
+    },
+    "status_get_equals_post": true,
+    "status_mcp": {
+      "index": {
+        "auto_rebuild": false,
+        "expected_format": "mdkernel-index/3",
+        "format": "mdkernel-index/2",
+        "state": "stale"
+      },
+      "is_error": false
+    },
+    "status_mcp_equals_http": true,
+    "status_post": {
+      "http": 200,
+      "index": {
+        "auto_rebuild": false,
+        "expected_format": "mdkernel-index/3",
+        "format": "mdkernel-index/2",
+        "state": "stale"
+      }
+    },
+    "trace": {
+      "http": 200
+    }
+  },
+  "auto_rebuild_false_index_fields_ok": true,
+  "auto_rebuild_false_start_log_says_stale": true,
+  "auto_rebuild_false_untouched": true,
+  "auto_rebuild_true": {
+    "blame": {
+      "blocks": 4,
+      "http": 200
+    },
+    "checkpoints": {
+      "http": 200
+    },
+    "search": {
+      "code": null,
+      "hits": 5,
+      "http": 200
+    },
+    "status_get": {
+      "http": 200,
+      "index": {
+        "auto_rebuild": true,
+        "expected_format": "mdkernel-index/3",
+        "format": "mdkernel-index/3",
+        "state": "ok"
+      }
+    },
+    "status_get_equals_post": true,
+    "status_mcp": {
+      "index": {
+        "auto_rebuild": true,
+        "expected_format": "mdkernel-index/3",
+        "format": "mdkernel-index/3",
+        "state": "ok"
+      },
+      "is_error": false
+    },
+    "status_mcp_equals_http": true,
+    "status_post": {
+      "http": 200,
+      "index": {
+        "auto_rebuild": true,
+        "expected_format": "mdkernel-index/3",
+        "format": "mdkernel-index/3",
+        "state": "ok"
+      }
+    },
+    "trace": {
+      "http": 200
+    }
+  },
+  "cases": {
+    "auto_rebuild=true: all 200": true,
+    "blame 200": true,
+    "checkpoints 200": true,
+    "search 503 index_stale": false,
+    "status GET 200 stale": true,
+    "status MCP stale": true,
+    "status POST 200 stale": true,
+    "trace 200": true
+  },
+  "criterion": "E1-1",
+  "fixture": "server/tests/fixtures/index_v2 (p1d-final binary, mdkernel-index/2; migrated)",
+  "pass": false,
+  "passed": "7/8"
+}
+  left: Bool(false)
+ right: true
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    e1_1_real_old_index_status_and_reads
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.04s
+
+error: test failed, to rerun pass `-p rootmark-server --test p1e1_status`

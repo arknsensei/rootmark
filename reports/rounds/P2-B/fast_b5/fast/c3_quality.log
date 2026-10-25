@@ -1,0 +1,4 @@
+cd research && uv run --frozen python -m eval.run_c3_quality --run 20261025T182021Z-67082de
+C-3 hybrid/single: nDCG@10 0.6769 (v2 0.6740, Δ +0.0029)
+C-3 hybrid/multi: nDCG@10 0.4800 (v2 0.4936, Δ -0.0136)
+C-3 FAIL (|Δ| ≤ 0.01)

@@ -1,0 +1,27 @@
+{
+ "differing_fields": {},
+ "environment_fields": [
+  "fast/conformance.json:fixtures_root"
+ ],
+ "equal": true,
+ "files": [
+  "fast/conformance.json",
+  "fast/conformance_rootmark.json",
+  "fast/conformance_equiv.json",
+  "fast/regress.json",
+  "c3_quality.json",
+  "p2l_checks.json",
+  "p2l_quality.json",
+  "p2l/d_tr.json",
+  "p2l/english.json",
+  "p2l/migrate.json",
+  "p2p_checks.json",
+  "p2b_checks.json",
+  "p2b/align.json",
+  "p2b/det.json",
+  "p2b/client_checks.json",
+  "p2b/obsidian_e2e.json",
+  "p2b/vscode_e2e.json"
+ ],
+ "n_fields": 95500
+}

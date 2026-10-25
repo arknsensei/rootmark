@@ -1,0 +1,23 @@
+{
+ "conformance": {
+  "differing": [],
+  "level_claimed": 3,
+  "new": [],
+  "new_failing": [],
+  "pass": true,
+  "reference_tests": 39,
+  "tests": 39
+ },
+ "conformance_equiv": {
+  "exit": 0
+ },
+ "pass": true,
+ "quality": {
+  "compared": 618,
+  "differing": [],
+  "pass": true,
+  "reference": "quality_ref_rust.json",
+  "source_run": "20261015T014417Z-9aa326b"
+ },
+ "reference_run": "20261024T000230Z-5632b3b"
+}

@@ -1,0 +1,344 @@
+{
+  "tools": {
+    "contract": [
+      "blame",
+      "checkpoint",
+      "checkpoints",
+      "events",
+      "history",
+      "promote",
+      "propose",
+      "read_block",
+      "search",
+      "status",
+      "trace"
+    ],
+    "server": [
+      "blame",
+      "checkpoint",
+      "checkpoints",
+      "events",
+      "history",
+      "promote",
+      "propose",
+      "read_block",
+      "search",
+      "status",
+      "trace"
+    ],
+    "equal": true
+  },
+  "codes": {
+    "contract": [
+      "denied 403",
+      "empty_query 400",
+      "exists 409",
+      "heading_not_found 422",
+      "index_stale 503",
+      "internal 500",
+      "invalid_arguments 400",
+      "migration_required 503",
+      "not_found 404",
+      "path_outside_vault 400",
+      "policy_violation 422",
+      "too_large 413"
+    ],
+    "server": [
+      "denied 403",
+      "empty_query 400",
+      "exists 409",
+      "heading_not_found 422",
+      "index_stale 503",
+      "internal 500",
+      "invalid_arguments 400",
+      "migration_required 503",
+      "not_found 404",
+      "path_outside_vault 400",
+      "policy_violation 422",
+      "too_large 413"
+    ],
+    "equal": true
+  },
+  "http": {
+    "endpoints": [
+      {
+        "endpoint": "POST /v1/blame",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "POST /v1/checkpoint",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "POST /v1/checkpoints",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "POST /v1/history",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "POST /v1/promote",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "POST /v1/propose",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "POST /v1/read_block",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "POST /v1/search",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "POST /v1/status",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "POST /v1/trace",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "endpoint": "GET /v1/status",
+        "status": 200,
+        "ok": true
+      }
+    ],
+    "codes": [
+      {
+        "code": "denied",
+        "contract_status": 403,
+        "status": 403,
+        "error_code": "denied",
+        "ok": true
+      },
+      {
+        "code": "empty_query",
+        "contract_status": 400,
+        "status": 400,
+        "error_code": "empty_query",
+        "ok": true
+      },
+      {
+        "code": "exists",
+        "contract_status": 409,
+        "status": 409,
+        "error_code": "exists",
+        "ok": true
+      },
+      {
+        "code": "heading_not_found",
+        "contract_status": 422,
+        "status": 422,
+        "error_code": "heading_not_found",
+        "ok": true
+      },
+      {
+        "code": "invalid_arguments",
+        "contract_status": 400,
+        "status": 400,
+        "error_code": "invalid_arguments",
+        "ok": true
+      },
+      {
+        "code": "not_found",
+        "contract_status": 404,
+        "status": 404,
+        "error_code": "not_found",
+        "ok": true
+      },
+      {
+        "code": "path_outside_vault",
+        "contract_status": 400,
+        "status": 400,
+        "error_code": "path_outside_vault",
+        "ok": true
+      },
+      {
+        "code": "policy_violation",
+        "contract_status": 422,
+        "status": 422,
+        "error_code": "policy_violation",
+        "ok": true
+      },
+      {
+        "code": "too_large",
+        "contract_status": 413,
+        "status": 413,
+        "error_code": "too_large",
+        "ok": true
+      },
+      {
+        "code": "migration_required",
+        "contract_status": 503,
+        "status": 503,
+        "error_code": "migration_required",
+        "ok": true
+      },
+      {
+        "code": "index_stale",
+        "contract_status": 503,
+        "status": 503,
+        "error_code": "index_stale",
+        "ok": true
+      },
+      {
+        "code": "internal",
+        "contract_status": 500,
+        "status": 500,
+        "error_code": "internal",
+        "ok": true
+      }
+    ],
+    "transport": [
+      {
+        "case": "no token",
+        "status": 401,
+        "error_code": "denied",
+        "ok": true
+      },
+      {
+        "case": "unknown path",
+        "status": 404,
+        "error_code": "not_found",
+        "ok": true
+      },
+      {
+        "case": "GET of a tool",
+        "status": 405,
+        "error_code": "invalid_arguments",
+        "ok": true
+      }
+    ],
+    "status_index": [
+      {
+        "state": "ok",
+        "status_get": 200,
+        "status_post": 200,
+        "index": {
+          "auto_rebuild": false,
+          "expected_format": "mdkernel-index/3",
+          "format": "mdkernel-index/3",
+          "state": "ok"
+        },
+        "search_status": 200,
+        "search_code": "",
+        "ok": true
+      },
+      {
+        "state": "stale",
+        "status_get": 200,
+        "status_post": 200,
+        "index": {
+          "auto_rebuild": false,
+          "expected_format": "mdkernel-index/3",
+          "format": "mdkernel-index/2",
+          "state": "stale"
+        },
+        "search_status": 503,
+        "search_code": "migration_required",
+        "ok": true
+      },
+      {
+        "state": "damaged",
+        "status_get": 200,
+        "status_post": 200,
+        "index": {
+          "auto_rebuild": false,
+          "expected_format": "mdkernel-index/3",
+          "format": null,
+          "state": "damaged"
+        },
+        "search_status": 503,
+        "search_code": "index_stale",
+        "ok": true
+      },
+      {
+        "state": "missing",
+        "status_get": 200,
+        "status_post": 200,
+        "index": {
+          "auto_rebuild": false,
+          "expected_format": "mdkernel-index/3",
+          "format": null,
+          "state": "missing"
+        },
+        "search_status": 503,
+        "search_code": "index_stale",
+        "ok": true
+      }
+    ],
+    "status_index_fields": [
+      "state",
+      "format",
+      "expected_format",
+      "auto_rebuild"
+    ],
+    "status_fields": [
+      "vault",
+      "spec_version",
+      "mdk_version",
+      "level_claimed",
+      "embedder",
+      "index.state",
+      "index.format",
+      "index.expected_format",
+      "index.auto_rebuild",
+      "migrations.artifacts",
+      "migrations.required",
+      "migrations.recommended",
+      "migrations.validations",
+      "migrations.applied",
+      "migrations.hint",
+      "last_checkpoint",
+      "policy.promotion",
+      "policy.edit",
+      "server_policy.server",
+      "server_policy.index",
+      "server_policy.identity",
+      "attestation.unattested",
+      "attestation.implicit",
+      "attestation.window_s",
+      "attestation.stage",
+      "attestation.pending",
+      "attestation.link_updates",
+      "attestation.unmatched"
+    ],
+    "http_only": [
+      {
+        "endpoint": "attest_session",
+        "ok": true,
+        "detail": "status 200"
+      },
+      {
+        "endpoint": "attest",
+        "ok": true,
+        "detail": "status 200"
+      },
+      {
+        "endpoint": "attest (wrong mac → 403 denied)",
+        "ok": true,
+        "detail": "status 403"
+      }
+    ],
+    "pass": true
+  },
+  "missing": [
+    "tool:events",
+    "http-endpoint:POST /v1/events (no request in this script)"
+  ],
+  "pass": false
+}

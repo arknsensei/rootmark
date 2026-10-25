@@ -1,0 +1,448 @@
+{
+ "set": "D-C′",
+ "window_s": 0.5,
+ "ticks": 40,
+ "human_blocks": 40,
+ "human_canonical": 40,
+ "human_accuracy": 1,
+ "agent_blocks": 40,
+ "agent_canonical": 0,
+ "by_delay": {
+  "0": {
+   "ticks": 10,
+   "human_blocks": 10,
+   "human_canonical": 10,
+   "agent_canonical": 0
+  },
+  "20": {
+   "ticks": 10,
+   "human_blocks": 10,
+   "human_canonical": 10,
+   "agent_canonical": 0
+  },
+  "50": {
+   "ticks": 10,
+   "human_blocks": 10,
+   "human_canonical": 10,
+   "agent_canonical": 0
+  },
+  "100": {
+   "ticks": 10,
+   "human_blocks": 10,
+   "human_canonical": 10,
+   "agent_canonical": 0
+  }
+ },
+ "pass": true,
+ "records": [
+  {
+   "id": "q000",
+   "doc": "blends.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 53,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q001",
+   "doc": "cupping.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 7,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q002",
+   "doc": "espresso.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 101,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q003",
+   "doc": "filter.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 7,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q004",
+   "doc": "glossary.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 52,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q005",
+   "doc": "grinders.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 1,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q006",
+   "doc": "maintenance.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 52,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q007",
+   "doc": "origins.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 22,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q008",
+   "doc": "roast-log.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 52,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q009",
+   "doc": "roasting.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 53,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q010",
+   "doc": "safety.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 7,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q011",
+   "doc": "staff.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 6,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q012",
+   "doc": "blends.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 22,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q013",
+   "doc": "cupping.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 104,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q014",
+   "doc": "espresso.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 21,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q015",
+   "doc": "filter.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 52,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q016",
+   "doc": "glossary.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 101,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q017",
+   "doc": "grinders.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 102,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q018",
+   "doc": "maintenance.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 52,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q019",
+   "doc": "origins.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 52,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q020",
+   "doc": "roast-log.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 110,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q021",
+   "doc": "roasting.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 22,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q022",
+   "doc": "safety.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 23,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q023",
+   "doc": "staff.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 21,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q024",
+   "doc": "blends.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 7,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q025",
+   "doc": "cupping.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 53,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q026",
+   "doc": "espresso.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 102,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q027",
+   "doc": "filter.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 103,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q028",
+   "doc": "glossary.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 7,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q029",
+   "doc": "grinders.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 101,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q030",
+   "doc": "maintenance.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 22,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q031",
+   "doc": "origins.md",
+   "agent_delay_ms": 50,
+   "actual_delay_ms": 51,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q032",
+   "doc": "roast-log.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 102,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q033",
+   "doc": "roasting.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 23,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q034",
+   "doc": "safety.md",
+   "agent_delay_ms": 100,
+   "actual_delay_ms": 105,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q035",
+   "doc": "staff.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 21,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q036",
+   "doc": "blends.md",
+   "agent_delay_ms": 20,
+   "actual_delay_ms": 22,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q037",
+   "doc": "cupping.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 8,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q038",
+   "doc": "espresso.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 7,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  },
+  {
+   "id": "q039",
+   "doc": "filter.md",
+   "agent_delay_ms": 0,
+   "actual_delay_ms": 8,
+   "human_blocks": 1,
+   "human_canonical": 1,
+   "agent_blocks": 1,
+   "agent_canonical": 0
+  }
+ ],
+ "attestation_lines": 70,
+ "plugin_counts": "attested 40 · unattested 0",
+ "link_settings": {
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false
+ },
+ "events_sha256": "4e8fae9d9ee370dc8b37995cb08b9c9b07910f93edbb89c16e5fded79524fe88",
+ "retries": []
+}

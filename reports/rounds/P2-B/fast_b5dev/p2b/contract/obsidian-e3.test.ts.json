@@ -1,0 +1,14 @@
+{
+ "file": "e3.test.ts",
+ "calls": 21,
+ "endpoints": {
+  "POST /v1/search": 14,
+  "POST /v1/checkpoints": 1,
+  "POST /v1/checkpoint": 2,
+  "POST /v1/blame": 2,
+  "POST /v1/trace": 2
+ },
+ "request_violations": [],
+ "response_violations": [],
+ "deliberate_violations": []
+}

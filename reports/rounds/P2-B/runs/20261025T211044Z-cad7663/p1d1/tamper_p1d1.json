@@ -1,0 +1,107 @@
+{
+  "cases": [
+    {
+      "group": "contract",
+      "case": "untouched contract",
+      "expected": "accepted",
+      "got": "rejected",
+      "as_expected": false
+    },
+    {
+      "group": "contract",
+      "case": "code row too_large removed",
+      "expected": "rejected",
+      "got": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "contract",
+      "case": "tool checkpoints renamed",
+      "expected": "rejected",
+      "got": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "contract",
+      "case": "status of exists changed",
+      "expected": "rejected",
+      "got": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "events",
+      "case": "untouched attributed log",
+      "expected": "accepted",
+      "got": "accepted",
+      "as_expected": true
+    },
+    {
+      "group": "events",
+      "case": "actor and source both removed (old-log reading)",
+      "expected": "accepted",
+      "got": "accepted",
+      "as_expected": true
+    },
+    {
+      "group": "events",
+      "case": "actor removed, source kept",
+      "expected": "rejected",
+      "got": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "events",
+      "case": "actor kind robot",
+      "expected": "rejected",
+      "got": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "events",
+      "case": "empty actor id",
+      "expected": "rejected",
+      "got": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "fixtures",
+      "case": "untouched fixture copy",
+      "expected": "accepted",
+      "got": "accepted",
+      "as_expected": true
+    },
+    {
+      "group": "fixtures",
+      "case": "C2-10 expects a malformed actor to open",
+      "expected": "rejected",
+      "got": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "fixtures",
+      "case": "C3-06 expects a denied write allowed (manifest untouched)",
+      "expected": "rejected",
+      "got": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "policy",
+      "case": "[edit] policy = everything",
+      "expected": "rejected",
+      "got": "rejected",
+      "as_expected": true
+    },
+    {
+      "group": "policy",
+      "case": "[edit] policy = append_only (control)",
+      "expected": "accepted",
+      "got": "accepted",
+      "as_expected": true
+    }
+  ],
+  "rejected": 9,
+  "rejected_total": 9,
+  "controls_ok": 4,
+  "controls_total": 5,
+  "pass": false
+}

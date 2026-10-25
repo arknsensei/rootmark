@@ -1,0 +1,13 @@
+{
+ "file": "e2.test.ts",
+ "calls": 7,
+ "endpoints": {
+  "POST /v1/blame": 4,
+  "POST /v1/promote": 3
+ },
+ "request_violations": [],
+ "response_violations": [],
+ "deliberate_violations": [
+  "#5 POST /v1/promote arguments.reason: shorter than 1 (deliberate: negative test: the server's 400 for an empty reason)"
+ ]
+}
