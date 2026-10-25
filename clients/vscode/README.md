@@ -20,6 +20,9 @@ skeleton: it is not published to the Marketplace and has no settings UI.
   `stale` (the file is not the version rootmark ingested), `changed`
   (unsaved, or saved and not yet ingested), `unlocated` (a v1 server) — and no
   line is guessed.
+  A note that starts with a byte order mark is never located: VS Code's
+  editor text drops the BOM, so its bytes are not the located ones (it says
+  `changed`; known limit, P2-B review finding 12).
 - **History**, **Promote**, **Demote** of the block at the cursor (the human
   channel: `X-Consumer: vscode`; promote and demote need `[identity]
   human_id`).

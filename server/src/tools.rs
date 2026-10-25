@@ -1798,6 +1798,18 @@ impl Kernel {
                         cp.checkpoint_id
                     );
                 }
+                // P2-B/B1: the block's location in the version read, before
+                // the trace is written (an unreadable location record fails
+                // the call with no trace; P2-B review finding 8)
+                let snap = v
+                    .snapshot_at(&x.doc_path, &cp.checkpoint_id)?
+                    .context("read_block: no snapshot at the checkpoint")?;
+                let locs = crate::loc::doc_locs(&self.vault, &v, &snap)?;
+                let loc = snap
+                    .blocks
+                    .iter()
+                    .position(|(l, _)| *l == x.lineage_id)
+                    .and_then(|i| locs.loc(i));
                 let (mut blocks, trace) = v.read_blocks(
                     std::slice::from_ref(&x.lineage_id),
                     consumer,
@@ -1806,17 +1818,7 @@ impl Kernel {
                 let rb = blocks.pop().context("read_blocks returned no block")?;
                 let mut out =
                     json!({"checkpoint_id": cp.checkpoint_id, "block": rb, "trace": trace});
-                // P2-B/B1: the block's location in the version read
-                let snap = v
-                    .snapshot_at(&x.doc_path, &cp.checkpoint_id)?
-                    .context("read_block: no snapshot at the checkpoint")?;
-                let locs = crate::loc::doc_locs(&self.vault, &v, &snap)?;
-                if let Some(l) = snap
-                    .blocks
-                    .iter()
-                    .position(|(l, _)| *l == x.lineage_id)
-                    .and_then(|i| locs.loc(i))
-                {
+                if let Some(l) = loc {
                     out["block"]["loc"] = l;
                 }
                 out["block"]["loc_stale"] = json!(locs.stale);
