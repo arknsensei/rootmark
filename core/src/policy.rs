@@ -202,6 +202,15 @@ fn rule_of(i: usize, v: &toml::Value) -> Result<PromotionRule> {
         bail!("{at}: source must not be empty (omit it to match any source)");
     }
     let raw = need("path_prefix")?;
+    // a recipe is written once: an NFD (or any non-NFC) spelling of the
+    // prefix is refused, not folded (GOAL P2-P 2: "NFD varyantı reddedilir";
+    // the search filter of P2-L/L3 folds it, a query being typed each time)
+    {
+        use unicode_normalization::UnicodeNormalization;
+        if raw.nfc().collect::<String>() != raw {
+            bail!("{at}: path_prefix {raw:?} is not in Unicode NFC (an NFD variant is refused; write the prefix in NFC)");
+        }
+    }
     let path_prefix = crate::pathprefix::normalize(&raw).with_context(|| at.clone())?;
     let to = need("to")?;
     if to != "canonical" {
