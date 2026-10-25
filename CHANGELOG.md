@@ -70,7 +70,7 @@ path filter.
 
 ### Fixes (P2-B/B0)
 - `rootmark migrate --dry-run`: the plan of `policy_attestation_1` says
-  `recommended: true` and no longer `required: true`.
+  `recommended: true` and `required: false` (it said `required: true`).
 - `status.migrations`: a `policy.toml` that cannot be read is an error of
   the matrix (`status.migrations.error`), not an `unknown` row.
 - Reading rule: a rule's `Promoted` names its own rule (`meta.reason =

@@ -170,7 +170,7 @@ fn the_dry_run_plan_of_a_recommended_migration_is_not_required() {
         .collect();
     assert_eq!(pa.len(), 1, "{dry}");
     assert_eq!(pa[0]["recommended"], true);
-    assert!(pa[0].get("required").is_none(), "{}", pa[0]);
+    assert_eq!(pa[0]["required"], false, "{}", pa[0]);
     // the other plans (validations) keep their `required` as before
     for p in plan
         .iter()
