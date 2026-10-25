@@ -739,7 +739,7 @@ p2-0-3-checks: require-run p2-0-2-harness
 # regression is against the last official RUN (P2-0.3); the active round's
 # checks are `ROUND_CHECKS` (a round sets its own).
 FAST_REF_RUN := ../reports/rounds/P2-0.3/runs/20261024T000230Z-5632b3b
-ROUND_CHECKS := p2l-checks p2l-quality p2p-checks
+ROUND_CHECKS := p2l-checks p2l-quality p2p-checks p2b-checks
 fast-regress: require-run
 	$(PY) -m eval.fast_regress --run $(RUN) --ref $(FAST_REF_RUN)
 
@@ -778,6 +778,22 @@ P2P_TESTS := --tests P0=rootmark-server:p2_p_p0,rootmark-index:p2_l_conformance 
   --tests P-3/P-6=rootmark-server:scene_collector
 p2p-checks: require-run
 	$(PY) -m eval.run_p2p_checks --run $(RUN) $(P2P_TESTS)
+
+# P2-B criteria into the RUN (TASKS B0–B5): p2b_checks.json (the round's
+# tests by criterion); the pre-registered alignment measurement on D-NOTES
+# (p2b/align.json, B-3/B-4 — a failed criterion is recorded, exit 3, not
+# fatal: K-P2B-T1); the determinism record of locations, the event stream
+# and the time filter (p2b/det.json, B-9); both clients' gates, the contract
+# check of every call and their e2e runs (p2b/client_checks.json, B-7, B-8)
+P2B_TESTS := --tests B-1=rootmark-server:p2_b_b0 \
+  --tests B-2=rootmark-server:p2_b_b1,rootmark-server:p1d1_criteria \
+  --tests B-5/B-6=rootmark-server:p2_b_b3,rootmark-server:p2_l_l3
+p2b-checks: require-run
+	$(PY) -m eval.run_p2b_checks --run $(RUN) $(P2B_TESTS)
+	$(PY) -m eval.p2b_align --run $(RUN) --rootmark ../target/release/rootmark \
+	  || { rc=$$?; [ $$rc -eq 3 ] && echo "p2b-checks: p2b_align exit 3 (a criterion failed; recorded, K-P2B-T1)" >&2; }
+	$(PY) -m eval.run_p2b_det --run $(RUN) --rootmark ../target/release/rootmark
+	bash scripts/p2b_client_checks.sh research/reports/runs/$(RUN)/p2b target/release/rootmark
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared);
 # `make verify FAST=1`: the fast pair (scripts/verify.sh, P2-L/F3)

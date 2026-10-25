@@ -27,6 +27,8 @@ out="$(cd "$out" && pwd)"
 rm -rf "$out/contract" && mkdir -p "$out/contract"
 rootmark="${2:-$root/target/release/rootmark}"
 [ -x "$rootmark" ] || { echo "p2b_client_checks: no rootmark binary at $rootmark" >&2; exit 2; }
+# absolute: the e2e runners start in the clients' directories
+rootmark="$(cd "$(dirname "$rootmark")" && pwd)/$(basename "$rootmark")"
 log="$(mktemp -t rootmark-p2b-clients.XXXXXX)"
 trap 'rm -f "$log" "$log".*' EXIT
 
