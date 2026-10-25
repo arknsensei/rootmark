@@ -174,7 +174,10 @@ fn other_rule_shapes_are_refused() {
         (recipe(Some("1"), &rule("r", "agent:", None, "s")), "actor"),
         // an NFD spelling of "resmî" (i + U+0302): refused, not folded
         (
-            recipe(Some("1"), &rule("r", "agent:c", None, "kaynak/resmi\u{302}")),
+            recipe(
+                Some("1"),
+                &rule("r", "agent:c", None, "kaynak/resmi\u{302}"),
+            ),
             "NFC",
         ),
     ] {
