@@ -114,6 +114,15 @@
 # P2-L official RUN); `pair` and the fast pair compare with
 # `eval.compare_p2p` (the P2-L sets plus p2p_checks.json); `compare-p2l` is
 # kept and `compare-p2p` is new.
+# P2-B (re-freeze P2-B/F2): after `make p2p-checks` the chain records
+# `make p2b-checks` (the round's tests by criterion → p2b_checks.json; the
+# D-NOTES alignment measurement → p2b/align.json; the determinism record of
+# block locations, the event stream and the time filter → p2b/det.json;
+# both clients' gates, contract check and e2e → p2b/client_checks.json); the
+# FAIL summary is the round's classifier (`eval.historical_p2b` against the
+# P2-P official RUN); `pair` and the fast pair compare with
+# `eval.compare_p2b` (the P2-P sets plus the P2-B files); `compare-p2p` is
+# kept and `compare-p2b` is new.
 #
 # P2-L (re-freeze P2-L/F3; K-P2.4 (3)): a fast mode for the rounds' own
 # quality gate. `FAST=1 scripts/verify.sh` (`make verify FAST=1`) runs two
@@ -240,6 +249,8 @@ chain() {
   make p2l-quality RUN="$run"
   log "P2-P checks (round tests by criterion: P-1 three vaults, rules, S1–S7, channel label, collector scene)"
   make p2p-checks RUN="$run"
+  log "P2-B checks (round tests by criterion; D-NOTES alignment; locations, events and time filter whole; both clients and the contract check)"
+  make p2b-checks RUN="$run"
   log "deliberate corruptions (B-7, B-8 and the P1-A cases)"
   bash scripts/test_tamper.sh "research/reports/runs/$run" >"research/reports/runs/$run/tamper.log" 2>&1 \
     || { cat "research/reports/runs/$run/tamper.log" >&2; exit 1; }
@@ -260,8 +271,8 @@ chain() {
   # round's own classifier against the previous official RUN, so its
   # counted FAILs are the round's (eval.historical_p2_0_1; since P2-0.2,
   # P2-0.2/F5, eval.historical_p2_0_2 against the P2-0.1 official RUN)
-  log "FAIL summary (K-E1.4, round classifier eval.historical_p2p)"
-  (cd research && uv run --frozen python -m eval.historical_p2p --run-dir "reports/runs/$run" --summary || true) >&2
+  log "FAIL summary (K-E1.4, round classifier eval.historical_p2b)"
+  (cd research && uv run --frozen python -m eval.historical_p2b --run-dir "reports/runs/$run" --summary || true) >&2
   log "chain finished in $((SECONDS - t0)) s"
   echo "RUN=$run" >&3
   echo "RUN_DIR=$work/repo/research/reports/runs/$run" >&3
@@ -352,12 +363,12 @@ pair_fast() {
   cat "$res_a" "$res_b"
   local repo rc=0
   repo="$(cd "$a" && pwd)/repo"
-  log "compare (P2-P fast) $dir_a $dir_b"
-  (cd "$repo/research" && uv run --frozen python -m eval.compare_p2p fast "$dir_a" "$dir_b" \
+  log "compare (P2-B fast) $dir_a $dir_b"
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p2b fast "$dir_a" "$dir_b" \
     --out "$dir_a/fast_pair_compare.json") >/dev/null || rc=$?
   jq -n --argjson s "$((SECONDS - t0))" '{elapsed_s: $s}' >"$dir_a/fast_pair_time.json"
   if [ "$rc" -ne 0 ]; then
-    echo "error: fast comparison failed (compare_p2p fast exit $rc; $dir_a/fast_pair_compare.json)" >&2
+    echo "error: fast comparison failed (compare_p2b fast exit $rc; $dir_a/fast_pair_compare.json)" >&2
     exit "$rc"
   fi
   log "fast pair equal ($(jq -r .n_fields "$dir_a/fast_pair_compare.json") fields) in $((SECONDS - t0)) s"
@@ -401,7 +412,20 @@ pair() {
     fi
   done
   cat "$res_a" "$res_b"
-  compare_p2p "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+  compare_p2b "$(cd "$a" && pwd)/repo" "$dir_a" "$dir_b" "$dir_a/pair_compare.json"
+}
+
+compare_p2b() {
+  local repo="$1" dir_a="$2" dir_b="$3" out="${4:-}"
+  log "compare (P2-B) $dir_a $dir_b"
+  local rc=0
+  (cd "$repo/research" && uv run --frozen python -m eval.compare_p2b pair "$dir_a" "$dir_b" \
+    ${out:+--out "$out"}) >&2 || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    echo "error: run comparison failed (compare_p2b pair exit $rc)" >&2
+    exit "$rc"
+  fi
+  log "P2-A pair set, P2-L, P2-P and P2-B results equal; D-A, D-A2 and D-C events.jsonl and attestations.jsonl byte-equal"
 }
 
 compare_p2p() {
@@ -605,6 +629,7 @@ case "${1:-}" in
   compare-p2a) compare_p2a "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p2l) compare_p2l "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   compare-p2p) compare_p2p "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
+  compare-p2b) compare_p2b "${2:?repo}" "${3:?run dir A}" "${4:?run dir B}" "${5:-}" ;;
   "")
     src="$(git rev-parse --show-toplevel)"
     base="$(mktemp -d -t rootmark-verify.XXXXXX)"
@@ -616,7 +641,7 @@ case "${1:-}" in
     fi
     ;;
   *)
-    echo "usage: [FAST=1] $0 [chain|chain-fast <src> <dir> | pair|pair-fast <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2|compare-p2a|compare-p2l|compare-p2p <repo> <runA> <runB> [out]]" >&2
+    echo "usage: [FAST=1] $0 [chain|chain-fast <src> <dir> | pair|pair-fast <src> <dirA> <dirB> | compare|compare-p1b|compare-p1c|compare-p1c1|compare-p1d|compare-p1d1|compare-p1e|compare-p1e1|compare-p2-0|compare-p2-0-1|compare-p2-0-2|compare-p2a|compare-p2l|compare-p2p|compare-p2b <repo> <runA> <runB> [out]]" >&2
     exit 2
     ;;
 esac

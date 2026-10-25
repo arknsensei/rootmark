@@ -400,6 +400,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/data/d_notes/**` | `P2-B/B2-pre:` | D-NOTES notları ve atıf (`NOTICE.md`); ölçümden önce |
 | `research/eval/p2b_align.py` | `P2-B/B2-pre:` | B-3/B-4 hizalama ölçücüsü (dilim, örtü, eski yöntem vekili; eşikler ölçümden önce) |
 | `research/eval/p2b_align.py` | `P2-B/B2-f1:` | yeniden dondurma P2-B/F1: gizli dizindeki notların ölçüm vault'undaki yolu (ölçümden önce; ilk koşu değer üretmeden durdu) |
+| `scripts/verify.sh` | `P2-B/B5-dev:` | yeniden dondurma P2-B/F2: P2-B adımı (`p2b-checks`), sınıflandırıcı `eval.historical_p2b`, `pair` ve hızlı çift → `compare_p2b`, `compare-p2b` |
+| `research/eval/check_compare_fields.py` | `P2-B/B5-dev:` | yeniden dondurma P2-B/F3: `compare_p2b` |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-B/B5-dev:` | yeniden dondurma P2-B/F3: `compare_p2b` bölümü, alan ve dosya satırları |
+| `research/eval/**` | `P2-B/B5-dev:` | yeniden dondurma P2-B/F3: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni P2-B dosyaları (`compare_p2b.py`, `historical_p2b.py`, `historical_fails_p2b.json`, `migration_required_fails_p2b.json`, `run_p2b_checks.py`, `run_p2b_det.py`, `report_p2b_align.py`) |
 <!-- /frozen-table -->
 
 ## Notlar
