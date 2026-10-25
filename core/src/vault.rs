@@ -975,6 +975,9 @@ pub struct IngestPlan {
     unchanged: Option<Snapshot>,
     /// an existing document's front matter changes
     frontmatter_changed: bool,
+    /// the locations of the planned version's blocks (P2-B/B1), recorded
+    /// on commit (`crate::loc`; never an event)
+    loc: crate::loc::LocRecord,
 }
 
 /// Compact per-document ingest report (CLI / `ingest_dir`).
@@ -1235,6 +1238,18 @@ impl Vault {
 
     pub fn events_path(&self) -> PathBuf {
         self.meta_dir.join("events.jsonl")
+    }
+
+    /// The recorded block locations of a version of `doc_path` (P2-B/B1,
+    /// `crate::loc`), checked against its snapshot; `None` when none was
+    /// recorded (a version ingested before P2-B).
+    pub fn loc_record(&self, snap: &Snapshot) -> Result<Option<crate::loc::LocRecord>> {
+        let Some(r) = crate::loc::read(&self.meta_dir, &snap.doc_path, &snap.snapshot_id)? else {
+            return Ok(None);
+        };
+        let vids: Vec<&str> = snap.blocks.iter().map(|(_, v)| v.as_str()).collect();
+        r.check(&snap.doc_path, &snap.snapshot_id, &vids)?;
+        Ok(Some(r))
     }
 
     pub fn store_dir(&self) -> &Path {
@@ -1580,6 +1595,7 @@ impl Vault {
                 objects: Vec::new(),
                 changed: Vec::new(),
                 blocks_before: before.clone(),
+                loc: crate::loc::LocRecord::of(doc_path, &snapshot.snapshot_id, text),
                 blocks_after: before,
                 unchanged: Some(snapshot),
                 frontmatter_changed: false,
@@ -1730,6 +1746,7 @@ impl Vault {
                 b
             })
             .collect();
+        let sid = snapshot_id(blocks_after.iter().map(|b| b.version_id.as_str()));
         Ok(IngestPlan {
             doc_path: doc_path.to_string(),
             matcher,
@@ -1740,6 +1757,7 @@ impl Vault {
             blocks_after,
             unchanged: None,
             frontmatter_changed: head.is_some() && fm_changed,
+            loc: crate::loc::LocRecord::of(doc_path, &sid, text),
         })
     }
 
@@ -1747,6 +1765,9 @@ impl Vault {
     /// must be applied to the state it was computed on: the events are
     /// verified again, and a plan of an earlier state fails.
     pub fn commit_plan(&mut self, plan: IngestPlan) -> Result<IngestResult> {
+        // P2-B/B1: the version's block locations, before anything of the
+        // ingest is written (a failure leaves the log as it was)
+        crate::loc::write(&self.meta_dir, &plan.loc)?;
         if let Some(snapshot) = plan.unchanged {
             return Ok(IngestResult {
                 snapshot,
@@ -1759,6 +1780,14 @@ impl Vault {
         let snapshot = self
             .snapshot(&plan.doc_path)?
             .context("snapshot after commit")?;
+        if snapshot.snapshot_id != plan.loc.snapshot_id {
+            bail!(
+                "{}: committed snapshot {} is not the planned {} (location record)",
+                plan.doc_path,
+                snapshot.snapshot_id,
+                plan.loc.snapshot_id
+            );
+        }
         Ok(IngestResult {
             snapshot,
             events,

@@ -8,6 +8,7 @@ pub mod files;
 pub mod governance;
 pub mod journal;
 pub mod lineage;
+pub mod loc;
 pub mod meta;
 pub mod model;
 pub mod normalize;
@@ -35,7 +36,7 @@ pub use model::{
     WikiLink,
 };
 pub use normalize::normalize;
-pub use parse::parse_document;
+pub use parse::{locate_blocks, parse_document, BlockLoc};
 pub use policy::{
     Attestation as AttestationPolicy, Edit, Policy, PolicySource, Promotion, PromotionRule,
 };

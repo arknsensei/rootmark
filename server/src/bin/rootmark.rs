@@ -55,7 +55,13 @@ enum Cmd {
     /// Ingest every *.md under dir in byte-wise path order; doc_path is relative to dir
     IngestDir { vault: PathBuf, dir: PathBuf },
     /// Rebuild the last snapshot of a document from the log
-    Replay { vault: PathBuf, doc: String },
+    Replay {
+        vault: PathBuf,
+        doc: String,
+        /// also each block's text and location (`loc`, `loc_stale`; P2-B/B1)
+        #[arg(long)]
+        loc: bool,
+    },
     /// blake3 of events.jsonl
     EventsHash { vault: PathBuf },
     /// Migrate a vault's stored artifacts to this rootmark's formats
@@ -179,6 +185,9 @@ enum Cmd {
         /// checkpoint id or name
         #[arg(long)]
         at: Option<String>,
+        /// also each block's location (`loc`, `loc_stale`; P2-B/B1)
+        #[arg(long)]
+        loc: bool,
     },
     /// Read blocks as of a checkpoint; records a consumption trace
     Read {
@@ -400,9 +409,29 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             let out = v.ingest_dir(&dir, m)?;
             json!({"ingested": out, "events_hash": v.events_hash()?})
         }
-        Cmd::Replay { vault, doc } => {
+        Cmd::Replay { vault, doc, loc } => {
             let v = Vault::open(&vault)?;
             match v.replay(&doc)? {
+                Some(s) if loc => {
+                    let locs = rootmarkserver::loc::doc_locs(&vault, &v, &s)?;
+                    let blocks = v.snapshot_blocks(&s)?;
+                    let mut out = serde_json::to_value(&s)?;
+                    out["blocks_detail"] = blocks
+                        .iter()
+                        .enumerate()
+                        .map(|(i, b)| {
+                            json!({
+                                "lineage_id": b.lineage_id,
+                                "version_id": b.version_id,
+                                "block_type": b.block_type,
+                                "normalized_text": b.normalized_text,
+                                "loc": locs.loc(i),
+                            })
+                        })
+                        .collect();
+                    out["loc_stale"] = json!(locs.stale);
+                    out
+                }
                 Some(s) => serde_json::to_value(s)?,
                 None => bail!("no snapshot for {doc}"),
             }
@@ -569,10 +598,25 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             let layer = v.layer_of(&lineage).ok();
             json!({"lineage_id": lineage, "layer": layer, "events": v.history(&lineage)?})
         }
-        Cmd::Blame { vault, doc, at } => {
+        Cmd::Blame {
+            vault,
+            doc,
+            at,
+            loc,
+        } => {
             let v = Vault::open(&vault)?;
             let blocks = v.blame(&doc, at.as_deref())?;
-            json!({"doc_path": doc, "at": at, "blocks": blocks})
+            let mut out = json!({"doc_path": doc, "at": at, "blocks": blocks});
+            if loc {
+                let snap = match &at {
+                    Some(c) => v.snapshot_at(&doc, c)?,
+                    None => v.snapshot(&doc)?,
+                }
+                .with_context(|| format!("no snapshot for {doc}"))?;
+                let locs = rootmarkserver::loc::doc_locs(&vault, &v, &snap)?;
+                rootmarkserver::loc::annotate_rows(&mut out, "blocks", &locs);
+            }
+            out
         }
         Cmd::Read {
             vault,

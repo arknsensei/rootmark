@@ -28,13 +28,25 @@ const toolsTable = (() => {
   return end < 0 ? s : s.slice(0, end);
 })();
 const contractTools = [...toolsTable.matchAll(/^\| `([a-z_]+)` \|/gm)].map((m) => m[1]);
-// §2.6: the human channel's own endpoints (never MCP tools)
+// §2.6, §2.7: the human channel's own endpoints (never MCP tools); a row
+// names the endpoint (`attest`) or its HTTP path (§2.7)
 const httpOnly = (() => {
   const s = section(2, 3);
   const a = s.indexOf("\n### 2.6 ");
   if (a < 0) return [];
-  return [...s.slice(a).matchAll(/^\| `([a-z_]+)` \|/gm)].map((m) => m[1]);
+  const b = s.indexOf("\n### 2.8 ") >= 0 ? s.indexOf("\n### 2.8 ") : s.indexOf("\n### 2.9 ");
+  const part = b > a ? s.slice(a, b) : s.slice(a);
+  return [...part.matchAll(/^\| `(?:POST \/v1\/)?([a-z_]+)` \|/gm)].map((m) => m[1]);
 })();
+// §2.9: the machine-readable response schema (contract version 2)
+const schema = (() => {
+  const m = section(2, 3).match(/```json contract-schema\n([\s\S]*?)\n```/);
+  if (!m) throw new Error("contract §2.9: no ```json contract-schema block");
+  return JSON.parse(m[1]);
+})();
+for (const n of [...contractTools, ...httpOnly]) {
+  if (!schema.responses[n]) throw new Error(`contract §2.9: no response schema for ${n}`);
+}
 const codes = [...section(3, 4).matchAll(/^\| `([a-z_]+)` \| (\d{3}) \|/gm)].map((m) => [m[1], Number(m[2])]);
 const names = tools.map((t) => t.name);
 const missing = [
@@ -114,4 +126,61 @@ for (const name of contractTools) {
   out += `}\n`;
 }
 out += `\n/** Arguments by tool. */\nexport interface ToolArgs {\n${contractTools.map((n) => `  ${n}: ${pascal(n)}Args;`).join("\n")}\n}\n`;
+
+// §2.9: response types (the fields a client relies on; others may come)
+const defName = (r) => {
+  if (!Object.prototype.hasOwnProperty.call(schema.defs, r)) throw new Error(`§2.9: unknown $ref ${r}`);
+  return pascal(r);
+};
+function schemaTs(s, where) {
+  const known = new Set(["type", "required", "properties", "items", "enum", "oneOf", "$ref"]);
+  for (const k of Object.keys(s)) if (!known.has(k)) throw new Error(`§2.9 ${where}: unknown key ${k}`);
+  if (s.$ref) return defName(s.$ref);
+  if (s.enum) return s.enum.map((v) => JSON.stringify(v)).join(" | ");
+  if (s.oneOf) return s.oneOf.map((x, i) => schemaTs(x, `${where}.oneOf[${i}]`)).join(" | ");
+  const types = Array.isArray(s.type) ? s.type : [s.type];
+  return types
+    .map((t) => {
+      switch (t) {
+        case "string":
+          return "string";
+        case "integer":
+        case "number":
+          return "number";
+        case "boolean":
+          return "boolean";
+        case "null":
+          return "null";
+        case "array":
+          if (!s.items) throw new Error(`§2.9 ${where}: array without items`);
+          return `Array<${schemaTs(s.items, `${where}[]`)}>`;
+        case "object": {
+          if (!s.properties) return "Record<string, unknown>";
+          const req = new Set(s.required ?? []);
+          for (const r of req) if (!(r in s.properties)) throw new Error(`§2.9 ${where}: required ${r} is not a property`);
+          const fields = Object.entries(s.properties).map(
+            ([k, v]) => `${k}${req.has(k) ? "" : "?"}: ${schemaTs(v, `${where}.${k}`)};`,
+          );
+          return `{ ${fields.join(" ")} }`;
+        }
+        default:
+          throw new Error(`§2.9 ${where}: unknown type ${t}`);
+      }
+    })
+    .join(" | ");
+}
+out += `\n/** Contract version of these types (§6). */\nexport const CONTRACT_VERSION = ${JSON.stringify(schema.contract_version)};\n`;
+out += `\n/** Headers every HTTP request carries (§1). */\nexport const HTTP_HEADERS = ${JSON.stringify(schema.headers.http)} as const;\n`;
+for (const [k, v] of Object.entries(schema.defs)) {
+  out += `\nexport type ${pascal(k)} = ${schemaTs(v, k)};\n`;
+}
+const endpoints = [...contractTools, ...httpOnly, "error"];
+for (const n of endpoints) {
+  out += `\n/** \`${n}\` response (§2.9). */\nexport type ${pascal(n)}Response = ${schemaTs(schema.responses[n], n)};\n`;
+}
+out += `\n/** Responses by tool or endpoint. */\nexport interface ToolResponses {\n${[...contractTools, ...httpOnly].map((n) => `  ${n}: ${pascal(n)}Response;`).join("\n")}\n}\n`;
+// the schema itself and the argument schemas, for the contract checker
+const argSchemas = Object.fromEntries(contractTools.map((n) => [n, tools.find((x) => x.name === n).inputSchema]));
+out += `\n/** §2.9's schema as written in the contract (the contract checker). */\nexport const RESPONSE_SCHEMA = ${JSON.stringify({ defs: schema.defs, responses: schema.responses })} as const;\n`;
+out += `\n/** The argument schemas of \`tools/list\` (the contract checker). */\nexport const ARGUMENT_SCHEMAS = ${JSON.stringify(argSchemas)} as const;\n`;
 process.stdout.write(out);
