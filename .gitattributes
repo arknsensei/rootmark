@@ -3,3 +3,5 @@
 # line-ending conversion on checkout (a Windows checkout with core.autocrlf
 # turned them into CRLF: fixtures_manifest "mismatch", 31/39; P2-A/A3).
 spec/fixtures/** -text
+# D-NOTES (P2-B/B2): real notes byte for byte, some committed with CRLF
+research/data/d_notes/** -text
