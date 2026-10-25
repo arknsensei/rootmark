@@ -404,6 +404,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/check_compare_fields.py` | `P2-B/B5-dev:` | yeniden dondurma P2-B/F3: `compare_p2b` |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-B/B5-dev:` | yeniden dondurma P2-B/F3: `compare_p2b` bölümü, alan ve dosya satırları |
 | `research/eval/**` | `P2-B/B5-dev:` | yeniden dondurma P2-B/F3: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni P2-B dosyaları (`compare_p2b.py`, `historical_p2b.py`, `historical_fails_p2b.json`, `migration_required_fails_p2b.json`, `run_p2b_checks.py`, `run_p2b_det.py`, `report_p2b_align.py`) |
+| `scripts/mcp_inspector.sh` | `P2-B/B5-f4:` | yeniden dondurma P2-B/F4: `events` aracının çağrı argümanları (yeni araç ölçülür; tam zincir başka türlü durur) |
 <!-- /frozen-table -->
 
 ## Notlar
