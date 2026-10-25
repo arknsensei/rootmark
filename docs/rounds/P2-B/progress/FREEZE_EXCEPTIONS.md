@@ -19,3 +19,9 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Neden:** emsal P2-P/F3, P2-L/F4, F7; çiftin karşılaştırıcısı belirlenimli alan sözleşmesine girer (K-E0.2).
 - **Önce/sonra:** `check_compare_fields.py`'den silinen satır 0, eklenen iki satır; `DETERMINISTIC_FIELDS.md`'den silinen satır 0; `python -m eval.check_compare_fields` geçer (`unmatched: 0`).
 - **Gözden geçirici onayı:** B5.review.md.
+
+## F4 · B5 · `scripts/mcp_inspector.sh` — `events` aracının çağrı argümanları
+- **Ne:** `tool_args`'a tek bir kol: `events) echo "since_seq=0 limit=5" ;;` (ve bir yorum satırı). Başka satır değişmedi.
+- **Neden:** P1-D'nin D-1 kaydedicisi `tools/list`'teki her aracı bir kez Inspector'dan çağırır ve tanımadığı araçta `set -e` altında çıkar: `inspector.json` yazılmaz ve `make p1d-checks` (dolayısıyla tam zincir) durur. İlk tam çift (`67082de`) A zincirinde tam burada durdu ("mcp_inspector: no call arguments for tool events"). `events` GOAL P2-B 4 (a)'nın istediği yeni araçtır; kaydedicinin ölçtüğü şey (her araç şeması geçerli, her çağrı başarılı) değişmez, yalnız yeni araç da ölçülür.
+- **Önce/sonra:** `diff`: yalnız iki satır eklendi. Yerel koşu: "schemas 11/11 valid, Inspector calls 11/11". Kaydedicinin araç kümesini sabitleyen öteki iki dondurulmuş kayıt (`mcp_e2e.sh` D-2 "tools/list has every tool of this round", `contract_check.sh` + `server/tests/contract.rs`) değiştirilmedi: zinciri durdurmazlar, FAIL'i kaydederler; sınıflandırıcının listesine kararıyla girer (K-P2B.4, B5.md).
+- **Gözden geçirici onayı:** B5.review.md'ye ek (F4).

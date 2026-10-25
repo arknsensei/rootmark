@@ -66,6 +66,8 @@ tool_args() {
     propose) echo "doc_path=inspector/note.md content=Inspector-proposed-text reason=inspector" ;;
     promote) echo "lineage_id=$lineage reason=inspector" ;;
     checkpoint) echo "name=inspector" ;;
+    # P2-B/F4: contract v2's read-only event stream (CLIENT_CONTRACT §2.8)
+    events) echo "since_seq=0 limit=5" ;;
     *) echo "mcp_inspector: no call arguments for tool $1" >&2; return 1 ;;
   esac
 }
