@@ -1,0 +1,113 @@
+{
+ "P-2/P-3": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_p_rules",
+    "tests": {
+     "a_matching_propose_is_promoted_by_the_first_rule": "ok",
+     "a_policy_promotion_without_a_rule_reason_is_refused_on_open": "ok",
+     "a_rule_names_the_agent_not_its_version": "ok",
+     "a_versioned_rule_matches_exactly": "ok",
+     "eight_invalid_recipes_are_refused_naming_the_field": "ok",
+     "lint_lists_the_rules": "ok",
+     "only_the_call_s_own_lineages_are_promoted": "ok",
+     "other_rule_shapes_are_refused": "ok",
+     "rule_order_and_source_decide": "ok",
+     "status_shows_the_rules": "ok",
+     "without_rules_nothing_changes": "ok"
+    }
+   }
+  ]
+ },
+ "P-3/P-6": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "scene_collector",
+    "tests": {
+     "the_collector_scene_through_the_cli": "ok",
+     "the_collector_scene_twice_byte_equal": "ok"
+    }
+   }
+  ]
+ },
+ "P-4/P-5": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "promotion_rules",
+    "tests": {
+     "a_repeated_text_block_of_the_call_is_promoted": "ok",
+     "demote_follows_the_promotion_policy": "ok",
+     "s1_an_unattested_file_write_is_never_promoted": "ok",
+     "s2_a_rule_for_another_actor_kind_is_refused": "ok",
+     "s3_outside_the_prefix_is_not_promoted": "ok",
+     "s4_unverified_and_late_attested_lineages_are_never_promoted": "ok",
+     "s5_a_refused_propose_promotes_nothing": "ok",
+     "s6_conformance_and_c3_06_unchanged": "ok",
+     "s6_events_hash_unchanged_without_rules": "ok",
+     "s6b_the_canonical_ranking_changes_only_under_the_prefix": "ok",
+     "s7_history_shows_the_rule_and_demote_undoes_it": "ok"
+    }
+   }
+  ]
+ },
+ "P-7": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_p_channel",
+    "tests": {
+     "cli_transitions_carry_source_only_when_given": "ok",
+     "http_transitions_carry_the_consumer": "ok",
+     "the_reading_rule_of_a_transition_s_source": "ok"
+    }
+   }
+  ]
+ },
+ "P0": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_p_p0",
+    "tests": {
+     "a2_a_copy_back_is_no_base": "ok",
+     "a2_a_hint_alone_is_no_base": "ok",
+     "a2_a_lower_layer_base_raises_nothing": "ok",
+     "a_broken_recipe_or_record_is_an_error_in_status_migrations": "ok",
+     "a_filtered_trace_is_not_written_without_its_filter": "ok",
+     "a_recipe_changed_after_the_migration_is_not_rolled_back": "ok",
+     "a_recipe_with_the_table_and_no_recipe_are_left_alone": "ok",
+     "policy_attestation_1_on_the_three_0_1_0_vaults": "ok",
+     "serve_warns_about_a_tableless_recipe": "ok"
+    }
+   },
+   {
+    "exit": 0,
+    "package": "rootmark-index",
+    "pass": true,
+    "target": "p2_l_conformance",
+    "tests": {
+     "level_3_with_both_lexical_variants": "ok"
+    }
+   }
+  ]
+ },
+ "pass": true
+}

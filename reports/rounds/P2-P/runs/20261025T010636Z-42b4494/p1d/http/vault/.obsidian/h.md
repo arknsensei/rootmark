@@ -1,0 +1,3 @@
+# Hidden
+
+Obsidian settings note.

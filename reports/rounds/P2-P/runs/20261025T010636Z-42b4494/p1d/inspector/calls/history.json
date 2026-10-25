@@ -1,0 +1,35 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"events\":[{\"doc_path\":\"espresso.md\",\"kind\":\"BlockCreated\",\"lineage_ids\":[\"74ecb4d582f0ffede4479a044f078542\"],\"meta\":{\"matcher_version\":\"v3\",\"provenance\":{\"author_kind\":\"Human\",\"source\":\"\"}},\"new_version_ids\":[\"89d0a18e79e31ff49018e502401250e4\"],\"old_version_ids\":[],\"seq\":18,\"snapshot_id\":null}],\"layer\":\"canonical\",\"lineage_id\":\"74ecb4d582f0ffede4479a044f078542\"}"
+    }
+  ],
+  "structuredContent": {
+    "events": [
+      {
+        "doc_path": "espresso.md",
+        "kind": "BlockCreated",
+        "lineage_ids": [
+          "74ecb4d582f0ffede4479a044f078542"
+        ],
+        "meta": {
+          "matcher_version": "v3",
+          "provenance": {
+            "author_kind": "Human",
+            "source": ""
+          }
+        },
+        "new_version_ids": [
+          "89d0a18e79e31ff49018e502401250e4"
+        ],
+        "old_version_ids": [],
+        "seq": 18,
+        "snapshot_id": null
+      }
+    ],
+    "layer": "canonical",
+    "lineage_id": "74ecb4d582f0ffede4479a044f078542"
+  },
+  "isError": false
+}

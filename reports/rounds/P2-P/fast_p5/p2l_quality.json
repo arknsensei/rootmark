@@ -1,0 +1,51 @@
+{
+ "cells": {
+  "flat/mdk_lower_alnum/minilm-l6-v2": 0.5715304257770003,
+  "flat/mdk_lower_alnum/multilingual-minilm-l12-v2": 0.6474518791338878,
+  "flat/uni_fold_tr/minilm-l6-v2": 0.5715304257770003,
+  "flat/uni_fold_tr/multilingual-minilm-l12-v2": 0.6474518791338878,
+  "hybrid/mdk_lower_alnum/minilm-l6-v2": 0.8028951691613695,
+  "hybrid/mdk_lower_alnum/multilingual-minilm-l12-v2": 0.867634127736342,
+  "hybrid/uni_fold_tr/minilm-l6-v2": 0.8097215162807255,
+  "hybrid/uni_fold_tr/multilingual-minilm-l12-v2": 0.880141725250518,
+  "lexical/mdk_lower_alnum/minilm-l6-v2": 0.9948882147769005,
+  "lexical/mdk_lower_alnum/multilingual-minilm-l12-v2": 0.9948882147769005,
+  "lexical/uni_fold_tr/minilm-l6-v2": 0.995177232135671,
+  "lexical/uni_fold_tr/multilingual-minilm-l12-v2": 0.995177232135671
+ },
+ "criteria": {
+  "L-2": {
+   "pass": false,
+   "threshold": 0.1,
+   "value": 0.0002890173587705158
+  },
+  "L-3": {
+   "compared": 618,
+   "differing": [],
+   "pass": true
+  },
+  "L-4": {
+   "default_tokenizer": "mdk_lower_alnum",
+   "delta_ndcg@10": {
+    "flat/structural/multi": 0.0,
+    "flat/structural/single": 0.0,
+    "hybrid/structural/multi": -0.0005634980290146752,
+    "hybrid/structural/single": -0.0024941534815388078
+   },
+   "differing_values": 22,
+   "max_abs_delta": 0.0024941534815388078,
+   "threshold": 0.001
+  },
+  "L-5": {
+   "pass": true,
+   "threshold": 0.05,
+   "value": 0.07592145335688749
+  },
+  "L-6": {
+   "info_vs_best_old_mode": -0.11474648952638244,
+   "pass": false,
+   "threshold": 0.1,
+   "value": 0.07724655608914854
+  }
+ }
+}

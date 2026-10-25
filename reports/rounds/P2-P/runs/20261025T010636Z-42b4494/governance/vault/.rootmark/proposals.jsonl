@@ -1,0 +1,2 @@
+{"actor":{"id":"claude-code","kind":"agent"},"consumer":"claude-code","doc_path":"agents/notes.md","events":5,"heading":null,"mode":"create","reason":"rootmark propose (CLI)","snapshot_id":"c6742baf63f58ab85928c0a04f4bf206"}
+{"actor":{"id":"claude-code","kind":"agent"},"consumer":"claude-code","doc_path":"espresso.md","events":2,"heading":null,"mode":"append","reason":"rootmark propose (CLI)","snapshot_id":"65c8b753f739052ea3377d99eff1c840"}

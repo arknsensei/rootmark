@@ -1,0 +1,6 @@
+rootmark serve: no policy.toml: wrote the default recipe (promotion human_only) to vault/.rootmark/policy.toml
+rootmark serve: no index: built one (33 records, 12 snapshots, minilm-l6-v2/e73168f9)
+rootmark serve: stopping (end of the MCP stream)
+rootmark serve: compact (shutdown): hot tier empty
+rootmark serve: stopped
+mcp_inspector: schemas 10/10 valid, Inspector calls 10/10
