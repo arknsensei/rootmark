@@ -1,0 +1,4562 @@
+{
+ "class_counts": {
+  "callout": 39,
+  "code_fence": 248,
+  "crlf": 45,
+  "embed": 34,
+  "footnote": 25,
+  "frontmatter": 194,
+  "html": 136,
+  "nested_list": 114,
+  "table": 48
+ },
+ "edge_classes": [
+  "html",
+  "footnote",
+  "callout",
+  "embed",
+  "table",
+  "nested_list",
+  "code_fence",
+  "frontmatter",
+  "crlf",
+  "bom",
+  "turkish_emoji"
+ ],
+ "edge_sha256": {
+  "bom": "2295fa1af19223c47277c42e867ca78fac10da174c4bf3f1fae813293656599a",
+  "callout": "2e92a473e6bfb825a3776f1626df5917339806e96bac53043ce151585979f64f",
+  "code_fence": "ba8d1d61fe02bede63b365d160162d6b8fde864deb7d1222c9f8f7a767b7af01",
+  "crlf": "ea6fe8c4b494f0d7a5f79e775dcb529ce1bd00aba3fa39b78eb2b5d98de5ffb4",
+  "embed": "9710858ded8e74d9f0c04d9242ff88a7d913134b46b8631f2dd60b8a8c86068b",
+  "footnote": "bd1e15b4674604e8fc84b0e39268413d7488df60dcb75c84718d5169d735bdbf",
+  "frontmatter": "27fa862ec44ceba414b1e5b5d53f120515ed46eab9d6dc9f64e38fccc0e6c041",
+  "html": "79384325c073b88a53210e7985bd5d55d3ffd6d2550889ed5b3d99ea43c4a1d2",
+  "nested_list": "1bd82373abdd13ef8682aa62e2dcd17c9681ecceef13ce8a8585a2c1a04afe40",
+  "table": "91129a37e27925f1456437d0a35fbd0670626c0571a17170484b85f1ab34e5cb",
+  "turkish_emoji": "6156c0490ffb871062cc0bb871f52da3915a62a6614adf4146228f7ca57f1e3a"
+ },
+ "name": "d_notes",
+ "notes": [
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "dataview/docs/docs/queries/data-commands.md",
+   "sha256": "bea20cd8e0126c70c43d7a3aece6ac548ccedb90847740465a0134eaf87d27b9",
+   "source": "dataview",
+   "source_path": "docs/docs/queries/data-commands.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "dataview/docs/docs/reference/literals.md",
+   "sha256": "7f4555170a7ccde5a33d8ee9f05855ca0ca9f21f6f61179a451cd1beb3190583",
+   "source": "dataview",
+   "source_path": "docs/docs/reference/literals.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "dataview/docs/docs/reference/sources.md",
+   "sha256": "c80546ef2e8bf9cc024f66bc3a25aa2615ac4f2ca8b4b805d17bc2fe47182f58",
+   "source": "dataview",
+   "source_path": "docs/docs/reference/sources.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "dataview/docs/docs/resources/develop-against-dataview.md",
+   "sha256": "a6904974ff91169791ca895b4604b1c8898bbb74a0e623e8c1e353233b3d6c50",
+   "source": "dataview",
+   "source_path": "docs/docs/resources/develop-against-dataview.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Albums.md",
+   "sha256": "73e4e7af5102d45ca7383f9461274d837e77b1fd17433577d1a03f8d3ee88ec9",
+   "source": "kepano",
+   "source_path": "Categories/Albums.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Board games.md",
+   "sha256": "b1095ff3909e8c0d1da60a9bedf3f9a21aaa13fb404a92afb660a4914268faf6",
+   "source": "kepano",
+   "source_path": "Categories/Board games.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Books.md",
+   "sha256": "583da93f3b9f3b2fc94dd689db21576b90d38ca66ab3b44c7944a3d2b4066d52",
+   "source": "kepano",
+   "source_path": "Categories/Books.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Clippings.md",
+   "sha256": "64347808670cd4d9ca3f2843ea30967f935759cefd1b87b00ec1aab91d96a4c8",
+   "source": "kepano",
+   "source_path": "Categories/Clippings.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Companies.md",
+   "sha256": "1925b9ac6d494c874eea90ee48fa61a83dd6172e2ffbeb264655749abf02fe5c",
+   "source": "kepano",
+   "source_path": "Categories/Companies.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Evergreen.md",
+   "sha256": "6092012d25c3a9d94dc4112d3727f7599e8b7af492aa7ef5ae89c95ef3f1deb5",
+   "source": "kepano",
+   "source_path": "Categories/Evergreen.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Games.md",
+   "sha256": "975913af6191d02dd8ad5786d0539531cd45c0ce7556dbc097437fce84de67b2",
+   "source": "kepano",
+   "source_path": "Categories/Games.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Journal.md",
+   "sha256": "76e4dd3a8caf29f049103e18986b9a5d03181a772f6737b29ab78aabbfd1ac9f",
+   "source": "kepano",
+   "source_path": "Categories/Journal.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Meetings.md",
+   "sha256": "44ba7614811ff4b6c13ae1fffeb4b197ec32f98473807f168050b7f63fcacdcb",
+   "source": "kepano",
+   "source_path": "Categories/Meetings.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Places.md",
+   "sha256": "825a8a33f52efddfbe54e6550e7090f2d08ffdfbba2ecbe314e049d7b8a01455",
+   "source": "kepano",
+   "source_path": "Categories/Places.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Podcast episodes.md",
+   "sha256": "8299e248e13744a671d925267c5b6106aad63766a02312845e6fe2f47ef81792",
+   "source": "kepano",
+   "source_path": "Categories/Podcast episodes.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Posts.md",
+   "sha256": "9ccf04bb1e0530b9fcd8068efd38ceff786fd12a71efec334fb60c86d3225ca4",
+   "source": "kepano",
+   "source_path": "Categories/Posts.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Products.md",
+   "sha256": "d5d8341a31063ef5f0ea89a4f0beb245ec29e537267bc6a1402098b26bbee7ca",
+   "source": "kepano",
+   "source_path": "Categories/Products.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Projects.md",
+   "sha256": "590b289d1528e5c161eba1bcaeb50a45b0074508ea04609075ed7569ecabbbd9",
+   "source": "kepano",
+   "source_path": "Categories/Projects.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Recipes.md",
+   "sha256": "386e494b91a75eb57b13fee22512f43910f9c3549362bc0d0ac2cf1f0b94f325",
+   "source": "kepano",
+   "source_path": "Categories/Recipes.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Shows.md",
+   "sha256": "e3521e1add7e7cfe40741919a6ecd877364e9f1be0ee22413e964fdba6751a34",
+   "source": "kepano",
+   "source_path": "Categories/Shows.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Categories/Trips.md",
+   "sha256": "2c690e9ba9381bfdc3e85aa4e10e9e0781b89870076479be6749041f18f4b7ea",
+   "source": "kepano",
+   "source_path": "Categories/Trips.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "kepano/Notes/2023 Japan Trip.md",
+   "sha256": "6a01f86fc11f26cc0f27cdaff7aa2b88e6def79e6c802842d48cb7f4cf26d2c3",
+   "source": "kepano",
+   "source_path": "Notes/2023 Japan Trip.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "frontmatter"
+   ],
+   "path": "kepano/Notes/2023-09-12 Meeting with Steph.md",
+   "sha256": "01808777b6825259a64421390bf6c1697d4e04eefa80a437c587b005180fbb66",
+   "source": "kepano",
+   "source_path": "Notes/2023-09-12 Meeting with Steph.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "kepano/Notes/Evergreen notes turn ideas into objects that you can manipulate.md",
+   "sha256": "c98cf2bac28cca87cb19d1e1fef7567d92fb067fd12f5643a38dbad478fb7e72",
+   "source": "kepano",
+   "source_path": "Notes/Evergreen notes turn ideas into objects that you can manipulate.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/References/Kevin Kelly.md",
+   "sha256": "f90290c27be36d66b515ee1f4cc71464cbdef97f8079d1eff6b31f67c8d06222",
+   "source": "kepano",
+   "source_path": "References/Kevin Kelly.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "kepano/References/Kyoto.md",
+   "sha256": "a5f90abc68b09168c15be2296754a828b6968a5e70b4fbb01ba6667fb986f22b",
+   "source": "kepano",
+   "source_path": "References/Kyoto.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "kepano/References/Obsidian.md",
+   "sha256": "277d3406c42dba9c45fca72cd0e62c741111efee78c378625e06dfe7bd3db11f",
+   "source": "kepano",
+   "source_path": "References/Obsidian.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/References/Parks.md",
+   "sha256": "7e2540df343e22fcd2eeb2dc7f737a222940a3823f3d2b5fb3331ab8c5068378",
+   "source": "kepano",
+   "source_path": "References/Parks.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/References/Paul Chambers.md",
+   "sha256": "577e30263bb07f3038fac900ae2f0d75423cf9c4444c83f467108c9241826d49",
+   "source": "kepano",
+   "source_path": "References/Paul Chambers.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/References/Sci-fi.md",
+   "sha256": "225d618d8489efa952c3ecde5d50b9a29d3394c82b283318454612febcc176da",
+   "source": "kepano",
+   "source_path": "References/Sci-fi.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Actor Template.md",
+   "sha256": "ff60bfe240ec64ae310e1a7a0212cef3557cac51a7c640751e5a4468c6d5c5aa",
+   "source": "kepano",
+   "source_path": "Templates/Actor Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Board Game Template.md",
+   "sha256": "ae807d9856c61347fd15cf43fb64375f8c3402e45c22d991252c2691dad6ff63",
+   "source": "kepano",
+   "source_path": "Templates/Board Game Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Daily Note Template.md",
+   "sha256": "5ec89f0e0af133a4efdd5cfc8aa02e4220bd4e500637d0d24a6006ea6dfcf2a0",
+   "source": "kepano",
+   "source_path": "Templates/Daily Note Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Director Template.md",
+   "sha256": "1bfe9749a3c4ab280df9ef150cc48ec7ee46768f8690445cdeb4f28d33914fa2",
+   "source": "kepano",
+   "source_path": "Templates/Director Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Evergreen Template.md",
+   "sha256": "eaad9796f6f9fed0fd362a43a275d80bf6a327dfad810f78cb22875c71e50273",
+   "source": "kepano",
+   "source_path": "Templates/Evergreen Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Genre Template.md",
+   "sha256": "225d618d8489efa952c3ecde5d50b9a29d3394c82b283318454612febcc176da",
+   "source": "kepano",
+   "source_path": "Templates/Genre Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Job Interview Template.md",
+   "sha256": "40f6d92daf47eb20b1ccb1e3600976e5b6c2fbb27fef3fd6a7001fed6068f9f7",
+   "source": "kepano",
+   "source_path": "Templates/Job Interview Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Journal Template.md",
+   "sha256": "26e7b83a0d456619b87a3d3e7af52f4db3785cc36d57d19914c7c2adae080696",
+   "source": "kepano",
+   "source_path": "Templates/Journal Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Meeting Template.md",
+   "sha256": "7f2e653299c1e2204fcb83a601c8e981d3d66643ab368c6989dba81b1aa9e6d3",
+   "source": "kepano",
+   "source_path": "Templates/Meeting Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Movie Template.md",
+   "sha256": "3a751d2d80ebf32edae3504d3e5f481770c1067ec9b59423c8e45182078fe933",
+   "source": "kepano",
+   "source_path": "Templates/Movie Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Musician Template.md",
+   "sha256": "63d0fa4afc585b0248a6fdcf0660f2dc6f3fff424f1db034a143f309fe506fa8",
+   "source": "kepano",
+   "source_path": "Templates/Musician Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Place Type Template.md",
+   "sha256": "3fedcef743af08d6749e1135777aabc19b654ffd021eff3ee461896190b8f264",
+   "source": "kepano",
+   "source_path": "Templates/Place Type Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Podcast Episode Template.md",
+   "sha256": "77538f7eb7371726eb9c70a592b9fd8ac565e2cfa653e87959c765562006db00",
+   "source": "kepano",
+   "source_path": "Templates/Podcast Episode Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Podcast Template.md",
+   "sha256": "1d8425e3e00322a446afee60021d74256ed0a26fe4fc644c327253bf26f2e79a",
+   "source": "kepano",
+   "source_path": "Templates/Podcast Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Product Type Template.md",
+   "sha256": "0ebe5fbfc15026764df50f4a9bcd30828012e0c00bffa68d8a51672f35f4e6ba",
+   "source": "kepano",
+   "source_path": "Templates/Product Type Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Project Template.md",
+   "sha256": "5ef693825f3149277e57480fcdb9c61dc88843f5c0807e98c657092f5889656a",
+   "source": "kepano",
+   "source_path": "Templates/Project Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Video Game Genre Template.md",
+   "sha256": "02ca48287602a34b4fc71deda9d2aac463d890c16f6470a3fc9cf1fc73acc330",
+   "source": "kepano",
+   "source_path": "Templates/Video Game Genre Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "frontmatter"
+   ],
+   "path": "kepano/Templates/Video Game Template.md",
+   "sha256": "69c708dd4f68928bfada1510c316f8b8696b90531493a0cb0c3201c67f726dbe",
+   "source": "kepano",
+   "source_path": "Templates/Video Game Template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/blog/2020/12/21/data-fetching-with-react-server-components.md",
+   "sha256": "0c33faa0bb80f346d15880e4492e126691132cc60104b3876c2cd4bb50812cc9",
+   "source": "react_tr",
+   "source_path": "src/content/blog/2020/12/21/data-fetching-with-react-server-components.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/blog/2021/06/08/the-plan-for-react-18.md",
+   "sha256": "3436ee153cc06a01696d2ed3d8a6497362321714df7cd2b5cb6a2b00de07e831",
+   "source": "react_tr",
+   "source_path": "src/content/blog/2021/06/08/the-plan-for-react-18.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/blog/2022/03/29/react-v18.md",
+   "sha256": "a32f4088ed19df9dc904cfec504f5dc8305af190cb2e85b8d1d15d94e022a733",
+   "source": "react_tr",
+   "source_path": "src/content/blog/2022/03/29/react-v18.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/blog/2024/02/15/react-labs-what-we-have-been-working-on-february-2024.md",
+   "sha256": "80f54a27124dd23821469b5d800514ff81ef3073ae37f9c796dfffa00248e129",
+   "source": "react_tr",
+   "source_path": "src/content/blog/2024/02/15/react-labs-what-we-have-been-working-on-february-2024.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/blog/2024/04/25/react-19-upgrade-guide.md",
+   "sha256": "4df1c50ace51d09fb53c370c5333e8921e01f7bdaca5bc487c3796e904bdc707",
+   "source": "react_tr",
+   "source_path": "src/content/blog/2024/04/25/react-19-upgrade-guide.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/blog/2024/10/21/react-compiler-beta-release.md",
+   "sha256": "9d3dc76e50e2f29498baec151b57900a574f0e404835be67710f2de6ae5b9d7d",
+   "source": "react_tr",
+   "source_path": "src/content/blog/2024/10/21/react-compiler-beta-release.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/blog/2025/10/07/react-compiler-1.md",
+   "sha256": "ae3ce13d08e1d80c8eb37bd1ac834ab1e5ea9c5b908ea8ea778998e9e71d91a5",
+   "source": "react_tr",
+   "source_path": "src/content/blog/2025/10/07/react-compiler-1.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/blog/index.md",
+   "sha256": "a392e1f0641127ead93bf869840c25b7d9cb04598d741e273adb36643e76797e",
+   "source": "react_tr",
+   "source_path": "src/content/blog/index.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/community/acknowledgements.md",
+   "sha256": "c17c9ed9b36edfeac84df1a301542171055c9872000b3cdbdd5178dc34aa6ba7",
+   "source": "react_tr",
+   "source_path": "src/content/community/acknowledgements.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/community/index.md",
+   "sha256": "7016500a6d5714c27f1e9a07afc591c9dd2f4a525d536dd030594382125cc7ff",
+   "source": "react_tr",
+   "source_path": "src/content/community/index.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/community/videos.md",
+   "sha256": "9fee0235d334059b8fdccaec1fde4f20802ed12bf2ca19f1148028d9c7844904",
+   "source": "react_tr",
+   "source_path": "src/content/community/videos.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html"
+   ],
+   "path": "react_tr/src/content/errors/377.md",
+   "sha256": "f4daeeb28d64eab7308b13c413aa6bd5cd9b254672bbd13440667997c5184002",
+   "source": "react_tr",
+   "source_path": "src/content/errors/377.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/building-a-react-framework.md",
+   "sha256": "289e07ee693c565d3fad005900f4ea671a5b3c62c691f8b8e2927bc9a92ba659",
+   "source": "react_tr",
+   "source_path": "src/content/learn/building-a-react-framework.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/choosing-the-state-structure.md",
+   "sha256": "1c0544949152a3381b33a0880ba635bccde776e925f32d464f955a7b1be11511",
+   "source": "react_tr",
+   "source_path": "src/content/learn/choosing-the-state-structure.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/creating-a-react-app.md",
+   "sha256": "1abf7173ebb5dbcdd9249001a09e612e8f32bf00e261873205af61da86dc7b80",
+   "source": "react_tr",
+   "source_path": "src/content/learn/creating-a-react-app.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/escape-hatches.md",
+   "sha256": "7828d855708971164a8a8ab24516fca9480a2e8c3e9f4432219eacbd2d424467",
+   "source": "react_tr",
+   "source_path": "src/content/learn/escape-hatches.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/extracting-state-logic-into-a-reducer.md",
+   "sha256": "7fbf22406ca2b4399286a4ed999494a816dea68eaa06b36a05b0cf928daedb98",
+   "source": "react_tr",
+   "source_path": "src/content/learn/extracting-state-logic-into-a-reducer.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/importing-and-exporting-components.md",
+   "sha256": "0cf1fd4431b1761cdb399391c21069c71e15aba3b10ada2b81c59b0b47013a90",
+   "source": "react_tr",
+   "source_path": "src/content/learn/importing-and-exporting-components.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/keeping-components-pure.md",
+   "sha256": "5749e6a6562348d061cf5d8e5fd54eccb3493af7e0d6096a2df337b43581979d",
+   "source": "react_tr",
+   "source_path": "src/content/learn/keeping-components-pure.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/passing-data-deeply-with-context.md",
+   "sha256": "b5c3392c771b6d3dcd57a0f969d07c9f3e5310affe4e6f4c75aed39f440c210f",
+   "source": "react_tr",
+   "source_path": "src/content/learn/passing-data-deeply-with-context.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/passing-props-to-a-component.md",
+   "sha256": "c0243656d65291a0ca254262683eaf2cc22d17e4a848e31a25647e4f799da90f",
+   "source": "react_tr",
+   "source_path": "src/content/learn/passing-props-to-a-component.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/preserving-and-resetting-state.md",
+   "sha256": "10457bb4ffbf57ea6df06ebbd13c15a4ef51ae30b9499f891db63ae646513c2e",
+   "source": "react_tr",
+   "source_path": "src/content/learn/preserving-and-resetting-state.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/react-compiler/debugging.md",
+   "sha256": "c2c98774b5ee3794126c511b78f6c048651510a02542fb167943f9a4342f8fd8",
+   "source": "react_tr",
+   "source_path": "src/content/learn/react-compiler/debugging.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/reacting-to-input-with-state.md",
+   "sha256": "7f0e64d32a06a494273fff1f4c2854eb62e7021b6ed08f798ffecde3963fdc4e",
+   "source": "react_tr",
+   "source_path": "src/content/learn/reacting-to-input-with-state.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/removing-effect-dependencies.md",
+   "sha256": "3c30e2bfa7d96679a917236cb62a12f59785fd9fd1491ad786b328e9e64b6f0a",
+   "source": "react_tr",
+   "source_path": "src/content/learn/removing-effect-dependencies.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/rendering-lists.md",
+   "sha256": "9360b1df2dc8e883e790882133d13f5e040f6bf3e451ae3c0843bb12a2ddc42f",
+   "source": "react_tr",
+   "source_path": "src/content/learn/rendering-lists.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/reusing-logic-with-custom-hooks.md",
+   "sha256": "031b5024a4156af877f5c086a7ed823681b7b5bbbb5c92b52d7858b4b5032795",
+   "source": "react_tr",
+   "source_path": "src/content/learn/reusing-logic-with-custom-hooks.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/thinking-in-react.md",
+   "sha256": "bcd8bfeb10b08873f65c632f0ebba2580b7b1cc86b5a0cc6133fa868d9662f99",
+   "source": "react_tr",
+   "source_path": "src/content/learn/thinking-in-react.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "table",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/updating-arrays-in-state.md",
+   "sha256": "127715d2db68e73403a8367ef48c5f89582c32f0154556b94ac9f08954a0910d",
+   "source": "react_tr",
+   "source_path": "src/content/learn/updating-arrays-in-state.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/updating-objects-in-state.md",
+   "sha256": "52bb1579f7cc134c55e090240d1a4bb196a80e86793e12098bd12691f624e56d",
+   "source": "react_tr",
+   "source_path": "src/content/learn/updating-objects-in-state.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/writing-markup-with-jsx.md",
+   "sha256": "96469e6b7b2e8958c9a350eefd39a72347836f22c20cc88e2aff45a7d7da7582",
+   "source": "react_tr",
+   "source_path": "src/content/learn/writing-markup-with-jsx.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/learn/your-first-component.md",
+   "sha256": "49ec90f8360e2043e9fd43f380ec77c41dd992c05e2b56426b64d77c185fc599",
+   "source": "react_tr",
+   "source_path": "src/content/learn/your-first-component.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/eslint-plugin-react-hooks/lints/config.md",
+   "sha256": "1dd4e2ed296a41241d9e04351acc4d49e6dba9654a76d660f48b1207ecccad85",
+   "source": "react_tr",
+   "source_path": "src/content/reference/eslint-plugin-react-hooks/lints/config.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/eslint-plugin-react-hooks/lints/immutability.md",
+   "sha256": "afeedcd7e750ee767510e03f0f0f11a1626f4a0950348f16851d0a1f3d3bc6ba",
+   "source": "react_tr",
+   "source_path": "src/content/reference/eslint-plugin-react-hooks/lints/immutability.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/eslint-plugin-react-hooks/lints/preserve-manual-memoization.md",
+   "sha256": "7b860321c24d0717839ba8ed83decb95d3c2562d73a14541aa908483600264f3",
+   "source": "react_tr",
+   "source_path": "src/content/reference/eslint-plugin-react-hooks/lints/preserve-manual-memoization.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/eslint-plugin-react-hooks/lints/static-components.md",
+   "sha256": "be55c407d160d743b9a76fbc7179e1e7b87865a06240d6355daec012cd37979b",
+   "source": "react_tr",
+   "source_path": "src/content/reference/eslint-plugin-react-hooks/lints/static-components.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-compiler/configuration.md",
+   "sha256": "4b7535de2c0cbdf1492709e018986a738a66a84fcbb07d862c53b923d60c54f2",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-compiler/configuration.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "table",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-compiler/directives.md",
+   "sha256": "04a41f0e9d32d28c4ec5310075e28b186840b059df59bec357702e854095b76d",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-compiler/directives.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-compiler/target.md",
+   "sha256": "0a573e4e06c7f887339227d576822d4f864ef0ec0408ae0ee3736b8b68148acc",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-compiler/target.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/client/createRoot.md",
+   "sha256": "fbd3e934fccb2c76df7c1527dbe4d65eb2e2b01caeca3eb5318e435558954117",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/client/createRoot.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/components/index.md",
+   "sha256": "2fca91742f9f93abc3873c0e29f423958738258f270c968d77ba298c5707f6de",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/components/index.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/components/input.md",
+   "sha256": "04265425eeef57f760a469b9fc484d0d2c795d0ae99a733617049d2eb705b59f",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/components/input.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/components/meta.md",
+   "sha256": "401aa318370fd1d478b18c688e5b4742dabdf4dd21ee6ea1ae942ab2a740c080",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/components/meta.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/components/progress.md",
+   "sha256": "d825a222d1d7bfaa1487df9e4c81fc85da7273e18836fc01d09541f9b12b3e49",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/components/progress.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/components/select.md",
+   "sha256": "fdf80f0ecd48df81a5ed44d23f65be3335de088dde7d8a5718fbc779431bf12e",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/components/select.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/components/textarea.md",
+   "sha256": "da9f00784c132287661d1a375a5fcf321067e73999ad43ad90bc56be6466b852",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/components/textarea.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/createPortal.md",
+   "sha256": "f288a993a80eb8ad41cb5b3d33a00a3d8ea4263ff62a4d08824f71779c9a9e15",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/createPortal.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/hydrate.md",
+   "sha256": "25ca8d139edc0dc69809004fcfc45b1f5a32a3a5f4d2b4d55140130518d13f7d",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/hydrate.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/index.md",
+   "sha256": "ec2e6b366996d581e91c9bba5e12e4e585673e62d181d57b686476bf56d868ef",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/index.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/prefetchDNS.md",
+   "sha256": "d089fd3ec97a36c6dbc0eff3bc15ced9c68f86af8003ec9ea39dcc58624cab09",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/prefetchDNS.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/preinitModule.md",
+   "sha256": "adda57f58314eb63c7097bcccaf5318fd99c30115b7bc97c7cc792432ff58008",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/preinitModule.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/render.md",
+   "sha256": "68ae593f12cb1f531e2dcd46dc81529c1e7765aab95e2b524d930abff7f89995",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/render.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/server/index.md",
+   "sha256": "fc69ada36d675de22d06ba81c30efd73c9a0749d30eb999a413893538be11a84",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/server/index.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/server/renderToNodeStream.md",
+   "sha256": "897be83dfdf0b62ff337effaf76cd1a190937b0bd00bc3d1b8fac7d17840292b",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/server/renderToNodeStream.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/server/renderToStaticMarkup.md",
+   "sha256": "04c86fbd937ad1766ea79ca7c0f5c274250091359cfe88874189e840a37a9b20",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/server/renderToStaticMarkup.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/server/renderToStaticNodeStream.md",
+   "sha256": "6d6bc20c6bf2c464fea5343f0248cc52aeb2a8c4e4ada1fcfecd636d90a5d2a2",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/server/renderToStaticNodeStream.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/server/renderToString.md",
+   "sha256": "a1c570e984f2955c0dc8babcdcad13a0cfe0b4087dcc88b9b6b675ce5dcd6d35",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/server/renderToString.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/static/index.md",
+   "sha256": "ff5a84bc8c918d3230328f10b02cb00364f977270bf30764f5442ff1cb9d7692",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/static/index.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/static/prerenderToNodeStream.md",
+   "sha256": "58cfb4f8171be23d79ebd1f02734b1feaf3dcb65621a01bac18417646c26172f",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/static/prerenderToNodeStream.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/static/resumeAndPrerenderToNodeStream.md",
+   "sha256": "20fb7980d8051c779dc85467c7804d817f8331ff5e07f1d03949370a3455ff31",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/static/resumeAndPrerenderToNodeStream.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react-dom/unmountComponentAtNode.md",
+   "sha256": "9e92c04fa00e5f0851aa41ab9211b8f545a433a96d25adf94fd61d2ef4073adc",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react-dom/unmountComponentAtNode.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/Fragment.md",
+   "sha256": "59c431fc9d6d5d210e5320a78a0b1ec9b11b51b90442adf0edb8944425397251",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/Fragment.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/StrictMode.md",
+   "sha256": "e4820b083fccc0822d6436e2afaf368a4fec653e9d82e29bc309e0344fc34484",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/StrictMode.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/Suspense.md",
+   "sha256": "0f6bdf4f6c64fe014cab47a9828c3c91fbdc2c97ca09307049b5e24cb5189612",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/Suspense.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/act.md",
+   "sha256": "0f0c60bce7d3f41d25d27e976ba275ac88e4add7aefe2dff376a2fcd3a121ca7",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/act.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/apis.md",
+   "sha256": "c79d34603898262c311925a1c76bc464a053b070f0deb47c7023d2668754dabe",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/apis.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/cloneElement.md",
+   "sha256": "7229fd242deeb650524c4856353b39403277bf5ec88dee65e4ccaf23cf4530e7",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/cloneElement.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/createRef.md",
+   "sha256": "faf694d8f8c40aa049d48d0eb16c8aa29d690afcf9c46a0861df3e69970377f5",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/createRef.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/experimental_taintUniqueValue.md",
+   "sha256": "1b31d46f88e4d2b9d4202024af5f273ee31d82e1f57b0c0ce145a868e4a0e4dc",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/experimental_taintUniqueValue.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/hooks.md",
+   "sha256": "68680ab4d66211569ffd264eb819f4b3afa8f3947b9e4bd9b5c288d22be3c2c8",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/hooks.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/index.md",
+   "sha256": "b0e2b23c5cd1fad189a59dbdef64367b9b85529ce301d391c348ecbee099de44",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/index.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/isValidElement.md",
+   "sha256": "cab85f707e3831a877f47771e06806092e0e511d324b9155ee324c9e3ee684b3",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/isValidElement.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/lazy.md",
+   "sha256": "418e6e1d62c886a06e54f8552db9df4ef9383ef46d0476d534a46da25fb005d2",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/lazy.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/use.md",
+   "sha256": "78bed05de14e1e4f53a6bc2ff3c44b8c1b4bd66668e523da2c51dfa1678fe303",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/use.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/useDeferredValue.md",
+   "sha256": "5fb7937ffef0e0244468c9091212281261e3cba57e1279239c74d074ef27d545",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/useDeferredValue.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/useLayoutEffect.md",
+   "sha256": "b6eb060c2c395c530b3a427287fd756d1617e1bc579dcc021936b85316449179",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/useLayoutEffect.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/useOptimistic.md",
+   "sha256": "e54c63a6c335b70c762f51e892d00962b6c0a285046a32a1268deeb9008c02f1",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/useOptimistic.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/useReducer.md",
+   "sha256": "46899e0f8ffb41939a6e38a8fe1103d34177935ffeac946b8573ee0df31c2dbb",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/useReducer.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/useRef.md",
+   "sha256": "f0a4970d889091bdcd5145f505ad75b8cd791b7b05700f04b98c3a2a773d1c19",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/useRef.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/useState.md",
+   "sha256": "651bbb3bde033b9d38d039312e98ead33b9d9dcadf8c4cc2870e2b58cd9e6226",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/useState.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/react/useTransition.md",
+   "sha256": "d82ea52c8ce9c28d71e9b6b47cc0f2c72f6caf4e26c3279ace9827f8fd3719d5",
+   "source": "react_tr",
+   "source_path": "src/content/reference/react/useTransition.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/rsc/directives.md",
+   "sha256": "f3926140b424f074640794cebca0f1a21cce1af1f335573cc394f1869e48ccb7",
+   "source": "react_tr",
+   "source_path": "src/content/reference/rsc/directives.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/rules/index.md",
+   "sha256": "8f5c8e4f3b1294e10f4f46b828f0ed87739bab9b5beb63854c254658ec21d920",
+   "source": "react_tr",
+   "source_path": "src/content/reference/rules/index.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/reference/rules/rules-of-hooks.md",
+   "sha256": "735db605b63b90822e41261c6cb67d242e866a85f0c83af847fae9a88b113098",
+   "source": "react_tr",
+   "source_path": "src/content/reference/rules/rules-of-hooks.md",
+   "turkish": true
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "react_tr/src/content/versions.md",
+   "sha256": "4cdbfd4c05c4abb62493a3bf7f3acf4f7abd4a8cccc56c13de754f41c0bf52dd",
+   "source": "react_tr",
+   "source_path": "src/content/versions.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0019-opt-in-builtin-traits.md",
+   "sha256": "10ccb0cc876f831292b329d56a67ef163f97d6805add25bc0a2e560b0b2110cd",
+   "source": "rfcs",
+   "source_path": "text/0019-opt-in-builtin-traits.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0042-regexps.md",
+   "sha256": "29e91405523c3c5434af88ad05c878a542ed9023adfc1d189e5c7f57bffb51c8",
+   "source": "rfcs",
+   "source_path": "text/0042-regexps.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence"
+   ],
+   "path": "rfcs/text/0048-traits.md",
+   "sha256": "597f271d3f64456b746af239ccd38501655943ff87aa0e8264f2e76b40c1351d",
+   "source": "rfcs",
+   "source_path": "text/0048-traits.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0059-remove-tilde.md",
+   "sha256": "95513d481aa46fe31ce256922f673f1445946523eb0a62bd5f4b5df55a40f2f6",
+   "source": "rfcs",
+   "source_path": "text/0059-remove-tilde.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0060-rename-strbuf.md",
+   "sha256": "32c1412b5b83a059afcb2c76d47034571480725ead0e4c03ed365cfb7b0b760a",
+   "source": "rfcs",
+   "source_path": "text/0060-rename-strbuf.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0079-undefined-struct-layout.md",
+   "sha256": "fc4111fb96a29a3a7d05f9dccacec52efae9933032568dc6cffbe25a7de3aa1f",
+   "source": "rfcs",
+   "source_path": "text/0079-undefined-struct-layout.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0092-struct-grammar.md",
+   "sha256": "dfd8cd8a4a680b123cd24c5d407cc21919f1f08a05b099a9b387f31c60680fda",
+   "source": "rfcs",
+   "source_path": "text/0092-struct-grammar.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0093-remove-format-intl.md",
+   "sha256": "9a125076a72996fa266c4385c24393aa9eeeadf67525b8afd51906c77cb34eaa",
+   "source": "rfcs",
+   "source_path": "text/0093-remove-format-intl.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0115-rm-integer-fallback.md",
+   "sha256": "edcb904d006a454fc49a661b198e3f4a0b42aefa334539744cd6522f43ca2115",
+   "source": "rfcs",
+   "source_path": "text/0115-rm-integer-fallback.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/0116-no-module-shadowing.md",
+   "sha256": "ae0ca46e3693762cd847418c9f89f7c64d5bea766f786b4c1a0aaa1186c4aa8c",
+   "source": "rfcs",
+   "source_path": "text/0116-no-module-shadowing.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0123-share-to-threadsafe.md",
+   "sha256": "7a162a495c4d920c7f6bf4a73fe57fa9d9db743956cdf089f6af9a3c82238cc0",
+   "source": "rfcs",
+   "source_path": "text/0123-share-to-threadsafe.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0130-box-not-special.md",
+   "sha256": "c79b8500f9a8218f26a8ff00f71e90ebc8aadad56a520b723db9fceb460c965b",
+   "source": "rfcs",
+   "source_path": "text/0130-box-not-special.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0131-target-specification.md",
+   "sha256": "9f07ad042c100e842b51ffaab20d78ee7162a78c18dc17abf56ff342d2dcf3f7",
+   "source": "rfcs",
+   "source_path": "text/0131-target-specification.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list"
+   ],
+   "path": "rfcs/text/0132-ufcs.md",
+   "sha256": "26ad2bf8cc591024adad347f14c5d4cfdda8ce6daddbfba871c0df3053dc7631",
+   "source": "rfcs",
+   "source_path": "text/0132-ufcs.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0135-where.md",
+   "sha256": "faabf1743d5af82e07914b6e18a839373bf69c667c31ff4cd094544821536a18",
+   "source": "rfcs",
+   "source_path": "text/0135-where.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0136-no-privates-in-public.md",
+   "sha256": "8463715e7ac192982d8ea45dcd931a53b27220b43644c3f4d4b0670098b0cc0b",
+   "source": "rfcs",
+   "source_path": "text/0136-no-privates-in-public.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence"
+   ],
+   "path": "rfcs/text/0155-anonymous-impl-only-in-same-module.md",
+   "sha256": "6cf7104effdcf7c801d989fcda5659936bae251a003611c4b6d0aed66a5830d4",
+   "source": "rfcs",
+   "source_path": "text/0155-anonymous-impl-only-in-same-module.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0160-if-let.md",
+   "sha256": "b62b1161b6c0a51cc834473c9959ebcea9f4c0a7e676c7573e8593faa1ef10fa",
+   "source": "rfcs",
+   "source_path": "text/0160-if-let.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0164-feature-gate-slice-pats.md",
+   "sha256": "073e192d29ab76ef4abf07315fce1447c23c6f0a23079a2d56d3adea3a9d79b1",
+   "source": "rfcs",
+   "source_path": "text/0164-feature-gate-slice-pats.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0168-mod.md",
+   "sha256": "82b5b53fbbd90725a6c7e92532579d86d75b9744a196941f8f7756dd1b75d8e1",
+   "source": "rfcs",
+   "source_path": "text/0168-mod.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/0213-defaulted-type-params.md",
+   "sha256": "bb484321b790edde57d019082e5ce15d499d56884b06c420a02152a3e91e1e59",
+   "source": "rfcs",
+   "source_path": "text/0213-defaulted-type-params.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0221-panic.md",
+   "sha256": "f94f938d802b3ae19b918cee9e4f4016c03e134f08e94c796d0266f0ca91ba87",
+   "source": "rfcs",
+   "source_path": "text/0221-panic.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/0235-collections-conventions.md",
+   "sha256": "afb89fe8ade55bf95760e7a39299d2d2c071e29e8e321c1ebb5bd05408e635c1",
+   "source": "rfcs",
+   "source_path": "text/0235-collections-conventions.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0326-restrict-xXX-to-ascii.md",
+   "sha256": "18a49fc14987085d717ea6fa4b432a82c08808b7d5ab1c19d6fe30b902bc12cb",
+   "source": "rfcs",
+   "source_path": "text/0326-restrict-xXX-to-ascii.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0339-statically-sized-literals.md",
+   "sha256": "99bf6f67eeb33bf8771af0fb3a8208b82e3ddd999285c3d109bad352a7aef89f",
+   "source": "rfcs",
+   "source_path": "text/0339-statically-sized-literals.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list"
+   ],
+   "path": "rfcs/text/0356-no-module-prefixes.md",
+   "sha256": "1ffae5bf57314d43ed505b0b17b3ca52e1df23251acdf426896c28c1972a7839",
+   "source": "rfcs",
+   "source_path": "text/0356-no-module-prefixes.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/0380-stabilize-std-fmt.md",
+   "sha256": "ffc945f12048db748c5a00590f9413240eca07680e92b4cf5fe913095b82da75",
+   "source": "rfcs",
+   "source_path": "text/0380-stabilize-std-fmt.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0387-higher-ranked-trait-bounds.md",
+   "sha256": "4090d9487acddaeecd1a80eff9d663c05039c90b1c3a9a42efc20daf4a48ad90",
+   "source": "rfcs",
+   "source_path": "text/0387-higher-ranked-trait-bounds.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0401-coercions.md",
+   "sha256": "d342f7caea90f336c53925f11ab380020518eb3d49a430861baf79ef3c403626",
+   "source": "rfcs",
+   "source_path": "text/0401-coercions.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0404-change-prefer-dynamic.md",
+   "sha256": "a5a04c86adee6ca64510980a6f7b74639f95e1f91d3aa1cd2c588fa44de6298d",
+   "source": "rfcs",
+   "source_path": "text/0404-change-prefer-dynamic.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0418-struct-variants.md",
+   "sha256": "1d487abc39409df7399da5baee5976a9e306dc59a38deac9f6b772086d20eae9",
+   "source": "rfcs",
+   "source_path": "text/0418-struct-variants.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0447-no-unused-impl-parameters.md",
+   "sha256": "8e2aca4c398675c73c8f2e3c5607a110e151a1b14ecc23e890800cfb5ea5b69a",
+   "source": "rfcs",
+   "source_path": "text/0447-no-unused-impl-parameters.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0494-c_str-and-c_vec-stability.md",
+   "sha256": "ba2775b293ea4fb08cb09c714f6de0214b3bc321e58225622a57b37e341a37d7",
+   "source": "rfcs",
+   "source_path": "text/0494-c_str-and-c_vec-stability.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0503-prelude-stabilization.md",
+   "sha256": "4a69189608aca9b165d9cea7fe5feb38d198c657607a87a720ea1fa71cba959a",
+   "source": "rfcs",
+   "source_path": "text/0503-prelude-stabilization.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/0528-string-patterns.md",
+   "sha256": "c917c94396dccdf2f2806a4b3d95a5ed0e0fcc8ff8ae70acf0160d7f02a4b4b3",
+   "source": "rfcs",
+   "source_path": "text/0528-string-patterns.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0529-conversion-traits.md",
+   "sha256": "50cdc784b11edf449f1646f6d84c7d263ac416362d2390ca7f0b3a85d8893a5f",
+   "source": "rfcs",
+   "source_path": "text/0529-conversion-traits.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0558-require-parentheses-for-chained-comparisons.md",
+   "sha256": "d5938a458571b556d4842dc1d26e0f78430043952ae71842f1820a8cfca79a96",
+   "source": "rfcs",
+   "source_path": "text/0558-require-parentheses-for-chained-comparisons.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0563-remove-ndebug.md",
+   "sha256": "d3bb01ec11bfca53eee642ac7969174d763061ad4aeabf2bf3c29cd61b7a9be8",
+   "source": "rfcs",
+   "source_path": "text/0563-remove-ndebug.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0574-drain-range.md",
+   "sha256": "1160f5908e5d696e69ec7ecdbf50829935ec8b1dd811190c6c3a9d66eb2e0983",
+   "source": "rfcs",
+   "source_path": "text/0574-drain-range.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0580-rename-collections.md",
+   "sha256": "47794d73e68db9c538e1d2c7be01ddeaca788721529154bd8935e9fd0f65efef",
+   "source": "rfcs",
+   "source_path": "text/0580-rename-collections.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0593-forbid-Self-definitions.md",
+   "sha256": "e941a6af93ab7be4db931ce737794bc878f773e9c25734c0029b9f3730717c97",
+   "source": "rfcs",
+   "source_path": "text/0593-forbid-Self-definitions.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table",
+    "code_fence"
+   ],
+   "path": "rfcs/text/0599-default-object-bound.md",
+   "sha256": "ae448ba1e2101d23a989d69706d6601292a2be1aa5c681f2acd88be4295a6931",
+   "source": "rfcs",
+   "source_path": "text/0599-default-object-bound.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0736-privacy-respecting-fru.md",
+   "sha256": "378c7ef97ce405e8bee6377fc942321ce7756148f84efdd319f2593668897229",
+   "source": "rfcs",
+   "source_path": "text/0736-privacy-respecting-fru.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0832-from-elem-with-love.md",
+   "sha256": "e23acc16ccd442c51d8fb0a1a6604916ce6a4ea714b27b9b0c87a31b80e061d8",
+   "source": "rfcs",
+   "source_path": "text/0832-from-elem-with-love.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0840-no-panic-in-c-string.md",
+   "sha256": "9cbcf2a12aca375eb6e9cd1a4252100a31c26bdf3a657e2d89c9039c73ff14e3",
+   "source": "rfcs",
+   "source_path": "text/0840-no-panic-in-c-string.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/0888-compiler-fence-intrinsics.md",
+   "sha256": "907951314ca625283a0aa675d6ab7347d0e7dc8a65458ebe01ff9500fef09dcb",
+   "source": "rfcs",
+   "source_path": "text/0888-compiler-fence-intrinsics.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/0909-move-thread-local-to-std-thread.md",
+   "sha256": "d8d927bf1e545a440731903806b697462ee84bfe3f1b24678637e8e71ced03f6",
+   "source": "rfcs",
+   "source_path": "text/0909-move-thread-local-to-std-thread.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/1066-safe-mem-forget.md",
+   "sha256": "5b9c1ce049e2d87eff5103eced8ab90526a7c9875803d0420fe0101935b02163",
+   "source": "rfcs",
+   "source_path": "text/1066-safe-mem-forget.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list"
+   ],
+   "path": "rfcs/text/1152-slice-string-symmetry.md",
+   "sha256": "31f8d125d0f22b9121d3c31dacc5aaab44b25e685b6f5032c2cbaca9cde9543b",
+   "source": "rfcs",
+   "source_path": "text/1152-slice-string-symmetry.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1193-cap-lints.md",
+   "sha256": "0ef9cd27341308cbb1fa160cfd29d238a1bd8e9166410536e7216521b8897eef",
+   "source": "rfcs",
+   "source_path": "text/1193-cap-lints.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1200-cargo-install.md",
+   "sha256": "b027edd80ddb967551ff7c3f3a069987ab7fd44e45b0daeb5dd11a792b88d83a",
+   "source": "rfcs",
+   "source_path": "text/1200-cargo-install.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1211-mir.md",
+   "sha256": "ee4aa3cefa2c37d450f5bae1d63ea5ad20f6acaa1afcabfc8ab0f13079b31b79",
+   "source": "rfcs",
+   "source_path": "text/1211-mir.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/1214-projections-lifetimes-and-wf.md",
+   "sha256": "0bd899ca110c2ba8b335dfd53d2c3c8782d096c219d6975ae5fc8e8c04bb22a0",
+   "source": "rfcs",
+   "source_path": "text/1214-projections-lifetimes-and-wf.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/1242-rust-lang-crates.md",
+   "sha256": "5fcf436b05784677a6818ee21bf9c31df47fc3ad2e01b4b004d84219f0f64244",
+   "source": "rfcs",
+   "source_path": "text/1242-rust-lang-crates.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1270-deprecation.md",
+   "sha256": "176fa94ed64776a709cc06b46cbe8053720e7d45870a12ba44885a4d0fca54ee",
+   "source": "rfcs",
+   "source_path": "text/1270-deprecation.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/1300-intrinsic-semantics.md",
+   "sha256": "3b79454621d00c3bba14e59e6ba837d0dd83f2e1a4c8231633f6338bcd3c2143",
+   "source": "rfcs",
+   "source_path": "text/1300-intrinsic-semantics.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1361-cargo-cfg-dependencies.md",
+   "sha256": "711724f24294facde502724ecb77ccf36d4db01886cbfc03104faf2febcae64a",
+   "source": "rfcs",
+   "source_path": "text/1361-cargo-cfg-dependencies.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1419-slice-copy.md",
+   "sha256": "9a88d6036f8d05aaebb4f718c73da0621e7a9c24c4894777fdc339c815172d3c",
+   "source": "rfcs",
+   "source_path": "text/1419-slice-copy.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1444-union.md",
+   "sha256": "913b25268decbfa3bf6d84bf8ceec501822c0fcf51d7cd88a2e4440596c74ded",
+   "source": "rfcs",
+   "source_path": "text/1444-union.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/1467-volatile.md",
+   "sha256": "bc7814395583f9f6893cc0feeeaacad35f685f61784c2441c0b221b087f1b7f2",
+   "source": "rfcs",
+   "source_path": "text/1467-volatile.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/1521-copy-clone-semantics.md",
+   "sha256": "cf4434d1490a0ade730603ad82708892438c3ac97791800810ec4e50b9bad1de",
+   "source": "rfcs",
+   "source_path": "text/1521-copy-clone-semantics.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1525-cargo-workspace.md",
+   "sha256": "a0186204fffeef505f27960f882f24985cd6d82c7cde0b875f2e7c91525af1c9",
+   "source": "rfcs",
+   "source_path": "text/1525-cargo-workspace.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1552-contains-method-for-various-collections.md",
+   "sha256": "7d5e5b3b0b196ba97eea4ad5b3efdd7bf89f2daaaca5ffdf6a4356ce8b0932c0",
+   "source": "rfcs",
+   "source_path": "text/1552-contains-method-for-various-collections.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/1559-attributes-with-literals.md",
+   "sha256": "969ee68ca90d8408b3b8e2ba2766aa26203ca7340a5ae4eb450f2f8194f49fdd",
+   "source": "rfcs",
+   "source_path": "text/1559-attributes-with-literals.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1561-macro-naming.md",
+   "sha256": "dc6f67f8269970aa91eaa601d0afcd31398bebc9c216caf2fbe8fd1db240d95a",
+   "source": "rfcs",
+   "source_path": "text/1561-macro-naming.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1567-long-error-codes-explanation-normalization.md",
+   "sha256": "8a8a5fbdf6f8083f4e035ff1f5d84f680634089a6b8e39bcd812b2b9b4b9ae44",
+   "source": "rfcs",
+   "source_path": "text/1567-long-error-codes-explanation-normalization.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/1620-regex-1.0.md",
+   "sha256": "db6c50cf7ec180ba5683c0e1feaf240b89833132e12d1744037098b339416aae",
+   "source": "rfcs",
+   "source_path": "text/1620-regex-1.0.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1647-allow-self-in-where-clauses.md",
+   "sha256": "f19fae77f119004895da9704997197b0550f1d0835babe505b1aa5ac87da1abb",
+   "source": "rfcs",
+   "source_path": "text/1647-allow-self-in-where-clauses.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1653-assert_ne.md",
+   "sha256": "1373d26805a2ca9c5fac7f02f9979bf70650d32bc4d6e74172cba09ef335c647",
+   "source": "rfcs",
+   "source_path": "text/1653-assert_ne.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1665-windows-subsystem.md",
+   "sha256": "3b2d308cfd7a0f71e80321075c170778c275274d80acd4f57b26b23c31fdff2b",
+   "source": "rfcs",
+   "source_path": "text/1665-windows-subsystem.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote"
+   ],
+   "path": "rfcs/text/1683-docs-team.md",
+   "sha256": "f4ca28e9e3c2234f4088d910422c4678e7bce28af71e9430e792ee9084a1f3dc",
+   "source": "rfcs",
+   "source_path": "text/1683-docs-team.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1685-deprecate-anonymous-parameters.md",
+   "sha256": "7066d10a1059c49a5d42601cf899c318ff60886aa435b3b1a1388dca1e596aca",
+   "source": "rfcs",
+   "source_path": "text/1685-deprecate-anonymous-parameters.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1733-trait-alias.md",
+   "sha256": "80212fd4b605aee08b48095f4a881b6529157d1fce4462865a301e087764b7d2",
+   "source": "rfcs",
+   "source_path": "text/1733-trait-alias.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1758-repr-transparent.md",
+   "sha256": "f6ec567ef212e8ad27d599bb0ca05ad74345b16a251bac8c135d3781d42c4592",
+   "source": "rfcs",
+   "source_path": "text/1758-repr-transparent.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "table",
+    "nested_list"
+   ],
+   "path": "rfcs/text/1824-crates.io-default-ranking.md",
+   "sha256": "d01b3adea531046e319ee2448ecaa5c76b4e5eda374e1e4166f0b136b06e2545",
+   "source": "rfcs",
+   "source_path": "text/1824-crates.io-default-ranking.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1826-change-doc-default-urls.md",
+   "sha256": "97b025be0e1a0753b5daee819c23245ed74c8a6552b23c52307d4acefbf0a4df",
+   "source": "rfcs",
+   "source_path": "text/1826-change-doc-default-urls.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1857-stabilize-drop-order.md",
+   "sha256": "5d0e50af22d669020e0973bce0a615d66ab380b0bd6cd9ecd0b0769bb8789115",
+   "source": "rfcs",
+   "source_path": "text/1857-stabilize-drop-order.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1866-more-readable-assert-eq.md",
+   "sha256": "df39ed21debc38d3b0e2119eed08fbd3945f2c05ea7d0737f9d9e287852e2593",
+   "source": "rfcs",
+   "source_path": "text/1866-more-readable-assert-eq.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/1909-unsized-rvalues.md",
+   "sha256": "c473d7f9db102dd2aae13ea4aaa08810e56b388d2816bfddd9c658ef39780dac",
+   "source": "rfcs",
+   "source_path": "text/1909-unsized-rvalues.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1940-must-use-functions.md",
+   "sha256": "3e6b59ae6aa9c51851698983732edc6d97459f3cdb9993f5dc8f9c4c66b543b6",
+   "source": "rfcs",
+   "source_path": "text/1940-must-use-functions.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1969-cargo-prepublish.md",
+   "sha256": "98e16d22c3f376754ee88027014f2d16e5bc9a94845bd22b823a9add10821d71",
+   "source": "rfcs",
+   "source_path": "text/1969-cargo-prepublish.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/1977-public-private-dependencies.md",
+   "sha256": "d7437e8b514629a1e10b79b76b23d3644c35a354fc9589b73b64d12435fff077",
+   "source": "rfcs",
+   "source_path": "text/1977-public-private-dependencies.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table"
+   ],
+   "path": "rfcs/text/1983-nursery-deprecation.md",
+   "sha256": "b8ba923d7c9996ad207679400f9bd7d7ae51474a012a715e2918657f5ab7dd4c",
+   "source": "rfcs",
+   "source_path": "text/1983-nursery-deprecation.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/1990-external-doc-attribute.md",
+   "sha256": "1b2713118bdf54fb7e09afa22e0cf486d906da4a35383ced6acc6cd2ec9d210d",
+   "source": "rfcs",
+   "source_path": "text/1990-external-doc-attribute.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2005-match-ergonomics.md",
+   "sha256": "9a168afcba9868d5b4a152e1060b62cf8add68538adcab8ca2138e9c8667c915",
+   "source": "rfcs",
+   "source_path": "text/2005-match-ergonomics.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2011-generic-assert.md",
+   "sha256": "983f6f1bb6608567662bb8b50d6ec7d8a5b3ab20a26bd27e0d0982073ae72bed",
+   "source": "rfcs",
+   "source_path": "text/2011-generic-assert.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/2025-nested-method-calls.md",
+   "sha256": "95d68fdc1ce3ae0094ec526c9bd8302bce64241a68831425aeb05de7d7c37e2a",
+   "source": "rfcs",
+   "source_path": "text/2025-nested-method-calls.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/2043-is-aligned-intrinsic.md",
+   "sha256": "e5b91cd741aec769b55bc028f1bba0d7ecc66c27936955fc141c699e28816a55",
+   "source": "rfcs",
+   "source_path": "text/2043-is-aligned-intrinsic.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/2045-target-feature.md",
+   "sha256": "6cd79177599262253a34deb18f3ea18f474da86e1daf4e80a52a71f44b914733",
+   "source": "rfcs",
+   "source_path": "text/2045-target-feature.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2056-allow-trivial-where-clause-constraints.md",
+   "sha256": "6f8644762b5072303e252bcc32e5d9c4a89e70beedc2ab09ba7cb776e95ad6b9",
+   "source": "rfcs",
+   "source_path": "text/2056-allow-trivial-where-clause-constraints.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2089-implied-bounds.md",
+   "sha256": "abf084312f2f205d7c93d98e99dd6dcc198a7b440f5c50360418de71545d0cda",
+   "source": "rfcs",
+   "source_path": "text/2089-implied-bounds.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "table",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/2091-inline-semantic.md",
+   "sha256": "c45601b6a02bd913608ccb32a5a4236e7f7ddff6c3dad188ac79e342c9753f25",
+   "source": "rfcs",
+   "source_path": "text/2091-inline-semantic.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2102-unnamed-fields.md",
+   "sha256": "f020db3787ecb1d976fa150c61027a33ace4056862110417584f7b96b931c053",
+   "source": "rfcs",
+   "source_path": "text/2102-unnamed-fields.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2128-use-nested-groups.md",
+   "sha256": "f3d800a2a1a31e98aad6954b5d4b066b4f711e84ddb370ab7d1419f74248018d",
+   "source": "rfcs",
+   "source_path": "text/2128-use-nested-groups.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2196-metabuild.md",
+   "sha256": "58453619a4b8337c5fff39d9a3f3997761ff30e4374574664526fb9233b13919",
+   "source": "rfcs",
+   "source_path": "text/2196-metabuild.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2203-const-repeat-expr.md",
+   "sha256": "275d22fb036b6a02078927a6de3fd4f5a97c9ffc857f685fc9c6e4685ba57f85",
+   "source": "rfcs",
+   "source_path": "text/2203-const-repeat-expr.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2226-fmt-debug-hex.md",
+   "sha256": "d637f9a1719703f79c33acb49ce8c34c14c0b3f7b14d3ec00675ccdfc129a44a",
+   "source": "rfcs",
+   "source_path": "text/2226-fmt-debug-hex.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table"
+   ],
+   "path": "rfcs/text/2235-libc-struct-traits.md",
+   "sha256": "4270c3a5058a95353da6e76f5058d3830226cbaf08c5568fc909c4e740ad23bf",
+   "source": "rfcs",
+   "source_path": "text/2235-libc-struct-traits.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2294-if-let-guard.md",
+   "sha256": "1109dc5bf15fa80367d0d70ac4bf5fe6c4dba89070691471be01dfb89f273017",
+   "source": "rfcs",
+   "source_path": "text/2294-if-let-guard.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2298-macro-at-most-once-rep.md",
+   "sha256": "f65a9ca380fea4f1e9cfd8c2763874fbd56bdabbf00b3726e388c64e7ea59892",
+   "source": "rfcs",
+   "source_path": "text/2298-macro-at-most-once-rep.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2302-tuple-struct-self-ctor.md",
+   "sha256": "9d93f8e81e3f5d517e36479758f0cdea2de908f14e8c7f85c9301c42faa807d0",
+   "source": "rfcs",
+   "source_path": "text/2302-tuple-struct-self-ctor.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2307-concrete-nonzero-types.md",
+   "sha256": "9ab1fdad0525f8a9a4416e0c826da6f560c582280122569ca575911380a27298",
+   "source": "rfcs",
+   "source_path": "text/2307-concrete-nonzero-types.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table",
+    "code_fence"
+   ],
+   "path": "rfcs/text/2325-stable-simd.md",
+   "sha256": "3d51f0e23982ea06076786820769029f2faeb63ffdc71da2ac298859938423f8",
+   "source": "rfcs",
+   "source_path": "text/2325-stable-simd.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/2333-prior-art.md",
+   "sha256": "a8d35a10e118ac524a3e437252d958c36cacab059a2df917ad924e40dc12a629",
+   "source": "rfcs",
+   "source_path": "text/2333-prior-art.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2351-is-sorted.md",
+   "sha256": "62006e383ed1a2b40c2cf2755bb876c91b86bd46cf86e573820867ecd34b564c",
+   "source": "rfcs",
+   "source_path": "text/2351-is-sorted.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2363-arbitrary-enum-discriminant.md",
+   "sha256": "037a846553201ac03a8840634d965d0cb169b27e7cdbaae9cfd29f3bfe9904cc",
+   "source": "rfcs",
+   "source_path": "text/2363-arbitrary-enum-discriminant.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2397-do-not-recommend.md",
+   "sha256": "fd484336021e13ab45c95c545f0c5d607d8f7f2254772661abe5e19da1231da9",
+   "source": "rfcs",
+   "source_path": "text/2397-do-not-recommend.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2539-cfg_attr-multiple-attrs.md",
+   "sha256": "52fefbb52f8ab5ea3aec9c789e8bb1f8c46fc927b45ced35d575813225b3d845",
+   "source": "rfcs",
+   "source_path": "text/2539-cfg_attr-multiple-attrs.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/2574-simd-ffi.md",
+   "sha256": "f7649570e9b16f7c78b0a5c075e32f04f7c7514a1af9358de8c9796a2d11051e",
+   "source": "rfcs",
+   "source_path": "text/2574-simd-ffi.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2585-unsafe-block-in-unsafe-fn.md",
+   "sha256": "c267165e5d752d21ef71c744315d6e8d0696e952f52ae5f592c403a82b6b8016",
+   "source": "rfcs",
+   "source_path": "text/2585-unsafe-block-in-unsafe-fn.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/2627-raw-dylib-kind.md",
+   "sha256": "6cb1ee0cec73535b93232224e3bb8f66bb9295c5dfaa001631c05a72476104c9",
+   "source": "rfcs",
+   "source_path": "text/2627-raw-dylib-kind.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/2689-compiler-team-contributors.md",
+   "sha256": "2a6b7ddf92ff484910a6ddfdbcccb712c8d65ed90499e841dfb55718e6453eed",
+   "source": "rfcs",
+   "source_path": "text/2689-compiler-team-contributors.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2696-debug-map-key-value.md",
+   "sha256": "5ea66142579c74948e0f3a77ea16cd04062f6158752f83d7fe1634a71b0de5ff",
+   "source": "rfcs",
+   "source_path": "text/2696-debug-map-key-value.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/2835-project-safe-transmute.md",
+   "sha256": "cc4dea7ecac485238cc6933ffebb90548e7ea2467f42478cff8d2608b452d35c",
+   "source": "rfcs",
+   "source_path": "text/2835-project-safe-transmute.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/2836-project-asm.md",
+   "sha256": "0bc708edd8d3535b2d8158155bf1ccb861c0c34c16fedc0cf00cb2895a0d11f7",
+   "source": "rfcs",
+   "source_path": "text/2836-project-asm.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list"
+   ],
+   "path": "rfcs/text/2857-roadmap-2020.md",
+   "sha256": "3bf2f258eb85067d214c069dd73402b4038acf793ecff2e221fe9e5e71ecb207",
+   "source": "rfcs",
+   "source_path": "text/2857-roadmap-2020.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "table",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/2873-inline-asm.md",
+   "sha256": "db1c761dbd2c03244d15dfde74e799d154539349a8271fa3ce57d15013b8f260",
+   "source": "rfcs",
+   "source_path": "text/2873-inline-asm.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2906-cargo-workspace-deduplicate.md",
+   "sha256": "e6a0622174f80c2bc2d3d2cf87186a799740aed3c6f88999b594547ac3b32c11",
+   "source": "rfcs",
+   "source_path": "text/2906-cargo-workspace-deduplicate.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2920-inline-const.md",
+   "sha256": "ca928a2dd6c09670de44edb6eb85399e46dedcb4b118c203c4345f507ec03742",
+   "source": "rfcs",
+   "source_path": "text/2920-inline-const.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table"
+   ],
+   "path": "rfcs/text/2947-crates-io-token-scopes.md",
+   "sha256": "5beaefd6731ef71b361bebcede4ffcdb75eda7b2b06b0ff71cf5bd9db8d565f9",
+   "source": "rfcs",
+   "source_path": "text/2947-crates-io-token-scopes.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/2963-rustdoc-json.md",
+   "sha256": "541a3afe26e946182dee1a50a3d1cd23e7be4843a79868df6801aecd09c128d3",
+   "source": "rfcs",
+   "source_path": "text/2963-rustdoc-json.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/2996-async-iterator.md",
+   "sha256": "5a62882431dc8afea05e60428ece3b1ddb73530960e6ec679fc7df8514005122",
+   "source": "rfcs",
+   "source_path": "text/2996-async-iterator.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3007-panic-plan.md",
+   "sha256": "4f62317dc3731fefd578c13a0a98f0d9a714700299d9e0a26dfe34e2c35dc8d4",
+   "source": "rfcs",
+   "source_path": "text/3007-panic-plan.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3013-conditional-compilation-checking.md",
+   "sha256": "86da9c17ca14f445f8dbd0c5403eb8d1579e7309b0d954dabaa3032dad041901",
+   "source": "rfcs",
+   "source_path": "text/3013-conditional-compilation-checking.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3027-infallible-promotion.md",
+   "sha256": "2741045c9d81dc2e7e13d646435eff051b4060d76c755fb2fc42ed732cfa2c39",
+   "source": "rfcs",
+   "source_path": "text/3027-infallible-promotion.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list"
+   ],
+   "path": "rfcs/text/3085-edition-2021.md",
+   "sha256": "5c814fc8df9d60d03ba30ab42c525ca757ffd66b0aff6abc6b46c3dec34f2862",
+   "source": "rfcs",
+   "source_path": "text/3085-edition-2021.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3123-rustdoc-scrape-examples.md",
+   "sha256": "2dee43b15426d97fce115a297908a75351ff0d2b3fb57fe7c65782f0dc03af38",
+   "source": "rfcs",
+   "source_path": "text/3123-rustdoc-scrape-examples.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3148-option-result-map-or-default.md",
+   "sha256": "0c194110b6d1d5f7ed1ec449875cb11018df59cf188daf77a1f7bfb20dc620ce",
+   "source": "rfcs",
+   "source_path": "text/3148-option-result-map-or-default.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3151-scoped-threads.md",
+   "sha256": "49768dd82c9693ba8e6894e72143c4f941a87a05c99da2db9bfdaddfe1005f8e",
+   "source": "rfcs",
+   "source_path": "text/3151-scoped-threads.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3184-thread-local-cell-methods.md",
+   "sha256": "285d6a70ac01d004a27b5aae20a182ddf37625350c62e2b64d3c7043bc2508d4",
+   "source": "rfcs",
+   "source_path": "text/3184-thread-local-cell-methods.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3245-refined-impls.md",
+   "sha256": "322d3676bfdacc67cadb03d4633632d81067d8452a6729436a55e1266b18a080",
+   "source": "rfcs",
+   "source_path": "text/3245-refined-impls.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/3309-style-team.md",
+   "sha256": "caeee09cc4595021373f5e031dbc6271c2ecd41225389bd2feb9895af77f3311",
+   "source": "rfcs",
+   "source_path": "text/3309-style-team.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/3338-style-evolution.md",
+   "sha256": "4fe58b7b722b25a7208cae14caac3f5e785f609d54d95fd83df487a21d2a087c",
+   "source": "rfcs",
+   "source_path": "text/3338-style-evolution.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3368-diagnostic-attribute-namespace.md",
+   "sha256": "29b91d3eb3b625207be325ee45bcedbda2e7c5bbd85a49047af0216815d91f07",
+   "source": "rfcs",
+   "source_path": "text/3368-diagnostic-attribute-namespace.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3389-manifest-lint.md",
+   "sha256": "f65a548697d87313d0230bbca410ebfa4fca2f45ca135b2aa936f15cb03b1f06",
+   "source": "rfcs",
+   "source_path": "text/3389-manifest-lint.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table",
+    "nested_list"
+   ],
+   "path": "rfcs/text/3391-result_ffi_guarantees.md",
+   "sha256": "e1bb08589b7c4a665d0e3aed7cd008b251109c819c2b3b9f84840b0d5a350066",
+   "source": "rfcs",
+   "source_path": "text/3391-result_ffi_guarantees.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "nested_list"
+   ],
+   "path": "rfcs/text/3392-leadership-council.md",
+   "sha256": "9e25477a8dd5d04d721834597b913d9b8fc18376cd92051c7efd15799c3991c1",
+   "source": "rfcs",
+   "source_path": "text/3392-leadership-council.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3416-feature-metadata.md",
+   "sha256": "b6ea4bdfe077439fa80d54db11ec0c008acb6975c895c59ab8f63f1e73c83572",
+   "source": "rfcs",
+   "source_path": "text/3416-feature-metadata.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3425-return-position-impl-trait-in-traits.md",
+   "sha256": "f33582d136abfa006ec6276f1deb80aff835143427cdca82ae3a48655f693bab",
+   "source": "rfcs",
+   "source_path": "text/3425-return-position-impl-trait-in-traits.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3453-f16-and-f128.md",
+   "sha256": "e75d5af89dcfb2bcb32678144a4a604f41d7c224b3b77f060f96a6b517fbf109",
+   "source": "rfcs",
+   "source_path": "text/3453-f16-and-f128.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3484-unsafe-extern-blocks.md",
+   "sha256": "431312fefed4bc9d4d6db86e18b3bac9214a80374e9087fd307b965c72f39bc0",
+   "source": "rfcs",
+   "source_path": "text/3484-unsafe-extern-blocks.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "table",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3498-lifetime-capture-rules-2024.md",
+   "sha256": "7222be6d2394632492dcbc44716e70c9ff017896c69f0db7b30e279dcee676ea",
+   "source": "rfcs",
+   "source_path": "text/3498-lifetime-capture-rules-2024.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote"
+   ],
+   "path": "rfcs/text/3531-macro-fragment-policy.md",
+   "sha256": "ab4f8ecdc9cb31887086085a2e0345a29e7e7da4e549ca594559daa2e056d20e",
+   "source": "rfcs",
+   "source_path": "text/3531-macro-fragment-policy.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote"
+   ],
+   "path": "rfcs/text/3533-combine-infra-and-release-teams.md",
+   "sha256": "6f6f5e26a51b2139cfa013d1d2a445b7fbec4f17fa209a2098b074fbdcc422ee",
+   "source": "rfcs",
+   "source_path": "text/3533-combine-infra-and-release-teams.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3543-patchable-function-entry.md",
+   "sha256": "f7efb26fd09f53e0f31ab378a3d4df78aa7c2f4a8e02c42a332bb2309291b9e0",
+   "source": "rfcs",
+   "source_path": "text/3543-patchable-function-entry.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "html",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3559-rust-has-provenance.md",
+   "sha256": "703f143e79a7cd6e8c8b2acaa3bb0ed37cb4f29675bb5eee4fe93873b404638c",
+   "source": "rfcs",
+   "source_path": "text/3559-rust-has-provenance.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3591-import-trait-associated-functions.md",
+   "sha256": "e9b26f447bd5019ae221728455c9cffbb2b2863f702524bdfe713fc88019c7b8",
+   "source": "rfcs",
+   "source_path": "text/3591-import-trait-associated-functions.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table",
+    "nested_list"
+   ],
+   "path": "rfcs/text/3614-project-goals.md",
+   "sha256": "21341b36266fa6fd1688aef92ab55e57241236974952ef0e2e49c78268d68c4f",
+   "source": "rfcs",
+   "source_path": "text/3614-project-goals.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3624-supertrait-item-shadowing-v2.md",
+   "sha256": "4bb6428f3da5b3f6bb60a0f9d96309a0c361bb4bfd309283c18f73576e16358c",
+   "source": "rfcs",
+   "source_path": "text/3624-supertrait-item-shadowing-v2.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3627-match-ergonomics-2024.md",
+   "sha256": "1aa887d5da4142dd1c57fee635dac2690949d2b9cf7a11e83743c07706b79b47",
+   "source": "rfcs",
+   "source_path": "text/3627-match-ergonomics-2024.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "callout",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3668-async-closures.md",
+   "sha256": "38aefc9b10ba55bdf2c9d524618ceb88cc7b51e620b91d5c32ab02fd89832966",
+   "source": "rfcs",
+   "source_path": "text/3668-async-closures.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table",
+    "nested_list"
+   ],
+   "path": "rfcs/text/3672-Project-Goals-2024h2.md",
+   "sha256": "9b3fd4b8d12999f52521cfa2e6a628859e43590d1ff74b35d9fa5221c1cfbb96",
+   "source": "rfcs",
+   "source_path": "text/3672-Project-Goals-2024h2.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3673-rustdoc-types-maintainers.md",
+   "sha256": "ee8071bf9395719b1da10564f336d30c927ad638f37ad6ecc044f1e9bd69c060",
+   "source": "rfcs",
+   "source_path": "text/3673-rustdoc-types-maintainers.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "rfcs/text/3695-cfg-boolean-literals.md",
+   "sha256": "5b63fca61250d504c0ee17c851e64bdadbec8e4ee21d18eddeefd98152df52cd",
+   "source": "rfcs",
+   "source_path": "text/3695-cfg-boolean-literals.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote"
+   ],
+   "path": "rfcs/text/3771-demote-i686-pc-windows-gnu.md",
+   "sha256": "0d227aa7278c955216b9b76b370a265294e0cd9dc96d5cd9be437fef08a0d44f",
+   "source": "rfcs",
+   "source_path": "text/3771-demote-i686-pc-windows-gnu.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3772-build-target-edition.md",
+   "sha256": "788a45037d6fab85231300e2db30bb8ebcf177ee92e5d99b127e7a332a76e924",
+   "source": "rfcs",
+   "source_path": "text/3772-build-target-edition.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3809-derive-from.md",
+   "sha256": "491ba43e4bd7863887bb5d27383dde8baaa63e30e22c12d6c4b8673b7724a12a",
+   "source": "rfcs",
+   "source_path": "text/3809-derive-from.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list"
+   ],
+   "path": "rfcs/text/3817-promote-aarch64-pc-windows-msvc-to-tier-1.md",
+   "sha256": "3aaf8f0f2b3984272ab0f25662c12e07abd1096bd14347845bfee9058cabf205",
+   "source": "rfcs",
+   "source_path": "text/3817-promote-aarch64-pc-windows-msvc-to-tier-1.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "nested_list"
+   ],
+   "path": "rfcs/text/3873-build-std-context.md",
+   "sha256": "1615301232153fa0fa0f772fb2c1cf05c3539eb649810308aa7ba84c5f3c9f7d",
+   "source": "rfcs",
+   "source_path": "text/3873-build-std-context.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3874-build-std-always.md",
+   "sha256": "b1bb52ffb660526b66d3d8842a2efb4e111ecd8e3792fc2da095ed4afdd1c212",
+   "source": "rfcs",
+   "source_path": "text/3874-build-std-always.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3892-complex-numbers.md",
+   "sha256": "994da6f229bdcb8d5d298a76800c8ddd442f1fbe01ed4b39fa8fc43fd034e59f",
+   "source": "rfcs",
+   "source_path": "text/3892-complex-numbers.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3923-cargo-min-publish-age.md",
+   "sha256": "be5108b7f2a65913a4be94bd0b7b26856ae8f5bf5530f04f04de6e9684922230",
+   "source": "rfcs",
+   "source_path": "text/3923-cargo-min-publish-age.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "code_fence"
+   ],
+   "path": "rfcs/text/3928-todo-overreach.md",
+   "sha256": "cc22712a9f69502d87a03aa9954e35d2813e0e844eaa801af8c5c9dada9d8fa6",
+   "source": "rfcs",
+   "source_path": "text/3928-todo-overreach.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3946-crates-io-username-identity.md",
+   "sha256": "df6c71496c8810fef3a3a779af8023e3288a2bd045f613b8c5bc79604a7d003e",
+   "source": "rfcs",
+   "source_path": "text/3946-crates-io-username-identity.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "html",
+    "code_fence"
+   ],
+   "path": "rfcs/text/3958-rustdoc-texmath.md",
+   "sha256": "b9ca98a5d2db1691c021217d6b8ac3719646edceb6ed34ed0e8ee169b71fb9c9",
+   "source": "rfcs",
+   "source_path": "text/3958-rustdoc-texmath.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "table"
+   ],
+   "path": "rfcs/text/3999-std-only-i686-msvc.md",
+   "sha256": "a593c56583670516c3efa36585263235397ffb5d309395477df318cd895ee9ca",
+   "source": "rfcs",
+   "source_path": "text/3999-std-only-i686-msvc.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Advanced/Daily Agenda.md",
+   "sha256": "380f9585252ba12e6f21b34e5f8270f6bb99aba6ca2b154d3bc8bab717f23dc0",
+   "source": "tasks",
+   "source_path": "docs/Advanced/Daily Agenda.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Advanced/Notifications.md",
+   "sha256": "c4b4a5d4184351319c1d83afedae8741b76d90e564b6267f3cfbbdd84d5ffb36",
+   "source": "tasks",
+   "source_path": "docs/Advanced/Notifications.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "embed",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Advanced/Styling.md",
+   "sha256": "a7e368b72b0a290a83a1bad8c1769c004f3c5e6dcbf8cc7933fb50d83a548afd",
+   "source": "tasks",
+   "source_path": "docs/Advanced/Styling.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "table",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Advanced/Urgency.md",
+   "sha256": "5b3bea140c16bbd0906de871157c70bd9e4a4a9862c133fed900fe6b7133971d",
+   "source": "tasks",
+   "source_path": "docs/Advanced/Urgency.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Editing/Create or edit Task.md",
+   "sha256": "e97805822814739a395867950b73c916c9e8728b61cff120c9f645fdfc6af9a6",
+   "source": "tasks",
+   "source_path": "docs/Editing/Create or edit Task.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Editing/Editing Dates.md",
+   "sha256": "4ff3c0fec31fcac8128b37dd4481994f281d65cf3999f22c9521f3dab128349f",
+   "source": "tasks",
+   "source_path": "docs/Editing/Editing Dates.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Editing/Toggling and Editing Statuses.md",
+   "sha256": "7621e7d64296db8c26593ecbe66362434ec4424336017d244dcf3b317b230ce8",
+   "source": "tasks",
+   "source_path": "docs/Editing/Toggling and Editing Statuses.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/Dates.md",
+   "sha256": "c944d18c13bce427b5daa2ad8cfaaa03a4d14474a8b90d5b71da0226e1a103e8",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/Dates.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/Getting Started.md",
+   "sha256": "6bfef714c8726e9d0942ec1d443ecdcd5f8edf2661a4e798dbcd4950fa72cd5a",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/Getting Started.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "embed",
+    "table",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/On Completion.md",
+   "sha256": "897c1b509637f7ed743ddd43efa86fd554fdb33c995b105a1596f665cfdf75b7",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/On Completion.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "table",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/Recurring Tasks.md",
+   "sha256": "4e6d0fede00b7750ab176faed4e3144232e9efcdc73ba014b902ead597f295ea",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/Recurring Tasks.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/Statuses.md",
+   "sha256": "4573d38fb7ec7a674776a7d5103fe9c9292798b61a6a95fdb951ddd07ba34b5d",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/Statuses.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/Statuses/About Statuses.md",
+   "sha256": "68b728b7c9e9c5dba35ab771a3a29bb44cd506db2f67d500ae67ebc2914c8bdd",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/Statuses/About Statuses.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "table",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/Statuses/Example Statuses.md",
+   "sha256": "0976e3d37b1d99898b0b5bed88b5d5f57fa5a3f06dc1bdcb7a5e340e65875d29",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/Statuses/Example Statuses.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/Statuses/Status Types.md",
+   "sha256": "cd1fc81c5cc17538befcf22645916637e088a0348afb026daa2264285bdbfd43",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/Statuses/Status Types.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/Tags.md",
+   "sha256": "7802ca19e4e61ea517feb99c8bdf9165633277321cd7ab8ecf8b97f6fc7126f7",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/Tags.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Getting Started/Use Filename as Default Date.md",
+   "sha256": "019616d8168db9dd3e7ab246c371d20aa8ef7e2c38c7ee1becb23f5ea40b63ba",
+   "source": "tasks",
+   "source_path": "docs/Getting Started/Use Filename as Default Date.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/How To/Set up custom statuses.md",
+   "sha256": "87f95dba03a9a60148aed551988dceec07e608b19cbd62052019002c5210147d",
+   "source": "tasks",
+   "source_path": "docs/How To/Set up custom statuses.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/How To/Style custom statuses.md",
+   "sha256": "1ae32d867ff4bac469b84c5a3d8208bd36a5106957a8a9e3d8c34de835efb74d",
+   "source": "tasks",
+   "source_path": "docs/How To/Style custom statuses.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Introduction.md",
+   "sha256": "716502eda54bbd003e0b94cf0003e60565235e9dd2434f3530984d3aac60efc9",
+   "source": "tasks",
+   "source_path": "docs/Introduction.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Other Plugins/Meta Bind Plugin.md",
+   "sha256": "6388e72944d7954a36b8c37fa2ae4f902ecc61e34abc8931d03d17e650a25a3c",
+   "source": "tasks",
+   "source_path": "docs/Other Plugins/Meta Bind Plugin.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Other Plugins/QuickAdd.md",
+   "sha256": "e97d1f0d394795685dfc658daae1af7fac262f195dbef4a7cfe1a5dd0d7eb75c",
+   "source": "tasks",
+   "source_path": "docs/Other Plugins/QuickAdd.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Queries/About Queries.md",
+   "sha256": "ceea0672e33893b78f790e3d1abca42341299608ff3b617ea0f3f72cacebfb4a",
+   "source": "tasks",
+   "source_path": "docs/Queries/About Queries.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Queries/Backlinks.md",
+   "sha256": "43b3395728458df015021bbf12a8b27d23a6049b21ee5a63e0f5a1267f40035a",
+   "source": "tasks",
+   "source_path": "docs/Queries/Backlinks.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Queries/Combining Filters.md",
+   "sha256": "3016dbfd5946a369a4e92a1d6d61fbf67041d325a72c0c0410e5a008b2fe707d",
+   "source": "tasks",
+   "source_path": "docs/Queries/Combining Filters.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Queries/Examples.md",
+   "sha256": "aa66fa08c8491c003777408629505fa9f6a520fcf8da03f2e8f7816b0488241b",
+   "source": "tasks",
+   "source_path": "docs/Queries/Examples.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Queries/Explaining Queries.md",
+   "sha256": "abfb154a3c5311192b9198bc0aa02738ade846aa3824cdee61fbebc84b3a4d40",
+   "source": "tasks",
+   "source_path": "docs/Queries/Explaining Queries.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "table",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Queries/Global Query.md",
+   "sha256": "5ce443e6ef3be0dc8f65e8f5a4257c361280ad1419ef61f74be8de2b4d2d64ea",
+   "source": "tasks",
+   "source_path": "docs/Queries/Global Query.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Queries/Grouping.md",
+   "sha256": "f6bfa3067de05e1ee900419c2783edb16ce17efad1840aa10da5529094dcb08e",
+   "source": "tasks",
+   "source_path": "docs/Queries/Grouping.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Queries/Presets.md",
+   "sha256": "bf762764796d85b29657d91f051865875ab7329c23378ef33d7a4de55d534052",
+   "source": "tasks",
+   "source_path": "docs/Queries/Presets.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Queries/Regular Expressions.md",
+   "sha256": "53405be3b29facabea8e5e6cd58062f09fae075cc65a59ee08b2d783afe4a44f",
+   "source": "tasks",
+   "source_path": "docs/Queries/Regular Expressions.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Reference/About Reference.md",
+   "sha256": "39b7f82eccdcdfbc1924d5b0b03f390554cf3dfe8e24fe19d9c386717210c0cd",
+   "source": "tasks",
+   "source_path": "docs/Reference/About Reference.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "table",
+    "code_fence"
+   ],
+   "path": "tasks/docs/Reference/Status Collections/LYT Mode Theme.md",
+   "sha256": "d57cd847f54c8be985ede9d5fb1def2c41ecf48e0f3bc1e4a006b0f2dcfa6d80",
+   "source": "tasks",
+   "source_path": "docs/Reference/Status Collections/LYT Mode Theme.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Reference/Status Collections/SlRvb's Alternate Checkboxes.md",
+   "sha256": "b114a57bdc323ac01ffdf3ffb0fffd0b5c80bd227d4da2965af0396e4da8c806",
+   "source": "tasks",
+   "source_path": "docs/Reference/Status Collections/SlRvb's Alternate Checkboxes.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Scripting/About Scripting.md",
+   "sha256": "da376dd4dff61edc136dd4c61035c320bb2bf4c96fd0a8a4a558dcda9366486f",
+   "source": "tasks",
+   "source_path": "docs/Scripting/About Scripting.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Scripting/Custom Grouping.md",
+   "sha256": "bf8a63aca628789cfe6e1f57c56b75a794a2c2e1bf0bfa29d3b34bee319bde93",
+   "source": "tasks",
+   "source_path": "docs/Scripting/Custom Grouping.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Scripting/Expressions.md",
+   "sha256": "f2615213ad345c6b10faaa67b369eb8e64507b8cb146d6d100f072a7f7a64d78",
+   "source": "tasks",
+   "source_path": "docs/Scripting/Expressions.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Scripting/Placeholders.md",
+   "sha256": "81e520bc6ae55cfd5aa7eae32c23e5186e3a355ab037ae33b24334db1fc0ce7e",
+   "source": "tasks",
+   "source_path": "docs/Scripting/Placeholders.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Scripting/Query Properties.md",
+   "sha256": "058e09f12f1e797e51403217f5c583a086bf6996d3b702480ee000ca4eae7e8d",
+   "source": "tasks",
+   "source_path": "docs/Scripting/Query Properties.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Scripting/Task Properties.md",
+   "sha256": "13aebf8ed3f2f5da74ac4772c49f13bbae403767476e36d5119bc5f4f8c20ffd",
+   "source": "tasks",
+   "source_path": "docs/Scripting/Task Properties.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "embed",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Support and Help/Known Limitations.md",
+   "sha256": "53c261aa56bdb08408a0a7ecd1bf3f095fd93e2fb5072a9b5ded272ffbcec14a",
+   "source": "tasks",
+   "source_path": "docs/Support and Help/Known Limitations.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/Support and Help/Useful Links.md",
+   "sha256": "1e03b320d581c6d57fa16a2c2592bc12b8aae42cb8bbb8d252effd2b2a173d82",
+   "source": "tasks",
+   "source_path": "docs/Support and Help/Useful Links.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/What is New/Changelog.md",
+   "sha256": "185f9dc532e4ff7f17660375086ab2a50a55aaf3d4b421a514d2118f27c27c4b",
+   "source": "tasks",
+   "source_path": "docs/What is New/Changelog.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "table"
+   ],
+   "path": "tasks/docs/_meta/templates/support and related issues.md",
+   "sha256": "661737ebb409dc10d306edd8975d80a35b37f228570fbce6bd85299e9711e060",
+   "source": "tasks",
+   "source_path": "docs/_meta/templates/support and related issues.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "tasks/docs/migration.md",
+   "sha256": "c00aec9cf51fe6f754192ad0799f880c520cb7a4640cdd9cff0959b890ed7c4c",
+   "source": "tasks",
+   "source_path": "docs/migration.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence"
+   ],
+   "path": "tasks/docs/snippets-embedded-in-multiple-pages/Sample HTML - Full mode.md",
+   "sha256": "cceb10e20000dda0e20f49ecaa4520f56922b2eab37bc5c58364b840f262d161",
+   "source": "tasks",
+   "source_path": "docs/snippets-embedded-in-multiple-pages/Sample HTML - Full mode.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html"
+   ],
+   "path": "terminal/.github/actions/spelling/advice.md",
+   "sha256": "fc03da545ec162daed00b6858727181ecc2c662114e738114e529fc903773bf1",
+   "source": "terminal",
+   "source_path": ".github/actions/spelling/advice.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "terminal/AGENTS.md",
+   "sha256": "431d08d057621b26efc8c5db368327e5c472372e662fa6616bf468815f2955b5",
+   "source": "terminal",
+   "source_path": "AGENTS.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence"
+   ],
+   "path": "terminal/NOTICE.md",
+   "sha256": "e7fbaadee6ab20c28b87730a510ee5f5815d8fb4bd88d1d54d282dc2a74c0726",
+   "source": "terminal",
+   "source_path": "NOTICE.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "table",
+    "nested_list",
+    "code_fence"
+   ],
+   "path": "terminal/README.md",
+   "sha256": "2502797b5b8fc4bb985bbeef3c32431e0555610c85a8a9bad4a113b8f5d65437",
+   "source": "terminal",
+   "source_path": "README.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "nested_list"
+   ],
+   "path": "terminal/SECURITY.md",
+   "sha256": "1280a2a8ba3288f8b74ba2d00de8395a5268c2b04d74bcb6f6be43ae0c2a4e24",
+   "source": "terminal",
+   "source_path": "SECURITY.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list"
+   ],
+   "path": "terminal/doc/ConsoleHostSettings.md",
+   "sha256": "c83f49d2fe12a2e218323ffabed4a213f4c4238989bda099de0a4cf344668558",
+   "source": "terminal",
+   "source_path": "doc/ConsoleHostSettings.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/doc/EXCEPTIONS.md",
+   "sha256": "2b78092017b2206a7356d7f306f56370c55e3a10db7112d9cd793ffb8df650a8",
+   "source": "terminal",
+   "source_path": "doc/EXCEPTIONS.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list"
+   ],
+   "path": "terminal/doc/ORGANIZATION.md",
+   "sha256": "c62daf9b3923356bf55c1d2bd9834889600c2a87de84e42fe0c343a3751cfca8",
+   "source": "terminal",
+   "source_path": "doc/ORGANIZATION.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence"
+   ],
+   "path": "terminal/doc/TAEF.md",
+   "sha256": "882fb48f9ef4f0182c15c5f6b73d8aa64fb5f5351d780aa64ae907781d58c273",
+   "source": "terminal",
+   "source_path": "doc/TAEF.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list"
+   ],
+   "path": "terminal/doc/UniversalTest.md",
+   "sha256": "d204dfcbc6b2b5582af264ac4cf66566e64923e7823fd7497758c02167a73e0a",
+   "source": "terminal",
+   "source_path": "doc/UniversalTest.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/doc/WIL.md",
+   "sha256": "0d66bcc9be2ab8c4769bd4ecdd6fc33fcb3132aef1fc5447e61b86d65dd424bb",
+   "source": "terminal",
+   "source_path": "doc/WIL.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence"
+   ],
+   "path": "terminal/doc/cascadia/Json-Utility-API.md",
+   "sha256": "36dd7dd4979d4302c6091d87cb0cbc98db7845077bb23d49378df8e3ff7e29ef",
+   "source": "terminal",
+   "source_path": "doc/cascadia/Json-Utility-API.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "html",
+    "code_fence"
+   ],
+   "path": "terminal/doc/cascadia/Unittesting-CppWinRT-Xaml.md",
+   "sha256": "85d6f020310092bfda8184ab37ae43e32412c5d71216cdb8550eedf269be5a48",
+   "source": "terminal",
+   "source_path": "doc/cascadia/Unittesting-CppWinRT-Xaml.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence"
+   ],
+   "path": "terminal/doc/roadmap-2022.md",
+   "sha256": "65d5c74bccbeb3e6f9f018b8481ed96d6f4461016a72b15a399a62a755bcd070",
+   "source": "terminal",
+   "source_path": "doc/roadmap-2022.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "footnote",
+    "code_fence"
+   ],
+   "path": "terminal/doc/roadmap-2023.md",
+   "sha256": "2f43e3417e4e1cda6ec5a4ee9419dfb90a6c052917410b8d8cf69522770b79b7",
+   "source": "terminal",
+   "source_path": "doc/roadmap-2023.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#1142 - Keybinding Arguments.md",
+   "sha256": "7fa7fcaf51807e4b19ef5261209ddea7965f87b86386e83d6aa966fd3e608e17",
+   "source": "terminal",
+   "source_path": "doc/specs/#1142 - Keybinding Arguments.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#1235 - Azure cloud shell connector/spec.md",
+   "sha256": "df09fc7407c3e59c038af78c6586df960e1ff37f4b99a72999be9642d7410199",
+   "source": "terminal",
+   "source_path": "doc/specs/#1235 - Azure cloud shell connector/spec.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#12570 - Show Hide operations on GetConsoleWindow via PTY.md",
+   "sha256": "a48a7aa1b52920aa57da01032dd7cfa2bfc8bda922d4ea18bbb698de4a9dcdcd",
+   "source": "terminal",
+   "source_path": "doc/specs/#12570 - Show Hide operations on GetConsoleWindow via PTY.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "callout",
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#13000 - In-process ConPTY.md",
+   "sha256": "e2bdc5115a29cf3b6743eae427bf6186735ab49121344b92163c0016cb39fe6b",
+   "source": "terminal",
+   "source_path": "doc/specs/#13000 - In-process ConPTY.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "html",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#1337 - Per-Profile Tab Colors/#1337 - Per-Profile Tab Colors.md",
+   "sha256": "7ec0c7b31a059ccff0aa3a386d72d5532feaad5c2bb261c86804d30065ead72d",
+   "source": "terminal",
+   "source_path": "doc/specs/#1337 - Per-Profile Tab Colors/#1337 - Per-Profile Tab Colors.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#1502 - Advanced Tab Switcher/spec.md",
+   "sha256": "9801c48299c73402607a763a9b043cdc556e7cf6318e50c7af1c84dfa507a852",
+   "source": "terminal",
+   "source_path": "doc/specs/#1502 - Advanced Tab Switcher/spec.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#1564 - Settings UI/design.md",
+   "sha256": "16ddb881b31a9f20346c8540141a34862c79890023a9873e8fe7e1f8dcb064db",
+   "source": "terminal",
+   "source_path": "doc/specs/#1564 - Settings UI/design.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#16599 - Quick Fix/#16599 - Quick Fix.md",
+   "sha256": "c9784fa09eeeb79603860c6162ea75e599964611468986e8c6db3ef9d1b87e26",
+   "source": "terminal",
+   "source_path": "doc/specs/#16599 - Quick Fix/#16599 - Quick Fix.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#2046 - Unified keybindings and commands, and synthesized action names.md",
+   "sha256": "65f2758cd8e925f1be143ba3885355e2db96141e139dfe2829b9dfac93fc5cf8",
+   "source": "terminal",
+   "source_path": "doc/specs/#2046 - Unified keybindings and commands, and synthesized action names.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#2325 - Default Profile Settings.md",
+   "sha256": "e92701a854dd8c5735f7d3abf2eb70e31d5bdcaa5571e75f44d58cd60b0934ee",
+   "source": "terminal",
+   "source_path": "doc/specs/#2325 - Default Profile Settings.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#2557 - Settings Keybinding.md",
+   "sha256": "c6ad61eb6ca1877ac32a5590bf7eb102b9031d869a98143cbf17ef48efbd89a0",
+   "source": "terminal",
+   "source_path": "doc/specs/#2557 - Settings Keybinding.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#532 - Panes and Split Windows.md",
+   "sha256": "67361b3b6db109530352c02592712477cafea35b625890ee6341252894eef1d5",
+   "source": "terminal",
+   "source_path": "doc/specs/#532 - Panes and Split Windows.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#597 - Tab Sizing.md",
+   "sha256": "9ac6bc444e442065937fe010e8dbdcbaf838609a9938932efe4bb3be66f97c08",
+   "source": "terminal",
+   "source_path": "doc/specs/#597 - Tab Sizing.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#607 - Commandline Arguments for the Windows Terminal.md",
+   "sha256": "6a59b86d3005cf44572881d9846f995b8de0b01723ed33424df1fe1f0ca567c0",
+   "source": "terminal",
+   "source_path": "doc/specs/#607 - Commandline Arguments for the Windows Terminal.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "footnote",
+    "callout",
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#7335 - Console Allocation Policy.md",
+   "sha256": "420ff1d5bb8b03d8fa4a8ebbc1b330e40a432fa503b199171b3c0256f92e5cf2",
+   "source": "terminal",
+   "source_path": "doc/specs/#7335 - Console Allocation Policy.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#885 - Terminal Settings Model/#885 - Terminal Settings Model.md",
+   "sha256": "e8206b23b97f98c662024df8fa1251304f8dcea19bf9fd3721f51a214d7d3731",
+   "source": "terminal",
+   "source_path": "doc/specs/#885 - Terminal Settings Model/#885 - Terminal Settings Model.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#885 - Terminal Settings Model/Actions Addendum.md",
+   "sha256": "9d267c9200e5c5d17683998634d0a8068b6a77df4db8cb6f4c50857dac240865",
+   "source": "terminal",
+   "source_path": "doc/specs/#885 - Terminal Settings Model/Actions Addendum.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/#980 - SnapOnOutput.md",
+   "sha256": "dfd1b1bf3b4d4897b5f4d3dc4246763f32278fd4d5e8afde5485b76fad5b0f18",
+   "source": "terminal",
+   "source_path": "doc/specs/#980 - SnapOnOutput.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/Proto extensions-spec.md",
+   "sha256": "8e68b1ffa98c22ec59d936ef1084a6616c5ad94fc35ebcccbdac756d1d9fa858",
+   "source": "terminal",
+   "source_path": "doc/specs/Proto extensions-spec.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/drafts/#1256 - Tab tearoff.md",
+   "sha256": "57109ec613a998ab2dc06a116b8588bae014f268197e43b809c721c057ce532f",
+   "source": "terminal",
+   "source_path": "doc/specs/drafts/#1256 - Tab tearoff.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "html",
+    "nested_list",
+    "code_fence",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/drafts/#642 - Buffer Exporting and Logging/#642 - Buffer Exporting and Logging.md",
+   "sha256": "dddd4170dc79fc5c4d68a892d4e8f8c8eb4460f5cd3271dfc7328d3bd21f88e1",
+   "source": "terminal",
+   "source_path": "doc/specs/drafts/#642 - Buffer Exporting and Logging/#642 - Buffer Exporting and Logging.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "html",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/settings-spec-template.md",
+   "sha256": "6f97278f9fdc85e2182bff11031c9b08fcdbd0a3a0ab7f9c735e7e3453434bb9",
+   "source": "terminal",
+   "source_path": "doc/specs/settings-spec-template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "frontmatter"
+   ],
+   "path": "terminal/doc/specs/spec-template.md",
+   "sha256": "1f4f02178b002ec23e08272d3644816c911fd92d1e636f397a21ba1b40bb4c90",
+   "source": "terminal",
+   "source_path": "doc/specs/spec-template.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/doc/submitting_code.md",
+   "sha256": "f5e87c875fe632ba8b2244426826caf0e56ae51f8eea2629e363970aa38cd647",
+   "source": "terminal",
+   "source_path": "doc/submitting_code.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "footnote",
+    "table",
+    "nested_list"
+   ],
+   "path": "terminal/doc/terminal-a11y-2023.md",
+   "sha256": "9f0d1b9f059dc75bb41f3f912897baff38ef31db5d544193c4920ed4445071cb",
+   "source": "terminal",
+   "source_path": "doc/terminal-a11y-2023.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/doc/terminal-v1-roadmap.md",
+   "sha256": "a4b490e912c463cef8f58ab0874328c617df35e4b63c81fe08e771507ab87e54",
+   "source": "terminal",
+   "source_path": "doc/terminal-v1-roadmap.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/doc/terminal-v2-roadmap.md",
+   "sha256": "6943ef9d3453d41899525d5bbedb9d3f880a7bd14442ac4739b0c01f119ec181",
+   "source": "terminal",
+   "source_path": "doc/terminal-v2-roadmap.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/doc/user-docs/UsingCommandlineArguments.md",
+   "sha256": "d2c9f48af48adb229646f2f6d85edbd395f3c0a3e36cd7f2739f9758daadb098",
+   "source": "terminal",
+   "source_path": "doc/user-docs/UsingCommandlineArguments.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "terminal/doc/user-docs/index.md",
+   "sha256": "fb04132aae0cadc6e8103b7a44d8b861d38a04b2af16adb7d3c8279e064deaa0",
+   "source": "terminal",
+   "source_path": "doc/user-docs/index.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/oss/README.md",
+   "sha256": "a67c9e235e8b759ffc9323daa904543da0990b1e8c76fe171490074fb5f53f5e",
+   "source": "terminal",
+   "source_path": "oss/README.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/oss/chromium/MAINTAINER_README.md",
+   "sha256": "30b48d9b0eb7d8fb51e0acc0081c8f3c1d16b865a225005b56abb5f8810faf80",
+   "source": "terminal",
+   "source_path": "oss/chromium/MAINTAINER_README.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "html",
+    "code_fence"
+   ],
+   "path": "terminal/oss/chromium/base/numerics/README.md",
+   "sha256": "940aaf62feea64e6ed1af07622a74043fd64478323f8d0888a965adebbc5bbed",
+   "source": "terminal",
+   "source_path": "oss/chromium/base/numerics/README.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/oss/interval_tree/MAINTAINER_README.md",
+   "sha256": "3828f4d752dd98a835468951a79a9ee5930175d51758b7446d33aa8cc3c6bea3",
+   "source": "terminal",
+   "source_path": "oss/interval_tree/MAINTAINER_README.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf"
+   ],
+   "path": "terminal/res/README.md",
+   "sha256": "0e07192fadae66c6666a86cced74270c86baea263abf1f9735d2dadf1d89e86d",
+   "source": "terminal",
+   "source_path": "res/README.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "nested_list"
+   ],
+   "path": "terminal/res/fonts/README.md",
+   "sha256": "d3526303874f903138c6418335196b43308f891cac18552db4bccfc2447be377",
+   "source": "terminal",
+   "source_path": "res/fonts/README.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "terminal/samples/ConPTY/GUIConsole/README.md",
+   "sha256": "46ca1536e22ec412e41ab6f70b46bd2d2ac0bc3fc733a95a295c3d08e9985cfa",
+   "source": "terminal",
+   "source_path": "samples/ConPTY/GUIConsole/README.md",
+   "turkish": false
+  },
+  {
+   "classes": [],
+   "path": "terminal/samples/ConPTY/MiniTerm/README.md",
+   "sha256": "d06c75a33f66ee0d9ede0c95edf5e443e41a1dc805b919715aae3c46e762f1b0",
+   "source": "terminal",
+   "source_path": "samples/ConPTY/MiniTerm/README.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence"
+   ],
+   "path": "terminal/samples/PixelShaders/README.md",
+   "sha256": "057b980174a51d3bf3af6fcff4d63c98436da51febf0e499afa5bcb2b0865d35",
+   "source": "terminal",
+   "source_path": "samples/PixelShaders/README.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence"
+   ],
+   "path": "terminal/src/tools/ansi-color/README.md",
+   "sha256": "fa615f92d40730b147e0381a89911ce96b0c14caafac1a2ac753a6c10508e414",
+   "source": "terminal",
+   "source_path": "src/tools/ansi-color/README.md",
+   "turkish": false
+  },
+  {
+   "classes": [
+    "crlf",
+    "code_fence"
+   ],
+   "path": "terminal/tools/README.md",
+   "sha256": "8942cab2053598bc2fa58b497a2d2ac59003afb1c55821be16cbdb59800ac5ff",
+   "source": "terminal",
+   "source_path": "tools/README.md",
+   "turkish": false
+  }
+ ],
+ "round": "P2-B",
+ "rules": {
+  "bytes": [
+   40,
+   200000
+  ],
+  "class_min": 20,
+  "class_quota": 25,
+  "edge_per_class": 200,
+  "n_notes": 400,
+  "tr_min_letters": 5,
+  "tr_quota": 40
+ },
+ "seed": 20261025,
+ "sources": [
+  {
+   "include": "text/[^/]+\\.md",
+   "license": "MIT (dual MIT/Apache-2.0; MIT chosen)",
+   "license_file": "LICENSE-MIT",
+   "name": "rfcs",
+   "rev": "f148c94986feb17b3954ee620c848c96a9b41166",
+   "url": "https://github.com/rust-lang/rfcs"
+  },
+  {
+   "include": ".+\\.md",
+   "license": "MIT",
+   "license_file": "LICENSE",
+   "name": "terminal",
+   "rev": "98c8c795ebc2560af55e72beba3fa5fd31ceef64",
+   "url": "https://github.com/microsoft/terminal"
+  },
+  {
+   "include": "docs/.+\\.md",
+   "license": "MIT",
+   "license_file": "LICENSE",
+   "name": "tasks",
+   "rev": "5d9902f734d4ac03bd765bbb4df977772f5c2e14",
+   "url": "https://github.com/obsidian-tasks-group/obsidian-tasks"
+  },
+  {
+   "include": ".+\\.md",
+   "license": "MIT",
+   "license_file": "LICENSE",
+   "name": "kepano",
+   "rev": "473697347a0eaac790a6596229c741b3915f3b77",
+   "url": "https://github.com/kepano/kepano-obsidian"
+  },
+  {
+   "include": "docs/.+\\.md",
+   "license": "MIT",
+   "license_file": "LICENSE.txt",
+   "name": "dataview",
+   "rev": "5ad0994ff384cbb797de382e7edff2388141b73a",
+   "url": "https://github.com/blacksmithgu/obsidian-dataview"
+  },
+  {
+   "include": "src/content/.+\\.md",
+   "license": "CC BY 4.0",
+   "license_file": "LICENSE-DOCS.md",
+   "name": "react_tr",
+   "rev": "4e8375d1aaff9ec1aa58e4d641823e266d36e53d",
+   "url": "https://github.com/reactjs/tr.react.dev"
+  }
+ ],
+ "turkish": 54
+}
