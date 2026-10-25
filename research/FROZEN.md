@@ -399,6 +399,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/data/MANIFEST.d_notes.json` | `P2-B/B2-pre:` | D-NOTES manifest'i (not başına sha256, sınıflar, kenar vakası özetleri; ölçümden önce) |
 | `research/data/d_notes/**` | `P2-B/B2-pre:` | D-NOTES notları ve atıf (`NOTICE.md`); ölçümden önce |
 | `research/eval/p2b_align.py` | `P2-B/B2-pre:` | B-3/B-4 hizalama ölçücüsü (dilim, örtü, eski yöntem vekili; eşikler ölçümden önce) |
+| `research/eval/p2b_align.py` | `P2-B/B2-f1:` | yeniden dondurma P2-B/F1: gizli dizindeki notların ölçüm vault'undaki yolu (ölçümden önce; ilk koşu değer üretmeden durdu) |
 <!-- /frozen-table -->
 
 ## Notlar

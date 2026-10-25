@@ -169,8 +169,20 @@ def measure_doc(raw: bytes, rep: dict) -> dict:
     }
 
 
+def vault_path(rel: str) -> str:
+    """The document's path in the measuring vault: a component starting
+    with `.` (a hidden directory such as `.github/`, which `rootmark
+    ingest-dir` does not ingest) starts with `_` instead (P2-B/F1); the
+    bytes are unchanged."""
+    return "/".join("_" + c[1:] if c.startswith(".") else c for c in rel.split("/"))
+
+
 def measure_set(rootmark: str, docs: dict[str, bytes], work: Path) -> dict:
     v = work / "vault"
+    mapped = {vault_path(rel): b for rel, b in docs.items()}
+    if len(mapped) != len(docs):
+        raise SystemExit("p2b_align: two documents map to one vault path")
+    docs = mapped
     for rel, b in docs.items():
         f = v / rel
         f.parent.mkdir(parents=True, exist_ok=True)
