@@ -1,0 +1,456 @@
+{
+ "criteria": {
+  "B-3": {
+   "error": 0.005513855785991249,
+   "max": 0.005,
+   "pass": false
+  },
+  "B-4": {
+   "max": 0.02,
+   "pass": true,
+   "pass_per_class": {
+    "bom": true,
+    "callout": true,
+    "code_fence": true,
+    "crlf": true,
+    "embed": true,
+    "footnote": true,
+    "frontmatter": true,
+    "html": true,
+    "nested_list": true,
+    "table": true,
+    "turkish_emoji": true
+   },
+   "per_class": {
+    "bom": 0.00435097897026831,
+    "callout": 0.0,
+    "code_fence": 0.0,
+    "crlf": 0.0,
+    "embed": 0.0,
+    "footnote": 0.0,
+    "frontmatter": 0.0,
+    "html": 0.0012836970474967907,
+    "nested_list": 0.0,
+    "table": 0.0,
+    "turkish_emoji": 0.0
+   }
+  }
+ },
+ "edge": {
+  "bom": {
+   "bad": 6,
+   "blocks": 1379,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.00435097897026831,
+   "failing_docs": [
+    {
+     "bad": 1,
+     "cover_fail": 0,
+     "doc": "bom/023.md",
+     "slice_fail": 1
+    },
+    {
+     "bad": 1,
+     "cover_fail": 0,
+     "doc": "bom/030.md",
+     "slice_fail": 1
+    },
+    {
+     "bad": 1,
+     "cover_fail": 0,
+     "doc": "bom/061.md",
+     "slice_fail": 1
+    },
+    {
+     "bad": 1,
+     "cover_fail": 0,
+     "doc": "bom/067.md",
+     "slice_fail": 1
+    },
+    {
+     "bad": 1,
+     "cover_fail": 0,
+     "doc": "bom/069.md",
+     "slice_fail": 1
+    },
+    {
+     "bad": 1,
+     "cover_fail": 0,
+     "doc": "bom/148.md",
+     "slice_fail": 1
+    }
+   ],
+   "gaps": {
+    "blank": 1496,
+    "frontmatter": 0,
+    "link_ref": 83,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.38,
+   "pairable_docs": 76,
+   "slice_fail": 6
+  },
+  "callout": {
+   "bad": 0,
+   "blocks": 1259,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0,
+   "failing_docs": [],
+   "gaps": {
+    "blank": 1382,
+    "frontmatter": 1,
+    "link_ref": 76,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.18,
+   "pairable_docs": 36,
+   "slice_fail": 0
+  },
+  "code_fence": {
+   "bad": 0,
+   "blocks": 1357,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0,
+   "failing_docs": [],
+   "gaps": {
+    "blank": 1470,
+    "frontmatter": 1,
+    "link_ref": 86,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.395,
+   "pairable_docs": 79,
+   "slice_fail": 0
+  },
+  "crlf": {
+   "bad": 0,
+   "blocks": 1308,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0,
+   "failing_docs": [],
+   "gaps": {
+    "blank": 1379,
+    "frontmatter": 0,
+    "link_ref": 129,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.27,
+   "pairable_docs": 54,
+   "slice_fail": 0
+  },
+  "embed": {
+   "bad": 0,
+   "blocks": 1233,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0,
+   "failing_docs": [],
+   "gaps": {
+    "blank": 1375,
+    "frontmatter": 0,
+    "link_ref": 58,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.455,
+   "pairable_docs": 91,
+   "slice_fail": 0
+  },
+  "footnote": {
+   "bad": 0,
+   "blocks": 1356,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0,
+   "failing_docs": [],
+   "gaps": {
+    "blank": 1479,
+    "frontmatter": 0,
+    "link_ref": 77,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.05,
+   "pairable_docs": 10,
+   "slice_fail": 0
+  },
+  "frontmatter": {
+   "bad": 0,
+   "blocks": 1153,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0,
+   "failing_docs": [],
+   "gaps": {
+    "blank": 1081,
+    "frontmatter": 173,
+    "link_ref": 72,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.485,
+   "pairable_docs": 97,
+   "slice_fail": 0
+  },
+  "html": {
+   "bad": 2,
+   "blocks": 1558,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0012836970474967907,
+   "failing_docs": [
+    {
+     "bad": 1,
+     "cover_fail": 0,
+     "doc": "html/025.md",
+     "slice_fail": 1
+    },
+    {
+     "bad": 1,
+     "cover_fail": 0,
+     "doc": "html/138.md",
+     "slice_fail": 1
+    }
+   ],
+   "gaps": {
+    "blank": 1695,
+    "frontmatter": 2,
+    "link_ref": 61,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.005,
+   "pairable_docs": 1,
+   "slice_fail": 2
+  },
+  "nested_list": {
+   "bad": 0,
+   "blocks": 2113,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0,
+   "failing_docs": [],
+   "gaps": {
+    "blank": 2230,
+    "frontmatter": 1,
+    "link_ref": 82,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.405,
+   "pairable_docs": 81,
+   "slice_fail": 0
+  },
+  "table": {
+   "bad": 0,
+   "blocks": 1283,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0,
+   "failing_docs": [],
+   "gaps": {
+    "blank": 1418,
+    "frontmatter": 0,
+    "link_ref": 64,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.445,
+   "pairable_docs": 89,
+   "slice_fail": 0
+  },
+  "turkish_emoji": {
+   "bad": 0,
+   "blocks": 1342,
+   "cover_fail": 0,
+   "docs": 200,
+   "empty_docs": 0,
+   "error": 0.0,
+   "failing_docs": [],
+   "gaps": {
+    "blank": 1459,
+    "frontmatter": 0,
+    "link_ref": 83,
+    "no_block_other": 0
+   },
+   "old_method_pairable": 0.405,
+   "pairable_docs": 81,
+   "slice_fail": 0
+  }
+ },
+ "edge_sha256": {
+  "bom": "2295fa1af19223c47277c42e867ca78fac10da174c4bf3f1fae813293656599a",
+  "callout": "2e92a473e6bfb825a3776f1626df5917339806e96bac53043ce151585979f64f",
+  "code_fence": "ba8d1d61fe02bede63b365d160162d6b8fde864deb7d1222c9f8f7a767b7af01",
+  "crlf": "ea6fe8c4b494f0d7a5f79e775dcb529ce1bd00aba3fa39b78eb2b5d98de5ffb4",
+  "embed": "9710858ded8e74d9f0c04d9242ff88a7d913134b46b8631f2dd60b8a8c86068b",
+  "footnote": "bd1e15b4674604e8fc84b0e39268413d7488df60dcb75c84718d5169d735bdbf",
+  "frontmatter": "27fa862ec44ceba414b1e5b5d53f120515ed46eab9d6dc9f64e38fccc0e6c041",
+  "html": "79384325c073b88a53210e7985bd5d55d3ffd6d2550889ed5b3d99ea43c4a1d2",
+  "nested_list": "1bd82373abdd13ef8682aa62e2dcd17c9681ecceef13ce8a8585a2c1a04afe40",
+  "table": "91129a37e27925f1456437d0a35fbd0670626c0571a17170484b85f1ab34e5cb",
+  "turkish_emoji": "6156c0490ffb871062cc0bb871f52da3915a62a6614adf4146228f7ca57f1e3a"
+ },
+ "manifest_seed": 20261025,
+ "notes": {
+  "bad": 155,
+  "blocks": 28111,
+  "cover_fail": 0,
+  "docs": 400,
+  "empty_docs": 0,
+  "error": 0.005513855785991249,
+  "failing_docs": [
+   {
+    "bad": 16,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0019-opt-in-builtin-traits.md",
+    "slice_fail": 16
+   },
+   {
+    "bad": 3,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0042-regexps.md",
+    "slice_fail": 3
+   },
+   {
+    "bad": 22,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0048-traits.md",
+    "slice_fail": 22
+   },
+   {
+    "bad": 2,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0059-remove-tilde.md",
+    "slice_fail": 2
+   },
+   {
+    "bad": 4,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0130-box-not-special.md",
+    "slice_fail": 4
+   },
+   {
+    "bad": 7,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0132-ufcs.md",
+    "slice_fail": 7
+   },
+   {
+    "bad": 22,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0135-where.md",
+    "slice_fail": 22
+   },
+   {
+    "bad": 19,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0213-defaulted-type-params.md",
+    "slice_fail": 19
+   },
+   {
+    "bad": 4,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0387-higher-ranked-trait-bounds.md",
+    "slice_fail": 4
+   },
+   {
+    "bad": 2,
+    "cover_fail": 0,
+    "doc": "rfcs/text/0736-privacy-respecting-fru.md",
+    "slice_fail": 2
+   },
+   {
+    "bad": 19,
+    "cover_fail": 0,
+    "doc": "rfcs/text/1211-mir.md",
+    "slice_fail": 19
+   },
+   {
+    "bad": 17,
+    "cover_fail": 0,
+    "doc": "rfcs/text/1214-projections-lifetimes-and-wf.md",
+    "slice_fail": 17
+   },
+   {
+    "bad": 1,
+    "cover_fail": 0,
+    "doc": "rfcs/text/2025-nested-method-calls.md",
+    "slice_fail": 1
+   },
+   {
+    "bad": 1,
+    "cover_fail": 0,
+    "doc": "rfcs/text/2091-inline-semantic.md",
+    "slice_fail": 1
+   },
+   {
+    "bad": 7,
+    "cover_fail": 0,
+    "doc": "rfcs/text/3958-rustdoc-texmath.md",
+    "slice_fail": 7
+   },
+   {
+    "bad": 1,
+    "cover_fail": 0,
+    "doc": "tasks/docs/Advanced/Daily Agenda.md",
+    "slice_fail": 1
+   },
+   {
+    "bad": 2,
+    "cover_fail": 0,
+    "doc": "tasks/docs/Queries/About Queries.md",
+    "slice_fail": 2
+   },
+   {
+    "bad": 1,
+    "cover_fail": 0,
+    "doc": "terminal/doc/EXCEPTIONS.md",
+    "slice_fail": 1
+   },
+   {
+    "bad": 5,
+    "cover_fail": 0,
+    "doc": "terminal/doc/TAEF.md",
+    "slice_fail": 5
+   }
+  ],
+  "gaps": {
+   "blank": 27225,
+   "frontmatter": 184,
+   "link_ref": 1092,
+   "no_block_other": 0
+  },
+  "old_method_pairable": 0.33,
+  "pairable_docs": 132,
+  "slice_fail": 155
+ },
+ "notes_digest": "0bc15790172bcd5051f0e2775ce43bad",
+ "notes_turkish": {
+  "bad": 0,
+  "blocks": 6731,
+  "cover_fail": 0,
+  "docs": 54,
+  "empty_docs": 0,
+  "error": 0.0,
+  "failing_docs": [],
+  "gaps": {
+   "blank": 6731,
+   "frontmatter": 54,
+   "link_ref": 0,
+   "no_block_other": 0
+  },
+  "old_method_pairable": 0.0,
+  "pairable_docs": 0,
+  "slice_fail": 0
+ },
+ "pass": false
+}
