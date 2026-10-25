@@ -717,7 +717,9 @@ pub fn matrix(vault: &Path) -> Result<Value> {
             "ok",
             Some("no [attestation] table: read as unattested = \"unverified\"; `rootmark migrate` adds unattested = \"canonical\" (policy_attestation_1, recommended; K-P2L-T1)".into()),
         ),
-        Err(e) => row(None, "recipe/attestation", "unknown", Some(format!("{e:#}"))),
+        // P2-B/B0 (review finding 8): a recipe this reader cannot read is
+        // an error (`status.migrations.error`), never a silent `unknown`
+        Err(e) => return Err(e),
     };
     let mut required = Vec::new();
     let mut recommended = Vec::new();
@@ -852,9 +854,14 @@ pub fn dry_run(vault: &Path, only: Option<&str>) -> Result<Value> {
         .into_iter()
         .map(|(m, p)| {
             let mut v = serde_json::to_value(p.expect("planned"))?;
-            // P2-P/P0: a migration no vault requires says so (only then)
+            // P2-P/P0: a migration no vault requires says so (only then);
+            // P2-B/B0 (review finding 7): and its plan does not say
+            // `required` (`status.migrations` never lists it there)
             if m.recommended() {
                 v["recommended"] = json!(true);
+                if let Some(o) = v.as_object_mut() {
+                    o.remove("required");
+                }
             }
             Ok(v)
         })

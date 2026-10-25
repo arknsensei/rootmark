@@ -282,8 +282,11 @@ fn check_builtin_policy(ev: &Event, m: &TransitionMeta) -> Result<()> {
 /// (P2-P/P1, declarative promotion rules): a `Promoted` whose actor is a
 /// `policy` carries the rule that allowed it — `meta.reason` starts with
 /// `rule:` followed by the rule id — and a non-empty `policy_version`
-/// (`transition_meta` requires it). Checked on write and on replay; the
-/// kernel decides nothing, it only refuses an event of another shape.
+/// (`transition_meta` requires it). P2-B/B0 (P2-P review finding 5): the
+/// rule named in `reason` is the actor's id (`meta.actor.id`) and the
+/// lineage came from `proposal` (`meta.from`) — a rule promotes only an
+/// agent's `propose`. Checked on write and on replay; the kernel decides
+/// nothing, it only refuses an event of another shape.
 fn check_policy_promotion(ev: &Event, m: &TransitionMeta) -> Result<()> {
     if ev.kind == EventKind::Promoted && m.actor.kind == ActorKind::Policy {
         let rule = m.reason.strip_prefix("rule:").unwrap_or_default();
@@ -292,6 +295,21 @@ fn check_policy_promotion(ev: &Event, m: &TransitionMeta) -> Result<()> {
                 "event seq {}: a Promoted by a policy actor names its rule: meta.reason \"rule:<id>\", not {:?}",
                 ev.seq,
                 m.reason
+            );
+        }
+        if rule != m.actor.id {
+            bail!(
+                "event seq {}: a Promoted by a policy actor names its own rule: meta.reason {:?} does not name meta.actor.id {:?}",
+                ev.seq,
+                m.reason,
+                m.actor.id
+            );
+        }
+        if m.from != Layer::Proposal {
+            bail!(
+                "event seq {}: a Promoted by a policy actor comes from proposal: meta.from is {:?}",
+                ev.seq,
+                m.from.as_str()
             );
         }
     }
