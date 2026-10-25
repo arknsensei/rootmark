@@ -395,6 +395,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/check_compare_fields.py` | `P2-P/P5-dev:` | yeniden dondurma P2-P/F3: `compare_p2p` |
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-P/P5-dev:` | yeniden dondurma P2-P/F3: `compare_p2p` bölümü, alan ve dosya satırları |
 | `research/eval/**` | `P2-P/P5-dev:` | yeniden dondurma P2-P/F3: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni P2-P dosyaları (`run_p2p_checks.py`, `compare_p2p.py`, `historical_p2p.py`, `historical_fails_p2p.json`, `migration_required_fails_p2p.json`) de bu satırla donar |
+| `research/eval/datasets/d_notes.py` | `P2-B/B2-pre:` | D-NOTES seçicisi ve kenar vakası üreteci (kaynaklar, revizyonlar, lisanslar, seçim kuralları, tohum; ölçümden önce) |
+| `research/data/MANIFEST.d_notes.json` | `P2-B/B2-pre:` | D-NOTES manifest'i (not başına sha256, sınıflar, kenar vakası özetleri; ölçümden önce) |
+| `research/data/d_notes/**` | `P2-B/B2-pre:` | D-NOTES notları ve atıf (`NOTICE.md`); ölçümden önce |
+| `research/eval/p2b_align.py` | `P2-B/B2-pre:` | B-3/B-4 hizalama ölçücüsü (dilim, örtü, eski yöntem vekili; eşikler ölçümden önce) |
 <!-- /frozen-table -->
 
 ## Notlar
