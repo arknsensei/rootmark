@@ -1,0 +1,16 @@
+{
+  "documents": 200,
+  "edits": 200,
+  "embedded_per_edit": {
+    "max": 1,
+    "min": 1,
+    "total": 200
+  },
+  "embedder_id": "minilm-l6-v2/e73168f9",
+  "max_ms": 35.1965,
+  "p50_ms": 28.750583,
+  "p95_ms": 32.272709,
+  "pass": true,
+  "threads": 1,
+  "threshold_p95_ms": 100.0
+}

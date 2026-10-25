@@ -1,0 +1,12 @@
+scene: ok   1 human+agent status
+scene: ok   2 human checkpoint
+scene: ok   3 agent propose
+scene: ok   4 human blame
+scene: ok   5 human search
+scene: ok   6 human promote
+scene: ok   7 human search
+scene: ok   8 human trace
+scene: ok   9 human search+blame
+scene: ok   10 agent propose
+scene: ok   11 human blame+search
+scene: 11/11; E-3 Markdown changed only at the propose step: true

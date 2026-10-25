@@ -1,0 +1,3 @@
+{"actor":{"id":"mcp-e2e-prep","kind":"agent"},"consumer":"mcp-e2e-prep","doc_path":"agent/notes.md","events":3,"heading":null,"mode":"create","reason":"rootmark propose (CLI)","snapshot_id":"df3e8a6204451c5c6e60029110c4115b"}
+{"actor":{"id":"mcp-e2e/1.0","kind":"agent"},"consumer":"mcp-e2e/1.0","doc_path":"agent/plan.md","events":3,"heading":null,"mode":"create","reason":"e2e create","snapshot_id":"b89f63dbbb4c035b7a8ef869dce64840"}
+{"actor":{"id":"mcp-e2e/1.0","kind":"agent"},"consumer":"mcp-e2e/1.0","doc_path":"agent/d6.md","events":3,"heading":null,"mode":"create","reason":"e2e d6","snapshot_id":"a86cc7775f010177c205980fb876364a"}

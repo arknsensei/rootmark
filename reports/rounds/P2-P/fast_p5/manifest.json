@@ -1,0 +1,87 @@
+{
+ "phases": {
+  "c3_quality": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70",
+    "MANIFEST.d_tr.json": "b9ff40d6d795474349793542d370c3ba"
+   },
+   "git_sha": "42b4494fa9234b96bb0f499d88f520e87f235e41",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "c3_quality.json"
+   ],
+   "params": {
+    "chunking": "structural",
+    "k": 10,
+    "modes": [
+     "hybrid",
+     "flat"
+    ],
+    "threshold": 0.01
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  },
+  "p2l_quality": {
+   "data_manifests": {
+    "MANIFEST.d1.json": "7516fda12ac6c0a6d910af9025b31f63",
+    "MANIFEST.d1h.json": "657bb8d3f8df3757f0e8bcc45441fc7e",
+    "MANIFEST.d1ho.json": "eadaedd5d09fdd826ad60efb94c2bb08",
+    "MANIFEST.d1hs.json": "c841e985a574e640843657e8aad69357",
+    "MANIFEST.d1k4.json": "1710f3774c2276cc8545af4460557b80",
+    "MANIFEST.d1sh.json": "b704380c900449a8df61818ee56c96e6",
+    "MANIFEST.d2.json": "c8b9283a028efd5bddbea5f29780f2e2",
+    "MANIFEST.d3.json": "4a62699021ed8f4eca0cb3135ac5ee70",
+    "MANIFEST.d_tr.json": "b9ff40d6d795474349793542d370c3ba"
+   },
+   "git_sha": "42b4494fa9234b96bb0f499d88f520e87f235e41",
+   "matcher_defaults": [
+    0.5,
+    0.65
+   ],
+   "outputs": [
+    "p2l/d_tr.json",
+    "p2l/english.json",
+    "p2l_quality.json"
+   ],
+   "params": {
+    "embedders": [
+     "minilm-l6-v2",
+     "multilingual-minilm-l12-v2"
+    ],
+    "k_chunks": 50,
+    "modes": [
+     "lexical",
+     "flat",
+     "hybrid"
+    ],
+    "tokenizers": [
+     "mdk_lower_alnum",
+     "uni_fold_tr"
+    ]
+   },
+   "versions": {
+    "platform": "darwin",
+    "python": "3.12.9",
+    "rust": "rustc 1.92.0 (ded5c06cf 2025-12-08)"
+   },
+   "worktree_clean": true
+  }
+ },
+ "run_id": "20261025T005253Z-42b4494",
+ "seed": 20261013
+}

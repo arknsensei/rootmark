@@ -1,0 +1,224 @@
+{
+  "harness": "real Obsidian, separate instance (own --user-data-dir, CDP), plugin bundle installed; K-E1.3",
+  "consumer": "rootmark-obsidian/0.1.0",
+  "agent": "real-agent/1.0",
+  "steps": [
+    {
+      "step": 1,
+      "actor": "human",
+      "command": "status bar",
+      "shows": {
+        "text": "rootmark 0.2.0 · human:editor"
+      },
+      "pass": true
+    },
+    {
+      "step": 2,
+      "actor": "human",
+      "command": "checkpoint panel: Name 'before'",
+      "shows": {
+        "named": 1,
+        "checkpoints": 1
+      },
+      "pass": true
+    },
+    {
+      "step": 3,
+      "actor": "agent",
+      "command": "MCP propose",
+      "shows": {
+        "is_error": false
+      },
+      "pass": true
+    },
+    {
+      "step": 4,
+      "actor": "human",
+      "command": "gutter + proposal view",
+      "shows": {
+        "gutter": [
+          {
+            "label": "P",
+            "title": "proposal · Agent · source: real-agent/1.0 · created at seq 110, last event seq 110",
+            "cls": "rootmark-mark rootmark-layer-proposal"
+          },
+          {
+            "label": "P",
+            "title": "proposal · Agent · source: real-agent/1.0 · created at seq 111, last event seq 111",
+            "cls": "rootmark-mark rootmark-layer-proposal"
+          }
+        ],
+        "proposal_rows": [
+          [
+            "agent/scene.md",
+            "Grind notes",
+            "real-agent/1.0",
+            "110"
+          ],
+          [
+            "agent/scene.md",
+            "Grind notes",
+            "real-agent/1.0",
+            "111"
+          ]
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 5,
+      "actor": "human",
+      "command": "search panel (default; include proposals)",
+      "shows": {
+        "default_on_doc": 0,
+        "with_proposals": {
+          "canonical_on_doc": 0,
+          "proposal_on_doc": 1
+        }
+      },
+      "pass": true
+    },
+    {
+      "step": 6,
+      "actor": "human",
+      "command": "proposal view: Promote selected + reason modal",
+      "shows": {
+        "promote_disabled": {
+          "empty": true,
+          "blank": true,
+          "filled": false
+        },
+        "demote_disabled": true,
+        "promoted": 2,
+        "actors": [
+          {
+            "id": "editor",
+            "kind": "human"
+          },
+          {
+            "id": "editor",
+            "kind": "human"
+          }
+        ],
+        "reasons": [
+          "approved in Obsidian",
+          "approved in Obsidian"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 7,
+      "actor": "human",
+      "command": "search panel",
+      "shows": {
+        "on_doc": [
+          "agent/scene.md · canonical · 3.8722 · 2 blocks"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "step": 8,
+      "actor": "human",
+      "command": "trace viewer + jump",
+      "shows": {
+        "summary_consumer": "rootmark-obsidian/0.1.0",
+        "links_on_doc": 2,
+        "cursor_line": 0,
+        "block_line": 0
+      },
+      "pass": true
+    },
+    {
+      "step": 9,
+      "actor": "human",
+      "command": "search at 'before' + checkpoint past view",
+      "shows": {
+        "same_checkpoint_as_step_2": true,
+        "hits_on_doc": 0,
+        "past_doc": "agent/scene.md had no snapshot at checkpoint 9a1342342e600fdca482ac2c60fcfa3c",
+        "past_espresso": "espresso.md at 9a1342342e600fdca482ac2c60fcfa3c (read only)",
+        "espresso_blocks": 10
+      },
+      "pass": true
+    },
+    {
+      "step": 10,
+      "actor": "agent",
+      "command": "MCP propose replace_section + heading-less append",
+      "shows": {
+        "replace_section": "denied",
+        "append": "policy_violation",
+        "hint": "start the appended text with a heading"
+      },
+      "pass": true
+    },
+    {
+      "step": 11,
+      "actor": "human",
+      "command": "gutter + search panel unchanged",
+      "shows": {
+        "gutter_marks": 10,
+        "gutter_unchanged": true,
+        "search_unchanged": true
+      },
+      "pass": true
+    }
+  ],
+  "passed": 11,
+  "total": 11,
+  "e3_md_changed_per_step": [
+    [],
+    [],
+    [
+      "agent/scene.md"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "e3_md_changes_only_at_propose": true,
+  "e4_access_log": {
+    "requests": 57,
+    "endpoints_used": [
+      "GET /v1/status",
+      "POST /v1/blame",
+      "POST /v1/checkpoint",
+      "POST /v1/checkpoints",
+      "POST /v1/promote",
+      "POST /v1/search",
+      "POST /v1/trace"
+    ],
+    "outside_contract": 0,
+    "outside": []
+  },
+  "e1_9_connection": {
+    "step": "E1-9",
+    "actor": "human",
+    "command": "connection screen (stale index) + rebuild",
+    "shows": {
+      "status_bar": "rootmark 0.2.0 · human:editor · index stale",
+      "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`",
+      "notice_shown": true,
+      "search_before_rebuild": {
+        "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+        "hits": 0
+      },
+      "status_bar_after_rebuild": "rootmark 0.2.0 · human:editor",
+      "search_after_rebuild": {
+        "error": null,
+        "hits": 5
+      }
+    },
+    "pass": true
+  },
+  "obsidian_exit": 0,
+  "obsidian_exit_connection_step": 0,
+  "pass": true
+}

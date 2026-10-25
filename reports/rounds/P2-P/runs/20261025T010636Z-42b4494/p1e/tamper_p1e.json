@@ -1,0 +1,143 @@
+{
+  "cases": [
+    {
+      "group": "contract-http",
+      "case": "untouched contract and server",
+      "expected": "accepted",
+      "got": "accepted",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "contract-http",
+      "case": "HTTP endpoint POST /v1/checkpoints removed (MCP still lists the tool)",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": {
+        "tools_equal": true,
+        "codes_equal": true,
+        "http_pass": false,
+        "failed_endpoints": [
+          "POST /v1/checkpoints"
+        ],
+        "as_expected": true
+      },
+      "as_expected": true
+    },
+    {
+      "group": "contract-http",
+      "case": "status of index_stale changed to 500",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "compare-fields",
+      "case": "untouched declaration",
+      "expected": "accepted",
+      "got": "accepted",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "compare-fields",
+      "case": "an excluded field's row removed (undeclared exclusion in code)",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "compare-fields",
+      "case": "a row the code does not exclude added",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "compare-fields",
+      "case": "a pair exclusion relabelled as a decision",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "client-types",
+      "case": "untouched generated types",
+      "expected": "accepted",
+      "got": "accepted",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "client-types",
+      "case": "a tool outside the contract added to the generated types",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "client-types",
+      "case": "generator: one closed schema (control)",
+      "expected": "accepted",
+      "got": "accepted",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "client-types",
+      "case": "generator: top-level oneOf refused",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "client-types",
+      "case": "generator: required field without a property refused",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "plugin-e2e",
+      "case": "untouched harness",
+      "expected": "accepted",
+      "got": "accepted",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "plugin-e2e",
+      "case": "a request outside the contract (POST /v1/demote) as the plugin",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": {
+        "outside": 1,
+        "as_expected": true
+      },
+      "as_expected": true
+    },
+    {
+      "group": "plugin-e2e",
+      "case": "a Markdown write outside the propose step",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": {
+        "e3": false,
+        "as_expected": true
+      },
+      "as_expected": true
+    }
+  ],
+  "rejected": 10,
+  "rejected_total": 10,
+  "controls_ok": 5,
+  "controls_total": 5,
+  "pass": true
+}

@@ -1,0 +1,1432 @@
+{
+ "E1-1": {
+  "cases": {
+   "auto_rebuild=true: all 200": true,
+   "blame 200": true,
+   "checkpoints 200": true,
+   "search 503 index_stale": false,
+   "status GET 200 stale": true,
+   "status MCP stale": true,
+   "status POST 200 stale": true,
+   "trace 200": true
+  },
+  "pass": false,
+  "passed": "7/8"
+ },
+ "E1-2": {
+  "pass": true,
+  "passed": "2/2"
+ },
+ "E1-3": {
+  "e3_md_changes_only_at_propose": true,
+  "e4_outside_contract": 0,
+  "e4_requests": 57,
+  "failed": [],
+  "harness": "real Obsidian, separate instance (own --user-data-dir, CDP), plugin bundle installed; K-E1.3",
+  "pass": true,
+  "steps": "11/11"
+ },
+ "E1-4": {
+  "every_item_scripted": true,
+  "failed": [
+   "R4"
+  ],
+  "pass": false,
+  "r7": true,
+  "release_check": "20/21",
+  "release_md_items": [
+   "R1",
+   "R2",
+   "R3",
+   "R4",
+   "R4a",
+   "R5",
+   "R6",
+   "R7",
+   "R8",
+   "R9",
+   "R10",
+   "R11",
+   "R12",
+   "R13",
+   "R14",
+   "R15",
+   "R16",
+   "R17",
+   "R18",
+   "R19",
+   "R20"
+  ],
+  "script_items": [
+   "R1",
+   "R10",
+   "R11",
+   "R12",
+   "R13",
+   "R14",
+   "R15",
+   "R16",
+   "R17",
+   "R18",
+   "R19",
+   "R2",
+   "R20",
+   "R3",
+   "R4",
+   "R4a",
+   "R5",
+   "R6",
+   "R7",
+   "R8",
+   "R9"
+  ]
+ },
+ "E1-5": {
+  "other_targets": {
+   "x86_64-pc-windows-msvc": "skipped"
+  },
+  "pass": false,
+  "required": {
+   "built": true,
+   "conformance": {
+    "fixtures_manifest": "ok",
+    "level_claimed": 3,
+    "passed": 39,
+    "total": 39
+   },
+   "ok": true,
+   "spec_version": "2.0.3",
+   "target": "aarch64-apple-darwin",
+   "version": "rootmark 0.2.0"
+  },
+  "required_targets": [
+   "aarch64-apple-darwin",
+   "x86_64-unknown-linux-gnu"
+  ],
+  "sha256_present": true,
+  "workflow_r13": true,
+  "workflow_triggered": "human step (docs/RELEASE.md 3), not part of the chain"
+ },
+ "E1-6": {
+  "conformance": {
+   "level_claimed": 3,
+   "passed": 39,
+   "total": 39
+  },
+  "pass": false,
+  "regress_vs_p1e": {
+   "conformance": {
+    "differing_tests": [
+     "C2-11",
+     "C2-12",
+     "C2-13",
+     "C2-14",
+     "C3-08"
+    ],
+    "equal": false,
+    "level_claimed": [
+     3,
+     3
+    ],
+    "passed": [
+     34,
+     39
+    ],
+    "spec_version": [
+     "1.0.3",
+     "2.0.3"
+    ],
+    "tests": 39
+   },
+   "differing_fields": {
+    "conformance_p1d1.json:fixtures_manifest_hash": "inf",
+    "conformance_p1d1.json:passed": 0.1282051282051282,
+    "conformance_p1d1.json:spec_version": "inf",
+    "conformance_p1d1.json:tests›#len": 0.1282051282051282,
+    "conformance_p1d1.json:tests›27›actual_hash": "inf",
+    "conformance_p1d1.json:tests›27›expected_hash": "inf",
+    "conformance_p1d1.json:tests›27›id": "inf",
+    "conformance_p1d1.json:tests›27›level": 0.3333333333333333,
+    "conformance_p1d1.json:tests›27›title": "inf",
+    "conformance_p1d1.json:tests›28›actual_hash": "inf",
+    "conformance_p1d1.json:tests›28›expected_hash": "inf",
+    "conformance_p1d1.json:tests›28›id": "inf",
+    "conformance_p1d1.json:tests›28›level": 0.3333333333333333,
+    "conformance_p1d1.json:tests›28›title": "inf",
+    "conformance_p1d1.json:tests›29›actual_hash": "inf",
+    "conformance_p1d1.json:tests›29›expected_hash": "inf",
+    "conformance_p1d1.json:tests›29›id": "inf",
+    "conformance_p1d1.json:tests›29›level": 0.3333333333333333,
+    "conformance_p1d1.json:tests›29›title": "inf",
+    "conformance_p1d1.json:tests›30›actual_hash": "inf",
+    "conformance_p1d1.json:tests›30›expected_hash": "inf",
+    "conformance_p1d1.json:tests›30›id": "inf",
+    "conformance_p1d1.json:tests›30›level": 0.3333333333333333,
+    "conformance_p1d1.json:tests›30›title": "inf",
+    "conformance_p1d1.json:tests›31›actual_hash": "inf",
+    "conformance_p1d1.json:tests›31›expected_hash": "inf",
+    "conformance_p1d1.json:tests›31›id": "inf",
+    "conformance_p1d1.json:tests›31›title": "inf",
+    "conformance_p1d1.json:tests›32›actual_hash": "inf",
+    "conformance_p1d1.json:tests›32›expected_hash": "inf",
+    "conformance_p1d1.json:tests›32›id": "inf",
+    "conformance_p1d1.json:tests›32›title": "inf",
+    "conformance_p1d1.json:tests›33›actual_hash": "inf",
+    "conformance_p1d1.json:tests›33›expected_hash": "inf",
+    "conformance_p1d1.json:tests›33›id": "inf",
+    "conformance_p1d1.json:tests›33›title": "inf",
+    "conformance_p1d1.json:tests›34›actual_hash": {
+     "a": "absent",
+     "b": "b56b16b3ccc5a4a7afbbbf29211fba85"
+    },
+    "conformance_p1d1.json:tests›34›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "conformance_p1d1.json:tests›34›expected_hash": {
+     "a": "absent",
+     "b": "b56b16b3ccc5a4a7afbbbf29211fba85"
+    },
+    "conformance_p1d1.json:tests›34›id": {
+     "a": "absent",
+     "b": "C3-04"
+    },
+    "conformance_p1d1.json:tests›34›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "conformance_p1d1.json:tests›34›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "conformance_p1d1.json:tests›34›title": {
+     "a": "absent",
+     "b": "Retrieval never returns derived as content"
+    },
+    "conformance_p1d1.json:tests›35›actual_hash": {
+     "a": "absent",
+     "b": "cf9fc81f3b2ea5c10cba06f75d7cc984"
+    },
+    "conformance_p1d1.json:tests›35›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "conformance_p1d1.json:tests›35›expected_hash": {
+     "a": "absent",
+     "b": "cf9fc81f3b2ea5c10cba06f75d7cc984"
+    },
+    "conformance_p1d1.json:tests›35›id": {
+     "a": "absent",
+     "b": "C3-05"
+    },
+    "conformance_p1d1.json:tests›35›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "conformance_p1d1.json:tests›35›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "conformance_p1d1.json:tests›35›title": {
+     "a": "absent",
+     "b": "With proposal results requested, the canonical prefix equals the result without the request (lexical, flat, hybrid; spec §9, 1.0.2)"
+    },
+    "conformance_p1d1.json:tests›36›actual_hash": {
+     "a": "absent",
+     "b": "10f03eb0e5f58b0829041bb9e2d716c4"
+    },
+    "conformance_p1d1.json:tests›36›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "conformance_p1d1.json:tests›36›expected_hash": {
+     "a": "absent",
+     "b": "10f03eb0e5f58b0829041bb9e2d716c4"
+    },
+    "conformance_p1d1.json:tests›36›id": {
+     "a": "absent",
+     "b": "C3-06"
+    },
+    "conformance_p1d1.json:tests›36›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "conformance_p1d1.json:tests›36›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "conformance_p1d1.json:tests›36›title": {
+     "a": "absent",
+     "b": "Canonical invariance: agent writes the default edit policy (append_only) allows never change the canonical ranking of any query, every mode; writes touching canonical blocks or canonical chunks are denied and write nothing (spec §7, §9; 1.0.3)"
+    },
+    "conformance_p1d1.json:tests›37›actual_hash": {
+     "a": "absent",
+     "b": "8b8d319fbf4e73d91ae6b8ac266d3632"
+    },
+    "conformance_p1d1.json:tests›37›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "conformance_p1d1.json:tests›37›expected_hash": {
+     "a": "absent",
+     "b": "8b8d319fbf4e73d91ae6b8ac266d3632"
+    },
+    "conformance_p1d1.json:tests›37›id": {
+     "a": "absent",
+     "b": "C3-07"
+    },
+    "conformance_p1d1.json:tests›37›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "conformance_p1d1.json:tests›37›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "conformance_p1d1.json:tests›37›title": {
+     "a": "absent",
+     "b": "Response length with proposal results requested: at most k canonical and at most k proposal hits, at most 2k in total, every mode (spec §9; 1.0.3)"
+    },
+    "conformance_p1d1.json:tests›38›actual_hash": {
+     "a": "absent",
+     "b": "922f40bd3bd93c07f34fb30348fbd6a6"
+    },
+    "conformance_p1d1.json:tests›38›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "conformance_p1d1.json:tests›38›expected_hash": {
+     "a": "absent",
+     "b": "922f40bd3bd93c07f34fb30348fbd6a6"
+    },
+    "conformance_p1d1.json:tests›38›id": {
+     "a": "absent",
+     "b": "C3-08"
+    },
+    "conformance_p1d1.json:tests›38›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "conformance_p1d1.json:tests›38›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "conformance_p1d1.json:tests›38›title": {
+     "a": "absent",
+     "b": "unverified in retrieval (spec 2.0.0 §7.1, §9): unverified chunks are excluded by default; with proposal results requested they are ranked with the proposal chunks after every canonical result, labelled unverified, score x0.5, the canonical prefix unchanged, at most k non-canonical results, every mode"
+    },
+    "conformance_p1d1.json:total": 0.1282051282051282,
+    "p1b1_checks.json:criteria›B1-3›spec_version": "inf",
+    "p1b_checks.json:fixtures_manifest_hash": "inf",
+    "p1c1_checks.json:C1-7›spec_version": "inf",
+    "p1c_checks.json:C-1›spec_version": "inf",
+    "p1d/scene/scene.json:steps›0›shows›spec_version": "inf",
+    "p1d1/d1_13.json:codes›contract›#len": 0.08333333333333333,
+    "p1d1/d1_13.json:codes›contract›10": "inf",
+    "p1d1/d1_13.json:codes›contract›11": {
+     "a": "absent",
+     "b": "too_large 413"
+    },
+    "p1d1/d1_13.json:codes›contract›7": "inf",
+    "p1d1/d1_13.json:codes›contract›8": "inf",
+    "p1d1/d1_13.json:codes›contract›9": "inf",
+    "p1d1/d1_13.json:codes›server›#len": 0.08333333333333333,
+    "p1d1/d1_13.json:codes›server›10": "inf",
+    "p1d1/d1_13.json:codes›server›11": {
+     "a": "absent",
+     "b": "too_large 413"
+    },
+    "p1d1/d1_13.json:codes›server›7": "inf",
+    "p1d1/d1_13.json:codes›server›8": "inf",
+    "p1d1/d1_13.json:codes›server›9": "inf",
+    "p1d1/d1_13.json:http›codes›#len": 0.08333333333333333,
+    "p1d1/d1_13.json:http›codes›10›code": "inf",
+    "p1d1/d1_13.json:http›codes›10›contract_status": 0.005964214711729622,
+    "p1d1/d1_13.json:http›codes›10›error_code": "inf",
+    "p1d1/d1_13.json:http›codes›10›status": 0.005964214711729622,
+    "p1d1/d1_13.json:http›codes›11›code": {
+     "a": "absent",
+     "b": "internal"
+    },
+    "p1d1/d1_13.json:http›codes›11›contract_status": {
+     "a": "absent",
+     "b": 500
+    },
+    "p1d1/d1_13.json:http›codes›11›error_code": {
+     "a": "absent",
+     "b": "internal"
+    },
+    "p1d1/d1_13.json:http›codes›11›ok": {
+     "a": "absent",
+     "b": true
+    },
+    "p1d1/d1_13.json:http›codes›11›status": {
+     "a": "absent",
+     "b": 500
+    },
+    "p1d1/d1_13.json:http›codes›9›code": "inf",
+    "p1d1/d1_13.json:http›codes›9›error_code": "inf",
+    "p1d1/d1_13.json:http›http_only›#len": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1d1/d1_13.json:http›http_only›0›detail": {
+     "a": "absent",
+     "b": "status 200"
+    },
+    "p1d1/d1_13.json:http›http_only›0›endpoint": {
+     "a": "absent",
+     "b": "attest_session"
+    },
+    "p1d1/d1_13.json:http›http_only›0›ok": {
+     "a": "absent",
+     "b": true
+    },
+    "p1d1/d1_13.json:http›http_only›1›detail": {
+     "a": "absent",
+     "b": "status 200"
+    },
+    "p1d1/d1_13.json:http›http_only›1›endpoint": {
+     "a": "absent",
+     "b": "attest"
+    },
+    "p1d1/d1_13.json:http›http_only›1›ok": {
+     "a": "absent",
+     "b": true
+    },
+    "p1d1/d1_13.json:http›http_only›2›detail": {
+     "a": "absent",
+     "b": "status 403"
+    },
+    "p1d1/d1_13.json:http›http_only›2›endpoint": {
+     "a": "absent",
+     "b": "attest (wrong mac → 403 denied)"
+    },
+    "p1d1/d1_13.json:http›http_only›2›ok": {
+     "a": "absent",
+     "b": true
+    },
+    "p1d1/d1_13.json:http›status_fields›#len": {
+     "a": "absent",
+     "b": 28
+    },
+    "p1d1/d1_13.json:http›status_fields›0": {
+     "a": "absent",
+     "b": "vault"
+    },
+    "p1d1/d1_13.json:http›status_fields›1": {
+     "a": "absent",
+     "b": "spec_version"
+    },
+    "p1d1/d1_13.json:http›status_fields›10": {
+     "a": "absent",
+     "b": "migrations.required"
+    },
+    "p1d1/d1_13.json:http›status_fields›11": {
+     "a": "absent",
+     "b": "migrations.recommended"
+    },
+    "p1d1/d1_13.json:http›status_fields›12": {
+     "a": "absent",
+     "b": "migrations.validations"
+    },
+    "p1d1/d1_13.json:http›status_fields›13": {
+     "a": "absent",
+     "b": "migrations.applied"
+    },
+    "p1d1/d1_13.json:http›status_fields›14": {
+     "a": "absent",
+     "b": "migrations.hint"
+    },
+    "p1d1/d1_13.json:http›status_fields›15": {
+     "a": "absent",
+     "b": "last_checkpoint"
+    },
+    "p1d1/d1_13.json:http›status_fields›16": {
+     "a": "absent",
+     "b": "policy.promotion"
+    },
+    "p1d1/d1_13.json:http›status_fields›17": {
+     "a": "absent",
+     "b": "policy.edit"
+    },
+    "p1d1/d1_13.json:http›status_fields›18": {
+     "a": "absent",
+     "b": "server_policy.server"
+    },
+    "p1d1/d1_13.json:http›status_fields›19": {
+     "a": "absent",
+     "b": "server_policy.index"
+    },
+    "p1d1/d1_13.json:http›status_fields›2": {
+     "a": "absent",
+     "b": "mdk_version"
+    },
+    "p1d1/d1_13.json:http›status_fields›20": {
+     "a": "absent",
+     "b": "server_policy.identity"
+    },
+    "p1d1/d1_13.json:http›status_fields›21": {
+     "a": "absent",
+     "b": "attestation.unattested"
+    },
+    "p1d1/d1_13.json:http›status_fields›22": {
+     "a": "absent",
+     "b": "attestation.implicit"
+    },
+    "p1d1/d1_13.json:http›status_fields›23": {
+     "a": "absent",
+     "b": "attestation.window_s"
+    },
+    "p1d1/d1_13.json:http›status_fields›24": {
+     "a": "absent",
+     "b": "attestation.stage"
+    },
+    "p1d1/d1_13.json:http›status_fields›25": {
+     "a": "absent",
+     "b": "attestation.pending"
+    },
+    "p1d1/d1_13.json:http›status_fields›26": {
+     "a": "absent",
+     "b": "attestation.link_updates"
+    },
+    "p1d1/d1_13.json:http›status_fields›27": {
+     "a": "absent",
+     "b": "attestation.unmatched"
+    },
+    "p1d1/d1_13.json:http›status_fields›3": {
+     "a": "absent",
+     "b": "level_claimed"
+    },
+    "p1d1/d1_13.json:http›status_fields›4": {
+     "a": "absent",
+     "b": "embedder"
+    },
+    "p1d1/d1_13.json:http›status_fields›5": {
+     "a": "absent",
+     "b": "index.state"
+    },
+    "p1d1/d1_13.json:http›status_fields›6": {
+     "a": "absent",
+     "b": "index.format"
+    },
+    "p1d1/d1_13.json:http›status_fields›7": {
+     "a": "absent",
+     "b": "index.expected_format"
+    },
+    "p1d1/d1_13.json:http›status_fields›8": {
+     "a": "absent",
+     "b": "index.auto_rebuild"
+    },
+    "p1d1/d1_13.json:http›status_fields›9": {
+     "a": "absent",
+     "b": "migrations.artifacts"
+    },
+    "p1d1_checks.json:D1-10›pass": "inf",
+    "p1d1_checks.json:D1-10›passed": "inf",
+    "p1d1_checks.json:D1-10›spec_version": "inf",
+    "p1d1_checks.json:D1-12›regress_vs_p1d›conformance›spec_version›1": "inf",
+    "p1d1_checks.json:D1-13›codes": 0.08333333333333333,
+    "p1d_checks.json:D-9›conformance›spec_version›1": "inf",
+    "p1e/e0/e14.json:auto_rebuild_false›code": "inf",
+    "p1e/e0/e14.json:auto_rebuild_false›message": "inf",
+    "p1e/e0/e14.json:pass": "inf",
+    "p1e/e0/e14.json:passed": 0.5,
+    "p1e/plugin_e2e/plugin_e2e.json:steps›0›shows›spec_version": "inf",
+    "p1e/release/conformance_equiv.json:passed›0": 0.1282051282051282,
+    "p1e/release/conformance_equiv.json:passed›1": 0.1282051282051282,
+    "p1e/release/conformance_equiv.json:spec_version›0": "inf",
+    "p1e/release/conformance_equiv.json:spec_version›1": "inf",
+    "p1e/release/conformance_equiv.json:total›0": 0.1282051282051282,
+    "p1e/release/conformance_equiv.json:total›1": 0.1282051282051282,
+    "p1e/release/conformance_rootmark.json:fixtures_manifest_hash": "inf",
+    "p1e/release/conformance_rootmark.json:mdk_version": "inf",
+    "p1e/release/conformance_rootmark.json:passed": 0.1282051282051282,
+    "p1e/release/conformance_rootmark.json:spec_version": "inf",
+    "p1e/release/conformance_rootmark.json:tests›#len": 0.1282051282051282,
+    "p1e/release/conformance_rootmark.json:tests›27›actual_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›27›expected_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›27›id": "inf",
+    "p1e/release/conformance_rootmark.json:tests›27›level": 0.3333333333333333,
+    "p1e/release/conformance_rootmark.json:tests›27›title": "inf",
+    "p1e/release/conformance_rootmark.json:tests›28›actual_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›28›expected_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›28›id": "inf",
+    "p1e/release/conformance_rootmark.json:tests›28›level": 0.3333333333333333,
+    "p1e/release/conformance_rootmark.json:tests›28›title": "inf",
+    "p1e/release/conformance_rootmark.json:tests›29›actual_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›29›expected_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›29›id": "inf",
+    "p1e/release/conformance_rootmark.json:tests›29›level": 0.3333333333333333,
+    "p1e/release/conformance_rootmark.json:tests›29›title": "inf",
+    "p1e/release/conformance_rootmark.json:tests›30›actual_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›30›expected_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›30›id": "inf",
+    "p1e/release/conformance_rootmark.json:tests›30›level": 0.3333333333333333,
+    "p1e/release/conformance_rootmark.json:tests›30›title": "inf",
+    "p1e/release/conformance_rootmark.json:tests›31›actual_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›31›expected_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›31›id": "inf",
+    "p1e/release/conformance_rootmark.json:tests›31›title": "inf",
+    "p1e/release/conformance_rootmark.json:tests›32›actual_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›32›expected_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›32›id": "inf",
+    "p1e/release/conformance_rootmark.json:tests›32›title": "inf",
+    "p1e/release/conformance_rootmark.json:tests›33›actual_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›33›expected_hash": "inf",
+    "p1e/release/conformance_rootmark.json:tests›33›id": "inf",
+    "p1e/release/conformance_rootmark.json:tests›33›title": "inf",
+    "p1e/release/conformance_rootmark.json:tests›34›actual_hash": {
+     "a": "absent",
+     "b": "b56b16b3ccc5a4a7afbbbf29211fba85"
+    },
+    "p1e/release/conformance_rootmark.json:tests›34›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e/release/conformance_rootmark.json:tests›34›expected_hash": {
+     "a": "absent",
+     "b": "b56b16b3ccc5a4a7afbbbf29211fba85"
+    },
+    "p1e/release/conformance_rootmark.json:tests›34›id": {
+     "a": "absent",
+     "b": "C3-04"
+    },
+    "p1e/release/conformance_rootmark.json:tests›34›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e/release/conformance_rootmark.json:tests›34›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e/release/conformance_rootmark.json:tests›34›title": {
+     "a": "absent",
+     "b": "Retrieval never returns derived as content"
+    },
+    "p1e/release/conformance_rootmark.json:tests›35›actual_hash": {
+     "a": "absent",
+     "b": "cf9fc81f3b2ea5c10cba06f75d7cc984"
+    },
+    "p1e/release/conformance_rootmark.json:tests›35›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e/release/conformance_rootmark.json:tests›35›expected_hash": {
+     "a": "absent",
+     "b": "cf9fc81f3b2ea5c10cba06f75d7cc984"
+    },
+    "p1e/release/conformance_rootmark.json:tests›35›id": {
+     "a": "absent",
+     "b": "C3-05"
+    },
+    "p1e/release/conformance_rootmark.json:tests›35›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e/release/conformance_rootmark.json:tests›35›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e/release/conformance_rootmark.json:tests›35›title": {
+     "a": "absent",
+     "b": "With proposal results requested, the canonical prefix equals the result without the request (lexical, flat, hybrid; spec §9, 1.0.2)"
+    },
+    "p1e/release/conformance_rootmark.json:tests›36›actual_hash": {
+     "a": "absent",
+     "b": "10f03eb0e5f58b0829041bb9e2d716c4"
+    },
+    "p1e/release/conformance_rootmark.json:tests›36›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e/release/conformance_rootmark.json:tests›36›expected_hash": {
+     "a": "absent",
+     "b": "10f03eb0e5f58b0829041bb9e2d716c4"
+    },
+    "p1e/release/conformance_rootmark.json:tests›36›id": {
+     "a": "absent",
+     "b": "C3-06"
+    },
+    "p1e/release/conformance_rootmark.json:tests›36›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e/release/conformance_rootmark.json:tests›36›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e/release/conformance_rootmark.json:tests›36›title": {
+     "a": "absent",
+     "b": "Canonical invariance: agent writes the default edit policy (append_only) allows never change the canonical ranking of any query, every mode; writes touching canonical blocks or canonical chunks are denied and write nothing (spec §7, §9; 1.0.3)"
+    },
+    "p1e/release/conformance_rootmark.json:tests›37›actual_hash": {
+     "a": "absent",
+     "b": "8b8d319fbf4e73d91ae6b8ac266d3632"
+    },
+    "p1e/release/conformance_rootmark.json:tests›37›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e/release/conformance_rootmark.json:tests›37›expected_hash": {
+     "a": "absent",
+     "b": "8b8d319fbf4e73d91ae6b8ac266d3632"
+    },
+    "p1e/release/conformance_rootmark.json:tests›37›id": {
+     "a": "absent",
+     "b": "C3-07"
+    },
+    "p1e/release/conformance_rootmark.json:tests›37›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e/release/conformance_rootmark.json:tests›37›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e/release/conformance_rootmark.json:tests›37›title": {
+     "a": "absent",
+     "b": "Response length with proposal results requested: at most k canonical and at most k proposal hits, at most 2k in total, every mode (spec §9; 1.0.3)"
+    },
+    "p1e/release/conformance_rootmark.json:tests›38›actual_hash": {
+     "a": "absent",
+     "b": "922f40bd3bd93c07f34fb30348fbd6a6"
+    },
+    "p1e/release/conformance_rootmark.json:tests›38›detail": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e/release/conformance_rootmark.json:tests›38›expected_hash": {
+     "a": "absent",
+     "b": "922f40bd3bd93c07f34fb30348fbd6a6"
+    },
+    "p1e/release/conformance_rootmark.json:tests›38›id": {
+     "a": "absent",
+     "b": "C3-08"
+    },
+    "p1e/release/conformance_rootmark.json:tests›38›level": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e/release/conformance_rootmark.json:tests›38›result": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e/release/conformance_rootmark.json:tests›38›title": {
+     "a": "absent",
+     "b": "unverified in retrieval (spec 2.0.0 §7.1, §9): unverified chunks are excluded by default; with proposal results requested they are ranked with the proposal chunks after every canonical result, labelled unverified, score x0.5, the canonical prefix unchanged, at most k non-canonical results, every mode"
+    },
+    "p1e/release/conformance_rootmark.json:total": 0.1282051282051282,
+    "p1e/release/release_local.json:conformance›passed": 0.1282051282051282,
+    "p1e/release/release_local.json:conformance›total": 0.1282051282051282,
+    "p1e/release/release_local.json:spec_version": "inf",
+    "p1e/release/release_local.json:version": "inf",
+    "p1e/scene/scene.json:steps›0›shows›mcp_spec_version": "inf",
+    "p1e/scene/scene.json:steps›0›shows›spec_version": "inf",
+    "p1e_checks.json:E-14›pass": "inf",
+    "p1e_checks.json:E-14›passed": "inf",
+    "p1e_checks.json:E-7›chain_local_target›conformance›passed": 0.1282051282051282,
+    "p1e_checks.json:E-7›chain_local_target›conformance›total": 0.1282051282051282,
+    "p1e_checks.json:E-7›chain_local_target›spec_version": "inf",
+    "p1e_checks.json:E-7›chain_local_target›version": "inf",
+    "p1e_checks.json:E-9›conformance›passed": 0.1282051282051282,
+    "p1e_checks.json:E-9›conformance›total": 0.1282051282051282,
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›differing_tests›#len": 1.0,
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›differing_tests›0": {
+     "a": "absent",
+     "b": "C2-11"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›differing_tests›1": {
+     "a": "absent",
+     "b": "C2-12"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›differing_tests›2": {
+     "a": "absent",
+     "b": "C2-13"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›differing_tests›3": {
+     "a": "absent",
+     "b": "C2-14"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›differing_tests›4": {
+     "a": "absent",
+     "b": "C3-08"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›equal": "inf",
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›passed›1": 0.1282051282051282,
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›spec_version›1": "inf",
+    "p1e_checks.json:E-9›regress_vs_p1d1›conformance›tests": 0.1282051282051282,
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:fixtures_manifest_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:passed": {
+     "a": "absent",
+     "b": 0.1282051282051282
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:spec_version": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›#len": {
+     "a": "absent",
+     "b": 0.1282051282051282
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›27›actual_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›27›expected_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›27›id": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›27›level": {
+     "a": "absent",
+     "b": 0.3333333333333333
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›27›title": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›28›actual_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›28›expected_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›28›id": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›28›level": {
+     "a": "absent",
+     "b": 0.3333333333333333
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›28›title": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›29›actual_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›29›expected_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›29›id": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›29›level": {
+     "a": "absent",
+     "b": 0.3333333333333333
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›29›title": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›30›actual_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›30›expected_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›30›id": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›30›level": {
+     "a": "absent",
+     "b": 0.3333333333333333
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›30›title": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›31›actual_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›31›expected_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›31›id": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›31›title": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›32›actual_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›32›expected_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›32›id": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›32›title": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›33›actual_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›33›expected_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›33›id": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›33›title": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›actual_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›actual_hash›b": {
+     "a": "absent",
+     "b": "b56b16b3ccc5a4a7afbbbf29211fba85"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›detail›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›detail›b": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›expected_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›expected_hash›b": {
+     "a": "absent",
+     "b": "b56b16b3ccc5a4a7afbbbf29211fba85"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›id›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›id›b": {
+     "a": "absent",
+     "b": "C3-04"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›level›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›level›b": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›result›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›result›b": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›title›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›34›title›b": {
+     "a": "absent",
+     "b": "Retrieval never returns derived as content"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›actual_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›actual_hash›b": {
+     "a": "absent",
+     "b": "cf9fc81f3b2ea5c10cba06f75d7cc984"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›detail›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›detail›b": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›expected_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›expected_hash›b": {
+     "a": "absent",
+     "b": "cf9fc81f3b2ea5c10cba06f75d7cc984"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›id›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›id›b": {
+     "a": "absent",
+     "b": "C3-05"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›level›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›level›b": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›result›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›result›b": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›title›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›35›title›b": {
+     "a": "absent",
+     "b": "With proposal results requested, the canonical prefix equals the result without the request (lexical, flat, hybrid; spec §9, 1.0.2)"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›actual_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›actual_hash›b": {
+     "a": "absent",
+     "b": "10f03eb0e5f58b0829041bb9e2d716c4"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›detail›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›detail›b": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›expected_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›expected_hash›b": {
+     "a": "absent",
+     "b": "10f03eb0e5f58b0829041bb9e2d716c4"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›id›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›id›b": {
+     "a": "absent",
+     "b": "C3-06"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›level›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›level›b": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›result›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›result›b": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›title›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›36›title›b": {
+     "a": "absent",
+     "b": "Canonical invariance: agent writes the default edit policy (append_only) allows never change the canonical ranking of any query, every mode; writes touching canonical blocks or canonical chunks are denied and write nothing (spec §7, §9; 1.0.3)"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›actual_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›actual_hash›b": {
+     "a": "absent",
+     "b": "8b8d319fbf4e73d91ae6b8ac266d3632"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›detail›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›detail›b": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›expected_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›expected_hash›b": {
+     "a": "absent",
+     "b": "8b8d319fbf4e73d91ae6b8ac266d3632"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›id›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›id›b": {
+     "a": "absent",
+     "b": "C3-07"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›level›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›level›b": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›result›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›result›b": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›title›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›37›title›b": {
+     "a": "absent",
+     "b": "Response length with proposal results requested: at most k canonical and at most k proposal hits, at most 2k in total, every mode (spec §9; 1.0.3)"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›actual_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›actual_hash›b": {
+     "a": "absent",
+     "b": "922f40bd3bd93c07f34fb30348fbd6a6"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›detail›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›detail›b": {
+     "a": "absent",
+     "b": null
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›expected_hash›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›expected_hash›b": {
+     "a": "absent",
+     "b": "922f40bd3bd93c07f34fb30348fbd6a6"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›id›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›id›b": {
+     "a": "absent",
+     "b": "C3-08"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›level›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›level›b": {
+     "a": "absent",
+     "b": 3
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›result›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›result›b": {
+     "a": "absent",
+     "b": "pass"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›title›a": {
+     "a": "absent",
+     "b": "absent"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:tests›38›title›b": {
+     "a": "absent",
+     "b": "unverified in retrieval (spec 2.0.0 §7.1, §9): unverified chunks are excluded by default; with proposal results requested they are ranked with the proposal chunks after every canonical result, labelled unverified, score x0.5, the canonical prefix unchanged, at most k non-canonical results, every mode"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›conformance_p1d1·json:total": {
+     "a": "absent",
+     "b": 0.1282051282051282
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1b1_checks·json:criteria›B1-3›spec_version": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1b_checks·json:fixtures_manifest_hash": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1c1_checks·json:C1-7›spec_version": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1c_checks·json:C-1›spec_version": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1d/scene/scene·json:steps›0›shows›spec_version": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1d1_checks·json:D1-10›pass": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1d1_checks·json:D1-10›passed": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1d1_checks·json:D1-10›spec_version": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1d1_checks·json:D1-12›regress_vs_p1d›conformance›spec_version›1": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›differing_fields›p1d_checks·json:D-9›conformance›spec_version›1": {
+     "a": "absent",
+     "b": "inf"
+    },
+    "p1e_checks.json:E-9›regress_vs_p1d1›excluded_differences›p1d1/d1_13·json:codes›leaves": 0.1111111111111111
+   },
+   "equal": false,
+   "excluded_differences": {
+    "p1d/mcp_e2e/mcp_e2e.json:checks/4/pass": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:per_tool/status/passed": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1d1/d1_13.json:http/status_index": {
+     "decision": "F2 (E1-8)",
+     "leaves": 41
+    },
+    "p1d1/d1_13.json:http/status_index_fields": {
+     "decision": "F2 (E1-8)",
+     "leaves": 5
+    },
+    "p1d1_checks.json:D1-12/pass": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1d1_checks.json:D1-12/regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1d1_checks.json:D1-12/regress_vs_p1d/equal": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1d_checks.json:D-2/per_tool/status/passed": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1e/check_compare_fields.json:fields_declared": {
+     "decision": "F5, F6",
+     "leaves": 1
+    },
+    "p1e/check_compare_fields.json:fields_in_code": {
+     "decision": "F5, F6",
+     "leaves": 1
+    },
+    "p1e/check_compare_fields.json:file_constants": {
+     "decision": "F5, F6",
+     "leaves": 1
+    },
+    "p1e/check_compare_fields.json:modules": {
+     "decision": "F5, F6",
+     "leaves": 9
+    },
+    "p1e/client.json:bundle_bytes": {
+     "decision": "K-E1.2 (E1.2)",
+     "leaves": 1
+    },
+    "p1e/client.json:vitest/files": {
+     "decision": "K-E1.2 (E1.2)",
+     "leaves": 1
+    },
+    "p1e/client.json:vitest/passed": {
+     "decision": "K-E1.2 (E1.2)",
+     "leaves": 1
+    },
+    "p1e/client.json:vitest/tests": {
+     "decision": "K-E1.2 (E1.2)",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-10/bundle_bytes": {
+     "decision": "K-E1.2 (E1.2)",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-10/vitest/files": {
+     "decision": "K-E1.2 (E1.2)",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-10/vitest/passed": {
+     "decision": "K-E1.2 (E1.2)",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-10/vitest/tests": {
+     "decision": "K-E1.2 (E1.2)",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-9/pass": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›4›pass": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d/mcp_e2e/mcp_e2e.json:per_tool›status›passed": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›pass": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›4›pass": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d1_checks.json:D1-12›regress_vs_p1d›equal": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-9/regress_vs_p1d1/differing_fields/p1d_checks.json:D-2›per_tool›status›passed": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-9/regress_vs_p1d1/equal": {
+     "decision": "K-E1.2",
+     "leaves": 1
+    },
+    "p1e_checks.json:E-9/regress_vs_p1d1/excluded_differences/p1d1/d1_13.json:http/leaves": {
+     "decision": "F2 (E1-8)",
+     "leaves": 1
+    }
+   },
+   "exclusions_without_difference": [],
+   "n_fields": 101929,
+   "reference_run": "20261017T024341Z-632f29e"
+  }
+ },
+ "E1-8": {
+  "contract_check_pass": true,
+  "deliberate": [
+   {
+    "as_expected": true,
+    "case": "untouched contract and server"
+   },
+   {
+    "as_expected": false,
+    "case": "p1e-final server (string index, status 500 on an unreadable manifest)"
+   },
+   {
+    "as_expected": true,
+    "case": "status row without index {…} fields"
+   }
+  ],
+  "pass": false,
+  "status_index": [
+   {
+    "ok": true,
+    "search_status": 200,
+    "state": "ok",
+    "status_get": 200,
+    "status_post": 200
+   },
+   {
+    "ok": true,
+    "search_status": 503,
+    "state": "stale",
+    "status_get": 200,
+    "status_post": 200
+   },
+   {
+    "ok": true,
+    "search_status": 503,
+    "state": "damaged",
+    "status_get": 200,
+    "status_post": 200
+   },
+   {
+    "ok": true,
+    "search_status": 503,
+    "state": "missing",
+    "status_get": 200,
+    "status_post": 200
+   }
+  ],
+  "status_index_fields": [
+   "state",
+   "format",
+   "expected_format",
+   "auto_rebuild"
+  ]
+ },
+ "E1-9": {
+  "connection_step": {
+   "notice_shown": true,
+   "search_after_rebuild": {
+    "error": null,
+    "hits": 5
+   },
+   "search_before_rebuild": {
+    "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+    "hits": 0
+   },
+   "status_bar": "rootmark 0.2.0 · human:editor · index stale",
+   "status_bar_after_rebuild": "rootmark 0.2.0 · human:editor",
+   "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+  },
+  "contract_check_pass": true,
+  "pass": true,
+  "skipped": false
+ },
+ "tamper": {
+  "controls": "3/3",
+  "pass": false,
+  "real_cases_run": true,
+  "rejected": "3/4"
+ }
+}
