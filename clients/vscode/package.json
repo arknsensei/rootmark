@@ -1,0 +1,44 @@
+{
+  "name": "rootmark-vscode",
+  "displayName": "rootmark",
+  "version": "0.2.0",
+  "private": true,
+  "description": "VS Code client skeleton of rootmark serve: status, search, block blame with locations, history, promote and demote over the HTTP contract (docs/CLIENT_CONTRACT.md v2). Saves are not attested.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "publisher": "rootmark-local",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "main": "./dist/extension.cjs",
+  "activationEvents": [
+    "workspaceContains:.rootmark/policy.toml"
+  ],
+  "contributes": {
+    "commands": [
+      { "command": "rootmark.status", "title": "rootmark: Status" },
+      { "command": "rootmark.search", "title": "rootmark: Search" },
+      { "command": "rootmark.blame", "title": "rootmark: Blame this note" },
+      { "command": "rootmark.clearBlame", "title": "rootmark: Clear blame" },
+      { "command": "rootmark.history", "title": "rootmark: History of the block at the cursor" },
+      { "command": "rootmark.promote", "title": "rootmark: Promote the block at the cursor" },
+      { "command": "rootmark.demote", "title": "rootmark: Demote the block at the cursor" }
+    ]
+  },
+  "scripts": {
+    "build": "tsc --noEmit && node esbuild.config.mjs",
+    "test": "vitest run",
+    "lint": "tsc --noEmit && eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.1",
+    "@types/vscode": "1.95.0",
+    "esbuild": "0.28.2",
+    "eslint": "10.12.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0",
+    "vite": "8.3.1",
+    "vitest": "5.0.3"
+  }
+}

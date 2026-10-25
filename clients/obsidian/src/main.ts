@@ -1,7 +1,7 @@
 import { MarkdownView, Notice, Plugin, TFile } from "obsidian";
 import { connect, describeError, type ConnectionState, type RootmarkClient } from "./api";
 import { align, blockLine, editorBlocks } from "./align";
-import { blameOf, historyOf, listProposals, type ProposalRow } from "./commands";
+import { alignNote, blameOf, blameResultOf, historyOf, listProposals, type ProposalRow } from "./commands";
 import { gutterMarks, indexNotice } from "./view";
 import { blameGutter, setMarks } from "./ui/gutter";
 import { HistoryModal } from "./ui/history-modal";
@@ -167,15 +167,22 @@ export default class RootmarkPlugin extends Plugin {
       return;
     }
     try {
-      const blocks = await blameOf(client, view.file.path);
-      if (blocks === null) {
+      const r = await blameResultOf(client, view.file.path);
+      if (r === null) {
         cm.dispatch({ effects: setMarks.of([]) });
         this.gutterHint(`${view.file.path} is not in the rootmark log: no blame`);
         return;
       }
-      const al = align(blocks, this.rangesOf(view.file));
+      // contract v2: the server's locations, checked against the note's
+      // bytes on disk (read only); else the editor's block map by order
+      const bytes = r.blocks.some((b) => b.loc !== undefined)
+        ? new Uint8Array(await this.app.vault.adapter.readBinary(view.file.path))
+        : null;
+      const c = this.app.metadataCache.getFileCache(view.file);
+      const headings = (c?.headings ?? []).map((h) => ({ line: h.position.start.line, heading: h.heading }));
+      const { al, by } = alignNote(r, bytes, this.rangesOf(view.file), headings);
       cm.dispatch({ effects: setMarks.of(gutterMarks(al)) });
-      this.gutterHint(al.aligned ? `blame: ${String(blocks.length)} blocks aligned` : al.reason);
+      this.gutterHint(al.aligned ? `blame: ${String(r.blocks.length)} blocks aligned (${by === "loc" ? "by location" : "by order"})` : al.reason);
     } catch (e) {
       this.gutterHint(`blame failed: ${describeError(e)}`);
       new Notice(`rootmark blame: ${describeError(e)}`);

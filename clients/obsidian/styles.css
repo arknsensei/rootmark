@@ -12,3 +12,7 @@
 .rootmark-error { color: var(--text-error); }
 .rootmark-history li { font-family: var(--font-monospace); font-size: 0.85em; }
 .rootmark-index-warning { color: var(--text-warning); }
+
+/* P2-B/B4 (a): the lines of proposal and unverified blocks */
+.rootmark-line-proposal { background-color: rgba(63, 185, 80, 0.10); }
+.rootmark-line-unverified { background-color: rgba(210, 153, 34, 0.12); }

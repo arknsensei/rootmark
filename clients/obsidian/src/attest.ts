@@ -4,7 +4,7 @@
 // key comes from `POST /v1/attest_session` over the token). Only the two
 // contract endpoints below are used; nothing here writes a vault file.
 
-import { decodeHttp, RootmarkError, type Connection, type HttpRequest, type Transport } from "./api";
+import { decodeHttp, exchange, RootmarkError, type Connection, type HttpRequest, type Transport } from "./api";
 import { contentHash } from "./blake3";
 import type { SavedHow } from "./own-writes";
 
@@ -114,7 +114,7 @@ export class Attester {
     };
     let res;
     try {
-      res = await this.transport(req);
+      res = await exchange(this.transport, req);
     } catch (e) {
       throw new RootmarkError("unreachable", `${endpoint}: rootmark serve did not answer (${String(e)})`, null);
     }

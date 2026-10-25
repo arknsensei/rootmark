@@ -7,7 +7,7 @@
 #     core/, index/, server/, bindings/python/ Cargo.toml with a version
 #     (`=x.y.z` or the lower bound `x.y.z`; path dependencies skipped) —
 #     crates.io `created_at`;
-#   - npm: clients/obsidian/package.json dependencies, devDependencies —
+#   - npm: clients/*/package.json (obsidian, vscode) dependencies, devDependencies —
 #     registry `time`;
 #   - Python: research/pyproject.toml `name==version` lines (dependencies and
 #     dependency groups) — PyPI's first upload time of that version;
@@ -74,13 +74,15 @@ for f in core/Cargo.toml index/Cargo.toml server/Cargo.toml bindings/python/Carg
     fi
   done <"$f"
 done
-pj=clients/obsidian/package.json
-while IFS=$'\t' read -r name ver; do
-  [[ "$ver" =~ ^[0-9] ]] || { echo "check_dep_age: $pj: $name $ver is not an exact version" >&2; exit 2; }
-  n="$(grep -n "\"$name\": \"$ver\"" "$pj" | head -1 | cut -d: -f1)"
-  [ -n "$n" ] || { echo "check_dep_age: $pj: the line of $name $ver was not found" >&2; exit 2; }
-  entries+=("npm	$name	$ver	$pj	$n")
-done < <(jq -r '((.dependencies // {}) + (.devDependencies // {})) | to_entries[] | "\(.key)\t\(.value)"' "$pj")
+# every client package (P2-B/B4: clients/obsidian and clients/vscode)
+for pj in clients/*/package.json; do
+  while IFS=$'\t' read -r name ver; do
+    [[ "$ver" =~ ^[0-9] ]] || { echo "check_dep_age: $pj: $name $ver is not an exact version" >&2; exit 2; }
+    n="$(grep -n "\"$name\": \"$ver\"" "$pj" | head -1 | cut -d: -f1)"
+    [ -n "$n" ] || { echo "check_dep_age: $pj: the line of $name $ver was not found" >&2; exit 2; }
+    entries+=("npm	$name	$ver	$pj	$n")
+  done < <(jq -r '((.dependencies // {}) + (.devDependencies // {})) | to_entries[] | "\(.key)\t\(.value)"' "$pj")
+done
 pp=research/pyproject.toml
 n=0
 inlist=false

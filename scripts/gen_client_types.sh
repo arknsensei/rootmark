@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# P1-E/E1: clients/obsidian/src/contract.gen.ts from the contract — the
+# P1-E/E1: clients/obsidian/src/contract.gen.ts (P2-B/B4: one file, imported
+# by the Obsidian and the VS Code client) from the contract — the
 # argument JSON Schemas of a live `rootmark serve --mcp stdio` (`tools/list`,
 # docs/CLIENT_CONTRACT.md §2 points there) and the §2/§3 tables of
 # docs/CLIENT_CONTRACT.md (clients/obsidian/scripts/gen-types.mjs).

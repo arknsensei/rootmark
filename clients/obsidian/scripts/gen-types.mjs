@@ -38,14 +38,16 @@ const httpOnly = (() => {
   const part = b > a ? s.slice(a, b) : s.slice(a);
   return [...part.matchAll(/^\| `(?:POST \/v1\/)?([a-z_]+)` \|/gm)].map((m) => m[1]);
 })();
-// §2.9: the machine-readable response schema (contract version 2)
+// §2.9: the machine-readable response schema (contract version 2); a
+// contract without it (version 1) gives the argument types only
 const schema = (() => {
   const m = section(2, 3).match(/```json contract-schema\n([\s\S]*?)\n```/);
-  if (!m) throw new Error("contract §2.9: no ```json contract-schema block");
-  return JSON.parse(m[1]);
+  return m ? JSON.parse(m[1]) : null;
 })();
-for (const n of [...contractTools, ...httpOnly]) {
-  if (!schema.responses[n]) throw new Error(`contract §2.9: no response schema for ${n}`);
+if (schema !== null) {
+  for (const n of [...contractTools, ...httpOnly]) {
+    if (!schema.responses[n]) throw new Error(`contract §2.9: no response schema for ${n}`);
+  }
 }
 const codes = [...section(3, 4).matchAll(/^\| `([a-z_]+)` \| (\d{3}) \|/gm)].map((m) => [m[1], Number(m[2])]);
 const names = tools.map((t) => t.name);
@@ -128,6 +130,10 @@ for (const name of contractTools) {
 out += `\n/** Arguments by tool. */\nexport interface ToolArgs {\n${contractTools.map((n) => `  ${n}: ${pascal(n)}Args;`).join("\n")}\n}\n`;
 
 // §2.9: response types (the fields a client relies on; others may come)
+if (schema === null) {
+  process.stdout.write(out);
+  process.exit(0);
+}
 const defName = (r) => {
   if (!Object.prototype.hasOwnProperty.call(schema.defs, r)) throw new Error(`§2.9: unknown $ref ${r}`);
   return pascal(r);
@@ -183,4 +189,8 @@ out += `\n/** Responses by tool or endpoint. */\nexport interface ToolResponses 
 const argSchemas = Object.fromEntries(contractTools.map((n) => [n, tools.find((x) => x.name === n).inputSchema]));
 out += `\n/** §2.9's schema as written in the contract (the contract checker). */\nexport const RESPONSE_SCHEMA = ${JSON.stringify({ defs: schema.defs, responses: schema.responses })} as const;\n`;
 out += `\n/** The argument schemas of \`tools/list\` (the contract checker). */\nexport const ARGUMENT_SCHEMAS = ${JSON.stringify(argSchemas)} as const;\n`;
+for (const n of httpOnly) {
+  if (!schema.requests?.[n]) throw new Error(`contract §2.9: no request schema for ${n}`);
+}
+out += `\n/** The bodies of the HTTP-only endpoints (§2.9 \`requests\`; the contract checker). */\nexport const REQUEST_SCHEMA = ${JSON.stringify(schema.requests)} as const;\n`;
 process.stdout.write(out);

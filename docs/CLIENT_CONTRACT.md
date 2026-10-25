@@ -27,8 +27,8 @@ Argüman şemaları MCP `tools/list`'tedir (JSON Schema 2020-12, `additionalProp
 | `promote` | evet | `lineage_id`, `reason` | `decision` `promoted` (+ `event`, `layer`) ya da `denied` (+ `reason`, `actor`, `layer`); her ikisinde `policy`, `policy_version`, `lineage_id`. `proposal` ya da (2.0.0) `unverified` soy terfi eder |
 | `checkpoint` | evet | `name` (isteğe bağlı) | `checkpoint_id, name, event_seq, docs` |
 | `checkpoints` | hayır | — | `checkpoints[]` (oluşturma sırası; ad, adlandırma olayından sonra görünür) |
-| `trace` | hayır | `since_seq` (0), `consumer` | `traces[{trace_id, checkpoint_id, consumer, query_hash, returned[{doc_path, lineage_id, version_id}], at_seq}]` |
 | `events` | hayır | `since_seq` (0), `kinds` (dize dizisi), `path_prefix` (dize dizisi, §2.2), `limit` 1–1000 (100) (v2, §2.8) | `events[]` (her nesne `events.jsonl` satırının baytları), `next_seq, head_seq`; filtre verildiyse `filter {kinds, path_prefix}` |
+| `trace` | hayır | `since_seq` (0), `consumer` | `traces[{trace_id, checkpoint_id, consumer, query_hash, returned[{doc_path, lineage_id, version_id}], at_seq}]` |
 
 ### 2.1 `propose` ve düzenleme politikası (K-D1.1)
 - Ajan metni dosyaya kimlik, işaret ya da meta veri eklenmeden yazılır. Satır sonları belgenin satır sonuna uydurulur (CRLF belgede CRLF), sonda tek bir satır sonu kalır, `append`'de önüne bir boş satır konur. Bloklar `author_kind: Agent`, `source` = tüketici olarak alınır ve `proposal` katmanındadır. Terfiye kadar varsayılan aramaya girmezler.
@@ -144,7 +144,7 @@ Salt okunur, çekmeli olay akışı (HTTP `POST /v1/events`, MCP `events`): itme
 - `events` hiçbir şey yazmaz: olay, iz (`traces.jsonl` dahil) ve başka dosya aynen kalır; `events_hash` değişmez. **İz yazmaz.** Okuma gibi yazanları bekler (§5), tüketici kimliği istemez.
 
 ### 2.9 Yanıt şeması — makine okunur (sürüm 2; P2-B/B1, B4)
-§2.5'in istemcinin dayandığı alanları tek kaynakta: `scripts/gen_client_types.sh` iki istemcinin ortak tiplerini (`clients/shared/contract.gen.ts`) bu bloktan ve `tools/list`'in argüman şemalarından üretir; sözleşme denetleyicisi (`clients/shared/contract-check.ts`) istemcilerin test ve e2e koşularındaki bütün çağrıları buna karşı denetler. Biçim JSON Schema'nın küçük bir alt kümesidir: `type` (`string`, `integer`, `number`, `boolean`, `array`, `object`, `null` ya da dizi), `required`, `properties`, `items`, `enum`, `oneOf`, `$ref` (`defs` içindeki bir ada). `required`'da olmayan özellik isteğe bağlıdır (sürüm 2'nin alanları); listede olmayan alan gelebilir ve istemci ona dayanmaz (§2.5). `responses` her aracın ve §2.6–§2.7 ucunun başarılı yanıtıdır; `error` §3'ün gövdesidir. `headers.http` her HTTP isteğinin taşıması gereken başlıklardır (§1).
+§2.5'in istemcinin dayandığı alanları tek kaynakta: `scripts/gen_client_types.sh` iki istemcinin ortak tiplerini (`clients/obsidian/src/contract.gen.ts`; Obsidian ve VS Code aynı dosyayı içe aktarır) bu bloktan ve `tools/list`'in argüman şemalarından üretir; sözleşme denetleyicisi (`clients/obsidian/src/contract-check.ts`, iki istemcinin ortak modülü) istemcilerin test ve e2e koşularındaki bütün çağrıları buna karşı denetler. Biçim JSON Schema'nın küçük bir alt kümesidir: `type` (`string`, `integer`, `number`, `boolean`, `array`, `object`, `null` ya da dizi), `required`, `properties`, `items`, `enum`, `oneOf`, `$ref` (`defs` içindeki bir ada). `required`'da olmayan özellik isteğe bağlıdır (sürüm 2'nin alanları); listede olmayan alan gelebilir ve istemci ona dayanmaz (§2.5). `responses` her aracın ve §2.6–§2.7 ucunun başarılı yanıtıdır; `error` §3'ün gövdesidir. `requests` §2.6–§2.7'nin yalnız HTTP uçlarının gövdeleridir (kapalı nesne; araçların argümanları `tools/list`'tedir). `headers.http` her HTTP isteğinin taşıması gereken başlıklardır (§1).
 
 ```json contract-schema
 {
@@ -176,6 +176,11 @@ Salt okunur, çekmeli olay akışı (HTTP `POST /v1/events`, MCP `events`): itme
     "attest": {"type": "object", "required": ["attestation_id", "doc_path", "content_hash", "at_seq", "recorded", "raised"], "properties": {"attestation_id": {"type": "string"}, "doc_path": {"type": "string"}, "content_hash": {"type": "string"}, "at_seq": {"type": "integer"}, "recorded": {"type": "boolean"}, "raised": {"type": "array", "items": {"type": "string"}}}},
     "demote": {"$ref": "Transition"},
     "error": {"type": "object", "required": ["error"], "properties": {"error": {"type": "object", "required": ["code", "message"], "properties": {"code": {"type": "string"}, "message": {"type": "string"}, "hint": {"type": "string"}}}}}
+  },
+  "requests": {
+    "attest_session": {"type": "object", "required": [], "properties": {}},
+    "attest": {"type": "object", "required": ["doc_path", "content_hash", "session_id", "mac"], "properties": {"doc_path": {"type": "string"}, "content_hash": {"type": "string"}, "saved_at_seq": {"type": "integer"}, "session_id": {"type": "string"}, "mac": {"type": "string"}, "late": {"type": "boolean"}, "renamed_from": {"type": "string"}, "link_update_of": {"type": "string"}, "link_update_from": {"type": "string"}, "content": {"type": "string"}}},
+    "demote": {"type": "object", "required": ["lineage_id", "reason"], "properties": {"lineage_id": {"type": "string"}, "reason": {"type": "string"}, "to": {"enum": ["proposal", "unverified", "derived"]}}}
   }
 }
 ```
