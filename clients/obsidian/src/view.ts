@@ -7,6 +7,8 @@ import type { Alignment } from "./align";
 export interface GutterMark {
   /** 0-based editor line where the block starts */
   line: number;
+  /** 0-based editor line where the block ends (inclusive) */
+  end: number;
   lineage_id: string;
   layer: string;
   /** one letter in the gutter: C canonical, P proposal, U unverified
@@ -22,6 +24,7 @@ export function gutterMarks(al: Alignment<BlameBlock>): GutterMark[] {
   if (!al.aligned) return [];
   return al.pairs.map(({ block: b, range }) => ({
     line: range.start,
+    end: range.end,
     lineage_id: b.lineage_id,
     layer: b.layer,
     label: b.layer === "canonical" ? "C" : b.layer === "proposal" ? "P" : b.layer === "unverified" ? "U" : "D",

@@ -3,8 +3,10 @@
 // generated from the contract (contract.gen.ts); the result types below
 // name the main fields of §2 and the inner fields of §2.5 — the ones the
 // client relies on, each checked on every answer (`shape.ts`). No Obsidian
-// import here: the same client runs in the plugin (transport: Obsidian
-// `requestUrl`) and in Node (e2e harness: `fetch`).
+// or VS Code import here: both clients use this module (P2-B/B4: one
+// source for both clients, imported by clients/vscode), in the plugin (transport: Obsidian
+// `requestUrl`), the VS Code extension host and Node (e2e: `fetch`). Every
+// exchange goes through `exchange` (the contract checker's recorder).
 
 import {
   ERROR_STATUS,
@@ -15,10 +17,14 @@ import {
   type ToolArgs,
   type ToolName,
 } from "./contract.gen";
+import { exchange } from "./contract-check";
 import { lastCheckpointViolation, resultViolation } from "./shape";
+import { RESPONSE_SCHEMA } from "./contract.gen";
+import { violations } from "./contract-check";
 
-export { TOOLS, ERROR_STATUS, HTTP_ONLY };
+export { TOOLS, ERROR_STATUS, HTTP_ONLY, exchange };
 export type { ErrorCode, HttpOnlyName, ToolArgs, ToolName };
+export type { SearchArgs } from "./contract.gen";
 
 /** spec 2.0.0: `unverified` (an external edit no client attested, §7.1) */
 export type Layer = "canonical" | "proposal" | "unverified" | "derived";
@@ -202,6 +208,23 @@ export type PromoteResult =
       policy_version: string;
     };
 
+/** `demote` (§2.7) arguments and answer. */
+export interface DemoteArgs {
+  lineage_id: string;
+  reason: string;
+  to?: "proposal" | "unverified" | "derived";
+}
+export interface DemoteResult {
+  decision: "demoted" | "denied";
+  lineage_id: string;
+  layer?: Layer;
+  event?: LogEvent;
+  reason?: string;
+  actor?: Actor;
+  policy: string;
+  policy_version: string;
+}
+
 export interface CheckpointsResult {
   checkpoints: Checkpoint[];
 }
@@ -342,11 +365,32 @@ export class RootmarkClient {
     };
     let res: HttpResponse;
     try {
-      res = await this.transport(req);
+      res = await exchange(this.transport, req);
     } catch (e) {
       throw new RootmarkError("unreachable", `${tool}: rootmark serve did not answer (${String(e)})`, null);
     }
     return decode(tool, res);
+  }
+
+  /** `POST /v1/demote` (§2.7, the human channel's own endpoint; never an
+   * MCP tool): the answer checked against §2.9. */
+  async httpOnly(name: "demote", args: DemoteArgs): Promise<DemoteResult> {
+    const req: HttpRequest = {
+      method: "POST",
+      url: `${this.conn.baseUrl}/v1/${name}`,
+      headers: { Authorization: `Bearer ${this.conn.token}`, "X-Consumer": this.conn.consumer, "Content-Type": "application/json" },
+      body: JSON.stringify(args),
+    };
+    let res: HttpResponse;
+    try {
+      res = await exchange(this.transport, req);
+    } catch (e) {
+      throw new RootmarkError("unreachable", `${name}: rootmark serve did not answer (${String(e)})`, null);
+    }
+    const body = decodeHttp(name, res);
+    const bad = violations(RESPONSE_SCHEMA.responses[name], body, name, RESPONSE_SCHEMA.defs, false);
+    if (bad.length > 0) throw new RootmarkError("bad_response", `answer outside the contract (§2.9): ${bad.join("; ")}`, 200);
+    return body as unknown as DemoteResult;
   }
 
   /** `POST /v1/<tool>` with the tool's arguments (§1). A tool outside the

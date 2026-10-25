@@ -176,3 +176,9 @@ export function blake3(bytes: Uint8Array): Uint8Array {
 export function contentHash(bytes: Uint8Array): string {
   return Array.from(blake3(bytes).subarray(0, 16), (b) => b.toString(16).padStart(2, '0')).join('');
 }
+
+/** The kernel's `hash32` of a string (its UTF-8 bytes): `version_id` and
+ * the other 32-hex ids (spec §1). */
+export function hash32(s: string): string {
+  return contentHash(new TextEncoder().encode(s));
+}

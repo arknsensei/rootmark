@@ -1,7 +1,7 @@
 // The blame gutter (CodeMirror 6): one mark per block of the active note,
 // set by the plugin after each `blame`. Clicking a mark asks for its history.
 import { RangeSet, StateEffect, StateField, type Extension } from "@codemirror/state";
-import { gutter, GutterMarker, type EditorView } from "@codemirror/view";
+import { Decoration, EditorView, gutter, GutterMarker, type DecorationSet } from "@codemirror/view";
 import type { GutterMark } from "../view";
 
 class Mark extends GutterMarker {
@@ -31,9 +31,25 @@ const marksField = StateField.define<GutterMark[]>({
   },
 });
 
+/** The lines of the blocks that are not knowledge yet (`proposal`, and
+ * `unverified`: an external edit no client attested) are marked apart
+ * (P2-B/B4 (a): the located form of the gutter's marks). */
+const layerLines = EditorView.decorations.compute([marksField], (state): DecorationSet => {
+  const doc = state.doc;
+  const out = [];
+  for (const m of [...state.field(marksField)].sort((a, b) => a.line - b.line)) {
+    if (m.layer !== "proposal" && m.layer !== "unverified") continue;
+    for (let l = m.line; l <= Math.min(m.end, doc.lines - 1); l++) {
+      out.push(Decoration.line({ class: `rootmark-line-${m.layer}` }).range(doc.line(l + 1).from));
+    }
+  }
+  return Decoration.set(out, true);
+});
+
 export function blameGutter(onClick: (lineage: string) => void): Extension {
   return [
     marksField,
+    layerLines,
     gutter({
       class: "rootmark-gutter",
       markers: (view: EditorView) => {

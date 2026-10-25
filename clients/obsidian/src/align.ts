@@ -103,3 +103,83 @@ export function blockLine(
     ? { reason: `block ${lineage.slice(0, 8)} is no longer in this note (changed since the trace)` }
     : { line: p.range.start };
 }
+
+// ---- contract v2: the server's block locations (P2-B/B4 (a)) ---------------------------
+
+import type { Loc } from "./api";
+
+
+/** Unicode `White_Space` (what the kernel's normalization trims and
+ * collapses; not JavaScript's `\s`, which also holds U+FEFF). */
+const WS = "\\t\\n\\v\\f\\r \\u0085\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000";
+const WS_RUN = new RegExp(`[${WS}]+`, "g");
+const WS_EDGE = new RegExp(`^[${WS}]+|[${WS}]+$`, "g");
+
+/** spec §2.1: NFC, line endings to `\n`; for every block but code also
+ * trimmed and each white space run collapsed to one space. */
+export function normalizeBlock(text: string, isCode: boolean): string {
+  const lf = text.normalize("NFC").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  return isCode ? lf : lf.replace(WS_EDGE, "").replace(WS_RUN, " ");
+}
+
+/** The kernel's block types as hashed into `version_id` (spec §1). */
+const BLOCK_TYPES = ["Heading", "Paragraph", "ListItem", "Code", "Table", "Blockquote", "Other"] as const;
+
+/** The slice check of the decision rule (K-P2B-T1; contract §2.5
+ * "Deneysel"): the bytes of a location, normalized, give the block's
+ * `version_id` for one of the block types. */
+export function sliceMatches(bytes: Uint8Array, loc: Loc, versionId: string, hash32: (s: string) => string): boolean {
+  if (!(loc.byte_start >= 0 && loc.byte_start < loc.byte_end && loc.byte_end <= bytes.length)) return false;
+  let text: string;
+  try {
+    text = new TextDecoder("utf-8", { fatal: true }).decode(bytes.subarray(loc.byte_start, loc.byte_end));
+  } catch {
+    return false;
+  }
+  return BLOCK_TYPES.some((t) => hash32(`${t}\n${normalizeBlock(text, t === "Code")}`) === versionId);
+}
+
+export type LocAlignment<T> =
+  | Alignment<T>
+  /** the server's locations are not the file's bytes: the panel says so
+   * and guesses no line */
+  | { aligned: false; stale: true; reason: string };
+
+/** `blame` blocks ↔ editor lines from the server's locations (contract v2):
+ * - `loc_stale` → not aligned, "stale" (no line guessed);
+ * - the note's bytes are not the located version (`content_hash`) → not
+ *   aligned (unsaved, or saved and not yet ingested);
+ * - every block passes the slice check → aligned by location;
+ * - otherwise (or with no `loc`: a v1 server) → `null`: the caller falls
+ *   back to the order pairing (`align`).
+ * `contentHash` and `hash32` are the kernel's BLAKE3 hashes of bytes and
+ * of a string (first 32 hex characters). */
+export function alignByLoc<T extends { version_id: string; loc?: Loc }>(
+  blocks: readonly T[],
+  locStale: boolean | undefined,
+  bytes: Uint8Array,
+  contentHash: (b: Uint8Array) => string,
+  hash32: (s: string) => string,
+  headings: readonly { line: number; heading: string }[] = [],
+): LocAlignment<T> | null {
+  if (locStale === true) {
+    return { aligned: false, stale: true, reason: "stale: the note on disk is not the version rootmark ingested; no line is guessed" };
+  }
+  if (blocks.length === 0 || blocks.some((b) => b.loc === undefined)) return null;
+  const h = contentHash(bytes);
+  if (blocks.some((b) => b.loc?.content_hash !== h)) {
+    return { aligned: false, reason: "the note is not the version rootmark located (unsaved, or saved and not yet ingested): not aligned" };
+  }
+  if (!blocks.every((b) => sliceMatches(bytes, b.loc as Loc, b.version_id, hash32))) return null;
+  const sorted = [...headings].sort((a, b) => a.line - b.line);
+  return {
+    aligned: true,
+    pairs: blocks.map((block) => {
+      const l = block.loc as Loc;
+      const start = l.line_start - 1;
+      let heading: string | null = null;
+      for (const x of sorted) if (x.line <= start) heading = x.heading;
+      return { block, range: { start, end: l.line_end - 1, heading } };
+    }),
+  };
+}

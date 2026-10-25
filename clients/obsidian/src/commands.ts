@@ -5,9 +5,12 @@
 // Nothing here writes a vault file: the only writes are the contract's
 // HTTP tools (`promote`, `checkpoint`; the plugin never proposes).
 
+import { align, alignByLoc, type BlockRange, type LocAlignment } from "./align";
+import { contentHash, hash32 } from "./blake3";
 import {
   RootmarkError,
   type BlameBlock,
+  type BlameResult,
   type Checkpoint,
   type HistoryResult,
   type Hit,
@@ -44,6 +47,37 @@ export async function blameOf(client: RootmarkClient, doc: string, at?: string):
     if (e instanceof RootmarkError && e.code === "not_found") return null;
     throw e;
   }
+}
+
+/** `blame` with its v2 fields (`loc`, `loc_stale`); `null` when the log
+ * does not know the document. */
+export async function blameResultOf(client: RootmarkClient, doc: string): Promise<BlameResult | null> {
+  try {
+    return await client.call("blame", { doc_path: doc });
+  } catch (e) {
+    if (e instanceof RootmarkError && e.code === "not_found") return null;
+    throw e;
+  }
+}
+
+/** Where a note's blocks are (blame gutter, P2-B/B4 (a)): from the
+ * server's locations when they are this note's bytes and pass the slice
+ * check (contract §2.5); `loc_stale` → "stale", no line; no `loc` (a v1
+ * server) or a failed slice check → the editor's block map by order
+ * (`align`), as before. */
+export function alignNote(
+  r: BlameResult,
+  bytes: Uint8Array | null,
+  ranges: readonly BlockRange[],
+  headings: readonly { line: number; heading: string }[] = [],
+): { al: LocAlignment<BlameBlock>; by: "loc" | "order" } {
+  if (bytes !== null) {
+    const byLoc = alignByLoc(r.blocks, r.loc_stale, bytes, contentHash, hash32, headings);
+    if (byLoc !== null) return { al: byLoc, by: "loc" };
+  } else if (r.loc_stale === true) {
+    return { al: { aligned: false, stale: true, reason: "stale: the note on disk is not the version rootmark ingested; no line is guessed" }, by: "loc" };
+  }
+  return { al: align(r.blocks, ranges), by: "order" };
 }
 
 export async function historyOf(client: RootmarkClient, lineage: string): Promise<HistoryResult> {

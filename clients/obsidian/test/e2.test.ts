@@ -2,6 +2,7 @@
 // lines, the proposal list, Promote over the human channel (E-5 against a
 // fake server), Demote refused, and a static scan that the plugin never
 // calls a file-writing API.
+import { allowNextViolation } from "../src/contract-check";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -146,6 +147,9 @@ describe("Promote over HTTP — E-5 against a fake server", () => {
 
   it("without a reason the server's 400 invalid_arguments is reported, not retried", async () => {
     fake.reply(400, { error: { code: "invalid_arguments", message: "promote: reason must not be empty" } });
+    // an empty reason is outside the contract (`minLength: 1`): the point
+    // of this test is the server's refusal (P2-B/B4 (c))
+    allowNextViolation("negative test: the server's 400 for an empty reason");
     const out = await promoteAll(client, ["l"], "");
     expect(fake.requests).toHaveLength(1);
     expect(out[0]?.error).toBeInstanceOf(RootmarkError);

@@ -48,6 +48,7 @@ Durum: P1-E/E5 yayım belgesi; kaynağı `docs/SECURITY.md` (P1-D.1/D1.0, K-D1.3
 
 ## İstemci (P1-E)
 - Obsidian istemcisi (`clients/obsidian`) yalnız HTTP sözleşmesini konuşur: token dosyasını ve `policy.toml [server] http_port`'u salt okur, md dosyalarına yazmaz (statik tarama + E-3 izleyicisi), `rootmark serve`'i başlatmaz. Token'ı okuyabilen eklenti insan kanalındadır (kabul edilen varsayımla aynı güven düzeyi).
+- **VS Code iskeleti (P2-B/B4 (b)).** `clients/vscode` aynı HTTP sözleşmesini (`X-Consumer: vscode`) konuşur; token'ı her bağlanışta vault'un `.rootmark/server.token`'ından salt okur ve **yalnız bellekte** tutar — ayarlara, `globalState`'e, `SecretStorage`'a, çalışma alanına ya da günlüğe yazmaz; md'ye yazmaz, `rootmark serve`'i başlatmaz. Token'ı okuyabilen eklenti, Obsidian eklentisi gibi insan kanalındadır. **Kaydetmeleri tasdik etmez:** VS Code'un kaydı izleyicinin gördüğü tasdiksiz bir dış değişikliktir (`unattested = "unverified"` seçilmişse bloklar `unverified` olur, aktör `unattested_fs`); bu, herhangi bir editörün ya da betiğin kaydıyla aynıdır ve VS Code'u insan kanalına ek bir tasdik yolu yapmaz (`clients/vscode/README.md`). Konum (`loc`) yalnız okuma içindir: istemci konumla bir şey yazmaz; terfi ve indirme yine `promote`/`demote` uçlarından ve politikadan geçer.
 - İstemci sözleşme dışı ya da biçimsiz bir yanıtı `bad_response` diye gösterir, sessizce kabul etmez; proposal sonuçlarını istenmeden göstermez, gizlemez.
 
 ## Bilinen açık sınırlar
