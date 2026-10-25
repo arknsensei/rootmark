@@ -1,0 +1,299 @@
+{
+ "reference_run": "reports/rounds/P2-L/runs/20261024T184609Z-ced61f9",
+ "fails": [
+  {
+   "file": "p1b1_checks.json",
+   "criterion": "B1-3",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version"
+  },
+  {
+   "file": "p1c1_checks.json",
+   "criterion": "C1-7",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version"
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-11",
+   "label": "historical",
+   "decisions": [
+    "K-D1.2",
+    "K-D1.4-T",
+    "K-E0.1"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-3",
+   "label": "historical",
+   "decisions": [
+    "K-C8-T",
+    "K-C1.1",
+    "K-C1.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-10",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version"
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-12",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-D RUN)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-2",
+   "label": "historical",
+   "decisions": [
+    "K-D1.1",
+    "K-D1.5",
+    "K-E0.4",
+    "K-D1.4-T"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-7",
+   "label": "historical",
+   "decisions": [
+    "K-D1.4-T",
+    "K-D1.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-9",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-C.1 RUN)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-1",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "the /2 index (an older rootmark's) answers search 503 migration_required, not index_stale (K-P2A.2); the other 7 cases unchanged"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-4",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.6",
+    "K-P2L.1"
+   ],
+   "why": "release_check's one FAIL is R4: the required Linux record is skipped in the chain (ROOTMARK_RELEASE_LINUX=0; K-P2A.6); R15 passes since P2-L/F2 (E1-9 expects migration_required, K-P2A.2), so the entry left the migration-required listing"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-5",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.6",
+    "K-P2L.1",
+    "K-P2L.2"
+   ],
+   "why": "Linux x86_64 is a required release target since 0.2.0 (K-P2A.6) and the chain runs scripts/release.sh with ROOTMARK_RELEASE_LINUX=0: the required Linux record is skipped; rootmark 0.2.0, spec 2.0.3"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-6",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "E1-6 regresses P1-E.1 against P1-E: its differing fields grow by the contract's new code migration_required (D1-13's contract and server code lists)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-8",
+   "label": "historical",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "tamper",
+   "label": "historical",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-14",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "auto_rebuild = false on the /2 index: search 503 migration_required, not index_stale (K-P2A.2); auto_rebuild = true unchanged"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-7",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.1",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: the local release binary is rootmark 0.2.0, spec 2.0.3 (K-P2L.1, K-P2L.2)"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-9",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "E-9 regresses P1-E against P1-D.1: the excluded D1-13 leaves grow by the new code migration_required"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b′",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2c",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2d",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "D-C′ (real Obsidian) not run in a development round's chain; D-C ran"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2e",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2j",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.2's recorder expects 2.0.2; 39/39 and level 3 unchanged"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2k",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "spec §7.1's Draft status no longer cites 'the independent verification of Phase 2 round P2-0.2' (SPEC_EDITS P2-L E3, K-P2-03.1 (4)): the frozen check looks for that phrase; the status is Draft"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "fail_summary",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2",
+    "K-P2A.2"
+   ],
+   "why": "P2-0.2's own classifier (against the P2-0.1 RUN) sees the migration-required FAILs E1-1, E1-4, E1-9, E-14; P2-A's classifier is this one; P2-L: P2-0.2's own classifier sees P2-L's decisions"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "regress",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2",
+    "K-P2A.2"
+   ],
+   "why": "P2-0.2's regress against the P2-0.1 RUN sees P2-A's decisions (contract code, installers, field audit) and the skipped real-Obsidian sets; P2-A's regress is eval.compare_p2a against the P2-0.2 RUN; P2-L: P2-0.2's regress against the P2-0.1 RUN sees P2-L's decisions (spec 2.0.3, 0.2.0, the round's comparator)"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b′",
+   "label": "historical",
+   "decisions": [
+    "K-P2-03.1"
+   ],
+   "why": "P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run; informational (pass null by design)"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3j",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.3's recorder expects 2.0.2"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "rules",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "as H-P2-0.2k (SPEC_EDITS P2-L E3)"
+  }
+ ],
+ "historical": 28,
+ "migration_required": 2,
+ "counted_fails": 0,
+ "counted": []
+}
