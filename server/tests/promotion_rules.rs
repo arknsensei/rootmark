@@ -657,19 +657,27 @@ fn s7_history_shows_the_rule_and_demote_undoes_it() {
 }
 
 /// The demote endpoint follows the promotion policy: `deny` refuses it as
-/// a decision (no event); an unknown lineage is `not_found`.
+/// a decision (no event); an unknown lineage is `not_found`. Rules are not
+/// loaded under `deny` (their promotions could not be demoted; P5 review 2,
+/// K-P2P.5).
 #[test]
 fn demote_follows_the_promotion_policy() {
+    let deny = |rules: &str, version: bool| {
+        recipe("canonical", rules, version).replace("policy = \"human_only\"", "policy = \"deny\"")
+    };
+    let e = rootmarkcore::Policy::parse(
+        &deny(&collector(), true),
+        rootmarkcore::PolicySource::Builtin,
+    )
+    .unwrap_err();
+    assert!(format!("{e:#}").contains("deny"), "{e:#}");
     let (v, k) = vault(
         "demote-deny",
-        &recipe("canonical", &collector(), true)
-            .replace("policy = \"human_only\"", "policy = \"deny\""),
+        &deny("", false),
         &[("notes/a.md", "# A\n\nbir not.\n")],
     );
-    let r = propose(&k, "collector", "sources/official/d.md", NOTE).unwrap();
-    // rules promote whatever the manual policy (P2-P/P1 assumption P1-6)
-    assert_eq!(r["promoted"].as_array().unwrap().len(), 2);
-    let (l, _) = blame(&k, "sources/official/d.md").remove(0);
+    // a canonical human block: deny refuses its demotion
+    let (l, _) = blame(&k, "notes/a.md").remove(0);
     let log0 = std::fs::read(v.join(".rootmark/events.jsonl")).unwrap();
     let d = k
         .call("demote", &json!({"lineage_id": l, "reason": "x"}), human())
@@ -690,4 +698,47 @@ fn demote_follows_the_promotion_policy() {
         rootmarkserver::error::code_of(&e),
         rootmarkserver::error::Code::NotFound
     );
+}
+
+/// P5 review 1: a new block whose text repeats one already in the document
+/// (same version, new lineage) is the call's own and is promoted.
+#[test]
+fn a_repeated_text_block_of_the_call_is_promoted() {
+    let doc = "sources/official/tekrar.md";
+    let (_, k) = vault(
+        "repeat",
+        &recipe("canonical", &collector(), true),
+        &[("notes/a.md", "# A\n\nbir not.\n")],
+    );
+    // another agent's proposal with the same section first (no rule for it)
+    propose(&k, "other", doc, "# Taslak\n\n## Özet\n\naynı metin.\n").unwrap();
+    let old: Vec<String> = blame(&k, doc).into_iter().map(|(l, _)| l).collect();
+    let r = k
+        .call(
+            "propose",
+            &json!({"doc_path": doc, "content": "## Özet\n\naynı metin.\n",
+                    "reason": "collect", "mode": "append"}),
+            agent("collector"),
+        )
+        .unwrap();
+    // the two lineages the call created (the lineage matcher decides which
+    // of the repeated blocks keeps the old lineage), and only they
+    let promoted: Vec<&str> = r["promoted"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .map(|e| e["lineage_ids"][0].as_str().unwrap())
+        .collect();
+    assert_eq!(promoted.len(), 2, "{r}");
+    assert!(promoted.iter().all(|l| !old.iter().any(|o| o == l)));
+    let now = blame(&k, doc);
+    assert_eq!(now.len(), 5);
+    for (l, layer) in now {
+        let want = if old.contains(&l) {
+            "proposal"
+        } else {
+            "canonical"
+        };
+        assert_eq!(layer, want, "{l}");
+    }
 }

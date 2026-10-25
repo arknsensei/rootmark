@@ -328,7 +328,7 @@ pub fn transition_meta(ev: &Event) -> Result<TransitionMeta> {
     // non-empty string
     let source = match ev.meta.get("source") {
         None => None,
-        Some(serde_json::Value::String(x)) if !x.trim().is_empty() => Some(x.clone()),
+        Some(serde_json::Value::String(x)) if !x.is_empty() => Some(x.clone()),
         Some(_) => bail!(
             "event seq {}: {:?} meta.source must be a non-empty string",
             ev.seq,

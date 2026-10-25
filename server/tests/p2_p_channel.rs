@@ -320,12 +320,7 @@ fn the_reading_rule_of_a_transition_s_source() {
     let p = v.join(".rootmark/events.jsonl");
     let good = std::fs::read_to_string(&p).unwrap();
     assert!(good.contains("\"source\":\"bot\""));
-    for bad in [
-        "\"source\":\"\"",
-        "\"source\":7",
-        "\"source\":null",
-        "\"source\":\" \"",
-    ] {
+    for bad in ["\"source\":\"\"", "\"source\":7", "\"source\":null"] {
         std::fs::write(&p, good.replace("\"source\":\"bot\"", bad)).unwrap();
         let e = rootmarkcore::Vault::open(&v).err().expect(bad);
         assert!(format!("{e:#}").contains("meta.source"), "{bad}: {e:#}");

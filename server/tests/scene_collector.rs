@@ -320,6 +320,9 @@ fn scene(dir: &Path, cli: bool) -> Run {
     }
 }
 
+/// `hash32` of the scene's `traces.jsonl` (5022 bytes).
+const TRACES_HASH: &str = "8b60ec65a8add3b95e3c1308da1766f3";
+
 fn dir(name: &str) -> PathBuf {
     std::env::temp_dir().join(format!("rootmark-p2p4-{}-{name}", std::process::id()))
 }
@@ -333,6 +336,14 @@ fn the_collector_scene_twice_byte_equal() {
     assert_eq!(a.events, b.events, "events.jsonl");
     assert_eq!(a.traces, b.traces, "traces.jsonl");
     assert_eq!(a.checkpoint, b.checkpoint);
+    // the values of this build's scene, fixed (P5 review 4: the full pair
+    // records pass/fail only; a change of the scene's bytes fails here)
+    assert_eq!(a.events_hash, "c7a2068cf3895387e035e1bb7cebb8e2");
+    assert_eq!(a.checkpoint, "ae3565f73449d8e40db9011ae6a0b8d7");
+    assert_eq!(
+        rootmarkcore::hash32(&String::from_utf8_lossy(&a.traces)),
+        TRACES_HASH
+    );
     eprintln!(
         "scene: events_hash {} checkpoint {} traces {} bytes",
         a.events_hash,
