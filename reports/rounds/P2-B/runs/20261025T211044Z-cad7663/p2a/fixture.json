@@ -1,0 +1,40 @@
+{
+ "set": "fixture (A-1)",
+ "applied": [
+  "rename_store",
+  "index_rebuild",
+  "log_readers",
+  "checkpoints"
+ ],
+ "index_format_after": "mdkernel-index/3",
+ "rollbacks": [
+  {
+   "id": "0004-checkpoints",
+   "exit": 0,
+   "byte_equal": true
+  },
+  {
+   "id": "0003-log_readers",
+   "exit": 0,
+   "byte_equal": true
+  },
+  {
+   "id": "0002-index_rebuild",
+   "exit": 0,
+   "byte_equal": true
+  },
+  {
+   "id": "0001-rename_store",
+   "exit": 0,
+   "byte_equal": true
+  }
+ ],
+ "checks": {
+  "applied_in_order": true,
+  "index_migrated": true,
+  "required_empty_after": true,
+  "rollback_all": true,
+  "byte_equal_after_rollback": true
+ },
+ "pass": true
+}

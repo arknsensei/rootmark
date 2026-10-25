@@ -1,0 +1,644 @@
+{
+ "set": "migrate_old (A-2)",
+ "vaults": [
+  {
+   "vault": "v0.1.0/e2e",
+   "dry_run": {
+    "plan": [
+     {
+      "migration": "policy_attestation_1",
+      "required": false,
+      "from": "recipe without [attestation] (read as unattested = \"unverified\")",
+      "to": "recipe with [attestation] unattested = \"canonical\" (K-P2L-T1)",
+      "bytes": 425
+     },
+     {
+      "migration": "log_readers",
+      "required": false,
+      "from": "rootmark-events/1; no attestation log",
+      "to": "rootmark-events/1; attestations/2.0.2 (reading rule)",
+      "bytes": 0
+     },
+     {
+      "migration": "checkpoints",
+      "required": false,
+      "from": "rootmark-checkpoints/1",
+      "to": "rootmark-checkpoints/1",
+      "bytes": 0
+     }
+    ],
+    "matrix": {
+     "applied": [],
+     "artifacts": {
+      "attestations": {
+       "expected": "attestations/2.0.2",
+       "format": null,
+       "note": "no attestation log",
+       "state": "ok"
+      },
+      "checkpoints": {
+       "expected": "rootmark-checkpoints/1",
+       "format": "rootmark-checkpoints/1",
+       "state": "ok"
+      },
+      "events": {
+       "expected": "rootmark-events/1",
+       "format": "rootmark-events/1",
+       "state": "ok"
+      },
+      "index": {
+       "expected": "mdkernel-index/3",
+       "format": null,
+       "note": "no index (`rootmark index build`)",
+       "state": "unknown"
+      },
+      "policy": {
+       "expected": "recipe/attestation",
+       "format": "recipe/implicit",
+       "note": "no [attestation] table: read as unattested = \"unverified\"; `rootmark migrate` adds unattested = \"canonical\" (policy_attestation_1, recommended; K-P2L-T1)",
+       "state": "ok"
+      },
+      "store": {
+       "expected": "rootmark-store/1",
+       "format": "rootmark-store/1",
+       "state": "ok"
+      }
+     },
+     "hint": null,
+     "recommended": [
+      "policy_attestation_1"
+     ],
+     "required": [],
+     "validations": [
+      "log_readers",
+      "checkpoints"
+     ]
+    }
+   },
+   "applied": [
+    "0001-policy_attestation_1",
+    "0002-log_readers",
+    "0003-checkpoints"
+   ],
+   "events_hash": "f4100b644d14e6ea22644fdf9d314ae6",
+   "documents": 13,
+   "rollbacks": [
+    {
+     "id": "0003-checkpoints",
+     "exit": 0,
+     "byte_equal": true
+    },
+    {
+     "id": "0002-log_readers",
+     "exit": 0,
+     "byte_equal": true
+    },
+    {
+     "id": "0001-policy_attestation_1",
+     "exit": 0,
+     "byte_equal": true
+    }
+   ],
+   "checks": {
+    "dry_run_changes_nothing": true,
+    "migrated": true,
+    "events_hash_equal": true,
+    "replay_equal": true,
+    "blame_equal": true,
+    "second_migrate_noop": true,
+    "rollback_all": true,
+    "byte_equal_after_rollback": true,
+    "events_hash_expected": true,
+    "replay_expected": true,
+    "layers_expected": true
+   },
+   "pass": true
+  },
+  {
+   "vault": "v0.1.0/mixed",
+   "dry_run": {
+    "plan": [
+     {
+      "migration": "policy_attestation_1",
+      "required": false,
+      "from": "recipe without [attestation] (read as unattested = \"unverified\")",
+      "to": "recipe with [attestation] unattested = \"canonical\" (K-P2L-T1)",
+      "bytes": 407
+     },
+     {
+      "migration": "log_readers",
+      "required": false,
+      "from": "rootmark-events/1; no attestation log",
+      "to": "rootmark-events/1; attestations/2.0.2 (reading rule)",
+      "bytes": 0
+     },
+     {
+      "migration": "checkpoints",
+      "required": false,
+      "from": "rootmark-checkpoints/1",
+      "to": "rootmark-checkpoints/1",
+      "bytes": 0
+     }
+    ],
+    "matrix": {
+     "applied": [],
+     "artifacts": {
+      "attestations": {
+       "expected": "attestations/2.0.2",
+       "format": null,
+       "note": "no attestation log",
+       "state": "ok"
+      },
+      "checkpoints": {
+       "expected": "rootmark-checkpoints/1",
+       "format": "rootmark-checkpoints/1",
+       "state": "ok"
+      },
+      "events": {
+       "expected": "rootmark-events/1",
+       "format": "rootmark-events/1",
+       "state": "ok"
+      },
+      "index": {
+       "expected": "mdkernel-index/3",
+       "format": null,
+       "note": "no index (`rootmark index build`)",
+       "state": "unknown"
+      },
+      "policy": {
+       "expected": "recipe/attestation",
+       "format": "recipe/implicit",
+       "note": "no [attestation] table: read as unattested = \"unverified\"; `rootmark migrate` adds unattested = \"canonical\" (policy_attestation_1, recommended; K-P2L-T1)",
+       "state": "ok"
+      },
+      "store": {
+       "expected": "rootmark-store/1",
+       "format": "rootmark-store/1",
+       "state": "ok"
+      }
+     },
+     "hint": null,
+     "recommended": [
+      "policy_attestation_1"
+     ],
+     "required": [],
+     "validations": [
+      "log_readers",
+      "checkpoints"
+     ]
+    }
+   },
+   "applied": [
+    "0001-policy_attestation_1",
+    "0002-log_readers",
+    "0003-checkpoints"
+   ],
+   "events_hash": "952cf4830310b10ba8c124366ec6c1b3",
+   "documents": 6,
+   "rollbacks": [
+    {
+     "id": "0003-checkpoints",
+     "exit": 0,
+     "byte_equal": true
+    },
+    {
+     "id": "0002-log_readers",
+     "exit": 0,
+     "byte_equal": true
+    },
+    {
+     "id": "0001-policy_attestation_1",
+     "exit": 0,
+     "byte_equal": true
+    }
+   ],
+   "checks": {
+    "dry_run_changes_nothing": true,
+    "migrated": true,
+    "events_hash_equal": true,
+    "replay_equal": true,
+    "blame_equal": true,
+    "second_migrate_noop": true,
+    "rollback_all": true,
+    "byte_equal_after_rollback": true,
+    "events_hash_expected": true,
+    "replay_expected": true,
+    "layers_expected": true
+   },
+   "pass": true
+  },
+  {
+   "vault": "v0.1.0/scene",
+   "dry_run": {
+    "plan": [
+     {
+      "migration": "policy_attestation_1",
+      "required": false,
+      "from": "recipe without [attestation] (read as unattested = \"unverified\")",
+      "to": "recipe with [attestation] unattested = \"canonical\" (K-P2L-T1)",
+      "bytes": 407
+     },
+     {
+      "migration": "log_readers",
+      "required": false,
+      "from": "rootmark-events/1; no attestation log",
+      "to": "rootmark-events/1; attestations/2.0.2 (reading rule)",
+      "bytes": 0
+     },
+     {
+      "migration": "checkpoints",
+      "required": false,
+      "from": "rootmark-checkpoints/1",
+      "to": "rootmark-checkpoints/1",
+      "bytes": 0
+     }
+    ],
+    "matrix": {
+     "applied": [],
+     "artifacts": {
+      "attestations": {
+       "expected": "attestations/2.0.2",
+       "format": null,
+       "note": "no attestation log",
+       "state": "ok"
+      },
+      "checkpoints": {
+       "expected": "rootmark-checkpoints/1",
+       "format": "rootmark-checkpoints/1",
+       "state": "ok"
+      },
+      "events": {
+       "expected": "rootmark-events/1",
+       "format": "rootmark-events/1",
+       "state": "ok"
+      },
+      "index": {
+       "expected": "mdkernel-index/3",
+       "format": null,
+       "note": "no index (`rootmark index build`)",
+       "state": "unknown"
+      },
+      "policy": {
+       "expected": "recipe/attestation",
+       "format": "recipe/implicit",
+       "note": "no [attestation] table: read as unattested = \"unverified\"; `rootmark migrate` adds unattested = \"canonical\" (policy_attestation_1, recommended; K-P2L-T1)",
+       "state": "ok"
+      },
+      "store": {
+       "expected": "rootmark-store/1",
+       "format": "rootmark-store/1",
+       "state": "ok"
+      }
+     },
+     "hint": null,
+     "recommended": [
+      "policy_attestation_1"
+     ],
+     "required": [],
+     "validations": [
+      "log_readers",
+      "checkpoints"
+     ]
+    }
+   },
+   "applied": [
+    "0001-policy_attestation_1",
+    "0002-log_readers",
+    "0003-checkpoints"
+   ],
+   "events_hash": "10972fd963231d012db854a1d1a4dc7e",
+   "documents": 13,
+   "rollbacks": [
+    {
+     "id": "0003-checkpoints",
+     "exit": 0,
+     "byte_equal": true
+    },
+    {
+     "id": "0002-log_readers",
+     "exit": 0,
+     "byte_equal": true
+    },
+    {
+     "id": "0001-policy_attestation_1",
+     "exit": 0,
+     "byte_equal": true
+    }
+   ],
+   "checks": {
+    "dry_run_changes_nothing": true,
+    "migrated": true,
+    "events_hash_equal": true,
+    "replay_equal": true,
+    "blame_equal": true,
+    "second_migrate_noop": true,
+    "rollback_all": true,
+    "byte_equal_after_rollback": true,
+    "events_hash_expected": true,
+    "replay_expected": true,
+    "layers_expected": true
+   },
+   "pass": true
+  },
+  {
+   "vault": "ce4cf04/attested",
+   "dry_run": {
+    "plan": [
+     {
+      "migration": "log_readers",
+      "required": false,
+      "from": "rootmark-events/1; attestations/2.0.0",
+      "to": "rootmark-events/1; attestations/2.0.2 (reading rule)",
+      "bytes": 0
+     },
+     {
+      "migration": "checkpoints",
+      "required": false,
+      "from": "rootmark-checkpoints/1",
+      "to": "rootmark-checkpoints/1",
+      "bytes": 0
+     }
+    ],
+    "matrix": {
+     "applied": [],
+     "artifacts": {
+      "attestations": {
+       "expected": "attestations/2.0.2",
+       "format": "attestations/2.0.0",
+       "note": "read by the 2.0.2 reading rule (spec §8)",
+       "state": "ok"
+      },
+      "checkpoints": {
+       "expected": "rootmark-checkpoints/1",
+       "format": "rootmark-checkpoints/1",
+       "state": "ok"
+      },
+      "events": {
+       "expected": "rootmark-events/1",
+       "format": "rootmark-events/1",
+       "state": "ok"
+      },
+      "index": {
+       "expected": "mdkernel-index/3",
+       "format": null,
+       "note": "no index (`rootmark index build`)",
+       "state": "unknown"
+      },
+      "policy": {
+       "expected": "recipe/attestation",
+       "format": "recipe/attestation",
+       "state": "ok"
+      },
+      "store": {
+       "expected": "rootmark-store/1",
+       "format": "rootmark-store/1",
+       "state": "ok"
+      }
+     },
+     "hint": null,
+     "recommended": [],
+     "required": [],
+     "validations": [
+      "log_readers",
+      "checkpoints"
+     ]
+    }
+   },
+   "applied": [
+    "0001-log_readers",
+    "0002-checkpoints"
+   ],
+   "events_hash": "ce178f1315530c32bd477bb0f2ba5eaa",
+   "documents": 6,
+   "rollbacks": [
+    {
+     "id": "0002-checkpoints",
+     "exit": 0,
+     "byte_equal": true
+    },
+    {
+     "id": "0001-log_readers",
+     "exit": 0,
+     "byte_equal": true
+    }
+   ],
+   "checks": {
+    "dry_run_changes_nothing": true,
+    "migrated": true,
+    "events_hash_equal": true,
+    "replay_equal": true,
+    "blame_equal": true,
+    "second_migrate_noop": true,
+    "rollback_all": true,
+    "byte_equal_after_rollback": true,
+    "events_hash_expected": true,
+    "replay_expected": true,
+    "layers_expected": true
+   },
+   "pass": true
+  },
+  {
+   "vault": "ce4cf04/bulk",
+   "dry_run": {
+    "plan": [
+     {
+      "migration": "log_readers",
+      "required": false,
+      "from": "rootmark-events/1; attestations/2.0.0",
+      "to": "rootmark-events/1; attestations/2.0.2 (reading rule)",
+      "bytes": 0
+     },
+     {
+      "migration": "checkpoints",
+      "required": false,
+      "from": "rootmark-checkpoints/1",
+      "to": "rootmark-checkpoints/1",
+      "bytes": 0
+     }
+    ],
+    "matrix": {
+     "applied": [],
+     "artifacts": {
+      "attestations": {
+       "expected": "attestations/2.0.2",
+       "format": "attestations/2.0.0",
+       "note": "read by the 2.0.2 reading rule (spec §8)",
+       "state": "ok"
+      },
+      "checkpoints": {
+       "expected": "rootmark-checkpoints/1",
+       "format": "rootmark-checkpoints/1",
+       "state": "ok"
+      },
+      "events": {
+       "expected": "rootmark-events/1",
+       "format": "rootmark-events/1",
+       "state": "ok"
+      },
+      "index": {
+       "expected": "mdkernel-index/3",
+       "format": null,
+       "note": "no index (`rootmark index build`)",
+       "state": "unknown"
+      },
+      "policy": {
+       "expected": "recipe/attestation",
+       "format": "recipe/attestation",
+       "state": "ok"
+      },
+      "store": {
+       "expected": "rootmark-store/1",
+       "format": "rootmark-store/1",
+       "state": "ok"
+      }
+     },
+     "hint": null,
+     "recommended": [],
+     "required": [],
+     "validations": [
+      "log_readers",
+      "checkpoints"
+     ]
+    }
+   },
+   "applied": [
+    "0001-log_readers",
+    "0002-checkpoints"
+   ],
+   "events_hash": "973c3a19a7b964fc7818efd873aed7bf",
+   "documents": 5,
+   "rollbacks": [
+    {
+     "id": "0002-checkpoints",
+     "exit": 0,
+     "byte_equal": true
+    },
+    {
+     "id": "0001-log_readers",
+     "exit": 0,
+     "byte_equal": true
+    }
+   ],
+   "checks": {
+    "dry_run_changes_nothing": true,
+    "migrated": true,
+    "events_hash_equal": true,
+    "replay_equal": true,
+    "blame_equal": true,
+    "second_migrate_noop": true,
+    "rollback_all": true,
+    "byte_equal_after_rollback": true,
+    "events_hash_expected": true,
+    "replay_expected": true,
+    "layers_expected": true
+   },
+   "pass": true
+  },
+  {
+   "vault": "21b16ea/partial",
+   "dry_run": {
+    "plan": [
+     {
+      "migration": "log_readers",
+      "required": false,
+      "from": "rootmark-events/1; attestations/2.0.1",
+      "to": "rootmark-events/1; attestations/2.0.2 (reading rule)",
+      "bytes": 0
+     },
+     {
+      "migration": "checkpoints",
+      "required": false,
+      "from": "rootmark-checkpoints/1",
+      "to": "rootmark-checkpoints/1",
+      "bytes": 0
+     }
+    ],
+    "matrix": {
+     "applied": [],
+     "artifacts": {
+      "attestations": {
+       "expected": "attestations/2.0.2",
+       "format": "attestations/2.0.1",
+       "note": "read by the 2.0.2 reading rule (spec §8)",
+       "state": "ok"
+      },
+      "checkpoints": {
+       "expected": "rootmark-checkpoints/1",
+       "format": "rootmark-checkpoints/1",
+       "state": "ok"
+      },
+      "events": {
+       "expected": "rootmark-events/1",
+       "format": "rootmark-events/1",
+       "state": "ok"
+      },
+      "index": {
+       "expected": "mdkernel-index/3",
+       "format": null,
+       "note": "no index (`rootmark index build`)",
+       "state": "unknown"
+      },
+      "policy": {
+       "expected": "recipe/attestation",
+       "format": "recipe/attestation",
+       "state": "ok"
+      },
+      "store": {
+       "expected": "rootmark-store/1",
+       "format": "rootmark-store/1",
+       "state": "ok"
+      }
+     },
+     "hint": null,
+     "recommended": [],
+     "required": [],
+     "validations": [
+      "log_readers",
+      "checkpoints"
+     ]
+    }
+   },
+   "applied": [
+    "0001-log_readers",
+    "0002-checkpoints"
+   ],
+   "events_hash": "bcab134c0df19b334df5334730022eee",
+   "documents": 6,
+   "rollbacks": [
+    {
+     "id": "0002-checkpoints",
+     "exit": 0,
+     "byte_equal": true
+    },
+    {
+     "id": "0001-log_readers",
+     "exit": 0,
+     "byte_equal": true
+    }
+   ],
+   "checks": {
+    "dry_run_changes_nothing": true,
+    "migrated": true,
+    "events_hash_equal": true,
+    "replay_equal": true,
+    "blame_equal": true,
+    "second_migrate_noop": true,
+    "rollback_all": true,
+    "byte_equal_after_rollback": true,
+    "events_hash_expected": true,
+    "replay_expected": true,
+    "layers_expected": true
+   },
+   "pass": true
+  }
+ ],
+ "passed": 6,
+ "conformance": {
+  "exit": 0,
+  "level_claimed": 3,
+  "passed": 39,
+  "total": 39,
+  "pass": true
+ },
+ "pass": true
+}

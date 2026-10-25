@@ -1,0 +1,25 @@
+{
+  "C1-2": {
+    "canonical_prefix_equal": 3000,
+    "pass": true
+  },
+  "C1-3": {
+    "pass": true,
+    "proposal_hits": 14529,
+    "searches_matching_independent_ranking": 3000
+  },
+  "chunks_by_layer": {
+    "canonical": 32,
+    "derived": 1,
+    "proposal": 7
+  },
+  "k": 10,
+  "lexical_queries_sensitive_to_mixed_statistics": 980,
+  "modes": [
+    "flat",
+    "lexical",
+    "hybrid"
+  ],
+  "queries": 1000,
+  "searches": 3000
+}

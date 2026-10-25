@@ -1,0 +1,10 @@
+scene: ok   1 status
+scene: ok   2 propose
+scene: ok   3 search
+scene: ok   4 search
+scene: ok   5 promote
+scene: ok   6 cli promote --actor human:editor
+scene: ok   7 search
+scene: ok   8 trace
+scene: ok   9 checkpoint
+scene: 9/9 (scene-agent/1.0)

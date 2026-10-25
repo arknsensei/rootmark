@@ -1,0 +1,313 @@
+{
+ "D1-1": {
+  "cases": {
+   "full section": "denied",
+   "heading": "denied",
+   "mixed canonical+proposal": "denied",
+   "nested heading": "denied",
+   "partial": "denied",
+   "whole human document": "denied"
+  },
+  "denied": "6/6",
+  "files_and_events_unchanged": true,
+  "pass": true
+ },
+ "D1-10": {
+  "level_claimed": 3,
+  "new_tests": {
+   "C2-10": "pass",
+   "C3-06": "pass",
+   "C3-07": "pass"
+  },
+  "pass": false,
+  "passed": "39/39",
+  "spec_version": "2.0.3",
+  "spec_version_by_criterion": "1.0.3"
+ },
+ "D1-11": {
+  "pass": true,
+  "v3_final_compat": true,
+  "vaults": {
+   "e2e": {
+    "docs": 15,
+    "events_bytes_unchanged": true,
+    "events_hash_equal": true,
+    "pass": true,
+    "replay_equal": 15
+   },
+   "scene": {
+    "docs": 13,
+    "events_bytes_unchanged": true,
+    "events_hash_equal": true,
+    "pass": true,
+    "replay_equal": 13
+   }
+  }
+ },
+ "D1-12": {
+  "d1_5_runs_equal": true,
+  "pair": {
+   "decided_by": "eval.compare_p1d1 pair (pair_compare.json)"
+  },
+  "pass": false,
+  "regress_vs_p1d": {
+   "conformance": {
+    "differing_tests": [],
+    "equal": true,
+    "excluded": {
+     "fixtures_manifest_hash": "C2-10, C3-06, C3-07 fixtures added (F2, F6)",
+     "spec_version": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3, CRITERION yama kuralı)"
+    },
+    "level_claimed": [
+     3,
+     3
+    ],
+    "spec_version": [
+     "1.0.2",
+     "2.0.3"
+    ],
+    "tests": 31
+   },
+   "differing_fields": {
+    "p1d/inspector/inspector.json:calls_ok": 0.09090909090909091,
+    "p1d/inspector/inspector.json:calls›#len": 0.09090909090909091,
+    "p1d/inspector/inspector.json:calls›10›ok": {
+     "a": "absent",
+     "b": true
+    },
+    "p1d/inspector/inspector.json:calls›10›tool": {
+     "a": "absent",
+     "b": "events"
+    },
+    "p1d/inspector/inspector.json:schemas_valid": 0.09090909090909091,
+    "p1d/inspector/inspector.json:tools_expected": 0.09090909090909091,
+    "p1d/inspector/inspector.json:tools_listed": 0.09090909090909091,
+    "p1d/mcp_e2e/mcp_e2e.json:checks›1›pass": "inf",
+    "p1d/mcp_e2e/mcp_e2e.json:checks›4›pass": "inf",
+    "p1d/mcp_e2e/mcp_e2e.json:handshake_pass": "inf",
+    "p1d/mcp_e2e/mcp_e2e.json:per_tool›handshake›passed": 0.5,
+    "p1d_checks.json:D-1›inspector_calls_ok": "inf",
+    "p1d_checks.json:D-1›schemas_valid": "inf",
+    "p1d_checks.json:D-1›tools_listed": 0.09090909090909091
+   },
+   "equal": false,
+   "excluded_differences": {
+    "p1b1_checks.json:criteria/B1-3/spec_version": {
+     "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+     "leaves": 1
+    },
+    "p1b_checks.json:fixtures_manifest_hash": {
+     "decision": "F2, F6 (C2-10, C3-06, C3-07)",
+     "leaves": 1
+    },
+    "p1c1_checks.json:C1-6/lexical/dl": {
+     "decision": "K-D1.7",
+     "leaves": 1
+    },
+    "p1c1_checks.json:C1-6/rejected_cases": {
+     "decision": "K-D1.7 (F1)",
+     "leaves": 1
+    },
+    "p1c1_checks.json:C1-7": {
+     "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+     "leaves": 2
+    },
+    "p1c_checks.json:C-1/spec_version": {
+     "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+     "leaves": 1
+    },
+    "p1c_index.json:index_files_build/manifest.json": {
+     "decision": "K-D1.7",
+     "leaves": 1
+    },
+    "p1c_index.json:index_files_compact/manifest.json": {
+     "decision": "K-D1.7",
+     "leaves": 1
+    },
+    "p1c_index.json:index_files_final/manifest.json": {
+     "decision": "K-D1.7",
+     "leaves": 1
+    },
+    "p1d/http/http_e2e.json:cases/11": {
+     "decision": "K-D1.5",
+     "leaves": 2
+    },
+    "p1d/http/http_e2e.json:cases/5": {
+     "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+     "leaves": 1
+    },
+    "p1d/http/http_e2e.json:cases/8": {
+     "decision": "K-D1.5",
+     "leaves": 2
+    },
+    "p1d/http/http_e2e.json:d7_passed": {
+     "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+     "leaves": 1
+    },
+    "p1d/http/http_e2e.json:pass": {
+     "decision": "K-D1.5, spec 1.0.3",
+     "leaves": 1
+    },
+    "p1d/http/http_e2e.json:passed": {
+     "decision": "K-D1.5, spec 1.0.3",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:checks/3": {
+     "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:checks/41": {
+     "decision": "K-D1.1",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:checks/49": {
+     "decision": "K-D1.1",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:checks/50": {
+     "decision": "K-D1.1",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:checks/52": {
+     "decision": "K-D1.1",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:checks/53": {
+     "decision": "K-D1.6",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:pass": {
+     "decision": "K-D1.1, K-D1.6, spec 1.0.3",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:per_tool/propose": {
+     "decision": "K-D1.1",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:per_tool/status": {
+     "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+     "leaves": 1
+    },
+    "p1d/mcp_e2e/mcp_e2e.json:tools_passed": {
+     "decision": "K-D1.1, spec 1.0.3",
+     "leaves": 1
+    },
+    "p1d/scene/scene.json:steps/0/shows/spec_version": {
+     "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+     "leaves": 1
+    },
+    "p1d_checks.json:D-2": {
+     "decision": "K-D1.1, spec 1.0.3",
+     "leaves": 6
+    },
+    "p1d_checks.json:D-7": {
+     "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+     "leaves": 4
+    },
+    "p1d_checks.json:D-9": {
+     "decision": "K-D1.7, spec 1.0.3, F2/F6",
+     "leaves": 14
+    }
+   },
+   "exclusions_without_difference": [],
+   "n_fields": 99881,
+   "reference_run": "20261015T210419Z-a6b52fe"
+  }
+ },
+ "D1-13": {
+  "codes": 12,
+  "codes_equal": true,
+  "missing": [
+   "tool:events",
+   "http-endpoint:POST /v1/events (no request in this script)"
+  ],
+  "pass": false,
+  "tools": 11,
+  "tools_equal": true
+ },
+ "D1-2": {
+  "accepted": true,
+  "pass": true,
+  "section_layers": [
+   "proposal",
+   "proposal"
+  ]
+ },
+ "D1-3": {
+  "accepted": 451,
+  "comparisons": 600,
+  "differing": 0,
+  "outcomes": {
+   "append:accepted": 156,
+   "append:policy_violation": 13,
+   "create:accepted": 158,
+   "replace_section:accepted": 137,
+   "replace_section:denied": 36
+  },
+  "pass": true,
+  "writes": 500
+ },
+ "D1-4": {
+  "event_actor": {
+   "id": "criteria-agent/1.0",
+   "kind": "agent"
+  },
+  "history_actor": {
+   "id": "criteria-agent/1.0",
+   "kind": "agent"
+  },
+  "pass": true
+ },
+ "D1-5": {
+  "calls": 100,
+  "pass": true,
+  "pipelined_a_vs_b": {
+   "events.jsonl": true,
+   "md_files": true,
+   "proposals.jsonl": true,
+   "traces.jsonl": true
+  },
+  "pipelined_vs_lockstep": {
+   "events.jsonl": true,
+   "md_files": true,
+   "proposals.jsonl": true,
+   "traces.jsonl": true
+  },
+  "propose": 40
+ },
+ "D1-6": {
+  "correct": "100/100",
+  "log_and_traces_unchanged": true,
+  "measured": {
+   "elapsed_ms_pipelined": 10.227708,
+   "elapsed_ms_serial": 39.462458,
+   "ratio": 0.2591756448622638,
+   "ratio_below_0_6": true
+  },
+  "pass": true
+ },
+ "D1-7": {
+  "http_promote_actor": {
+   "id": "editor-ada",
+   "kind": "human"
+  },
+  "http_without_human_id": 403,
+  "mcp_promote": "denied",
+  "pass": true,
+  "passed": "3/3"
+ },
+ "D1-8": {
+  "events_unchanged": true,
+  "pass": true,
+  "passed": "24/24"
+ },
+ "D1-9": {
+  "pass": true,
+  "passed": "2/2"
+ },
+ "tamper": {
+  "controls": "4/5",
+  "pass": false,
+  "rejected": "9/9"
+ }
+}

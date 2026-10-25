@@ -1,0 +1,1019 @@
+{
+  "min_age_days": 14,
+  "declared": 111,
+  "dependencies": [
+    {
+      "ecosystem": "cargo",
+      "name": "anyhow",
+      "version": "1.0.104",
+      "declared": "core/Cargo.toml:11",
+      "published": "2026-07-18T20:59:37.656167Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "blake3",
+      "version": "1.8.7",
+      "declared": "core/Cargo.toml:12",
+      "published": "2026-08-20T09:09:56.903547Z",
+      "age_days_at_adoption": 54,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "pathfinding",
+      "version": "4.16.0",
+      "declared": "core/Cargo.toml:13",
+      "published": "2026-09-07T14:02:33.128724Z",
+      "age_days_at_adoption": 36,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "pulldown-cmark",
+      "version": "0.13.4",
+      "declared": "core/Cargo.toml:14",
+      "published": "2026-05-20T08:48:23.621050Z",
+      "age_days_at_adoption": 146,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "regex",
+      "version": "1.13.1",
+      "declared": "core/Cargo.toml:15",
+      "published": "2026-07-15T20:19:35.162139Z",
+      "age_days_at_adoption": 90,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde",
+      "version": "1.0.229",
+      "declared": "core/Cargo.toml:16",
+      "published": "2026-07-18T23:05:13.266456Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde_json",
+      "version": "1.0.154",
+      "declared": "core/Cargo.toml:17",
+      "published": "2026-10-11T15:31:46.076577Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "strsim",
+      "version": "0.11.1",
+      "declared": "core/Cargo.toml:18",
+      "published": "2024-04-02T22:18:09.406790Z",
+      "age_days_at_adoption": 923,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "tiktoken-rs",
+      "version": "0.12.1",
+      "declared": "core/Cargo.toml:19",
+      "published": "2026-09-24T17:15:08.043219Z",
+      "age_days_at_adoption": 19,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "toml",
+      "version": "0.8.23",
+      "declared": "core/Cargo.toml:20",
+      "published": "2025-06-06T15:03:09.398690Z",
+      "age_days_at_adoption": 494,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "unicode-normalization",
+      "version": "0.1.25",
+      "declared": "core/Cargo.toml:21",
+      "published": "2025-10-30T16:06:38.929447Z",
+      "age_days_at_adoption": 348,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "blake3",
+      "version": "1.8.7",
+      "declared": "core/Cargo.toml:24",
+      "published": "2026-08-20T09:09:56.903547Z",
+      "age_days_at_adoption": 54,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "regex",
+      "version": "1.13.1",
+      "declared": "core/Cargo.toml:25",
+      "published": "2026-07-15T20:19:35.162139Z",
+      "age_days_at_adoption": 90,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "anyhow",
+      "version": "1.0.104",
+      "declared": "index/Cargo.toml:16",
+      "published": "2026-07-18T20:59:37.656167Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "blake3",
+      "version": "1.8.7",
+      "declared": "index/Cargo.toml:18",
+      "published": "2026-08-20T09:09:56.903547Z",
+      "age_days_at_adoption": 55,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "clap",
+      "version": "4.6.7",
+      "declared": "index/Cargo.toml:19",
+      "published": "2026-09-14T18:40:28.474794Z",
+      "age_days_at_adoption": 30,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "ndarray",
+      "version": "0.17.2",
+      "declared": "index/Cargo.toml:20",
+      "published": "2026-01-10T23:19:18.256265Z",
+      "age_days_at_adoption": 277,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "ort",
+      "version": "2.0.0-rc.13",
+      "declared": "index/Cargo.toml:21",
+      "published": "2026-07-28T06:47:07.112688Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde",
+      "version": "1.0.229",
+      "declared": "index/Cargo.toml:22",
+      "published": "2026-07-18T23:05:13.266456Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde_json",
+      "version": "1.0.154",
+      "declared": "index/Cargo.toml:23",
+      "published": "2026-10-11T15:31:46.076577Z",
+      "age_days_at_adoption": 3,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "tantivy",
+      "version": "0.26.2",
+      "declared": "index/Cargo.toml:24",
+      "published": "2026-09-08T15:17:06.487018Z",
+      "age_days_at_adoption": 36,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "unicode-normalization",
+      "version": "0.1.25",
+      "declared": "index/Cargo.toml:25",
+      "published": "2025-10-30T16:06:38.929447Z",
+      "age_days_at_adoption": 359,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "toml",
+      "version": "0.8.23",
+      "declared": "index/Cargo.toml:26",
+      "published": "2025-06-06T15:03:09.398690Z",
+      "age_days_at_adoption": 505,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "tokenizers",
+      "version": "0.23.2",
+      "declared": "index/Cargo.toml:27",
+      "published": "2026-09-03T08:49:28.624173Z",
+      "age_days_at_adoption": 41,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "anyhow",
+      "version": "1.0.104",
+      "declared": "server/Cargo.toml:30",
+      "published": "2026-07-18T20:59:37.656167Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "blake3",
+      "version": "1.8.7",
+      "declared": "server/Cargo.toml:31",
+      "published": "2026-08-20T09:09:56.903547Z",
+      "age_days_at_adoption": 57,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "axum",
+      "version": "0.8.9",
+      "declared": "server/Cargo.toml:34",
+      "published": "2026-04-14T07:55:20.258398Z",
+      "age_days_at_adoption": 184,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "clap",
+      "version": "4.6.7",
+      "declared": "server/Cargo.toml:35",
+      "published": "2026-09-14T18:40:28.474794Z",
+      "age_days_at_adoption": 30,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "notify",
+      "version": "8.2.0",
+      "declared": "server/Cargo.toml:36",
+      "published": "2025-08-03T14:54:41.092775Z",
+      "age_days_at_adoption": 437,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "rmcp",
+      "version": "3.5.0",
+      "declared": "server/Cargo.toml:37",
+      "published": "2026-09-28T00:16:06.911025Z",
+      "age_days_at_adoption": 17,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "getrandom",
+      "version": "0.3.4",
+      "declared": "server/Cargo.toml:38",
+      "published": "2025-10-14T17:47:36.464125Z",
+      "age_days_at_adoption": 365,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "hmac-sha256",
+      "version": "1.1.15",
+      "declared": "server/Cargo.toml:40",
+      "published": "2026-09-25T08:58:21.825161Z",
+      "age_days_at_adoption": 24,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "schemars",
+      "version": "1.2.1",
+      "declared": "server/Cargo.toml:41",
+      "published": "2026-02-01T16:34:40.510710Z",
+      "age_days_at_adoption": 255,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde",
+      "version": "1.0.229",
+      "declared": "server/Cargo.toml:42",
+      "published": "2026-07-18T23:05:13.266456Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde_json",
+      "version": "1.0.154",
+      "declared": "server/Cargo.toml:43",
+      "published": "2026-10-11T15:31:46.076577Z",
+      "age_days_at_adoption": 3,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "toml",
+      "version": "0.8.23",
+      "declared": "server/Cargo.toml:44",
+      "published": "2025-06-06T15:03:09.398690Z",
+      "age_days_at_adoption": 495,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "tokio",
+      "version": "1.53.1",
+      "declared": "server/Cargo.toml:45",
+      "published": "2026-07-20T17:06:09.996426Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "jsonschema",
+      "version": "0.58.3",
+      "declared": "server/Cargo.toml:50",
+      "published": "2026-09-30T07:56:38.840489Z",
+      "age_days_at_adoption": 15,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "anyhow",
+      "version": "1.0.104",
+      "declared": "bindings/python/Cargo.toml:13",
+      "published": "2026-07-18T20:59:37.656167Z",
+      "age_days_at_adoption": 87,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "pyo3",
+      "version": "0.29.3",
+      "declared": "bindings/python/Cargo.toml:16",
+      "published": "2026-09-30T18:00:35.517912Z",
+      "age_days_at_adoption": 13,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde",
+      "version": "1.0.229",
+      "declared": "bindings/python/Cargo.toml:17",
+      "published": "2026-07-18T23:05:13.266456Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde_json",
+      "version": "1.0.154",
+      "declared": "bindings/python/Cargo.toml:18",
+      "published": "2026-10-11T15:31:46.076577Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@codemirror/state",
+      "version": "6.5.0",
+      "declared": "clients/obsidian/package.json:16",
+      "published": "2024-12-09T12:26:28.029Z",
+      "age_days_at_adoption": 676,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@codemirror/view",
+      "version": "6.38.6",
+      "declared": "clients/obsidian/package.json:17",
+      "published": "2025-10-13T07:32:25.479Z",
+      "age_days_at_adoption": 368,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/js",
+      "version": "10.0.1",
+      "declared": "clients/obsidian/package.json:18",
+      "published": "2026-02-06T22:34:56.290Z",
+      "age_days_at_adoption": 252,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/node",
+      "version": "24.19.1",
+      "declared": "clients/obsidian/package.json:19",
+      "published": "2026-10-01T22:38:02.894Z",
+      "age_days_at_adoption": 15,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esbuild",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package.json:20",
+      "published": "2026-08-08T20:00:55.454Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint",
+      "version": "10.12.0",
+      "declared": "clients/obsidian/package.json:21",
+      "published": "2026-10-02T20:08:19.213Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "obsidian",
+      "version": "1.13.1",
+      "declared": "clients/obsidian/package.json:22",
+      "published": "2026-06-09T21:30:47.611Z",
+      "age_days_at_adoption": 129,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript",
+      "version": "6.0.3",
+      "declared": "clients/obsidian/package.json:23",
+      "published": "2026-04-16T23:38:27.905Z",
+      "age_days_at_adoption": 182,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript-eslint",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package.json:24",
+      "published": "2026-09-28T17:12:00.356Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vite",
+      "version": "8.3.1",
+      "declared": "clients/obsidian/package.json:25",
+      "published": "2026-09-24T12:26:19.940Z",
+      "age_days_at_adoption": 22,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vitest",
+      "version": "5.0.3",
+      "declared": "clients/obsidian/package.json:26",
+      "published": "2026-09-30T11:30:42.429Z",
+      "age_days_at_adoption": 16,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/js",
+      "version": "10.0.1",
+      "declared": "clients/vscode/package.json:34",
+      "published": "2026-02-06T22:34:56.290Z",
+      "age_days_at_adoption": 260,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/node",
+      "version": "24.19.1",
+      "declared": "clients/vscode/package.json:35",
+      "published": "2026-10-01T22:38:02.894Z",
+      "age_days_at_adoption": 23,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/vscode",
+      "version": "1.95.0",
+      "declared": "clients/vscode/package.json:36",
+      "published": "2024-10-29T18:02:35.536Z",
+      "age_days_at_adoption": 725,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esbuild",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package.json:37",
+      "published": "2026-08-08T20:00:55.454Z",
+      "age_days_at_adoption": 77,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint",
+      "version": "10.12.0",
+      "declared": "clients/vscode/package.json:38",
+      "published": "2026-10-02T20:08:19.213Z",
+      "age_days_at_adoption": 22,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript",
+      "version": "6.0.3",
+      "declared": "clients/vscode/package.json:39",
+      "published": "2026-04-16T23:38:27.905Z",
+      "age_days_at_adoption": 191,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript-eslint",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package.json:40",
+      "published": "2026-09-28T17:12:00.356Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vite",
+      "version": "8.3.1",
+      "declared": "clients/vscode/package.json:41",
+      "published": "2026-09-24T12:26:19.940Z",
+      "age_days_at_adoption": 31,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vitest",
+      "version": "5.0.3",
+      "declared": "clients/vscode/package.json:42",
+      "published": "2026-09-30T11:30:42.429Z",
+      "age_days_at_adoption": 25,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "sentence-transformers",
+      "version": "6.1.0",
+      "declared": "research/pyproject.toml:10",
+      "published": "2026-09-18T10:44:22.841108Z",
+      "age_days_at_adoption": 25,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "torch",
+      "version": "2.14.1",
+      "declared": "research/pyproject.toml:11",
+      "published": "2026-09-30T17:43:48.426734Z",
+      "age_days_at_adoption": 13,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "lancedb",
+      "version": "0.40.0",
+      "declared": "research/pyproject.toml:12",
+      "published": "2026-10-07T10:35:02.537180Z",
+      "age_days_at_adoption": 6,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pyarrow",
+      "version": "26.0.0",
+      "declared": "research/pyproject.toml:13",
+      "published": "2026-10-09T08:13:28.874876Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "rank-bm25",
+      "version": "0.2.2",
+      "declared": "research/pyproject.toml:14",
+      "published": "2022-02-16T12:10:50.626909Z",
+      "age_days_at_adoption": 1700,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "networkx",
+      "version": "3.7",
+      "declared": "research/pyproject.toml:15",
+      "published": "2026-09-21T16:45:14.609636Z",
+      "age_days_at_adoption": 22,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "scipy",
+      "version": "1.18.1",
+      "declared": "research/pyproject.toml:16",
+      "published": "2026-08-21T23:23:44.522812Z",
+      "age_days_at_adoption": 52,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "numpy",
+      "version": "2.5.4",
+      "declared": "research/pyproject.toml:17",
+      "published": "2026-10-10T20:02:40.843976Z",
+      "age_days_at_adoption": 3,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "tiktoken",
+      "version": "0.14.0",
+      "declared": "research/pyproject.toml:18",
+      "published": "2026-08-17T19:48:31.788018Z",
+      "age_days_at_adoption": 57,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "anthropic",
+      "version": "1.13.0",
+      "declared": "research/pyproject.toml:19",
+      "published": "2026-10-09T15:29:08.803597Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "matplotlib",
+      "version": "3.11.2",
+      "declared": "research/pyproject.toml:20",
+      "published": "2026-09-11T19:02:59.277416Z",
+      "age_days_at_adoption": 32,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "blake3",
+      "version": "1.0.11",
+      "declared": "research/pyproject.toml:21",
+      "published": "2026-10-08T08:55:18.099814Z",
+      "age_days_at_adoption": 5,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pytest",
+      "version": "9.1.1",
+      "declared": "research/pyproject.toml:25",
+      "published": "2026-06-19T10:58:31.347074Z",
+      "age_days_at_adoption": 116,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "ruff",
+      "version": "0.17.0",
+      "declared": "research/pyproject.toml:25",
+      "published": "2026-10-09T19:46:38.695158Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "maturin",
+      "version": "1.15.0",
+      "declared": "research/pyproject.toml:25",
+      "published": "2026-08-24T12:10:53.327344Z",
+      "age_days_at_adoption": 50,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:30",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/ci.yml:33",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:44",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/ci.yml:47",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/ci.yml:50",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 32,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/setup-node",
+      "version": "v7.0.0",
+      "declared": ".github/workflows/ci.yml:51",
+      "published": "2026-07-14T02:46:05Z",
+      "age_days_at_adoption": 101,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/ci.yml:55",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:73",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/ci.yml:76",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/ci.yml:79",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 32,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/setup-node",
+      "version": "v7.0.0",
+      "declared": ".github/workflows/ci.yml:80",
+      "published": "2026-07-14T02:46:05Z",
+      "age_days_at_adoption": 101,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/ci.yml:84",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/pages.yml:29",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/pages.yml:30",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/pages.yml:31",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/configure-pages",
+      "version": "v6.0.0",
+      "declared": ".github/workflows/pages.yml:53",
+      "published": "2026-03-25T17:00:49Z",
+      "age_days_at_adoption": 212,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/jekyll-build-pages",
+      "version": "v1.0.13",
+      "declared": ".github/workflows/pages.yml:54",
+      "published": "2024-08-06T23:48:04Z",
+      "age_days_at_adoption": 807,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-pages-artifact",
+      "version": "v5.0.0",
+      "declared": ".github/workflows/pages.yml:58",
+      "published": "2026-04-10T18:22:59Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/deploy-pages",
+      "version": "v5.0.1",
+      "declared": ".github/workflows/pages.yml:69",
+      "published": "2026-09-01T21:31:19Z",
+      "age_days_at_adoption": 52,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:44",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/release.yml:45",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/release.yml:48",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:113",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:133",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/download-artifact",
+      "version": "v8.0.1",
+      "declared": ".github/workflows/release.yml:134",
+      "published": "2026-03-11T15:44:25Z",
+      "age_days_at_adoption": 226,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/attest-build-provenance",
+      "version": "v4.2.2",
+      "declared": ".github/workflows/release.yml:163",
+      "published": "2026-08-06T19:59:04Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:170",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:177",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/verify.yml:33",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/verify.yml:36",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/verify.yml:39",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 32,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/setup-node",
+      "version": "v7.0.0",
+      "declared": ".github/workflows/verify.yml:40",
+      "published": "2026-07-14T02:46:05Z",
+      "age_days_at_adoption": 101,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/verify.yml:43",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/verify.yml:71",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    }
+  ],
+  "registry_missing": false,
+  "pass": true
+}

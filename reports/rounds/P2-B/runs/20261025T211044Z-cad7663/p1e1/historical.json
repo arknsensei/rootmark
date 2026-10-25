@@ -1,0 +1,245 @@
+{
+  "reference_run": "reports/rounds/P1-E/runs/20261017T024341Z-632f29e",
+  "fails": [
+    {
+      "file": "p1b1_checks.json",
+      "criterion": "B1-3",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "spec_version"
+      ]
+    },
+    {
+      "file": "p1c1_checks.json",
+      "criterion": "C1-7",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "spec_version"
+      ]
+    },
+    {
+      "file": "p1c_checks.json",
+      "criterion": "C-11",
+      "label": "historical",
+      "decisions": [
+        "K-D1.2",
+        "K-D1.4-T",
+        "K-E0.1"
+      ],
+      "why": "P1-C's regression against P1-B.1 sees B1-3's spec-version difference",
+      "declared_changes": []
+    },
+    {
+      "file": "p1c_checks.json",
+      "criterion": "C-3",
+      "label": "historical",
+      "decisions": [
+        "K-C8-T",
+        "K-C1.1",
+        "K-C1.2"
+      ],
+      "why": "P1-C's hybrid multi-question nDCG@10 was -0.0136 off v2; closed in P1-C.1 by the declared lexical variant and the Rust quality reference",
+      "declared_changes": []
+    },
+    {
+      "file": "p1d1_checks.json",
+      "criterion": "D1-10",
+      "label": "fail",
+      "why": "not a listed historical FAIL"
+    },
+    {
+      "file": "p1d1_checks.json",
+      "criterion": "D1-12",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "regress_vs_p1d/conformance/spec_version/1",
+        "regress_vs_p1d/differing_fields",
+        "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls_ok",
+        "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls›#len",
+        "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls›10›ok/a",
+        "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls›10›ok/b",
+        "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls›10›tool/a",
+        "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls›10›tool/b",
+        "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:schemas_valid",
+        "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:tools_expected",
+        "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:tools_listed",
+        "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›1›pass",
+        "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:handshake_pass",
+        "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:per_tool›handshake›passed",
+        "regress_vs_p1d/differing_fields/p1d_checks.json:D-1›inspector_calls_ok",
+        "regress_vs_p1d/differing_fields/p1d_checks.json:D-1›schemas_valid",
+        "regress_vs_p1d/differing_fields/p1d_checks.json:D-1›tools_listed",
+        "regress_vs_p1d/excluded_differences/p1d_checks.json:D-2/leaves"
+      ]
+    },
+    {
+      "file": "p1d1_checks.json",
+      "criterion": "D1-13",
+      "label": "fail",
+      "why": "not a listed historical FAIL"
+    },
+    {
+      "file": "p1d1_checks.json",
+      "criterion": "tamper",
+      "label": "fail",
+      "why": "not a listed historical FAIL"
+    },
+    {
+      "file": "p1d_checks.json",
+      "criterion": "D-2",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "handshake",
+        "per_tool/handshake/passed"
+      ]
+    },
+    {
+      "file": "p1d_checks.json",
+      "criterion": "D-7",
+      "label": "historical",
+      "decisions": [
+        "K-D1.4-T",
+        "K-D1.5"
+      ],
+      "why": "P1-D's HTTP e2e expects spec 1.0.2 (D7-3) and the old status codes of two cases",
+      "declared_changes": []
+    },
+    {
+      "file": "p1d_checks.json",
+      "criterion": "D-9",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "conformance/spec_version/1"
+      ]
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "E1-1",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "E1-4",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "E1-5",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "E1-6",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "E1-8",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "E1-9",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e1_checks.json",
+      "criterion": "tamper",
+      "label": "fail",
+      "why": "absent from the reference RUN"
+    },
+    {
+      "file": "p1e_checks.json",
+      "criterion": "E-14",
+      "label": "fail",
+      "why": "not a listed historical FAIL"
+    },
+    {
+      "file": "p1e_checks.json",
+      "criterion": "E-16",
+      "label": "fail",
+      "why": "not a listed historical FAIL"
+    },
+    {
+      "file": "p1e_checks.json",
+      "criterion": "E-7",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "chain_local_target/conformance/passed",
+        "chain_local_target/conformance/total",
+        "chain_local_target/spec_version",
+        "chain_local_target/version"
+      ]
+    },
+    {
+      "file": "p1e_checks.json",
+      "criterion": "E-9",
+      "label": "fail",
+      "why": "its record differs from the reference RUN outside the declared changes",
+      "differing": [
+        "conformance/passed",
+        "conformance/total",
+        "regress_vs_p1d1/conformance/differing_tests",
+        "regress_vs_p1d1/conformance/differing_tests/0",
+        "regress_vs_p1d1/conformance/differing_tests/1",
+        "regress_vs_p1d1/conformance/differing_tests/2",
+        "regress_vs_p1d1/conformance/differing_tests/3",
+        "regress_vs_p1d1/conformance/differing_tests/4",
+        "regress_vs_p1d1/conformance/equal",
+        "regress_vs_p1d1/conformance/passed/1",
+        "regress_vs_p1d1/conformance/spec_version/1",
+        "regress_vs_p1d1/conformance/tests",
+        "regress_vs_p1d1/differing_fields",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:fixtures_manifest_hash",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:passed",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:spec_version",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:tests›#len",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:tests›27›actual_hash",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:tests›27›expected_hash",
+        "regress_vs_p1d1/differing_fields/conformance_p1d1.json:tests›27›id"
+      ]
+    },
+    {
+      "file": "p1e_checks.json",
+      "criterion": "tamper",
+      "label": "fail",
+      "why": "not a listed historical FAIL"
+    }
+  ],
+  "historical": 3,
+  "counted_fails": 20,
+  "counted": [
+    "p1b1_checks.json:B1-3",
+    "p1c1_checks.json:C1-7",
+    "p1d1_checks.json:D1-10",
+    "p1d1_checks.json:D1-12",
+    "p1d1_checks.json:D1-13",
+    "p1d1_checks.json:tamper",
+    "p1d_checks.json:D-2",
+    "p1d_checks.json:D-9",
+    "p1e1_checks.json:E1-1",
+    "p1e1_checks.json:E1-4",
+    "p1e1_checks.json:E1-5",
+    "p1e1_checks.json:E1-6",
+    "p1e1_checks.json:E1-8",
+    "p1e1_checks.json:E1-9",
+    "p1e1_checks.json:tamper",
+    "p1e_checks.json:E-14",
+    "p1e_checks.json:E-16",
+    "p1e_checks.json:E-7",
+    "p1e_checks.json:E-9",
+    "p1e_checks.json:tamper"
+  ]
+}

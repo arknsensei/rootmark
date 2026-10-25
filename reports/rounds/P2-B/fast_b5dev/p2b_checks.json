@@ -1,0 +1,88 @@
+{
+ "B-1": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_b_b0",
+    "tests": {
+     "a_policy_promotion_of_another_rule_or_layer_is_refused_on_open": "ok",
+     "a_rule_prefix_in_nfd_is_refused": "ok",
+     "a_search_prefix_in_nfd_is_folded_to_nfc": "ok",
+     "an_external_change_before_a_matching_propose_is_never_promoted": "ok",
+     "an_unreadable_recipe_is_an_error_of_the_matrix": "ok",
+     "the_dry_run_plan_of_a_recommended_migration_is_not_required": "ok"
+    }
+   }
+  ]
+ },
+ "B-2": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_b_b1",
+    "tests": {
+     "a_file_changed_before_its_ingest_gives_stale_locations": "ok",
+     "blame_and_read_block_carry_locations_that_slice_the_blocks": "ok",
+     "locations_are_derived_and_deterministic": "ok",
+     "search_hits_carry_locations": "ok",
+     "the_six_old_vaults_keep_their_events_hash": "ok"
+    }
+   },
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p1d1_criteria",
+    "tests": {
+     "d1_1_and_d1_2_replace_section_under_append_only": "ok",
+     "d1_3_canonical_invariance_under_500_agent_writes": "ok",
+     "d1_4_unrestricted_deletion_names_the_agent": "ok",
+     "d1_5_pipelined_calls_give_identical_logs": "ok",
+     "d1_6_read_only_calls_run_in_parallel": "ok",
+     "d1_7_channel_decides_the_actor": "ok",
+     "d1_8_error_codes_mcp_and_http": "ok",
+     "d1_9_name_the_unnamed_checkpoint": "ok"
+    }
+   }
+  ]
+ },
+ "B-5/B-6": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_b_b3",
+    "tests": {
+     "dates_from_the_front_matter_never_from_the_file_time": "ok",
+     "dates_from_the_path": "ok",
+     "events_are_the_log_lines_and_filters_only_filter": "ok",
+     "events_over_mcp_keep_the_line_bytes": "ok",
+     "invalid_time_filters_and_recipes_are_refused": "ok"
+    }
+   },
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_l_l3",
+    "tests": {
+     "a_damaged_filter_record_is_an_error": "ok",
+     "a_prefix_outside_the_vault_is_refused_and_records_nothing": "ok",
+     "include_proposal_keeps_its_meaning_under_a_filter": "ok",
+     "normalized_filters_give_one_query_hash_and_the_unfiltered_hash_is_unchanged": "ok",
+     "only_documents_under_the_prefixes_in_the_unfiltered_order": "ok",
+     "the_trace_carries_the_filter": "ok"
+    }
+   }
+  ]
+ },
+ "pass": true
+}

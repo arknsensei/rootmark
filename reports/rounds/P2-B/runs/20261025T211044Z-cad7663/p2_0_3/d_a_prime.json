@@ -1,0 +1,837 @@
+{
+ "set": "D-A′",
+ "window_s": 0.5,
+ "scenarios": 50,
+ "agent_blocks": 50,
+ "agent_canonical": 0,
+ "by_kind": {
+  "in_agent_block": {
+   "scenarios": 25,
+   "agent_canonical": 0
+  },
+  "in_human_block": {
+   "scenarios": 15,
+   "agent_canonical": 0
+  },
+  "unobserved": {
+   "scenarios": 10,
+   "agent_canonical": 0
+  },
+  "carry": {
+   "scenarios": 10,
+   "agent_canonical": 0
+  }
+ },
+ "links_rewritten": 47,
+ "fakes": 10,
+ "fakes_denied": 10,
+ "carry_scenarios": 10,
+ "carry_agent_blocks": 10,
+ "carry_agent_canonical": 0,
+ "carry_human_canonical_before": 90,
+ "carry_human_canonical_after": 76,
+ "pass": true,
+ "records": [
+  {
+   "id": "p000",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p001",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p002",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p003",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p004",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p005",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p006",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p007",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p008",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p009",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p010",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p011",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p012",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p013",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p014",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p015",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p016",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p017",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p018",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p019",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p020",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": false,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p021",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p022",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p023",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p024",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p025",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p026",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p027",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p028",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p029",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p030",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": false,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p031",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p032",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p033",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p034",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p035",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p036",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p037",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p038",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p039",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p040",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p041",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p042",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p043",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p044",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p045",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p046",
+   "kind": "unobserved",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": false,
+   "observed_before_rename": null
+  },
+  {
+   "id": "p047",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p048",
+   "kind": "in_human_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p049",
+   "kind": "in_agent_block",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true
+  },
+  {
+   "id": "p050",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 11,
+   "human_canonical_before": 9,
+   "human_canonical_after": 9
+  },
+  {
+   "id": "p051",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 10,
+   "human_canonical_before": 6,
+   "human_canonical_after": 6
+  },
+  {
+   "id": "p052",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 16,
+   "human_canonical_before": 14,
+   "human_canonical_after": 0
+  },
+  {
+   "id": "p053",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 12,
+   "human_canonical_before": 9,
+   "human_canonical_after": 9
+  },
+  {
+   "id": "p054",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 13,
+   "human_canonical_before": 9,
+   "human_canonical_after": 9
+  },
+  {
+   "id": "p055",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 15,
+   "human_canonical_before": 10,
+   "human_canonical_after": 10
+  },
+  {
+   "id": "p056",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 14,
+   "human_canonical_before": 6,
+   "human_canonical_after": 6
+  },
+  {
+   "id": "p057",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 14,
+   "human_canonical_before": 9,
+   "human_canonical_after": 9
+  },
+  {
+   "id": "p058",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 19,
+   "human_canonical_before": 12,
+   "human_canonical_after": 12
+  },
+  {
+   "id": "p059",
+   "kind": "carry",
+   "agent_blocks": 1,
+   "agent_canonical": 0,
+   "agent_layers": [
+    "unverified"
+   ],
+   "link_rewritten": true,
+   "observed_before_rename": true,
+   "human_blocks": 11,
+   "human_canonical_before": 6,
+   "human_canonical_after": 6
+  }
+ ],
+ "fake_records": [
+  {
+   "id": "f000",
+   "variant": "append_paragraph",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: arşiv/p040-p038-p010-roast-log.md is not a link update of arşiv/p040-p038-p010-roast-log.md for p044-p022-p013-p011-safety.md: 16 blocks against 15 in arşiv/p040-p038-p010-roast-log.md",
+   "denied": true,
+   "new_blocks": 2,
+   "new_canonical": 0
+  },
+  {
+   "id": "f001",
+   "variant": "word_in_canonical",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: arşiv/p043-p005-roasting.md is not a link update of arşiv/p043-p005-roasting.md for arşiv/p051-p039-p033-p012-p006-p004-staff.md: the front matter differs: the text differs outside link targets",
+   "denied": true,
+   "new_blocks": 1,
+   "new_canonical": 0
+  },
+  {
+   "id": "f002",
+   "variant": "link_label",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: arşiv/p048-p037-p034-p030-p024-p018-p009-p008-p003-p002-glossary.md is not a link update of arşiv/p048-p037-p034-p030-p024-p018-p009-p008-p003-p002-glossary.md for arşiv/p043-p005-roasting.md: block 8: the text differs outside link targets",
+   "denied": true,
+   "new_blocks": 1,
+   "new_canonical": 0
+  },
+  {
+   "id": "f003",
+   "variant": "heading_text",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: arşiv/p051-p039-p033-p012-p006-p004-staff.md is not a link update of arşiv/p051-p039-p033-p012-p006-p004-staff.md for arşiv/p040-p038-p010-roast-log.md: block 0: the text differs outside link targets",
+   "denied": true,
+   "new_blocks": 2,
+   "new_canonical": 0
+  },
+  {
+   "id": "f004",
+   "variant": "delete_paragraph",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: arşiv/p054-p053-p050-p042-p032-p025-p017-p014-p007-p000-filter.md is not a link update of arşiv/p054-p053-p050-p042-p032-p025-p017-p014-p007-p000-filter.md for arşiv/p040-p038-p010-roast-log.md: 14 blocks against 15 in arşiv/p054-p053-p050-p042-p032-p025-p017-p014-p007-p000-filter.md",
+   "denied": true,
+   "new_blocks": 1,
+   "new_canonical": 0
+  },
+  {
+   "id": "f005",
+   "variant": "new_link",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: p035-p031-p027-p026-origins.md is not a link update of p035-p031-p027-p026-origins.md for arşiv/p040-p038-p010-roast-log.md: block 1: the old link target \"p047-p029-p019-p001-cupping\" does not name p040-p038-p010-roast-log.md",
+   "denied": true,
+   "new_blocks": 2,
+   "new_canonical": 0
+  },
+  {
+   "id": "f006",
+   "variant": "list_item",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: p036-p021-p016-espresso.md is not a link update of p036-p021-p016-espresso.md for arşiv/p040-p038-p010-roast-log.md: 14 blocks against 13 in p036-p021-p016-espresso.md",
+   "denied": true,
+   "new_blocks": 2,
+   "new_canonical": 0
+  },
+  {
+   "id": "f007",
+   "variant": "code_block",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: p044-p022-p013-p011-safety.md is not a link update of p044-p022-p013-p011-safety.md for arşiv/p040-p038-p010-roast-log.md: 17 blocks against 16 in p044-p022-p013-p011-safety.md",
+   "denied": true,
+   "new_blocks": 2,
+   "new_canonical": 0
+  },
+  {
+   "id": "f008",
+   "variant": "target_and_text",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: p046-p028-blends.md is not a link update of p046-p028-blends.md for arşiv/p040-p038-p010-roast-log.md: block 1: the text differs outside link targets",
+   "denied": true,
+   "new_blocks": 1,
+   "new_canonical": 0
+  },
+  {
+   "id": "f009",
+   "variant": "replace_with_agent",
+   "status": 403,
+   "code": "denied",
+   "message": "attest: p047-p029-p019-p001-cupping.md is not a link update of p047-p029-p019-p001-cupping.md for arşiv/p043-p005-roasting.md: block 9: the text differs outside link targets",
+   "denied": true,
+   "new_blocks": 1,
+   "new_canonical": 0
+  }
+ ],
+ "attestation_lines": 225,
+ "plugin_counts": "attested 225 · unattested 150",
+ "link_settings": {
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false
+ },
+ "events_sha256": "8ceeb57ee144a7bdd3cd23a8f76c6438e036a273c940836f82c1f3faa9b8271d",
+ "retries": []
+}

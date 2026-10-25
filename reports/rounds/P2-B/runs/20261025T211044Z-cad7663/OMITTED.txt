@@ -1,0 +1,4 @@
+Left out of this archive (size; as in the P2-P archive), sha256 of chain A's files:
+p1d/mcp_e2e/run1/session.jsonl     0295bbb99f79d3f1ffcf72abcf45e88ed539ca8f122a91fe6a8f11af9f34f223 (run2 identical)
+p1d/mcp_e2e/run1/transcript.jsonl  49b661ac547a7b8d1cb6c03e9279eafb13cbc03c67c8e60582624f0dcadd9e42 (run2 identical)
+chain_B/: chain B's top-level records only (RUN 20261025T221921Z-cad7663).

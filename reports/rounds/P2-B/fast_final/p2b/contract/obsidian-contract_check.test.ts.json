@@ -1,0 +1,8 @@
+{
+ "file": "contract_check.test.ts",
+ "calls": 0,
+ "endpoints": {},
+ "request_violations": [],
+ "response_violations": [],
+ "deliberate_violations": []
+}
