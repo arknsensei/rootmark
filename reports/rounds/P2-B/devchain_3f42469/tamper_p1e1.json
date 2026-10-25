@@ -1,0 +1,61 @@
+{
+  "cases": [
+    {
+      "group": "contract-status",
+      "case": "untouched contract and server",
+      "expected": "accepted",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": false
+    },
+    {
+      "group": "contract-status",
+      "case": "p1e-final server (string index, status 500 on an unreadable manifest)",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": {
+        "tools_equal": false,
+        "codes_equal": true,
+        "endpoints_ok": true,
+        "transport_ok": true,
+        "failed_states": [
+          "ok",
+          "stale",
+          "damaged",
+          "missing"
+        ],
+        "as_expected": false
+      },
+      "as_expected": false
+    },
+    {
+      "group": "contract-status",
+      "case": "status row without index {…} fields",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "old-index",
+      "case": "fixture regenerated with the p1d-final mdk",
+      "expected": "accepted",
+      "got": "accepted",
+      "detail": null,
+      "as_expected": true
+    },
+    {
+      "group": "old-index",
+      "case": "fixture manifest relabelled to the current format",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": null,
+      "as_expected": true
+    }
+  ],
+  "rejected": 2,
+  "rejected_total": 3,
+  "controls_ok": 1,
+  "controls_total": 2,
+  "pass": false
+}
