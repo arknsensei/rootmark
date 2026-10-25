@@ -61,6 +61,25 @@ path filter.
   back if the trace cannot be written); `status.migrations` reports an error
   instead of empty lists when a rollback record cannot be read.
 
+### Downgrading to 0.2.0 (P2-B/B0)
+- A recipe with `[[promotion.rules]]` does not open in 0.2.0 (it refuses the
+  unknown table, so `rootmark serve` does not start): remove the
+  `[[promotion.rules]]` tables (and `[promotion] version`) from
+  `.rootmark/policy.toml` before going back. The rules' `Promoted` events
+  stay in the log; 0.2.0 reads them as a policy actor's promotions.
+
+### Fixes (P2-B/B0)
+- `rootmark migrate --dry-run`: the plan of `policy_attestation_1` says
+  `recommended: true` and no longer `required: true`.
+- `status.migrations`: a `policy.toml` that cannot be read is an error of
+  the matrix (`status.migrations.error`), not an `unknown` row.
+- Reading rule: a rule's `Promoted` names its own rule (`meta.reason =
+  "rule:<meta.actor.id>"`) and comes from `proposal`; a log that says
+  otherwise is refused when the vault opens.
+- A search `path_prefix` written in NFD keeps being folded to NFC (a read);
+  a rule's `path_prefix` in NFD keeps being refused (an authority). Both are
+  now documented in docs/CLIENT_CONTRACT.md §2.2 and tested.
+
 ## 0.2.0 — 2026-10-24 (phase 2: attested writes, migrations, installers)
 
 Phase 2 rounds P2-0, P2-0.1, P2-0.2, P2-0.3 (attested writes) and P2-A
