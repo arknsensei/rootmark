@@ -61,6 +61,9 @@ pub struct IndexConfig {
     pub tokenizer: Variant,
     /// one of `EMBEDDERS`
     pub embedder: String,
+    /// `[index] date_from_path` or `[index] date_field` (P2-B/B3 (b)): where
+    /// the search time filter takes a document's date from
+    pub date: Option<crate::date::DateSource>,
 }
 
 impl Default for IndexConfig {
@@ -68,6 +71,7 @@ impl Default for IndexConfig {
         IndexConfig {
             tokenizer: Variant::default(),
             embedder: EMBEDDER_DEFAULT.to_string(),
+            date: None,
         }
     }
 }
@@ -101,6 +105,25 @@ impl IndexConfig {
                 bail!("[index] embedder {name:?}: one of {EMBEDDERS:?}");
             }
             c.embedder = name.to_string();
+        }
+        // P2-B/B3 (b): one date source at most
+        match (t.get("date_from_path"), t.get("date_field")) {
+            (Some(_), Some(_)) => {
+                bail!("[index] date_from_path and [index] date_field: one date source, not both")
+            }
+            (Some(v), None) => {
+                let Some(p) = v.as_str() else {
+                    bail!("[index] date_from_path must be a string");
+                };
+                c.date = Some(crate::date::DateSource::path(p)?);
+            }
+            (None, Some(v)) => {
+                let Some(k) = v.as_str() else {
+                    bail!("[index] date_field must be a string");
+                };
+                c.date = Some(crate::date::DateSource::field(k)?);
+            }
+            (None, None) => {}
         }
         Ok(c)
     }

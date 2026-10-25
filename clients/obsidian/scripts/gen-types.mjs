@@ -61,7 +61,7 @@ const pascal = (s) => s.replace(/(^|_)([a-z])/g, (_, __, c) => c.toUpperCase());
 function tsType(name, key, s) {
   const where = `${name}.${key}`;
   // arrays of a simple type (P2-L/L3: `search.path_prefix`)
-  const known = new Set(["type", "description", "enum", "minLength", "minimum", "maximum", "items", "minItems", "maxItems"]);
+  const known = new Set(["type", "description", "enum", "minLength", "maxLength", "minimum", "maximum", "items", "minItems", "maxItems"]);
   for (const k of Object.keys(s)) if (!known.has(k)) throw new Error(`${where}: unknown schema key ${k}`);
   if (s.enum) {
     if (s.type !== "string") throw new Error(`${where}: non-string enum`);

@@ -22,6 +22,7 @@ use rootmarkcore::{
     Actor, ActorKind, AuthorKind, Decision, EditMode, EditRequest, MatcherVersion, Policy,
     Provenance, Vault,
 };
+use rootmarkindex::date::Date;
 use rootmarkindex::search::{Mode, Searcher};
 use rootmarkindex::store::{self, Store};
 use rootmarkindex::OnnxMiniLm;
@@ -95,6 +96,10 @@ pub fn specs() -> Vec<ToolSpec> {
                     "path_prefix": {"type": "array", "minItems": 1, "maxItems": 64,
                         "items": {"type": "string", "minLength": 1},
                         "description": "only documents whose vault-relative path is one of these or lies under it ('/' separated; no absolute path, no '..'); applied before ranking, recorded in the trace"},
+                    "date_from": {"type": "string", "minLength": 10, "maxLength": 10,
+                        "description": "only documents dated on or after this day (YYYY-MM-DD; the date from the vault's [index] date_from_path or date_field, never a file time); recorded in the trace"},
+                    "date_to": {"type": "string", "minLength": 10, "maxLength": 10,
+                        "description": "only documents dated on or before this day (YYYY-MM-DD); a document without a date is left out while a time filter is given"},
                     "loc": {"type": "boolean",
                         "description": "also each hit's block locations: loc (per lineage: line and byte range, content_hash) and loc_stale (default false)"},
                 }),
@@ -247,6 +252,30 @@ pub fn specs() -> Vec<ToolSpec> {
                         "description": "only traces with at_seq >= since_seq (default 0)"},
                     "consumer": {"type": "string", "minLength": 1,
                         "description": "only traces of this consumer"},
+                }),
+                &[],
+            ),
+        },
+        ToolSpec {
+            name: "events",
+            description: "The event log as a stream to pull (P2-B; contract §2.8): the events of \
+                `events.jsonl` from `since_seq` on (inclusive), in seq order, each object the bytes of \
+                its log line, at most `limit` (default 100, at most 1000; a larger limit is refused). \
+                `kinds` and `path_prefix` only filter, never reorder (`path_prefix` as in search: \
+                vault-relative, NFC). `next_seq` is where the next page starts, `head_seq` the log's \
+                length. Writes nothing (no event, no trace).",
+            input_schema: object_schema(
+                json!({
+                    "since_seq": {"type": "integer", "minimum": 0,
+                        "description": "first seq to return (default 0); beyond head_seq is refused"},
+                    "kinds": {"type": "array", "minItems": 1, "maxItems": 12,
+                        "items": {"type": "string", "minLength": 1},
+                        "description": "only events of these kinds (BlockCreated, …, Promoted, Demoted, CheckpointCreated, …)"},
+                    "path_prefix": {"type": "array", "minItems": 1, "maxItems": 64,
+                        "items": {"type": "string", "minLength": 1},
+                        "description": "only events of documents whose vault-relative path is one of these or lies under it (as in search)"},
+                    "limit": {"type": "integer", "minimum": 1, "maximum": 1000,
+                        "description": "at most this many events (default 100, at most 1000)"},
                 }),
                 &[],
             ),
@@ -415,6 +444,82 @@ struct SearchArgs {
     /// P2-B/B1: each hit's block locations (contract §2.5; default false:
     /// the hits are the v1 hits, byte for byte)
     loc: Option<bool>,
+    /// P2-B/B3 (b): the time filter, inclusive `YYYY-MM-DD` (contract §2.2)
+    date_from: Option<String>,
+    date_to: Option<String>,
+}
+
+/// P2-B/B3 (a): `events` (contract §2.8)
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct EventsArgs {
+    since_seq: Option<u64>,
+    kinds: Option<Vec<String>>,
+    path_prefix: Option<Vec<String>>,
+    limit: Option<usize>,
+}
+
+/// `events`' default and largest `limit` (contract §2.8): a larger one is
+/// refused, never cut silently.
+pub const EVENTS_LIMIT_DEFAULT: usize = 100;
+pub const EVENTS_LIMIT_MAX: usize = 1000;
+
+/// The event kinds `events.kinds` names (spec §4.2, as written in the log).
+const EVENT_KINDS: [&str; 12] = [
+    "BlockCreated",
+    "BlockUpdated",
+    "BlockMoved",
+    "BlockSplit",
+    "BlockMerged",
+    "BlockDeleted",
+    "SnapshotCommitted",
+    "LayerChanged",
+    "Promoted",
+    "Demoted",
+    "CheckpointCreated",
+    "CheckpointNamed",
+];
+
+/// One page of `events` (contract §2.8): the log lines as written, in seq
+/// order, and where the next page starts.
+pub struct EventsPage {
+    /// `events.jsonl` lines, byte for byte (no line ending)
+    pub lines: Vec<String>,
+    pub next_seq: u64,
+    pub head_seq: u64,
+    pub filter: Option<Value>,
+}
+
+impl EventsPage {
+    /// The answer as a JSON value (MCP `structuredContent`, tests).
+    pub fn to_value(&self) -> Result<Value> {
+        let events = self
+            .lines
+            .iter()
+            .map(|l| serde_json::from_str::<Value>(l))
+            .collect::<serde_json::Result<Vec<_>>>()?;
+        let mut o = json!({"events": events, "head_seq": self.head_seq, "next_seq": self.next_seq});
+        if let Some(f) = &self.filter {
+            o["filter"] = f.clone();
+        }
+        Ok(o)
+    }
+
+    /// The answer as JSON text in which every event object is the bytes of
+    /// its `events.jsonl` line (HTTP body, MCP text content); the same
+    /// value as `to_value`.
+    pub fn to_body(&self) -> String {
+        let filter = self
+            .filter
+            .as_ref()
+            .map_or(String::new(), |f| format!(",\"filter\":{f}"));
+        format!(
+            "{{\"events\":[{}]{filter},\"head_seq\":{},\"next_seq\":{}}}",
+            self.lines.join(","),
+            self.head_seq,
+            self.next_seq
+        )
+    }
 }
 
 #[derive(Deserialize)]
@@ -548,6 +653,35 @@ fn within_caps(caps: &rootmarkcore::attest::Caps, plan: &rootmarkcore::IngestPla
 }
 
 /// A checkpoint `at` names (id or name); unknown → `not_found`.
+/// The time filter's range (P2-B/B3 (b)): `None` without `date_from` and
+/// `date_to`; each, when given, exactly `YYYY-MM-DD` (a calendar day), and
+/// `date_from` not after `date_to`.
+fn date_range(
+    from: Option<&str>,
+    to: Option<&str>,
+) -> Result<Option<(Option<Date>, Option<Date>)>> {
+    let parse = |field: &str, s: Option<&str>| -> Result<Option<Date>> {
+        s.map(|x| {
+            Date::parse(x).with_context(|| format!("search: {field} {x:?} is not a day YYYY-MM-DD"))
+        })
+        .transpose()
+    };
+    let (f, t) = (parse("date_from", from)?, parse("date_to", to)?);
+    if f.is_none() && t.is_none() {
+        return Ok(None);
+    }
+    if let (Some(a), Some(b)) = (f, t) {
+        if a > b {
+            bail!(
+                "search: date_from {} is after date_to {}",
+                a.to_iso(),
+                b.to_iso()
+            );
+        }
+    }
+    Ok(Some((f, t)))
+}
+
 fn checkpoint_at(v: &Vault, at: &str) -> Result<rootmarkcore::Checkpoint> {
     v.find_checkpoint(at).code(Code::NotFound)
 }
@@ -597,6 +731,46 @@ impl Kernel {
             *e = Some((name.clone(), Arc::new(OnnxMiniLm::load_named(&name)?)));
         }
         Ok(e.as_ref().expect("set above").1.clone())
+    }
+
+    /// The time filter over the documents of the searched state (the
+    /// checkpoint `at`, or the current state): each document's date from
+    /// the vault's `[index]` date source (path and front matter of its
+    /// version there; never a file time). A vault without a date source
+    /// cannot be filtered by time (an error naming the fields).
+    fn date_filter(
+        &self,
+        v: &Vault,
+        at: Option<&str>,
+        from: Option<Date>,
+        to: Option<Date>,
+    ) -> Result<rootmarkindex::date::DateFilter> {
+        let Some(src) = rootmarkindex::config::IndexConfig::of_vault(&self.vault)?.date else {
+            bail!("search: date_from/date_to need a date source: [index] date_from_path or [index] date_field in .rootmark/policy.toml");
+        };
+        let mut docs: Vec<(String, Option<String>)> = Vec::new();
+        match at {
+            Some(a) => {
+                let cp = checkpoint_at(v, a)?;
+                for d in cp.docs.keys() {
+                    let snap = v.snapshot_at(d, &cp.checkpoint_id)?;
+                    docs.push((d.clone(), snap.and_then(|s| s.frontmatter)));
+                }
+            }
+            None => {
+                for d in v.doc_paths() {
+                    if let Some(s) = v.snapshot(&d)? {
+                        docs.push((d, s.frontmatter));
+                    }
+                }
+            }
+        }
+        Ok(rootmarkindex::date::DateFilter::build(
+            &src,
+            from,
+            to,
+            docs.iter().map(|(p, f)| (p.as_str(), f.as_deref())),
+        ))
     }
 
     fn matcher_for(&self, v: &Vault) -> MatcherVersion {
@@ -1423,6 +1597,105 @@ impl Kernel {
         }
     }
 
+    /// `events` as a page (P2-B/B3 (a)), under the readers' lock like
+    /// every read (`run`): the HTTP and MCP transports send its `to_body`.
+    pub fn run_events(&self, a: &Value) -> Result<EventsPage> {
+        let _r = self.queue.read();
+        self.events_page(a)
+    }
+
+    /// `events` (contract §2.8): reads `events.jsonl` and writes nothing.
+    /// Every argument is checked before the log is read; a log line whose
+    /// seq is not its line number is an error (never skipped).
+    fn events_page(&self, a: &Value) -> Result<EventsPage> {
+        let x: EventsArgs = args("events", a)?;
+        let limit = x.limit.unwrap_or(EVENTS_LIMIT_DEFAULT);
+        if !(1..=EVENTS_LIMIT_MAX).contains(&limit) {
+            bail_code!(
+                Code::InvalidArguments,
+                "events: limit = {limit} outside [1, {EVENTS_LIMIT_MAX}]"
+            );
+        }
+        let kinds = match &x.kinds {
+            None => None,
+            Some(k) => {
+                if k.is_empty() {
+                    bail_code!(
+                        Code::InvalidArguments,
+                        "events: kinds is empty (omit it for every kind)"
+                    );
+                }
+                for n in k {
+                    if !EVENT_KINDS.contains(&n.as_str()) {
+                        bail_code!(
+                            Code::InvalidArguments,
+                            "events: unknown kind {n:?} (one of {EVENT_KINDS:?})"
+                        );
+                    }
+                }
+                let mut k = k.clone();
+                k.sort();
+                k.dedup();
+                Some(k)
+            }
+        };
+        let prefix = x
+            .path_prefix
+            .as_deref()
+            .map(rootmarkindex::search::PathFilter::new)
+            .transpose()
+            .code(Code::InvalidArguments)?;
+        let mut filter = serde_json::Map::new();
+        if let Some(k) = &kinds {
+            filter.insert("kinds".into(), json!(k));
+        }
+        if let Some(p) = &prefix {
+            filter.insert("path_prefix".into(), json!(p.prefixes()));
+        }
+        let path = rootmarkcore::meta::path(&self.vault).join("events.jsonl");
+        let text = match std::fs::read(&path) {
+            Ok(b) => String::from_utf8(b).context("events.jsonl is not UTF-8")?,
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => String::new(),
+            Err(e) => return Err(e).with_context(|| format!("read {}", path.display())),
+        };
+        let all: Vec<&str> = text.lines().collect();
+        let head = all.len() as u64;
+        let since = x.since_seq.unwrap_or(0);
+        if since > head {
+            bail_code!(
+                Code::InvalidArguments,
+                "events: since_seq {since} is beyond the log (head_seq {head})"
+            );
+        }
+        let mut lines = Vec::new();
+        let mut next = head;
+        for (i, line) in all.iter().enumerate().skip(since as usize) {
+            if lines.len() == limit {
+                next = i as u64;
+                break;
+            }
+            let ev: rootmarkcore::Event = serde_json::from_str(line)
+                .with_context(|| format!("events.jsonl line {}", i + 1))?;
+            if ev.seq != i as u64 {
+                bail!("events.jsonl line {}: seq {} != {}", i + 1, ev.seq, i);
+            }
+            let kind = serde_json::to_value(ev.kind)?;
+            let keep = kinds
+                .as_ref()
+                .is_none_or(|k| kind.as_str().is_some_and(|n| k.iter().any(|x| x == n)))
+                && prefix.as_ref().is_none_or(|p| p.matches(&ev.doc_path));
+            if keep {
+                lines.push((*line).to_string());
+            }
+        }
+        Ok(EventsPage {
+            lines,
+            next_seq: next,
+            head_seq: head,
+            filter: (!filter.is_empty()).then_some(Value::Object(filter)),
+        })
+    }
+
     fn dispatch(&self, name: &str, a: &Value, caller: Caller) -> Result<Value> {
         let consumer = caller.consumer;
         if caller.channel == Channel::Http && needs_human_id(name) {
@@ -1450,10 +1723,28 @@ impl Kernel {
                     .map(rootmarkindex::search::PathFilter::new)
                     .transpose()
                     .code(Code::InvalidArguments)?;
+                // P2-B/B3 (b): the time filter's range, checked before
+                // anything is recorded
+                let range = date_range(x.date_from.as_deref(), x.date_to.as_deref())
+                    .code(Code::InvalidArguments)?;
                 let mut v = open_vault(&self.vault)?;
                 if let Some(at) = &x.at {
                     checkpoint_at(&v, at)?;
                 }
+                let mut undated = None;
+                let filter = match range {
+                    None => filter,
+                    Some((from, to)) => {
+                        let df = self
+                            .date_filter(&v, x.at.as_deref(), from, to)
+                            .code(Code::InvalidArguments)?;
+                        undated = Some(df.undated);
+                        Some(match filter {
+                            Some(f) => f.with_dates(df),
+                            None => rootmarkindex::search::PathFilter::dates_only(df),
+                        })
+                    }
+                };
                 index_readable(&v)?;
                 let e = self.embedder()?;
                 let s = Store::open(&v, e.as_ref())?;
@@ -1472,6 +1763,11 @@ impl Kernel {
                 // nothing written)
                 if x.loc.unwrap_or(false) {
                     crate::loc::annotate_hits(&self.vault, &v, &mut out)?;
+                }
+                // P2-B/B3 (b): the documents the time filter left out for
+                // want of a date (only with a time filter)
+                if let Some(n) = undated {
+                    out["undated_excluded"] = json!(n);
                 }
                 Ok(out)
             }
@@ -1526,6 +1822,7 @@ impl Kernel {
                 out["block"]["loc_stale"] = json!(locs.stale);
                 Ok(out)
             }
+            "events" => self.events_page(a)?.to_value(),
             "status" => {
                 args::<NoArgs>(name, a)?;
                 self.status()

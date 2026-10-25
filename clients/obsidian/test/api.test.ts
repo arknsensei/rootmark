@@ -43,6 +43,7 @@ const ARGS: { [T in ToolName]: ToolArgs[T] } = {
   checkpoint: { name: "yesterday" },
   checkpoints: {},
   trace: { since_seq: 0, consumer: "scene-agent/1.0" },
+  events: { since_seq: 0, kinds: ["Promoted"], limit: 10 },
 };
 
 describe("requests (contract §1)", () => {
@@ -62,9 +63,9 @@ describe("requests (contract §1)", () => {
     expect(JSON.parse(r?.body ?? "")).toEqual(ARGS[tool]);
   });
 
-  it("the contract has exactly the ten tools of §2", () => {
+  it("the contract has exactly the eleven tools of §2 (v2: events, P2-B/B3)", () => {
     expect([...TOOLS].sort()).toEqual(
-      ["blame", "checkpoint", "checkpoints", "history", "promote", "propose", "read_block", "search", "status", "trace"],
+      ["blame", "checkpoint", "checkpoints", "events", "history", "promote", "propose", "read_block", "search", "status", "trace"],
     );
   });
 

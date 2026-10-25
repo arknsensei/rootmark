@@ -373,9 +373,16 @@ fn pass(
 /// a longer one than `MAX_PREFIX_BYTES`, an absolute path (`/…`, `\…`, a
 /// drive `C:`), a `\`, an empty, `.` or `..` component, a control
 /// character. A prefix therefore never addresses anything outside the vault.
+///
+/// P2-B/B3 (b): the filter may also carry the search's time filter
+/// (`with_dates`, `dates_only`): a document then matches when its path
+/// matches the prefixes (if any) and it is among the time filter's dated
+/// documents in range.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PathFilter {
+    /// empty only for a time filter alone (`dates_only`)
     prefixes: Vec<String>,
+    dates: Option<crate::date::DateFilter>,
 }
 
 pub const MAX_PREFIXES: usize = 64;
@@ -399,23 +406,65 @@ impl PathFilter {
         }
         out.sort();
         out.dedup();
-        Ok(PathFilter { prefixes: out })
+        Ok(PathFilter {
+            prefixes: out,
+            dates: None,
+        })
+    }
+
+    /// A time filter alone (P2-B/B3 (b)).
+    pub fn dates_only(d: crate::date::DateFilter) -> PathFilter {
+        PathFilter {
+            prefixes: Vec::new(),
+            dates: Some(d),
+        }
+    }
+
+    /// This path filter and a time filter (P2-B/B3 (b)).
+    pub fn with_dates(mut self, d: crate::date::DateFilter) -> PathFilter {
+        self.dates = Some(d);
+        self
     }
 
     pub fn prefixes(&self) -> &[String] {
         &self.prefixes
     }
 
+    pub fn dates(&self) -> Option<&crate::date::DateFilter> {
+        self.dates.as_ref()
+    }
+
     pub fn matches(&self, doc_path: &str) -> bool {
-        self.prefixes
-            .iter()
-            .any(|p| rootmarkcore::pathprefix::matches(p, doc_path))
+        (self.prefixes.is_empty()
+            || self
+                .prefixes
+                .iter()
+                .any(|p| rootmarkcore::pathprefix::matches(p, doc_path)))
+            && self
+                .dates
+                .as_ref()
+                .is_none_or(|d| d.docs.contains(doc_path))
     }
 
     /// The filter as the trace and the query hash carry it:
-    /// `{"path_prefix": [<normalized prefixes>]}`.
+    /// `{"path_prefix": [<normalized prefixes>]}`; with a time filter also
+    /// `date_from` and `date_to` (`YYYY-MM-DD`, each when given; P2-B/B3
+    /// (b)); a time filter alone has no `path_prefix`. A path filter alone
+    /// is written as before (its `query_hash` is unchanged).
     pub fn to_json(&self) -> serde_json::Value {
-        serde_json::json!({ "path_prefix": self.prefixes })
+        let mut o = serde_json::Map::new();
+        if !self.prefixes.is_empty() {
+            o.insert("path_prefix".into(), serde_json::json!(self.prefixes));
+        }
+        if let Some(d) = &self.dates {
+            if let Some(f) = d.from {
+                o.insert("date_from".into(), serde_json::json!(f.to_iso()));
+            }
+            if let Some(t) = d.to {
+                o.insert("date_to".into(), serde_json::json!(t.to_iso()));
+            }
+        }
+        serde_json::Value::Object(o)
     }
 
     fn keep(&self, store: &Store, v: Vec<(usize, Layer)>) -> Vec<(usize, Layer)> {

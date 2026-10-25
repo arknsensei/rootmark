@@ -193,12 +193,27 @@ impl ServerHandler for McpServer {
             .unwrap_or_else(|p| p.into_inner())
             .remove(&context.id);
         let res = tokio::task::spawn_blocking(move || {
-            kernel.run(ticket, &name, &args, Caller::mcp(consumer.as_deref()))
+            if name == "events" {
+                // P2-B/B3 (a): the text content is the answer with each
+                // event object its log line, byte for byte
+                drop(ticket);
+                let page = kernel.run_events(&args)?;
+                Ok((page.to_value()?, Some(page.to_body())))
+            } else {
+                kernel
+                    .run(ticket, &name, &args, Caller::mcp(consumer.as_deref()))
+                    .map(|v| (v, None))
+            }
         })
         .await
         .map_err(|e| McpError::internal_error(format!("tool task failed: {e}"), None))?;
         Ok(match res {
-            Ok(v) => CallToolResult::structured(v),
+            Ok((v, None)) => CallToolResult::structured(v),
+            Ok((v, Some(body))) => {
+                let mut r = CallToolResult::structured(v);
+                r.content = vec![ContentBlock::text(body)];
+                r
+            }
             Err(e) => {
                 let mut r =
                     CallToolResult::error(vec![ContentBlock::text(format!("error: {e:#}"))]);

@@ -71,6 +71,9 @@ export interface Hit {
   lineage_ids: string[];
   layer: Layer;
   score: number;
+  /** contract v2 (`search` with `loc: true`): per lineage, or null */
+  loc?: (Loc | null)[];
+  loc_stale?: boolean;
 }
 
 export interface SearchResult {
@@ -80,6 +83,10 @@ export interface SearchResult {
   query_hash: string;
   trace_id: string;
   hits: Hit[];
+  /** the filter given (path prefixes, time range; contract §2.2) */
+  filter?: Record<string, unknown>;
+  /** contract v2: documents a time filter left out for want of a date */
+  undated_excluded?: number;
 }
 
 export interface Returned {
@@ -130,7 +137,18 @@ export interface HistoryResult {
   events: LogEvent[];
 }
 
+/** A block location (contract v2 §2.5; deneysel, K-P2B-T1). */
+export interface Loc {
+  line_start: number;
+  line_end: number;
+  byte_start: number;
+  byte_end: number;
+  content_hash: string;
+}
+
 export interface BlameBlock {
+  /** contract v2 (§2.5): where the block stands in the located bytes */
+  loc?: Loc;
   lineage_id: string;
   version_id: string;
   layer: Layer;
@@ -146,6 +164,8 @@ export interface BlameResult {
   doc_path: string;
   at: string | null;
   blocks: BlameBlock[];
+  /** contract v2 (§2.5): the locations are not the file's bytes */
+  loc_stale?: boolean;
 }
 
 export interface ProposeResult {
@@ -190,6 +210,14 @@ export interface TraceResult {
   traces: Trace[];
 }
 
+/** `events` (contract v2 §2.8): log lines in seq order and the next page. */
+export interface EventsResult {
+  events: LogEvent[];
+  next_seq: number;
+  head_seq: number;
+  filter?: Record<string, unknown>;
+}
+
 /** Results by tool. */
 export interface ToolResult {
   status: StatusResult;
@@ -202,6 +230,7 @@ export interface ToolResult {
   checkpoint: Checkpoint;
   checkpoints: CheckpointsResult;
   trace: TraceResult;
+  events: EventsResult;
 }
 
 export interface HttpRequest {
