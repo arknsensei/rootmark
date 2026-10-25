@@ -6,7 +6,29 @@ binding and the Obsidian client. One version number for all of them
 
 ## Unreleased
 
-Rounds P2-L and P2-P (block 1 of phase 2). Spec 2.0.3 (Draft sections only).
+Rounds P2-L and P2-P (block 1 of phase 2). Spec 2.0.3: §7.1 (Draft) default
+`canonical`, rename back onto an earlier path; §7 (Validated) the optional
+`meta.source` of `Promoted`/`Demoted`; §8 an informative note on the search
+path filter.
+
+### Declarative promotion rules (P2-P)
+- `[[promotion.rules]]` in `.rootmark/policy.toml` (`id`, `actor =
+  "agent:<name>"`, optional `source`, `path_prefix`, `to = "canonical"`;
+  `[promotion] version` required with rules): an agent's `propose` under a
+  rule's prefix is promoted to `canonical` at once, one `Promoted` per
+  lineage the call wrote (`meta.actor = policy:<rule>`, `meta.reason =
+  "rule:<rule>"`, `policy_version`), returned in the response's `promoted`.
+  Only `propose` runs the rules: unattested file writes and `unverified`
+  content are never promoted by a rule. A rule names the agent (its MCP
+  client name, or the CLI's `--source`) — a self-declared name: keep prefixes
+  narrow. `rootmark policy lint <vault>` checks the recipe; an invalid rule
+  stops `rootmark serve`.
+- `POST /v1/demote` (HTTP, the human channel): a human undoes a promotion,
+  a rule's included.
+- Channel label: a human's promotion or demotion over HTTP records its
+  `X-Consumer` as `meta.source` (`rootmark promote/demote --source` on the
+  command line) — e.g. a bot relaying a remote human's approval
+  (docs/HEADLESS_CHANNEL.md).
 
 ### Upgrading from 0.1.0
 - A vault set up by 0.1.0 has a `.rootmark/policy.toml` without an

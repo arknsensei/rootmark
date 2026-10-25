@@ -1977,17 +1977,19 @@ impl Kernel {
                 edit.name()
             );
         }
-        // P2-P/P1: the lineages this call writes — their version is new in
-        // it (a moved block keeps its version) — for the promotion rules
-        let before: std::collections::HashSet<&str> = plan
+        // P2-P/P1: the lineages this call writes — a live (lineage, version)
+        // that is new in it (a moved block keeps both; a new block whose
+        // text repeats an existing one has the same version but a new
+        // lineage, P5 review 1) — for the promotion rules
+        let before: std::collections::HashSet<(&str, &str)> = plan
             .blocks_before
             .iter()
-            .map(|b| b.version_id.as_str())
+            .map(|b| (b.lineage_id.as_str(), b.version_id.as_str()))
             .collect();
         let wrote: Vec<String> = plan
             .blocks_after
             .iter()
-            .filter(|b| !before.contains(b.version_id.as_str()))
+            .filter(|b| !before.contains(&(b.lineage_id.as_str(), b.version_id.as_str())))
             .map(|b| b.lineage_id.clone())
             .collect();
         // write: directories this call creates are remembered (and removed

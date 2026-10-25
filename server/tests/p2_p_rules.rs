@@ -453,3 +453,31 @@ fn a_rule_names_the_agent_not_its_version() {
         assert_eq!(r.get("promoted").is_some(), want, "{who}: {r}");
     }
 }
+
+/// A rule written with a version matches that exact id only (P5 review 10).
+#[test]
+fn a_versioned_rule_matches_exactly() {
+    let text = recipe(
+        Some("1"),
+        &rule("r", "agent:collector/1.0", None, "sources"),
+    );
+    let v = vault("versioned", &text);
+    let k = Kernel::open(&v).unwrap();
+    for (i, (who, want)) in [
+        ("collector/1.0", true),
+        ("collector/1.0/x", false),
+        ("collector", false),
+    ]
+    .into_iter()
+    .enumerate()
+    {
+        let r = k
+            .call(
+                "propose",
+                &json!({"doc_path": format!("sources/v{i}.md"), "content": "# N\n\nmetin.\n", "reason": "r"}),
+                Caller::mcp(Some(who)),
+            )
+            .unwrap();
+        assert_eq!(r.get("promoted").is_some(), want, "{who}: {r}");
+    }
+}

@@ -143,14 +143,17 @@ impl PromotionRule {
     }
 }
 
-/// `got` is `want`, or `want/<version>` with a version that is not empty
-/// and holds no `/` (an MCP client's `<name>/<version>`).
+/// `got` is `want`, or — when `want` is a bare name (no `/`) —
+/// `want/<version>` with a version that is not empty and holds no `/` (an
+/// MCP client's `<name>/<version>`). A rule written with a version
+/// (`agent:x/1.0`) matches exactly (P5 review 10).
 fn same_agent(want: &str, got: &str) -> bool {
     got == want
-        || got
-            .strip_prefix(want)
-            .and_then(|r| r.strip_prefix('/'))
-            .is_some_and(|v| !v.is_empty() && !v.contains('/'))
+        || (!want.contains('/')
+            && got
+                .strip_prefix(want)
+                .and_then(|r| r.strip_prefix('/'))
+                .is_some_and(|v| !v.is_empty() && !v.contains('/')))
 }
 
 /// The rule id form: `[a-z0-9_-]{1,64}`.
@@ -399,6 +402,11 @@ impl RawPromotion {
                             r.id
                         );
                     }
+                }
+                // P5 review 2 (K-P2P.5): under `deny` no one can demote, so a
+                // rule's promotion could never be taken back
+                if !rules.is_empty() && name == "deny" {
+                    bail!("[promotion]: policy = \"deny\" with [[promotion.rules]]: a rule's promotion could not be demoted (deny refuses every transition); use policy = \"human_only\"");
                 }
                 if !rules.is_empty() && version.is_none() {
                     bail!("[promotion]: missing field `version` (required with [[promotion.rules]]; the policy_version of a rule's promotion)");
