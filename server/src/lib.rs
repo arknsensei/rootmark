@@ -7,6 +7,7 @@ pub mod config;
 pub mod conformance;
 pub mod error;
 pub mod http;
+pub mod loc;
 pub mod mcp;
 pub mod migrate;
 pub mod paths;

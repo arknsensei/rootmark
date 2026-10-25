@@ -95,6 +95,8 @@ pub fn specs() -> Vec<ToolSpec> {
                     "path_prefix": {"type": "array", "minItems": 1, "maxItems": 64,
                         "items": {"type": "string", "minLength": 1},
                         "description": "only documents whose vault-relative path is one of these or lies under it ('/' separated; no absolute path, no '..'); applied before ranking, recorded in the trace"},
+                    "loc": {"type": "boolean",
+                        "description": "also each hit's block locations: loc (per lineage: line and byte range, content_hash) and loc_stale (default false)"},
                 }),
                 &["query"],
             ),
@@ -106,7 +108,8 @@ pub fn specs() -> Vec<ToolSpec> {
                 source), for lineage `lineage_id` of document `doc_path`; at checkpoint `at` or at \
                 the checkpoint of the current state. Records one consumption trace for the calling \
                 consumer. A `derived` block is never returned; a lineage that is not live in that \
-                document at that checkpoint is an error and records nothing.",
+                document at that checkpoint is an error and records nothing. The block also \
+                carries its location `loc` and `loc_stale` (as in blame).",
             input_schema: object_schema(
                 json!({
                     "doc_path": {"type": "string", "minLength": 1,
@@ -135,7 +138,10 @@ pub fn specs() -> Vec<ToolSpec> {
             description: "Provenance of a document block by block, in document order (spec §4.3, \
                 §7): per block its lineage id, version id, layer (canonical, proposal, derived), \
                 author kind, source and the log offsets that created and last changed it; at the \
-                head, or as of a checkpoint (spec §8). Writes nothing.",
+                head, or as of a checkpoint (spec §8). Per block also its location `loc` (lines, \
+                UTF-8 byte range and the `content_hash` of the bytes they belong to) and \
+                `loc_stale` (the file on disk holds other bytes than that version: the locations \
+                are the version's, not the file's). Writes nothing.",
             input_schema: object_schema(
                 json!({
                     "doc_path": {"type": "string", "minLength": 1,
@@ -406,6 +412,9 @@ struct SearchArgs {
     include_proposal: Option<bool>,
     /// P2-L/L3: vault-relative path prefixes (contract §2.2)
     path_prefix: Option<Vec<String>>,
+    /// P2-B/B1: each hit's block locations (contract §2.5; default false:
+    /// the hits are the v1 hits, byte for byte)
+    loc: Option<bool>,
 }
 
 #[derive(Deserialize)]
@@ -1458,7 +1467,13 @@ impl Kernel {
                     x.include_proposal.unwrap_or(false),
                     filter.as_ref(),
                 )?;
-                Ok(serde_json::to_value(r)?)
+                let mut out = serde_json::to_value(r)?;
+                // P2-B/B1: each hit's block locations, when asked (derived;
+                // nothing written)
+                if x.loc.unwrap_or(false) {
+                    crate::loc::annotate_hits(&self.vault, &v, &mut out)?;
+                }
+                Ok(out)
             }
             "read_block" => {
                 let x: ReadBlockArgs = args(name, a)?;
@@ -1493,7 +1508,23 @@ impl Kernel {
                     &cp.checkpoint_id,
                 )?;
                 let rb = blocks.pop().context("read_blocks returned no block")?;
-                Ok(json!({"checkpoint_id": cp.checkpoint_id, "block": rb, "trace": trace}))
+                let mut out =
+                    json!({"checkpoint_id": cp.checkpoint_id, "block": rb, "trace": trace});
+                // P2-B/B1: the block's location in the version read
+                let snap = v
+                    .snapshot_at(&x.doc_path, &cp.checkpoint_id)?
+                    .context("read_block: no snapshot at the checkpoint")?;
+                let locs = crate::loc::doc_locs(&self.vault, &v, &snap)?;
+                if let Some(l) = snap
+                    .blocks
+                    .iter()
+                    .position(|(l, _)| *l == x.lineage_id)
+                    .and_then(|i| locs.loc(i))
+                {
+                    out["block"]["loc"] = l;
+                }
+                out["block"]["loc_stale"] = json!(locs.stale);
+                Ok(out)
             }
             "status" => {
                 args::<NoArgs>(name, a)?;
@@ -1732,7 +1763,16 @@ impl Kernel {
                     }
                 }
                 let blocks = v.blame(&x.doc_path, x.at.as_deref())?;
-                Ok(json!({"doc_path": x.doc_path, "at": x.at, "blocks": blocks}))
+                let mut out = json!({"doc_path": x.doc_path, "at": x.at, "blocks": blocks});
+                // P2-B/B1: each block's location (derived; nothing written)
+                let snap = match &x.at {
+                    Some(at) => v.snapshot_at(&x.doc_path, at)?,
+                    None => v.snapshot(&x.doc_path)?,
+                }
+                .context("blame: no snapshot")?;
+                let locs = crate::loc::doc_locs(&self.vault, &v, &snap)?;
+                crate::loc::annotate_rows(&mut out, "blocks", &locs);
+                Ok(out)
             }
             "checkpoints" => {
                 args::<NoArgs>(name, a)?;

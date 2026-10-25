@@ -7,7 +7,7 @@ export const TOOLS = ["status","search","read_block","history","blame","propose"
 export type ToolName = (typeof TOOLS)[number];
 
 /** The human channel's own endpoints (§2.6), `POST /v1/<name>`; never MCP tools. */
-export const HTTP_ONLY = ["attest_session","attest"] as const;
+export const HTTP_ONLY = ["attest_session","attest","demote"] as const;
 export type HttpOnlyName = (typeof HTTP_ONLY)[number];
 
 /** The stable error codes of the contract (§3) and their HTTP status. */
@@ -39,6 +39,8 @@ export interface SearchArgs {
   include_proposal?: boolean;
   /** canonical hits to return (default 10) */
   k?: number;
+  /** also each hit's block locations: loc (per lineage: line and byte range, content_hash) and loc_stale (default false) */
+  loc?: boolean;
   /** retrieval mode (default hybrid) */
   mode?: "hybrid" | "lexical" | "flat";
   /** only documents whose vault-relative path is one of these or lies under it ('/' separated; no absolute path, no '..'); applied before ranking, recorded in the trace */
@@ -123,3 +125,90 @@ export interface ToolArgs {
   checkpoints: CheckpointsArgs;
   trace: TraceArgs;
 }
+
+/** Contract version of these types (§6). */
+export const CONTRACT_VERSION = 2;
+
+/** Headers every HTTP request carries (§1). */
+export const HTTP_HEADERS = ["Authorization","X-Consumer"] as const;
+
+export type Loc = { line_start: number; line_end: number; byte_start: number; byte_end: number; content_hash: string; };
+
+export type BlockSummary = { lineage_id: string; version_id: string; layer: Layer; layer_source: string; author_kind: string; source: string; seq_created: number; seq_last: number; inactive: boolean; loc?: Loc; };
+
+export type Event = { seq: number; kind: string; doc_path: string; lineage_ids: Array<string>; meta: Record<string, unknown>; };
+
+export type Hit = { doc_path: string; chunk_id: string; lineage_ids: Array<string>; layer: Layer; score: number; loc?: Array<Loc | null>; loc_stale?: boolean; };
+
+export type Trace = { trace_id: string; checkpoint_id: string; consumer: string; query_hash: string; at_seq: number; returned: Array<{ doc_path: string; lineage_id: string; version_id: string; }>; filter?: Record<string, unknown>; };
+
+export type Checkpoint = { checkpoint_id: string; name: string | null; event_seq: number; docs: Record<string, unknown>; };
+
+export type Transition = { decision: string; lineage_id: string; policy: string; policy_version: string; event?: Event; layer?: Layer; reason?: string; actor?: Record<string, unknown>; };
+
+export type Layer = "canonical" | "proposal" | "unverified" | "derived";
+
+/** `status` response (§2.9). */
+export type StatusResponse = { vault: string; spec_version: string; mdk_version: string; level_claimed: number; embedder: string | null; index: { state: "ok" | "stale" | "missing" | "damaged"; format: string | null; expected_format: string; auto_rebuild: boolean; }; migrations: Record<string, unknown>; last_checkpoint: Checkpoint | null; policy: { promotion: string; edit: string; }; server_policy: { identity: { human_id: string | null; }; }; attestation: { unattested: "unverified" | "canonical"; implicit: boolean; window_s: number; stage: number; pending: number; }; };
+
+/** `search` response (§2.9). */
+export type SearchResponse = { checkpoint_id: string; mode: string; include_proposal: boolean; query_hash: string; trace_id: string; hits: Array<Hit>; filter?: Record<string, unknown>; };
+
+/** `read_block` response (§2.9). */
+export type ReadBlockResponse = { checkpoint_id: string; block: { doc_path: string; inactive: boolean; loc?: Loc; loc_stale?: boolean; block: { version_id: string; lineage_id: string; block_type: string; text: string; heading_path: Array<string>; layer: Layer; provenance: { author_kind: string; source: string; }; }; }; trace: Trace; };
+
+/** `history` response (§2.9). */
+export type HistoryResponse = { lineage_id: string; layer: Layer | null; events: Array<Event>; };
+
+/** `blame` response (§2.9). */
+export type BlameResponse = { doc_path: string; at: string | null; blocks: Array<BlockSummary>; loc_stale?: boolean; };
+
+/** `propose` response (§2.9). */
+export type ProposeResponse = { doc_path: string; mode: string; bytes: number; synced_external_events: number; edit_policy: string; actor: Record<string, unknown>; snapshot_id: string; events: number; chunks_embedded: number; blocks: Array<BlockSummary>; events_hash: string; promoted?: Array<Event>; };
+
+/** `promote` response (§2.9). */
+export type PromoteResponse = Transition;
+
+/** `checkpoint` response (§2.9). */
+export type CheckpointResponse = Checkpoint;
+
+/** `checkpoints` response (§2.9). */
+export type CheckpointsResponse = { checkpoints: Array<Checkpoint>; };
+
+/** `trace` response (§2.9). */
+export type TraceResponse = { traces: Array<Trace>; };
+
+/** `attest_session` response (§2.9). */
+export type AttestSessionResponse = { session_id: string; key: string; ttl_s: number; stage: number; };
+
+/** `attest` response (§2.9). */
+export type AttestResponse = { attestation_id: string; doc_path: string; content_hash: string; at_seq: number; recorded: boolean; raised: Array<string>; };
+
+/** `demote` response (§2.9). */
+export type DemoteResponse = Transition;
+
+/** `error` response (§2.9). */
+export type ErrorResponse = { error: { code: string; message: string; hint?: string; }; };
+
+/** Responses by tool or endpoint. */
+export interface ToolResponses {
+  status: StatusResponse;
+  search: SearchResponse;
+  read_block: ReadBlockResponse;
+  history: HistoryResponse;
+  blame: BlameResponse;
+  propose: ProposeResponse;
+  promote: PromoteResponse;
+  checkpoint: CheckpointResponse;
+  checkpoints: CheckpointsResponse;
+  trace: TraceResponse;
+  attest_session: AttestSessionResponse;
+  attest: AttestResponse;
+  demote: DemoteResponse;
+}
+
+/** §2.9's schema as written in the contract (the contract checker). */
+export const RESPONSE_SCHEMA = {"defs":{"Loc":{"type":"object","required":["line_start","line_end","byte_start","byte_end","content_hash"],"properties":{"line_start":{"type":"integer"},"line_end":{"type":"integer"},"byte_start":{"type":"integer"},"byte_end":{"type":"integer"},"content_hash":{"type":"string"}}},"BlockSummary":{"type":"object","required":["lineage_id","version_id","layer","layer_source","author_kind","source","seq_created","seq_last","inactive"],"properties":{"lineage_id":{"type":"string"},"version_id":{"type":"string"},"layer":{"$ref":"layer"},"layer_source":{"type":"string"},"author_kind":{"type":"string"},"source":{"type":"string"},"seq_created":{"type":"integer"},"seq_last":{"type":"integer"},"inactive":{"type":"boolean"},"loc":{"$ref":"Loc"}}},"Event":{"type":"object","required":["seq","kind","doc_path","lineage_ids","meta"],"properties":{"seq":{"type":"integer"},"kind":{"type":"string"},"doc_path":{"type":"string"},"lineage_ids":{"type":"array","items":{"type":"string"}},"meta":{"type":"object"}}},"Hit":{"type":"object","required":["doc_path","chunk_id","lineage_ids","layer","score"],"properties":{"doc_path":{"type":"string"},"chunk_id":{"type":"string"},"lineage_ids":{"type":"array","items":{"type":"string"}},"layer":{"$ref":"layer"},"score":{"type":"number"},"loc":{"type":"array","items":{"oneOf":[{"$ref":"Loc"},{"type":"null"}]}},"loc_stale":{"type":"boolean"}}},"Trace":{"type":"object","required":["trace_id","checkpoint_id","consumer","query_hash","at_seq","returned"],"properties":{"trace_id":{"type":"string"},"checkpoint_id":{"type":"string"},"consumer":{"type":"string"},"query_hash":{"type":"string"},"at_seq":{"type":"integer"},"returned":{"type":"array","items":{"type":"object","required":["doc_path","lineage_id","version_id"],"properties":{"doc_path":{"type":"string"},"lineage_id":{"type":"string"},"version_id":{"type":"string"}}}},"filter":{"type":"object"}}},"Checkpoint":{"type":"object","required":["checkpoint_id","name","event_seq","docs"],"properties":{"checkpoint_id":{"type":"string"},"name":{"type":["string","null"]},"event_seq":{"type":"integer"},"docs":{"type":"object"}}},"Transition":{"type":"object","required":["decision","lineage_id","policy","policy_version"],"properties":{"decision":{"type":"string"},"lineage_id":{"type":"string"},"policy":{"type":"string"},"policy_version":{"type":"string"},"event":{"$ref":"Event"},"layer":{"$ref":"layer"},"reason":{"type":"string"},"actor":{"type":"object"}}},"layer":{"enum":["canonical","proposal","unverified","derived"]}},"responses":{"status":{"type":"object","required":["vault","spec_version","mdk_version","level_claimed","embedder","index","migrations","last_checkpoint","policy","server_policy","attestation"],"properties":{"vault":{"type":"string"},"spec_version":{"type":"string"},"mdk_version":{"type":"string"},"level_claimed":{"type":"integer"},"embedder":{"type":["string","null"]},"index":{"type":"object","required":["state","format","expected_format","auto_rebuild"],"properties":{"state":{"enum":["ok","stale","missing","damaged"]},"format":{"type":["string","null"]},"expected_format":{"type":"string"},"auto_rebuild":{"type":"boolean"}}},"migrations":{"type":"object"},"last_checkpoint":{"oneOf":[{"$ref":"Checkpoint"},{"type":"null"}]},"policy":{"type":"object","required":["promotion","edit"],"properties":{"promotion":{"type":"string"},"edit":{"type":"string"}}},"server_policy":{"type":"object","required":["identity"],"properties":{"identity":{"type":"object","required":["human_id"],"properties":{"human_id":{"type":["string","null"]}}}}},"attestation":{"type":"object","required":["unattested","implicit","window_s","stage","pending"],"properties":{"unattested":{"enum":["unverified","canonical"]},"implicit":{"type":"boolean"},"window_s":{"type":"number"},"stage":{"type":"integer"},"pending":{"type":"integer"}}}}},"search":{"type":"object","required":["checkpoint_id","mode","include_proposal","query_hash","trace_id","hits"],"properties":{"checkpoint_id":{"type":"string"},"mode":{"type":"string"},"include_proposal":{"type":"boolean"},"query_hash":{"type":"string"},"trace_id":{"type":"string"},"hits":{"type":"array","items":{"$ref":"Hit"}},"filter":{"type":"object"}}},"read_block":{"type":"object","required":["checkpoint_id","block","trace"],"properties":{"checkpoint_id":{"type":"string"},"block":{"type":"object","required":["doc_path","block","inactive"],"properties":{"doc_path":{"type":"string"},"inactive":{"type":"boolean"},"loc":{"$ref":"Loc"},"loc_stale":{"type":"boolean"},"block":{"type":"object","required":["version_id","lineage_id","block_type","text","heading_path","layer","provenance"],"properties":{"version_id":{"type":"string"},"lineage_id":{"type":"string"},"block_type":{"type":"string"},"text":{"type":"string"},"heading_path":{"type":"array","items":{"type":"string"}},"layer":{"$ref":"layer"},"provenance":{"type":"object","required":["author_kind","source"],"properties":{"author_kind":{"type":"string"},"source":{"type":"string"}}}}}}},"trace":{"$ref":"Trace"}}},"history":{"type":"object","required":["lineage_id","layer","events"],"properties":{"lineage_id":{"type":"string"},"layer":{"oneOf":[{"$ref":"layer"},{"type":"null"}]},"events":{"type":"array","items":{"$ref":"Event"}}}},"blame":{"type":"object","required":["doc_path","at","blocks"],"properties":{"doc_path":{"type":"string"},"at":{"type":["string","null"]},"blocks":{"type":"array","items":{"$ref":"BlockSummary"}},"loc_stale":{"type":"boolean"}}},"propose":{"type":"object","required":["doc_path","mode","bytes","synced_external_events","edit_policy","actor","snapshot_id","events","chunks_embedded","blocks","events_hash"],"properties":{"doc_path":{"type":"string"},"mode":{"type":"string"},"bytes":{"type":"integer"},"synced_external_events":{"type":"integer"},"edit_policy":{"type":"string"},"actor":{"type":"object"},"snapshot_id":{"type":"string"},"events":{"type":"integer"},"chunks_embedded":{"type":"integer"},"blocks":{"type":"array","items":{"$ref":"BlockSummary"}},"events_hash":{"type":"string"},"promoted":{"type":"array","items":{"$ref":"Event"}}}},"promote":{"$ref":"Transition"},"checkpoint":{"$ref":"Checkpoint"},"checkpoints":{"type":"object","required":["checkpoints"],"properties":{"checkpoints":{"type":"array","items":{"$ref":"Checkpoint"}}}},"trace":{"type":"object","required":["traces"],"properties":{"traces":{"type":"array","items":{"$ref":"Trace"}}}},"attest_session":{"type":"object","required":["session_id","key","ttl_s","stage"],"properties":{"session_id":{"type":"string"},"key":{"type":"string"},"ttl_s":{"type":"integer"},"stage":{"type":"integer"}}},"attest":{"type":"object","required":["attestation_id","doc_path","content_hash","at_seq","recorded","raised"],"properties":{"attestation_id":{"type":"string"},"doc_path":{"type":"string"},"content_hash":{"type":"string"},"at_seq":{"type":"integer"},"recorded":{"type":"boolean"},"raised":{"type":"array","items":{"type":"string"}}}},"demote":{"$ref":"Transition"},"error":{"type":"object","required":["error"],"properties":{"error":{"type":"object","required":["code","message"],"properties":{"code":{"type":"string"},"message":{"type":"string"},"hint":{"type":"string"}}}}}}} as const;
+
+/** The argument schemas of `tools/list` (the contract checker). */
+export const ARGUMENT_SCHEMAS = {"status":{"additionalProperties":false,"properties":{},"required":[],"type":"object"},"search":{"additionalProperties":false,"properties":{"at":{"description":"checkpoint id or name (default: the current state's)","minLength":1,"type":"string"},"include_proposal":{"description":"also return labelled proposal chunks (default false)","type":"boolean"},"k":{"description":"canonical hits to return (default 10)","maximum":1000,"minimum":1,"type":"integer"},"loc":{"description":"also each hit's block locations: loc (per lineage: line and byte range, content_hash) and loc_stale (default false)","type":"boolean"},"mode":{"description":"retrieval mode (default hybrid)","enum":["hybrid","lexical","flat"],"type":"string"},"path_prefix":{"description":"only documents whose vault-relative path is one of these or lies under it ('/' separated; no absolute path, no '..'); applied before ranking, recorded in the trace","items":{"minLength":1,"type":"string"},"maxItems":64,"minItems":1,"type":"array"},"query":{"description":"the query text (not empty, not only whitespace)","minLength":1,"type":"string"}},"required":["query"],"type":"object"},"read_block":{"additionalProperties":false,"properties":{"at":{"description":"checkpoint id or name (default: the current state's)","minLength":1,"type":"string"},"doc_path":{"description":"vault-relative path of the Markdown document","minLength":1,"type":"string"},"lineage_id":{"description":"lineage id (32 lowercase hex)","minLength":1,"type":"string"}},"required":["doc_path","lineage_id"],"type":"object"},"history":{"additionalProperties":false,"properties":{"lineage_id":{"description":"lineage id (32 lowercase hex)","minLength":1,"type":"string"}},"required":["lineage_id"],"type":"object"},"blame":{"additionalProperties":false,"properties":{"at":{"description":"checkpoint id or name (default: the head)","minLength":1,"type":"string"},"doc_path":{"description":"vault-relative path of a Markdown document","minLength":1,"type":"string"}},"required":["doc_path"],"type":"object"},"propose":{"additionalProperties":false,"properties":{"content":{"description":"the agent's Markdown text","type":"string"},"doc_path":{"description":"vault-relative path of a .md document","minLength":1,"type":"string"},"heading":{"description":"the section heading text (replace_section only)","minLength":1,"type":"string"},"mode":{"description":"create (default), append or replace_section","enum":["create","append","replace_section"],"type":"string"},"reason":{"description":"why the agent proposes this (recorded, not written to the document)","minLength":1,"type":"string"}},"required":["doc_path","content","reason"],"type":"object"},"promote":{"additionalProperties":false,"properties":{"lineage_id":{"description":"lineage id (32 lowercase hex)","minLength":1,"type":"string"},"reason":{"description":"why the promotion is requested","minLength":1,"type":"string"}},"required":["lineage_id","reason"],"type":"object"},"checkpoint":{"additionalProperties":false,"properties":{"name":{"description":"optional checkpoint name","minLength":1,"type":"string"}},"required":[],"type":"object"},"checkpoints":{"additionalProperties":false,"properties":{},"required":[],"type":"object"},"trace":{"additionalProperties":false,"properties":{"consumer":{"description":"only traces of this consumer","minLength":1,"type":"string"},"since_seq":{"description":"only traces with at_seq >= since_seq (default 0)","minimum":0,"type":"integer"}},"required":[],"type":"object"}} as const;
