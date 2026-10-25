@@ -101,7 +101,8 @@ $hits"
   if [ ! -f docs/CLIENT_CONTRACT.md ]; then
     violation "clients/ exists but docs/CLIENT_CONTRACT.md does not (the client's only dependency)"
   else
-    endpoints="$(sed -n '/^## 2\. /,/^## 3\. /p' docs/CLIENT_CONTRACT.md | grep -E '^\| `[a-z_]+` \|' | sed -E 's/^\| `([a-z_]+)`.*/\1/' | sort -u)"
+    # a row names the endpoint (`attest`) or its HTTP path (`POST /v1/demote`, §2.7; P2-B)
+    endpoints="$(sed -n '/^## 2\. /,/^## 3\. /p' docs/CLIENT_CONTRACT.md | grep -E '^\| `(POST /v1/)?[a-z_]+` \|' | sed -E 's#^\| `(POST /v1/)?([a-z_]+)`.*#\2#' | sort -u)"
     used="$(grep -RhoE --include='*.ts' --include='*.tsx' --include='*.js' --include='*.mjs' \
         --exclude-dir=node_modules --exclude=main.js "/v1/[A-Za-z0-9_]+" clients 2>/dev/null | sed 's#^/v1/##' | sort -u || true)"
     for u in $used; do

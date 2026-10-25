@@ -176,6 +176,24 @@ async fn handle(
     };
     let kernel = st.kernel.clone();
     let tool = tool.to_string();
+    if tool == "events" {
+        // P2-B/B3 (a): each event object is its log line, byte for byte
+        let res = tokio::task::spawn_blocking(move || kernel.run_events(&args)).await;
+        return match res {
+            Ok(Ok(page)) => (
+                StatusCode::OK,
+                [(header::CONTENT_TYPE, "application/json")],
+                page.to_body(),
+            )
+                .into_response(),
+            Ok(Err(e)) => tool_err(&e),
+            Err(e) => err(
+                StatusCode::INTERNAL_SERVER_ERROR,
+                Code::Internal,
+                format!("tool task failed: {e}"),
+            ),
+        };
+    }
     let res = tokio::task::spawn_blocking(move || {
         kernel.run(ticket, &tool, &args, Caller::http(consumer.as_str()))
     })

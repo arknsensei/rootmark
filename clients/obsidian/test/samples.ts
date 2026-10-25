@@ -3,6 +3,14 @@
 import type { ToolName } from "../src/api";
 
 export const SAMPLES: Record<ToolName, unknown> = {
+  // contract v2 (§2.8): `events` (P2-B/B3), a real answer's shape
+  "events": {
+    "events": [
+      {"seq": 0, "doc_path": "a.md", "kind": "BlockCreated", "lineage_ids": ["f4495f5ee61ea960be41bfa9de348401"], "old_version_ids": [], "new_version_ids": ["05597c314da02e6d03f61b69efa72c94"], "snapshot_id": null, "meta": {"matcher_version": "v3", "provenance": {"author_kind": "Human", "source": ""}}}
+    ],
+    "head_seq": 9,
+    "next_seq": 1
+  },
   "search": {
     "checkpoint_id": "5e6669bbb36cd9558eff3bd83cfe1e45",
     "hits": [

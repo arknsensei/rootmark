@@ -108,7 +108,9 @@ impl ServerConfig {
                     }
                     // P2-L/L1, L2: the index's own settings (`rootmarkindex::config`)
                     "tokenizer" | "embedder" => {}
-                    _ => bail!("[index]: unknown field `{k}` (compact_every_s, auto_rebuild, tokenizer, embedder)"),
+                    // P2-B/B3 (b): the search time filter's date source
+                    "date_from_path" | "date_field" => {}
+                    _ => bail!("[index]: unknown field `{k}` (compact_every_s, auto_rebuild, tokenizer, embedder, date_from_path, date_field)"),
                 }
             }
         }

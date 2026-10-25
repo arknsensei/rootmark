@@ -130,6 +130,8 @@ export const RESULT: { readonly [T in Exclude<ToolName, "promote">]: Spec } = {
   checkpoint: CHECKPOINT,
   checkpoints: { checkpoints: [CHECKPOINT] },
   trace: { traces: [TRACE] },
+  // contract v2 (§2.8, P2-B/B3): the plugin does not call it yet
+  events: { events: [EVENT], next_seq: "integer", head_seq: "integer" },
 };
 
 const PROMOTED = {

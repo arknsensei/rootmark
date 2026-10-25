@@ -73,7 +73,7 @@ expect fail "$d" "client imports server directly (P1-E/E0)"
 
 d="$(fresh client-path)"
 mkdir -p "$d/clients/obsidian/src"
-printf 'export const p = "/v1/demote";\n' >"$d/clients/obsidian/src/bad.ts"
+printf 'export const p = "/v1/delete";\n' >"$d/clients/obsidian/src/bad.ts"
 expect fail "$d" "client names an HTTP path outside the contract (P1-E/E0)"
 
 d="$(fresh client-path-ok)"
