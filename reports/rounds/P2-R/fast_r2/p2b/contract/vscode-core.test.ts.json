@@ -1,0 +1,14 @@
+{
+ "file": "core.test.ts",
+ "calls": 12,
+ "endpoints": {
+  "POST /v1/blame": 7,
+  "POST /v1/search": 2,
+  "POST /v1/history": 1,
+  "POST /v1/promote": 1,
+  "POST /v1/demote": 1
+ },
+ "request_violations": [],
+ "response_violations": [],
+ "deliberate_violations": []
+}

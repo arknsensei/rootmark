@@ -1,0 +1,9 @@
+FAST="1" bash scripts/verify.sh
+[verify 10:32:40] workdirs under /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.LiChG6J7i0
+RUN=20261026T103547Z-e0f5998
+RUN_DIR=/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.LiChG6J7i0/A/repo/research/reports/runs/20261026T103547Z-e0f5998
+RUN=20261026T103546Z-e0f5998
+RUN_DIR=/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.LiChG6J7i0/B/repo/research/reports/runs/20261026T103546Z-e0f5998
+[verify 10:49:38] compare (P2-B fast) /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.LiChG6J7i0/A/repo/research/reports/runs/20261026T103547Z-e0f5998 /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.LiChG6J7i0/B/repo/research/reports/runs/20261026T103546Z-e0f5998
+[verify 10:49:39] fast pair equal (95400 fields) in 1019 s
+make verify FAST=1  2449.74s user 300.77s system 269% cpu 16:59.32 total
