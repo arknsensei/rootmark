@@ -1765,6 +1765,25 @@ impl Vault {
     /// must be applied to the state it was computed on: the events are
     /// verified again, and a plan of an earlier state fails.
     pub fn commit_plan(&mut self, plan: IngestPlan) -> Result<IngestResult> {
+        // P2-R/R0 (c11, P2-B review finding 11): the snapshot the plan
+        // commits is the one its location record names, checked before
+        // anything is written (a mismatch leaves the log as it was)
+        if plan.unchanged.is_none() {
+            let committed = plan
+                .events
+                .iter()
+                .rev()
+                .find(|e| e.kind == EventKind::SnapshotCommitted)
+                .and_then(|e| e.snapshot_id.clone());
+            if committed.as_deref() != Some(plan.loc.snapshot_id.as_str()) {
+                bail!(
+                    "{}: the plan commits snapshot {} but its location record names {}",
+                    plan.doc_path,
+                    committed.as_deref().unwrap_or("(none)"),
+                    plan.loc.snapshot_id
+                );
+            }
+        }
         // P2-B/B1: the version's block locations, before anything of the
         // ingest is written (a failure leaves the log as it was)
         crate::loc::write(&self.meta_dir, &plan.loc)?;
@@ -1780,14 +1799,6 @@ impl Vault {
         let snapshot = self
             .snapshot(&plan.doc_path)?
             .context("snapshot after commit")?;
-        if snapshot.snapshot_id != plan.loc.snapshot_id {
-            bail!(
-                "{}: committed snapshot {} is not the planned {} (location record)",
-                plan.doc_path,
-                snapshot.snapshot_id,
-                plan.loc.snapshot_id
-            );
-        }
         Ok(IngestResult {
             snapshot,
             events,

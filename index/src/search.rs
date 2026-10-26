@@ -670,6 +670,35 @@ impl<'a> Searcher<'a> {
         include_proposal: bool,
         filter: Option<&PathFilter>,
     ) -> Result<SearchResult> {
+        self.search_filtered_then(
+            vault,
+            mode,
+            query,
+            k,
+            at,
+            include_proposal,
+            filter,
+            |_, _, _| Ok(()),
+        )
+        .map(|(r, ())| r)
+    }
+
+    /// `search_filtered` that calls `before` with the vault, the checkpoint
+    /// id and the hits after they are ranked and **before** the trace is
+    /// written (P2-R/R0, P2-B review finding 8): an error of `before` fails
+    /// the search with no trace.
+    #[allow(clippy::too_many_arguments)]
+    pub fn search_filtered_then<T>(
+        &mut self,
+        vault: &mut Vault,
+        mode: Mode,
+        query: &str,
+        k: usize,
+        at: Option<&str>,
+        include_proposal: bool,
+        filter: Option<&PathFilter>,
+        before: impl FnOnce(&Vault, &str, &[Hit]) -> Result<T>,
+    ) -> Result<(SearchResult, T)> {
         // before the checkpoint lookup: an empty query writes nothing (K-C1.5)
         check_query(query)?;
         let cp = match at {
@@ -720,6 +749,8 @@ impl<'a> Searcher<'a> {
                 })
             })
             .collect();
+        let hits: Vec<Hit> = picked.into_iter().map(|(_, h)| h).collect();
+        let extra = before(vault, &cp.checkpoint_id, &hits)?;
         let qh = query_hash_filtered(query, filter);
         let fj = filter.map(PathFilter::to_json);
         let trace = vault.record_trace_filtered(
@@ -729,14 +760,17 @@ impl<'a> Searcher<'a> {
             returned,
             fj.as_ref(),
         )?;
-        Ok(SearchResult {
-            checkpoint_id: cp.checkpoint_id,
-            mode,
-            include_proposal,
-            query_hash: qh,
-            trace_id: trace.trace_id,
-            hits: picked.into_iter().map(|(_, h)| h).collect(),
-            filter: filter.map(PathFilter::to_json),
-        })
+        Ok((
+            SearchResult {
+                checkpoint_id: cp.checkpoint_id,
+                mode,
+                include_proposal,
+                query_hash: qh,
+                trace_id: trace.trace_id,
+                hits,
+                filter: filter.map(PathFilter::to_json),
+            },
+            extra,
+        ))
     }
 }

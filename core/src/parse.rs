@@ -3,7 +3,7 @@
 use crate::model::{version_id, BlockDraft, BlockType};
 use crate::normalize::normalize;
 use anyhow::Result;
-use pulldown_cmark::{Event, Options, Parser, Tag};
+use pulldown_cmark::{CodeBlockKind, Event, Options, Parser, Tag};
 use serde::{Deserialize, Serialize};
 use std::ops::Range;
 
@@ -84,8 +84,9 @@ where
     out
 }
 
-/// Top-level block boundaries: `(type, heading level, byte range in body)`.
-fn top_level_ranges(body: &str) -> Vec<(BlockType, Option<u8>, Range<usize>)> {
+/// Top-level block boundaries: `(type, heading level, byte range in body,
+/// indented code block)`.
+fn top_level_ranges(body: &str) -> Vec<(BlockType, Option<u8>, Range<usize>, bool)> {
     let mut out = Vec::new();
     // `stack` mirrors open tags; `capture` marks tags whose range became a block.
     let mut stack: Vec<bool> = Vec::new();
@@ -111,11 +112,12 @@ fn top_level_ranges(body: &str) -> Vec<(BlockType, Option<u8>, Range<usize>)> {
                         }
                         _ => Some((BlockType::Other, None)),
                     };
+                    let indented = matches!(tag, Tag::CodeBlock(CodeBlockKind::Indented));
                     if let Some((bt, lvl)) = kind {
-                        out.push((bt, lvl, range.clone()));
+                        out.push((bt, lvl, range.clone(), indented));
                     }
                 } else if parent_is_top_list && matches!(tag, Tag::Item) {
-                    out.push((BlockType::ListItem, None, range.clone()));
+                    out.push((BlockType::ListItem, None, range.clone(), false));
                 }
                 stack.push(true);
                 in_top_list.push(is_list);
@@ -124,9 +126,9 @@ fn top_level_ranges(body: &str) -> Vec<(BlockType, Option<u8>, Range<usize>)> {
                 stack.pop();
                 in_top_list.pop();
             }
-            Event::Rule if stack.is_empty() => out.push((BlockType::Other, None, range)),
+            Event::Rule if stack.is_empty() => out.push((BlockType::Other, None, range, false)),
             Event::Html(_) | Event::Text(_) if stack.is_empty() => {
-                out.push((BlockType::Other, None, range))
+                out.push((BlockType::Other, None, range, false))
             }
             _ => {}
         }
@@ -139,7 +141,11 @@ fn top_level_ranges(body: &str) -> Vec<(BlockType, Option<u8>, Range<usize>)> {
 /// `events_hash`. Lines are 1-based and inclusive, counted in the whole
 /// document including the front matter (as `BlockDraft`); bytes are UTF-8
 /// offsets into the document, half open, the block's raw text without its
-/// trailing line ending.
+/// trailing line ending — except that an indented code block starts at the
+/// start of its first line, its indent included (P2-R/R0 (a), K-P2B-T1 (a):
+/// the block's raw text begins after that indent, so a slice from there
+/// would parse as a paragraph; the raw text, the ids and the events are
+/// unchanged).
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct BlockLoc {
     pub version_id: String,
@@ -158,6 +164,9 @@ struct Item {
     line_start: u32,
     line_end: u32,
     byte_start: usize,
+    /// where the block's location starts: `byte_start`, or for an indented
+    /// code block the start of its first line (`BlockLoc`)
+    loc_start: usize,
 }
 
 fn parse_items(text: &str) -> (Vec<Item>, Option<String>) {
@@ -171,8 +180,20 @@ fn parse_items(text: &str) -> (Vec<Item>, Option<String>) {
             .count() as u32
     };
     let mut items = Vec::new();
-    for (bt, level, range) in top_level_ranges(body) {
+    for (bt, level, range, indented) in top_level_ranges(body) {
         let start = range.start;
+        // an indented code block's range begins after its first line's
+        // indent (spaces or tabs only, back to the line start)
+        let loc_start = if indented {
+            let line = body[..start].rfind('\n').map_or(0, |i| i + 1);
+            if body[line..start].bytes().all(|b| b == b' ' || b == b'\t') {
+                line
+            } else {
+                start
+            }
+        } else {
+            start
+        };
         let raw = body[range].trim_end_matches(['\n', '\r']).to_string();
         let norm = normalize(&raw, bt == BlockType::Code);
         if norm.trim().is_empty() {
@@ -190,6 +211,7 @@ fn parse_items(text: &str) -> (Vec<Item>, Option<String>) {
             line_start,
             line_end,
             byte_start: body_off + start,
+            loc_start: body_off + loc_start,
         });
     }
     (items, frontmatter)
@@ -205,7 +227,7 @@ pub fn locate_blocks(text: &str) -> Vec<BlockLoc> {
             version_id: version_id(it.bt, &it.norm),
             line_start: it.line_start,
             line_end: it.line_end,
-            byte_start: it.byte_start as u64,
+            byte_start: it.loc_start as u64,
             byte_end: (it.byte_start + it.raw.len()) as u64,
         })
         .collect()
