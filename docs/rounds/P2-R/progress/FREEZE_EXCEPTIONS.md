@@ -25,3 +25,9 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Neden:** GOAL P2-R 3 ve 5: arşivlenmiş checkpoint'e sorgu `archived` koduyla reddedilir, CLIENT_CONTRACT §3'e yeni kod. Dondurulmuş D1-13 denetleyicisi sözleşmenin her kodunu bir testle ve gerçek bir HTTP çağrısıyla eşler; yeni kod olmadan çıkış 1 olurdu (emsal P2-A/F2'nin `migration_required`'ı).
 - **Önce/sonra:** önce (F1 sürümü, `archived` sözleşmede ve sunucuda): `cargo test --test contract` `http_statuses_of_the_codes` düşer (12 ≠ 13), `contract_check` `http-code:archived` ve `code:archived` eksik der; sonra `contract` 5/5, `contract_check` çıkış 0, "11 tools, 13 codes" ve `archived` 410 (`reports/rounds/P2-R/r0b/contract_check_r2.json`).
 - **Gözden geçirici onayı:** R5.review.md.
+
+## F5 · R3 · `research/eval/check_p2b_align_regress.py` — biçim
+- **Ne:** `ruff format` iki liste ifadesini satırlara böldü; davranış aynen (`R3_f5.diff`: yalnız satır kırma).
+- **Neden:** R0'da (`2f85d43`) eklenen ve F3'te (`research/eval/**` satırı) donan dosya `ruff format --check`'ten geçmiyordu: `make lint` düşerdi (R-10 "kalite kapıları temiz").
+- **Önce/sonra:** önce `ruff format --check .` "1 file would be reformatted" (bu dosya); sonra 251/251 biçimli; `tests/test_p2r_tools.py` 4/4 aynen.
+- **Gözden geçirici onayı:** R5.review.md.

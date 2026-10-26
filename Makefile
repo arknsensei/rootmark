@@ -739,7 +739,7 @@ p2-0-3-checks: require-run p2-0-2-harness
 # regression is against the last official RUN (P2-0.3); the active round's
 # checks are `ROUND_CHECKS` (a round sets its own).
 FAST_REF_RUN := ../reports/rounds/P2-0.3/runs/20261024T000230Z-5632b3b
-ROUND_CHECKS := p2l-checks p2l-quality p2p-checks p2b-checks
+ROUND_CHECKS := p2l-checks p2l-quality p2p-checks p2b-checks p2r-checks
 fast-regress: require-run
 	$(PY) -m eval.fast_regress --run $(RUN) --ref $(FAST_REF_RUN)
 
@@ -799,6 +799,19 @@ p2b-checks: require-run
 	  > reports/runs/$(RUN)/p2b/align_regress.json
 	$(PY) -m eval.run_p2b_det --run $(RUN) --rootmark ../target/release/rootmark
 	bash scripts/p2b_client_checks.sh research/reports/runs/$(RUN)/p2b target/release/rootmark
+
+# P2-R criteria into the RUN (TASKS R0–R5): p2r_checks.json (the round's
+# tests by criterion); the pre-registered volume measurement D-VOL
+# (p2r/volume.json, R-7 — a failed criterion is recorded, exit 3, not fatal:
+# GOAL decision rule); the determinism record of a prune (p2r/det.json, R-6)
+P2R_TESTS := --tests R-1=rootmark-server:p2_r_r0,rootmark-server:contract,rootmark-server:p2_b_b1 \
+  --tests R-2/R-4=rootmark-server:p2_r_r1 \
+  --tests R-5/R-8=rootmark-server:p2_r_r2
+p2r-checks: require-run
+	$(PY) -m eval.run_p2r_checks --run $(RUN) $(P2R_TESTS)
+	$(PY) -m eval.p2r_volume --run $(RUN) --rootmark ../target/release/rootmark \
+	  || { rc=$$?; [ $$rc -eq 3 ] && echo "p2r-checks: p2r_volume exit 3 (R-7 failed; recorded, GOAL decision rule)" >&2; }
+	$(PY) -m eval.run_p2r_det --run $(RUN) --rootmark ../target/release/rootmark
 
 # Clean-clone double run (scripts/verify.sh pair; two temp dirs, compared);
 # `make verify FAST=1`: the fast pair (scripts/verify.sh, P2-L/F3)

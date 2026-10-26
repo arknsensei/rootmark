@@ -413,6 +413,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/**` | `P2-R/R0-f3:` | yeniden dondurma P2-R/F3: sınıflandırıcının P2-B listeleri (K-P2B.4 girdileri çıktı; kalan yollar K-P2B.4 ve K-P2R.3 ile); bu commit'te var olan `check_p2b_align_regress.py` de bu satırla donar |
 | `scripts/contract_check.sh` | `P2-R/R2:` | yeniden dondurma P2-R/F4: `archived` kodunun gerçek HTTP tetikleyicisi |
 | `server/tests/contract.rs` | `P2-R/R2:` | yeniden dondurma P2-R/F4: `archived` kodunun durumu ve gerçek çağrısı |
+| `research/eval/**` | `P2-R/R3-pre:` | yeniden dondurma P2-R/F5: `check_p2b_align_regress.py`'nin biçimi; bu commit'te var olan D-VOL ön-kaydı (`p2r_volume.py`, `datasets/d_vol.py`) ve `run_p2r_det.py`, `run_p2r_checks.py` de bu satırla donar (ölçümden önce) |
 <!-- /frozen-table -->
 
 ## Notlar
