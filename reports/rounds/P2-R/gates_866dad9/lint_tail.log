@@ -1,0 +1,40 @@
+check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-B/B5-dev: superseded by re-freeze P2-R/R5-dev:
+check_frozen: research/eval/** — P2-B/B5-dev: superseded by re-freeze P2-R/R5-rec:
+check_frozen: scripts/mcp_inspector.sh — 1 files unchanged since dccf57d (P2-B/B5-f4:)
+check_frozen: research/eval/** — P2-B/B5-f5: superseded by re-freeze P2-R/R5-rec:
+check_frozen: scripts/mcp_e2e.sh — P2-R/R0-f1: superseded by re-freeze P2-R/R0-f2:
+check_frozen: scripts/contract_check.sh — P2-R/R0-f1: superseded by re-freeze P2-R/R2:
+check_frozen: server/tests/contract.rs — P2-R/R0-f1: superseded by re-freeze P2-R/R2:
+check_frozen: scripts/mcp_e2e.sh — 1 files unchanged since 078d21a (P2-R/R0-f2:)
+check_frozen: research/eval/** — P2-R/R0-f3: superseded by re-freeze P2-R/R5-rec:
+check_frozen: scripts/contract_check.sh — 1 files unchanged since 8333328 (P2-R/R2:)
+check_frozen: server/tests/contract.rs — 1 files unchanged since 8333328 (P2-R/R2:)
+check_frozen: research/eval/** — P2-R/R3-pre: superseded by re-freeze P2-R/R5-rec:
+check_frozen: scripts/verify.sh — 1 files unchanged since 95139c8 (P2-R/R5-dev:)
+check_frozen: research/eval/check_compare_fields.py — 1 files unchanged since 95139c8 (P2-R/R5-dev:)
+check_frozen: research/eval/DETERMINISTIC_FIELDS.md — 1 files unchanged since 95139c8 (P2-R/R5-dev:)
+check_frozen: research/eval/** — P2-R/R5-dev: superseded by re-freeze P2-R/R5-rec:
+check_frozen: research/eval/** — 141 files unchanged since 866dad9 (P2-R/R5-rec:)
+check_frozen: table append-only since d7264c9 (docs/rounds/GH-0/progress/ROUND_START)
+check_frozen: table append-only since 63a4004 (docs/rounds/P1-B.1/progress/ROUND_START)
+check_frozen: table append-only since 983c62d (docs/rounds/P1-B/progress/ROUND_START)
+check_frozen: table append-only since 00f29bc (docs/rounds/P1-C.1/progress/ROUND_START)
+check_frozen: table append-only since 7053760 (docs/rounds/P1-C/progress/ROUND_START)
+check_frozen: table append-only since e8827f8 (docs/rounds/P1-D.1/progress/ROUND_START)
+check_frozen: table append-only since 2e2c4ea (docs/rounds/P1-D/progress/ROUND_START)
+check_frozen: table append-only since 1ec03b9 (docs/rounds/P1-E.1/progress/ROUND_START)
+check_frozen: table append-only since 11e29b0 (docs/rounds/P1-E/progress/ROUND_START)
+check_frozen: table append-only since 7bccb25 (docs/rounds/P2-0.1/progress/ROUND_START)
+check_frozen: table append-only since f3f8f2a (docs/rounds/P2-0.2/progress/ROUND_START)
+check_frozen: table append-only since c50ee2f (docs/rounds/P2-0.3/progress/ROUND_START)
+check_frozen: table append-only since 85be0a7 (docs/rounds/P2-0/progress/ROUND_START)
+check_frozen: table append-only since b3c2e0e (docs/rounds/P2-A/progress/ROUND_START)
+check_frozen: table append-only since 6a5e911 (docs/rounds/P2-B/progress/ROUND_START)
+check_frozen: table append-only since fc645ed (docs/rounds/P2-L/progress/ROUND_START)
+check_frozen: table append-only since cfa31d6 (docs/rounds/P2-P/progress/ROUND_START)
+check_frozen: table append-only since ae7e692 (docs/rounds/P2-R/progress/ROUND_START)
+check_frozen: OK
+bash scripts/check_compare_fields.sh >/dev/null
+check_compare_fields: OK (18 comparators, 413 declared fields, 33 file constants)
+bash scripts/gen_client_types.sh --check
+gen_client_types: up to date

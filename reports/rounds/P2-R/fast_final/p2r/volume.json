@@ -1,0 +1,136 @@
+{
+ "V_after": 2115988,
+ "V_after2": 2184310,
+ "V_before": 14756069,
+ "after": {
+  "V": 2115988,
+  "apart": {
+   "archive_checkpoints": 700350,
+   "archive_traces": 11401096,
+   "attestations": 0,
+   "events": 1955182,
+   "objects": 460000,
+   "snapshots": 301600,
+   "trace_filters": 0
+  },
+  "parts": {
+   "checkpoints": 154050,
+   "journal": 0,
+   "loc": 333156,
+   "traces": 1628782
+  }
+ },
+ "after2": {
+  "V": 2184310,
+  "apart": {
+   "archive_checkpoints": 1021950,
+   "archive_traces": 14660124,
+   "attestations": 0,
+   "events": 2374732,
+   "objects": 540800,
+   "snapshots": 366700,
+   "trace_filters": 0
+  },
+  "parts": {
+   "checkpoints": 181050,
+   "journal": 0,
+   "loc": 371550,
+   "traces": 1631710
+  }
+ },
+ "before": {
+  "V": 14756069,
+  "apart": {
+   "archive_checkpoints": 0,
+   "archive_traces": 0,
+   "attestations": 0,
+   "events": 1708132,
+   "objects": 460000,
+   "snapshots": 301600,
+   "trace_filters": 0
+  },
+  "parts": {
+   "checkpoints": 854400,
+   "journal": 0,
+   "loc": 871791,
+   "traces": 13029878
+  }
+ },
+ "criteria": {
+  "R-7": {
+   "a": 0.14339781143609454,
+   "a_max": 0.35,
+   "b": 1.0322884628835325,
+   "b_max": 1.1,
+   "pass": true
+  }
+ },
+ "pass": true,
+ "phase2_before_prune": {
+  "V": 5914568,
+  "apart": {
+   "archive_checkpoints": 700350,
+   "archive_traces": 11401096,
+   "attestations": 0,
+   "events": 2293732,
+   "objects": 540800,
+   "snapshots": 366700,
+   "trace_filters": 0
+  },
+  "parts": {
+   "checkpoints": 502650,
+   "journal": 0,
+   "loc": 521180,
+   "traces": 4890738
+  }
+ },
+ "promoted_never_pruned": true,
+ "prune1": {
+  "bound": {
+   "checkpoint_id": "6dcaa9664e83523ccdd022ef0e178431",
+   "event_seq": 4203
+  },
+  "checkpoints_archived": 35,
+  "events_hash": "df60e1b5204cb3ba1f36905229f6c25c",
+  "events_hash_before": "7d3793f5688863cf8086883094917c8e",
+  "filter_lines_archived": 0,
+  "journal_records_removed": 0,
+  "loc_kept": 700,
+  "loc_removed": 900,
+  "pruned_lineages": 610,
+  "trace_base": 2100,
+  "trace_lines_archived": 2100
+ },
+ "prune2": {
+  "bound": {
+   "checkpoint_id": "87777f02402a076ea505faa7a02f992b",
+   "event_seq": 5685
+  },
+  "checkpoints_archived": 10,
+  "events_hash": "42de17dcb10c59cca7e075445d2f3ff9",
+  "events_hash_before": "3e96061770013ecae1538cf2dd0903d9",
+  "filter_lines_archived": 0,
+  "journal_records_removed": 0,
+  "loc_kept": 800,
+  "loc_removed": 250,
+  "pruned_lineages": 200,
+  "trace_base": 2700,
+  "trace_lines_archived": 600
+ },
+ "ratio_a": 0.14339781143609454,
+ "ratio_b": 1.0322884628835325,
+ "scenario": {
+  "edits_per_round": 25,
+  "idle_checkpoints": 10,
+  "keep_checkpoints": 5,
+  "notes": 200,
+  "now_ms": 1800000000000,
+  "promoted_lineages": 10,
+  "proposals_per_round": 10,
+  "reads_per_round": 10,
+  "rounds": 40,
+  "rounds_phase2": 10,
+  "searches_per_round": 50
+ },
+ "traces_joined_equal": true
+}
