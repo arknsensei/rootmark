@@ -25,10 +25,17 @@ def regressions(got: dict, ref: dict) -> list[str]:
     for k in ("manifest_seed", "notes_digest", "edge_sha256"):
         if got.get(k) != ref.get(k):
             out.append(f"{k}: {got.get(k)!r} != reference {ref.get(k)!r}")
-    sets = [("notes", got["notes"], ref["notes"]), ("notes_turkish", got["notes_turkish"], ref["notes_turkish"])]
+    sets = [
+        ("notes", got["notes"], ref["notes"]),
+        ("notes_turkish", got["notes_turkish"], ref["notes_turkish"]),
+    ]
     if set(got["edge"]) != set(ref["edge"]):
         out.append(f"edge classes {sorted(got['edge'])} != reference {sorted(ref['edge'])}")
-    sets += [(f"edge.{c}", got["edge"][c], ref["edge"][c]) for c in sorted(ref["edge"]) if c in got["edge"]]
+    sets += [
+        (f"edge.{c}", got["edge"][c], ref["edge"][c])
+        for c in sorted(ref["edge"])
+        if c in got["edge"]
+    ]
     for name, g, r in sets:
         if g.get("blocks") != r.get("blocks"):
             out.append(f"{name}: blocks {g.get('blocks')} != reference {r.get('blocks')}")
