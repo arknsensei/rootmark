@@ -33,7 +33,9 @@ cd "$root"
 cargo build -q --release -p rootmark-server --bin rootmark --example mcp_client
 rootmark="$root/target/release/rootmark"
 client="$root/target/release/examples/mcp_client"
-TOOLS="status search read_block history blame propose promote checkpoint checkpoints trace"
+# P2-R/R0 (b), freeze exception P2-R/F1: the contract's 11th tool `events`
+# (P2-B, K-P2B.4) is in the set, called at the end of the session
+TOOLS="status search read_block history blame propose promote checkpoint checkpoints trace events"
 
 prepare() { # prepare <run-dir>: the vault, through the CLI
   local d="$1"
@@ -120,6 +122,10 @@ session() { # session <lineage> <agent-lineage>: the JSON-RPC messages, one per 
   call promote '{"lineage_id":"00000000000000000000000000000000","reason":"x"}' # 245 unknown lineage
   call promote "{\"lineage_id\":\"$al\"}"                    # 246 no reason
   call history "{\"lineage_id\":\"$al\"}"                    # 247 no Promoted event
+  # P2-R/R0 (b): the event stream (contract §2.8), read only
+  call events '{"since_seq":0,"limit":5}'                    # 248
+  call events '{"kinds":["Promoted"]}'                       # 249 none: the agent's promotions were denied
+  call events '{"kinds":["NoSuchKind"]}'                     # 250 unknown kind
 }
 
 session_b() { # session_b <agent-lineage>: after the human's CLI promotions
@@ -298,6 +304,13 @@ if [ "$(sed -n '/^## Recipe/,$!p' "$out/run1/vault_cli/espresso.md")" = "$(sed -
    [ "$(grep -cE 'lineage|version_id|rootmark' "$v1/espresso.md" || true)" = 0 ]; then pd=true; fi
 results+=("{\"tool\":\"propose\",\"check\":\"espresso.md: text before ## Recipe unchanged, agent text present, appended line last, no ids\",\"pass\":$pd}")
 echo "mcp_e2e: $( [ "$pd" = true ] && echo 'ok  ' || echo FAIL) [propose] espresso.md edits are the agent's text only"
+# P2-R/R0 (b): `events` (contract §2.8)
+check events "valid call: the first 5 log lines, next_seq 5" \
+  "$ok_result and (.result.structuredContent | (.events | length) == 5 and .next_seq == 5 and .head_seq > 5 and ([.events[].seq] == [0,1,2,3,4]))" 248
+check events "kinds filter: no Promoted event" \
+  "$ok_result and (.result.structuredContent | (.events | length) == 0 and .filter.kinds == [\"Promoted\"] and .next_seq == .head_seq)" 249
+check events "unknown kind is an error" "$tool_err" 250
+
 # events: every event after the session's start (checkpoints and the
 # human's CLI promotions aside) belongs
 # to a proposed document, and every event that creates a block version

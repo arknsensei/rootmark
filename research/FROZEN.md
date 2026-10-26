@@ -406,6 +406,9 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/**` | `P2-B/B5-dev:` | yeniden dondurma P2-B/F3: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni P2-B dosyaları (`compare_p2b.py`, `historical_p2b.py`, `historical_fails_p2b.json`, `migration_required_fails_p2b.json`, `run_p2b_checks.py`, `run_p2b_det.py`, `report_p2b_align.py`) |
 | `scripts/mcp_inspector.sh` | `P2-B/B5-f4:` | yeniden dondurma P2-B/F4: `events` aracının çağrı argümanları (yeni araç ölçülür; tam zincir başka türlü durur) |
 | `research/eval/**` | `P2-B/B5-f5:` | yeniden dondurma P2-B/F5: sınıflandırıcının iki listesi (`historical_fails_p2b.json`, `migration_required_fails_p2b.json`), K-P2B.4: `events`'in 10 araçlı kaydedicilerde doğurduğu FAIL'ler, yollarıyla tek tek |
+| `scripts/mcp_e2e.sh` | `P2-R/R0-f1:` | yeniden dondurma P2-R/F1: 11. araç `events` (`TOOLS`, üç çağrı ve kontrolü; K-P2B.4'ün önerisi) |
+| `scripts/contract_check.sh` | `P2-R/R0-f1:` | yeniden dondurma P2-R/F1: `events`'in HTTP isteği (K-P2B.4'ün önerisi) |
+| `server/tests/contract.rs` | `P2-R/R0-f1:` | yeniden dondurma P2-R/F1: `events`'in gerçek çağrısı (D1-13 eşleşmesi; K-P2B.4'ün önerisi) |
 <!-- /frozen-table -->
 
 ## Notlar

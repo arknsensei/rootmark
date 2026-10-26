@@ -187,6 +187,8 @@ tool_args() { # the §2 tool → a valid body
     promote) echo "{\"lineage_id\":\"$proposed\",\"reason\":\"contract-http\"}" ;;
     checkpoint) echo '{"name":"contract-http"}' ;;
     trace) echo '{"consumer":"contract-http"}' ;;
+    # P2-R/R0 (b), freeze exception P2-R/F1: the 11th tool (P2-B, K-P2B.4)
+    events) echo '{"since_seq":0,"limit":5}' ;;
     *) echo "" ;;
   esac
 }

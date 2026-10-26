@@ -128,6 +128,10 @@ fn every_tool_answers() {
         .any(|x| x["checkpoint_id"] == c["checkpoint_id"] && x["name"] == "contract"));
     let t = call_tool(&k, "trace", json!({"consumer": "contract/1.0"}));
     assert_eq!(t["traces"].as_array().unwrap().len(), 2);
+    // P2-R/R0 (b), freeze exception P2-R/F1: the 11th tool (P2-B, K-P2B.4)
+    let e = call_tool(&k, "events", json!({"since_seq": 0, "limit": 5}));
+    assert_eq!(e["events"].as_array().unwrap().len(), 5);
+    assert_eq!(e["next_seq"], 5);
 }
 
 #[test]

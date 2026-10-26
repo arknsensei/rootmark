@@ -1,0 +1,9 @@
+# P2-R — Dondurma istisnaları (docs/DEV_PROCESS.md §4)
+
+Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. Gözden geçirici bu turda tek seferdir, R5'te (K-P2.4).
+
+## F1 · R0 · `scripts/mcp_e2e.sh`, `scripts/contract_check.sh`, `server/tests/contract.rs` — kaydedicilerin 11 araca uyarlanması (K-P2B.4'ün önerisi)
+- **Ne:** `mcp_e2e.sh`: `TOOLS`'a `events` (tek satır değişti), oturumun sonuna üç `events` çağrısı (248 geçerli sayfa, 249 `kinds` süzgeci, 250 bilinmeyen tür) ve onların üç kontrolü; önceki 247 çağrının kimlikleri ve kontrolleri aynen. `contract_check.sh`: `tool_args`'a `events) echo '{"since_seq":0,"limit":5}'` (ve bir yorum). `contract.rs`: `every_tool_answers`'a `call_tool(&k, "events", …)` ve iki iddia. Silinen tek satır `TOOLS`'un eski tanımı (`R0_f1.diff`).
+- **Neden:** GOAL P2-R R0 (b) (K-P2B.4'ün önerisi): P2-B'nin 11. aracı `events` bu kaydedicilerde FAIL kaydettiriyordu (D-2 el sıkışması, D1-13 `tool:events`/`POST /v1/events` eksik ve onlara dayanan kontroller); sınıflandırıcının listesine K-P2B.4 ile girmişlerdi. Ölçülen şey gevşemez: her araç (artık 11) `tools/list`'te ve sözleşmede, her araç gerçek bir test çağrısı ve gerçek bir HTTP çağrısıyla eşleşir; kurcalamaların reddi aynen (kurcalama betiklerine dokunulmadı).
+- **Önce/sonra:** `contract_check.sh` önce çıkış 1, `missing: ["tool:events", "http-endpoint:POST /v1/events (no request in this script)"]` (`reports/rounds/P2-R/r0b/contract_check_before.json`); sonra çıkış 0, "11 tools, 12 codes", `missing: []` (`contract_check_after.json`). `mcp_e2e.sh` sonra: el sıkışma `true` ("tools/list has every tool of this round" 11 araçla geçer), `events` 3/3; araçlar 9/11 — kalan iki aracın (`status`, `propose`) FAIL'leri önceki turlardan tarihsel ve sınıflandırıcıda (`mcp_e2e_after.json`). `cargo test --test contract`: 4/4. Sınıflandırıcıya etkisi geliştirme zincirinde ölçülür (R0.md).
+- **Gözden geçirici onayı:** R5.review.md.
