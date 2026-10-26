@@ -1,0 +1,1043 @@
+FAST="1" bash scripts/verify.sh
+[verify 13:03:50] workdirs under /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF
+[A] [verify 13:03:50] fast: clone /Users/arkns/Works/mdkernel -> /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/A/repo
+[A] [verify 13:03:54] fast: commit 866dad9ccc885fa1ee28b6d692a800429a50aa2b
+[A] [verify 13:05:51] fast: D3 (manifest verified)
+[A] [verify 13:06:23] fast: check_frozen, check_deps
+[A] check_frozen: research/eval/** — P1-A/A4: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/tests/fixtures/freeze_fixture/** — 18 files unchanged since 540783b (P1-A/A4:)
+[A] check_frozen: research/tests/fixtures/freeze_fixture_v3/** — 17 files unchanged since 540783b (P1-A/A4:)
+[A] check_frozen: research/data/MANIFEST.*.json — 5 files unchanged since 540783b (P1-A/A4:)
+[A] check_frozen: research/data/d4/** — 3 files unchanged since 540783b (P1-A/A4:)
+[A] check_frozen: research/data/splits/** — 1 files unchanged since 540783b (P1-A/A4:)
+[A] check_frozen: research/reports/runs/20261013T154851Z-f133d0b/** — 12 files unchanged since 540783b (P1-A/A4:)
+[A] check_frozen: research/reports/runs/20261013T182004Z-f82dabd/** — 11 files unchanged since 540783b (P1-A/A4:)
+[A] check_frozen: spec/fixtures/** — P1-A/A3: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance.rs — P1-A/A3: superseded by re-freeze P2-L/L0:
+[A] check_frozen: core/tests/conformance/eval.rs — P1-A/A3: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/gen_fixtures.sh — P1-A/A3: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/fixture-gen/** — P1-A/A3: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_freeze_indep.sh — P1-A/A4: superseded by re-freeze GH-0/G5-tar:
+[A] check_frozen: research/eval/datasets/synthetic_edits_v3.py — P1-A/A5: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/run_holdout.py — P1-A/A5: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/run_split_grid.py — P1-A/A5: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/data/MANIFEST.d1ho.json — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+[A] check_frozen: research/data/MANIFEST.d1sh.json — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+[A] check_frozen: research/eval/compare_p1a.py — 1 files unchanged since 7c30c30 (P1-A/A6:)
+[A] check_frozen: research/eval/run_p1a_checks.py — P1-A/A6: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_tamper.sh — P1-A/A6: superseded by re-freeze GH-0/G5-tar:
+[A] check_frozen: research/eval/report_p1a.py — 1 files unchanged since 27d8ae8 (P1-A/A7-pre:)
+[A] check_frozen: scripts/verify.sh — P1-A/A6: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/check_frozen.sh — P1-A/A6: superseded by re-freeze P1-B.1/B1.0:
+[A] check_frozen: table append-only since 3f2be39 (research/FROZEN.md row, P1-B/B0:)
+[A] check_frozen: scripts/check_frozen.sh — P1-B/B0: superseded by re-freeze P1-B.1/B1.0:
+[A] check_frozen: core/tests/conformance.rs — P1-B/B0: superseded by re-freeze P2-L/L0:
+[A] check_frozen: scripts/test_tamper.sh — P1-B/B0: superseded by re-freeze GH-0/G5-tar:
+[A] check_frozen: scripts/check_frozen.sh — P1-B/B0-fix: superseded by re-freeze P1-B.1/B1.0:
+[A] check_frozen: core/tests/conformance.rs — P1-B/B7: superseded by re-freeze P2-L/L0:
+[A] check_frozen: spec/fixtures/** — P1-B/B7: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance/eval_c2.rs — P1-B/B7: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance_c2_gen.rs — P1-B/B7: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/gen_fixtures_c2.sh — P1-B/B7: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/datasets/synthetic_edits_v4.py — 1 files unchanged since df19545 (P1-B/B8-pre:)
+[A] check_frozen: research/data/MANIFEST.d1hs.json — 1 files unchanged since df19545 (P1-B/B8-pre:)
+[A] check_frozen: research/eval/run_holdout_split.py — P1-B/B8-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/verify.sh — P1-B/B9-pre: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/run_p1b_checks.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+[A] check_frozen: research/eval/compare_p1b.py — P1-B/B9-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/report_p1b.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+[A] check_frozen: scripts/governance_scenario.sh — P1-B/B9-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_policy_bounds.sh — P1-B/B9-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/check_v3_compat.sh — P1-B/B9-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/verify.sh — P1-B/B9-pre2: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/check_frozen.sh — 1 files unchanged since 7bf9b11 (P1-B.1/B1.0:)
+[A] check_frozen: spec/fixtures/** — P1-B.1/B1.2: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance.rs — P1-B.1/B1.2: superseded by re-freeze P2-L/L0:
+[A] check_frozen: scripts/check_v3_compat.sh — P1-B.1/B1.3: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/gen_v3final_mixed.sh — P1-B.1/B1.3: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/v3final-mixed-gen/** — P1-B.1/B1.3: superseded by re-freeze GH-0/G0:
+[A] check_frozen: core/tests/fixtures/v3_final_mixed/** — 110 files unchanged since e1e2fc7 (P1-B.1/B1.3:)
+[A] check_frozen: research/eval/compare_p1b1.py — P1-B.1/B1.4-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/run_p1b1_checks.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+[A] check_frozen: research/eval/report_p1b1.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+[A] check_frozen: spec/fixtures/** — P1-C/C0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance.rs — P1-C/C0: superseded by re-freeze P2-L/L0:
+[A] check_frozen: core/tests/conformance/eval_c2.rs — P1-C/C0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance_c2_gen.rs — P1-C/C0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: research/eval/gen_embed_ref.py — P1-C/C1: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/data/embed_ref.json — 1 files unchanged since 9cbbb6c (P1-C/C1:)
+[A] check_frozen: research/eval/gen_tok_ref.py — P1-C/C2: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/data/tok_ref.json — 1 files unchanged since 9340729 (P1-C/C2:)
+[A] check_frozen: spec/fixtures/** — P1-C/C7: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance_c3.rs — P1-C/C7: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance/eval_c3.rs — P1-C/C7: superseded by re-freeze P2-0/Z2:
+[A] check_frozen: index/tests/conformance_c3_gen.rs — P1-C/C7: superseded by re-freeze P2-0/Z4:
+[A] check_frozen: scripts/gen_fixtures_c3.sh — P1-C/C7: superseded by re-freeze GH-0/G0:
+[A] check_frozen: spec/fixtures/** — P1-C/C7-fix: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance_c3.rs — P1-C/C7-fix: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: research/eval/run_c3_quality.py — P1-C/C8: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/verify.sh — P1-C/C9-pre: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/run_p1c_checks.py — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/compare_p1c.py — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+[A] check_frozen: research/eval/report_p1c.py — P1-C/C9-pre: superseded by re-freeze P1-C/C9-fix:
+[A] check_frozen: scripts/test_tamper_p1c.sh — P1-C/C9-pre: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/governance.rs — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: index/tests/embed.rs — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: index/tests/hot.rs — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: core/tests/compat_v3final.rs — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/report_p1c.py — 1 files unchanged since 3a0dc23 (P1-C/C9-fix:)
+[A] check_frozen: core/tests/conformance.rs — P1-C.1/C1.0: superseded by re-freeze P2-L/L0:
+[A] check_frozen: research/eval/bm25_lucene.py — P1-C.1/C1.1: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/run_c1_variant.py — P1-C.1/C1.1: superseded by re-freeze GH-0/G0:
+[A] check_frozen: spec/fixtures/** — P1-C.1/C1.3: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance/eval_c3.rs — P1-C.1/C1.3: superseded by re-freeze P2-0/Z2:
+[A] check_frozen: index/tests/conformance_c3.rs — P1-C.1/C1.3: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance_c3_gen.rs — P1-C.1/C1.3: superseded by re-freeze P2-0/Z4:
+[A] check_frozen: scripts/verify.sh — P1-C.1/C1.4-pre: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/test_tamper_p1c.sh — P1-C.1/C1.4-pre: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/test_p1c1.sh — P1-C.1/C1.4-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: index/tests/p1c1.rs — P1-C.1/C1.4-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/compare_p1c1.py — P1-C.1/C1.4-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/run_p1c1_checks.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+[A] check_frozen: research/eval/gen_quality_ref.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+[A] check_frozen: research/data/quality_ref_rust.json — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+[A] check_frozen: research/eval/report_p1c1.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+[A] check_frozen: research/eval/compare_p1c1.py — P1-C.1/C1.4-fix: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/check_v3_compat.sh — P1-D/D0: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_p1c1.sh — P1-D/D0: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_tamper_p1c.sh — P1-D/D0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/verify.sh — P1-D/D7-pre: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/compare_p1d.py — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/run_p1d_checks.py — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/report_p1d.py — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/mcp_e2e.sh — P1-D/D7-pre: superseded by re-freeze P2-R/R0-f2:
+[A] check_frozen: scripts/mcp_inspector.sh — P1-D/D7-pre: superseded by re-freeze P2-B/B5-f4:
+[A] check_frozen: scripts/http_e2e.sh — P1-D/D7-pre: superseded by re-freeze P2-A/A0:
+[A] check_frozen: scripts/scene_agent.sh — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_tamper_p1d.sh — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: server/tests/serve_watch.rs — P1-D/D7-pre: superseded by re-freeze P2-A/A0:
+[A] check_frozen: server/tests/mcp_schemas.rs — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: server/examples/mcp_client.rs — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+[A] check_frozen: index/tests/p1c1.rs — P1-D.1/D1.3: superseded by re-freeze GH-0/G0:
+[A] check_frozen: spec/fixtures/** — P1-D.1/D1.3: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance/eval_c3.rs — P1-D.1/D1.3: superseded by re-freeze P2-0/Z2:
+[A] check_frozen: index/tests/conformance_c3.rs — P1-D.1/D1.3: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance_c3_gen.rs — P1-D.1/D1.3: superseded by re-freeze P2-0/Z4:
+[A] check_frozen: spec/fixtures/** — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance/eval_c2.rs — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance_c2_gen.rs — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance.rs — P1-D.1/D1.4: superseded by re-freeze P2-L/L0:
+[A] check_frozen: index/tests/conformance_c3.rs — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/test_tamper_p1c.sh — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/verify.sh — P1-D.1/D1.7-pre: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/compare_p1d1.py — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/run_p1d1_checks.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+[A] check_frozen: research/eval/report_p1d1.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+[A] check_frozen: scripts/test_p1d1.sh — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_tamper_p1d1.sh — P1-D.1/D1.7-pre: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/contract_check.sh — P1-D.1/D1.7-pre: superseded by re-freeze P2-R/R2:
+[A] check_frozen: server/tests/p1d1_criteria.rs — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: server/tests/contract.rs — P1-D.1/D1.7-pre: superseded by re-freeze P2-R/R2:
+[A] check_frozen: server/examples/mcp_pipeline.rs — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+[A] check_frozen: scripts/governance_scenario.sh — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_p1c1.sh — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/compare_p1d.py — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/compare_p1d1.py — P1-D.1/D1.7-fix: superseded by re-freeze GH-0/G0:
+[A] check_frozen: server/tests/p1d1_criteria.rs — P1-E/E0: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/compare_p1d1.py — P1-E/E0: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/contract_check.sh — P1-E/E0: superseded by re-freeze P2-R/R2:
+[A] check_frozen: server/tests/contract.rs — P1-E/E0: superseded by re-freeze P2-R/R2:
+[A] check_frozen: research/eval/check_compare_fields.py — P1-E/E0: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/check_compare_fields.sh — P1-E/E0: superseded by re-freeze P1-E/E0-fix2:
+[A] check_frozen: research/eval/check_compare_fields.py — P1-E/E0-fix2: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/check_compare_fields.sh — 1 files unchanged since 5ade7f8 (P1-E/E0-fix2:)
+[A] check_frozen: scripts/verify.sh — P1-E/E7-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/compare_p1e.py — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/run_p1e_checks.py — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P1-E/E7-pre: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/scene.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/plugin_e2e.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: clients/obsidian/e2e/** — P1-E/E7-pre: superseded by re-freeze P2-L/L0-release:
+[A] check_frozen: scripts/client_checks.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/release_local.sh — P1-E/E7-pre: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/conformance_equiv.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_tamper_p1e.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/report_p1e.py — P1-E/E8: superseded by re-freeze GH-0/G0:
+[A] check_frozen: server/tests/contract.rs — P1-E.1/E1.1: superseded by re-freeze P2-R/R2:
+[A] check_frozen: scripts/contract_check.sh — P1-E.1/E1.1: superseded by re-freeze P2-R/R2:
+[A] check_frozen: scripts/gen_old_index.sh — P1-E.1/E1.1: superseded by re-freeze GH-0/G0:
+[A] check_frozen: server/tests/fixtures/index_v2/** — 28 files unchanged since bf95e57 (P1-E.1/E1.1:)
+[A] check_frozen: server/tests/p1e1_status.rs — P1-E.1/E1.1: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_tamper_p1e1.sh — P1-E.1/E1.1: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/verify.sh — P1-E.1/E1.4: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/historical.py — P1-E.1/E1.4: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/historical_fails.json — 1 files unchanged since 38e562e (P1-E.1/E1.4:)
+[A] check_frozen: scripts/verify.sh — P1-E.1/E1.5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/check_compare_fields.py — P1-E.1/E1.5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P1-E.1/E1.5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/historical.py — P1-E.1/E1.5-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P1-E.1/E1.5-pre: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/compare_p1e1.py — 1 files unchanged since 7ea12dc (P1-E.1/E1.5-pre:)
+[A] check_frozen: research/eval/run_p1e1_checks.py — 1 files unchanged since 7ea12dc (P1-E.1/E1.5-pre:)
+[A] check_frozen: research/eval/report_p1e1.py — 1 files unchanged since 7ea12dc (P1-E.1/E1.5-pre:)
+[A] check_frozen: clients/obsidian/e2e/real/** — P1-E.1/E1.5-pre: superseded by re-freeze P2-L/L0-release:
+[A] check_frozen: scripts/plugin_e2e_real.sh — P1-E.1/E1.5-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/test_tamper_p1e1_e2e.sh — P1-E.1/E1.5-pre: superseded by re-freeze GH-0/G0:
+[A] check_frozen: scripts/release.sh — P1-E.1/E1.5-pre: superseded by re-freeze P2-L/L0-release:
+[A] check_frozen: scripts/release_target.sh — P1-E.1/E1.5-pre: superseded by re-freeze P2-A/A3:
+[A] check_frozen: scripts/release_check.sh — P1-E.1/E1.5-pre: superseded by re-freeze P2-P/P0:
+[A] check_frozen: research/eval/** — GH-0/G0: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: core/tests/conformance.rs — GH-0/G0: superseded by re-freeze P2-L/L0:
+[A] check_frozen: core/tests/conformance/eval.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/gen_fixtures.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/fixture-gen/** — 2 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_freeze_indep.sh — GH-0/G0: superseded by re-freeze GH-0/G5-tar:
+[A] check_frozen: research/eval/datasets/synthetic_edits_v3.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/run_holdout.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/run_split_grid.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/run_p1a_checks.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_tamper.sh — GH-0/G0: superseded by re-freeze GH-0/G5-tar:
+[A] check_frozen: scripts/verify.sh — GH-0/G0: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: core/tests/conformance/eval_c2.rs — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance_c2_gen.rs — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/gen_fixtures_c2.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/run_holdout_split.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/compare_p1b.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/governance_scenario.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_policy_bounds.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/check_v3_compat.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/gen_v3final_mixed.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/v3final-mixed-gen/** — 3 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/compare_p1b1.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/gen_embed_ref.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/gen_tok_ref.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: index/tests/conformance_c3.rs — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance/eval_c3.rs — GH-0/G0: superseded by re-freeze P2-0/Z2:
+[A] check_frozen: index/tests/conformance_c3_gen.rs — GH-0/G0: superseded by re-freeze P2-0/Z4:
+[A] check_frozen: scripts/gen_fixtures_c3.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/run_c3_quality.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/run_p1c_checks.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_tamper_p1c.sh — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/governance.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: index/tests/embed.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: index/tests/hot.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: core/tests/compat_v3final.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/bm25_lucene.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/run_c1_variant.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_p1c1.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: index/tests/p1c1.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/compare_p1d.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/run_p1d_checks.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/report_p1d.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/mcp_e2e.sh — GH-0/G0: superseded by re-freeze P2-R/R0-f2:
+[A] check_frozen: scripts/mcp_inspector.sh — GH-0/G0: superseded by re-freeze P2-B/B5-f4:
+[A] check_frozen: scripts/http_e2e.sh — GH-0/G0: superseded by re-freeze P2-A/A0:
+[A] check_frozen: scripts/scene_agent.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_tamper_p1d.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: server/tests/serve_watch.rs — GH-0/G0: superseded by re-freeze P2-A/A0:
+[A] check_frozen: server/tests/mcp_schemas.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/compare_p1d1.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_p1d1.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_tamper_p1d1.sh — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/contract_check.sh — GH-0/G0: superseded by re-freeze P2-R/R2:
+[A] check_frozen: server/tests/p1d1_criteria.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: server/tests/contract.rs — GH-0/G0: superseded by re-freeze P2-R/R2:
+[A] check_frozen: research/eval/check_compare_fields.py — GH-0/G0: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/compare_p1e.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/run_p1e_checks.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — GH-0/G0: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/scene.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/plugin_e2e.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: clients/obsidian/e2e/** — GH-0/G0: superseded by re-freeze P2-L/L0-release:
+[A] check_frozen: scripts/client_checks.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/release_local.sh — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/conformance_equiv.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_tamper_p1e.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/report_p1e.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/gen_old_index.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: server/tests/p1e1_status.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_tamper_p1e1.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: clients/obsidian/e2e/real/** — GH-0/G0: superseded by re-freeze P2-L/L0-release:
+[A] check_frozen: scripts/plugin_e2e_real.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_tamper_p1e1_e2e.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/release.sh — GH-0/G0: superseded by re-freeze P2-L/L0-release:
+[A] check_frozen: scripts/release_target.sh — GH-0/G0: superseded by re-freeze P2-A/A3:
+[A] check_frozen: scripts/release_check.sh — GH-0/G0: superseded by re-freeze P2-P/P0:
+[A] check_frozen: research/eval/compare_p1c1.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: research/eval/historical.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[A] check_frozen: scripts/test_tamper.sh — 1 files unchanged since 02ffcd1 (GH-0/G5-tar:)
+[A] check_frozen: scripts/test_freeze_indep.sh — 1 files unchanged since 02ffcd1 (GH-0/G5-tar:)
+[A] check_frozen: scripts/http_e2e.sh — GH-0/G5-stat: superseded by re-freeze P2-A/A0:
+[A] check_frozen: scripts/contract_check.sh — P2-0/Z0: superseded by re-freeze P2-R/R2:
+[A] check_frozen: scripts/release_check.sh — P2-0/Z0: superseded by re-freeze P2-P/P0:
+[A] check_frozen: research/eval/run_artifacts.py — 1 files unchanged since f189593 (P2-0/Z0:)
+[A] check_frozen: index/tests/conformance/eval_c3.rs — 1 files unchanged since 7b08867 (P2-0/Z2:)
+[A] check_frozen: server/tests/serve_watch.rs — P2-0/Z2: superseded by re-freeze P2-A/A0:
+[A] check_frozen: scripts/http_e2e.sh — P2-0/Z2: superseded by re-freeze P2-A/A0:
+[A] check_frozen: scripts/contract_check.sh — P2-0/Z2: superseded by re-freeze P2-R/R2:
+[A] check_frozen: core/tests/conformance/eval_c2.rs — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance.rs — P2-0/Z4: superseded by re-freeze P2-L/L0:
+[A] check_frozen: core/tests/conformance_c2_gen.rs — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance_c3.rs — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance_c3_gen.rs — 1 files unchanged since 25f5bf7 (P2-0/Z4:)
+[A] check_frozen: spec/fixtures/** — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/test_tamper_p1c.sh — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/test_tamper_p1d1.sh — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/release_local.sh — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/release_target.sh — P2-0/Z4: superseded by re-freeze P2-A/A3:
+[A] check_frozen: scripts/release_check.sh — P2-0/Z4: superseded by re-freeze P2-P/P0:
+[A] check_frozen: core/tests/conformance/eval_c2.rs — P2-0/Z4-fix: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: spec/fixtures/** — P2-0/Z4-fix: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: research/eval/run_p2_0.py — P2-0/Z5: superseded by re-freeze P2-A/A0:
+[A] check_frozen: research/eval/datasets/p2_0_sets.py — 1 files unchanged since cbe8db2 (P2-0/Z5:)
+[A] check_frozen: research/eval/agent_fs_writer.py — 1 files unchanged since cbe8db2 (P2-0/Z5:)
+[A] check_frozen: research/data/p2_0_old_vaults/** — 298 files unchanged since cbe8db2 (P2-0/Z5:)
+[A] check_frozen: scripts/gen_p2_0_old_vaults.sh — 1 files unchanged since cbe8db2 (P2-0/Z5:)
+[A] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — P2-0/Z5: superseded by re-freeze P2-A/A0:
+[A] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — P2-0/Z5-fix: superseded by re-freeze P2-A/A0:
+[A] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — P2-0/Z5-fix2: superseded by re-freeze P2-A/A0:
+[A] check_frozen: research/eval/run_p2_0.py — P2-0/Z5-fix2: superseded by re-freeze P2-A/A0:
+[A] check_frozen: scripts/verify.sh — P2-0/Z7: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/check_compare_fields.py — P2-0/Z7: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0/Z7: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/compare_p2_0.py — P2-0/Z7: superseded by re-freeze P2-0/Z7-fix:
+[A] check_frozen: research/eval/run_p2_0_checks.py — 1 files unchanged since 24be01c (P2-0/Z7:)
+[A] check_frozen: research/eval/tamper_p2_0.py — 1 files unchanged since 24be01c (P2-0/Z7:)
+[A] check_frozen: research/eval/** — P2-0/Z7-frz: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: scripts/contract_check.sh — P2-0/Z7-fix: superseded by re-freeze P2-R/R2:
+[A] check_frozen: research/eval/** — P2-0/Z7-fix: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/compare_p2_0.py — 1 files unchanged since bf15537 (P2-0/Z7-fix:)
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0/Z7-fix: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/historical_p2_0.py — 1 files unchanged since bf15537 (P2-0/Z7-fix:)
+[A] check_frozen: research/eval/historical_fails_p2_0.json — 1 files unchanged since bf15537 (P2-0/Z7-fix:)
+[A] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — P2-0/Z7-fix: superseded by re-freeze P2-A/A0:
+[A] check_frozen: research/eval/** — P2-0/Z7-rev: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/** — P2-0/Z8-pre: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: core/tests/conformance/eval_c2.rs — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: core/tests/conformance.rs — P2-0.1/Y2: superseded by re-freeze P2-L/L0:
+[A] check_frozen: core/tests/conformance_c2_gen.rs — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: index/tests/conformance_c3.rs — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: spec/fixtures/** — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/test_tamper_p1c.sh — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/test_tamper_p1d1.sh — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/release_local.sh — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[A] check_frozen: scripts/release_target.sh — P2-0.1/Y2: superseded by re-freeze P2-A/A3:
+[A] check_frozen: scripts/release_check.sh — P2-0.1/Y2: superseded by re-freeze P2-P/P0:
+[A] check_frozen: scripts/verify.sh — P2-0.1/Y4: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/verify.sh — P2-0.1/Y6-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/check_compare_fields.py — P2-0.1/Y6-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0.1/Y6-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/** — P2-0.1/Y6-frz: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/** — P2-0.1/Y6-pre: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: clients/obsidian/e2e/p2_0_1/real.ts — P2-0.1/Y6-pre: superseded by re-freeze P2-A/A0:
+[A] check_frozen: scripts/gen_p2_0_1_old_vaults.sh — 1 files unchanged since dfde0c6 (P2-0.1/Y6-pre:)
+[A] check_frozen: research/data/p2_0_1_old_vaults/** — 115 files unchanged since dfde0c6 (P2-0.1/Y6-pre:)
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0.1/Y6-pre: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/verify.sh — P2-0.2/X2: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: core/tests/conformance/eval_c2.rs — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[A] check_frozen: core/tests/conformance.rs — P2-0.2/X3: superseded by re-freeze P2-L/L0:
+[A] check_frozen: core/tests/conformance_c2_gen.rs — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[A] check_frozen: index/tests/conformance_c3.rs — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[A] check_frozen: spec/fixtures/** — 206 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[A] check_frozen: scripts/test_tamper_p1c.sh — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[A] check_frozen: scripts/test_tamper_p1d1.sh — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[A] check_frozen: scripts/release_local.sh — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[A] check_frozen: scripts/release_target.sh — P2-0.2/X3: superseded by re-freeze P2-A/A3:
+[A] check_frozen: scripts/release_check.sh — P2-0.2/X3: superseded by re-freeze P2-P/P0:
+[A] check_frozen: scripts/verify.sh — P2-0.2/X5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/check_compare_fields.py — P2-0.2/X5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0.2/X5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/** — P2-0.2/X5-dev: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/** — P2-0.2/X5-rec: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0.2/X5-rec: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/** — P2-A/A0: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/run_p2_0.py — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[A] check_frozen: clients/obsidian/e2e/** — P2-A/A0: superseded by re-freeze P2-L/L0-release:
+[A] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[A] check_frozen: clients/obsidian/e2e/p2_0_1/real.ts — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[A] check_frozen: scripts/http_e2e.sh — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[A] check_frozen: server/tests/serve_watch.rs — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[A] check_frozen: server/tests/contract.rs — P2-A/A2: superseded by re-freeze P2-R/R2:
+[A] check_frozen: scripts/contract_check.sh — P2-A/A2: superseded by re-freeze P2-R/R2:
+[A] check_frozen: scripts/release_check.sh — P2-A/A3: superseded by re-freeze P2-P/P0:
+[A] check_frozen: scripts/release_target.sh — 1 files unchanged since d583881 (P2-A/A3:)
+[A] check_frozen: scripts/verify.sh — P2-A/A5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/check_compare_fields.py — P2-A/A5-dev2: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-A/A5-dev2: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/** — P2-A/A5-dev2: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/** — P2-A/A5-rec: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-A/A5-rec: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: scripts/verify.sh — P2-0.3/R0: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/** — P2-0.3/R0: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: scripts/release_check.sh — P2-L/L0-release: superseded by re-freeze P2-P/P0:
+[A] check_frozen: scripts/release.sh — 1 files unchanged since fc645ed (P2-L/L0-release:)
+[A] check_frozen: clients/obsidian/e2e/** — 10 files unchanged since fc645ed (P2-L/L0-release:)
+[A] check_frozen: clients/obsidian/e2e/real/** — 3 files unchanged since fc645ed (P2-L/L0-release:)
+[A] check_frozen: scripts/verify.sh — P2-L/L0: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/check_compare_fields.py — P2-L/L0: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-L/L0: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/** — P2-L/L0: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: core/tests/conformance.rs — 1 files unchanged since d6ac64c (P2-L/L0:)
+[A] check_frozen: research/eval/datasets/d_tr.py — 1 files unchanged since 94376ed (P2-L/L4-pre:)
+[A] check_frozen: research/data/MANIFEST.d_tr.json — 1 files unchanged since 94376ed (P2-L/L4-pre:)
+[A] check_frozen: research/eval/run_p2l.py — 1 files unchanged since 94376ed (P2-L/L4-pre:)
+[A] check_frozen: research/eval/run_p2l_migrate.py — 1 files unchanged since 94376ed (P2-L/L4-pre:)
+[A] check_frozen: scripts/verify.sh — P2-L/L5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/compare_p2l.py — 1 files unchanged since b38ccd7 (P2-L/L5-dev:)
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-L/L5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/** — P2-L/L5-dev: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/** — P2-L/L5-rec: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: scripts/release_check.sh — 1 files unchanged since eb2c829 (P2-P/P0:)
+[A] check_frozen: scripts/verify.sh — P2-P/P5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/check_compare_fields.py — P2-P/P5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-P/P5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/** — P2-P/P5-dev: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/datasets/d_notes.py — 1 files unchanged since f48eb0e (P2-B/B2-pre:)
+[A] check_frozen: research/data/MANIFEST.d_notes.json — 1 files unchanged since f48eb0e (P2-B/B2-pre:)
+[A] check_frozen: research/data/d_notes/** — 401 files unchanged since f48eb0e (P2-B/B2-pre:)
+[A] check_frozen: research/eval/p2b_align.py — P2-B/B2-pre: superseded by re-freeze P2-B/B2-f1:
+[A] check_frozen: research/eval/p2b_align.py — 1 files unchanged since 7da5725 (P2-B/B2-f1:)
+[A] check_frozen: scripts/verify.sh — P2-B/B5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/check_compare_fields.py — P2-B/B5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-B/B5-dev: superseded by re-freeze P2-R/R5-dev:
+[A] check_frozen: research/eval/** — P2-B/B5-dev: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: scripts/mcp_inspector.sh — 1 files unchanged since dccf57d (P2-B/B5-f4:)
+[A] check_frozen: research/eval/** — P2-B/B5-f5: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: scripts/mcp_e2e.sh — P2-R/R0-f1: superseded by re-freeze P2-R/R0-f2:
+[A] check_frozen: scripts/contract_check.sh — P2-R/R0-f1: superseded by re-freeze P2-R/R2:
+[A] check_frozen: server/tests/contract.rs — P2-R/R0-f1: superseded by re-freeze P2-R/R2:
+[A] check_frozen: scripts/mcp_e2e.sh — 1 files unchanged since 078d21a (P2-R/R0-f2:)
+[A] check_frozen: research/eval/** — P2-R/R0-f3: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: scripts/contract_check.sh — 1 files unchanged since 8333328 (P2-R/R2:)
+[A] check_frozen: server/tests/contract.rs — 1 files unchanged since 8333328 (P2-R/R2:)
+[A] check_frozen: research/eval/** — P2-R/R3-pre: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: scripts/verify.sh — 1 files unchanged since 95139c8 (P2-R/R5-dev:)
+[A] check_frozen: research/eval/check_compare_fields.py — 1 files unchanged since 95139c8 (P2-R/R5-dev:)
+[A] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — 1 files unchanged since 95139c8 (P2-R/R5-dev:)
+[A] check_frozen: research/eval/** — P2-R/R5-dev: superseded by re-freeze P2-R/R5-rec:
+[A] check_frozen: research/eval/** — 141 files unchanged since 866dad9 (P2-R/R5-rec:)
+[A] check_frozen: table append-only since d7264c9 (docs/rounds/GH-0/progress/ROUND_START)
+[A] check_frozen: table append-only since 63a4004 (docs/rounds/P1-B.1/progress/ROUND_START)
+[A] check_frozen: table append-only since 983c62d (docs/rounds/P1-B/progress/ROUND_START)
+[A] check_frozen: table append-only since 00f29bc (docs/rounds/P1-C.1/progress/ROUND_START)
+[A] check_frozen: table append-only since 7053760 (docs/rounds/P1-C/progress/ROUND_START)
+[A] check_frozen: table append-only since e8827f8 (docs/rounds/P1-D.1/progress/ROUND_START)
+[A] check_frozen: table append-only since 2e2c4ea (docs/rounds/P1-D/progress/ROUND_START)
+[A] check_frozen: table append-only since 1ec03b9 (docs/rounds/P1-E.1/progress/ROUND_START)
+[A] check_frozen: table append-only since 11e29b0 (docs/rounds/P1-E/progress/ROUND_START)
+[A] check_frozen: table append-only since 7bccb25 (docs/rounds/P2-0.1/progress/ROUND_START)
+[A] check_frozen: table append-only since f3f8f2a (docs/rounds/P2-0.2/progress/ROUND_START)
+[A] check_frozen: table append-only since c50ee2f (docs/rounds/P2-0.3/progress/ROUND_START)
+[A] check_frozen: table append-only since 85be0a7 (docs/rounds/P2-0/progress/ROUND_START)
+[A] check_frozen: table append-only since b3c2e0e (docs/rounds/P2-A/progress/ROUND_START)
+[A] check_frozen: table append-only since 6a5e911 (docs/rounds/P2-B/progress/ROUND_START)
+[A] check_frozen: table append-only since fc645ed (docs/rounds/P2-L/progress/ROUND_START)
+[A] check_frozen: table append-only since cfa31d6 (docs/rounds/P2-P/progress/ROUND_START)
+[A] check_frozen: table append-only since ae7e692 (docs/rounds/P2-R/progress/ROUND_START)
+[A] check_frozen: OK
+[A] check_deps: OK (core ← index ← server ← clients; research → bindings/python)
+[A] [verify 13:07:15] RUN=20261026T130715Z-866dad9
+[A] [verify 13:07:15] fast: conformance (make conformance, rootmark conformance)
+[A] rm -f reports/conformance.json
+[A] ROOTMARK_FIXTURES="/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/A/repo/spec/fixtures" ROOTMARK_CONFORMANCE_REPORT="/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/A/repo/reports/conformance.json" \
+[A] 	  cargo test -p rootmark-core --release --test conformance -- --nocapture
+[A]    Compiling serde_core v1.0.229
+[A]    Compiling serde v1.0.229
+[A]    Compiling aho-corasick v1.1.5
+[A]    Compiling num-traits v0.2.19
+[A]    Compiling syn v2.0.119
+[A]    Compiling syn v3.0.9
+[A]    Compiling bitflags v2.13.2
+[A]    Compiling pulldown-cmark v0.13.4
+[A]    Compiling deprecate-until v1.0.0
+[A]    Compiling regex-automata v0.4.18
+[A]    Compiling integer-sqrt v0.1.5
+[A]    Compiling serde_derive v1.0.229
+[A]    Compiling thiserror-impl v2.0.21
+[A]    Compiling serde_json v1.0.154
+[A]    Compiling thiserror v2.0.21
+[A]    Compiling pathfinding v4.16.0
+[A]    Compiling fancy-regex v0.19.2
+[A]    Compiling regex v1.13.1
+[A]    Compiling bstr v1.13.1
+[A]    Compiling toml_datetime v0.6.11
+[A]    Compiling serde_spanned v0.6.9
+[A]    Compiling toml_edit v0.22.27
+[A]    Compiling tiktoken-rs v0.12.1
+[A]    Compiling toml v0.8.23
+[A]    Compiling rootmark-core v0.2.0 (/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/A/repo/core)
+[A]     Finished `release` profile [optimized] target(s) in 8.15s
+[A]      Running tests/conformance.rs (target/release/deps/conformance-6a83b7cf7b93d790)
+[A] 
+[A] running 1 test
+[A] test conformance_levels_1_and_2 ... ok
+[A] 
+[A] test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.75s
+[A] 
+[A] ROOTMARK_FIXTURES="/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/A/repo/spec/fixtures" ROOTMARK_CONFORMANCE_REPORT="/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/A/repo/reports/conformance.json" \
+[A] 	  cargo test -p rootmark-index --release --test conformance_c3 -- --nocapture
+[A]    Compiling rootmark-index v0.2.0 (/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/A/repo/index)
+[A]     Finished `release` profile [optimized] target(s) in 1.05s
+[A]      Running tests/conformance_c3.rs (target/release/deps/conformance_c3-ceb464d8afd9f0d3)
+[A] 
+[A] running 1 test
+[A] test conformance_level_3 ... ok
+[A] 
+[A] test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.98s
+[A] 
+[A] conformance: level 3, 39/39 (reports/conformance.json)
+[A] rootmark conformance: level 3, 39/39 (spec 2.0.3)
+[A] [verify 13:07:48] fast: C-3 quality (D3 + D4 test split)
+[A] [verify 13:09:05] fast: regress (quality reference, conformance vs the last official RUN)
+[A] cd research && uv run --frozen python -m eval.fast_regress --run 20261026T130715Z-866dad9 --ref ../reports/rounds/P2-0.3/runs/20261024T000230Z-5632b3b
+[A] fast_regress: quality 618 values, differing 0; conformance 39 tests (0 new), differing 0; equiv exit 0 → pass
+[A] [verify 13:09:05] fast: round checks (make p2b-checks p2r-checks)
+[A] /Applications/Xcode.app/Contents/Developer/usr/bin/make p2b-checks p2r-checks RUN=20261026T130715Z-866dad9
+[A] cd research && uv run --frozen python -m eval.run_p2b_checks --run 20261026T130715Z-866dad9 --tests B-1=rootmark-server:p2_b_b0 --tests B-2=rootmark-server:p2_b_b1,rootmark-server:p1d1_criteria --tests B-5/B-6=rootmark-server:p2_b_b3,rootmark-server:p2_l_l3
+[A] p2b-checks: B-1 6 tests → pass
+[A] p2b-checks: B-2 13 tests → pass
+[A] p2b-checks: B-5/B-6 11 tests → pass
+[A] cd research && uv run --frozen python -m eval.p2b_align --run 20261026T130715Z-866dad9 --rootmark ../target/release/rootmark \
+[A] 	  || { rc=$?; [ $rc -eq 3 ] && echo "p2b-checks: p2b_align exit 3 (a criterion failed; recorded, K-P2B-T1)" >&2; }
+[A] p2b-align: B-3 notes error 0.00000 (pass); B-4 max class error 0.00128 (pass); old method pairable 0.330
+[A] cd research && uv run --frozen python -m eval.check_p2b_align_regress --run 20261026T130715Z-866dad9 --ref ../reports/rounds/P2-R/r0/align.json \
+[A] 	  > reports/runs/20261026T130715Z-866dad9/p2b/align_regress.json
+[A] cd research && uv run --frozen python -m eval.run_p2b_det --run 20261026T130715Z-866dad9 --rootmark ../target/release/rootmark
+[A] p2b-det: 27 documents located, 1652 events, dated search 1 hits, stale True
+[A] bash scripts/p2b_client_checks.sh research/reports/runs/20261026T130715Z-866dad9/p2b target/release/rootmark
+[A] p2b-client-checks: B-7 true (obsidian 164/164 tests, e2e 25/25 by location; vscode 12/12 tests, build 0); B-8 151 calls in 12 runs, 0 outside the contract (apart: 1 deliberate calls, 39 fake-server answers in unit tests)
+[A] cd research && uv run --frozen python -m eval.run_p2r_checks --run 20261026T130715Z-866dad9 --tests R-1=rootmark-server:p2_r_r0,rootmark-server:contract,rootmark-server:p2_b_b1 --tests R-2/R-4=rootmark-server:p2_r_r1 --tests R-5/R-8=rootmark-server:p2_r_r2
+[A] p2r-checks: R-1 14 tests → pass
+[A] p2r-checks: R-2/R-4 7 tests → pass
+[A] p2r-checks: R-5/R-8 8 tests → pass
+[A] cd research && uv run --frozen python -m eval.p2r_volume --run 20261026T130715Z-866dad9 --rootmark ../target/release/rootmark \
+[A] 	  || { rc=$?; [ $rc -eq 3 ] && echo "p2r-checks: p2r_volume exit 3 (R-7 failed; recorded, GOAL decision rule)" >&2; }
+[A] p2r-volume: V_before 14756069, V_after 2115988 (a 0.1434, pass), V_after2 2184310 (b 1.0323, pass); joined traces equal True; promoted never pruned True
+[A] cd research && uv run --frozen python -m eval.run_p2r_det --run 20261026T130715Z-866dad9 --rootmark ../target/release/rootmark
+[A] p2r-det: pruned 6 lineages, 4 trace lines, 1 checkpoints archived; dry run changed nothing True; pass True
+[A] [verify 13:21:17] fast chain finished in 1047 s
+[B] [verify 13:03:50] fast: clone /Users/arkns/Works/mdkernel -> /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/B/repo
+[B] [verify 13:03:54] fast: commit 866dad9ccc885fa1ee28b6d692a800429a50aa2b
+[B] [verify 13:05:45] fast: D3 (manifest verified)
+[B] [verify 13:06:17] fast: check_frozen, check_deps
+[B] check_frozen: research/eval/** — P1-A/A4: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/tests/fixtures/freeze_fixture/** — 18 files unchanged since 540783b (P1-A/A4:)
+[B] check_frozen: research/tests/fixtures/freeze_fixture_v3/** — 17 files unchanged since 540783b (P1-A/A4:)
+[B] check_frozen: research/data/MANIFEST.*.json — 5 files unchanged since 540783b (P1-A/A4:)
+[B] check_frozen: research/data/d4/** — 3 files unchanged since 540783b (P1-A/A4:)
+[B] check_frozen: research/data/splits/** — 1 files unchanged since 540783b (P1-A/A4:)
+[B] check_frozen: research/reports/runs/20261013T154851Z-f133d0b/** — 12 files unchanged since 540783b (P1-A/A4:)
+[B] check_frozen: research/reports/runs/20261013T182004Z-f82dabd/** — 11 files unchanged since 540783b (P1-A/A4:)
+[B] check_frozen: spec/fixtures/** — P1-A/A3: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance.rs — P1-A/A3: superseded by re-freeze P2-L/L0:
+[B] check_frozen: core/tests/conformance/eval.rs — P1-A/A3: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/gen_fixtures.sh — P1-A/A3: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/fixture-gen/** — P1-A/A3: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_freeze_indep.sh — P1-A/A4: superseded by re-freeze GH-0/G5-tar:
+[B] check_frozen: research/eval/datasets/synthetic_edits_v3.py — P1-A/A5: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/run_holdout.py — P1-A/A5: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/run_split_grid.py — P1-A/A5: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/data/MANIFEST.d1ho.json — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+[B] check_frozen: research/data/MANIFEST.d1sh.json — 1 files unchanged since 3cbc1e6 (P1-A/A5:)
+[B] check_frozen: research/eval/compare_p1a.py — 1 files unchanged since 7c30c30 (P1-A/A6:)
+[B] check_frozen: research/eval/run_p1a_checks.py — P1-A/A6: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_tamper.sh — P1-A/A6: superseded by re-freeze GH-0/G5-tar:
+[B] check_frozen: research/eval/report_p1a.py — 1 files unchanged since 27d8ae8 (P1-A/A7-pre:)
+[B] check_frozen: scripts/verify.sh — P1-A/A6: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/check_frozen.sh — P1-A/A6: superseded by re-freeze P1-B.1/B1.0:
+[B] check_frozen: table append-only since 3f2be39 (research/FROZEN.md row, P1-B/B0:)
+[B] check_frozen: scripts/check_frozen.sh — P1-B/B0: superseded by re-freeze P1-B.1/B1.0:
+[B] check_frozen: core/tests/conformance.rs — P1-B/B0: superseded by re-freeze P2-L/L0:
+[B] check_frozen: scripts/test_tamper.sh — P1-B/B0: superseded by re-freeze GH-0/G5-tar:
+[B] check_frozen: scripts/check_frozen.sh — P1-B/B0-fix: superseded by re-freeze P1-B.1/B1.0:
+[B] check_frozen: core/tests/conformance.rs — P1-B/B7: superseded by re-freeze P2-L/L0:
+[B] check_frozen: spec/fixtures/** — P1-B/B7: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance/eval_c2.rs — P1-B/B7: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance_c2_gen.rs — P1-B/B7: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/gen_fixtures_c2.sh — P1-B/B7: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/datasets/synthetic_edits_v4.py — 1 files unchanged since df19545 (P1-B/B8-pre:)
+[B] check_frozen: research/data/MANIFEST.d1hs.json — 1 files unchanged since df19545 (P1-B/B8-pre:)
+[B] check_frozen: research/eval/run_holdout_split.py — P1-B/B8-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/verify.sh — P1-B/B9-pre: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/run_p1b_checks.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+[B] check_frozen: research/eval/compare_p1b.py — P1-B/B9-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/report_p1b.py — 1 files unchanged since 3cd19bb (P1-B/B9-pre:)
+[B] check_frozen: scripts/governance_scenario.sh — P1-B/B9-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_policy_bounds.sh — P1-B/B9-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/check_v3_compat.sh — P1-B/B9-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/verify.sh — P1-B/B9-pre2: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/check_frozen.sh — 1 files unchanged since 7bf9b11 (P1-B.1/B1.0:)
+[B] check_frozen: spec/fixtures/** — P1-B.1/B1.2: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance.rs — P1-B.1/B1.2: superseded by re-freeze P2-L/L0:
+[B] check_frozen: scripts/check_v3_compat.sh — P1-B.1/B1.3: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/gen_v3final_mixed.sh — P1-B.1/B1.3: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/v3final-mixed-gen/** — P1-B.1/B1.3: superseded by re-freeze GH-0/G0:
+[B] check_frozen: core/tests/fixtures/v3_final_mixed/** — 110 files unchanged since e1e2fc7 (P1-B.1/B1.3:)
+[B] check_frozen: research/eval/compare_p1b1.py — P1-B.1/B1.4-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/run_p1b1_checks.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+[B] check_frozen: research/eval/report_p1b1.py — 1 files unchanged since 226b511 (P1-B.1/B1.4-pre:)
+[B] check_frozen: spec/fixtures/** — P1-C/C0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance.rs — P1-C/C0: superseded by re-freeze P2-L/L0:
+[B] check_frozen: core/tests/conformance/eval_c2.rs — P1-C/C0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance_c2_gen.rs — P1-C/C0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: research/eval/gen_embed_ref.py — P1-C/C1: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/data/embed_ref.json — 1 files unchanged since 9cbbb6c (P1-C/C1:)
+[B] check_frozen: research/eval/gen_tok_ref.py — P1-C/C2: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/data/tok_ref.json — 1 files unchanged since 9340729 (P1-C/C2:)
+[B] check_frozen: spec/fixtures/** — P1-C/C7: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance_c3.rs — P1-C/C7: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance/eval_c3.rs — P1-C/C7: superseded by re-freeze P2-0/Z2:
+[B] check_frozen: index/tests/conformance_c3_gen.rs — P1-C/C7: superseded by re-freeze P2-0/Z4:
+[B] check_frozen: scripts/gen_fixtures_c3.sh — P1-C/C7: superseded by re-freeze GH-0/G0:
+[B] check_frozen: spec/fixtures/** — P1-C/C7-fix: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance_c3.rs — P1-C/C7-fix: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: research/eval/run_c3_quality.py — P1-C/C8: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/verify.sh — P1-C/C9-pre: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/run_p1c_checks.py — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/compare_p1c.py — 1 files unchanged since 9aa326b (P1-C/C9-pre:)
+[B] check_frozen: research/eval/report_p1c.py — P1-C/C9-pre: superseded by re-freeze P1-C/C9-fix:
+[B] check_frozen: scripts/test_tamper_p1c.sh — P1-C/C9-pre: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/governance.rs — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: index/tests/embed.rs — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: index/tests/hot.rs — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: core/tests/compat_v3final.rs — P1-C/C9-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/report_p1c.py — 1 files unchanged since 3a0dc23 (P1-C/C9-fix:)
+[B] check_frozen: core/tests/conformance.rs — P1-C.1/C1.0: superseded by re-freeze P2-L/L0:
+[B] check_frozen: research/eval/bm25_lucene.py — P1-C.1/C1.1: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/run_c1_variant.py — P1-C.1/C1.1: superseded by re-freeze GH-0/G0:
+[B] check_frozen: spec/fixtures/** — P1-C.1/C1.3: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance/eval_c3.rs — P1-C.1/C1.3: superseded by re-freeze P2-0/Z2:
+[B] check_frozen: index/tests/conformance_c3.rs — P1-C.1/C1.3: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance_c3_gen.rs — P1-C.1/C1.3: superseded by re-freeze P2-0/Z4:
+[B] check_frozen: scripts/verify.sh — P1-C.1/C1.4-pre: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/test_tamper_p1c.sh — P1-C.1/C1.4-pre: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/test_p1c1.sh — P1-C.1/C1.4-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: index/tests/p1c1.rs — P1-C.1/C1.4-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/compare_p1c1.py — P1-C.1/C1.4-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/run_p1c1_checks.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+[B] check_frozen: research/eval/gen_quality_ref.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+[B] check_frozen: research/data/quality_ref_rust.json — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+[B] check_frozen: research/eval/report_p1c1.py — 1 files unchanged since c337cf7 (P1-C.1/C1.4-pre:)
+[B] check_frozen: research/eval/compare_p1c1.py — P1-C.1/C1.4-fix: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/check_v3_compat.sh — P1-D/D0: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_p1c1.sh — P1-D/D0: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_tamper_p1c.sh — P1-D/D0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/verify.sh — P1-D/D7-pre: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/compare_p1d.py — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/run_p1d_checks.py — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/report_p1d.py — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/mcp_e2e.sh — P1-D/D7-pre: superseded by re-freeze P2-R/R0-f2:
+[B] check_frozen: scripts/mcp_inspector.sh — P1-D/D7-pre: superseded by re-freeze P2-B/B5-f4:
+[B] check_frozen: scripts/http_e2e.sh — P1-D/D7-pre: superseded by re-freeze P2-A/A0:
+[B] check_frozen: scripts/scene_agent.sh — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_tamper_p1d.sh — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: server/tests/serve_watch.rs — P1-D/D7-pre: superseded by re-freeze P2-A/A0:
+[B] check_frozen: server/tests/mcp_schemas.rs — P1-D/D7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: server/examples/mcp_client.rs — 1 files unchanged since a6b52fe (P1-D/D7-pre:)
+[B] check_frozen: index/tests/p1c1.rs — P1-D.1/D1.3: superseded by re-freeze GH-0/G0:
+[B] check_frozen: spec/fixtures/** — P1-D.1/D1.3: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance/eval_c3.rs — P1-D.1/D1.3: superseded by re-freeze P2-0/Z2:
+[B] check_frozen: index/tests/conformance_c3.rs — P1-D.1/D1.3: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance_c3_gen.rs — P1-D.1/D1.3: superseded by re-freeze P2-0/Z4:
+[B] check_frozen: spec/fixtures/** — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance/eval_c2.rs — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance_c2_gen.rs — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance.rs — P1-D.1/D1.4: superseded by re-freeze P2-L/L0:
+[B] check_frozen: index/tests/conformance_c3.rs — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/test_tamper_p1c.sh — P1-D.1/D1.4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/verify.sh — P1-D.1/D1.7-pre: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/compare_p1d1.py — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/run_p1d1_checks.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+[B] check_frozen: research/eval/report_p1d1.py — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+[B] check_frozen: scripts/test_p1d1.sh — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_tamper_p1d1.sh — P1-D.1/D1.7-pre: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/contract_check.sh — P1-D.1/D1.7-pre: superseded by re-freeze P2-R/R2:
+[B] check_frozen: server/tests/p1d1_criteria.rs — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: server/tests/contract.rs — P1-D.1/D1.7-pre: superseded by re-freeze P2-R/R2:
+[B] check_frozen: server/examples/mcp_pipeline.rs — 1 files unchanged since 2f56267 (P1-D.1/D1.7-pre:)
+[B] check_frozen: scripts/governance_scenario.sh — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_p1c1.sh — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/compare_p1d.py — P1-D.1/D1.7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/compare_p1d1.py — P1-D.1/D1.7-fix: superseded by re-freeze GH-0/G0:
+[B] check_frozen: server/tests/p1d1_criteria.rs — P1-E/E0: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/compare_p1d1.py — P1-E/E0: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/contract_check.sh — P1-E/E0: superseded by re-freeze P2-R/R2:
+[B] check_frozen: server/tests/contract.rs — P1-E/E0: superseded by re-freeze P2-R/R2:
+[B] check_frozen: research/eval/check_compare_fields.py — P1-E/E0: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/check_compare_fields.sh — P1-E/E0: superseded by re-freeze P1-E/E0-fix2:
+[B] check_frozen: research/eval/check_compare_fields.py — P1-E/E0-fix2: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/check_compare_fields.sh — 1 files unchanged since 5ade7f8 (P1-E/E0-fix2:)
+[B] check_frozen: scripts/verify.sh — P1-E/E7-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/compare_p1e.py — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/run_p1e_checks.py — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P1-E/E7-pre: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/scene.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/plugin_e2e.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: clients/obsidian/e2e/** — P1-E/E7-pre: superseded by re-freeze P2-L/L0-release:
+[B] check_frozen: scripts/client_checks.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/release_local.sh — P1-E/E7-pre: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/conformance_equiv.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_tamper_p1e.sh — P1-E/E7-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/report_p1e.py — P1-E/E8: superseded by re-freeze GH-0/G0:
+[B] check_frozen: server/tests/contract.rs — P1-E.1/E1.1: superseded by re-freeze P2-R/R2:
+[B] check_frozen: scripts/contract_check.sh — P1-E.1/E1.1: superseded by re-freeze P2-R/R2:
+[B] check_frozen: scripts/gen_old_index.sh — P1-E.1/E1.1: superseded by re-freeze GH-0/G0:
+[B] check_frozen: server/tests/fixtures/index_v2/** — 28 files unchanged since bf95e57 (P1-E.1/E1.1:)
+[B] check_frozen: server/tests/p1e1_status.rs — P1-E.1/E1.1: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_tamper_p1e1.sh — P1-E.1/E1.1: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/verify.sh — P1-E.1/E1.4: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/historical.py — P1-E.1/E1.4: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/historical_fails.json — 1 files unchanged since 38e562e (P1-E.1/E1.4:)
+[B] check_frozen: scripts/verify.sh — P1-E.1/E1.5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/check_compare_fields.py — P1-E.1/E1.5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P1-E.1/E1.5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/historical.py — P1-E.1/E1.5-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P1-E.1/E1.5-pre: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/compare_p1e1.py — 1 files unchanged since 7ea12dc (P1-E.1/E1.5-pre:)
+[B] check_frozen: research/eval/run_p1e1_checks.py — 1 files unchanged since 7ea12dc (P1-E.1/E1.5-pre:)
+[B] check_frozen: research/eval/report_p1e1.py — 1 files unchanged since 7ea12dc (P1-E.1/E1.5-pre:)
+[B] check_frozen: clients/obsidian/e2e/real/** — P1-E.1/E1.5-pre: superseded by re-freeze P2-L/L0-release:
+[B] check_frozen: scripts/plugin_e2e_real.sh — P1-E.1/E1.5-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/test_tamper_p1e1_e2e.sh — P1-E.1/E1.5-pre: superseded by re-freeze GH-0/G0:
+[B] check_frozen: scripts/release.sh — P1-E.1/E1.5-pre: superseded by re-freeze P2-L/L0-release:
+[B] check_frozen: scripts/release_target.sh — P1-E.1/E1.5-pre: superseded by re-freeze P2-A/A3:
+[B] check_frozen: scripts/release_check.sh — P1-E.1/E1.5-pre: superseded by re-freeze P2-P/P0:
+[B] check_frozen: research/eval/** — GH-0/G0: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: core/tests/conformance.rs — GH-0/G0: superseded by re-freeze P2-L/L0:
+[B] check_frozen: core/tests/conformance/eval.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/gen_fixtures.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/fixture-gen/** — 2 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_freeze_indep.sh — GH-0/G0: superseded by re-freeze GH-0/G5-tar:
+[B] check_frozen: research/eval/datasets/synthetic_edits_v3.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/run_holdout.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/run_split_grid.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/run_p1a_checks.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_tamper.sh — GH-0/G0: superseded by re-freeze GH-0/G5-tar:
+[B] check_frozen: scripts/verify.sh — GH-0/G0: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: core/tests/conformance/eval_c2.rs — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance_c2_gen.rs — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/gen_fixtures_c2.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/run_holdout_split.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/compare_p1b.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/governance_scenario.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_policy_bounds.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/check_v3_compat.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/gen_v3final_mixed.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/v3final-mixed-gen/** — 3 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/compare_p1b1.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/gen_embed_ref.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/gen_tok_ref.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: index/tests/conformance_c3.rs — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance/eval_c3.rs — GH-0/G0: superseded by re-freeze P2-0/Z2:
+[B] check_frozen: index/tests/conformance_c3_gen.rs — GH-0/G0: superseded by re-freeze P2-0/Z4:
+[B] check_frozen: scripts/gen_fixtures_c3.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/run_c3_quality.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/run_p1c_checks.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_tamper_p1c.sh — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/governance.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: index/tests/embed.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: index/tests/hot.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: core/tests/compat_v3final.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/bm25_lucene.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/run_c1_variant.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_p1c1.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: index/tests/p1c1.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/compare_p1d.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/run_p1d_checks.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/report_p1d.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/mcp_e2e.sh — GH-0/G0: superseded by re-freeze P2-R/R0-f2:
+[B] check_frozen: scripts/mcp_inspector.sh — GH-0/G0: superseded by re-freeze P2-B/B5-f4:
+[B] check_frozen: scripts/http_e2e.sh — GH-0/G0: superseded by re-freeze P2-A/A0:
+[B] check_frozen: scripts/scene_agent.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_tamper_p1d.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: server/tests/serve_watch.rs — GH-0/G0: superseded by re-freeze P2-A/A0:
+[B] check_frozen: server/tests/mcp_schemas.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/compare_p1d1.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_p1d1.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_tamper_p1d1.sh — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/contract_check.sh — GH-0/G0: superseded by re-freeze P2-R/R2:
+[B] check_frozen: server/tests/p1d1_criteria.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: server/tests/contract.rs — GH-0/G0: superseded by re-freeze P2-R/R2:
+[B] check_frozen: research/eval/check_compare_fields.py — GH-0/G0: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/compare_p1e.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/run_p1e_checks.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — GH-0/G0: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/scene.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/plugin_e2e.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: clients/obsidian/e2e/** — GH-0/G0: superseded by re-freeze P2-L/L0-release:
+[B] check_frozen: scripts/client_checks.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/release_local.sh — GH-0/G0: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/conformance_equiv.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_tamper_p1e.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/report_p1e.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/gen_old_index.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: server/tests/p1e1_status.rs — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_tamper_p1e1.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: clients/obsidian/e2e/real/** — GH-0/G0: superseded by re-freeze P2-L/L0-release:
+[B] check_frozen: scripts/plugin_e2e_real.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_tamper_p1e1_e2e.sh — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/release.sh — GH-0/G0: superseded by re-freeze P2-L/L0-release:
+[B] check_frozen: scripts/release_target.sh — GH-0/G0: superseded by re-freeze P2-A/A3:
+[B] check_frozen: scripts/release_check.sh — GH-0/G0: superseded by re-freeze P2-P/P0:
+[B] check_frozen: research/eval/compare_p1c1.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: research/eval/historical.py — 1 files unchanged since 2f5e949 (GH-0/G0:)
+[B] check_frozen: scripts/test_tamper.sh — 1 files unchanged since 02ffcd1 (GH-0/G5-tar:)
+[B] check_frozen: scripts/test_freeze_indep.sh — 1 files unchanged since 02ffcd1 (GH-0/G5-tar:)
+[B] check_frozen: scripts/http_e2e.sh — GH-0/G5-stat: superseded by re-freeze P2-A/A0:
+[B] check_frozen: scripts/contract_check.sh — P2-0/Z0: superseded by re-freeze P2-R/R2:
+[B] check_frozen: scripts/release_check.sh — P2-0/Z0: superseded by re-freeze P2-P/P0:
+[B] check_frozen: research/eval/run_artifacts.py — 1 files unchanged since f189593 (P2-0/Z0:)
+[B] check_frozen: index/tests/conformance/eval_c3.rs — 1 files unchanged since 7b08867 (P2-0/Z2:)
+[B] check_frozen: server/tests/serve_watch.rs — P2-0/Z2: superseded by re-freeze P2-A/A0:
+[B] check_frozen: scripts/http_e2e.sh — P2-0/Z2: superseded by re-freeze P2-A/A0:
+[B] check_frozen: scripts/contract_check.sh — P2-0/Z2: superseded by re-freeze P2-R/R2:
+[B] check_frozen: core/tests/conformance/eval_c2.rs — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance.rs — P2-0/Z4: superseded by re-freeze P2-L/L0:
+[B] check_frozen: core/tests/conformance_c2_gen.rs — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance_c3.rs — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance_c3_gen.rs — 1 files unchanged since 25f5bf7 (P2-0/Z4:)
+[B] check_frozen: spec/fixtures/** — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/test_tamper_p1c.sh — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/test_tamper_p1d1.sh — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/release_local.sh — P2-0/Z4: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/release_target.sh — P2-0/Z4: superseded by re-freeze P2-A/A3:
+[B] check_frozen: scripts/release_check.sh — P2-0/Z4: superseded by re-freeze P2-P/P0:
+[B] check_frozen: core/tests/conformance/eval_c2.rs — P2-0/Z4-fix: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: spec/fixtures/** — P2-0/Z4-fix: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: research/eval/run_p2_0.py — P2-0/Z5: superseded by re-freeze P2-A/A0:
+[B] check_frozen: research/eval/datasets/p2_0_sets.py — 1 files unchanged since cbe8db2 (P2-0/Z5:)
+[B] check_frozen: research/eval/agent_fs_writer.py — 1 files unchanged since cbe8db2 (P2-0/Z5:)
+[B] check_frozen: research/data/p2_0_old_vaults/** — 298 files unchanged since cbe8db2 (P2-0/Z5:)
+[B] check_frozen: scripts/gen_p2_0_old_vaults.sh — 1 files unchanged since cbe8db2 (P2-0/Z5:)
+[B] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — P2-0/Z5: superseded by re-freeze P2-A/A0:
+[B] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — P2-0/Z5-fix: superseded by re-freeze P2-A/A0:
+[B] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — P2-0/Z5-fix2: superseded by re-freeze P2-A/A0:
+[B] check_frozen: research/eval/run_p2_0.py — P2-0/Z5-fix2: superseded by re-freeze P2-A/A0:
+[B] check_frozen: scripts/verify.sh — P2-0/Z7: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/check_compare_fields.py — P2-0/Z7: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0/Z7: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/compare_p2_0.py — P2-0/Z7: superseded by re-freeze P2-0/Z7-fix:
+[B] check_frozen: research/eval/run_p2_0_checks.py — 1 files unchanged since 24be01c (P2-0/Z7:)
+[B] check_frozen: research/eval/tamper_p2_0.py — 1 files unchanged since 24be01c (P2-0/Z7:)
+[B] check_frozen: research/eval/** — P2-0/Z7-frz: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: scripts/contract_check.sh — P2-0/Z7-fix: superseded by re-freeze P2-R/R2:
+[B] check_frozen: research/eval/** — P2-0/Z7-fix: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/compare_p2_0.py — 1 files unchanged since bf15537 (P2-0/Z7-fix:)
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0/Z7-fix: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/historical_p2_0.py — 1 files unchanged since bf15537 (P2-0/Z7-fix:)
+[B] check_frozen: research/eval/historical_fails_p2_0.json — 1 files unchanged since bf15537 (P2-0/Z7-fix:)
+[B] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — P2-0/Z7-fix: superseded by re-freeze P2-A/A0:
+[B] check_frozen: research/eval/** — P2-0/Z7-rev: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/** — P2-0/Z8-pre: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: core/tests/conformance/eval_c2.rs — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: core/tests/conformance.rs — P2-0.1/Y2: superseded by re-freeze P2-L/L0:
+[B] check_frozen: core/tests/conformance_c2_gen.rs — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: index/tests/conformance_c3.rs — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: spec/fixtures/** — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/test_tamper_p1c.sh — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/test_tamper_p1d1.sh — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/release_local.sh — P2-0.1/Y2: superseded by re-freeze P2-0.2/X3:
+[B] check_frozen: scripts/release_target.sh — P2-0.1/Y2: superseded by re-freeze P2-A/A3:
+[B] check_frozen: scripts/release_check.sh — P2-0.1/Y2: superseded by re-freeze P2-P/P0:
+[B] check_frozen: scripts/verify.sh — P2-0.1/Y4: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/verify.sh — P2-0.1/Y6-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/check_compare_fields.py — P2-0.1/Y6-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0.1/Y6-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/** — P2-0.1/Y6-frz: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/** — P2-0.1/Y6-pre: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: clients/obsidian/e2e/p2_0_1/real.ts — P2-0.1/Y6-pre: superseded by re-freeze P2-A/A0:
+[B] check_frozen: scripts/gen_p2_0_1_old_vaults.sh — 1 files unchanged since dfde0c6 (P2-0.1/Y6-pre:)
+[B] check_frozen: research/data/p2_0_1_old_vaults/** — 115 files unchanged since dfde0c6 (P2-0.1/Y6-pre:)
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0.1/Y6-pre: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/verify.sh — P2-0.2/X2: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: core/tests/conformance/eval_c2.rs — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[B] check_frozen: core/tests/conformance.rs — P2-0.2/X3: superseded by re-freeze P2-L/L0:
+[B] check_frozen: core/tests/conformance_c2_gen.rs — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[B] check_frozen: index/tests/conformance_c3.rs — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[B] check_frozen: spec/fixtures/** — 206 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[B] check_frozen: scripts/test_tamper_p1c.sh — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[B] check_frozen: scripts/test_tamper_p1d1.sh — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[B] check_frozen: scripts/release_local.sh — 1 files unchanged since 3afbcb3 (P2-0.2/X3:)
+[B] check_frozen: scripts/release_target.sh — P2-0.2/X3: superseded by re-freeze P2-A/A3:
+[B] check_frozen: scripts/release_check.sh — P2-0.2/X3: superseded by re-freeze P2-P/P0:
+[B] check_frozen: scripts/verify.sh — P2-0.2/X5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/check_compare_fields.py — P2-0.2/X5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0.2/X5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/** — P2-0.2/X5-dev: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/** — P2-0.2/X5-rec: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-0.2/X5-rec: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/** — P2-A/A0: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/run_p2_0.py — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[B] check_frozen: clients/obsidian/e2e/** — P2-A/A0: superseded by re-freeze P2-L/L0-release:
+[B] check_frozen: clients/obsidian/e2e/p2_0/sessions.ts — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[B] check_frozen: clients/obsidian/e2e/p2_0_1/real.ts — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[B] check_frozen: scripts/http_e2e.sh — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[B] check_frozen: server/tests/serve_watch.rs — 1 files unchanged since 8c6be12 (P2-A/A0:)
+[B] check_frozen: server/tests/contract.rs — P2-A/A2: superseded by re-freeze P2-R/R2:
+[B] check_frozen: scripts/contract_check.sh — P2-A/A2: superseded by re-freeze P2-R/R2:
+[B] check_frozen: scripts/release_check.sh — P2-A/A3: superseded by re-freeze P2-P/P0:
+[B] check_frozen: scripts/release_target.sh — 1 files unchanged since d583881 (P2-A/A3:)
+[B] check_frozen: scripts/verify.sh — P2-A/A5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/check_compare_fields.py — P2-A/A5-dev2: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-A/A5-dev2: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/** — P2-A/A5-dev2: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/** — P2-A/A5-rec: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-A/A5-rec: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: scripts/verify.sh — P2-0.3/R0: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/** — P2-0.3/R0: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: scripts/release_check.sh — P2-L/L0-release: superseded by re-freeze P2-P/P0:
+[B] check_frozen: scripts/release.sh — 1 files unchanged since fc645ed (P2-L/L0-release:)
+[B] check_frozen: clients/obsidian/e2e/** — 10 files unchanged since fc645ed (P2-L/L0-release:)
+[B] check_frozen: clients/obsidian/e2e/real/** — 3 files unchanged since fc645ed (P2-L/L0-release:)
+[B] check_frozen: scripts/verify.sh — P2-L/L0: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/check_compare_fields.py — P2-L/L0: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-L/L0: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/** — P2-L/L0: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: core/tests/conformance.rs — 1 files unchanged since d6ac64c (P2-L/L0:)
+[B] check_frozen: research/eval/datasets/d_tr.py — 1 files unchanged since 94376ed (P2-L/L4-pre:)
+[B] check_frozen: research/data/MANIFEST.d_tr.json — 1 files unchanged since 94376ed (P2-L/L4-pre:)
+[B] check_frozen: research/eval/run_p2l.py — 1 files unchanged since 94376ed (P2-L/L4-pre:)
+[B] check_frozen: research/eval/run_p2l_migrate.py — 1 files unchanged since 94376ed (P2-L/L4-pre:)
+[B] check_frozen: scripts/verify.sh — P2-L/L5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/compare_p2l.py — 1 files unchanged since b38ccd7 (P2-L/L5-dev:)
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-L/L5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/** — P2-L/L5-dev: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/** — P2-L/L5-rec: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: scripts/release_check.sh — 1 files unchanged since eb2c829 (P2-P/P0:)
+[B] check_frozen: scripts/verify.sh — P2-P/P5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/check_compare_fields.py — P2-P/P5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-P/P5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/** — P2-P/P5-dev: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/datasets/d_notes.py — 1 files unchanged since f48eb0e (P2-B/B2-pre:)
+[B] check_frozen: research/data/MANIFEST.d_notes.json — 1 files unchanged since f48eb0e (P2-B/B2-pre:)
+[B] check_frozen: research/data/d_notes/** — 401 files unchanged since f48eb0e (P2-B/B2-pre:)
+[B] check_frozen: research/eval/p2b_align.py — P2-B/B2-pre: superseded by re-freeze P2-B/B2-f1:
+[B] check_frozen: research/eval/p2b_align.py — 1 files unchanged since 7da5725 (P2-B/B2-f1:)
+[B] check_frozen: scripts/verify.sh — P2-B/B5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/check_compare_fields.py — P2-B/B5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — P2-B/B5-dev: superseded by re-freeze P2-R/R5-dev:
+[B] check_frozen: research/eval/** — P2-B/B5-dev: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: scripts/mcp_inspector.sh — 1 files unchanged since dccf57d (P2-B/B5-f4:)
+[B] check_frozen: research/eval/** — P2-B/B5-f5: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: scripts/mcp_e2e.sh — P2-R/R0-f1: superseded by re-freeze P2-R/R0-f2:
+[B] check_frozen: scripts/contract_check.sh — P2-R/R0-f1: superseded by re-freeze P2-R/R2:
+[B] check_frozen: server/tests/contract.rs — P2-R/R0-f1: superseded by re-freeze P2-R/R2:
+[B] check_frozen: scripts/mcp_e2e.sh — 1 files unchanged since 078d21a (P2-R/R0-f2:)
+[B] check_frozen: research/eval/** — P2-R/R0-f3: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: scripts/contract_check.sh — 1 files unchanged since 8333328 (P2-R/R2:)
+[B] check_frozen: server/tests/contract.rs — 1 files unchanged since 8333328 (P2-R/R2:)
+[B] check_frozen: research/eval/** — P2-R/R3-pre: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: scripts/verify.sh — 1 files unchanged since 95139c8 (P2-R/R5-dev:)
+[B] check_frozen: research/eval/check_compare_fields.py — 1 files unchanged since 95139c8 (P2-R/R5-dev:)
+[B] check_frozen: research/eval/DETERMINISTIC_FIELDS.md — 1 files unchanged since 95139c8 (P2-R/R5-dev:)
+[B] check_frozen: research/eval/** — P2-R/R5-dev: superseded by re-freeze P2-R/R5-rec:
+[B] check_frozen: research/eval/** — 141 files unchanged since 866dad9 (P2-R/R5-rec:)
+[B] check_frozen: table append-only since d7264c9 (docs/rounds/GH-0/progress/ROUND_START)
+[B] check_frozen: table append-only since 63a4004 (docs/rounds/P1-B.1/progress/ROUND_START)
+[B] check_frozen: table append-only since 983c62d (docs/rounds/P1-B/progress/ROUND_START)
+[B] check_frozen: table append-only since 00f29bc (docs/rounds/P1-C.1/progress/ROUND_START)
+[B] check_frozen: table append-only since 7053760 (docs/rounds/P1-C/progress/ROUND_START)
+[B] check_frozen: table append-only since e8827f8 (docs/rounds/P1-D.1/progress/ROUND_START)
+[B] check_frozen: table append-only since 2e2c4ea (docs/rounds/P1-D/progress/ROUND_START)
+[B] check_frozen: table append-only since 1ec03b9 (docs/rounds/P1-E.1/progress/ROUND_START)
+[B] check_frozen: table append-only since 11e29b0 (docs/rounds/P1-E/progress/ROUND_START)
+[B] check_frozen: table append-only since 7bccb25 (docs/rounds/P2-0.1/progress/ROUND_START)
+[B] check_frozen: table append-only since f3f8f2a (docs/rounds/P2-0.2/progress/ROUND_START)
+[B] check_frozen: table append-only since c50ee2f (docs/rounds/P2-0.3/progress/ROUND_START)
+[B] check_frozen: table append-only since 85be0a7 (docs/rounds/P2-0/progress/ROUND_START)
+[B] check_frozen: table append-only since b3c2e0e (docs/rounds/P2-A/progress/ROUND_START)
+[B] check_frozen: table append-only since 6a5e911 (docs/rounds/P2-B/progress/ROUND_START)
+[B] check_frozen: table append-only since fc645ed (docs/rounds/P2-L/progress/ROUND_START)
+[B] check_frozen: table append-only since cfa31d6 (docs/rounds/P2-P/progress/ROUND_START)
+[B] check_frozen: table append-only since ae7e692 (docs/rounds/P2-R/progress/ROUND_START)
+[B] check_frozen: OK
+[B] check_deps: OK (core ← index ← server ← clients; research → bindings/python)
+[B] [verify 13:07:08] RUN=20261026T130708Z-866dad9
+[B] [verify 13:07:08] fast: conformance (make conformance, rootmark conformance)
+[B] rm -f reports/conformance.json
+[B] ROOTMARK_FIXTURES="/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/B/repo/spec/fixtures" ROOTMARK_CONFORMANCE_REPORT="/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/B/repo/reports/conformance.json" \
+[B] 	  cargo test -p rootmark-core --release --test conformance -- --nocapture
+[B]    Compiling serde_core v1.0.229
+[B]    Compiling serde v1.0.229
+[B]    Compiling aho-corasick v1.1.5
+[B]    Compiling num-traits v0.2.19
+[B]    Compiling syn v2.0.119
+[B]    Compiling syn v3.0.9
+[B]    Compiling bitflags v2.13.2
+[B]    Compiling pulldown-cmark v0.13.4
+[B]    Compiling deprecate-until v1.0.0
+[B]    Compiling regex-automata v0.4.18
+[B]    Compiling serde_derive v1.0.229
+[B]    Compiling thiserror-impl v2.0.21
+[B]    Compiling integer-sqrt v0.1.5
+[B]    Compiling thiserror v2.0.21
+[B]    Compiling serde_json v1.0.154
+[B]    Compiling pathfinding v4.16.0
+[B]    Compiling regex v1.13.1
+[B]    Compiling bstr v1.13.1
+[B]    Compiling fancy-regex v0.19.2
+[B]    Compiling toml_datetime v0.6.11
+[B]    Compiling serde_spanned v0.6.9
+[B]    Compiling tiktoken-rs v0.12.1
+[B]    Compiling toml_edit v0.22.27
+[B]    Compiling toml v0.8.23
+[B]    Compiling rootmark-core v0.2.0 (/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/B/repo/core)
+[B]     Finished `release` profile [optimized] target(s) in 8.52s
+[B]      Running tests/conformance.rs (target/release/deps/conformance-6a83b7cf7b93d790)
+[B] 
+[B] running 1 test
+[B] test conformance_levels_1_and_2 ... ok
+[B] 
+[B] test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.41s
+[B] 
+[B] ROOTMARK_FIXTURES="/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/B/repo/spec/fixtures" ROOTMARK_CONFORMANCE_REPORT="/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/B/repo/reports/conformance.json" \
+[B] 	  cargo test -p rootmark-index --release --test conformance_c3 -- --nocapture
+[B]    Compiling rootmark-index v0.2.0 (/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/B/repo/index)
+[B]     Finished `release` profile [optimized] target(s) in 1.04s
+[B]      Running tests/conformance_c3.rs (target/release/deps/conformance_c3-ceb464d8afd9f0d3)
+[B] 
+[B] running 1 test
+[B] test conformance_level_3 ... ok
+[B] 
+[B] test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.47s
+[B] 
+[B] conformance: level 3, 39/39 (reports/conformance.json)
+[B] rootmark conformance: level 3, 39/39 (spec 2.0.3)
+[B] [verify 13:07:41] fast: C-3 quality (D3 + D4 test split)
+[B] [verify 13:08:58] fast: regress (quality reference, conformance vs the last official RUN)
+[B] cd research && uv run --frozen python -m eval.fast_regress --run 20261026T130708Z-866dad9 --ref ../reports/rounds/P2-0.3/runs/20261024T000230Z-5632b3b
+[B] fast_regress: quality 618 values, differing 0; conformance 39 tests (0 new), differing 0; equiv exit 0 → pass
+[B] [verify 13:08:59] fast: round checks (make p2b-checks p2r-checks)
+[B] /Applications/Xcode.app/Contents/Developer/usr/bin/make p2b-checks p2r-checks RUN=20261026T130708Z-866dad9
+[B] cd research && uv run --frozen python -m eval.run_p2b_checks --run 20261026T130708Z-866dad9 --tests B-1=rootmark-server:p2_b_b0 --tests B-2=rootmark-server:p2_b_b1,rootmark-server:p1d1_criteria --tests B-5/B-6=rootmark-server:p2_b_b3,rootmark-server:p2_l_l3
+[B] p2b-checks: B-1 6 tests → pass
+[B] p2b-checks: B-2 13 tests → pass
+[B] p2b-checks: B-5/B-6 11 tests → pass
+[B] cd research && uv run --frozen python -m eval.p2b_align --run 20261026T130708Z-866dad9 --rootmark ../target/release/rootmark \
+[B] 	  || { rc=$?; [ $rc -eq 3 ] && echo "p2b-checks: p2b_align exit 3 (a criterion failed; recorded, K-P2B-T1)" >&2; }
+[B] p2b-align: B-3 notes error 0.00000 (pass); B-4 max class error 0.00128 (pass); old method pairable 0.330
+[B] cd research && uv run --frozen python -m eval.check_p2b_align_regress --run 20261026T130708Z-866dad9 --ref ../reports/rounds/P2-R/r0/align.json \
+[B] 	  > reports/runs/20261026T130708Z-866dad9/p2b/align_regress.json
+[B] cd research && uv run --frozen python -m eval.run_p2b_det --run 20261026T130708Z-866dad9 --rootmark ../target/release/rootmark
+[B] p2b-det: 27 documents located, 1652 events, dated search 1 hits, stale True
+[B] bash scripts/p2b_client_checks.sh research/reports/runs/20261026T130708Z-866dad9/p2b target/release/rootmark
+[B] p2b-client-checks: B-7 true (obsidian 164/164 tests, e2e 25/25 by location; vscode 12/12 tests, build 0); B-8 151 calls in 12 runs, 0 outside the contract (apart: 1 deliberate calls, 39 fake-server answers in unit tests)
+[B] cd research && uv run --frozen python -m eval.run_p2r_checks --run 20261026T130708Z-866dad9 --tests R-1=rootmark-server:p2_r_r0,rootmark-server:contract,rootmark-server:p2_b_b1 --tests R-2/R-4=rootmark-server:p2_r_r1 --tests R-5/R-8=rootmark-server:p2_r_r2
+[B] p2r-checks: R-1 14 tests → pass
+[B] p2r-checks: R-2/R-4 7 tests → pass
+[B] p2r-checks: R-5/R-8 8 tests → pass
+[B] cd research && uv run --frozen python -m eval.p2r_volume --run 20261026T130708Z-866dad9 --rootmark ../target/release/rootmark \
+[B] 	  || { rc=$?; [ $rc -eq 3 ] && echo "p2r-checks: p2r_volume exit 3 (R-7 failed; recorded, GOAL decision rule)" >&2; }
+[B] p2r-volume: V_before 14756069, V_after 2115988 (a 0.1434, pass), V_after2 2184310 (b 1.0323, pass); joined traces equal True; promoted never pruned True
+[B] cd research && uv run --frozen python -m eval.run_p2r_det --run 20261026T130708Z-866dad9 --rootmark ../target/release/rootmark
+[B] p2r-det: pruned 6 lineages, 4 trace lines, 1 checkpoints archived; dry run changed nothing True; pass True
+[B] [verify 13:21:13] fast chain finished in 1043 s
+RUN=20261026T130715Z-866dad9
+RUN_DIR=/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/A/repo/research/reports/runs/20261026T130715Z-866dad9
+RUN=20261026T130708Z-866dad9
+RUN_DIR=/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/B/repo/research/reports/runs/20261026T130708Z-866dad9
+[verify 13:21:17] compare (P2-R fast) /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/A/repo/research/reports/runs/20261026T130715Z-866dad9 /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.06mRWjDfsF/B/repo/research/reports/runs/20261026T130708Z-866dad9
+[verify 13:21:18] fast pair equal (18550 fields) in 1048 s
+real 1047.48
+user 2656.14
+sys 350.55

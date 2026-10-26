@@ -1,0 +1,17 @@
+{
+ "file": "attest.test.ts",
+ "calls": 18,
+ "endpoints": {
+  "POST /v1/attest_session": 9,
+  "POST /v1/attest": 9
+ },
+ "request_violations": [],
+ "response_violations": [
+  "#16 POST /v1/attest response: missing field doc_path",
+  "#16 POST /v1/attest response: missing field content_hash",
+  "#16 POST /v1/attest response: missing field at_seq",
+  "#16 POST /v1/attest response: missing field recorded",
+  "#16 POST /v1/attest response: missing field raised"
+ ],
+ "deliberate_violations": []
+}
