@@ -480,6 +480,15 @@ const EVENT_KINDS: [&str; 12] = [
     "CheckpointNamed",
 ];
 
+/// What `events` reads of a log line to filter it (P2-R/R0 c9): the rest
+/// of the line is skipped, not parsed into an event.
+#[derive(Deserialize)]
+struct EventHead {
+    seq: u64,
+    kind: rootmarkcore::EventKind,
+    doc_path: String,
+}
+
 /// One page of `events` (contract §2.8): the log lines as written, in seq
 /// order, and where the next page starts.
 pub struct EventsPage {
@@ -1652,42 +1661,70 @@ impl Kernel {
         if let Some(p) = &prefix {
             filter.insert("path_prefix".into(), json!(p.prefixes()));
         }
+        // P2-R/R0 (c9, P2-B review finding 9): the log is read line by line
+        // with a line counter; a line before `since_seq`, or after the page
+        // is full, is only counted (for `head_seq`), never parsed; a line in
+        // between is read for its seq, kind and path only (`EventHead`),
+        // and parsed whole only when it is returned. The answer's bytes are
+        // as before.
         let path = rootmarkcore::meta::path(&self.vault).join("events.jsonl");
-        let text = match std::fs::read(&path) {
-            Ok(b) => String::from_utf8(b).context("events.jsonl is not UTF-8")?,
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => String::new(),
-            Err(e) => return Err(e).with_context(|| format!("read {}", path.display())),
-        };
-        let all: Vec<&str> = text.lines().collect();
-        let head = all.len() as u64;
         let since = x.since_seq.unwrap_or(0);
+        let mut lines = Vec::new();
+        let mut head: u64 = 0;
+        let mut next: Option<u64> = None;
+        match std::fs::File::open(&path) {
+            Ok(f) => {
+                let mut r = std::io::BufReader::new(f);
+                let mut buf = Vec::new();
+                loop {
+                    buf.clear();
+                    let n = std::io::BufRead::read_until(&mut r, b'\n', &mut buf)
+                        .with_context(|| format!("read {}", path.display()))?;
+                    if n == 0 {
+                        break;
+                    }
+                    let i = head;
+                    head += 1;
+                    if i < since || next.is_some() {
+                        continue;
+                    }
+                    if lines.len() == limit {
+                        next = Some(i);
+                        continue;
+                    }
+                    // as `str::lines`: without its `\n` or `\r\n`
+                    let mut b = buf.as_slice();
+                    if let Some(x) = b.strip_suffix(b"\n") {
+                        b = x.strip_suffix(b"\r").unwrap_or(x);
+                    }
+                    let line = std::str::from_utf8(b).context("events.jsonl is not UTF-8")?;
+                    let ev: EventHead = serde_json::from_str(line)
+                        .with_context(|| format!("events.jsonl line {}", i + 1))?;
+                    if ev.seq != i {
+                        bail!("events.jsonl line {}: seq {} != {}", i + 1, ev.seq, i);
+                    }
+                    let kind = serde_json::to_value(ev.kind)?;
+                    let keep = kinds
+                        .as_ref()
+                        .is_none_or(|k| kind.as_str().is_some_and(|n| k.iter().any(|x| x == n)))
+                        && prefix.as_ref().is_none_or(|p| p.matches(&ev.doc_path));
+                    if keep {
+                        serde_json::from_str::<rootmarkcore::Event>(line)
+                            .with_context(|| format!("events.jsonl line {}", i + 1))?;
+                        lines.push(line.to_string());
+                    }
+                }
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+            Err(e) => return Err(e).with_context(|| format!("read {}", path.display())),
+        }
         if since > head {
             bail_code!(
                 Code::InvalidArguments,
                 "events: since_seq {since} is beyond the log (head_seq {head})"
             );
         }
-        let mut lines = Vec::new();
-        let mut next = head;
-        for (i, line) in all.iter().enumerate().skip(since as usize) {
-            if lines.len() == limit {
-                next = i as u64;
-                break;
-            }
-            let ev: rootmarkcore::Event = serde_json::from_str(line)
-                .with_context(|| format!("events.jsonl line {}", i + 1))?;
-            if ev.seq != i as u64 {
-                bail!("events.jsonl line {}: seq {} != {}", i + 1, ev.seq, i);
-            }
-            let kind = serde_json::to_value(ev.kind)?;
-            let keep = kinds
-                .as_ref()
-                .is_none_or(|k| kind.as_str().is_some_and(|n| k.iter().any(|x| x == n)))
-                && prefix.as_ref().is_none_or(|p| p.matches(&ev.doc_path));
-            if keep {
-                lines.push((*line).to_string());
-            }
-        }
+        let next = next.unwrap_or(head);
         Ok(EventsPage {
             lines,
             next_seq: next,
@@ -1749,7 +1786,12 @@ impl Kernel {
                 let e = self.embedder()?;
                 let s = Store::open(&v, e.as_ref())?;
                 let mut se = Searcher::new(&s, e.as_ref(), consumer)?;
-                let r = se.search_filtered(
+                let want_loc = x.loc.unwrap_or(false);
+                // P2-B/B1: each hit's block locations, when asked (derived;
+                // nothing written) — computed before the trace is written
+                // (P2-R/R0, P2-B review finding 8): an unreadable location
+                // record fails the search with no trace
+                let (r, located) = se.search_filtered_then(
                     &mut v,
                     mode,
                     &x.query,
@@ -1757,12 +1799,18 @@ impl Kernel {
                     x.at.as_deref(),
                     x.include_proposal.unwrap_or(false),
                     filter.as_ref(),
+                    |v, cp, hits| {
+                        if !want_loc {
+                            return Ok(None);
+                        }
+                        let mut o = json!({"checkpoint_id": cp, "hits": hits});
+                        crate::loc::annotate_hits(&self.vault, v, &mut o)?;
+                        Ok(Some(o["hits"].take()))
+                    },
                 )?;
                 let mut out = serde_json::to_value(r)?;
-                // P2-B/B1: each hit's block locations, when asked (derived;
-                // nothing written)
-                if x.loc.unwrap_or(false) {
-                    crate::loc::annotate_hits(&self.vault, &v, &mut out)?;
+                if let Some(hits) = located {
+                    out["hits"] = hits;
                 }
                 // P2-B/B3 (b): the documents the time filter left out for
                 // want of a date (only with a time filter)
