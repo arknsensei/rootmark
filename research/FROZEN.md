@@ -409,6 +409,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/mcp_e2e.sh` | `P2-R/R0-f1:` | yeniden dondurma P2-R/F1: 11. araç `events` (`TOOLS`, üç çağrı ve kontrolü; K-P2B.4'ün önerisi) |
 | `scripts/contract_check.sh` | `P2-R/R0-f1:` | yeniden dondurma P2-R/F1: `events`'in HTTP isteği (K-P2B.4'ün önerisi) |
 | `server/tests/contract.rs` | `P2-R/R0-f1:` | yeniden dondurma P2-R/F1: `events`'in gerçek çağrısı (D1-13 eşleşmesi; K-P2B.4'ün önerisi) |
+| `scripts/mcp_e2e.sh` | `P2-R/R0-f2:` | yeniden dondurma P2-R/F2: `events` kontrolleri listenin sonunda (eski kayıtların kontrol konumları aynen) |
 <!-- /frozen-table -->
 
 ## Notlar

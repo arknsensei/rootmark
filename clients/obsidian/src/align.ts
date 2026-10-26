@@ -125,9 +125,27 @@ export function normalizeBlock(text: string, isCode: boolean): string {
 /** The kernel's block types as hashed into `version_id` (spec §1). */
 const BLOCK_TYPES = ["Heading", "Paragraph", "ListItem", "Code", "Table", "Blockquote", "Other"] as const;
 
+/** An indented code block's slice without its first line's indent: the
+ * kernel's location of such a block starts at its line start (P2-R/R0,
+ * K-P2B-T1 (a)), its text after the first four columns of indentation
+ * (spaces; a tab to the next multiple of four). `null` when the slice does
+ * not start with four columns of indentation. */
+export function dedentFirstLine(text: string): string | null {
+  let col = 0;
+  let i = 0;
+  while (col < 4 && i < text.length) {
+    if (text[i] === " ") col += 1;
+    else if (text[i] === "\t") col += 4 - (col % 4);
+    else return null;
+    i += 1;
+  }
+  return col === 4 ? text.slice(i) : null;
+}
+
 /** The slice check of the decision rule (K-P2B-T1; contract §2.5
  * "Deneysel"): the bytes of a location, normalized, give the block's
- * `version_id` for one of the block types. */
+ * `version_id` for one of the block types — for `Code` also without the
+ * first line's indent (an indented code block, P2-R/R0). */
 export function sliceMatches(bytes: Uint8Array, loc: Loc, versionId: string, hash32: (s: string) => string): boolean {
   if (!(loc.byte_start >= 0 && loc.byte_start < loc.byte_end && loc.byte_end <= bytes.length)) return false;
   let text: string;
@@ -136,7 +154,9 @@ export function sliceMatches(bytes: Uint8Array, loc: Loc, versionId: string, has
   } catch {
     return false;
   }
-  return BLOCK_TYPES.some((t) => hash32(`${t}\n${normalizeBlock(text, t === "Code")}`) === versionId);
+  if (BLOCK_TYPES.some((t) => hash32(`${t}\n${normalizeBlock(text, t === "Code")}`) === versionId)) return true;
+  const code = dedentFirstLine(text);
+  return code !== null && hash32(`Code\n${normalizeBlock(code, true)}`) === versionId;
 }
 
 export type LocAlignment<T> =

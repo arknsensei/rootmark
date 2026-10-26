@@ -4,7 +4,7 @@
 // server) the order pairing stays. The fixtures are real answers of
 // `rootmark blame --loc` for the texts below.
 import { describe, expect, it } from "vitest";
-import { align, alignByLoc, normalizeBlock, sliceMatches, type BlockRange } from "../src/align";
+import { align, alignByLoc, dedentFirstLine, normalizeBlock, sliceMatches, type BlockRange } from "../src/align";
 import type { BlameBlock, BlameResult } from "../src/api";
 import { contentHash, hash32 } from "../src/blake3";
 import { alignNote } from "../src/commands";
@@ -55,6 +55,15 @@ describe("the kernel's hashes and normalization in the client", () => {
     // first line's indentation (K-P2B-T1), the slice is still the block
     const code = "Para.\n\n    code line\n    second\n";
     expect(sliceMatches(bytes(code), { byte_start: 11, byte_end: 31, line_start: 3, line_end: 4, content_hash: "b8d02525c119dfd1bba821b946e99484" }, "143331cd0f7046f65b4f33232b2af927", hash32)).toBe(true);
+    // P2-R/R0 (K-P2B-T1 (a)): the location starts at the line start, its
+    // indent included; the check drops the first four columns
+    expect(sliceMatches(bytes(code), { byte_start: 7, byte_end: 31, line_start: 3, line_end: 4, content_hash: "b8d02525c119dfd1bba821b946e99484" }, "143331cd0f7046f65b4f33232b2af927", hash32)).toBe(true);
+    // six spaces: the block's text keeps two; a tab is four columns
+    const six = "      six\n    four";
+    expect(dedentFirstLine(six)).toBe("  six\n    four");
+    expect(dedentFirstLine("  \t two")).toBe(" two");
+    expect(dedentFirstLine("\t  tab")).toBe("  tab");
+    expect(dedentFirstLine("   x")).toBe(null);
     // a wrong range fails
     expect(sliceMatches(bytes(TEXT), loc(23, 37, 4, 4), "19115f797b47e9007d8379cc83f388ac", hash32)).toBe(false);
   });
