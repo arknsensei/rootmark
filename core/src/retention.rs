@@ -300,9 +300,22 @@ fn replace_file(p: &Path, bytes: &[u8]) -> Result<()> {
         .to_string_lossy()
         .to_string();
     let tmp = p.with_file_name(format!(".{name}.tmp"));
-    fs::write(&tmp, bytes).with_context(|| format!("write {}", tmp.display()))?;
+    // synced before the rename (P2-R review finding 2): an interrupted prune
+    // leaves either the old file or the new one
+    let mut f = fs::File::create(&tmp).with_context(|| format!("write {}", tmp.display()))?;
+    std::io::Write::write_all(&mut f, bytes)
+        .and_then(|_| f.sync_all())
+        .with_context(|| format!("write {}", tmp.display()))?;
     fs::rename(&tmp, p).with_context(|| format!("rename to {}", p.display()))?;
     Ok(())
+}
+
+/// A write-once archive file, synced before the live files change.
+fn write_archive(p: &Path, bytes: &[u8]) -> Result<()> {
+    crate::store::write_immutable(p, bytes)?;
+    fs::File::open(p)
+        .and_then(|f| f.sync_all())
+        .with_context(|| format!("sync {}", p.display()))
 }
 
 impl Vault {
@@ -586,7 +599,7 @@ impl Vault {
             }
             let dir = trace_archive_dir(&meta);
             fs::create_dir_all(&dir).with_context(|| format!("create {}", dir.display()))?;
-            crate::store::write_immutable(
+            write_archive(
                 &dir.join(archive_name(first, base - 1)),
                 &lines[..k].concat(),
             )?;
@@ -609,7 +622,7 @@ impl Vault {
                 bail!("trace_filters.jsonl changed since the retention plan");
             }
             if fk > 0 {
-                crate::store::write_immutable(
+                write_archive(
                     &dir.join(filters_name(first, base - 1)),
                     &flines[..fk].concat(),
                 )?;
