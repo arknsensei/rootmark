@@ -410,6 +410,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/contract_check.sh` | `P2-R/R0-f1:` | yeniden dondurma P2-R/F1: `events`'in HTTP isteği (K-P2B.4'ün önerisi) |
 | `server/tests/contract.rs` | `P2-R/R0-f1:` | yeniden dondurma P2-R/F1: `events`'in gerçek çağrısı (D1-13 eşleşmesi; K-P2B.4'ün önerisi) |
 | `scripts/mcp_e2e.sh` | `P2-R/R0-f2:` | yeniden dondurma P2-R/F2: `events` kontrolleri listenin sonunda (eski kayıtların kontrol konumları aynen) |
+| `research/eval/**` | `P2-R/R0-f3:` | yeniden dondurma P2-R/F3: sınıflandırıcının P2-B listeleri (K-P2B.4 girdileri çıktı; kalan yollar K-P2B.4 ve K-P2R.3 ile); bu commit'te var olan `check_p2b_align_regress.py` de bu satırla donar |
 <!-- /frozen-table -->
 
 ## Notlar
