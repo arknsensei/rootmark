@@ -1,0 +1,126 @@
+{
+ "steps": {
+  "status": {
+   "text": "rootmark <v> · ok",
+   "human": "ada"
+  },
+  "search": {
+   "all": [
+    [
+     "journal/2026/10/24.md",
+     "canonical",
+     0
+    ],
+    [
+     "journal/2026/10/25.md",
+     "canonical",
+     0
+    ],
+    [
+     "notes/demleme.md",
+     "canonical",
+     3
+    ],
+    [
+     "journal/2026/10/25.md",
+     "proposal",
+     8
+    ]
+   ],
+   "dated": [
+    [
+     "journal/2026/10/25.md",
+     0
+    ]
+   ],
+   "undated_excluded": 1,
+   "prefixed": [
+    "notes/demleme.md"
+   ]
+  },
+  "blame": {
+   "journal/2026/10/24.md": [
+    [
+     "canonical",
+     0,
+     0
+    ],
+    [
+     "canonical",
+     2,
+     2
+    ]
+   ],
+   "journal/2026/10/25.md": [
+    [
+     "canonical",
+     0,
+     0
+    ],
+    [
+     "canonical",
+     2,
+     2
+    ],
+    [
+     "canonical",
+     3,
+     6
+    ],
+    [
+     "proposal",
+     8,
+     8
+    ],
+    [
+     "proposal",
+     10,
+     10
+    ]
+   ],
+   "notes/demleme.md": [
+    [
+     "canonical",
+     3,
+     3
+    ],
+    [
+     "canonical",
+     5,
+     5
+    ],
+    [
+     "canonical",
+     7,
+     8
+    ]
+   ]
+  },
+  "history_before": [
+   "#11 BlockCreated · actor not recorded"
+  ],
+  "promote": "promoted 5ed3310a → canonical",
+  "demote": "demoted 5ed3310a → proposal",
+  "history_after": [
+   "#11 BlockCreated · actor not recorded",
+   "#15 Promoted · human:ada · proposal → canonical",
+   "#16 Demoted · human:ada · canonical → proposal"
+  ],
+  "after_save": "stale"
+ },
+ "contract": {
+  "calls": 12,
+  "endpoints": {
+   "GET /v1/status": 1,
+   "POST /v1/search": 3,
+   "POST /v1/blame": 4,
+   "POST /v1/history": 2,
+   "POST /v1/promote": 1,
+   "POST /v1/demote": 1
+  },
+  "request_violations": [],
+  "response_violations": [],
+  "deliberate_violations": []
+ },
+ "pass": true
+}
