@@ -788,10 +788,15 @@ p2p-checks: require-run
 P2B_TESTS := --tests B-1=rootmark-server:p2_b_b0 \
   --tests B-2=rootmark-server:p2_b_b1,rootmark-server:p1d1_criteria \
   --tests B-5/B-6=rootmark-server:p2_b_b3,rootmark-server:p2_l_l3
+# P2-R/R0 (c5): the alignment is checked against R-3's official value; a
+# regression (real notes, Turkish notes or an edge class higher) fails
+P2B_ALIGN_REF := reports/rounds/P2-R/r0/align.json
 p2b-checks: require-run
 	$(PY) -m eval.run_p2b_checks --run $(RUN) $(P2B_TESTS)
 	$(PY) -m eval.p2b_align --run $(RUN) --rootmark ../target/release/rootmark \
 	  || { rc=$$?; [ $$rc -eq 3 ] && echo "p2b-checks: p2b_align exit 3 (a criterion failed; recorded, K-P2B-T1)" >&2; }
+	$(PY) -m eval.check_p2b_align_regress --run $(RUN) --ref ../$(P2B_ALIGN_REF) \
+	  > reports/runs/$(RUN)/p2b/align_regress.json
 	$(PY) -m eval.run_p2b_det --run $(RUN) --rootmark ../target/release/rootmark
 	bash scripts/p2b_client_checks.sh research/reports/runs/$(RUN)/p2b target/release/rootmark
 
