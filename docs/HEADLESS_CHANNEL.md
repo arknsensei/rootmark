@@ -38,9 +38,17 @@ Bir vault'a tek bir yazar süreç: aynı vault'ta iki `rootmark serve` yazıyors
 2. **Kim yazdı, ne değişti?** `POST /v1/history` `{"lineage_id": …}`: soyun bütün olayları ve aktörleri.
 3. **Onay:** insan "onayla" derse `POST /v1/promote` `{"lineage_id": …, "reason": "telegram: onaylandı"}`. Yanıt `decision: "promoted"` ve `Promoted` olayı (`meta.actor {kind: human, id: ada}`, `meta.source: "telegram-bot"`). Bir chunk'ı aramada görünür kılmak için chunk'ın bütün soyları terfi ettirilir (§2.4).
 4. **Geri alma:** `POST /v1/demote` `{"lineage_id": …, "reason": …}` (CLIENT_CONTRACT §2.7): `canonical → proposal`; kuralla terfi etmiş içerik de böyle indirilir. Olay `meta.source: "telegram-bot"` taşır.
-5. **Ret:** hiçbir şey yapmamak (öneri `proposal` kalır, varsayılan aramaya girmez). Budama P2-R'de.
+5. **Ret:** hiçbir şey yapmamak (öneri `proposal` kalır, varsayılan aramaya girmez). Süresi dolan öneriler budama kuralıyla sönümlenir (aşağıda "Budama akışı").
 
 Bot `X-Consumer`'ı her istekte göndermek zorundadır (sözleşme §1; yoksa 400 ve hiçbir şey yazılmaz). Aynı makinede terminalden onay veren insan `rootmark promote <vault> <lineage> --actor human:ada --reason … --source terminal` kullanabilir (etiket isteğe bağlıdır).
+
+## Budama akışı (P2-R; CLIENT_CONTRACT §2.10)
+Uzun yaşayan başsız bir vault'ta `.rootmark` sınırlanır; budamayı yalnız insan kanalı başlatır (bot da insan kanalıdır), sunucu kendiliğinden budamaz, ajan budayamaz.
+1. **Tarif** (bir kez): `[retention] keep_checkpoints = 24` (ör. saatlik checkpoint'le son bir gün canlı) ve isteğe bağlı sönümleme kuralı `[prune] version = "…"`, `[[prune.rules]] id = "stale", layer = "proposal", idle_checkpoints = 168` (bir hafta dokunulmayan öneri). `rootmark policy lint` denetler.
+2. **Plan:** bot `POST /v1/prune` `{"dry_run": true}` gönderir; yanıt budanacak soyları (`rules.pruned`), arşive taşınacak iz satırlarını ve checkpoint'leri, silinecek konum kayıtlarını ve ham günlüğün sayılarını listeler. Hiçbir dosya değişmez.
+3. **Onay:** insan planı görür ve onaylar.
+4. **Budama:** bot `POST /v1/prune` `{}` gönderir (planla aynı durumda aynı sonuç; arada yazım olduysa yanıt yeni durumu yansıtır). Kuralların `Demoted` olayları `meta.source: "telegram-bot"` taşır; `history` onları gösterir. Arşiv `.rootmark/` içinde kalır; silmek insanın kararıdır.
+5. **Sonra:** arşivlenmiş bir checkpoint'e `at` ile sorgu `archived` (410) döner; eski izler `rootmark trace list <vault> --archived` ile okunur.
 
 ## Sahne: toplayıcı ajan → otomatik canonical → `trace` (P2-P/P4)
 `server/tests/scene_collector.rs`'in koşturduğu akış (deterministik, iki koşturmada bayt eşit):

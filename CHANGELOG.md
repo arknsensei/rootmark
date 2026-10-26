@@ -11,6 +11,38 @@ Rounds P2-L and P2-P (block 1 of phase 2). Spec 2.0.3: §7.1 (Draft) default
 `meta.source` of `Promoted`/`Demoted`; §8 an informative note on the search
 path filter.
 
+### Retention and pruning (P2-R)
+- `rootmark prune <vault> [--dry-run] [--now-ms <ms>]` and `POST /v1/prune`
+  (HTTP, the human channel; `{dry_run?, now_ms?}`): the vault's explicit
+  prune. Never run by `rootmark serve` on its own; not an MCP tool.
+  `rootmark prune <vault> <lineage> --actor … --reason …` is unchanged.
+- Proposal decay: `[prune] version` and `[[prune.rules]]` (`id`, `layer =
+  "proposal"|"unverified"`, `idle_checkpoints >= 1`, optional `path_prefix`
+  list): a lineage idle for that many checkpoints gets a `Demoted` with
+  `meta.prune` (layer unchanged, `policy:<rule>`, `rule:<rule>`); it is no
+  longer retrieved (also with `include_proposal`) from then on, and is read
+  as before at an earlier checkpoint. `canonical` is never pruned.
+- Retention: `[retention] keep_checkpoints = K` moves trace lines behind
+  the oldest of the last K checkpoints, byte for byte, to
+  `.rootmark/traces/archive/` (`at_seq` and `trace_id` unchanged; the base in
+  `.rootmark/traces/base`; `rootmark trace list --archived`), and unnamed
+  checkpoints no live trace reads to `.rootmark/checkpoints/archive/` (a query
+  `at` one is refused with the new code `archived`, HTTP 410); location
+  records of versions no live checkpoint names are deleted; the raw journal
+  is pruned as by `rootmark journal prune`. rootmark never deletes the
+  archive, nor `events.jsonl`, `objects/`, `snapshots/`,
+  `attestations.jsonl`.
+- `status.retention`, `checkpoints[].archived`, `trace.archived_before`
+  (contract version 2's addendum, §2.10).
+- Fixes: a pruned lineage was still retrieved with `include_proposal`;
+  `search` computes its locations before its trace (a failure leaves no
+  trace); `events` reads the log from `since_seq` with a line counter;
+  an indented code block's location starts at its line start
+  (K-P2B-T1 (a); ids and events unchanged; the alignment error of the
+  pre-registered D-NOTES measurement drops from 0.00551 to 0) and the
+  clients' slice check accepts it (the block's text after its first four
+  columns); `commit_plan` checks the planned snapshot before writing.
+
 ### Declarative promotion rules (P2-P)
 - `[[promotion.rules]]` in `.rootmark/policy.toml` (`id`, `actor =
   "agent:<name>"`, optional `source`, `path_prefix`, `to = "canonical"`;
@@ -67,6 +99,15 @@ path filter.
   `[[promotion.rules]]` tables (and `[promotion] version`) from
   `.rootmark/policy.toml` before going back. The rules' `Promoted` events
   stay in the log; 0.2.0 reads them as a policy actor's promotions.
+
+### Downgrading after a prune (P2-R)
+- A vault whose traces or checkpoints were archived (`.rootmark/traces/base`,
+  the archive directories) is refused by 0.2.0: its reader counts `at_seq`
+  from the first line of `traces.jsonl` and expects every checkpoint file in
+  `.rootmark/checkpoints/`. Move the archive files back (the trace archive
+  files in name order, then `traces.jsonl`; the checkpoint files) and remove
+  `.rootmark/traces/` before downgrading. `[retention]` and `[prune]` are
+  unknown to 0.2.0's recipe reader: remove them first.
 
 ### Fixes (P2-B/B0)
 - `rootmark migrate --dry-run`: the plan of `policy_attestation_1` says
