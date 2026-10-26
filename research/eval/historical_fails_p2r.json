@@ -1,5 +1,5 @@
 {
- "about": "P2-R (TASKS R5): P2-B's listing after P2-R/F3 as it is, against the P2-B official RUN (which holds these FAILs); P2-R's entries are added from the development RUN before the official pair (R5.md). P2-B (TASKS B5): P2-P's listing as it is, against the P2-P official RUN (which holds these FAILs); P2-B's entries (K-P2B.4: the FAILs of the frozen 10-tool recorders on the new `events` tool, each with its paths) were added from the development RUN 20261025T194943Z-3f42469 before the official pair (B5.md). Earlier text: P2-P (TASKS P5): P2-L's listing as it is, against the P2-L official RUN (which holds these FAILs); P2-P's entries are added from the development RUN before the official pair (P5.md). Earlier text: P2-L (eval.historical_p2l, against the P2-0.3 official RUN): P2-A's entries carried over, then the P2-L decisions' entries, written from a development RUN before the official RUN (docs/rounds/P2-L/progress/L5.md). Before: P2-A (K-P2A.2): written from the development RUN 20261020T203735Z-c51159b before the official RUN (A5.md) P2-R/R0 (b) (K-P2R.3): K-P2B.4's entries of the adapted recorders were removed (D1-13, two tamper controls, E-16, E1-8's and the e1 tamper's contract paths, D-2's handshake); D1-12 keeps the Inspector's paths under K-P2B.4 and D-2/D1-12 gain the adapted mcp_e2e's new paths under K-P2R.3, from the development RUN 20261026T082210Z-2f85d43.",
+ "about": "P2-R (TASKS R5): P2-B's listing after P2-R/F3 as it is, against the P2-B official RUN (which holds these FAILs); P2-R's entries are added from the development RUN before the official pair (R5.md). P2-B (TASKS B5): P2-P's listing as it is, against the P2-P official RUN (which holds these FAILs); P2-B's entries (K-P2B.4: the FAILs of the frozen 10-tool recorders on the new `events` tool, each with its paths) were added from the development RUN 20261025T194943Z-3f42469 before the official pair (B5.md). Earlier text: P2-P (TASKS P5): P2-L's listing as it is, against the P2-L official RUN (which holds these FAILs); P2-P's entries are added from the development RUN before the official pair (P5.md). Earlier text: P2-L (eval.historical_p2l, against the P2-0.3 official RUN): P2-A's entries carried over, then the P2-L decisions' entries, written from a development RUN before the official RUN (docs/rounds/P2-L/progress/L5.md). Before: P2-A (K-P2A.2): written from the development RUN 20261020T203735Z-c51159b before the official RUN (A5.md) P2-R/R0 (b) (K-P2R.3): K-P2B.4's entries of the adapted recorders were removed (D1-13, two tamper controls, E-16, E1-8's and the e1 tamper's contract paths, D-2's handshake); D1-12 keeps the Inspector's paths under K-P2B.4 and D-2/D1-12 gain the adapted mcp_e2e's new paths under K-P2R.3, from the development RUN 20261026T082210Z-2f85d43. P2-R/F8: K-P2R.3 paths of D1-12, D-2, E1-8 and tamper (the adapted recorders pass again against P2-B's RUN) added from the development RUN 20261026T114425Z-95139c8.",
  "reference_run": "reports/rounds/P2-B/runs/20261025T211044Z-cad7663",
  "entries": [
   {
@@ -74,9 +74,10 @@
    "criterion": "D1-12",
    "decisions": [
     "K-P2-01.3",
-    "K-P2L.2"
+    "K-P2L.2",
+    "K-P2R.3"
    ],
-   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-D RUN); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its regress against the P1-D RUN sees the Inspector list and call 11 tools (one call more, `events`, F4) and mcp_e2e's handshake check 'tools/list has every tool of this round' (a frozen 10-tool set) fail; P2-R (K-P2R.3): K-P2B.4's paths of the recorders it named left with their adaptation (P2-R/F1, F2); the Inspector's 11 tools against P1-D's 10-tool RUN stay (K-P2B.4: the tool itself, not a recorder), and the adapted mcp_e2e's three `events` checks (the last of its list) and its 11-tool set are new against P1-D",
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-D RUN); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its regress against the P1-D RUN sees the Inspector list and call 11 tools (one call more, `events`, F4) and mcp_e2e's handshake check 'tools/list has every tool of this round' (a frozen 10-tool set) fail; P2-R (K-P2R.3): K-P2B.4's paths of the recorders it named left with their adaptation (P2-R/F1, F2); the Inspector's 11 tools against P1-D's 10-tool RUN stay (K-P2B.4: the tool itself, not a recorder), and the adapted mcp_e2e's three `events` checks (the last of its list) and its 11-tool set are new against P1-D; P2-R/F8 (K-P2R.3): against P2-B's RUN, the adapted mcp_e2e's handshake check passes again (its three paths in P1-D's regress are gone)",
    "changes": [
     {
      "path": "regress_vs_p1d/conformance/spec_version",
@@ -185,6 +186,18 @@
     {
      "path": "regress_vs_p1d/excluded_differences/p1d_checks.json:D-2/leaves",
      "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›1›pass",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:handshake_pass",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:per_tool›handshake›passed",
+     "decision": "K-P2R.3"
     }
    ]
   },
@@ -195,9 +208,10 @@
     "K-D1.1",
     "K-D1.5",
     "K-E0.4",
-    "K-D1.4-T"
+    "K-D1.4-T",
+    "K-P2R.3"
    ],
-   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): mcp_e2e.sh's check 'tools/list has every tool of this round' compares with its frozen 10-tool set and fails on 11 (handshake 1/2); every tool's own checks unchanged; P2-R (K-P2R.3): mcp_e2e.sh adapted to 11 tools (P2-R/F1, F2): its handshake passes again (K-P2B.4's paths left); the new tool's checks and the passed-tool count are new against P2-P's record",
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): mcp_e2e.sh's check 'tools/list has every tool of this round' compares with its frozen 10-tool set and fails on 11 (handshake 1/2); every tool's own checks unchanged; P2-R (K-P2R.3): mcp_e2e.sh adapted to 11 tools (P2-R/F1, F2): its handshake passes again (K-P2B.4's paths left); the new tool's checks and the passed-tool count are new against P2-P's record; P2-R/F8 (K-P2R.3): against P2-B's RUN (handshake false, 1/2) the adapted handshake passes (true, 2/2)",
    "changes": [
     {
      "path": "per_tool/events/checks",
@@ -209,6 +223,14 @@
     },
     {
      "path": "tools_passed",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "handshake",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "per_tool/handshake/passed",
      "decision": "K-P2R.3"
     }
    ]
@@ -242,19 +264,35 @@
    "file": "p1e1_checks.json",
    "criterion": "E1-8",
    "decisions": [
-    "K-P2-0.5"
+    "K-P2-0.5",
+    "K-P2R.3"
    ],
-   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its contract check (scripts/contract_check.sh, frozen) fails on the absent `tool:events` / `POST /v1/events`, so the deliberate case 'untouched contract and server' is rejected",
-   "changes": []
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its contract check (scripts/contract_check.sh, frozen) fails on the absent `tool:events` / `POST /v1/events`, so the deliberate case 'untouched contract and server' is rejected; P2-R (K-P2R.3, P2-R/F1, F8): the adapted contract check passes again against P2-B's RUN (contract_check_pass, the deliberate case as expected)",
+   "changes": [
+    {
+     "path": "contract_check_pass",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "deliberate/0/as_expected",
+     "decision": "K-P2R.3"
+    }
+   ]
   },
   {
    "file": "p1e1_checks.json",
    "criterion": "tamper",
    "decisions": [
-    "K-P2-0.5"
+    "K-P2-0.5",
+    "K-P2R.3"
    ],
-   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its control 'untouched contract and server' runs the same contract check (controls 2/3); rejected 3/4 unchanged",
-   "changes": []
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its control 'untouched contract and server' runs the same contract check (controls 2/3); rejected 3/4 unchanged; P2-R (K-P2R.3, P2-R/F1, F8): the control 'untouched contract and server' passes again against P2-B's RUN (controls 3/3)",
+   "changes": [
+    {
+     "path": "controls",
+     "decision": "K-P2R.3"
+    }
+   ]
   },
   {
    "file": "p1e_checks.json",
