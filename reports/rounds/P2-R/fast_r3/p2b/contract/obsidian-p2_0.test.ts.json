@@ -1,0 +1,12 @@
+{
+ "file": "p2_0.test.ts",
+ "calls": 3,
+ "endpoints": {
+  "POST /v1/blame": 1,
+  "POST /v1/promote": 1,
+  "POST /v1/search": 1
+ },
+ "request_violations": [],
+ "response_violations": [],
+ "deliberate_violations": []
+}
