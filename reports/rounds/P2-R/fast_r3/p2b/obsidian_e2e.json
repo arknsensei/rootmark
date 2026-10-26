@@ -1,0 +1,198 @@
+{
+ "notes": 25,
+ "aligned_by_location": 25,
+ "per_note": [
+  {
+   "path": "dataview/docs/docs/queries/data-commands.md",
+   "blocks": 42,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "kepano/Categories/Products.md",
+   "blocks": 1,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "kepano/Templates/Daily Note Template.md",
+   "blocks": 2,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "react_tr/src/content/blog/2020/12/21/data-fetching-with-react-server-components.md",
+   "blocks": 14,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "react_tr/src/content/learn/extracting-state-logic-into-a-reducer.md",
+   "blocks": 255,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "react_tr/src/content/reference/eslint-plugin-react-hooks/lints/config.md",
+   "blocks": 17,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "react_tr/src/content/reference/react-dom/index.md",
+   "blocks": 31,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "react_tr/src/content/reference/react/act.md",
+   "blocks": 49,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "react_tr/src/content/reference/react/useTransition.md",
+   "blocks": 236,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/0130-box-not-special.md",
+   "blocks": 28,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/0387-higher-ranked-trait-bounds.md",
+   "blocks": 55,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/0832-from-elem-with-love.md",
+   "blocks": 34,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/1467-volatile.md",
+   "blocks": 16,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/1826-change-doc-default-urls.md",
+   "blocks": 33,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/2091-inline-semantic.md",
+   "blocks": 207,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/2539-cfg_attr-multiple-attrs.md",
+   "blocks": 59,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/3013-conditional-compilation-checking.md",
+   "blocks": 153,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/3453-f16-and-f128.md",
+   "blocks": 51,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "rfcs/text/3772-build-target-edition.md",
+   "blocks": 66,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "tasks/docs/Editing/Editing Dates.md",
+   "blocks": 29,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "tasks/docs/Other Plugins/QuickAdd.md",
+   "blocks": 47,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "tasks/docs/Scripting/Placeholders.md",
+   "blocks": 51,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "terminal/doc/TAEF.md",
+   "blocks": 29,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "terminal/doc/specs/#2325 - Default Profile Settings.md",
+   "blocks": 88,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  },
+  {
+   "path": "terminal/doc/terminal-v1-roadmap.md",
+   "blocks": 27,
+   "by": "loc",
+   "aligned": true,
+   "lines_ok": true
+  }
+ ],
+ "stale": {
+  "loc_stale": true,
+  "aligned": false,
+  "says_stale": true,
+  "marks": 0
+ },
+ "contract": {
+  "calls": 27,
+  "endpoints": {
+   "GET /v1/status": 1,
+   "POST /v1/blame": 26
+  },
+  "request_violations": [],
+  "response_violations": [],
+  "deliberate_violations": []
+ },
+ "pass": true
+}

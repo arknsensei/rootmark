@@ -1,0 +1,5 @@
+FAST="1" bash scripts/verify.sh
+[verify 11:07:30] workdirs under /var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.lQDstj78pH
+error: a fast chain failed (A exit 2, B exit 2)
+make: *** [verify] Error 1
+make verify FAST=1  3186.92s user 419.00s system 220% cpu 27:18.14 total
