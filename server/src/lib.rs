@@ -12,6 +12,7 @@ pub mod mcp;
 pub mod migrate;
 pub mod paths;
 pub mod propose;
+pub mod prune;
 pub mod queue;
 pub mod rules;
 pub mod serve;

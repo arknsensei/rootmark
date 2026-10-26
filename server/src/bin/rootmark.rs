@@ -163,14 +163,28 @@ enum Cmd {
         #[arg(long)]
         source: Option<String>,
     },
-    /// Mark a proposal lineage inactive (deletes nothing) through the policy
+    /// With a lineage: mark that proposal lineage inactive (deletes nothing)
+    /// through the policy. Without one (P2-R): the vault's explicit prune —
+    /// the recipe's `[[prune.rules]]` (`Demoted` with `meta.prune`), the
+    /// trace and checkpoint archive and the location records of
+    /// `[retention]`, and the raw journal (`journal prune`); `--dry-run`
+    /// prints the plan and changes nothing. Never run by `serve` on its own
     Prune {
         vault: PathBuf,
-        lineage: String,
+        lineage: Option<String>,
+        /// with a lineage: <human|agent|policy>:<id>
         #[arg(long)]
-        actor: String,
+        actor: Option<String>,
+        /// with a lineage: why
         #[arg(long)]
-        reason: String,
+        reason: Option<String>,
+        /// without a lineage: print the plan, change no file
+        #[arg(long)]
+        dry_run: bool,
+        /// without a lineage: the time of the journal prune in ms since the
+        /// epoch (default: the clock; only the journal reads it)
+        #[arg(long)]
+        now_ms: Option<u64>,
     },
     /// Checkpoints (spec §8)
     #[command(subcommand)]
@@ -569,18 +583,41 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
         )?,
         Cmd::Prune {
             vault,
-            lineage,
+            lineage: Some(lineage),
             actor,
             reason,
-        } => transition(
-            &vault,
-            TransitionKind::Prune,
-            &lineage,
-            &actor,
-            &reason,
-            None,
-            None,
-        )?,
+            dry_run,
+            now_ms,
+        } => {
+            if dry_run || now_ms.is_some() {
+                bail!("rootmark prune <vault> <lineage>: --dry-run and --now-ms belong to the vault's prune (without a lineage)");
+            }
+            let (Some(actor), Some(reason)) = (actor, reason) else {
+                bail!("rootmark prune <vault> <lineage>: --actor and --reason are required");
+            };
+            transition(
+                &vault,
+                TransitionKind::Prune,
+                &lineage,
+                &actor,
+                &reason,
+                None,
+                None,
+            )?
+        }
+        Cmd::Prune {
+            vault,
+            lineage: None,
+            actor,
+            reason,
+            dry_run,
+            now_ms,
+        } => {
+            if actor.is_some() || reason.is_some() {
+                bail!("rootmark prune <vault>: --actor and --reason belong to the prune of one lineage (the vault's prune acts for its recipe's rules)");
+            }
+            rootmarkserver::prune::run(&vault, dry_run, now_ms)?
+        }
         Cmd::Checkpoint(c) => match c {
             CheckpointCmd::Create { vault, name } => {
                 let mut v = Vault::open(&vault)?;
