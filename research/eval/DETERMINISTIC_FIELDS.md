@@ -66,6 +66,9 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 ### `compare_p2b`
 `fast` (P2-B/B5, `make verify FAST=1`): `compare_p2p`'nin hızlı dosyaları ve P2-B dosyaları (`P2B_FAST_FILES`) alan alan; hariç: `fast/conformance.json`'ın `fixtures_root`'u (`P2B_INFO`, ortam; P2-P'ninki). `pair`: `compare_p2p.pair` (P2-A çift kümesi, P2-L ve P2-P dosyaları) + `P2B_FILES` alan alan: `p2b_checks.json` (turun testleri ölçüt başına), `p2b/align.json` (B-3/B-4: D-NOTES hizalama sayıları), `p2b/det.json` (B-9: blok konumları, olay akışının sayfaları ve zaman filtreli aramalar bütünüyle; vault geçici dizinde, yolu kayda yazılmaz), `p2b/client_checks.json`, `p2b/obsidian_e2e.json`, `p2b/vscode_e2e.json` (B-7, B-8: kapıların çıkışları, test sayıları, e2e sonuçları, sözleşme raporları; duvar saati, port, token ve yol yok). `regress` kipi yok (`EXCLUDED` boş).
 
+### `compare_p2r`
+`fast` (P2-R/R5, `make verify FAST=1`): uyumluluk, regres ve C-3 dosyaları, P2-B ve P2-R dosyaları (`P2R_FAST_FILES`; K-P2.4 (3): FAST etkin bloğun — Blok 2 — kontrollerini koşar, Blok 1'inkiler yalnız tam zincirde) alan alan; hariç: `fast/conformance.json`'ın `fixtures_root`'u (`P2R_INFO`, ortam; P2-B'ninki). `pair`: `compare_p2b.pair` (P2-A çift kümesi, P2-L, P2-P ve P2-B dosyaları) + `P2R_FILES` alan alan: `p2r_checks.json` (turun testleri ölçüt başına), `p2r/volume.json` (R-7: D-VOL hacimleri, budama sayıları; vault geçici dizinde, yol ve zaman yok), `p2r/det.json` (R-6: bir budamanın çıktıları ve canlı/arşiv dosya hash'leri bütünüyle), `p2b/align_regress.json` (R0 c5: hizalamanın R-3'e karşı denetimi). `regress` kipi yok (`EXCLUDED` boş).
+
 ## Alan tablosu
 <!-- fields-table -->
 | Araç | Kip | Dosya | Yol kalıbı | Sınıf | Gerekçe |
@@ -482,6 +485,7 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2l` | hepsi | `fast/conformance.json` | `fixtures_root` | ortam | zincirin klonunun mutlak fixture yolu |
 | `compare_p2p` | hepsi | `fast/conformance.json` | `fixtures_root` | ortam | zincirin klonunun mutlak fixture yolu |
 | `compare_p2b` | hepsi | `fast/conformance.json` | `fixtures_root` | ortam | zincirin klonunun mutlak fixture yolu |
+| `compare_p2r` | hepsi | `fast/conformance.json` | `fixtures_root` | ortam | zincirin klonunun mutlak fixture yolu |
 <!-- /fields-table -->
 
 ## Dosya tablosu
@@ -519,4 +523,6 @@ Yalnız `regress` (P1-B resmi RUN'ı ↔ P1-B.1): `allowed_fields`, K-B1.2'nin s
 | `compare_p2p.P2P_FILES` | `p2p_checks.json` |
 | `compare_p2b.P2B_FAST_FILES` | `fast/conformance.json`, `fast/conformance_rootmark.json`, `fast/conformance_equiv.json`, `fast/regress.json`, `c3_quality.json`, `p2l_checks.json`, `p2l_quality.json`, `p2l/d_tr.json`, `p2l/english.json`, `p2l/migrate.json`, `p2p_checks.json`, `p2b_checks.json`, `p2b/align.json`, `p2b/det.json`, `p2b/client_checks.json`, `p2b/obsidian_e2e.json`, `p2b/vscode_e2e.json` |
 | `compare_p2b.P2B_FILES` | `p2b_checks.json`, `p2b/align.json`, `p2b/det.json`, `p2b/client_checks.json`, `p2b/obsidian_e2e.json`, `p2b/vscode_e2e.json` |
+| `compare_p2r.P2R_FAST_FILES` | `fast/conformance.json`, `fast/conformance_rootmark.json`, `fast/conformance_equiv.json`, `fast/regress.json`, `c3_quality.json`, `p2b_checks.json`, `p2b/align.json`, `p2b/det.json`, `p2b/client_checks.json`, `p2b/obsidian_e2e.json`, `p2b/vscode_e2e.json`, `p2r_checks.json`, `p2r/volume.json`, `p2r/det.json`, `p2b/align_regress.json` |
+| `compare_p2r.P2R_FILES` | `p2r_checks.json`, `p2r/volume.json`, `p2r/det.json`, `p2b/align_regress.json` |
 <!-- /files-table -->

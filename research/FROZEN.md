@@ -414,6 +414,10 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/contract_check.sh` | `P2-R/R2:` | yeniden dondurma P2-R/F4: `archived` kodunun gerçek HTTP tetikleyicisi |
 | `server/tests/contract.rs` | `P2-R/R2:` | yeniden dondurma P2-R/F4: `archived` kodunun durumu ve gerçek çağrısı |
 | `research/eval/**` | `P2-R/R3-pre:` | yeniden dondurma P2-R/F5: `check_p2b_align_regress.py`'nin biçimi; bu commit'te var olan D-VOL ön-kaydı (`p2r_volume.py`, `datasets/d_vol.py`) ve `run_p2r_det.py`, `run_p2r_checks.py` de bu satırla donar (ölçümden önce) |
+| `scripts/verify.sh` | `P2-R/R5-dev:` | yeniden dondurma P2-R/F6: P2-R adımı (`p2r-checks`), sınıflandırıcı `eval.historical_p2r`, `pair` ve hızlı çift → `compare_p2r`, `compare-p2r` |
+| `research/eval/check_compare_fields.py` | `P2-R/R5-dev:` | yeniden dondurma P2-R/F7: `compare_p2r` |
+| `research/eval/DETERMINISTIC_FIELDS.md` | `P2-R/R5-dev:` | yeniden dondurma P2-R/F7: `compare_p2r` bölümü, alan ve dosya satırları |
+| `research/eval/**` | `P2-R/R5-dev:` | yeniden dondurma P2-R/F7: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni P2-R dosyaları (`compare_p2r.py`, `historical_p2r.py`, `historical_fails_p2r.json`, `migration_required_fails_p2r.json`) |
 <!-- /frozen-table -->
 
 ## Notlar

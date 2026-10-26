@@ -1,0 +1,605 @@
+{
+ "about": "P2-R (TASKS R5): P2-B's listing after P2-R/F3 as it is, against the P2-B official RUN (which holds these FAILs); P2-R's entries are added from the development RUN before the official pair (R5.md). P2-B (TASKS B5): P2-P's listing as it is, against the P2-P official RUN (which holds these FAILs); P2-B's entries (K-P2B.4: the FAILs of the frozen 10-tool recorders on the new `events` tool, each with its paths) were added from the development RUN 20261025T194943Z-3f42469 before the official pair (B5.md). Earlier text: P2-P (TASKS P5): P2-L's listing as it is, against the P2-L official RUN (which holds these FAILs); P2-P's entries are added from the development RUN before the official pair (P5.md). Earlier text: P2-L (eval.historical_p2l, against the P2-0.3 official RUN): P2-A's entries carried over, then the P2-L decisions' entries, written from a development RUN before the official RUN (docs/rounds/P2-L/progress/L5.md). Before: P2-A (K-P2A.2): written from the development RUN 20261020T203735Z-c51159b before the official RUN (A5.md) P2-R/R0 (b) (K-P2R.3): K-P2B.4's entries of the adapted recorders were removed (D1-13, two tamper controls, E-16, E1-8's and the e1 tamper's contract paths, D-2's handshake); D1-12 keeps the Inspector's paths under K-P2B.4 and D-2/D1-12 gain the adapted mcp_e2e's new paths under K-P2R.3, from the development RUN 20261026T082210Z-2f85d43.",
+ "reference_run": "reports/rounds/P2-B/runs/20261025T211044Z-cad7663",
+ "entries": [
+  {
+   "file": "p1b1_checks.json",
+   "criterion": "B1-3",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version",
+   "changes": [
+    {
+     "path": "spec_version",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p1c1_checks.json",
+   "criterion": "C1-7",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version",
+   "changes": [
+    {
+     "path": "spec_version",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-11",
+   "decisions": [
+    "K-D1.2",
+    "K-D1.4-T",
+    "K-E0.1"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-3",
+   "decisions": [
+    "K-C8-T",
+    "K-C1.1",
+    "K-C1.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-10",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version",
+   "changes": [
+    {
+     "path": "spec_version",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-12",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-D RUN); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its regress against the P1-D RUN sees the Inspector list and call 11 tools (one call more, `events`, F4) and mcp_e2e's handshake check 'tools/list has every tool of this round' (a frozen 10-tool set) fail; P2-R (K-P2R.3): K-P2B.4's paths of the recorders it named left with their adaptation (P2-R/F1, F2); the Inspector's 11 tools against P1-D's 10-tool RUN stay (K-P2B.4: the tool itself, not a recorder), and the adapted mcp_e2e's three `events` checks (the last of its list) and its 11-tool set are new against P1-D",
+   "changes": [
+    {
+     "path": "regress_vs_p1d/conformance/spec_version",
+     "decision": "K-P2L.2"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls_ok",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls›#len",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls›10›ok",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:calls›10›tool",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:schemas_valid",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:tools_expected",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/inspector/inspector.json:tools_listed",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d_checks.json:D-1›inspector_calls_ok",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d_checks.json:D-1›schemas_valid",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d_checks.json:D-1›tools_listed",
+     "decision": "K-P2B.4"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›#len",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›66›check",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›66›pass",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›66›tool",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›67›check",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›67›pass",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›67›tool",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›68›check",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›68›pass",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:checks›68›tool",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:per_tool›events›checks",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:per_tool›events›passed",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:tools_total",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:tools›#len",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/differing_fields/p1d/mcp_e2e/mcp_e2e.json:tools›10",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "regress_vs_p1d/excluded_differences/p1d_checks.json:D-2/leaves",
+     "decision": "K-P2R.3"
+    }
+   ]
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-2",
+   "decisions": [
+    "K-D1.1",
+    "K-D1.5",
+    "K-E0.4",
+    "K-D1.4-T"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): mcp_e2e.sh's check 'tools/list has every tool of this round' compares with its frozen 10-tool set and fails on 11 (handshake 1/2); every tool's own checks unchanged; P2-R (K-P2R.3): mcp_e2e.sh adapted to 11 tools (P2-R/F1, F2): its handshake passes again (K-P2B.4's paths left); the new tool's checks and the passed-tool count are new against P2-P's record",
+   "changes": [
+    {
+     "path": "per_tool/events/checks",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "per_tool/events/passed",
+     "decision": "K-P2R.3"
+    },
+    {
+     "path": "tools_passed",
+     "decision": "K-P2R.3"
+    }
+   ]
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-7",
+   "decisions": [
+    "K-D1.4-T",
+    "K-D1.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)",
+   "changes": []
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-9",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version (its regress against the P1-C.1 RUN)",
+   "changes": [
+    {
+     "path": "conformance/spec_version",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-8",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its contract check (scripts/contract_check.sh, frozen) fails on the absent `tool:events` / `POST /v1/events`, so the deliberate case 'untouched contract and server' is rejected",
+   "changes": []
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "tamper",
+   "decisions": [
+    "K-P2-0.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its control 'untouched contract and server' runs the same contract check (controls 2/3); rejected 3/4 unchanged",
+   "changes": []
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-7",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.1",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: the local release binary is rootmark 0.2.0, spec 2.0.3 (K-P2L.1, K-P2L.2)",
+   "changes": [
+    {
+     "path": "chain_local_target/spec_version",
+     "decision": "K-P2L.2"
+    },
+    {
+     "path": "chain_local_target/version",
+     "decision": "K-P2L.1"
+    }
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-6",
+   "decisions": [],
+   "why": "E1-6 regresses P1-E.1 against P1-E: its differing fields grow by the contract's new code migration_required (D1-13's contract and server code lists)",
+   "changes": [
+    {
+     "path": "regress_vs_p1e",
+     "decision": "K-P2A.2"
+    }
+   ]
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-9",
+   "decisions": [],
+   "why": "E-9 regresses P1-E against P1-D.1: the excluded D1-13 leaves grow by the new code migration_required",
+   "changes": [
+    {
+     "path": "regress_vs_p1d1",
+     "decision": "K-P2A.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "fail_summary",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "P2-0.2's own classifier (against the P2-0.1 RUN) sees the migration-required FAILs E1-1, E1-4, E1-9, E-14; P2-A's classifier is this one; P2-L: P2-0.2's own classifier sees P2-L's decisions",
+   "changes": [
+    {
+     "path": "counted",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "counted_fails",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "historical",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "regress",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "P2-0.2's regress against the P2-0.1 RUN sees P2-A's decisions (contract code, installers, field audit) and the skipped real-Obsidian sets; P2-A's regress is eval.compare_p2a against the P2-0.2 RUN; P2-L: P2-0.2's regress against the P2-0.1 RUN sees P2-L's decisions (spec 2.0.3, 0.2.0, the round's comparator)",
+   "changes": [
+    {
+     "path": "differing_fields",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "excluded_differences",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "p2_0_1_sets",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2A.2"
+    },
+    {
+     "path": "conformance",
+     "decision": "K-P2L.2"
+    },
+    {
+     "path": "n_fields",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json",
+   "not_measured": true,
+   "changes": []
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b′",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json",
+   "not_measured": true,
+   "changes": []
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2c",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json",
+   "not_measured": true,
+   "changes": []
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2d",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "D-C′ (real Obsidian) not run in a development round's chain; D-C ran",
+   "changes": [
+    {
+     "path": "d_c_prime",
+     "decision": "K-P2.3"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2.3"
+    }
+   ],
+   "not_measured": true
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2e",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json",
+   "not_measured": true,
+   "changes": []
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-5",
+   "decisions": [
+    "K-P2A.6",
+    "K-P2L.1",
+    "K-P2L.2"
+   ],
+   "why": "Linux x86_64 is a required release target since 0.2.0 (K-P2A.6) and the chain runs scripts/release.sh with ROOTMARK_RELEASE_LINUX=0: the required Linux record is skipped; rootmark 0.2.0, spec 2.0.3",
+   "changes": [
+    {
+     "path": "other_targets",
+     "decision": "K-P2A.6"
+    },
+    {
+     "path": "required_targets",
+     "decision": "K-P2A.6"
+    },
+    {
+     "path": "required/spec_version",
+     "decision": "K-P2L.2"
+    },
+    {
+     "path": "required/version",
+     "decision": "K-P2L.1"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2A.6"
+    }
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-4",
+   "decisions": [
+    "K-P2A.6",
+    "K-P2L.1"
+   ],
+   "why": "release_check's one FAIL is R4: the required Linux record is skipped in the chain (ROOTMARK_RELEASE_LINUX=0; K-P2A.6); R15 passes since P2-L/F2 (E1-9 expects migration_required, K-P2A.2), so the entry left the migration-required listing",
+   "changes": [
+    {
+     "path": "failed",
+     "decision": "K-P2A.6"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2j",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.2's recorder expects 2.0.2; 39/39 and level 3 unchanged",
+   "changes": [
+    {
+     "path": "spec_version",
+     "decision": "K-P2L.2"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2k",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "spec §7.1's Draft status no longer cites 'the independent verification of Phase 2 round P2-0.2' (SPEC_EDITS P2-L E3, K-P2-03.1 (4)): the frozen check looks for that phrase; the status is Draft",
+   "changes": [
+    {
+     "path": "written/spec_7_1_draft",
+     "decision": "K-P2L.2"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3j",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.3's recorder expects 2.0.2",
+   "changes": [
+    {
+     "path": "spec_version",
+     "decision": "K-P2L.2"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "rules",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "as H-P2-0.2k (SPEC_EDITS P2-L E3)",
+   "changes": [
+    {
+     "path": "written/spec_7_1_draft",
+     "decision": "K-P2L.2"
+    },
+    {
+     "path": "pass",
+     "decision": "K-P2L.2"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b",
+   "decisions": [
+    "K-P2-03.1"
+   ],
+   "why": "P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run",
+   "changes": [
+    {
+     "path": "by_kind",
+     "decision": "K-P2-03.1"
+    },
+    {
+     "path": "false_unverified_rate",
+     "decision": "K-P2-03.1"
+    },
+    {
+     "path": "unverified_after_window",
+     "decision": "K-P2-03.1"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b-yük",
+   "decisions": [
+    "K-P2-03.1"
+   ],
+   "why": "P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run",
+   "changes": [
+    {
+     "path": "false_unverified_rate",
+     "decision": "K-P2-03.1"
+    }
+   ]
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b′",
+   "decisions": [
+    "K-P2-03.1"
+   ],
+   "why": "P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run; informational (pass null by design)",
+   "changes": [
+    {
+     "path": "by_class",
+     "decision": "K-P2-03.1"
+    },
+    {
+     "path": "by_kind",
+     "decision": "K-P2-03.1"
+    },
+    {
+     "path": "false_unverified_rate",
+     "decision": "K-P2-03.1"
+    },
+    {
+     "path": "unverified_after_window",
+     "decision": "K-P2-03.1"
+    }
+   ],
+   "not_measured": true
+  }
+ ]
+}
