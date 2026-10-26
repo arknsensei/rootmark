@@ -1,0 +1,33 @@
+diff --git a/scripts/mcp_e2e.sh b/scripts/mcp_e2e.sh
+index cd82380..d6732d3 100644
+--- a/scripts/mcp_e2e.sh
++++ b/scripts/mcp_e2e.sh
+@@ -304,13 +304,6 @@ if [ "$(sed -n '/^## Recipe/,$!p' "$out/run1/vault_cli/espresso.md")" = "$(sed -
+    [ "$(grep -cE 'lineage|version_id|rootmark' "$v1/espresso.md" || true)" = 0 ]; then pd=true; fi
+ results+=("{\"tool\":\"propose\",\"check\":\"espresso.md: text before ## Recipe unchanged, agent text present, appended line last, no ids\",\"pass\":$pd}")
+ echo "mcp_e2e: $( [ "$pd" = true ] && echo 'ok  ' || echo FAIL) [propose] espresso.md edits are the agent's text only"
+-# P2-R/R0 (b): `events` (contract §2.8)
+-check events "valid call: the first 5 log lines, next_seq 5" \
+-  "$ok_result and (.result.structuredContent | (.events | length) == 5 and .next_seq == 5 and .head_seq > 5 and ([.events[].seq] == [0,1,2,3,4]))" 248
+-check events "kinds filter: no Promoted event" \
+-  "$ok_result and (.result.structuredContent | (.events | length) == 0 and .filter.kinds == [\"Promoted\"] and .next_seq == .head_seq)" 249
+-check events "unknown kind is an error" "$tool_err" 250
+-
+ # events: every event after the session's start (checkpoints and the
+ # human's CLI promotions aside) belongs
+ # to a proposed document, and every event that creates a block version
+@@ -359,6 +352,14 @@ checkb checkpoint "D-6 search --at d6 gives the old state (checkpoint d6, no age
+ checkb checkpoint "D-6 search gives the new state (agent/d6.md, canonical)" \
+   'any(.result.structuredContent.hits[]; .doc_path == "agent/d6.md" and .layer == "canonical")' 3
+ 
++# P2-R/R0 (b): `events` (contract §2.8), after every earlier check (the
++# records of earlier rounds keep their check positions; P2-R/F2)
++check events "valid call: the first 5 log lines, next_seq 5" \
++  "$ok_result and (.result.structuredContent | (.events | length) == 5 and .next_seq == 5 and .head_seq > 5 and ([.events[].seq] == [0,1,2,3,4]))" 248
++check events "kinds filter: no Promoted event" \
++  "$ok_result and (.result.structuredContent | (.events | length) == 0 and .filter.kinds == [\"Promoted\"] and .next_seq == .head_seq)" 249
++check events "unknown kind is an error" "$tool_err" 250
++
+ # pass per tool: every check of that tool holds
+ per_tool="$(printf '%s\n' "${results[@]}" | jq -sc 'group_by(.tool) | map({key: .[0].tool, value: {checks: length, passed: (map(select(.pass)) | length)}}) | from_entries')"
+ 
