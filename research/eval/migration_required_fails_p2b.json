@@ -38,10 +38,9 @@
    "file": "p1e1_checks.json",
    "criterion": "E1-9",
    "decisions": [
-    "K-P2A.2",
-    "K-P2B.4"
+    "K-P2A.2"
    ],
-   "why": "the real-Obsidian e2e on the /2 index: the plugin's search before the rebuild gets migration_required and its tooltip names `rootmark migrate` (K-P2A.2); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its contract check (scripts/contract_check.sh, frozen) fails on the absent `tool:events` / `POST /v1/events`",
+   "why": "the real-Obsidian e2e on the /2 index: the plugin's search before the rebuild gets migration_required and its tooltip names `rootmark migrate` (K-P2A.2); P2-R (K-P2R.3): its contract check passes again with the adapted contract_check.sh (P2-R/F1): K-P2B.4's path left",
    "paths": [
     {
      "path": "connection_step/search_before_rebuild/error",
@@ -50,10 +49,6 @@
     {
      "path": "connection_step/tooltip",
      "expect": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
-    },
-    {
-     "path": "contract_check_pass",
-     "expect": false
     }
    ]
   }

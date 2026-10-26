@@ -1,0 +1,6 @@
+# Geliştirme zinciri `20261026T082210Z-2f85d43` (P2-R/R0 (b))
+
+- `scripts/verify.sh chain` `2f85d43`'te (F1 sonrası) başladı; P2-0.3 adımında gerçek Obsidian'ın bir kaydı 6 s içinde yazmamasıyla durdu (bilinen kararsızlık), kalan adımlar aynı klonda ve aynı RUN'da elle sürdürüldü (`p2-0-3-checks` yeniden denemede geçti, `p2l`, `p2p`, `p2b`).
+- `p2b-checks` P2-B'nin Obsidian e2e'sinde 21/25 gösterdi (R0 (a)'nın istemci dilim denetimini girintili kodda kırması, ASSUMPTIONS R0-6); düzeltme ve F2 (`078d21a`) sonrası klon `078d21a`'ya alındı, `p1d-checks`, `p1d1-checks`, `p2b-checks` aynı RUN'da yeniden koştu: e2e 25/25, `test_tamper` 12/12. Bu yüzden RUN iki commit'in kayıtlarını taşır (geliştirme kaydıdır, resmi değil).
+- `historical_p2b_before.json`: P2-B'nin listeleriyle (K-P2B.4 girdileri içinde) sayılan FAIL 2 (D1-12, D-2: uyarlanan `mcp_e2e`'nin yeni yolları). `historical_p2b_after.json`: F3 listeleriyle sayılan FAIL 0 (30 tarihsel, 2 göç gerekli).
+- Uyarlanan kaydedicilerin kayıtları: `p1d1_checks.json` D1-13 `pass: true`, `missing: []`, kurcalama kontrolleri 5/5; `p1e_checks.json` E-16 `true`, kurcalama 5/5; `p1e1_checks.json` E1-8 `contract_check_pass: true`, kurcalama 3/3, E1-9 `contract_check_pass: true`; `p1d_checks.json` D-2 el sıkışması `true`.
