@@ -43,3 +43,9 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Neden:** emsal P2-B/F3; çiftin karşılaştırıcısı belirlenimli alan sözleşmesine girer (K-E0.2).
 - **Önce/sonra:** `check_compare_fields.py`'den silinen satır 0, eklenen iki satır; `DETERMINISTIC_FIELDS.md`'den silinen satır 0; `python -m eval.check_compare_fields` geçer (`unmatched: 0`).
 - **Gözden geçirici onayı:** R5.review.md.
+
+## F8 · R5 · `research/eval/historical_fails_p2r.json` — K-P2R.3 yolları (gözden geçirici koşulu 3)
+- **Ne:** dört girdiye (P2-B'nin resmi RUN'ına karşı uyarlanan kaydedicilerin yeniden geçen alanları) `K-P2R.3` kararlı `changes` yolları eklendi: `p1d1` D1-12'nin 3 yolu (P1-D regress'inde `mcp_e2e`'nin el sıkışması), `p1d` D-2'nin 2 (`handshake`, `per_tool/handshake/passed`), `p1e1` E1-8'in 2 (`contract_check_pass`, `deliberate/0/as_expected`), `p1e1` tamper'ın 1 (`controls`); bu girdilerin `decisions`'ına `K-P2R.3`, `why`'larına ve `about`'a açıklama eklendi. Göç gerekli listesi ve sınıflandırıcının kodu değişmedi. `R5_f8.diff`.
+- **Neden:** referans P2-B'nin RUN'ı bu alanları başarısız (K-P2B.4) tutar; F1'in uyarlaması onları yeniden geçirir — kayıt referanstan ayrılır, sınıflandırıcı sayar. F3'te liste P2-P'nin RUN'ına göre düşünülmüştü; P2-R listeleri P2-B'nin RUN'ına baktığı için bu yollar eksik kaldı.
+- **Önce/sonra:** aynı geliştirme RUN'ına (`20261026T114425Z-95139c8`, `reports/rounds/P2-R/devchain_95139c8/`) karşı `eval.historical_p2r`: önce sayılan FAIL 4 (D1-12, D-2, E1-8, tamper), sonra 0 (30 tarihsel, 2 göç gerekli). `git diff`: silinen satırlar yalnız değişen `about`/`why` satırları ve JSON virgülleri; hiçbir girdi ya da yol çıkmadı.
+- **Gözden geçirici onayı:** R5.review.md koşul 3 (listeler değişirse F8, önce/sonra aynı geliştirme RUN'ına karşı).
