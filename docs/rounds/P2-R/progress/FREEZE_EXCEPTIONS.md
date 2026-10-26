@@ -31,3 +31,15 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Neden:** R0'da (`2f85d43`) eklenen ve F3'te (`research/eval/**` satırı) donan dosya `ruff format --check`'ten geçmiyordu: `make lint` düşerdi (R-10 "kalite kapıları temiz").
 - **Önce/sonra:** önce `ruff format --check .` "1 file would be reformatted" (bu dosya); sonra 251/251 biçimli; `tests/test_p2r_tools.py` 4/4 aynen.
 - **Gözden geçirici onayı:** R5.review.md.
+
+## F6 · R5 · `scripts/verify.sh` — P2-R adımı, sınıflandırıcı, çift karşılaştırıcısı
+- **Ne:** tam zincire `make p2b-checks`'ten sonra bir adım (`make p2r-checks` → `p2r_checks.json`: R-1, R-2/R-4, R-5/R-8; `p2r/volume.json` (D-VOL, R-7; kalan ölçüt kaydedilir, çıkış 3 zinciri durdurmaz); `p2r/det.json` (R-6)); FAIL özeti `eval.historical_p2b` yerine `eval.historical_p2r` (P2-B'nin resmi RUN'ına karşı); `pair` ve hızlı çift `compare_p2b` yerine yeni `compare_p2r`, `compare-p2r` alt komutu; `compare-p2b` korunur. Hızlı zincirin adımları değişmedi (tur kontrolleri Makefile'ın `ROUND_CHECKS`'i; Makefile dondurulmuş değil).
+- **Neden:** TASKS R5 ("`verify.sh` P2-R adımı ve `compare_p2r` (dondurma istisnası, önce/sonra)"); emsal P2-B/F2.
+- **Önce/sonra:** `R5_f6_removed.out`: P2-B sürümünden silinen satırlar yalnız sınıflandırıcının iki satırı, hızlı çiftin karşılaştırıcı çağrısının üç satırı (günlük, çağrı, hata iletisi), `pair`'in karşılaştırıcı çağrısı ve kullanım satırı; öteki adımlar bayt bayt aynı (yalnız ekleme: başlık yorumu, `make p2r-checks` adımı, `compare_p2r` işlevi, `compare-p2r` alt komutu). `bash -n` temiz.
+- **Gözden geçirici onayı:** R5.review.md.
+
+## F7 · R5 · `research/eval/check_compare_fields.py`, `research/eval/DETERMINISTIC_FIELDS.md` — `compare_p2r`; yeni P2-R ölçüm dosyaları
+- **Ne:** alan denetimi yeni karşılaştırıcıyı tanır (`("compare_p2r", "P2R")`, dosya sabitleri `P2R_FAST_FILES`, `P2R_FILES`); `DETERMINISTIC_FIELDS.md`'ye `compare_p2r` bölümü, alan satırı (`fast/conformance.json` `fixtures_root`, ortam) ve iki dosya satırı. Bu commit'te var olan yeni P2-R ölçüm dosyaları (`compare_p2r.py`; `historical_p2r.py` ve iki listesi — P2-B'ninkiler F3'ten sonra, referansı P2-B'nin resmi RUN'ı) `research/eval/**` satırıyla yeniden dondurulur.
+- **Neden:** emsal P2-B/F3; çiftin karşılaştırıcısı belirlenimli alan sözleşmesine girer (K-E0.2).
+- **Önce/sonra:** `check_compare_fields.py`'den silinen satır 0, eklenen iki satır; `DETERMINISTIC_FIELDS.md`'den silinen satır 0; `python -m eval.check_compare_fields` geçer (`unmatched: 0`).
+- **Gözden geçirici onayı:** R5.review.md.

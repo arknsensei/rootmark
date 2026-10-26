@@ -737,9 +737,11 @@ p2-0-3-checks: require-run p2-0-2-harness
 
 # P2-L (GOAL P2-L L0 d, K-P2.4 (3)): the fast verification's steps. Its
 # regression is against the last official RUN (P2-0.3); the active round's
-# checks are `ROUND_CHECKS` (a round sets its own).
+# checks are `ROUND_CHECKS` (a round sets its own). P2-R/R5 (ASSUMPTIONS
+# R5-1): the active block's checks (Block 2: P2-B, P2-R); Block 1's
+# (p2l-checks, p2l-quality, p2p-checks) run in the full chain
 FAST_REF_RUN := ../reports/rounds/P2-0.3/runs/20261024T000230Z-5632b3b
-ROUND_CHECKS := p2l-checks p2l-quality p2p-checks p2b-checks p2r-checks
+ROUND_CHECKS := p2b-checks p2r-checks
 fast-regress: require-run
 	$(PY) -m eval.fast_regress --run $(RUN) --ref $(FAST_REF_RUN)
 
