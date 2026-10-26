@@ -28,14 +28,17 @@ const toolsTable = (() => {
   return end < 0 ? s : s.slice(0, end);
 })();
 const contractTools = [...toolsTable.matchAll(/^\| `([a-z_]+)` \|/gm)].map((m) => m[1]);
-// §2.6, §2.7: the human channel's own endpoints (never MCP tools); a row
+// §2.6, §2.7, §2.10: the human channel's own endpoints (never MCP tools); a row
 // names the endpoint (`attest`) or its HTTP path (§2.7)
 const httpOnly = (() => {
   const s = section(2, 3);
   const a = s.indexOf("\n### 2.6 ");
   if (a < 0) return [];
   const b = s.indexOf("\n### 2.8 ") >= 0 ? s.indexOf("\n### 2.8 ") : s.indexOf("\n### 2.9 ");
-  const part = b > a ? s.slice(a, b) : s.slice(a);
+  let part = b > a ? s.slice(a, b) : s.slice(a);
+  // P2-R: §2.10's `POST /v1/prune` (after the §2.9 schema)
+  const c = s.indexOf("\n### 2.10 ");
+  if (c >= 0) part += s.slice(c);
   return [...part.matchAll(/^\| `(?:POST \/v1\/)?([a-z_]+)` \|/gm)].map((m) => m[1]);
 })();
 // §2.9: the machine-readable response schema (contract version 2); a
