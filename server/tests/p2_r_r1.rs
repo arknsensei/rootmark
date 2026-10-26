@@ -496,8 +496,8 @@ fn the_same_vault_and_recipe_prune_alike() {
     for v in [&a, &b] {
         set_recipe(v, &format!("{RULES}{UNVERIFIED_RULE}"));
     }
-    let oa = rootmark(&["prune", a.to_str().unwrap()]);
-    let ob = rootmark(&["prune", b.to_str().unwrap()]);
+    let oa = rootmark(&["prune", a.to_str().unwrap(), "--now-ms", "0"]);
+    let ob = rootmark(&["prune", b.to_str().unwrap(), "--now-ms", "0"]);
     assert!(oa.status.success() && ob.status.success());
     assert_eq!(oa.stdout, ob.stdout);
     assert_eq!(log(&a), log(&b));

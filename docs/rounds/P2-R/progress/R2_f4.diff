@@ -1,0 +1,90 @@
+--- /private/tmp/claude-501/-Users-arkns-Works-mdkernel/8041928f-f8da-460f-a1e8-57002fb04cc6/scratchpad/cc.before.sh	2026-10-26 13:24:45
++++ scripts/contract_check.sh	2026-10-26 13:24:45
+@@ -246,6 +246,18 @@
+     too_large) req POST /v1/propose "{\"doc_path\":\"big.md\",\"content\":\"$(printf 'x%.0s' $(seq 1 100))\",\"reason\":\"r\"}" ;;
+     heading_not_found) req POST /v1/propose '{"doc_path":"a.md","mode":"replace_section","heading":"Nope","content":"x","reason":"r"}' ;;
+     policy_violation) req POST /v1/propose '{"doc_path":"a.md","mode":"append","content":"x","reason":"r"}' ;;
++    archived)
++      # P2-R/F4 (contract §2.10): a checkpoint a retention prune archived —
++      # two new states, each checkpointed; keep 1; the first is refused
++      req POST /v1/propose '{"doc_path":"arch/a1.md","content":"# A1\n\nOne.","reason":"r"}' >/dev/null
++      a1="$(req POST /v1/checkpoint '{}' | cut -d' ' -f2- | jq -r '.checkpoint_id // empty')"
++      req POST /v1/propose '{"doc_path":"arch/a2.md","content":"# A2\n\nTwo.","reason":"r"}' >/dev/null
++      req POST /v1/checkpoint '{}' >/dev/null
++      cp "$hv/.rootmark/policy.toml" "$work/policy.bak"
++      printf '\n[retention]\nkeep_checkpoints = 1\n' >>"$hv/.rootmark/policy.toml"
++      req POST /v1/prune '{"now_ms":0}' >/dev/null
++      cp "$work/policy.bak" "$hv/.rootmark/policy.toml"
++      req POST /v1/search "{\"query\":\"espresso\",\"at\":\"$a1\"}" ;;
+     migration_required)
+       m="$hv/.rootmark/index/manifest.json"
+       # the current index, for `index_stale`, `internal` and the status step below
+--- /private/tmp/claude-501/-Users-arkns-Works-mdkernel/8041928f-f8da-460f-a1e8-57002fb04cc6/scratchpad/contract.before2.rs	2026-10-26 13:24:45
++++ server/tests/contract.rs	2026-10-26 13:24:45
+@@ -24,6 +24,57 @@
+     v
+ }
+ 
++/// §3 `archived` (P2-R/F4, contract §2.10): a query as of a checkpoint
++/// whose file a retention prune moved to `checkpoints/archive/`.
++#[test]
++fn archived_from_a_real_call() {
++    let v = vault("archived");
++    let vs = v.to_str().unwrap();
++    let rm = |args: &[&str]| -> serde_json::Value {
++        let o = Command::new(env!("CARGO_BIN_EXE_rootmark"))
++            .args(args)
++            .output()
++            .unwrap();
++        assert!(
++            o.status.success(),
++            "{args:?}: {}",
++            String::from_utf8_lossy(&o.stderr)
++        );
++        serde_json::from_slice(&o.stdout).unwrap()
++    };
++    let mut cps = Vec::new();
++    for i in 0..2 {
++        std::fs::write(
++            v.join("a.md"),
++            format!("# A\n\nSome text about espresso {i}.\n"),
++        )
++        .unwrap();
++        rm(&["ingest", vs, v.join("a.md").to_str().unwrap()]);
++        cps.push(
++            rm(&["checkpoint", "create", vs])["checkpoint_id"]
++                .as_str()
++                .unwrap()
++                .to_string(),
++        );
++    }
++    std::fs::write(
++        v.join(".rootmark/policy.toml"),
++        format!(
++            "{}\n[retention]\nkeep_checkpoints = 1\n",
++            rootmarkserver::config::default_recipe()
++        ),
++    )
++    .unwrap();
++    rm(&["prune", vs, "--now-ms", "0"]);
++    let k = Kernel::open(&v).unwrap();
++    expect_code(
++        &k,
++        "search",
++        json!({"query": "espresso", "at": cps[0]}),
++        Code::Archived,
++    );
++}
++
+ /// §3 `internal`: a failure of the vault or its index, not of the call —
+ /// here an index file that does not match its manifest — is `internal`
+ /// (HTTP 500), never a silent empty result; the call writes no trace. (An
+@@ -65,6 +116,8 @@
+         (Code::IndexStale, 503),
+         // P2-A/F2: an older rootmark's index (P2-A/A2)
+         (Code::MigrationRequired, 503),
++        // P2-R/F4: a checkpoint a retention prune archived (P2-R/R2)
++        (Code::Archived, 410),
+         (Code::Internal, 500),
+     ];
+     assert_eq!(want.len(), Code::ALL.len());

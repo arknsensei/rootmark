@@ -32,6 +32,11 @@
 //! # layer = "proposal"               # "proposal" | "unverified" (never canonical)
 //! # idle_checkpoints = 10            # >= 1: checkpoints created since the lineage's last event
 //! # path_prefix = ["agents/"]        # optional; vault-relative, NFC (an NFD spelling is refused)
+//!
+//! # P2-R/R2: retention of traces and checkpoints (optional; without it
+//! # nothing is archived). The bound is the oldest of the last K checkpoints
+//! # [retention]
+//! # keep_checkpoints = 5             # >= 1
 //! ```
 //!
 //! The optional `[server]`, `[index]` (P1-D) and `[identity]` (P1-D.1,
@@ -408,6 +413,27 @@ pub struct Policy {
     /// `[[prune.rules]]` (P2-R/R1), in recipe order (the first covering
     /// rule decides)
     pub prune_rules: Vec<PruneRule>,
+    /// `[retention] keep_checkpoints` (P2-R/R2): `None` without the table —
+    /// traces and checkpoints are kept without bound
+    pub keep_checkpoints: Option<u64>,
+}
+
+/// `[retention] keep_checkpoints = K` (P2-R/R2; K >= 1, the only field).
+fn retention_of(t: Option<&toml::Table>) -> Result<Option<u64>> {
+    let Some(t) = t else {
+        return Ok(None);
+    };
+    if let Some(k) = t.keys().find(|k| k.as_str() != "keep_checkpoints") {
+        bail!("[retention]: unknown field `{k}` (keep_checkpoints)");
+    }
+    match t.get("keep_checkpoints") {
+        Some(toml::Value::Integer(n)) if *n >= 1 => Ok(Some(*n as u64)),
+        Some(toml::Value::Integer(n)) => {
+            bail!("[retention] keep_checkpoints = {n}: the kernel minimum is 1")
+        }
+        Some(_) => bail!("[retention] keep_checkpoints must be an integer"),
+        None => bail!("[retention]: missing field `keep_checkpoints`"),
+    }
 }
 
 /// `[attestation]` (spec 2.0.0 §7.1).
@@ -493,6 +519,7 @@ struct RawPolicy {
     identity: Option<toml::Table>,
     attestation: Option<toml::Table>,
     prune: Option<toml::Table>,
+    retention: Option<toml::Table>,
 }
 
 /// `[edit] policy = "<policy>"` (the only field).
@@ -608,6 +635,7 @@ impl Policy {
             attestation: Attestation::default(),
             prune_version: None,
             prune_rules: Vec::new(),
+            keep_checkpoints: None,
         }
     }
 
@@ -634,6 +662,7 @@ impl Policy {
         let (name, promotion_version, promotion_rules) = raw.promotion.parts()?;
         let (prune_version, prune_rules) = prune_of(raw.prune.as_ref())?;
         Ok(Policy {
+            keep_checkpoints: retention_of(raw.retention.as_ref())?,
             prune_version,
             prune_rules,
             promotion: Promotion::parse(name)?,
@@ -683,6 +712,10 @@ impl Policy {
                     "to": r.to.as_str(),
                 })).collect::<Vec<_>>(),
             });
+        }
+        // P2-R/R2: likewise only a recipe with `[retention]` shows it
+        if let Some(k) = self.keep_checkpoints {
+            out["retention"] = serde_json::json!({"keep_checkpoints": k});
         }
         // P2-R/R1: likewise only a recipe with prune rules shows them
         if !self.prune_rules.is_empty() {

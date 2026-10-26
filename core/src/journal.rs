@@ -323,6 +323,25 @@ impl Vault {
         now_ms: u64,
         retention: JournalRetention,
     ) -> Result<PruneReport> {
+        self.journal_prune_inner(now_ms, retention, true)
+    }
+
+    /// What `journal_prune` would remove at `now_ms`; nothing is written
+    /// (P2-R/R2: `rootmark prune --dry-run`).
+    pub fn journal_prune_plan(
+        &self,
+        now_ms: u64,
+        retention: JournalRetention,
+    ) -> Result<PruneReport> {
+        self.journal_prune_inner(now_ms, retention, false)
+    }
+
+    fn journal_prune_inner(
+        &self,
+        now_ms: u64,
+        retention: JournalRetention,
+        write: bool,
+    ) -> Result<PruneReport> {
         let dir = journal_dir(self);
         let mut rep = PruneReport {
             records_removed: 0,
@@ -366,7 +385,7 @@ impl Vault {
             rep.records_removed += (n - keep.len()) as u64;
             rep.records_kept += keep.len() as u64;
             referenced.extend(keep.iter().map(|r| r.content_hash.clone()));
-            if keep.len() != n {
+            if write && keep.len() != n {
                 write_records(f, &keep)?;
             }
         }
@@ -384,7 +403,9 @@ impl Vault {
                 for b in entries {
                     let name = b.file_name().and_then(|n| n.to_str()).unwrap_or("");
                     if !referenced.contains(name) {
-                        fs::remove_file(&b)?;
+                        if write {
+                            fs::remove_file(&b)?;
+                        }
                         rep.blobs_removed += 1;
                     }
                 }

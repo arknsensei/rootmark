@@ -24,6 +24,57 @@ fn vault(name: &str) -> PathBuf {
     v
 }
 
+/// §3 `archived` (P2-R/F4, contract §2.10): a query as of a checkpoint
+/// whose file a retention prune moved to `checkpoints/archive/`.
+#[test]
+fn archived_from_a_real_call() {
+    let v = vault("archived");
+    let vs = v.to_str().unwrap();
+    let rm = |args: &[&str]| -> serde_json::Value {
+        let o = Command::new(env!("CARGO_BIN_EXE_rootmark"))
+            .args(args)
+            .output()
+            .unwrap();
+        assert!(
+            o.status.success(),
+            "{args:?}: {}",
+            String::from_utf8_lossy(&o.stderr)
+        );
+        serde_json::from_slice(&o.stdout).unwrap()
+    };
+    let mut cps = Vec::new();
+    for i in 0..2 {
+        std::fs::write(
+            v.join("a.md"),
+            format!("# A\n\nSome text about espresso {i}.\n"),
+        )
+        .unwrap();
+        rm(&["ingest", vs, v.join("a.md").to_str().unwrap()]);
+        cps.push(
+            rm(&["checkpoint", "create", vs])["checkpoint_id"]
+                .as_str()
+                .unwrap()
+                .to_string(),
+        );
+    }
+    std::fs::write(
+        v.join(".rootmark/policy.toml"),
+        format!(
+            "{}\n[retention]\nkeep_checkpoints = 1\n",
+            rootmarkserver::config::default_recipe()
+        ),
+    )
+    .unwrap();
+    rm(&["prune", vs, "--now-ms", "0"]);
+    let k = Kernel::open(&v).unwrap();
+    expect_code(
+        &k,
+        "search",
+        json!({"query": "espresso", "at": cps[0]}),
+        Code::Archived,
+    );
+}
+
 /// §3 `internal`: a failure of the vault or its index, not of the call —
 /// here an index file that does not match its manifest — is `internal`
 /// (HTTP 500), never a silent empty result; the call writes no trace. (An
@@ -65,6 +116,8 @@ fn http_statuses_of_the_codes() {
         (Code::IndexStale, 503),
         // P2-A/F2: an older rootmark's index (P2-A/A2)
         (Code::MigrationRequired, 503),
+        // P2-R/F4: a checkpoint a retention prune archived (P2-R/R2)
+        (Code::Archived, 410),
         (Code::Internal, 500),
     ];
     assert_eq!(want.len(), Code::ALL.len());

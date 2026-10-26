@@ -125,12 +125,14 @@ pub fn plan(v: &Vault, rules: &[PruneRule]) -> Result<Vec<Decay>> {
 }
 
 /// Writes the plan: one `Demoted` (`meta.prune`) per lineage through the
-/// rule's hook; returns the events in order.
+/// rule's hook (`source`: the channel's label, `meta.source`); returns the
+/// events in order.
 pub fn apply(
     v: &mut Vault,
     rules: &[PruneRule],
     version: Option<&str>,
     plan: &[Decay],
+    source: Option<&str>,
 ) -> Result<Vec<Event>> {
     let mut out = Vec::new();
     if plan.is_empty() {
@@ -147,37 +149,65 @@ pub fn apply(
         let hook = PruneHook { rule, version };
         let actor = Actor::new(ActorKind::Policy, &rule.id)?;
         let ev = v
-            .prune_inactive(&d.lineage_id, actor, &reason_of(rule), &hook)
+            .prune_inactive_from(&d.lineage_id, actor, &reason_of(rule), &hook, source)
             .with_context(|| format!("prune rule {}: prune {}", rule.id, d.lineage_id))?;
         out.push(ev);
     }
     Ok(out)
 }
 
-/// The vault's explicit prune (`rootmark prune <vault>`, `POST /v1/prune`):
-/// the recipe's decay rules. `dry_run`: the plan only, no file changes.
-/// The answer is deterministic: the same vault, recipe and call give the
-/// same bytes. `now_ms` is read by the raw journal's prune only.
+/// What `rootmark prune` says when the recipe has no `[retention]`.
+pub const NO_RETENTION: &str = "no [retention] in policy.toml: traces and checkpoints are kept without bound (nothing archived); location records of versions no checkpoint names are pruned";
+
+/// The vault's explicit prune (`rootmark prune <vault>`, `POST /v1/prune`;
+/// GOAL P2-R 3), in this order: the recipe's decay rules (`Demoted` with
+/// `meta.prune`, `source` its `meta.source`), the retention of traces,
+/// checkpoint files and location records (`[retention]`,
+/// `rootmarkcore::retention`), the raw journal (`journal prune` at
+/// `now_ms`, default the clock — the only part that reads a time).
+/// `dry_run`: the same plan, no file changes. The same vault, recipe and
+/// call give the same bytes.
 pub fn run(
     vault: &std::path::Path,
     dry_run: bool,
     now_ms: Option<u64>,
+    source: Option<&str>,
 ) -> Result<serde_json::Value> {
-    let _ = now_ms;
     let policy = rootmarkcore::Policy::load(vault)?;
+    let now = match now_ms {
+        Some(t) => t,
+        None => u64::try_from(
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)?
+                .as_millis(),
+        )?,
+    };
     let mut v = Vault::open(vault)?;
     let before = v.events_hash()?;
     let decays = plan(&v, &policy.prune_rules)?;
-    let events = if dry_run {
-        Vec::new()
+    let (events, retention, journal) = if dry_run {
+        (
+            Vec::new(),
+            v.retention_plan(policy.keep_checkpoints)?,
+            v.journal_prune_plan(now, policy.retention)?,
+        )
     } else {
-        apply(
+        let events = apply(
             &mut v,
             &policy.prune_rules,
             policy.prune_version.as_deref(),
             &decays,
-        )?
+            source,
+        )?;
+        let r = v.retention_plan(policy.keep_checkpoints)?;
+        v.apply_retention(&r)?;
+        let j = v.journal_prune(now, policy.retention)?;
+        (events, r, j)
     };
+    let mut ret = serde_json::to_value(&retention)?;
+    if policy.keep_checkpoints.is_none() {
+        ret["note"] = serde_json::json!(NO_RETENTION);
+    }
     Ok(serde_json::json!({
         "dry_run": dry_run,
         "events_hash_before": before,
@@ -187,6 +217,13 @@ pub fn run(
             "rules": policy.prune_rules.iter().map(|r| r.id.clone()).collect::<Vec<_>>(),
             "pruned": decays,
             "events": events.iter().map(|e| e.seq).collect::<Vec<_>>(),
+        },
+        "retention": ret,
+        "journal": {
+            "now_ms": now,
+            "records_removed": journal.records_removed,
+            "records_kept": journal.records_kept,
+            "blobs_removed": journal.blobs_removed,
         },
     }))
 }

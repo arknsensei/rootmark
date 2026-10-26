@@ -15,6 +15,7 @@ pub mod normalize;
 pub mod parse;
 pub mod pathprefix;
 pub mod policy;
+pub mod retention;
 pub mod store;
 pub mod vault;
 pub mod wikilink;

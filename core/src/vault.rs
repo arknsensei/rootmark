@@ -1022,12 +1022,17 @@ impl IngestSummary {
 
 pub struct Vault {
     root: PathBuf,
-    meta_dir: PathBuf,
+    pub(crate) meta_dir: PathBuf,
     next_seq: u64,
     /// replayed log: document states, checkpoints, content offset
-    state: Replayed,
-    /// number of lines in `traces.jsonl` (the next `at_seq`)
-    next_trace: u64,
+    pub(crate) state: Replayed,
+    /// the next `at_seq`: `trace_base` + the lines of `traces.jsonl`
+    pub(crate) next_trace: u64,
+    /// `at_seq` of the first line of `traces.jsonl` (P2-R/R2): the lines
+    /// before it were moved to `traces/archive/` (`crate::retention`)
+    pub(crate) trace_base: u64,
+    /// checkpoints whose file was moved to `checkpoints/archive/` (P2-R/R2)
+    pub(crate) archived: std::collections::BTreeSet<String>,
     /// THETA / THETA_SPLIT override; `None` → the compiled defaults of the
     /// matcher version passed to `ingest`.
     pub params: Option<MatchParams>,
@@ -1064,9 +1069,25 @@ impl Vault {
                 Some(MatcherVersion::parse(&v)?)
             }
         };
-        // every logged checkpoint has its write-once file, byte for byte
+        // every logged checkpoint has its write-once file, byte for byte —
+        // in `checkpoints/` or (P2-R/R2) moved to `checkpoints/archive/`,
+        // never both, never neither
+        let mut archived = std::collections::BTreeSet::new();
         for c in &state.checkpoints {
-            let p = checkpoint_path(&meta_dir, &c.checkpoint.checkpoint_id);
+            let cid = &c.checkpoint.checkpoint_id;
+            let live = checkpoint_path(&meta_dir, cid);
+            let arch = crate::retention::archived_checkpoint_path(&meta_dir, cid);
+            let p = match (live.exists(), arch.exists()) {
+                (true, false) => live,
+                (false, true) => {
+                    archived.insert(cid.clone());
+                    arch
+                }
+                (true, true) => {
+                    bail!("checkpoint {cid} has a file in checkpoints/ and in checkpoints/archive/")
+                }
+                (false, false) => live,
+            };
             let want = checkpoint_bytes(&Checkpoint {
                 name: c.created_name.clone(),
                 ..c.checkpoint.clone()
@@ -1081,16 +1102,20 @@ impl Vault {
                 bail!("{} does not match its CheckpointCreated event", p.display());
             }
         }
+        crate::retention::check_checkpoint_archive(&meta_dir, &state)?;
+        let trace_base = crate::retention::read_base(&meta_dir)?;
         let mut v = Vault {
             root,
             meta_dir,
             next_seq: events.len() as u64,
             state,
             next_trace: 0,
+            trace_base,
+            archived,
             params,
             lock,
         };
-        v.next_trace = v.traces(0)?.len() as u64;
+        v.next_trace = trace_base + v.traces(0)?.len() as u64;
         // spec 2.0.0 §7.1, §8: the attestation log is valid, and every late
         // attestation names one of the same document recorded before it
         let atts = v.attestations()?;
@@ -2050,6 +2075,20 @@ impl Vault {
         reason: &str,
         policy: &dyn crate::governance::PromotionPolicy,
     ) -> Result<Event> {
+        self.prune_inactive_from(lineage, actor, reason, policy, None)
+    }
+
+    /// `prune_inactive` whose event carries `meta.source` (spec 2.0.3 §7):
+    /// the channel's label of the request (P2-R: `POST /v1/prune`'s
+    /// consumer); `None`: no field.
+    pub fn prune_inactive_from(
+        &mut self,
+        lineage: &str,
+        actor: Actor,
+        reason: &str,
+        policy: &dyn crate::governance::PromotionPolicy,
+        source: Option<&str>,
+    ) -> Result<Event> {
         let cur = self.layer_of(lineage)?;
         let req = self.request(
             crate::governance::TransitionKind::Prune,
@@ -2058,7 +2097,7 @@ impl Vault {
             actor,
             reason,
         )?;
-        self.transition(EventKind::Demoted, &req, policy, None)
+        self.transition(EventKind::Demoted, &req, policy, source)
     }
 
     fn transition(
@@ -2255,6 +2294,7 @@ impl Vault {
     /// event; the checkpoint id and file do not change.
     pub fn name_checkpoint(&mut self, cid: &str, name: &str) -> Result<Checkpoint> {
         check_checkpoint_name(name)?;
+        self.check_not_archived(cid)?;
         let ev = Event {
             seq: self.next_seq,
             doc_path: String::new(),
@@ -2276,6 +2316,9 @@ impl Vault {
     /// The vault as of a checkpoint: the log replayed up to its offset.
     pub fn state_at(&self, checkpoint: &str) -> Result<(Checkpoint, Replayed)> {
         let cp = self.find_checkpoint(checkpoint)?;
+        // P2-R/R2: a query as of an archived checkpoint is refused, never
+        // answered from a file that is no longer live
+        self.check_not_archived(&cp.checkpoint_id)?;
         let events = read_events(&self.events_path())?;
         let upto = usize::try_from(cp.event_seq)?;
         if upto > events.len() {
@@ -2373,6 +2416,7 @@ impl Vault {
         if cp.checkpoint_id != checkpoint_id {
             bail!("record_trace takes a checkpoint id, not the name {checkpoint_id:?}");
         }
+        self.check_not_archived(checkpoint_id)?;
         // every returned version must be live at the checkpoint (B4 review)
         if !returned.is_empty() {
             let (_, st) = self.state_at(checkpoint_id)?;
@@ -2550,8 +2594,10 @@ impl Vault {
         Ok((out, t))
     }
 
-    /// Traces with `at_seq >= since`; every line is verified (contiguous
-    /// `at_seq`, `trace_id` formula, known checkpoint).
+    /// Live traces with `at_seq >= since`; every line is verified
+    /// (contiguous `at_seq` from the trace base — P2-R/R2: `at_seq` is
+    /// absolute, the lines before the base are in `traces/archive/` —,
+    /// `trace_id` formula, known checkpoint).
     pub fn traces(&self, since: u64) -> Result<Vec<crate::governance::Trace>> {
         let p = self.traces_path();
         if !p.exists() {
@@ -2562,8 +2608,14 @@ impl Vault {
         for (i, line) in text.lines().enumerate() {
             let t: crate::governance::Trace = serde_json::from_str(line)
                 .with_context(|| format!("traces.jsonl line {}", i + 1))?;
-            if t.at_seq != i as u64 {
-                bail!("traces.jsonl line {}: at_seq {} != {i}", i + 1, t.at_seq);
+            let want_at = self.trace_base + i as u64;
+            if t.at_seq != want_at {
+                bail!(
+                    "traces.jsonl line {}: at_seq {} != {want_at} (trace base {})",
+                    i + 1,
+                    t.at_seq,
+                    self.trace_base
+                );
             }
             crate::governance::check_trace_input(&t.consumer, &t.query_hash)
                 .with_context(|| format!("traces.jsonl line {}", i + 1))?;
