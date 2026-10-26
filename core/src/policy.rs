@@ -22,6 +22,16 @@
 //!
 //! [journal]
 //! retention_hours = 168             # >= 24
+//!
+//! # P2-R/R1: proposal decay rules (optional; run only by `rootmark prune`
+//! # and POST /v1/prune, never by `serve` on its own)
+//! # [prune]
+//! # version = "2026-10-26"           # required with rules: Demoted.meta.policy_version
+//! # [[prune.rules]]
+//! # id = "stale"                     # [a-z0-9_-]{1,64}, unique
+//! # layer = "proposal"               # "proposal" | "unverified" (never canonical)
+//! # idle_checkpoints = 10            # >= 1: checkpoints created since the lineage's last event
+//! # path_prefix = ["agents/"]        # optional; vault-relative, NFC (an NFD spelling is refused)
 //! ```
 //!
 //! The optional `[server]`, `[index]` (P1-D) and `[identity]` (P1-D.1,
@@ -208,13 +218,7 @@ fn rule_of(i: usize, v: &toml::Value) -> Result<PromotionRule> {
     // a recipe is written once: an NFD (or any non-NFC) spelling of the
     // prefix is refused, not folded (GOAL P2-P 2: "NFD varyantı reddedilir";
     // the search filter of P2-L/L3 folds it, a query being typed each time)
-    {
-        use unicode_normalization::UnicodeNormalization;
-        if raw.nfc().collect::<String>() != raw {
-            bail!("{at}: path_prefix {raw:?} is not in Unicode NFC (an NFD variant is refused; write the prefix in NFC)");
-        }
-    }
-    let path_prefix = crate::pathprefix::normalize(&raw).with_context(|| at.clone())?;
+    let path_prefix = recipe_prefix(&at, &raw)?;
     let to = need("to")?;
     if to != "canonical" {
         bail!("{at}: to {to:?} must be \"canonical\" (the only value)");
@@ -226,6 +230,155 @@ fn rule_of(i: usize, v: &toml::Value) -> Result<PromotionRule> {
         path_prefix,
         to: crate::model::Layer::Canonical,
     })
+}
+
+/// One proposal decay rule (P2-R/R1, `[[prune.rules]]`; K19-T, K-Q.1 (5)):
+/// the `server` matches it in `rootmark prune` / `POST /v1/prune` only; the
+/// kernel loads and checks it and writes the `Demoted` (`meta.prune`) its
+/// hook allows (it decides nothing, spec §7). `canonical` is never a rule's
+/// layer.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+pub struct PruneRule {
+    /// `[a-z0-9_-]{1,64}`, unique in the recipe
+    pub id: String,
+    /// `proposal` or `unverified`
+    pub layer: crate::model::Layer,
+    /// checkpoints created after the lineage's last event, at least (>= 1)
+    pub idle_checkpoints: u64,
+    /// normalized prefixes (`crate::pathprefix`); empty: every document
+    pub path_prefix: Vec<String>,
+}
+
+impl PruneRule {
+    /// Whether the rule covers a live lineage of `layer` in `doc_path`.
+    pub fn covers(&self, layer: crate::model::Layer, doc_path: &str) -> bool {
+        layer == self.layer
+            && (self.path_prefix.is_empty()
+                || self
+                    .path_prefix
+                    .iter()
+                    .any(|p| crate::pathprefix::matches(p, doc_path)))
+    }
+}
+
+/// A recipe path prefix: NFC (an NFD spelling is refused, P2-B rule of
+/// recipes), then normalized.
+fn recipe_prefix(at: &str, raw: &str) -> Result<String> {
+    use unicode_normalization::UnicodeNormalization;
+    if raw.nfc().collect::<String>() != raw {
+        bail!("{at}: path_prefix {raw:?} is not in Unicode NFC (an NFD variant is refused; write the prefix in NFC)");
+    }
+    crate::pathprefix::normalize(raw).with_context(|| at.to_string())
+}
+
+/// `[[prune.rules]]` entry `i` (1-based in messages).
+fn prune_rule_of(i: usize, v: &toml::Value) -> Result<PruneRule> {
+    let at = format!("[[prune.rules]] #{i}");
+    let Some(t) = v.as_table() else {
+        bail!("{at}: must be a table");
+    };
+    let at = match t.get("id").and_then(|v| v.as_str()) {
+        Some(id) => format!("{at} (id {id:?})"),
+        None => at,
+    };
+    if let Some(k) = t.keys().find(|k| {
+        !matches!(
+            k.as_str(),
+            "id" | "layer" | "idle_checkpoints" | "path_prefix"
+        )
+    }) {
+        bail!("{at}: unknown field `{k}` (id, layer, idle_checkpoints, path_prefix)");
+    }
+    let id = match t.get("id") {
+        Some(toml::Value::String(x)) => x.clone(),
+        Some(_) => bail!("{at}: id must be a string"),
+        None => bail!("{at}: missing field `id`"),
+    };
+    if !rule_id_ok(&id) {
+        bail!("{at}: id {id:?} must match [a-z0-9_-]{{1,64}}");
+    }
+    let layer = match t.get("layer") {
+        Some(toml::Value::String(x)) => match x.as_str() {
+            "proposal" => crate::model::Layer::Proposal,
+            "unverified" => crate::model::Layer::Unverified,
+            "canonical" => bail!("{at}: layer \"canonical\" is never pruned (a rule prunes proposal or unverified lineages)"),
+            other => bail!("{at}: layer {other:?} must be \"proposal\" or \"unverified\""),
+        },
+        Some(_) => bail!("{at}: layer must be a string"),
+        None => bail!("{at}: missing field `layer`"),
+    };
+    let idle_checkpoints = match t.get("idle_checkpoints") {
+        Some(toml::Value::Integer(n)) if *n >= 1 => *n as u64,
+        Some(toml::Value::Integer(n)) => {
+            bail!("{at}: idle_checkpoints = {n}: the kernel minimum is 1")
+        }
+        Some(_) => bail!("{at}: idle_checkpoints must be an integer"),
+        None => bail!("{at}: missing field `idle_checkpoints`"),
+    };
+    let path_prefix = match t.get("path_prefix") {
+        None => Vec::new(),
+        Some(toml::Value::Array(a)) if !a.is_empty() => {
+            let mut out = Vec::new();
+            for x in a {
+                let Some(x) = x.as_str() else {
+                    bail!("{at}: path_prefix must be a list of strings");
+                };
+                out.push(recipe_prefix(&at, x)?);
+            }
+            out
+        }
+        Some(toml::Value::Array(_)) => {
+            bail!("{at}: path_prefix is empty (omit it for every document)")
+        }
+        Some(_) => bail!("{at}: path_prefix must be a list of strings"),
+    };
+    Ok(PruneRule {
+        id,
+        layer,
+        idle_checkpoints,
+        path_prefix,
+    })
+}
+
+/// `[prune]`: `version` and `rules` (P2-R/R1).
+fn prune_of(t: Option<&toml::Table>) -> Result<(Option<String>, Vec<PruneRule>)> {
+    let Some(t) = t else {
+        return Ok((None, Vec::new()));
+    };
+    if let Some(k) = t
+        .keys()
+        .find(|k| !matches!(k.as_str(), "version" | "rules"))
+    {
+        bail!("[prune]: unknown field `{k}` (version, rules)");
+    }
+    let version = match t.get("version") {
+        None => None,
+        Some(toml::Value::String(v)) if !v.trim().is_empty() => Some(v.clone()),
+        Some(toml::Value::String(_)) => bail!("[prune] version must not be empty"),
+        Some(_) => bail!("[prune] version must be a string"),
+    };
+    let rules = match t.get("rules") {
+        None => Vec::new(),
+        Some(toml::Value::Array(a)) => a
+            .iter()
+            .enumerate()
+            .map(|(i, v)| prune_rule_of(i + 1, v))
+            .collect::<Result<Vec<_>>>()?,
+        Some(_) => bail!("[prune] rules must be an array of tables ([[prune.rules]])"),
+    };
+    let mut seen = std::collections::BTreeSet::new();
+    for r in &rules {
+        if !seen.insert(r.id.as_str()) {
+            bail!(
+                "[[prune.rules]]: id {:?} is given twice (ids are unique)",
+                r.id
+            );
+        }
+    }
+    if !rules.is_empty() && version.is_none() {
+        bail!("[prune]: missing field `version` (required with [[prune.rules]]; the policy_version of a rule's prune)");
+    }
+    Ok((version, rules))
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -249,6 +402,12 @@ pub struct Policy {
     pub identity: Option<toml::Table>,
     /// `[attestation]` (spec 2.0.0 §7.1)
     pub attestation: Attestation,
+    /// `[prune] version` (P2-R/R1): required with rules, the
+    /// `policy_version` of a rule's `Demoted`
+    pub prune_version: Option<String>,
+    /// `[[prune.rules]]` (P2-R/R1), in recipe order (the first covering
+    /// rule decides)
+    pub prune_rules: Vec<PruneRule>,
 }
 
 /// `[attestation]` (spec 2.0.0 §7.1).
@@ -333,6 +492,7 @@ struct RawPolicy {
     edit: Option<toml::Table>,
     identity: Option<toml::Table>,
     attestation: Option<toml::Table>,
+    prune: Option<toml::Table>,
 }
 
 /// `[edit] policy = "<policy>"` (the only field).
@@ -446,6 +606,8 @@ impl Policy {
             edit: Edit::AppendOnly,
             identity: None,
             attestation: Attestation::default(),
+            prune_version: None,
+            prune_rules: Vec::new(),
         }
     }
 
@@ -470,7 +632,10 @@ impl Policy {
     pub fn parse(text: &str, source: PolicySource) -> Result<Policy> {
         let raw: RawPolicy = toml::from_str(text).context("invalid policy.toml")?;
         let (name, promotion_version, promotion_rules) = raw.promotion.parts()?;
+        let (prune_version, prune_rules) = prune_of(raw.prune.as_ref())?;
         Ok(Policy {
+            prune_version,
+            prune_rules,
             promotion: Promotion::parse(name)?,
             promotion_version,
             promotion_rules,
@@ -517,6 +682,13 @@ impl Policy {
                     "path_prefix": r.path_prefix,
                     "to": r.to.as_str(),
                 })).collect::<Vec<_>>(),
+            });
+        }
+        // P2-R/R1: likewise only a recipe with prune rules shows them
+        if !self.prune_rules.is_empty() {
+            out["prune_rules"] = serde_json::json!({
+                "version": self.prune_version,
+                "rules": self.prune_rules,
             });
         }
         out

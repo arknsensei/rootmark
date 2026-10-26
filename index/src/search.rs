@@ -49,7 +49,8 @@ fn rank(l: Layer) -> u8 {
     }
 }
 
-/// The records of a checkpoint, with their layers then.
+/// The records of a checkpoint, with their layers then; a record holding a
+/// lineage inactive then (pruned) is left out (P2-R/R1).
 pub struct View {
     pub checkpoint: Checkpoint,
     /// `(storage position, layer)`, in `(doc_path, chunk_id)` order
@@ -67,6 +68,12 @@ impl View {
                 .with_context(|| format!("{doc}: no state at checkpoint"))?;
             for &i in store.snapshot(doc, sid)? {
                 let r = &store.records[i];
+                // P2-R/R1: a chunk holding a block pruned by then (marked
+                // inactive, spec §7) is not retrieved at this checkpoint;
+                // at an earlier checkpoint it is, as before
+                if r.blocks.iter().any(|b| ds.inactive.contains(&b.lineage_id)) {
+                    continue;
+                }
                 let mut layer = Layer::Canonical;
                 for b in &r.blocks {
                     let l = *ds.layer.get(&b.lineage_id).with_context(|| {

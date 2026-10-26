@@ -39,6 +39,7 @@ pub use normalize::normalize;
 pub use parse::{locate_blocks, parse_document, BlockLoc};
 pub use policy::{
     Attestation as AttestationPolicy, Edit, Policy, PolicySource, Promotion, PromotionRule,
+    PruneRule,
 };
 pub use store::BlockObject;
 pub use vault::{

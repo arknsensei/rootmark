@@ -288,6 +288,26 @@ fn check_builtin_policy(ev: &Event, m: &TransitionMeta) -> Result<()> {
 /// agent's `propose`. Checked on write and on replay; the kernel decides
 /// nothing, it only refuses an event of another shape.
 fn check_policy_promotion(ev: &Event, m: &TransitionMeta) -> Result<()> {
+    // P2-R/R1 (K-P2B.2 (c5)'s pattern): a prune by a policy actor (a decay
+    // rule, `[[prune.rules]]`) names its rule — `meta.reason` is
+    // `rule:<meta.actor.id>` — and keeps a proposal or unverified layer
+    if ev.kind == EventKind::Demoted && m.prune && m.actor.kind == ActorKind::Policy {
+        if m.reason != format!("rule:{}", m.actor.id) {
+            bail!(
+                "event seq {}: a prune by a policy actor names its own rule: meta.reason {:?} is not \"rule:{}\"",
+                ev.seq,
+                m.reason,
+                m.actor.id
+            );
+        }
+        if !matches!(m.from, Layer::Proposal | Layer::Unverified) {
+            bail!(
+                "event seq {}: a prune by a policy actor keeps a proposal or unverified layer, not {:?}",
+                ev.seq,
+                m.from.as_str()
+            );
+        }
+    }
     if ev.kind == EventKind::Promoted && m.actor.kind == ActorKind::Policy {
         let rule = m.reason.strip_prefix("rule:").unwrap_or_default();
         if rule.trim().is_empty() {
@@ -2110,6 +2130,13 @@ impl Vault {
         check_policy_promotion(&ev, &transition_meta(&ev)?)?;
         let mut out = self.commit_inner(&[], vec![ev])?;
         Ok(out.remove(0))
+    }
+
+    /// The `seq` of every `CheckpointCreated` event, in log order (P2-R:
+    /// what a decay rule counts after a lineage's last event, and the
+    /// creation order of the retention bound).
+    pub fn checkpoint_seqs(&self) -> Vec<u64> {
+        self.state.checkpoints.iter().map(|c| c.seq).collect()
     }
 
     /// Every checkpoint, in log order.
