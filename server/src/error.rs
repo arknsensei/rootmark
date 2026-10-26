@@ -37,12 +37,15 @@ pub enum Code {
     /// the vault's index is of an older format a migration brings to this
     /// one: run `rootmark migrate <vault>` (P2-A; the error carries a `hint`)
     MigrationRequired,
+    /// a query as of a checkpoint whose file was archived by a retention
+    /// prune (P2-R/R2; the message names the archive file)
+    Archived,
     /// anything else: a failure of the server or the vault
     Internal,
 }
 
 impl Code {
-    pub const ALL: [Code; 12] = [
+    pub const ALL: [Code; 13] = [
         Code::InvalidArguments,
         Code::EmptyQuery,
         Code::PathOutsideVault,
@@ -54,6 +57,7 @@ impl Code {
         Code::PolicyViolation,
         Code::IndexStale,
         Code::MigrationRequired,
+        Code::Archived,
         Code::Internal,
     ];
 
@@ -70,6 +74,7 @@ impl Code {
             Code::PolicyViolation => "policy_violation",
             Code::IndexStale => "index_stale",
             Code::MigrationRequired => "migration_required",
+            Code::Archived => "archived",
             Code::Internal => "internal",
         }
     }
@@ -82,6 +87,7 @@ impl Code {
             Code::Denied => 403,
             Code::NotFound => 404,
             Code::Exists => 409,
+            Code::Archived => 410,
             Code::TooLarge => 413,
             Code::HeadingNotFound | Code::PolicyViolation => 422,
             Code::Internal => 500,
@@ -207,8 +213,8 @@ mod tests {
             anyhow::Error::new(rootmarkindex::store::IndexStale("old".into())).context("search");
         assert_eq!(code_of(&e), Code::IndexStale);
         let names: Vec<&str> = Code::ALL.iter().map(|c| c.as_str()).collect();
-        // 12 since P2-A (`migration_required`)
-        assert_eq!(names.len(), 12);
+        // 12 since P2-A (`migration_required`), 13 since P2-R (`archived`)
+        assert_eq!(names.len(), 13);
         // a hint travels in the JSON; without one there is no key
         let e = coded_hint(Code::PolicyViolation, "no heading", "start with a heading")
             .context("propose");

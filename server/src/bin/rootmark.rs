@@ -279,6 +279,10 @@ enum TraceCmd {
         /// only traces with at_seq >= since
         #[arg(long, default_value_t = 0)]
         since: u64,
+        /// the archived traces instead (P2-R: moved by `rootmark prune`
+        /// behind the retention bound; `.rootmark/traces/archive/`)
+        #[arg(long)]
+        archived: bool,
     },
 }
 
@@ -616,7 +620,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             if actor.is_some() || reason.is_some() {
                 bail!("rootmark prune <vault>: --actor and --reason belong to the prune of one lineage (the vault's prune acts for its recipe's rules)");
             }
-            rootmarkserver::prune::run(&vault, dry_run, now_ms)?
+            rootmarkserver::prune::run(&vault, dry_run, now_ms, None)?
         }
         Cmd::Checkpoint(c) => match c {
             CheckpointCmd::Create { vault, name } => {
@@ -624,7 +628,7 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
                 serde_json::to_value(v.checkpoint(name.as_deref())?)?
             }
             CheckpointCmd::List { vault } => {
-                json!({"checkpoints": Vault::open(&vault)?.checkpoints()})
+                json!({"checkpoints": rootmarkserver::tools::checkpoint_list(&Vault::open(&vault)?)?})
             }
             CheckpointCmd::Show { vault, checkpoint } => {
                 serde_json::to_value(Vault::open(&vault)?.find_checkpoint(&checkpoint)?)?
@@ -665,8 +669,23 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             let (blocks, trace) = v.read_blocks(&lineages, &consumer, &at)?;
             json!({"blocks": blocks, "trace": trace})
         }
-        Cmd::Trace(TraceCmd::List { vault, since }) => {
-            json!({"traces": Vault::open(&vault)?.traces(since)?})
+        Cmd::Trace(TraceCmd::List {
+            vault,
+            since,
+            archived,
+        }) => {
+            let v = Vault::open(&vault)?;
+            if archived {
+                let all = v.archived_traces()?;
+                json!({"archived": true, "traces": all.into_iter().filter(|t| t.at_seq >= since).collect::<Vec<_>>()})
+            } else {
+                let mut out = json!({"traces": v.traces(since)?});
+                // P2-R/R2: the traces before the base are archived
+                if since < v.trace_base() {
+                    out["archived_before"] = json!(v.trace_base());
+                }
+                out
+            }
         }
         Cmd::Journal(j) => match j {
             JournalCmd::Append {

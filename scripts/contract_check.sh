@@ -246,6 +246,18 @@ code_req() {
     too_large) req POST /v1/propose "{\"doc_path\":\"big.md\",\"content\":\"$(printf 'x%.0s' $(seq 1 100))\",\"reason\":\"r\"}" ;;
     heading_not_found) req POST /v1/propose '{"doc_path":"a.md","mode":"replace_section","heading":"Nope","content":"x","reason":"r"}' ;;
     policy_violation) req POST /v1/propose '{"doc_path":"a.md","mode":"append","content":"x","reason":"r"}' ;;
+    archived)
+      # P2-R/F4 (contract §2.10): a checkpoint a retention prune archived —
+      # two new states, each checkpointed; keep 1; the first is refused
+      req POST /v1/propose '{"doc_path":"arch/a1.md","content":"# A1\n\nOne.","reason":"r"}' >/dev/null
+      a1="$(req POST /v1/checkpoint '{}' | cut -d' ' -f2- | jq -r '.checkpoint_id // empty')"
+      req POST /v1/propose '{"doc_path":"arch/a2.md","content":"# A2\n\nTwo.","reason":"r"}' >/dev/null
+      req POST /v1/checkpoint '{}' >/dev/null
+      cp "$hv/.rootmark/policy.toml" "$work/policy.bak"
+      printf '\n[retention]\nkeep_checkpoints = 1\n' >>"$hv/.rootmark/policy.toml"
+      req POST /v1/prune '{"now_ms":0}' >/dev/null
+      cp "$work/policy.bak" "$hv/.rootmark/policy.toml"
+      req POST /v1/search "{\"query\":\"espresso\",\"at\":\"$a1\"}" ;;
     migration_required)
       m="$hv/.rootmark/index/manifest.json"
       # the current index, for `index_stale`, `internal` and the status step below

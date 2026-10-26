@@ -19,3 +19,9 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Neden:** GOAL P2-R R0 (b) ve R-1 (b): "K-P2B.4'ün … girdileri listeden çıkar; sınıflandırıcı kodu değişmez; sayılan FAIL 0".
 - **Önce/sonra:** aynı geliştirme RUN'ına (`20261026T082210Z-2f85d43`, `reports/rounds/P2-R/devchain_2f85d43/`) karşı `eval.historical_p2b`: önce (P2-B'nin listeleri) sayılan FAIL 2 (D1-12, D-2), sonra 0 (30 tarihsel, 2 göç gerekli). `git diff`: hiçbir başka girdi ya da yol değişmedi; değişen `why`/`about` metinleri yalnız ekleme.
 - **Gözden geçirici onayı:** R5.review.md.
+
+## F4 · R2 · `scripts/contract_check.sh`, `server/tests/contract.rs` — yeni hata kodu `archived`
+- **Ne:** `contract_check.sh`'in `code_req`'ine `archived` kolu: HTTP vault'unda iki yeni durum (`propose` + `checkpoint`), tarife geçici `[retention] keep_checkpoints = 1`, `POST /v1/prune`, tarif geri, ilk checkpoint'e `at` ile `search` → 410 `archived`. `contract.rs`: `http_statuses_of_the_codes`'a `(Code::Archived, 410)`, yeni `archived_from_a_real_call` (CLI ile iki checkpoint, `prune`, `expect_code(… Code::Archived)`). Silinen satır yok (`R2_f4.diff`: yalnız ekleme).
+- **Neden:** GOAL P2-R 3 ve 5: arşivlenmiş checkpoint'e sorgu `archived` koduyla reddedilir, CLIENT_CONTRACT §3'e yeni kod. Dondurulmuş D1-13 denetleyicisi sözleşmenin her kodunu bir testle ve gerçek bir HTTP çağrısıyla eşler; yeni kod olmadan çıkış 1 olurdu (emsal P2-A/F2'nin `migration_required`'ı).
+- **Önce/sonra:** önce (F1 sürümü, `archived` sözleşmede ve sunucuda): `cargo test --test contract` `http_statuses_of_the_codes` düşer (12 ≠ 13), `contract_check` `http-code:archived` ve `code:archived` eksik der; sonra `contract` 5/5, `contract_check` çıkış 0, "11 tools, 13 codes" ve `archived` 410 (`reports/rounds/P2-R/r0b/contract_check_r2.json`).
+- **Gözden geçirici onayı:** R5.review.md.

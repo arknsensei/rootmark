@@ -324,7 +324,14 @@ impl<'a> Caller<'a> {
 pub fn is_writer(tool: &str) -> bool {
     matches!(
         tool,
-        "search" | "read_block" | "propose" | "promote" | "checkpoint" | "attest" | "demote"
+        "search"
+            | "read_block"
+            | "propose"
+            | "promote"
+            | "checkpoint"
+            | "attest"
+            | "demote"
+            | "prune"
     )
 }
 
@@ -334,7 +341,7 @@ pub fn is_writer(tool: &str) -> bool {
 pub fn needs_human_id(tool: &str) -> bool {
     matches!(
         tool,
-        "propose" | "promote" | "checkpoint" | "attest_session" | "attest" | "demote"
+        "propose" | "promote" | "checkpoint" | "attest_session" | "attest" | "demote" | "prune"
     )
 }
 
@@ -342,8 +349,10 @@ pub fn needs_human_id(tool: &str) -> bool {
 /// §7.1): `POST /v1/attest_session`, `POST /v1/attest`; and (P2-P,
 /// CLIENT_CONTRACT §2.7) `POST /v1/demote`, the human's undo of a promotion
 /// (a rule's included). They are not tools: MCP lists and serves none (an
-/// agent's channel never attests, nor demotes).
-pub const HTTP_ONLY: [&str; 3] = ["attest_session", "attest", "demote"];
+/// agent's channel never attests, nor demotes). P2-R/R2: `POST /v1/prune`,
+/// the human's explicit prune (CLIENT_CONTRACT §2.10): an agent never
+/// prunes, and `serve` never prunes on its own.
+pub const HTTP_ONLY: [&str; 4] = ["attest_session", "attest", "demote", "prune"];
 
 /// Whether `name` is an HTTP-only endpoint.
 pub fn is_http_only(name: &str) -> bool {
@@ -566,6 +575,16 @@ struct DemoteArgs {
     to: Option<String>,
 }
 
+/// P2-R/R2: `POST /v1/prune` (contract §2.10)
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct PruneArgs {
+    dry_run: Option<bool>,
+    /// the time of the raw journal's prune (ms since the epoch; default
+    /// the clock); nothing else reads a time
+    now_ms: Option<u64>,
+}
+
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct CheckpointArgs {
@@ -692,7 +711,46 @@ fn date_range(
 }
 
 fn checkpoint_at(v: &Vault, at: &str) -> Result<rootmarkcore::Checkpoint> {
-    v.find_checkpoint(at).code(Code::NotFound)
+    let cp = v.find_checkpoint(at).code(Code::NotFound)?;
+    // P2-R/R2: a checkpoint archived by a retention prune is refused with
+    // its own code, the message naming the archive file
+    v.check_not_archived(&cp.checkpoint_id)
+        .code(Code::Archived)?;
+    Ok(cp)
+}
+
+/// The checkpoints as `checkpoints` lists them: an archived one carries
+/// `archived: true` (P2-R/R2); the others are as before.
+pub fn checkpoint_list(v: &Vault) -> Result<Value> {
+    let mut out = Vec::new();
+    for c in v.checkpoints() {
+        let archived = v.is_archived(&c.checkpoint_id);
+        let mut j = serde_json::to_value(c)?;
+        if archived {
+            j["archived"] = json!(true);
+        }
+        out.push(j);
+    }
+    Ok(Value::Array(out))
+}
+
+/// `status.retention` (P2-R/R2): only for a recipe with `[retention]` or
+/// `[[prune.rules]]`, or a vault that archived something.
+fn retention_status(v: &Vault, policy: &Policy) -> Option<Value> {
+    if policy.keep_checkpoints.is_none()
+        && policy.prune_rules.is_empty()
+        && v.trace_base() == 0
+        && v.archived_checkpoints().is_empty()
+    {
+        return None;
+    }
+    Some(json!({
+        "keep_checkpoints": policy.keep_checkpoints,
+        "traces_base_at_seq": v.trace_base(),
+        "archived_traces": v.trace_base(),
+        "archived_checkpoints": v.archived_checkpoints().len(),
+        "rules": policy.prune_rules.iter().map(|r| r.id.clone()).collect::<Vec<_>>(),
+    }))
 }
 
 impl Kernel {
@@ -1956,6 +2014,21 @@ impl Kernel {
                     }
                 }
             }
+            "prune" if caller.channel == Channel::Http => {
+                // P2-R/R2 (CLIENT_CONTRACT §2.10): the human's explicit
+                // prune, in the writer queue; the rules' `Demoted` events
+                // carry the request's consumer as `meta.source`
+                let x: PruneArgs = args(name, a)?;
+                self.actor(name, &caller)?;
+                self.policy()?;
+                let source = need_consumer(name, consumer)?;
+                crate::prune::run(
+                    &self.vault,
+                    x.dry_run.unwrap_or(false),
+                    x.now_ms,
+                    Some(source),
+                )
+            }
             "demote" if caller.channel == Channel::Http => {
                 // P2-P (CLIENT_CONTRACT §2.7): the human's undo of a promotion,
                 // through the vault's promotion policy (`human_only`: the
@@ -2123,7 +2196,7 @@ impl Kernel {
             }
             "checkpoints" => {
                 args::<NoArgs>(name, a)?;
-                Ok(json!({"checkpoints": open_vault(&self.vault)?.checkpoints()}))
+                Ok(json!({"checkpoints": checkpoint_list(&open_vault(&self.vault)?)?}))
             }
             "attest_session" if caller.channel == Channel::Http => {
                 args::<NoArgs>(name, a)?;
@@ -2166,6 +2239,7 @@ impl Kernel {
                 // P2-L/L3: a filtered search's trace carries its filter
                 let filters = v.trace_filters(&all)?;
                 let since = x.since_seq.unwrap_or(0);
+                let base = v.trace_base();
                 let mut traces: Vec<Value> = Vec::new();
                 for t in all.into_iter().filter(|t| t.at_seq >= since) {
                     if x.consumer.as_ref().is_some_and(|c| &t.consumer != c) {
@@ -2178,7 +2252,13 @@ impl Kernel {
                     }
                     traces.push(j);
                 }
-                Ok(json!({"traces": traces}))
+                let mut out = json!({"traces": traces});
+                // P2-R/R2: the traces before the base are archived — said,
+                // never silently left out (`rootmark trace list --archived`)
+                if since < base {
+                    out["archived_before"] = json!(base);
+                }
+                Ok(out)
             }
             _ => bail_code!(Code::NotFound, "unknown tool {name:?}"),
         }
@@ -2512,7 +2592,7 @@ impl Kernel {
         let (policy, cfg) = self.policy()?;
         // the index never fails `status` (K-E1.2): its state is a field
         let ix = index_state(&v);
-        Ok(json!({
+        let mut out = json!({
             "vault": self.vault.display().to_string(),
             "spec_version": SPEC_VERSION,
             "mdk_version": ROOTMARK_VERSION,
@@ -2549,7 +2629,11 @@ impl Kernel {
                     .filter(|a| a.matched == Some(false))
                     .count(),
             },
-        }))
+        });
+        if let Some(r) = retention_status(&v, &policy) {
+            out["retention"] = r;
+        }
+        Ok(out)
     }
 }
 
