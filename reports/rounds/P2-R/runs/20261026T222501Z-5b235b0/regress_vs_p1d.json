@@ -1,0 +1,419 @@
+{
+ "conformance": {
+  "differing_tests": [],
+  "equal": true,
+  "excluded": {
+   "fixtures_manifest_hash": "C2-10, C3-06, C3-07 fixtures added (F2, F6)",
+   "spec_version": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3, CRITERION yama kuralı)"
+  },
+  "level_claimed": [
+   3,
+   3
+  ],
+  "spec_version": [
+   "1.0.2",
+   "2.0.3"
+  ],
+  "tests": 31
+ },
+ "differing_fields": {
+  "p1d/d10.json:pass": "inf",
+  "p1d/inspector/inspector.json:calls_ok": 0.09090909090909091,
+  "p1d/inspector/inspector.json:calls›#len": 0.09090909090909091,
+  "p1d/inspector/inspector.json:calls›10›ok": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d/inspector/inspector.json:calls›10›tool": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d/inspector/inspector.json:schemas_valid": 0.09090909090909091,
+  "p1d/inspector/inspector.json:tools_expected": 0.09090909090909091,
+  "p1d/inspector/inspector.json:tools_listed": 0.09090909090909091,
+  "p1d/mcp_e2e/mcp_e2e.json:checks›#len": 0.043478260869565216,
+  "p1d/mcp_e2e/mcp_e2e.json:checks›4›pass": "inf",
+  "p1d/mcp_e2e/mcp_e2e.json:checks›66›check": {
+   "a": "absent",
+   "b": "valid call: the first 5 log lines, next_seq 5"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›66›pass": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›66›tool": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›67›check": {
+   "a": "absent",
+   "b": "kinds filter: no Promoted event"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›67›pass": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›67›tool": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›68›check": {
+   "a": "absent",
+   "b": "unknown kind is an error"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›68›pass": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›68›tool": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:per_tool›events›checks": {
+   "a": "absent",
+   "b": 3
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:per_tool›events›passed": {
+   "a": "absent",
+   "b": 3
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:tools_total": 0.09090909090909091,
+  "p1d/mcp_e2e/mcp_e2e.json:tools›#len": 0.09090909090909091,
+  "p1d/mcp_e2e/mcp_e2e.json:tools›10": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d_checks.json:D-10›pass": "inf",
+  "p1d_checks.json:D-1›inspector_calls_ok": "inf",
+  "p1d_checks.json:D-1›schemas_valid": "inf",
+  "p1d_checks.json:D-1›tools_listed": 0.09090909090909091
+ },
+ "equal": false,
+ "excluded_differences": {
+  "p1b1_checks.json:criteria/B1-3/spec_version": {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "leaves": 1
+  },
+  "p1b_checks.json:fixtures_manifest_hash": {
+   "decision": "F2, F6 (C2-10, C3-06, C3-07)",
+   "leaves": 1
+  },
+  "p1c1_checks.json:C1-6/lexical/dl": {
+   "decision": "K-D1.7",
+   "leaves": 1
+  },
+  "p1c1_checks.json:C1-6/rejected_cases": {
+   "decision": "K-D1.7 (F1)",
+   "leaves": 1
+  },
+  "p1c1_checks.json:C1-7": {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "leaves": 2
+  },
+  "p1c_checks.json:C-1/spec_version": {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "leaves": 1
+  },
+  "p1c_index.json:index_files_build/manifest.json": {
+   "decision": "K-D1.7",
+   "leaves": 1
+  },
+  "p1c_index.json:index_files_compact/manifest.json": {
+   "decision": "K-D1.7",
+   "leaves": 1
+  },
+  "p1c_index.json:index_files_final/manifest.json": {
+   "decision": "K-D1.7",
+   "leaves": 1
+  },
+  "p1d/http/http_e2e.json:cases/11": {
+   "decision": "K-D1.5",
+   "leaves": 2
+  },
+  "p1d/http/http_e2e.json:cases/5": {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "leaves": 1
+  },
+  "p1d/http/http_e2e.json:cases/8": {
+   "decision": "K-D1.5",
+   "leaves": 2
+  },
+  "p1d/http/http_e2e.json:d7_passed": {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "leaves": 1
+  },
+  "p1d/http/http_e2e.json:pass": {
+   "decision": "K-D1.5, spec 1.0.3",
+   "leaves": 1
+  },
+  "p1d/http/http_e2e.json:passed": {
+   "decision": "K-D1.5, spec 1.0.3",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks/3": {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks/41": {
+   "decision": "K-D1.1",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks/49": {
+   "decision": "K-D1.1",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks/50": {
+   "decision": "K-D1.1",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks/52": {
+   "decision": "K-D1.1",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks/53": {
+   "decision": "K-D1.6",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:pass": {
+   "decision": "K-D1.1, K-D1.6, spec 1.0.3",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:per_tool/propose": {
+   "decision": "K-D1.1",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:per_tool/status": {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "leaves": 1
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:tools_passed": {
+   "decision": "K-D1.1, spec 1.0.3",
+   "leaves": 1
+  },
+  "p1d/scene/scene.json:steps/0/shows/spec_version": {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "leaves": 1
+  },
+  "p1d_checks.json:D-2": {
+   "decision": "K-D1.1, spec 1.0.3",
+   "leaves": 6
+  },
+  "p1d_checks.json:D-7": {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "leaves": 4
+  },
+  "p1d_checks.json:D-9": {
+   "decision": "K-D1.7, spec 1.0.3, F2/F6",
+   "leaves": 14
+  }
+ },
+ "exclusions": [
+  {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "file": "p1b1_checks.json",
+   "path": "criteria/B1-3/spec_version",
+   "why": "the frozen B1-3 record names the spec version"
+  },
+  {
+   "decision": "F2, F6 (C2-10, C3-06, C3-07)",
+   "file": "p1b_checks.json",
+   "path": "fixtures_manifest_hash",
+   "why": "MANIFEST.json gains the new fixtures' rows"
+  },
+  {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "file": "p1c_checks.json",
+   "path": "C-1/spec_version",
+   "why": "the frozen C-1 record names the spec version"
+  },
+  {
+   "decision": "K-D1.7",
+   "file": "p1c_index.json",
+   "path": "index_files_build/manifest.json",
+   "why": "manifest lexical.dl, format mdkernel-index/3"
+  },
+  {
+   "decision": "K-D1.7",
+   "file": "p1c_index.json",
+   "path": "index_files_compact/manifest.json",
+   "why": "manifest lexical.dl, format mdkernel-index/3"
+  },
+  {
+   "decision": "K-D1.7",
+   "file": "p1c_index.json",
+   "path": "index_files_final/manifest.json",
+   "why": "manifest lexical.dl, format mdkernel-index/3"
+  },
+  {
+   "decision": "K-D1.7",
+   "file": "p1c1_checks.json",
+   "path": "C1-6/lexical/dl",
+   "why": "the lexical record gains dl"
+  },
+  {
+   "decision": "K-D1.7 (F1)",
+   "file": "p1c1_checks.json",
+   "path": "C1-6/rejected_cases",
+   "why": "two rejection cases for dl"
+  },
+  {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "file": "p1c1_checks.json",
+   "path": "C1-7",
+   "why": "C1-7 checks the conformance report's spec version (1.0.2)"
+  },
+  {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "file": "p1d/http/http_e2e.json",
+   "path": "cases/5",
+   "why": "D7-3 checks status spec_version 1.0.2"
+  },
+  {
+   "decision": "K-D1.5",
+   "file": "p1d/http/http_e2e.json",
+   "path": "cases/8",
+   "why": "H-1 expects every tool error as 422; codes now set the status"
+  },
+  {
+   "decision": "K-D1.5",
+   "file": "p1d/http/http_e2e.json",
+   "path": "cases/11",
+   "why": "W-3 expects blame of an unknown document as 422; now 404 not_found"
+  },
+  {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "file": "p1d/http/http_e2e.json",
+   "path": "d7_passed",
+   "why": "count of D7-3 above"
+  },
+  {
+   "decision": "K-D1.5, spec 1.0.3",
+   "file": "p1d/http/http_e2e.json",
+   "path": "passed",
+   "why": "count of the cases above"
+  },
+  {
+   "decision": "K-D1.5, spec 1.0.3",
+   "file": "p1d/http/http_e2e.json",
+   "path": "pass",
+   "why": "conjunction of the cases above"
+  },
+  {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "checks/3",
+   "why": "status: versions (spec 1.0.2)"
+  },
+  {
+   "decision": "K-D1.1",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "checks/41",
+   "why": "heading-less append to the human espresso.md is denied (append_only)"
+  },
+  {
+   "decision": "K-D1.1",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "checks/49",
+   "why": "replace_section of the human Recipe section is denied (append_only)"
+  },
+  {
+   "decision": "K-D1.1",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "checks/50",
+   "why": "follows from the denied replace_section"
+  },
+  {
+   "decision": "K-D1.1",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "checks/52",
+   "why": "follows from the denied append and replace_section"
+  },
+  {
+   "decision": "K-D1.6",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "checks/53",
+   "why": "checkpoint {name} after a search names the state: one CheckpointNamed event"
+  },
+  {
+   "decision": "K-D1.1",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "per_tool/propose",
+   "why": "count of the propose checks above"
+  },
+  {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "per_tool/status",
+   "why": "count of the status check above"
+  },
+  {
+   "decision": "K-D1.1, spec 1.0.3",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "tools_passed",
+   "why": "count of the tools above"
+  },
+  {
+   "decision": "K-D1.1, K-D1.6, spec 1.0.3",
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "path": "pass",
+   "why": "conjunction of the checks above"
+  },
+  {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "file": "p1d/scene/scene.json",
+   "path": "steps/0/shows/spec_version",
+   "why": "the scene shows status spec_version"
+  },
+  {
+   "decision": "K-D1.1, spec 1.0.3",
+   "file": "p1d_checks.json",
+   "path": "D-2",
+   "why": "P1-D's D-2 record of the e2e counts above"
+  },
+  {
+   "decision": "K-D1.2, K-D1.6, K-D1.8 (spec 1.0.3 by CRITERION)",
+   "file": "p1d_checks.json",
+   "path": "D-7",
+   "why": "P1-D's D-7 record of D7-3 and the HTTP counts above"
+  },
+  {
+   "decision": "K-D1.7, spec 1.0.3, F2/F6",
+   "file": "p1d_checks.json",
+   "path": "D-9",
+   "why": "P1-D's D-9 (against P1-C.1) records the spec version, manifest and lexical.dl differences above"
+  }
+ ],
+ "exclusions_without_difference": [],
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json",
+  "c1_variant.json",
+  "p1c1_checks.json",
+  "p1d_checks.json",
+  "p1d/inspector/inspector.json",
+  "p1d/mcp_e2e/mcp_e2e.json",
+  "p1d/http/http_e2e.json",
+  "p1d/scene/scene.json",
+  "p1d/tamper_p1d.json",
+  "p1d/d10.json",
+  "p1d/sigterm.json"
+ ],
+ "n_fields": 99881,
+ "reference_run": "20261015T210419Z-a6b52fe"
+}

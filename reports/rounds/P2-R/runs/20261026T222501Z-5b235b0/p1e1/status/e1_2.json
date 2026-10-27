@@ -1,0 +1,41 @@
+{
+  "criterion": "E1-2",
+  "pass": true,
+  "passed": "2/2",
+  "runs": {
+    "auto_rebuild_false": {
+      "calls": {
+        "index": {
+          "auto_rebuild": false,
+          "expected_format": "mdkernel-index/3",
+          "format": null,
+          "state": "damaged"
+        },
+        "manifest_untouched": true,
+        "search_code": "index_stale",
+        "search_http": 503,
+        "status_http": 200,
+        "status_mcp_state": "damaged"
+      },
+      "search_503": true,
+      "status_200_damaged": true
+    },
+    "auto_rebuild_true": {
+      "calls": {
+        "index": {
+          "auto_rebuild": true,
+          "expected_format": "mdkernel-index/3",
+          "format": null,
+          "state": "damaged"
+        },
+        "manifest_untouched": true,
+        "search_code": "index_stale",
+        "search_http": 503,
+        "status_http": 200,
+        "status_mcp_state": "damaged"
+      },
+      "search_503": true,
+      "status_200_damaged": true
+    }
+  }
+}

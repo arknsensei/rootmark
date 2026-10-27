@@ -1,0 +1,211 @@
+{
+  "obsidian": {
+    "npm_ci": 0,
+    "tsc": 0,
+    "eslint": 0,
+    "vitest": {
+      "files": 36,
+      "tests": 164,
+      "passed": 164,
+      "failed": 0
+    },
+    "e2e": {
+      "exit": 0,
+      "notes": 25,
+      "aligned_by_location": 25,
+      "stale": {
+        "loc_stale": true,
+        "aligned": false,
+        "says_stale": true,
+        "marks": 0
+      },
+      "pass": true
+    }
+  },
+  "vscode": {
+    "npm_ci": 0,
+    "tsc": 0,
+    "eslint": 0,
+    "vitest": {
+      "files": 4,
+      "tests": 12,
+      "passed": 12,
+      "failed": 0
+    },
+    "build": 0,
+    "bundle_requires": [
+      "node:fs/promises",
+      "node:path",
+      "vscode"
+    ],
+    "e2e": {
+      "exit": 0,
+      "steps": {
+        "status": {
+          "text": "rootmark <v> · ok",
+          "human": "ada"
+        },
+        "search": {
+          "all": [
+            [
+              "journal/2026/10/24.md",
+              "canonical",
+              0
+            ],
+            [
+              "journal/2026/10/25.md",
+              "canonical",
+              0
+            ],
+            [
+              "notes/demleme.md",
+              "canonical",
+              3
+            ],
+            [
+              "journal/2026/10/25.md",
+              "proposal",
+              8
+            ]
+          ],
+          "dated": [
+            [
+              "journal/2026/10/25.md",
+              0
+            ]
+          ],
+          "undated_excluded": 1,
+          "prefixed": [
+            "notes/demleme.md"
+          ]
+        },
+        "blame": {
+          "journal/2026/10/24.md": [
+            [
+              "canonical",
+              0,
+              0
+            ],
+            [
+              "canonical",
+              2,
+              2
+            ]
+          ],
+          "journal/2026/10/25.md": [
+            [
+              "canonical",
+              0,
+              0
+            ],
+            [
+              "canonical",
+              2,
+              2
+            ],
+            [
+              "canonical",
+              3,
+              6
+            ],
+            [
+              "proposal",
+              8,
+              8
+            ],
+            [
+              "proposal",
+              10,
+              10
+            ]
+          ],
+          "notes/demleme.md": [
+            [
+              "canonical",
+              3,
+              3
+            ],
+            [
+              "canonical",
+              5,
+              5
+            ],
+            [
+              "canonical",
+              7,
+              8
+            ]
+          ]
+        },
+        "history_before": [
+          "#11 BlockCreated · actor not recorded"
+        ],
+        "promote": "promoted 5ed3310a → canonical",
+        "demote": "demoted 5ed3310a → proposal",
+        "history_after": [
+          "#11 BlockCreated · actor not recorded",
+          "#15 Promoted · human:ada · proposal → canonical",
+          "#16 Demoted · human:ada · canonical → proposal"
+        ],
+        "after_save": "stale"
+      },
+      "pass": true
+    }
+  },
+  "contract": {
+    "runs": 12,
+    "calls": 151,
+    "request_violations": [],
+    "response_violations_e2e": [],
+    "response_violations_unit_fake": [
+      "#0 POST /v1/status response: missing field migrations",
+      "#0 POST /v1/status response.attestation: missing field implicit",
+      "#11 GET /v1/status response: missing field migrations",
+      "#11 GET /v1/status response.attestation: missing field implicit",
+      "#26 POST /v1/status: HTTP 500 body is not JSON",
+      "#27 POST /v1/status: error code \"teapot\" is not in §3",
+      "#28 POST /v1/status response: missing field vault",
+      "#28 POST /v1/status response: missing field spec_version",
+      "#28 POST /v1/status response: missing field mdk_version",
+      "#28 POST /v1/status response: missing field level_claimed",
+      "#28 POST /v1/status response: missing field embedder",
+      "#28 POST /v1/status response: missing field index",
+      "#28 POST /v1/status response: missing field migrations",
+      "#28 POST /v1/status response: missing field last_checkpoint",
+      "#28 POST /v1/status response: missing field policy",
+      "#28 POST /v1/status response: missing field server_policy",
+      "#28 POST /v1/status response: missing field attestation",
+      "#30 POST /v1/status response: missing field migrations",
+      "#30 POST /v1/status response.attestation: missing field implicit",
+      "#41 POST /v1/status response: missing field mdk_version",
+      "#41 POST /v1/status response: missing field migrations",
+      "#41 POST /v1/status response.attestation: missing field implicit",
+      "#42 POST /v1/status response: missing field migrations",
+      "#42 POST /v1/status response.last_checkpoint: matches none of its alternatives",
+      "#42 POST /v1/status response.attestation: missing field implicit",
+      "#43 POST /v1/search response.hits[0].layer: \"secret\" is not one of [\"canonical\",\"proposal\",\"unverified\",\"derived\"]",
+      "#44 POST /v1/blame response.blocks[1].seq_created: \"1\" is not integer",
+      "#45 POST /v1/history response.events[0].lineage_ids: \"x\" is not array",
+      "#47 POST /v1/trace response.traces[0]: missing field returned",
+      "#48 GET /v1/status response: missing field mdk_version",
+      "#48 GET /v1/status response: missing field migrations",
+      "#48 GET /v1/status response.attestation: missing field implicit",
+      "#50 GET /v1/status response: missing field migrations",
+      "#50 GET /v1/status response.attestation: missing field implicit",
+      "#16 POST /v1/attest response: missing field doc_path",
+      "#16 POST /v1/attest response: missing field content_hash",
+      "#16 POST /v1/attest response: missing field at_seq",
+      "#16 POST /v1/attest response: missing field recorded",
+      "#16 POST /v1/attest response: missing field raised"
+    ],
+    "deliberate_violations": [
+      "#5 POST /v1/promote arguments.reason: shorter than 1 (deliberate: negative test: the server's 400 for an empty reason)"
+    ]
+  },
+  "B-7": true,
+  "B-8": {
+    "outside_contract": 0,
+    "pass": true
+  },
+  "pass": true
+}

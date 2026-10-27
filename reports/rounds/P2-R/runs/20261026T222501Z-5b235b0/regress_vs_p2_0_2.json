@@ -1,0 +1,1293 @@
+{
+ "conformance": {
+  "differing_tests": [],
+  "equal": false,
+  "level_claimed": [
+   3,
+   3
+  ],
+  "passed": [
+   39,
+   39
+  ],
+  "reference_tests": 39,
+  "spec_version": [
+   "2.0.2",
+   "2.0.3"
+  ],
+  "tests": 39
+ },
+ "differing_fields": {
+  "conformance_p1d1.json:spec_version": "inf",
+  "p1b1_checks.json:criteria›B1-3›spec_version": "inf",
+  "p1c1_checks.json:C1-7›spec_version": "inf",
+  "p1c_checks.json:C-1›spec_version": "inf",
+  "p1d/d10.json:pass": "inf",
+  "p1d/inspector/inspector.json:calls_ok": 0.09090909090909091,
+  "p1d/inspector/inspector.json:calls›#len": 0.09090909090909091,
+  "p1d/inspector/inspector.json:calls›10›ok": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d/inspector/inspector.json:calls›10›tool": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d/inspector/inspector.json:schemas_valid": 0.09090909090909091,
+  "p1d/inspector/inspector.json:tools_expected": 0.09090909090909091,
+  "p1d/inspector/inspector.json:tools_listed": 0.09090909090909091,
+  "p1d/mcp_e2e/mcp_e2e.json:checks›#len": 0.043478260869565216,
+  "p1d/mcp_e2e/mcp_e2e.json:checks›66›check": {
+   "a": "absent",
+   "b": "valid call: the first 5 log lines, next_seq 5"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›66›pass": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›66›tool": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›67›check": {
+   "a": "absent",
+   "b": "kinds filter: no Promoted event"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›67›pass": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›67›tool": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›68›check": {
+   "a": "absent",
+   "b": "unknown kind is an error"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›68›pass": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:checks›68›tool": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:per_tool›events›checks": {
+   "a": "absent",
+   "b": 3
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:per_tool›events›passed": {
+   "a": "absent",
+   "b": 3
+  },
+  "p1d/mcp_e2e/mcp_e2e.json:tools_passed": 0.1111111111111111,
+  "p1d/mcp_e2e/mcp_e2e.json:tools_total": 0.09090909090909091,
+  "p1d/mcp_e2e/mcp_e2e.json:tools›#len": 0.09090909090909091,
+  "p1d/mcp_e2e/mcp_e2e.json:tools›10": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d/scene/scene.json:steps›0›shows›spec_version": "inf",
+  "p1d1/d1_13.json:tools›contract›#len": 0.09090909090909091,
+  "p1d1/d1_13.json:tools›contract›10": {
+   "a": "absent",
+   "b": "trace"
+  },
+  "p1d1/d1_13.json:tools›contract›3": "inf",
+  "p1d1/d1_13.json:tools›contract›4": "inf",
+  "p1d1/d1_13.json:tools›contract›5": "inf",
+  "p1d1/d1_13.json:tools›contract›6": "inf",
+  "p1d1/d1_13.json:tools›contract›7": "inf",
+  "p1d1/d1_13.json:tools›contract›8": "inf",
+  "p1d1/d1_13.json:tools›contract›9": "inf",
+  "p1d1/d1_13.json:tools›server›#len": 0.09090909090909091,
+  "p1d1/d1_13.json:tools›server›10": {
+   "a": "absent",
+   "b": "trace"
+  },
+  "p1d1/d1_13.json:tools›server›3": "inf",
+  "p1d1/d1_13.json:tools›server›4": "inf",
+  "p1d1/d1_13.json:tools›server›5": "inf",
+  "p1d1/d1_13.json:tools›server›6": "inf",
+  "p1d1/d1_13.json:tools›server›7": "inf",
+  "p1d1/d1_13.json:tools›server›8": "inf",
+  "p1d1/d1_13.json:tools›server›9": "inf",
+  "p1d1_checks.json:D1-10›spec_version": "inf",
+  "p1d1_checks.json:D1-12›regress_vs_p1d›conformance›spec_version›1": "inf",
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/d10·json:pass": {
+   "a": "absent",
+   "b": "inf"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls_ok": {
+   "a": "absent",
+   "b": 0.09090909090909091
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›#len": {
+   "a": "absent",
+   "b": 0.09090909090909091
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›ok›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›ok›b": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›tool›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›tool›b": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:schemas_valid": {
+   "a": "absent",
+   "b": 0.09090909090909091
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:tools_expected": {
+   "a": "absent",
+   "b": 0.09090909090909091
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:tools_listed": {
+   "a": "absent",
+   "b": 0.09090909090909091
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›#len": {
+   "a": "absent",
+   "b": 0.043478260869565216
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›check›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›check›b": {
+   "a": "absent",
+   "b": "valid call: the first 5 log lines, next_seq 5"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›pass›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›pass›b": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›tool›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›tool›b": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›check›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›check›b": {
+   "a": "absent",
+   "b": "kinds filter: no Promoted event"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›pass›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›pass›b": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›tool›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›tool›b": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›check›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›check›b": {
+   "a": "absent",
+   "b": "unknown kind is an error"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›pass›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›pass›b": {
+   "a": "absent",
+   "b": true
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›tool›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›tool›b": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›checks›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›checks›b": {
+   "a": "absent",
+   "b": 3
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›passed›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›passed›b": {
+   "a": "absent",
+   "b": 3
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools_total": {
+   "a": "absent",
+   "b": 0.09090909090909091
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools›#len": {
+   "a": "absent",
+   "b": 0.09090909090909091
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools›10›a": {
+   "a": "absent",
+   "b": "absent"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools›10›b": {
+   "a": "absent",
+   "b": "events"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-10›pass": {
+   "a": "absent",
+   "b": "inf"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›inspector_calls_ok": {
+   "a": "absent",
+   "b": "inf"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›schemas_valid": {
+   "a": "absent",
+   "b": "inf"
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›tools_listed": {
+   "a": "absent",
+   "b": 0.09090909090909091
+  },
+  "p1d1_checks.json:D1-12›regress_vs_p1d›excluded_differences›p1d_checks·json:D-2›leaves": 0.3333333333333333,
+  "p1d1_checks.json:D1-13›tools": 0.09090909090909091,
+  "p1d_checks.json:D-10›pass": "inf",
+  "p1d_checks.json:D-1›inspector_calls_ok": "inf",
+  "p1d_checks.json:D-1›schemas_valid": "inf",
+  "p1d_checks.json:D-1›tools_listed": 0.09090909090909091,
+  "p1d_checks.json:D-2›per_tool›events›checks": {
+   "a": "absent",
+   "b": 3
+  },
+  "p1d_checks.json:D-2›per_tool›events›passed": {
+   "a": "absent",
+   "b": 3
+  },
+  "p1d_checks.json:D-2›tools_passed": "inf",
+  "p1d_checks.json:D-9›conformance›spec_version›1": "inf",
+  "p1e/check_compare_fields.json:fields_declared": 0.1016949152542373,
+  "p1e/check_compare_fields.json:fields_in_code": 0.1016949152542373,
+  "p1e/plugin_e2e/plugin_e2e.json:steps›0›shows›spec_version": "inf",
+  "p1e/release/conformance_equiv.json:spec_version›0": "inf",
+  "p1e/release/conformance_equiv.json:spec_version›1": "inf",
+  "p1e/release/conformance_rootmark.json:mdk_version": "inf",
+  "p1e/release/conformance_rootmark.json:spec_version": "inf",
+  "p1e/release/release_local.json:spec_version": "inf",
+  "p1e/release/release_local.json:version": "inf",
+  "p1e/scene/scene.json:steps›0›shows›mcp_spec_version": "inf",
+  "p1e/scene/scene.json:steps›0›shows›spec_version": "inf",
+  "p1e1/check_compare_fields.json:fields_declared": 0.1016949152542373,
+  "p1e1/check_compare_fields.json:fields_in_code": 0.1016949152542373,
+  "p1e1/contract.json:tools›contract›#len": 0.09090909090909091,
+  "p1e1/contract.json:tools›contract›10": {
+   "a": "absent",
+   "b": "trace"
+  },
+  "p1e1/contract.json:tools›contract›3": "inf",
+  "p1e1/contract.json:tools›contract›4": "inf",
+  "p1e1/contract.json:tools›contract›5": "inf",
+  "p1e1/contract.json:tools›contract›6": "inf",
+  "p1e1/contract.json:tools›contract›7": "inf",
+  "p1e1/contract.json:tools›contract›8": "inf",
+  "p1e1/contract.json:tools›contract›9": "inf",
+  "p1e1/contract.json:tools›server›#len": 0.09090909090909091,
+  "p1e1/contract.json:tools›server›10": {
+   "a": "absent",
+   "b": "trace"
+  },
+  "p1e1/contract.json:tools›server›3": "inf",
+  "p1e1/contract.json:tools›server›4": "inf",
+  "p1e1/contract.json:tools›server›5": "inf",
+  "p1e1/contract.json:tools›server›6": "inf",
+  "p1e1/contract.json:tools›server›7": "inf",
+  "p1e1/contract.json:tools›server›8": "inf",
+  "p1e1/contract.json:tools›server›9": "inf",
+  "p1e1/historical.json:historical": 0.25,
+  "p1e1/release/plugin_e2e_real.json:steps›0›shows›text": "inf",
+  "p1e1/release/release.json:required_ok": "inf",
+  "p1e1/release/release.json:required_targets›#len": 0.5,
+  "p1e1/release/release.json:required_targets›1": {
+   "a": "absent",
+   "b": "x86_64-unknown-linux-gnu"
+  },
+  "p1e1/release/release.json:spec_version": "inf",
+  "p1e1/release/release.json:targets›0›spec_version": "inf",
+  "p1e1/release/release.json:targets›0›version": "inf",
+  "p1e1/release/release.json:targets›2›required": "inf",
+  "p1e1/release/release.json:version": "inf",
+  "p1e1/tamper_p1e1.json:cases›1›detail›endpoints_ok": "inf",
+  "p1e1/tamper_p1e1.json:cases›1›detail›tools_equal": "inf",
+  "p1e1_checks.json:E1-5›other_targets›x86_64-unknown-linux-gnu": {
+   "a": "skipped",
+   "b": "absent"
+  },
+  "p1e1_checks.json:E1-5›pass": "inf",
+  "p1e1_checks.json:E1-5›required_targets›#len": 0.5,
+  "p1e1_checks.json:E1-5›required_targets›1": {
+   "a": "absent",
+   "b": "x86_64-unknown-linux-gnu"
+  },
+  "p1e1_checks.json:E1-5›required›spec_version": "inf",
+  "p1e1_checks.json:E1-5›required›version": "inf",
+  "p1e_checks.json:E-7›chain_local_target›spec_version": "inf",
+  "p1e_checks.json:E-7›chain_local_target›version": "inf",
+  "p2_0_2/d_a.json:canonical_changed": 0.40384615384615385,
+  "p2_0_2/d_a.json:new_blocks": 0.5523809523809524,
+  "p2_0_2/d_a.json:pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›0›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›0›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›0›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›100›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›100›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›100›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›101›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›101›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›101›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›107›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›107›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›107›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›108›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›108›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›108›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›109›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›109›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›109›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›10›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›10›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›10›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›111›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›111›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›111›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›112›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›112›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›112›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›118›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›118›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›118›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›119›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›119›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›119›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›11›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›11›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›11›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›120›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›120›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›120›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›121›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›121›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›121›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›122›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›122›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›122›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›123›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›123›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›123›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›124›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›124›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›124›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›125›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›125›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›125›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›129›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›129›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›129›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›12›canonical_changed": 1.0,
+  "p2_0_2/d_a.json:rows›12›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›12›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›12›preserved": 1.0,
+  "p2_0_2/d_a.json:rows›12›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›130›canonical_changed": 1.0,
+  "p2_0_2/d_a.json:rows›130›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›130›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›130›preserved": 1.0,
+  "p2_0_2/d_a.json:rows›130›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›131›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›131›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›131›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›133›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›133›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›133›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›134›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›134›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›134›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›135›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›135›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›135›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›137›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›137›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›137›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›138›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›138›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›138›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›139›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›139›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›139›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›13›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›13›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›13›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›140›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›140›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›140›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›141›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›141›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›141›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›142›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›142›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›142›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›143›new_blocks": 0.5,
+  "p2_0_2/d_a.json:rows›143›unverified": 0.5,
+  "p2_0_2/d_a.json:rows›148›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›148›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›148›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›149›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›149›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›149›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›150›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›150›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›150›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›151›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›151›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›151›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›153›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›153›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›153›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›154›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›154›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›154›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›161›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›161›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›161›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›162›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›162›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›162›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›163›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›163›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›163›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›165›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›165›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›165›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›166›new_blocks": 0.5,
+  "p2_0_2/d_a.json:rows›166›unverified": 0.5,
+  "p2_0_2/d_a.json:rows›171›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›171›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›171›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›172›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›172›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›172›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›173›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›173›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›173›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›175›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›175›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›175›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›183›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›183›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›183›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›184›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›184›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›184›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›185›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›185›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›185›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›194›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›194›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›194›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›195›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›195›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›195›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›196›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›196›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›196›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›197›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›197›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›197›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›198›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›198›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›198›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›199›canonical_changed": 1.0,
+  "p2_0_2/d_a.json:rows›199›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›199›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›199›preserved": 1.0,
+  "p2_0_2/d_a.json:rows›199›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›1›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›1›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›1›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›20›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›20›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›20›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›21›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›21›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›21›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›22›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›22›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›22›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›23›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›23›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›23›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›25›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›25›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›25›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›26›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›26›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›26›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›30›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›30›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›30›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›31›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›31›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›31›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›33›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›33›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›33›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›34›canonical_changed": 1.0,
+  "p2_0_2/d_a.json:rows›34›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›34›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›34›preserved": 1.0,
+  "p2_0_2/d_a.json:rows›34›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›35›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›35›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›35›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›36›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›36›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›36›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›37›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›37›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›37›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›39›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›39›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›39›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›40›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›40›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›40›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›41›new_blocks": 0.375,
+  "p2_0_2/d_a.json:rows›41›unverified": 0.375,
+  "p2_0_2/d_a.json:rows›42›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›42›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›42›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›48›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›48›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›48›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›49›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›49›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›49›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›50›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›50›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›50›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›51›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›51›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›51›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›53›canonical_changed": 1.0,
+  "p2_0_2/d_a.json:rows›53›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›53›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›53›preserved": 1.0,
+  "p2_0_2/d_a.json:rows›53›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›59›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›59›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›59›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›60›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›60›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›60›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›61›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›61›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›61›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›62›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›62›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›62›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›63›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›63›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›63›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›65›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›65›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›65›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›71›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›71›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›71›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›72›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›72›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›72›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›73›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›73›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›73›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›75›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›75›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›75›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›76›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›76›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›76›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›7›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›7›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›7›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›82›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›82›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›82›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›83›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›83›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›83›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›84›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›84›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›84›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›85›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›85›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›85›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›86›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›86›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›86›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›88›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›88›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›88›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›8›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›8›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›8›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›95›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›95›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›95›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›96›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›96›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›96›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›97›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›97›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›97›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›99›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›99›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›99›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›9›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›9›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›9›unverified": 1.0,
+  "p2_0_2/d_a.json:scenarios_with_canonical_changed": 0.3125,
+  "p2_0_2/d_a2.json:by_path›atomic_rename›new_blocks": 0.14285714285714285,
+  "p2_0_2/d_a2.json:by_path›cat›new_blocks": 0.17142857142857143,
+  "p2_0_2/d_a2.json:by_path›cp_rsync›new_blocks": 0.2857142857142857,
+  "p2_0_2/d_a2.json:by_path›git_apply›new_blocks": 0.02857142857142857,
+  "p2_0_2/d_a2.json:by_path›python›new_blocks": 0.34285714285714286,
+  "p2_0_2/d_a2.json:by_path›sed›new_blocks": 0.2,
+  "p2_0_2/d_a2.json:new_blocks": 0.19523809523809524,
+  "p2_0_2/d_a2.json:pass": "inf",
+  "p2_0_2/d_a2.json:rows›13›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›13›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›13›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›14›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›14›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›14›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›15›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›15›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›15›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›16›canonical_changed": 1.0,
+  "p2_0_2/d_a2.json:rows›16›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›16›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›16›preserved": 1.0,
+  "p2_0_2/d_a2.json:rows›16›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›17›canonical_changed": 1.0,
+  "p2_0_2/d_a2.json:rows›17›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›17›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›17›preserved": 1.0,
+  "p2_0_2/d_a2.json:rows›17›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›24›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›24›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›24›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›25›canonical_changed": 1.0,
+  "p2_0_2/d_a2.json:rows›25›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›25›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›25›preserved": 1.0,
+  "p2_0_2/d_a2.json:rows›25›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›27›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›27›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›27›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›28›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›28›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›28›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›29›canonical_changed": 1.0,
+  "p2_0_2/d_a2.json:rows›29›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›29›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›29›preserved": 1.0,
+  "p2_0_2/d_a2.json:rows›29›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›30›canonical_changed": 1.0,
+  "p2_0_2/d_a2.json:rows›30›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›30›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›30›preserved": 1.0,
+  "p2_0_2/d_a2.json:rows›30›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›37›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›37›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›37›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›38›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›38›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›38›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›39›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›39›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›39›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›3›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›3›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›3›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›40›canonical_changed": 1.0,
+  "p2_0_2/d_a2.json:rows›40›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›40›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›40›preserved": 1.0,
+  "p2_0_2/d_a2.json:rows›40›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›42›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›42›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›42›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›6›canonical_changed": 1.0,
+  "p2_0_2/d_a2.json:rows›6›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›6›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›6›preserved": 1.0,
+  "p2_0_2/d_a2.json:rows›6›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›7›canonical_changed": 1.0,
+  "p2_0_2/d_a2.json:rows›7›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›7›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›7›preserved": 1.0,
+  "p2_0_2/d_a2.json:rows›7›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›8›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›8›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›8›unverified": 1.0,
+  "p2_0_2/d_a2.json:rows›9›canonical_changed": 1.0,
+  "p2_0_2/d_a2.json:rows›9›new_blocks": 1.0,
+  "p2_0_2/d_a2.json:rows›9›pass_0a": "inf",
+  "p2_0_2/d_a2.json:rows›9›preserved": 1.0,
+  "p2_0_2/d_a2.json:rows›9›unverified": 1.0,
+  "p2_0_2/rules.json:pass": "inf",
+  "p2_0_2/rules.json:written›spec_7_1_draft": "inf",
+  "p2_0_2/tamper_p2_0_2.json:cases›13›detail›tools": 0.09090909090909091,
+  "p2_0_2_checks.json:H-P2-0·2a′›canonical_changed": 0.40384615384615385,
+  "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›atomic_rename›new_blocks": 0.14285714285714285,
+  "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›cat›new_blocks": 0.17142857142857143,
+  "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›cp_rsync›new_blocks": 0.2857142857142857,
+  "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›git_apply›new_blocks": 0.02857142857142857,
+  "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›python›new_blocks": 0.34285714285714286,
+  "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›sed›new_blocks": 0.2,
+  "p2_0_2_checks.json:H-P2-0·2a›d_a2›new_blocks": 0.19523809523809524,
+  "p2_0_2_checks.json:H-P2-0·2a›d_a›new_blocks": 0.5523809523809524,
+  "p2_0_2_checks.json:H-P2-0·2a›pass": "inf",
+  "p2_0_2_checks.json:H-P2-0·2j›pass": "inf",
+  "p2_0_2_checks.json:H-P2-0·2j›spec_version": "inf",
+  "p2_0_2_checks.json:H-P2-0·2k›pass": "inf",
+  "p2_0_2_checks.json:H-P2-0·2k›written›spec_7_1_draft": "inf"
+ },
+ "equal": false,
+ "excluded_differences": {
+  "p1d1/d1_13.json:codes": {
+   "decision": "K-P2A.2",
+   "leaves": 28
+  },
+  "p1d1/d1_13.json:http": {
+   "decision": "K-P2A.2",
+   "leaves": 88
+  },
+  "p1d1_checks.json:D1-13/codes": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:file_constants": {
+   "decision": "P2-A/F6",
+   "leaves": 1
+  },
+  "p1e/check_compare_fields.json:modules": {
+   "decision": "P2-A/F6",
+   "leaves": 7
+  },
+  "p1e/client.json:bundle_bytes": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e/client.json:vitest": {
+   "decision": "K-P2A.2",
+   "leaves": 3
+  },
+  "p1e/e0/e14.json:auto_rebuild_false": {
+   "decision": "K-P2A.2",
+   "leaves": 2
+  },
+  "p1e/e0/e14.json:pass": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e/e0/e14.json:passed": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e1/check_compare_fields.json:file_constants": {
+   "decision": "P2-A/F6",
+   "leaves": 1
+  },
+  "p1e1/check_compare_fields.json:modules": {
+   "decision": "P2-A/F6",
+   "leaves": 7
+  },
+  "p1e1/contract.json:codes": {
+   "decision": "K-P2A.2",
+   "leaves": 28
+  },
+  "p1e1/contract.json:http": {
+   "decision": "K-P2A.2",
+   "leaves": 88
+  },
+  "p1e1/historical.json:counted": {
+   "decision": "K-P2A.2",
+   "leaves": 13
+  },
+  "p1e1/historical.json:counted_fails": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e1/historical.json:fails": {
+   "decision": "K-P2A.2",
+   "leaves": 137
+  },
+  "p1e1/release/plugin_e2e_real.json:e1_9_connection": {
+   "decision": "K-P2A.2",
+   "leaves": 4
+  },
+  "p1e1/release/release.json:commit": {
+   "decision": "K-P2A.3",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:items": {
+   "decision": "K-P2A.3",
+   "leaves": 31
+  },
+  "p1e1/release/release_check.json:pass": {
+   "decision": "K-P2A.3",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:passed": {
+   "decision": "K-P2A.3",
+   "leaves": 1
+  },
+  "p1e1/release/release_check.json:total": {
+   "decision": "K-P2A.3",
+   "leaves": 1
+  },
+  "p1e1/status/e1_1.json:auto_rebuild_false": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e1/status/e1_1.json:cases": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e1/status/e1_1.json:pass": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e1/status/e1_1.json:passed": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e1_checks.json:E1-1": {
+   "decision": "K-P2A.2",
+   "leaves": 3
+  },
+  "p1e1_checks.json:E1-4": {
+   "decision": "K-P2A.3",
+   "leaves": 23
+  },
+  "p1e1_checks.json:E1-6": {
+   "decision": "K-P2A.2",
+   "leaves": 284
+  },
+  "p1e1_checks.json:E1-9": {
+   "decision": "K-P2A.2",
+   "leaves": 4
+  },
+  "p1e_checks.json:E-10/bundle_bytes": {
+   "decision": "K-P2A.2",
+   "leaves": 1
+  },
+  "p1e_checks.json:E-10/vitest": {
+   "decision": "K-P2A.2",
+   "leaves": 3
+  },
+  "p1e_checks.json:E-14": {
+   "decision": "K-P2A.2",
+   "leaves": 2
+  },
+  "p1e_checks.json:E-9": {
+   "decision": "K-P2A.2",
+   "leaves": 81
+  },
+  "p2_0_2_checks.json:fail_summary": {
+   "decision": "K-P2A.2",
+   "leaves": 12
+  },
+  "p2_0_2_checks.json:regress": {
+   "decision": "K-P2A.2",
+   "leaves": 563
+  }
+ },
+ "exclusions": [
+  {
+   "decision": "K-P2A.2",
+   "file": "p1d1/d1_13.json",
+   "path": "codes",
+   "why": "the contract's codes: migration_required (12)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1d1/d1_13.json",
+   "path": "http",
+   "why": "contract_check over HTTP: migration_required triggered, stale state's search code, status.migrations fields"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1d1_checks.json",
+   "path": "D1-13/codes",
+   "why": "D1-13's code count: 12"
+  },
+  {
+   "decision": "P2-A/F6",
+   "file": "p1e/check_compare_fields.json",
+   "path": "file_constants",
+   "why": "the field audit sees the new comparator compare_p2a"
+  },
+  {
+   "decision": "P2-A/F6",
+   "file": "p1e/check_compare_fields.json",
+   "path": "modules",
+   "why": "the field audit sees the new comparator compare_p2a"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e/client.json",
+   "path": "bundle_bytes",
+   "why": "the plugin's index notice names `rootmark migrate` (view.ts): its bundle size"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e/client.json",
+   "path": "vitest",
+   "why": "the client's tests: one more (the generated contract's code)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e/e0/e14.json",
+   "path": "auto_rebuild_false",
+   "why": "E-14 on the /2 index: search 503 migration_required"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e/e0/e14.json",
+   "path": "pass",
+   "why": "E-14 on the /2 index: search 503 migration_required"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e/e0/e14.json",
+   "path": "passed",
+   "why": "E-14 on the /2 index: search 503 migration_required"
+  },
+  {
+   "decision": "P2-A/F6",
+   "file": "p1e1/check_compare_fields.json",
+   "path": "file_constants",
+   "why": "the field audit sees the new comparator compare_p2a"
+  },
+  {
+   "decision": "P2-A/F6",
+   "file": "p1e1/check_compare_fields.json",
+   "path": "modules",
+   "why": "the field audit sees the new comparator compare_p2a"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/contract.json",
+   "path": "codes",
+   "why": "contract_check: migration_required (12 codes)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/contract.json",
+   "path": "http",
+   "why": "contract_check over HTTP: migration_required, stale state's search code, status.migrations fields"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/historical.json",
+   "path": "counted",
+   "why": "P1-E.1's classifier sees the migration-required FAILs (E1-1, E1-4, E1-9, E-14)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/historical.json",
+   "path": "counted_fails",
+   "why": "P1-E.1's classifier sees the migration-required FAILs (E1-1, E1-4, E1-9, E-14)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/historical.json",
+   "path": "fails",
+   "why": "P1-E.1's classifier sees the migration-required FAILs (E1-1, E1-4, E1-9, E-14)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/release/plugin_e2e_real.json",
+   "path": "e1_9_connection",
+   "why": "the real-Obsidian e2e on the /2 index: migration_required before the rebuild, the notice names `rootmark migrate`"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/release/plugin_e2e_real.json",
+   "path": "pass",
+   "why": "the real-Obsidian e2e on the /2 index (E1-9)"
+  },
+  {
+   "decision": "K-P2A.3",
+   "file": "p1e1/release/release.json",
+   "path": "commit",
+   "why": "the release package is built from this round's commit"
+  },
+  {
+   "decision": "K-P2A.3",
+   "file": "p1e1/release/release_check.json",
+   "path": "items",
+   "why": "release_check R17–R20 (P2-A/F3); R15 follows E1-9 (K-P2A.2)"
+  },
+  {
+   "decision": "K-P2A.3",
+   "file": "p1e1/release/release_check.json",
+   "path": "pass",
+   "why": "release_check R17–R20; R15 follows E1-9"
+  },
+  {
+   "decision": "K-P2A.3",
+   "file": "p1e1/release/release_check.json",
+   "path": "passed",
+   "why": "release_check R17–R20; R15 follows E1-9"
+  },
+  {
+   "decision": "K-P2A.3",
+   "file": "p1e1/release/release_check.json",
+   "path": "total",
+   "why": "release_check R17–R20 (21 items)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/status/e1_1.json",
+   "path": "auto_rebuild_false",
+   "why": "E1-1 on the /2 index: search 503 migration_required"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/status/e1_1.json",
+   "path": "cases",
+   "why": "E1-1 on the /2 index: search 503 migration_required"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/status/e1_1.json",
+   "path": "pass",
+   "why": "E1-1 on the /2 index"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1/status/e1_1.json",
+   "path": "passed",
+   "why": "E1-1 on the /2 index"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1_checks.json",
+   "path": "E1-1",
+   "why": "E1-1: migration required (eval.historical_p2a)"
+  },
+  {
+   "decision": "K-P2A.3",
+   "file": "p1e1_checks.json",
+   "path": "E1-4",
+   "why": "E1-4: release_check R17–R20 (K-P2A.3) and R15 (E1-9, K-P2A.2)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1_checks.json",
+   "path": "E1-6",
+   "why": "E1-6's regress against P1-E sees the new code"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e1_checks.json",
+   "path": "E1-9",
+   "why": "E1-9: migration required (eval.historical_p2a)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e_checks.json",
+   "path": "E-10/bundle_bytes",
+   "why": "the plugin bundle (view.ts notice)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e_checks.json",
+   "path": "E-10/vitest",
+   "why": "the client's tests: one more"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e_checks.json",
+   "path": "E-14",
+   "why": "E-14: migration required (eval.historical_p2a)"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p1e_checks.json",
+   "path": "E-9",
+   "why": "E-9's regress against P1-D.1 sees the new code"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p2_0_2_checks.json",
+   "path": "fail_summary",
+   "why": "P2-0.2's classifier sees the migration-required FAILs; P2-A's classifier is eval.historical_p2a"
+  },
+  {
+   "decision": "K-P2A.2",
+   "file": "p2_0_2_checks.json",
+   "path": "regress",
+   "why": "P2-0.2's regress against P2-0.1; P2-A's regress is this comparison"
+  }
+ ],
+ "exclusions_without_difference": [
+  "p1e1/release/plugin_e2e_real.json:pass"
+ ],
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json",
+  "c1_variant.json",
+  "p1c1_checks.json",
+  "p1d_checks.json",
+  "p1d/inspector/inspector.json",
+  "p1d/mcp_e2e/mcp_e2e.json",
+  "p1d/http/http_e2e.json",
+  "p1d/scene/scene.json",
+  "p1d/tamper_p1d.json",
+  "p1d/d10.json",
+  "p1d/sigterm.json",
+  "p1d1_checks.json",
+  "conformance_p1d1.json",
+  "p1d1/p1d1.json",
+  "p1d1/d1_1.json",
+  "p1d1/d1_2.json",
+  "p1d1/d1_3.json",
+  "p1d1/d1_4.json",
+  "p1d1/d1_5.json",
+  "p1d1/d1_6.json",
+  "p1d1/d1_7.json",
+  "p1d1/d1_8.json",
+  "p1d1/d1_9.json",
+  "p1d1/d1_11.json",
+  "p1d1/d1_13.json",
+  "p1d1/v3_compat.json",
+  "p1d1/v3_compat_mixed.json",
+  "p1d1/tamper_p1d1.json",
+  "p1e_checks.json",
+  "p1e/e0/e14.json",
+  "p1e/e0/e15.json",
+  "p1e/scene/scene.json",
+  "p1e/plugin_e2e/plugin_e2e.json",
+  "p1e/plugin_e2e/access_log.json",
+  "p1e/client.json",
+  "p1e/release/release_local.json",
+  "p1e/release/conformance_rootmark.json",
+  "p1e/release/conformance_equiv.json",
+  "p1e/tamper_p1e.json",
+  "p1e/check_compare_fields.json",
+  "p1e1_checks.json",
+  "p1e1/status/e1_1.json",
+  "p1e1/status/e1_2.json",
+  "p1e1/contract.json",
+  "p1e1/tamper_p1e1.json",
+  "p1e1/tamper_p1e1_e2e.json",
+  "p1e1/release/release.json",
+  "p1e1/release/release_check.json",
+  "p1e1/release/plugin_e2e_real.json",
+  "p1e1/release/access_log_real.json",
+  "p1e1/historical.json",
+  "p1e1/check_compare_fields.json",
+  "p2_0_2_checks.json",
+  "p2_0_2/rules.json",
+  "p2_0_2/d_e.json",
+  "p2_0_2/d_a.json",
+  "p2_0_2/d_a2.json",
+  "p2_0_2/d_c.json",
+  "p2_0_2/tamper_p2_0_2.json"
+ ],
+ "n_fields": 108846,
+ "p2_0_2_bytes": {
+  "equal": false,
+  "files": {
+   "p2_0_2/d_a/attestations.jsonl": {
+    "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "bytes": 0,
+    "equal": true
+   },
+   "p2_0_2/d_a/events.jsonl": {
+    "blake3": "8969047e33d23e6a80f2ae799c5a341f",
+    "bytes": 428018,
+    "equal": false
+   },
+   "p2_0_2/d_a2/attestations.jsonl": {
+    "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "bytes": 0,
+    "equal": true
+   },
+   "p2_0_2/d_a2/events.jsonl": {
+    "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+    "bytes": 253173,
+    "equal": false
+   },
+   "p2_0_2/d_c/attestations.jsonl": {
+    "blake3": "768213cc89bbe2ce8dcb882696b484f8",
+    "bytes": 24237,
+    "equal": true
+   },
+   "p2_0_2/d_c/events.jsonl": {
+    "blake3": "01bc1eee5373f844dc5263d4377d57e0",
+    "bytes": 476847,
+    "equal": true
+   }
+  }
+ },
+ "reference_run": "20261019T212951Z-72fd78f"
+}

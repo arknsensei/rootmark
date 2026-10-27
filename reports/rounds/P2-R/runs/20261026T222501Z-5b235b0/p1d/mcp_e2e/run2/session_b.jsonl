@@ -1,0 +1,7 @@
+{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18","capabilities":{},"clientInfo":{"name":"mcp-e2e","version":"1.0"}}}
+{"jsonrpc":"2.0","method":"notifications/initialized"}
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"search","arguments":{"query":"wombat","mode":"lexical","at":"d6"}}}
+{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"search","arguments":{"query":"wombat","mode":"lexical"}}}
+{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"search","arguments":{"query":"agent suggests finer espresso grind light roasts","mode":"lexical","k":50}}}
+{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"history","arguments":{"lineage_id":"8c0968018c876c489922c915a95bf19e"}}}
+{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"promote","arguments":{"lineage_id":"8c0968018c876c489922c915a95bf19e","reason":"again"}}}

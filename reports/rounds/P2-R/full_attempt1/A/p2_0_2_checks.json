@@ -1,0 +1,1458 @@
+{
+ "H-P2-0.2a": {
+  "d_a": {
+   "canonical_leak": 0,
+   "new_blocks": 525,
+   "scenarios": 200
+  },
+  "d_a2": {
+   "by_path": {
+    "atomic_rename": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "cat": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "cp_rsync": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "git_apply": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "python": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    },
+    "sed": {
+     "canonical_leak": 0,
+     "new_blocks": 35,
+     "scenarios": 20
+    }
+   },
+   "canonical_leak": 0,
+   "new_blocks": 210,
+   "scenarios": 120
+  },
+  "pass": true,
+  "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+ },
+ "H-P2-0.2a′": {
+  "canonical_changed": 52,
+  "pass": true,
+  "scenarios": "200/200",
+  "source": "p2_0_2/d_a.json"
+ },
+ "H-P2-0.2b": {
+  "measured": false,
+  "pass": null,
+  "reason": "no Obsidian binary at /nonexistent/obsidian",
+  "skipped": true,
+  "source": "p2_0_2/d_b.json"
+ },
+ "H-P2-0.2b′": {
+  "measured": false,
+  "pass": null,
+  "skipped": true,
+  "source": "p2_0_2/d_b.json"
+ },
+ "H-P2-0.2c": {
+  "measured": false,
+  "pass": null,
+  "skipped": true,
+  "source": "p2_0_2/d_b.json"
+ },
+ "H-P2-0.2d": {
+  "d_c": {
+   "accuracy": 1.0,
+   "agent_canonical": 0,
+   "blocks": 340,
+   "by_mode": {
+    "apart": {
+     "blocks": 298,
+     "right": 298
+    },
+    "collide": {
+     "blocks": 14,
+     "right": 14
+    },
+    "same_doc_after": {
+     "blocks": 28,
+     "right": 28
+    }
+   },
+   "partial_lines": 7,
+   "pass": true,
+   "right": 340,
+   "ticks": 160
+  },
+  "d_c_prime": {
+   "measured": false,
+   "pass": null,
+   "reason": "no Obsidian binary at /nonexistent/obsidian",
+   "skipped": true
+  },
+  "pass": null,
+  "source": "p2_0_2/d_c.json, p2_0_2/d_c_prime.json"
+ },
+ "H-P2-0.2e": {
+  "measured": false,
+  "pass": null,
+  "reason": "no Obsidian binary at /nonexistent/obsidian",
+  "skipped": true,
+  "source": "p2_0_2/d_a_prime.json"
+ },
+ "H-P2-0.2f": {
+  "by_kind": {
+   "append": {
+    "new_blocks": 20,
+    "sessions": 20,
+    "unverified_after_window": 0
+   },
+   "atomic": {
+    "new_blocks": 50,
+    "sessions": 50,
+    "unverified_after_window": 0
+   },
+   "inplace": {
+    "new_blocks": 30,
+    "sessions": 30,
+    "unverified_after_window": 0
+   },
+   "mv": {
+    "new_blocks": 459,
+    "sessions": 30,
+    "unverified_after_window": 0
+   },
+   "rapid": {
+    "new_blocks": 71,
+    "sessions": 20,
+    "unverified_after_window": 0
+   }
+  },
+  "false_unverified_rate": 0.0,
+  "latency_p95_ms": 136.7,
+  "latency_unsettled": 0,
+  "new_blocks": 630,
+  "pass": true,
+  "sessions": 150,
+  "source": "p2_0_2/d_b2.json",
+  "unverified_after_window": 0
+ },
+ "H-P2-0.2h": {
+  "failed": [],
+  "pass": true,
+  "source": "p2_0_2/d_e.json",
+  "vaults": "6/6"
+ },
+ "H-P2-0.2j": {
+  "level_claimed": 3,
+  "new": {
+   "C2-14": "pass"
+  },
+  "pass": false,
+  "passed": 39,
+  "source": "conformance_p1d1.json",
+  "spec_version": "2.0.3",
+  "total": 39
+ },
+ "H-P2-0.2k": {
+  "forward_compatibility": {
+   "known_line_read": {
+    "expected_open": true,
+    "opened": true,
+    "pass": true,
+    "refused_for_the_value": false
+   },
+   "matched_true_rejected": {
+    "expected_open": false,
+    "opened": false,
+    "pass": true,
+    "refused_for_the_value": true
+   },
+   "partial_false_rejected": {
+    "expected_open": false,
+    "opened": false,
+    "pass": true,
+    "refused_for_the_value": true
+   },
+   "unknown_field_read": {
+    "expected_open": true,
+    "opened": true,
+    "pass": true,
+    "refused_for_the_value": false
+   }
+  },
+  "pass": false,
+  "source": "p2_0_2/rules.json",
+  "written": {
+   "criterion_unknown_field": true,
+   "dev_process_stamp_rule": true,
+   "spec_7_1_draft": false,
+   "spec_8_reading_rule": true
+  }
+ },
+ "fail_summary": {
+  "counted": [
+   "p1d1_checks.json:D1-12",
+   "p1d_checks.json:D-2",
+   "p1e1_checks.json:E1-1",
+   "p1e1_checks.json:E1-4",
+   "p1e1_checks.json:E1-5",
+   "p1e_checks.json:E-14",
+   "p1e_checks.json:E-7"
+  ],
+  "counted_fails": 7,
+  "historical": 11,
+  "pass": false,
+  "reference_run": "reports/rounds/P2-0.1/runs/20261019T001516Z-21b16ea",
+  "source": "p2_0_2/historical.json (eval.historical_p2_0_2 = the chain's summary)"
+ },
+ "regress": {
+  "conformance": {
+   "differing_tests": [],
+   "equal": false,
+   "level_claimed": [
+    3,
+    3
+   ],
+   "new_tests_passed": {
+    "C2-14": true
+   },
+   "passed": [
+    38,
+    39
+   ],
+   "reference_tests": 38,
+   "spec_version": [
+    "2.0.1",
+    "2.0.3"
+   ],
+   "tests": 39,
+   "unexpected_new_tests": []
+  },
+  "differing_fields": {
+   "p1d/inspector/inspector.json:calls_ok": 0.09090909090909091,
+   "p1d/inspector/inspector.json:calls›#len": 0.09090909090909091,
+   "p1d/inspector/inspector.json:calls›10›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d/inspector/inspector.json:calls›10›tool": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d/inspector/inspector.json:schemas_valid": 0.09090909090909091,
+   "p1d/inspector/inspector.json:tools_expected": 0.09090909090909091,
+   "p1d/inspector/inspector.json:tools_listed": 0.09090909090909091,
+   "p1d/mcp_e2e/mcp_e2e.json:checks›#len": 0.043478260869565216,
+   "p1d/mcp_e2e/mcp_e2e.json:checks›66›check": {
+    "a": "absent",
+    "b": "valid call: the first 5 log lines, next_seq 5"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›66›pass": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›66›tool": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›67›check": {
+    "a": "absent",
+    "b": "kinds filter: no Promoted event"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›67›pass": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›67›tool": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›68›check": {
+    "a": "absent",
+    "b": "unknown kind is an error"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›68›pass": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›68›tool": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:per_tool›events›checks": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:per_tool›events›passed": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:tools_passed": 0.1111111111111111,
+   "p1d/mcp_e2e/mcp_e2e.json:tools_total": 0.09090909090909091,
+   "p1d/mcp_e2e/mcp_e2e.json:tools›#len": 0.09090909090909091,
+   "p1d/mcp_e2e/mcp_e2e.json:tools›10": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1/d1_13.json:codes›contract›#len": 0.15384615384615385,
+   "p1d1/d1_13.json:codes›contract›0": "inf",
+   "p1d1/d1_13.json:codes›contract›1": "inf",
+   "p1d1/d1_13.json:codes›contract›10": "inf",
+   "p1d1/d1_13.json:codes›contract›11": {
+    "a": "absent",
+    "b": "policy_violation 422"
+   },
+   "p1d1/d1_13.json:codes›contract›12": {
+    "a": "absent",
+    "b": "too_large 413"
+   },
+   "p1d1/d1_13.json:codes›contract›2": "inf",
+   "p1d1/d1_13.json:codes›contract›3": "inf",
+   "p1d1/d1_13.json:codes›contract›4": "inf",
+   "p1d1/d1_13.json:codes›contract›5": "inf",
+   "p1d1/d1_13.json:codes›contract›6": "inf",
+   "p1d1/d1_13.json:codes›contract›7": "inf",
+   "p1d1/d1_13.json:codes›contract›8": "inf",
+   "p1d1/d1_13.json:codes›contract›9": "inf",
+   "p1d1/d1_13.json:codes›server›#len": 0.15384615384615385,
+   "p1d1/d1_13.json:codes›server›0": "inf",
+   "p1d1/d1_13.json:codes›server›1": "inf",
+   "p1d1/d1_13.json:codes›server›10": "inf",
+   "p1d1/d1_13.json:codes›server›11": {
+    "a": "absent",
+    "b": "policy_violation 422"
+   },
+   "p1d1/d1_13.json:codes›server›12": {
+    "a": "absent",
+    "b": "too_large 413"
+   },
+   "p1d1/d1_13.json:codes›server›2": "inf",
+   "p1d1/d1_13.json:codes›server›3": "inf",
+   "p1d1/d1_13.json:codes›server›4": "inf",
+   "p1d1/d1_13.json:codes›server›5": "inf",
+   "p1d1/d1_13.json:codes›server›6": "inf",
+   "p1d1/d1_13.json:codes›server›7": "inf",
+   "p1d1/d1_13.json:codes›server›8": "inf",
+   "p1d1/d1_13.json:codes›server›9": "inf",
+   "p1d1/d1_13.json:http›codes›#len": 0.15384615384615385,
+   "p1d1/d1_13.json:http›codes›0›code": "inf",
+   "p1d1/d1_13.json:http›codes›0›contract_status": 0.01707317073170732,
+   "p1d1/d1_13.json:http›codes›0›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›0›status": 0.01707317073170732,
+   "p1d1/d1_13.json:http›codes›10›code": "inf",
+   "p1d1/d1_13.json:http›codes›10›contract_status": 0.005964214711729622,
+   "p1d1/d1_13.json:http›codes›10›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›10›status": 0.005964214711729622,
+   "p1d1/d1_13.json:http›codes›11›code": {
+    "a": "absent",
+    "b": "index_stale"
+   },
+   "p1d1/d1_13.json:http›codes›11›contract_status": {
+    "a": "absent",
+    "b": 503
+   },
+   "p1d1/d1_13.json:http›codes›11›error_code": {
+    "a": "absent",
+    "b": "index_stale"
+   },
+   "p1d1/d1_13.json:http›codes›11›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1/d1_13.json:http›codes›11›status": {
+    "a": "absent",
+    "b": 503
+   },
+   "p1d1/d1_13.json:http›codes›12›code": {
+    "a": "absent",
+    "b": "internal"
+   },
+   "p1d1/d1_13.json:http›codes›12›contract_status": {
+    "a": "absent",
+    "b": 500
+   },
+   "p1d1/d1_13.json:http›codes›12›error_code": {
+    "a": "absent",
+    "b": "internal"
+   },
+   "p1d1/d1_13.json:http›codes›12›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1/d1_13.json:http›codes›12›status": {
+    "a": "absent",
+    "b": 500
+   },
+   "p1d1/d1_13.json:http›codes›1›code": "inf",
+   "p1d1/d1_13.json:http›codes›1›contract_status": 0.007444168734491315,
+   "p1d1/d1_13.json:http›codes›1›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›1›status": 0.007444168734491315,
+   "p1d1/d1_13.json:http›codes›2›code": "inf",
+   "p1d1/d1_13.json:http›codes›2›contract_status": 0.022004889975550123,
+   "p1d1/d1_13.json:http›codes›2›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›2›status": 0.022004889975550123,
+   "p1d1/d1_13.json:http›codes›3›code": "inf",
+   "p1d1/d1_13.json:http›codes›3›contract_status": 0.030805687203791468,
+   "p1d1/d1_13.json:http›codes›3›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›3›status": 0.030805687203791468,
+   "p1d1/d1_13.json:http›codes›4›code": "inf",
+   "p1d1/d1_13.json:http›codes›4›contract_status": 0.052132701421800945,
+   "p1d1/d1_13.json:http›codes›4›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›4›status": 0.052132701421800945,
+   "p1d1/d1_13.json:http›codes›5›code": "inf",
+   "p1d1/d1_13.json:http›codes›5›contract_status": 0.009900990099009901,
+   "p1d1/d1_13.json:http›codes›5›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›5›status": 0.009900990099009901,
+   "p1d1/d1_13.json:http›codes›6›code": "inf",
+   "p1d1/d1_13.json:http›codes›6›contract_status": 0.009900990099009901,
+   "p1d1/d1_13.json:http›codes›6›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›6›status": 0.009900990099009901,
+   "p1d1/d1_13.json:http›codes›7›code": "inf",
+   "p1d1/d1_13.json:http›codes›7›contract_status": 0.052132701421800945,
+   "p1d1/d1_13.json:http›codes›7›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›7›status": 0.052132701421800945,
+   "p1d1/d1_13.json:http›codes›8›code": "inf",
+   "p1d1/d1_13.json:http›codes›8›contract_status": 0.02132701421800948,
+   "p1d1/d1_13.json:http›codes›8›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›8›status": 0.02132701421800948,
+   "p1d1/d1_13.json:http›codes›9›code": "inf",
+   "p1d1/d1_13.json:http›codes›9›contract_status": 0.17892644135188868,
+   "p1d1/d1_13.json:http›codes›9›error_code": "inf",
+   "p1d1/d1_13.json:http›codes›9›status": 0.17892644135188868,
+   "p1d1/d1_13.json:http›endpoints›#len": 0.08333333333333333,
+   "p1d1/d1_13.json:http›endpoints›10›endpoint": "inf",
+   "p1d1/d1_13.json:http›endpoints›11›endpoint": {
+    "a": "absent",
+    "b": "GET /v1/status"
+   },
+   "p1d1/d1_13.json:http›endpoints›11›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1/d1_13.json:http›endpoints›11›status": {
+    "a": "absent",
+    "b": 200
+   },
+   "p1d1/d1_13.json:http›endpoints›3›endpoint": "inf",
+   "p1d1/d1_13.json:http›endpoints›4›endpoint": "inf",
+   "p1d1/d1_13.json:http›endpoints›5›endpoint": "inf",
+   "p1d1/d1_13.json:http›endpoints›6›endpoint": "inf",
+   "p1d1/d1_13.json:http›endpoints›7›endpoint": "inf",
+   "p1d1/d1_13.json:http›endpoints›8›endpoint": "inf",
+   "p1d1/d1_13.json:http›endpoints›9›endpoint": "inf",
+   "p1d1/d1_13.json:http›status_fields›#len": 0.25,
+   "p1d1/d1_13.json:http›status_fields›10": "inf",
+   "p1d1/d1_13.json:http›status_fields›11": "inf",
+   "p1d1/d1_13.json:http›status_fields›12": "inf",
+   "p1d1/d1_13.json:http›status_fields›13": "inf",
+   "p1d1/d1_13.json:http›status_fields›14": "inf",
+   "p1d1/d1_13.json:http›status_fields›15": "inf",
+   "p1d1/d1_13.json:http›status_fields›16": "inf",
+   "p1d1/d1_13.json:http›status_fields›17": "inf",
+   "p1d1/d1_13.json:http›status_fields›18": "inf",
+   "p1d1/d1_13.json:http›status_fields›19": "inf",
+   "p1d1/d1_13.json:http›status_fields›20": "inf",
+   "p1d1/d1_13.json:http›status_fields›21": {
+    "a": "absent",
+    "b": "attestation.unattested"
+   },
+   "p1d1/d1_13.json:http›status_fields›22": {
+    "a": "absent",
+    "b": "attestation.implicit"
+   },
+   "p1d1/d1_13.json:http›status_fields›23": {
+    "a": "absent",
+    "b": "attestation.window_s"
+   },
+   "p1d1/d1_13.json:http›status_fields›24": {
+    "a": "absent",
+    "b": "attestation.stage"
+   },
+   "p1d1/d1_13.json:http›status_fields›25": {
+    "a": "absent",
+    "b": "attestation.pending"
+   },
+   "p1d1/d1_13.json:http›status_fields›26": {
+    "a": "absent",
+    "b": "attestation.link_updates"
+   },
+   "p1d1/d1_13.json:http›status_fields›27": {
+    "a": "absent",
+    "b": "attestation.unmatched"
+   },
+   "p1d1/d1_13.json:http›status_fields›9": "inf",
+   "p1d1/d1_13.json:http›status_index›1›search_code": "inf",
+   "p1d1/d1_13.json:tools›contract›#len": 0.09090909090909091,
+   "p1d1/d1_13.json:tools›contract›10": {
+    "a": "absent",
+    "b": "trace"
+   },
+   "p1d1/d1_13.json:tools›contract›3": "inf",
+   "p1d1/d1_13.json:tools›contract›4": "inf",
+   "p1d1/d1_13.json:tools›contract›5": "inf",
+   "p1d1/d1_13.json:tools›contract›6": "inf",
+   "p1d1/d1_13.json:tools›contract›7": "inf",
+   "p1d1/d1_13.json:tools›contract›8": "inf",
+   "p1d1/d1_13.json:tools›contract›9": "inf",
+   "p1d1/d1_13.json:tools›server›#len": 0.09090909090909091,
+   "p1d1/d1_13.json:tools›server›10": {
+    "a": "absent",
+    "b": "trace"
+   },
+   "p1d1/d1_13.json:tools›server›3": "inf",
+   "p1d1/d1_13.json:tools›server›4": "inf",
+   "p1d1/d1_13.json:tools›server›5": "inf",
+   "p1d1/d1_13.json:tools›server›6": "inf",
+   "p1d1/d1_13.json:tools›server›7": "inf",
+   "p1d1/d1_13.json:tools›server›8": "inf",
+   "p1d1/d1_13.json:tools›server›9": "inf",
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls_ok": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›#len": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›ok›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›ok›b": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›tool›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›tool›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:schemas_valid": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:tools_expected": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:tools_listed": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›#len": {
+    "a": "absent",
+    "b": 0.043478260869565216
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›check›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›check›b": {
+    "a": "absent",
+    "b": "valid call: the first 5 log lines, next_seq 5"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›pass›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›pass›b": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›tool›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›tool›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›check›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›check›b": {
+    "a": "absent",
+    "b": "kinds filter: no Promoted event"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›pass›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›pass›b": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›tool›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›tool›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›check›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›check›b": {
+    "a": "absent",
+    "b": "unknown kind is an error"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›pass›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›pass›b": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›tool›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›tool›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›checks›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›checks›b": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›passed›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›passed›b": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools_total": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools›#len": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools›10›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools›10›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›inspector_calls_ok": {
+    "a": "absent",
+    "b": "inf"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›schemas_valid": {
+    "a": "absent",
+    "b": "inf"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›tools_listed": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›excluded_differences›p1d_checks·json:D-2›leaves": 0.3333333333333333,
+   "p1d1_checks.json:D1-13›codes": 0.15384615384615385,
+   "p1d1_checks.json:D1-13›tools": 0.09090909090909091,
+   "p1d_checks.json:D-1›inspector_calls_ok": "inf",
+   "p1d_checks.json:D-1›schemas_valid": "inf",
+   "p1d_checks.json:D-1›tools_listed": 0.09090909090909091,
+   "p1d_checks.json:D-2›per_tool›events›checks": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d_checks.json:D-2›per_tool›events›passed": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d_checks.json:D-2›tools_passed": "inf",
+   "p1e/check_compare_fields.json:modules›13": {
+    "a": "absent",
+    "b": "compare_p2b"
+   },
+   "p1e/check_compare_fields.json:modules›14": {
+    "a": "absent",
+    "b": "compare_p2l"
+   },
+   "p1e/check_compare_fields.json:modules›15": {
+    "a": "absent",
+    "b": "compare_p2p"
+   },
+   "p1e/check_compare_fields.json:modules›16": {
+    "a": "absent",
+    "b": "compare_p2r"
+   },
+   "p1e/check_compare_fields.json:modules›17": {
+    "a": "absent",
+    "b": "compare_runs"
+   },
+   "p1e/client.json:vitest›files": 0.25,
+   "p1e/client.json:vitest›passed": 0.1402439024390244,
+   "p1e/client.json:vitest›tests": 0.1402439024390244,
+   "p1e/e0/e14.json:auto_rebuild_false›code": "inf",
+   "p1e/e0/e14.json:auto_rebuild_false›message": "inf",
+   "p1e/e0/e14.json:pass": "inf",
+   "p1e/e0/e14.json:passed": 0.5,
+   "p1e/release/conformance_rootmark.json:mdk_version": "inf",
+   "p1e/release/release_local.json:version": "inf",
+   "p1e1/check_compare_fields.json:modules›13": {
+    "a": "absent",
+    "b": "compare_p2b"
+   },
+   "p1e1/check_compare_fields.json:modules›14": {
+    "a": "absent",
+    "b": "compare_p2l"
+   },
+   "p1e1/check_compare_fields.json:modules›15": {
+    "a": "absent",
+    "b": "compare_p2p"
+   },
+   "p1e1/check_compare_fields.json:modules›16": {
+    "a": "absent",
+    "b": "compare_p2r"
+   },
+   "p1e1/check_compare_fields.json:modules›17": {
+    "a": "absent",
+    "b": "compare_runs"
+   },
+   "p1e1/contract.json:codes›contract›#len": 0.15384615384615385,
+   "p1e1/contract.json:codes›contract›0": "inf",
+   "p1e1/contract.json:codes›contract›1": "inf",
+   "p1e1/contract.json:codes›contract›10": "inf",
+   "p1e1/contract.json:codes›contract›11": {
+    "a": "absent",
+    "b": "policy_violation 422"
+   },
+   "p1e1/contract.json:codes›contract›12": {
+    "a": "absent",
+    "b": "too_large 413"
+   },
+   "p1e1/contract.json:codes›contract›2": "inf",
+   "p1e1/contract.json:codes›contract›3": "inf",
+   "p1e1/contract.json:codes›contract›4": "inf",
+   "p1e1/contract.json:codes›contract›5": "inf",
+   "p1e1/contract.json:codes›contract›6": "inf",
+   "p1e1/contract.json:codes›contract›7": "inf",
+   "p1e1/contract.json:codes›contract›8": "inf",
+   "p1e1/contract.json:codes›contract›9": "inf",
+   "p1e1/contract.json:codes›server›#len": 0.15384615384615385,
+   "p1e1/contract.json:codes›server›0": "inf",
+   "p1e1/contract.json:codes›server›1": "inf",
+   "p1e1/contract.json:codes›server›10": "inf",
+   "p1e1/contract.json:codes›server›11": {
+    "a": "absent",
+    "b": "policy_violation 422"
+   },
+   "p1e1/contract.json:codes›server›12": {
+    "a": "absent",
+    "b": "too_large 413"
+   },
+   "p1e1/contract.json:codes›server›2": "inf",
+   "p1e1/contract.json:codes›server›3": "inf",
+   "p1e1/contract.json:codes›server›4": "inf",
+   "p1e1/contract.json:codes›server›5": "inf",
+   "p1e1/contract.json:codes›server›6": "inf",
+   "p1e1/contract.json:codes›server›7": "inf",
+   "p1e1/contract.json:codes›server›8": "inf",
+   "p1e1/contract.json:codes›server›9": "inf",
+   "p1e1/contract.json:http›codes›#len": 0.15384615384615385,
+   "p1e1/contract.json:http›codes›0›code": "inf",
+   "p1e1/contract.json:http›codes›0›contract_status": 0.01707317073170732,
+   "p1e1/contract.json:http›codes›0›error_code": "inf",
+   "p1e1/contract.json:http›codes›0›status": 0.01707317073170732,
+   "p1e1/contract.json:http›codes›10›code": "inf",
+   "p1e1/contract.json:http›codes›10›contract_status": 0.005964214711729622,
+   "p1e1/contract.json:http›codes›10›error_code": "inf",
+   "p1e1/contract.json:http›codes›10›status": 0.005964214711729622,
+   "p1e1/contract.json:http›codes›11›code": {
+    "a": "absent",
+    "b": "index_stale"
+   },
+   "p1e1/contract.json:http›codes›11›contract_status": {
+    "a": "absent",
+    "b": 503
+   },
+   "p1e1/contract.json:http›codes›11›error_code": {
+    "a": "absent",
+    "b": "index_stale"
+   },
+   "p1e1/contract.json:http›codes›11›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/contract.json:http›codes›11›status": {
+    "a": "absent",
+    "b": 503
+   },
+   "p1e1/contract.json:http›codes›12›code": {
+    "a": "absent",
+    "b": "internal"
+   },
+   "p1e1/contract.json:http›codes›12›contract_status": {
+    "a": "absent",
+    "b": 500
+   },
+   "p1e1/contract.json:http›codes›12›error_code": {
+    "a": "absent",
+    "b": "internal"
+   },
+   "p1e1/contract.json:http›codes›12›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/contract.json:http›codes›12›status": {
+    "a": "absent",
+    "b": 500
+   },
+   "p1e1/contract.json:http›codes›1›code": "inf",
+   "p1e1/contract.json:http›codes›1›contract_status": 0.007444168734491315,
+   "p1e1/contract.json:http›codes›1›error_code": "inf",
+   "p1e1/contract.json:http›codes›1›status": 0.007444168734491315,
+   "p1e1/contract.json:http›codes›2›code": "inf",
+   "p1e1/contract.json:http›codes›2›contract_status": 0.022004889975550123,
+   "p1e1/contract.json:http›codes›2›error_code": "inf",
+   "p1e1/contract.json:http›codes›2›status": 0.022004889975550123,
+   "p1e1/contract.json:http›codes›3›code": "inf",
+   "p1e1/contract.json:http›codes›3›contract_status": 0.030805687203791468,
+   "p1e1/contract.json:http›codes›3›error_code": "inf",
+   "p1e1/contract.json:http›codes›3›status": 0.030805687203791468,
+   "p1e1/contract.json:http›codes›4›code": "inf",
+   "p1e1/contract.json:http›codes›4›contract_status": 0.052132701421800945,
+   "p1e1/contract.json:http›codes›4›error_code": "inf",
+   "p1e1/contract.json:http›codes›4›status": 0.052132701421800945,
+   "p1e1/contract.json:http›codes›5›code": "inf",
+   "p1e1/contract.json:http›codes›5›contract_status": 0.009900990099009901,
+   "p1e1/contract.json:http›codes›5›error_code": "inf",
+   "p1e1/contract.json:http›codes›5›status": 0.009900990099009901,
+   "p1e1/contract.json:http›codes›6›code": "inf",
+   "p1e1/contract.json:http›codes›6›contract_status": 0.009900990099009901,
+   "p1e1/contract.json:http›codes›6›error_code": "inf",
+   "p1e1/contract.json:http›codes›6›status": 0.009900990099009901,
+   "p1e1/contract.json:http›codes›7›code": "inf",
+   "p1e1/contract.json:http›codes›7›contract_status": 0.052132701421800945,
+   "p1e1/contract.json:http›codes›7›error_code": "inf",
+   "p1e1/contract.json:http›codes›7›status": 0.052132701421800945,
+   "p1e1/contract.json:http›codes›8›code": "inf",
+   "p1e1/contract.json:http›codes›8›contract_status": 0.02132701421800948,
+   "p1e1/contract.json:http›codes›8›error_code": "inf",
+   "p1e1/contract.json:http›codes›8›status": 0.02132701421800948,
+   "p1e1/contract.json:http›codes›9›code": "inf",
+   "p1e1/contract.json:http›codes›9›contract_status": 0.17892644135188868,
+   "p1e1/contract.json:http›codes›9›error_code": "inf",
+   "p1e1/contract.json:http›codes›9›status": 0.17892644135188868,
+   "p1e1/contract.json:http›endpoints›#len": 0.08333333333333333,
+   "p1e1/contract.json:http›endpoints›10›endpoint": "inf",
+   "p1e1/contract.json:http›endpoints›11›endpoint": {
+    "a": "absent",
+    "b": "GET /v1/status"
+   },
+   "p1e1/contract.json:http›endpoints›11›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/contract.json:http›endpoints›11›status": {
+    "a": "absent",
+    "b": 200
+   },
+   "p1e1/contract.json:http›endpoints›3›endpoint": "inf",
+   "p1e1/contract.json:http›endpoints›4›endpoint": "inf",
+   "p1e1/contract.json:http›endpoints›5›endpoint": "inf",
+   "p1e1/contract.json:http›endpoints›6›endpoint": "inf",
+   "p1e1/contract.json:http›endpoints›7›endpoint": "inf",
+   "p1e1/contract.json:http›endpoints›8›endpoint": "inf",
+   "p1e1/contract.json:http›endpoints›9›endpoint": "inf",
+   "p1e1/contract.json:http›status_fields›#len": 0.25,
+   "p1e1/contract.json:http›status_fields›10": "inf",
+   "p1e1/contract.json:http›status_fields›11": "inf",
+   "p1e1/contract.json:http›status_fields›12": "inf",
+   "p1e1/contract.json:http›status_fields›13": "inf",
+   "p1e1/contract.json:http›status_fields›14": "inf",
+   "p1e1/contract.json:http›status_fields›15": "inf",
+   "p1e1/contract.json:http›status_fields›16": "inf",
+   "p1e1/contract.json:http›status_fields›17": "inf",
+   "p1e1/contract.json:http›status_fields›18": "inf",
+   "p1e1/contract.json:http›status_fields›19": "inf",
+   "p1e1/contract.json:http›status_fields›20": "inf",
+   "p1e1/contract.json:http›status_fields›21": {
+    "a": "absent",
+    "b": "attestation.unattested"
+   },
+   "p1e1/contract.json:http›status_fields›22": {
+    "a": "absent",
+    "b": "attestation.implicit"
+   },
+   "p1e1/contract.json:http›status_fields›23": {
+    "a": "absent",
+    "b": "attestation.window_s"
+   },
+   "p1e1/contract.json:http›status_fields›24": {
+    "a": "absent",
+    "b": "attestation.stage"
+   },
+   "p1e1/contract.json:http›status_fields›25": {
+    "a": "absent",
+    "b": "attestation.pending"
+   },
+   "p1e1/contract.json:http›status_fields›26": {
+    "a": "absent",
+    "b": "attestation.link_updates"
+   },
+   "p1e1/contract.json:http›status_fields›27": {
+    "a": "absent",
+    "b": "attestation.unmatched"
+   },
+   "p1e1/contract.json:http›status_fields›9": "inf",
+   "p1e1/contract.json:http›status_index›1›search_code": "inf",
+   "p1e1/contract.json:tools›contract›#len": 0.09090909090909091,
+   "p1e1/contract.json:tools›contract›10": {
+    "a": "absent",
+    "b": "trace"
+   },
+   "p1e1/contract.json:tools›contract›3": "inf",
+   "p1e1/contract.json:tools›contract›4": "inf",
+   "p1e1/contract.json:tools›contract›5": "inf",
+   "p1e1/contract.json:tools›contract›6": "inf",
+   "p1e1/contract.json:tools›contract›7": "inf",
+   "p1e1/contract.json:tools›contract›8": "inf",
+   "p1e1/contract.json:tools›contract›9": "inf",
+   "p1e1/contract.json:tools›server›#len": 0.09090909090909091,
+   "p1e1/contract.json:tools›server›10": {
+    "a": "absent",
+    "b": "trace"
+   },
+   "p1e1/contract.json:tools›server›3": "inf",
+   "p1e1/contract.json:tools›server›4": "inf",
+   "p1e1/contract.json:tools›server›5": "inf",
+   "p1e1/contract.json:tools›server›6": "inf",
+   "p1e1/contract.json:tools›server›7": "inf",
+   "p1e1/contract.json:tools›server›8": "inf",
+   "p1e1/contract.json:tools›server›9": "inf",
+   "p1e1/historical.json:counted_fails": 0.3333333333333333,
+   "p1e1/historical.json:counted›#len": 0.3333333333333333,
+   "p1e1/historical.json:counted›10": {
+    "a": "absent",
+    "b": "p1e1_checks.json:E1-8"
+   },
+   "p1e1/historical.json:counted›11": {
+    "a": "absent",
+    "b": "p1e1_checks.json:tamper"
+   },
+   "p1e1/historical.json:counted›12": {
+    "a": "absent",
+    "b": "p1e_checks.json:E-14"
+   },
+   "p1e1/historical.json:counted›13": {
+    "a": "absent",
+    "b": "p1e_checks.json:E-7"
+   },
+   "p1e1/historical.json:counted›14": {
+    "a": "absent",
+    "b": "p1e_checks.json:E-9"
+   },
+   "p1e1/historical.json:counted›4": "inf",
+   "p1e1/historical.json:counted›5": "inf",
+   "p1e1/historical.json:counted›6": "inf",
+   "p1e1/historical.json:counted›7": "inf",
+   "p1e1/historical.json:counted›8": "inf",
+   "p1e1/historical.json:counted›9": "inf",
+   "p1e1/historical.json:historical": 0.25,
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection›shows›search_before_rebuild›error": "inf",
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection›shows›status_bar": "inf",
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection›shows›status_bar_after_rebuild": "inf",
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection›shows›tooltip": "inf",
+   "p1e1/release/plugin_e2e_real.json:steps›0›shows›text": "inf",
+   "p1e1/release/release.json:required_ok": "inf",
+   "p1e1/release/release.json:required_targets›#len": 0.5,
+   "p1e1/release/release.json:required_targets›1": {
+    "a": "absent",
+    "b": "x86_64-unknown-linux-gnu"
+   },
+   "p1e1/release/release.json:targets›0›version": "inf",
+   "p1e1/release/release.json:targets›2›required": "inf",
+   "p1e1/release/release.json:version": "inf",
+   "p1e1/release/release_check.json:items›#len": 0.19047619047619047,
+   "p1e1/release/release_check.json:items›0›detail": "inf",
+   "p1e1/release/release_check.json:items›0›item": "inf",
+   "p1e1/release/release_check.json:items›13›item": "inf",
+   "p1e1/release/release_check.json:items›14›item": "inf",
+   "p1e1/release/release_check.json:items›16›detail": "inf",
+   "p1e1/release/release_check.json:items›17›detail": {
+    "a": "absent",
+    "b": "installed rootmark-0.2.0-aarch64-apple-darwin.tar.gz; a changed archive refused"
+   },
+   "p1e1/release/release_check.json:items›17›id": {
+    "a": "absent",
+    "b": "R17"
+   },
+   "p1e1/release/release_check.json:items›17›item": {
+    "a": "absent",
+    "b": "installers install.sh / install.ps1 (SHA256SUMS checked, a changed archive refused)"
+   },
+   "p1e1/release/release_check.json:items›17›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/release/release_check.json:items›18›detail": {
+    "a": "absent",
+    "b": ""
+   },
+   "p1e1/release/release_check.json:items›18›id": {
+    "a": "absent",
+    "b": "R18"
+   },
+   "p1e1/release/release_check.json:items›18›item": {
+    "a": "absent",
+    "b": "CI release.yml: installer per job, SHA256SUMS, build provenance attestation"
+   },
+   "p1e1/release/release_check.json:items›18›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/release/release_check.json:items›19›detail": {
+    "a": "absent",
+    "b": ""
+   },
+   "p1e1/release/release_check.json:items›19›id": {
+    "a": "absent",
+    "b": "R19"
+   },
+   "p1e1/release/release_check.json:items›19›item": {
+    "a": "absent",
+    "b": "RELEASE.md: signing and notarization are written human steps"
+   },
+   "p1e1/release/release_check.json:items›19›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/release/release_check.json:items›20›detail": {
+    "a": "absent",
+    "b": ""
+   },
+   "p1e1/release/release_check.json:items›20›id": {
+    "a": "absent",
+    "b": "R20"
+   },
+   "p1e1/release/release_check.json:items›20›item": {
+    "a": "absent",
+    "b": "workflow actions pinned to full versions"
+   },
+   "p1e1/release/release_check.json:items›20›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1e1/release/release_check.json:items›4›detail": "inf",
+   "p1e1/release/release_check.json:items›4›ok": "inf",
+   "p1e1/release/release_check.json:items›7›detail": "inf",
+   "p1e1/release/release_check.json:pass": "inf",
+   "p1e1/release/release_check.json:passed": 0.15,
+   "p1e1/release/release_check.json:total": 0.19047619047619047,
+   "p1e1/status/e1_1.json:auto_rebuild_false›search›code": "inf",
+   "p1e1/status/e1_1.json:cases›search 503 index_stale": "inf",
+   "p1e1/status/e1_1.json:pass": "inf",
+   "p1e1/status/e1_1.json:passed": "inf",
+   "p1e1/tamper_p1e1.json:cases›1›detail›endpoints_ok": "inf",
+   "p1e1/tamper_p1e1.json:cases›1›detail›tools_equal": "inf",
+   "p1e1_checks.json:E1-1›cases›search 503 index_stale": "inf",
+   "p1e1_checks.json:E1-1›pass": "inf",
+   "p1e1_checks.json:E1-1›passed": "inf",
+   "p1e1_checks.json:E1-4›failed›#len": 1.0,
+   "p1e1_checks.json:E1-4›failed›0": {
+    "a": "absent",
+    "b": "R4"
+   },
+   "p1e1_checks.json:E1-4›pass": "inf",
+   "p1e1_checks.json:E1-4›release_check": "inf",
+   "p1e1_checks.json:E1-4›release_md_items›#len": 0.19047619047619047,
+   "p1e1_checks.json:E1-4›release_md_items›17": {
+    "a": "absent",
+    "b": "R17"
+   },
+   "p1e1_checks.json:E1-4›release_md_items›18": {
+    "a": "absent",
+    "b": "R18"
+   },
+   "p1e1_checks.json:E1-4›release_md_items›19": {
+    "a": "absent",
+    "b": "R19"
+   },
+   "p1e1_checks.json:E1-4›release_md_items›20": {
+    "a": "absent",
+    "b": "R20"
+   },
+   "p1e1_checks.json:E1-4›script_items›#len": 0.19047619047619047,
+   "p1e1_checks.json:E1-4›script_items›10": "inf",
+   "p1e1_checks.json:E1-4›script_items›11": "inf",
+   "p1e1_checks.json:E1-4›script_items›12": "inf",
+   "p1e1_checks.json:E1-4›script_items›13": "inf",
+   "p1e1_checks.json:E1-4›script_items›14": "inf",
+   "p1e1_checks.json:E1-4›script_items›15": "inf",
+   "p1e1_checks.json:E1-4›script_items›16": "inf",
+   "p1e1_checks.json:E1-4›script_items›17": {
+    "a": "absent",
+    "b": "R6"
+   },
+   "p1e1_checks.json:E1-4›script_items›18": {
+    "a": "absent",
+    "b": "R7"
+   },
+   "p1e1_checks.json:E1-4›script_items›19": {
+    "a": "absent",
+    "b": "R8"
+   },
+   "p1e1_checks.json:E1-4›script_items›20": {
+    "a": "absent",
+    "b": "R9"
+   },
+   "p1e1_checks.json:E1-4›script_items›8": "inf",
+   "p1e1_checks.json:E1-4›script_items›9": "inf",
+   "p1e1_checks.json:E1-5›other_targets›x86_64-unknown-linux-gnu": {
+    "a": "skipped",
+    "b": "absent"
+   },
+   "p1e1_checks.json:E1-5›pass": "inf",
+   "p1e1_checks.json:E1-5›required_targets›#len": 0.5,
+   "p1e1_checks.json:E1-5›required_targets›1": {
+    "a": "absent",
+    "b": "x86_64-unknown-linux-gnu"
+   },
+   "p1e1_checks.json:E1-5›required›version": "inf",
+   "p1e1_checks.json:E1-9›connection_step›search_before_rebuild›error": "inf",
+   "p1e1_checks.json:E1-9›connection_step›status_bar": "inf",
+   "p1e1_checks.json:E1-9›connection_step›status_bar_after_rebuild": "inf",
+   "p1e1_checks.json:E1-9›connection_step›tooltip": "inf",
+   "p1e_checks.json:E-10›vitest›files": 0.25,
+   "p1e_checks.json:E-10›vitest›passed": 0.1402439024390244,
+   "p1e_checks.json:E-10›vitest›tests": 0.1402439024390244,
+   "p1e_checks.json:E-14›pass": "inf",
+   "p1e_checks.json:E-14›passed": "inf",
+   "p1e_checks.json:E-7›chain_local_target›version": "inf"
+  },
+  "excluded_differences": {
+   "conformance_p1d1.json:fixtures_manifest_hash": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "conformance_p1d1.json:passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "conformance_p1d1.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "conformance_p1d1.json:tests": {
+    "decision": "K-P2-02.3",
+    "leaves": 41
+   },
+   "conformance_p1d1.json:total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1b1_checks.json:criteria/B1-3/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1b_checks.json:fixtures_manifest_hash": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1c1_checks.json:C1-7/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1c_checks.json:C-1/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d/scene/scene.json:steps/0/shows/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d1_checks.json:D1-10/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d1_checks.json:D1-10/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d1_checks.json:D1-12/regress_vs_p1d/conformance/spec_version/1": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1d_checks.json:D-9/conformance/spec_version/1": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:fields_declared": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:fields_in_code": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:file_constants": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules/#len": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules/11": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules/12": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e/client.json:bundle_bytes": {
+    "decision": "K-P2-02.2",
+    "leaves": 1
+   },
+   "p1e/plugin_e2e/plugin_e2e.json:steps/0/shows/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/conformance_equiv.json:passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 2
+   },
+   "p1e/release/conformance_equiv.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 2
+   },
+   "p1e/release/conformance_equiv.json:total": {
+    "decision": "K-P2-02.3",
+    "leaves": 2
+   },
+   "p1e/release/conformance_rootmark.json:fixtures_manifest_hash": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/conformance_rootmark.json:passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/conformance_rootmark.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/conformance_rootmark.json:tests": {
+    "decision": "K-P2-02.3",
+    "leaves": 41
+   },
+   "p1e/release/conformance_rootmark.json:total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/release_local.json:conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/release_local.json:conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/release/release_local.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/scene/scene.json:steps/0/shows/mcp_spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e/scene/scene.json:steps/0/shows/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:fields_declared": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:fields_in_code": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:file_constants": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules/#len": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules/11": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules/12": {
+    "decision": "P2-0.2/F6",
+    "leaves": 1
+   },
+   "p1e1/historical.json:fails": {
+    "decision": "K-P2-02.3",
+    "leaves": 112
+   },
+   "p1e1/release/release.json:commit": {
+    "decision": "K-P2-02.1",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:targets/0/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:targets/0/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release.json:targets/0/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/1/item": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/14/detail": {
+    "decision": "K-P2-02.1",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/3/item": {
+    "decision": "K-P2-02.1",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/4/item": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/8/detail": {
+    "decision": "K-P2-02.2",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items/9/item": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-5/required/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-5/required/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-5/required/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-6/regress_vs_p1e": {
+    "decision": "K-P2-02.3",
+    "leaves": 376
+   },
+   "p1e_checks.json:E-10/bundle_bytes": {
+    "decision": "K-P2-02.2",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-7/chain_local_target/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-7/chain_local_target/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-7/chain_local_target/spec_version": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-9/conformance/passed": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-9/conformance/total": {
+    "decision": "K-P2-02.3",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-9/regress_vs_p1d1": {
+    "decision": "K-P2-02.3",
+    "leaves": 109
+   }
+  },
+  "exclusions_without_difference": [],
+  "n_fields": 102495,
+  "p2_0_1_sets": {
+   "d_a": {
+    "differing": [],
+    "equal": true,
+    "events_equal": true
+   },
+   "d_a2": {
+    "differing": [],
+    "equal": true,
+    "events_equal": true
+   },
+   "d_c": {
+    "attestations_equal_but_matched": true,
+    "collide_ticks": 7,
+    "equal": true,
+    "events_same_multiset": true,
+    "matched_false_lines": 7,
+    "matched_other_lines": 0
+   },
+   "d_e_p2_0_1": {
+    "equal": true
+   },
+   "equal": true
+  },
+  "pass": false,
+  "reference_run": "20261019T001516Z-21b16ea",
+  "source": "regress_vs_p2_0_1.json"
+ },
+ "tamper": {
+  "controls": "4/4",
+  "pass": true,
+  "rejected": "12/12",
+  "source": "p2_0_2/tamper_p2_0_2.json"
+ },
+ "window": {
+  "source": "manifest.json (p2_0_2_test window_s)",
+  "window_s": 0.5
+ }
+}

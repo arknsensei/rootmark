@@ -1,0 +1,49 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"checkpoint_id\":\"9a1342342e600fdca482ac2c60fcfa3c\",\"hits\":[{\"chunk_id\":\"1267cec336ac47bb936b22edc988ae67\",\"doc_path\":\"espresso.md\",\"layer\":\"canonical\",\"lineage_ids\":[\"74ecb4d582f0ffede4479a044f078542\",\"c4bf6f31f6d9b9b83904d4d2d4cb8c22\"],\"score\":0.03278688524590164},{\"chunk_id\":\"5f8b580cb276953d269434eec9a68dc4\",\"doc_path\":\"maintenance.md\",\"layer\":\"canonical\",\"lineage_ids\":[\"79c0341c912967236466addcbf32ac7b\",\"511781a653cef44c1082cb8ae479f18c\",\"3fec4cab321c0827ad0102bc608426b3\"],\"score\":0.031746031746031744},{\"chunk_id\":\"970dcdaa33a4e6cbf6f9b975624fd664\",\"doc_path\":\"blends.md\",\"layer\":\"canonical\",\"lineage_ids\":[\"c5033708f8a62d3b6def3fec1f656996\",\"f78c2c81c95df2cc1dbec0a2e01985b8\"],\"score\":0.0315136476426799}],\"include_proposal\":false,\"mode\":\"hybrid\",\"query_hash\":\"a55527015d106b03e8c5f0b8a461b569\",\"trace_id\":\"b6b6080905e8eb9b3d17fb51632e9b03\"}"
+    }
+  ],
+  "structuredContent": {
+    "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+    "hits": [
+      {
+        "chunk_id": "1267cec336ac47bb936b22edc988ae67",
+        "doc_path": "espresso.md",
+        "layer": "canonical",
+        "lineage_ids": [
+          "74ecb4d582f0ffede4479a044f078542",
+          "c4bf6f31f6d9b9b83904d4d2d4cb8c22"
+        ],
+        "score": 0.03278688524590164
+      },
+      {
+        "chunk_id": "5f8b580cb276953d269434eec9a68dc4",
+        "doc_path": "maintenance.md",
+        "layer": "canonical",
+        "lineage_ids": [
+          "79c0341c912967236466addcbf32ac7b",
+          "511781a653cef44c1082cb8ae479f18c",
+          "3fec4cab321c0827ad0102bc608426b3"
+        ],
+        "score": 0.031746031746031744
+      },
+      {
+        "chunk_id": "970dcdaa33a4e6cbf6f9b975624fd664",
+        "doc_path": "blends.md",
+        "layer": "canonical",
+        "lineage_ids": [
+          "c5033708f8a62d3b6def3fec1f656996",
+          "f78c2c81c95df2cc1dbec0a2e01985b8"
+        ],
+        "score": 0.0315136476426799
+      }
+    ],
+    "include_proposal": false,
+    "mode": "hybrid",
+    "query_hash": "a55527015d106b03e8c5f0b8a461b569",
+    "trace_id": "b6b6080905e8eb9b3d17fb51632e9b03"
+  },
+  "isError": false
+}

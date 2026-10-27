@@ -1,0 +1,1962 @@
+{
+ "set": "D-A2",
+ "scenarios": 120,
+ "new_blocks": 169,
+ "canonical_leak": 0,
+ "by_path": {
+  "python": {
+   "scenarios": 20,
+   "new_blocks": 23,
+   "canonical_leak": 0
+  },
+  "sed": {
+   "scenarios": 20,
+   "new_blocks": 28,
+   "canonical_leak": 0
+  },
+  "git_apply": {
+   "scenarios": 20,
+   "new_blocks": 34,
+   "canonical_leak": 0
+  },
+  "cp_rsync": {
+   "scenarios": 20,
+   "new_blocks": 25,
+   "canonical_leak": 0
+  },
+  "cat": {
+   "scenarios": 20,
+   "new_blocks": 29,
+   "canonical_leak": 0
+  },
+  "atomic_rename": {
+   "scenarios": 20,
+   "new_blocks": 30,
+   "canonical_leak": 0
+  }
+ },
+ "scenarios_0a_prime": 120,
+ "pass": false,
+ "rows": [
+  {
+   "id": "e000",
+   "kind": "git_apply/append_human",
+   "documents": [
+    "roasting.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e001",
+   "kind": "atomic_rename/overwrite",
+   "documents": [
+    "roasting.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 10,
+   "preserved": 10,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e002",
+   "kind": "cat/replace_section",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 3,
+   "preserved": 3,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e003",
+   "kind": "git_apply/append_human",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e004",
+   "kind": "cp_rsync/append_human",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e005",
+   "kind": "cat/append_human",
+   "documents": [
+    "glossary.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e006",
+   "kind": "python/replace_section",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e007",
+   "kind": "cp_rsync/replace_section",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e008",
+   "kind": "sed/append_human",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e009",
+   "kind": "python/overwrite",
+   "documents": [
+    "glossary.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e010",
+   "kind": "cp_rsync/append_human",
+   "documents": [
+    "roast-log.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e011",
+   "kind": "python/overwrite",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 5,
+   "preserved": 5,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e012",
+   "kind": "cat/new_file",
+   "documents": [
+    "agent-e/e012.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e013",
+   "kind": "sed/new_file",
+   "documents": [
+    "agent-e/e013.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e014",
+   "kind": "python/new_file",
+   "documents": [
+    "agent-e/e014.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e015",
+   "kind": "atomic_rename/append_human",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e016",
+   "kind": "sed/replace_section",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e017",
+   "kind": "cat/overwrite",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e018",
+   "kind": "atomic_rename/new_file",
+   "documents": [
+    "agent-e/e018.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e019",
+   "kind": "atomic_rename/replace_section",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e020",
+   "kind": "sed/replace_section",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 5,
+   "preserved": 5,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e021",
+   "kind": "git_apply/new_file",
+   "documents": [
+    "agent-e/e021.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e022",
+   "kind": "python/new_file",
+   "documents": [
+    "agent-e/e022.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e023",
+   "kind": "sed/append_human",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e024",
+   "kind": "python/overwrite",
+   "documents": [
+    "agent-e/e021.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e025",
+   "kind": "atomic_rename/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e026",
+   "kind": "python/append_human",
+   "documents": [
+    "roasting.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e027",
+   "kind": "cat/overwrite",
+   "documents": [
+    "agent-e/e018.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e028",
+   "kind": "sed/append_human",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e029",
+   "kind": "cp_rsync/overwrite",
+   "documents": [
+    "roast-log.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e030",
+   "kind": "atomic_rename/overwrite",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e031",
+   "kind": "cat/replace_section",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 2,
+   "preserved": 2,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e032",
+   "kind": "sed/replace_section",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e033",
+   "kind": "sed/overwrite",
+   "documents": [
+    "agent-e/e018.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e034",
+   "kind": "cat/append_human",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e035",
+   "kind": "python/replace_section",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e036",
+   "kind": "git_apply/append_human",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e037",
+   "kind": "python/append_human",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e038",
+   "kind": "python/new_file",
+   "documents": [
+    "agent-e/e038.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e039",
+   "kind": "cp_rsync/overwrite",
+   "documents": [
+    "agent-e/e014.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e040",
+   "kind": "cp_rsync/overwrite",
+   "documents": [
+    "filter.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e041",
+   "kind": "python/append_human",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e042",
+   "kind": "sed/new_file",
+   "documents": [
+    "agent-e/e042.md"
+   ],
+   "new_blocks": 0,
+   "unverified": 0,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": false,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e043",
+   "kind": "cat/append_human",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e044",
+   "kind": "atomic_rename/new_file",
+   "documents": [
+    "agent-e/e044.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e045",
+   "kind": "git_apply/append_human",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e046",
+   "kind": "atomic_rename/overwrite",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 7,
+   "preserved": 7,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e047",
+   "kind": "atomic_rename/new_file",
+   "documents": [
+    "agent-e/e047.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e048",
+   "kind": "atomic_rename/replace_section",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e049",
+   "kind": "git_apply/overwrite",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 6,
+   "preserved": 6,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e050",
+   "kind": "git_apply/replace_section",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e051",
+   "kind": "cat/overwrite",
+   "documents": [
+    "agent-e/e038.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e052",
+   "kind": "git_apply/overwrite",
+   "documents": [
+    "agent-e/e038.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e053",
+   "kind": "cp_rsync/overwrite",
+   "documents": [
+    "filter.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e054",
+   "kind": "git_apply/new_file",
+   "documents": [
+    "agent-e/e054.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e055",
+   "kind": "atomic_rename/replace_section",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e056",
+   "kind": "cat/overwrite",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e057",
+   "kind": "python/new_file",
+   "documents": [
+    "agent-e/e057.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e058",
+   "kind": "sed/append_human",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e059",
+   "kind": "git_apply/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e060",
+   "kind": "cat/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e061",
+   "kind": "cp_rsync/append_human",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e062",
+   "kind": "python/overwrite",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 4,
+   "preserved": 4,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e063",
+   "kind": "cat/replace_section",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e064",
+   "kind": "cp_rsync/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 3,
+   "preserved": 3,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e065",
+   "kind": "cp_rsync/new_file",
+   "documents": [
+    "agent-e/e065.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e066",
+   "kind": "cp_rsync/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e067",
+   "kind": "cp_rsync/new_file",
+   "documents": [
+    "agent-e/e067.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e068",
+   "kind": "cat/overwrite",
+   "documents": [
+    "agent-e/e042.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e069",
+   "kind": "cp_rsync/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e070",
+   "kind": "git_apply/overwrite",
+   "documents": [
+    "filter.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e071",
+   "kind": "cp_rsync/append_human",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e072",
+   "kind": "cat/new_file",
+   "documents": [
+    "agent-e/e072.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e073",
+   "kind": "atomic_rename/append_human",
+   "documents": [
+    "maintenance.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e074",
+   "kind": "cat/new_file",
+   "documents": [
+    "agent-e/e074.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e075",
+   "kind": "atomic_rename/new_file",
+   "documents": [
+    "agent-e/e075.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e076",
+   "kind": "python/append_human",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e077",
+   "kind": "git_apply/new_file",
+   "documents": [
+    "agent-e/e077.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e078",
+   "kind": "cp_rsync/new_file",
+   "documents": [
+    "agent-e/e078.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e079",
+   "kind": "atomic_rename/append_human",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e080",
+   "kind": "sed/overwrite",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e081",
+   "kind": "python/replace_section",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 1,
+   "preserved": 1,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e082",
+   "kind": "git_apply/replace_section",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e083",
+   "kind": "sed/new_file",
+   "documents": [
+    "agent-e/e083.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e084",
+   "kind": "sed/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e085",
+   "kind": "git_apply/new_file",
+   "documents": [
+    "agent-e/e085.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e086",
+   "kind": "atomic_rename/new_file",
+   "documents": [
+    "agent-e/e086.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e087",
+   "kind": "cp_rsync/overwrite",
+   "documents": [
+    "agent-e/e075.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e088",
+   "kind": "python/replace_section",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e089",
+   "kind": "python/append_human",
+   "documents": [
+    "origins.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e090",
+   "kind": "sed/append_human",
+   "documents": [
+    "filter.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e091",
+   "kind": "atomic_rename/overwrite",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e092",
+   "kind": "git_apply/overwrite",
+   "documents": [
+    "agent-e/e054.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e093",
+   "kind": "atomic_rename/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e094",
+   "kind": "atomic_rename/overwrite",
+   "documents": [
+    "blends.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e095",
+   "kind": "git_apply/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e096",
+   "kind": "git_apply/append_human",
+   "documents": [
+    "roasting.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e097",
+   "kind": "sed/new_file",
+   "documents": [
+    "agent-e/e097.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e098",
+   "kind": "python/replace_section",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e099",
+   "kind": "cat/new_file",
+   "documents": [
+    "agent-e/e099.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e100",
+   "kind": "python/new_file",
+   "documents": [
+    "agent-e/e100.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e101",
+   "kind": "sed/overwrite",
+   "documents": [
+    "agent-e/e057.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e102",
+   "kind": "sed/new_file",
+   "documents": [
+    "agent-e/e102.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e103",
+   "kind": "sed/overwrite",
+   "documents": [
+    "filter.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e104",
+   "kind": "cp_rsync/new_file",
+   "documents": [
+    "agent-e/e104.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e105",
+   "kind": "cat/replace_section",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e106",
+   "kind": "git_apply/replace_section",
+   "documents": [
+    "espresso.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e107",
+   "kind": "python/overwrite",
+   "documents": [
+    "agent-e/e022.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "python"
+  },
+  {
+   "id": "e108",
+   "kind": "git_apply/new_file",
+   "documents": [
+    "agent-e/e108.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e109",
+   "kind": "cp_rsync/new_file",
+   "documents": [
+    "agent-e/e109.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e110",
+   "kind": "cat/append_human",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e111",
+   "kind": "atomic_rename/append_human",
+   "documents": [
+    "staff.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e112",
+   "kind": "atomic_rename/append_human",
+   "documents": [
+    "cupping.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "atomic_rename"
+  },
+  {
+   "id": "e113",
+   "kind": "sed/replace_section",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e114",
+   "kind": "sed/overwrite",
+   "documents": [
+    "agent-e/e104.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "sed"
+  },
+  {
+   "id": "e115",
+   "kind": "cat/append_human",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  },
+  {
+   "id": "e116",
+   "kind": "cp_rsync/append_human",
+   "documents": [
+    "safety.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e117",
+   "kind": "git_apply/overwrite",
+   "documents": [
+    "agent-e/e075.md"
+   ],
+   "new_blocks": 3,
+   "unverified": 3,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "git_apply"
+  },
+  {
+   "id": "e118",
+   "kind": "cp_rsync/replace_section",
+   "documents": [
+    "grinders.md"
+   ],
+   "new_blocks": 1,
+   "unverified": 1,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cp_rsync"
+  },
+  {
+   "id": "e119",
+   "kind": "cat/new_file",
+   "documents": [
+    "agent-e/e119.md"
+   ],
+   "new_blocks": 2,
+   "unverified": 2,
+   "leak": [],
+   "canonical_changed": 0,
+   "preserved": 0,
+   "lost": [],
+   "pass_0a": true,
+   "pass_0a_prime": true,
+   "path": "cat"
+  }
+ ]
+}

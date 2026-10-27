@@ -1,0 +1,87 @@
+{
+ "R-1": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_r_r0",
+    "tests": {
+     "a_an_indented_code_block_is_located_from_its_line_start": "ok",
+     "c11_a_plan_whose_snapshot_is_not_its_location_record_writes_nothing": "ok",
+     "c8_search_locations_are_computed_before_the_trace": "ok",
+     "c9_events_reads_from_since_seq_with_the_same_bytes": "ok"
+    }
+   },
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "contract",
+    "tests": {
+     "a_damaged_index_is_internal": "ok",
+     "archived_from_a_real_call": "ok",
+     "every_code_from_a_real_call": "ok",
+     "every_tool_answers": "ok",
+     "http_statuses_of_the_codes": "ok"
+    }
+   },
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_b_b1",
+    "tests": {
+     "a_file_changed_before_its_ingest_gives_stale_locations": "ok",
+     "blame_and_read_block_carry_locations_that_slice_the_blocks": "ok",
+     "locations_are_derived_and_deterministic": "ok",
+     "search_hits_carry_locations": "ok",
+     "the_six_old_vaults_keep_their_events_hash": "ok"
+    }
+   }
+  ]
+ },
+ "R-2/R-4": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_r_r1",
+    "tests": {
+     "a_pruned_proposal_is_read_from_a_checkpoint_before_the_prune": "ok",
+     "a_rule_prunes_idle_lineages_of_its_layer_and_prefix_only": "ok",
+     "the_kernel_refuses_a_rule_prune_of_canonical_or_of_another_rule": "ok",
+     "the_reading_rule_refuses_a_prune_that_does_not_name_its_rule": "ok",
+     "the_recipe_is_checked_on_load": "ok",
+     "the_same_vault_and_recipe_prune_alike": "ok",
+     "without_rules_no_event_is_written": "ok"
+    }
+   }
+  ]
+ },
+ "R-5/R-8": {
+  "pass": true,
+  "targets": [
+   {
+    "exit": 0,
+    "package": "rootmark-server",
+    "pass": true,
+    "target": "p2_r_r2",
+    "tests": {
+     "a_broken_archive_or_base_is_an_error_naming_it": "ok",
+     "a_dry_run_changes_no_file_and_no_table_archives_nothing": "ok",
+     "a_long_serve_session_prunes_nothing": "ok",
+     "checkpoints_behind_the_bound_are_archived_unless_named_or_read": "ok",
+     "location_records_of_heads_and_live_checkpoints_are_kept": "ok",
+     "only_an_explicit_human_call_prunes": "ok",
+     "the_same_vault_and_call_prune_alike": "ok",
+     "traces_move_to_the_archive_byte_for_byte_and_keep_their_ids": "ok"
+    }
+   }
+  ]
+ },
+ "pass": true
+}

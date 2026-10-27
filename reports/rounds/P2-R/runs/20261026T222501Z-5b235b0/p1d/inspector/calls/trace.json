@@ -1,0 +1,85 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"traces\":[{\"at_seq\":0,\"checkpoint_id\":\"9a1342342e600fdca482ac2c60fcfa3c\",\"consumer\":\"cli-prep\",\"query_hash\":\"b1f6228f03fe40b515a050bf4a8237ec\",\"returned\":[{\"doc_path\":\"espresso.md\",\"lineage_id\":\"74ecb4d582f0ffede4479a044f078542\",\"version_id\":\"89d0a18e79e31ff49018e502401250e4\"}],\"trace_id\":\"4c3e93edb4ffd4864096e6936d696970\"},{\"at_seq\":1,\"checkpoint_id\":\"9a1342342e600fdca482ac2c60fcfa3c\",\"consumer\":\"inspector-cli/2.9.0\",\"query_hash\":\"a55527015d106b03e8c5f0b8a461b569\",\"returned\":[{\"doc_path\":\"espresso.md\",\"lineage_id\":\"74ecb4d582f0ffede4479a044f078542\",\"version_id\":\"89d0a18e79e31ff49018e502401250e4\"},{\"doc_path\":\"espresso.md\",\"lineage_id\":\"c4bf6f31f6d9b9b83904d4d2d4cb8c22\",\"version_id\":\"fa889c08d606d0a20dc7680c00784642\"},{\"doc_path\":\"maintenance.md\",\"lineage_id\":\"79c0341c912967236466addcbf32ac7b\",\"version_id\":\"49a442ecd9135fa87e5e0a7c59c9e630\"},{\"doc_path\":\"maintenance.md\",\"lineage_id\":\"511781a653cef44c1082cb8ae479f18c\",\"version_id\":\"aec6af0df4de362bc215beafda6190c6\"},{\"doc_path\":\"maintenance.md\",\"lineage_id\":\"3fec4cab321c0827ad0102bc608426b3\",\"version_id\":\"e8dbf7693e88179ff3cff3a602628cb8\"},{\"doc_path\":\"blends.md\",\"lineage_id\":\"c5033708f8a62d3b6def3fec1f656996\",\"version_id\":\"73a2be55d19253b26dfaf7493ceafff6\"},{\"doc_path\":\"blends.md\",\"lineage_id\":\"f78c2c81c95df2cc1dbec0a2e01985b8\",\"version_id\":\"995b50f9f1aa4ab03b98132405f12dd2\"}],\"trace_id\":\"b6b6080905e8eb9b3d17fb51632e9b03\"},{\"at_seq\":2,\"checkpoint_id\":\"9a1342342e600fdca482ac2c60fcfa3c\",\"consumer\":\"inspector-cli/2.9.0\",\"query_hash\":\"b1f6228f03fe40b515a050bf4a8237ec\",\"returned\":[{\"doc_path\":\"espresso.md\",\"lineage_id\":\"74ecb4d582f0ffede4479a044f078542\",\"version_id\":\"89d0a18e79e31ff49018e502401250e4\"}],\"trace_id\":\"f79c778656aa1dbfb9cf5e2692c6b5d8\"}]}"
+    }
+  ],
+  "structuredContent": {
+    "traces": [
+      {
+        "at_seq": 0,
+        "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+        "consumer": "cli-prep",
+        "query_hash": "b1f6228f03fe40b515a050bf4a8237ec",
+        "returned": [
+          {
+            "doc_path": "espresso.md",
+            "lineage_id": "74ecb4d582f0ffede4479a044f078542",
+            "version_id": "89d0a18e79e31ff49018e502401250e4"
+          }
+        ],
+        "trace_id": "4c3e93edb4ffd4864096e6936d696970"
+      },
+      {
+        "at_seq": 1,
+        "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+        "consumer": "inspector-cli/2.9.0",
+        "query_hash": "a55527015d106b03e8c5f0b8a461b569",
+        "returned": [
+          {
+            "doc_path": "espresso.md",
+            "lineage_id": "74ecb4d582f0ffede4479a044f078542",
+            "version_id": "89d0a18e79e31ff49018e502401250e4"
+          },
+          {
+            "doc_path": "espresso.md",
+            "lineage_id": "c4bf6f31f6d9b9b83904d4d2d4cb8c22",
+            "version_id": "fa889c08d606d0a20dc7680c00784642"
+          },
+          {
+            "doc_path": "maintenance.md",
+            "lineage_id": "79c0341c912967236466addcbf32ac7b",
+            "version_id": "49a442ecd9135fa87e5e0a7c59c9e630"
+          },
+          {
+            "doc_path": "maintenance.md",
+            "lineage_id": "511781a653cef44c1082cb8ae479f18c",
+            "version_id": "aec6af0df4de362bc215beafda6190c6"
+          },
+          {
+            "doc_path": "maintenance.md",
+            "lineage_id": "3fec4cab321c0827ad0102bc608426b3",
+            "version_id": "e8dbf7693e88179ff3cff3a602628cb8"
+          },
+          {
+            "doc_path": "blends.md",
+            "lineage_id": "c5033708f8a62d3b6def3fec1f656996",
+            "version_id": "73a2be55d19253b26dfaf7493ceafff6"
+          },
+          {
+            "doc_path": "blends.md",
+            "lineage_id": "f78c2c81c95df2cc1dbec0a2e01985b8",
+            "version_id": "995b50f9f1aa4ab03b98132405f12dd2"
+          }
+        ],
+        "trace_id": "b6b6080905e8eb9b3d17fb51632e9b03"
+      },
+      {
+        "at_seq": 2,
+        "checkpoint_id": "9a1342342e600fdca482ac2c60fcfa3c",
+        "consumer": "inspector-cli/2.9.0",
+        "query_hash": "b1f6228f03fe40b515a050bf4a8237ec",
+        "returned": [
+          {
+            "doc_path": "espresso.md",
+            "lineage_id": "74ecb4d582f0ffede4479a044f078542",
+            "version_id": "89d0a18e79e31ff49018e502401250e4"
+          }
+        ],
+        "trace_id": "f79c778656aa1dbfb9cf5e2692c6b5d8"
+      }
+    ]
+  },
+  "isError": false
+}

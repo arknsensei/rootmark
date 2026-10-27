@@ -1,0 +1,3371 @@
+{
+ "A-1": {
+  "fixture": {
+   "applied": [
+    "rename_store",
+    "index_rebuild",
+    "log_readers",
+    "checkpoints"
+   ],
+   "checks": {
+    "applied_in_order": true,
+    "byte_equal_after_rollback": true,
+    "index_migrated": true,
+    "required_empty_after": true,
+    "rollback_all": true
+   }
+  },
+  "migration_tests": {
+   "pass": true,
+   "passed": 9,
+   "tests": {
+    "a_migration_that_would_change_events_hash_stops": true,
+    "a_record_cannot_widen_its_migration_s_scope": true,
+    "a_record_naming_paths_outside_its_scope_is_refused": true,
+    "a_rollback_never_follows_a_link_out_of_the_store": true,
+    "a_rollback_refuses_a_damaged_record_or_a_changed_vault": true,
+    "dry_run_changes_nothing_and_names_the_plan": true,
+    "rename_store_and_index_rebuild_forward_and_back": true,
+    "the_legacy_flag_still_renames_only": true,
+    "validations_record_and_roll_back_without_a_byte_changed": true
+   },
+   "total": 9
+  },
+  "pass": true,
+  "source": "p2a/fixture.json, p2a/tests.json (p2a_migrate)"
+ },
+ "A-2": {
+  "conformance": {
+   "exit": 0,
+   "level_claimed": 3,
+   "pass": true,
+   "passed": 39,
+   "total": 39
+  },
+  "pass": true,
+  "passed": "6/6",
+  "source": "p2a/migrate_old.json",
+  "threshold": "6/6",
+  "vaults": [
+   {
+    "applied": [
+     "0001-policy_attestation_1",
+     "0002-log_readers",
+     "0003-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "v0.1.0/e2e"
+   },
+   {
+    "applied": [
+     "0001-policy_attestation_1",
+     "0002-log_readers",
+     "0003-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "v0.1.0/mixed"
+   },
+   {
+    "applied": [
+     "0001-policy_attestation_1",
+     "0002-log_readers",
+     "0003-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "v0.1.0/scene"
+   },
+   {
+    "applied": [
+     "0001-log_readers",
+     "0002-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "ce4cf04/attested"
+   },
+   {
+    "applied": [
+     "0001-log_readers",
+     "0002-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "ce4cf04/bulk"
+   },
+   {
+    "applied": [
+     "0001-log_readers",
+     "0002-checkpoints"
+    ],
+    "checks": {
+     "blame_equal": true,
+     "byte_equal_after_rollback": true,
+     "dry_run_changes_nothing": true,
+     "events_hash_equal": true,
+     "events_hash_expected": true,
+     "layers_expected": true,
+     "migrated": true,
+     "replay_equal": true,
+     "replay_expected": true,
+     "rollback_all": true,
+     "second_migrate_noop": true
+    },
+    "pass": true,
+    "vault": "21b16ea/partial"
+   }
+  ]
+ },
+ "A-3": {
+  "contract_check": {
+   "missing": [],
+   "pass": true
+  },
+  "pass": true,
+  "source": "p2a/tests.json (p2a_status, contract), p1e1/contract.json",
+  "status_tests": {
+   "pass": true,
+   "passed": 4,
+   "tests": {
+    "an_older_index_is_migration_required_until_migrated": true,
+    "an_unknown_format_stays_index_stale": true,
+    "every_code_from_a_real_call": true,
+    "http_statuses_of_the_codes": true
+   },
+   "total": 4
+  }
+ },
+ "A-4": {
+  "attestations_verified": 5,
+  "commit": "2429cba07b1800864d6f9a71589af1d22e566ba6",
+  "install": {
+   "aarch64-apple-darwin": {
+    "conformance": {
+     "level": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "installer": "packaging/install.sh",
+    "ok": true,
+    "version": "rootmark 0.1.0"
+   },
+   "x86_64-pc-windows-msvc": {
+    "conformance": {
+     "level": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "installer": "packaging/install.ps1",
+    "ok": true,
+    "version": "rootmark 0.1.0"
+   },
+   "x86_64-unknown-linux-gnu": {
+    "conformance": {
+     "level": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "installer": "packaging/install.sh",
+    "ok": true,
+    "version": "rootmark 0.1.0"
+   }
+  },
+  "jobs": {
+   "aarch64-apple-darwin": {
+    "conformance": {
+     "fixtures_manifest": "ok",
+     "level_claimed": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "ok": true
+   },
+   "x86_64-pc-windows-msvc": {
+    "conformance": {
+     "fixtures_manifest": "ok",
+     "level_claimed": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "ok": true
+   },
+   "x86_64-unknown-linux-gnu": {
+    "conformance": {
+     "fixtures_manifest": "ok",
+     "level_claimed": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "ok": true
+   }
+  },
+  "pass": true,
+  "run": "https://github.com/arknsensei/rootmark/actions/runs/39488669699",
+  "source": "reports/rounds/P2-A/release_dispatch.json",
+  "threshold": "2/2 (x86_64-unknown-linux-gnu, x86_64-pc-windows-msvc)"
+ },
+ "A-5": {
+  "decision_request": "K-P2A.4-T",
+  "pass": true,
+  "result": "does not build as a single binary: no `ort` version (eligible or not) ships a prebuilt ONNX Runtime for x86_64-apple-darwin; `ort-sys` only knows the vcpkg triplet `x64-osx` for a static link from a self-built ONNX Runtime (`build/static_link`)",
+  "source": "reports/rounds/P2-A/intel_macos.json",
+  "threshold": "rapor"
+ },
+ "A-6": {
+  "linux_ci": {
+   "commit": "2429cba07b1800864d6f9a71589af1d22e566ba6",
+   "conclusion": "success",
+   "job": "test + lint + conformance (ubuntu-latest)",
+   "run": "https://github.com/arknsensei/rootmark/actions/runs/39488665486",
+   "test": "server/tests/propose_kernel.rs::other_spellings_of_existing_names_are_refused (in make test: cargo test --workspace)"
+  },
+  "pass": true,
+  "source": "p2a/tests.json (propose_kernel), reports/rounds/P2-A/ci_linux.json",
+  "this_machine": {
+   "pass": true,
+   "passed": 1,
+   "tests": {
+    "other_spellings_of_existing_names_are_refused": true
+   },
+   "total": 1
+  }
+ },
+ "A-7": {
+  "information": {
+   "commit": "4fdce51b913755fafce283e2216931fb473815d6",
+   "new_blocks": 2743,
+   "threshold": null,
+   "unverified_after_window": 19,
+   "value_0_2b": 0.006926722566532993
+  },
+  "pass": true,
+  "source": "p2a/tests.json (p2_a_a0, p2_0_2_carry), reports/rounds/P2-A/info_d_b_test3.json",
+  "tests": {
+   "pass": true,
+   "passed": 8,
+   "tests": {
+    "a_late_self_link_update_never_vouches_for_new_bytes": true,
+    "a_log_name_linking_into_the_vault_is_refused": true,
+    "a_policy_without_the_table_keeps_the_kernel_default": true,
+    "a_self_linking_note_renamed_then_rewritten_before_the_watcher_saw_it": true,
+    "serve_writes_the_canonical_policy_explicitly": true,
+    "the_attest_log_must_lie_outside_the_vault": true,
+    "the_attest_log_tells_refused_matched_and_unmatched_apart": true,
+    "unverified_is_the_opt_in_and_behaves_as_in_p2_0_2": true
+   },
+   "total": 8
+  }
+ },
+ "A-8": {
+  "check_deps": {
+   "exit": 0,
+   "last_line": "check_deps: OK (core ← index ← server ← clients; research → bindings/python)"
+  },
+  "check_frozen": {
+   "exit": 0,
+   "last_line": "check_frozen: OK"
+  },
+  "conformance": {
+   "level_claimed": 3,
+   "passed": 39,
+   "spec_version": "2.0.3",
+   "total": 39
+  },
+  "pair": "A ↔ B: pair_compare.json (eval.compare_p2a pair), read by the report",
+  "pass": true,
+  "source": "conformance_p1d1.json, scripts/check_frozen.sh, scripts/check_deps.sh"
+ },
+ "fail_summary": {
+  "counted": [
+   "p1b1_checks.json:B1-3",
+   "p1c1_checks.json:C1-7",
+   "p1d1_checks.json:D1-10",
+   "p1d1_checks.json:D1-12",
+   "p1d_checks.json:D-10",
+   "p1d_checks.json:D-2",
+   "p1d_checks.json:D-9",
+   "p1e1_checks.json:E1-4",
+   "p1e1_checks.json:E1-5",
+   "p1e_checks.json:E-7",
+   "p2_0_2_checks.json:H-P2-0.2a",
+   "p2_0_2_checks.json:H-P2-0.2d",
+   "p2_0_2_checks.json:H-P2-0.2f",
+   "p2_0_2_checks.json:H-P2-0.2j",
+   "p2_0_2_checks.json:H-P2-0.2k",
+   "p2_0_2_checks.json:fail_summary",
+   "p2_0_2_checks.json:regress"
+  ],
+  "counted_fails": 17,
+  "historical": 11,
+  "migration_required": 2,
+  "pass": false,
+  "reference_run": "reports/rounds/P2-0.2/runs/20261019T212951Z-72fd78f",
+  "source": "p2a/historical.json (eval.historical_p2a = the chain's summary)"
+ },
+ "regress": {
+  "conformance": {
+   "differing_tests": [],
+   "equal": false,
+   "level_claimed": [
+    3,
+    3
+   ],
+   "passed": [
+    39,
+    39
+   ],
+   "reference_tests": 39,
+   "spec_version": [
+    "2.0.2",
+    "2.0.3"
+   ],
+   "tests": 39
+  },
+  "differing_fields": {
+   "conformance_p1d1.json:spec_version": "inf",
+   "p1b1_checks.json:criteria›B1-3›spec_version": "inf",
+   "p1c1_checks.json:C1-7›spec_version": "inf",
+   "p1c_checks.json:C-1›spec_version": "inf",
+   "p1d/d10.json:pass": "inf",
+   "p1d/inspector/inspector.json:calls_ok": 0.09090909090909091,
+   "p1d/inspector/inspector.json:calls›#len": 0.09090909090909091,
+   "p1d/inspector/inspector.json:calls›10›ok": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d/inspector/inspector.json:calls›10›tool": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d/inspector/inspector.json:schemas_valid": 0.09090909090909091,
+   "p1d/inspector/inspector.json:tools_expected": 0.09090909090909091,
+   "p1d/inspector/inspector.json:tools_listed": 0.09090909090909091,
+   "p1d/mcp_e2e/mcp_e2e.json:checks›#len": 0.043478260869565216,
+   "p1d/mcp_e2e/mcp_e2e.json:checks›66›check": {
+    "a": "absent",
+    "b": "valid call: the first 5 log lines, next_seq 5"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›66›pass": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›66›tool": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›67›check": {
+    "a": "absent",
+    "b": "kinds filter: no Promoted event"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›67›pass": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›67›tool": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›68›check": {
+    "a": "absent",
+    "b": "unknown kind is an error"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›68›pass": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:checks›68›tool": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:per_tool›events›checks": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:per_tool›events›passed": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d/mcp_e2e/mcp_e2e.json:tools_passed": 0.1111111111111111,
+   "p1d/mcp_e2e/mcp_e2e.json:tools_total": 0.09090909090909091,
+   "p1d/mcp_e2e/mcp_e2e.json:tools›#len": 0.09090909090909091,
+   "p1d/mcp_e2e/mcp_e2e.json:tools›10": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d/scene/scene.json:steps›0›shows›spec_version": "inf",
+   "p1d1/d1_13.json:tools›contract›#len": 0.09090909090909091,
+   "p1d1/d1_13.json:tools›contract›10": {
+    "a": "absent",
+    "b": "trace"
+   },
+   "p1d1/d1_13.json:tools›contract›3": "inf",
+   "p1d1/d1_13.json:tools›contract›4": "inf",
+   "p1d1/d1_13.json:tools›contract›5": "inf",
+   "p1d1/d1_13.json:tools›contract›6": "inf",
+   "p1d1/d1_13.json:tools›contract›7": "inf",
+   "p1d1/d1_13.json:tools›contract›8": "inf",
+   "p1d1/d1_13.json:tools›contract›9": "inf",
+   "p1d1/d1_13.json:tools›server›#len": 0.09090909090909091,
+   "p1d1/d1_13.json:tools›server›10": {
+    "a": "absent",
+    "b": "trace"
+   },
+   "p1d1/d1_13.json:tools›server›3": "inf",
+   "p1d1/d1_13.json:tools›server›4": "inf",
+   "p1d1/d1_13.json:tools›server›5": "inf",
+   "p1d1/d1_13.json:tools›server›6": "inf",
+   "p1d1/d1_13.json:tools›server›7": "inf",
+   "p1d1/d1_13.json:tools›server›8": "inf",
+   "p1d1/d1_13.json:tools›server›9": "inf",
+   "p1d1_checks.json:D1-10›spec_version": "inf",
+   "p1d1_checks.json:D1-12›regress_vs_p1d›conformance›spec_version›1": "inf",
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/d10·json:pass": {
+    "a": "absent",
+    "b": "inf"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls_ok": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›#len": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›ok›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›ok›b": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›tool›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:calls›10›tool›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:schemas_valid": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:tools_expected": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/inspector/inspector·json:tools_listed": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›#len": {
+    "a": "absent",
+    "b": 0.043478260869565216
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›check›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›check›b": {
+    "a": "absent",
+    "b": "valid call: the first 5 log lines, next_seq 5"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›pass›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›pass›b": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›tool›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›66›tool›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›check›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›check›b": {
+    "a": "absent",
+    "b": "kinds filter: no Promoted event"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›pass›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›pass›b": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›tool›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›67›tool›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›check›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›check›b": {
+    "a": "absent",
+    "b": "unknown kind is an error"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›pass›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›pass›b": {
+    "a": "absent",
+    "b": true
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›tool›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:checks›68›tool›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›checks›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›checks›b": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›passed›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:per_tool›events›passed›b": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools_total": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools›#len": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools›10›a": {
+    "a": "absent",
+    "b": "absent"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d/mcp_e2e/mcp_e2e·json:tools›10›b": {
+    "a": "absent",
+    "b": "events"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-10›pass": {
+    "a": "absent",
+    "b": "inf"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›inspector_calls_ok": {
+    "a": "absent",
+    "b": "inf"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›schemas_valid": {
+    "a": "absent",
+    "b": "inf"
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›differing_fields›p1d_checks·json:D-1›tools_listed": {
+    "a": "absent",
+    "b": 0.09090909090909091
+   },
+   "p1d1_checks.json:D1-12›regress_vs_p1d›excluded_differences›p1d_checks·json:D-2›leaves": 0.3333333333333333,
+   "p1d1_checks.json:D1-13›tools": 0.09090909090909091,
+   "p1d_checks.json:D-10›pass": "inf",
+   "p1d_checks.json:D-1›inspector_calls_ok": "inf",
+   "p1d_checks.json:D-1›schemas_valid": "inf",
+   "p1d_checks.json:D-1›tools_listed": 0.09090909090909091,
+   "p1d_checks.json:D-2›per_tool›events›checks": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d_checks.json:D-2›per_tool›events›passed": {
+    "a": "absent",
+    "b": 3
+   },
+   "p1d_checks.json:D-2›tools_passed": "inf",
+   "p1d_checks.json:D-9›conformance›spec_version›1": "inf",
+   "p1e/check_compare_fields.json:fields_declared": 0.1016949152542373,
+   "p1e/check_compare_fields.json:fields_in_code": 0.1016949152542373,
+   "p1e/plugin_e2e/plugin_e2e.json:steps›0›shows›spec_version": "inf",
+   "p1e/release/conformance_equiv.json:spec_version›0": "inf",
+   "p1e/release/conformance_equiv.json:spec_version›1": "inf",
+   "p1e/release/conformance_rootmark.json:mdk_version": "inf",
+   "p1e/release/conformance_rootmark.json:spec_version": "inf",
+   "p1e/release/release_local.json:spec_version": "inf",
+   "p1e/release/release_local.json:version": "inf",
+   "p1e/scene/scene.json:steps›0›shows›mcp_spec_version": "inf",
+   "p1e/scene/scene.json:steps›0›shows›spec_version": "inf",
+   "p1e1/check_compare_fields.json:fields_declared": 0.1016949152542373,
+   "p1e1/check_compare_fields.json:fields_in_code": 0.1016949152542373,
+   "p1e1/contract.json:tools›contract›#len": 0.09090909090909091,
+   "p1e1/contract.json:tools›contract›10": {
+    "a": "absent",
+    "b": "trace"
+   },
+   "p1e1/contract.json:tools›contract›3": "inf",
+   "p1e1/contract.json:tools›contract›4": "inf",
+   "p1e1/contract.json:tools›contract›5": "inf",
+   "p1e1/contract.json:tools›contract›6": "inf",
+   "p1e1/contract.json:tools›contract›7": "inf",
+   "p1e1/contract.json:tools›contract›8": "inf",
+   "p1e1/contract.json:tools›contract›9": "inf",
+   "p1e1/contract.json:tools›server›#len": 0.09090909090909091,
+   "p1e1/contract.json:tools›server›10": {
+    "a": "absent",
+    "b": "trace"
+   },
+   "p1e1/contract.json:tools›server›3": "inf",
+   "p1e1/contract.json:tools›server›4": "inf",
+   "p1e1/contract.json:tools›server›5": "inf",
+   "p1e1/contract.json:tools›server›6": "inf",
+   "p1e1/contract.json:tools›server›7": "inf",
+   "p1e1/contract.json:tools›server›8": "inf",
+   "p1e1/contract.json:tools›server›9": "inf",
+   "p1e1/historical.json:historical": 0.25,
+   "p1e1/release/plugin_e2e_real.json:steps›0›shows›text": "inf",
+   "p1e1/release/release.json:required_ok": "inf",
+   "p1e1/release/release.json:required_targets›#len": 0.5,
+   "p1e1/release/release.json:required_targets›1": {
+    "a": "absent",
+    "b": "x86_64-unknown-linux-gnu"
+   },
+   "p1e1/release/release.json:spec_version": "inf",
+   "p1e1/release/release.json:targets›0›spec_version": "inf",
+   "p1e1/release/release.json:targets›0›version": "inf",
+   "p1e1/release/release.json:targets›2›required": "inf",
+   "p1e1/release/release.json:version": "inf",
+   "p1e1/tamper_p1e1.json:cases›1›detail›endpoints_ok": "inf",
+   "p1e1/tamper_p1e1.json:cases›1›detail›tools_equal": "inf",
+   "p1e1_checks.json:E1-5›other_targets›x86_64-unknown-linux-gnu": {
+    "a": "skipped",
+    "b": "absent"
+   },
+   "p1e1_checks.json:E1-5›pass": "inf",
+   "p1e1_checks.json:E1-5›required_targets›#len": 0.5,
+   "p1e1_checks.json:E1-5›required_targets›1": {
+    "a": "absent",
+    "b": "x86_64-unknown-linux-gnu"
+   },
+   "p1e1_checks.json:E1-5›required›spec_version": "inf",
+   "p1e1_checks.json:E1-5›required›version": "inf",
+   "p1e_checks.json:E-7›chain_local_target›spec_version": "inf",
+   "p1e_checks.json:E-7›chain_local_target›version": "inf",
+   "p2_0_2/d_a.json:canonical_changed": 0.5192307692307693,
+   "p2_0_2/d_a.json:new_blocks": 0.46285714285714286,
+   "p2_0_2/d_a.json:pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›100›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›100›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›100›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›101›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›101›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›101›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›108›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›108›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›108›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›109›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›109›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›109›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›10›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›10›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›10›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›110›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›110›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›110›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›110›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›110›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›112›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›112›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›112›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›113›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›113›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›113›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›114›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›114›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›114›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›120›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›120›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›120›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›122›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›122›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›122›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›123›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›123›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›123›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›124›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›124›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›124›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›125›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›125›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›125›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›126›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›126›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›126›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›127›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›127›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›127›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›129›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›129›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›129›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›130›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›130›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›130›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›130›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›130›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›131›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›131›new_blocks": 0.5,
+   "p2_0_2/d_a.json:rows›131›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›131›unverified": 0.5,
+   "p2_0_2/d_a.json:rows›137›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›137›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›137›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›138›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›138›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›138›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›139›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›139›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›139›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›140›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›140›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›140›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›142›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›142›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›142›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›143›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›143›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›143›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›145›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›145›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›145›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›151›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›151›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›151›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›152›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›152›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›152›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›153›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›153›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›153›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›154›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›154›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›154›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›155›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›155›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›155›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›157›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›157›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›157›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›158›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›158›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›158›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›165›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›165›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›165›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›166›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›166›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›166›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›167›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›167›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›167›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›168›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›168›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›168›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›169›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›169›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›169›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›170›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›170›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›170›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›172›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›172›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›172›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›17›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›17›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›17›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›180›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›180›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›180›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›181›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›181›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›181›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›182›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›182›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›182›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›183›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›183›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›183›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›184›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›184›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›184›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›185›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›185›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›185›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›187›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›187›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›187›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›18›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›18›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›18›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›18›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›18›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›195›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›195›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›195›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›196›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›196›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›196›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›197›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›197›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›197›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›198›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›198›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›198›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›199›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›199›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›199›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›199›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›199›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›19›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›19›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›19›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›20›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›20›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›20›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›21›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›21›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›21›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›22›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›22›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›22›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›23›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›23›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›23›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›24›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›24›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›24›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›24›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›24›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›25›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›25›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›25›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›33›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›33›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›33›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›34›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›34›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›34›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›34›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›34›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›35›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›35›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›35›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›36›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›36›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›36›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›38›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›38›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›38›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›3›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›3›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›3›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›40›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›40›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›40›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›41›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›41›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›41›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›48›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›48›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›48›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›49›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›49›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›49›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›4›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›4›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›4›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›50›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›50›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›50›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›51›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›51›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›51›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›52›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›52›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›52›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›52›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›52›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›53›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›53›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›53›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›53›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›53›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›54›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›54›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›54›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›57›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›57›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›57›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›5›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›5›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›5›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›61›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›61›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›61›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›64›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›64›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›64›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›65›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›65›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›65›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›66›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›66›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›66›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›67›canonical_changed": 1.0,
+   "p2_0_2/d_a.json:rows›67›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›67›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›67›preserved": 1.0,
+   "p2_0_2/d_a.json:rows›67›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›69›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›69›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›69›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›6›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›6›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›6›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›70›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›70›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›70›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›79›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›79›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›79›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›80›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›80›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›80›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›81›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›81›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›81›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›82›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›82›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›82›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›83›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›83›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›83›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›85›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›85›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›85›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›8›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›8›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›8›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›93›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›93›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›93›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›94›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›94›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›94›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›95›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›95›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›95›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›96›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›96›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›96›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›98›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›98›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›98›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›99›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›99›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›99›unverified": 1.0,
+   "p2_0_2/d_a.json:rows›9›new_blocks": 1.0,
+   "p2_0_2/d_a.json:rows›9›pass_0a": "inf",
+   "p2_0_2/d_a.json:rows›9›unverified": 1.0,
+   "p2_0_2/d_a.json:scenarios_with_canonical_changed": 0.5,
+   "p2_0_2/d_a2.json:by_path›atomic_rename›new_blocks": 0.2857142857142857,
+   "p2_0_2/d_a2.json:by_path›cat›new_blocks": 0.6,
+   "p2_0_2/d_a2.json:by_path›cp_rsync›new_blocks": 0.7142857142857143,
+   "p2_0_2/d_a2.json:by_path›git_apply›new_blocks": 0.5142857142857142,
+   "p2_0_2/d_a2.json:by_path›python›new_blocks": 0.6571428571428571,
+   "p2_0_2/d_a2.json:by_path›sed›new_blocks": 0.5714285714285714,
+   "p2_0_2/d_a2.json:new_blocks": 0.5571428571428572,
+   "p2_0_2/d_a2.json:pass": "inf",
+   "p2_0_2/d_a2.json:rows›0›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›0›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›0›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›100›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›100›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›100›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›101›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›101›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›101›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›102›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›102›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›102›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›103›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›103›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›103›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›104›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›104›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›104›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›106›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›106›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›106›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›107›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›107›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›107›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›10›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›10›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›10›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›115›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›115›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›115›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›116›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›116›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›116›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›117›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›117›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›117›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›118›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›118›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›118›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›119›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›119›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›119›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›11›canonical_changed": 1.0,
+   "p2_0_2/d_a2.json:rows›11›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›11›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›11›preserved": 1.0,
+   "p2_0_2/d_a2.json:rows›11›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›12›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›12›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›12›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›13›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›13›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›13›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›21›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›21›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›21›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›22›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›22›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›22›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›23›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›23›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›23›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›24›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›24›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›24›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›26›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›26›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›26›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›27›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›27›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›27›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›28›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›28›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›28›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›29›canonical_changed": 1.0,
+   "p2_0_2/d_a2.json:rows›29›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›29›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›29›preserved": 1.0,
+   "p2_0_2/d_a2.json:rows›29›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›35›canonical_changed": 1.0,
+   "p2_0_2/d_a2.json:rows›35›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›35›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›35›preserved": 1.0,
+   "p2_0_2/d_a2.json:rows›35›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›37›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›37›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›37›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›38›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›38›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›38›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›39›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›39›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›39›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›40›canonical_changed": 1.0,
+   "p2_0_2/d_a2.json:rows›40›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›40›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›40›preserved": 1.0,
+   "p2_0_2/d_a2.json:rows›40›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›41›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›41›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›41›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›42›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›42›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›42›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›43›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›43›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›43›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›51›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›51›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›51›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›52›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›52›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›52›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›53›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›53›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›53›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›54›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›54›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›54›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›55›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›55›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›55›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›56›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›56›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›56›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›57›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›57›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›57›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›58›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›58›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›58›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›60›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›60›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›60›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›66›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›66›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›66›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›67›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›67›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›67›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›68›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›68›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›68›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›69›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›69›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›69›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›6›canonical_changed": 1.0,
+   "p2_0_2/d_a2.json:rows›6›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›6›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›6›preserved": 1.0,
+   "p2_0_2/d_a2.json:rows›6›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›70›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›70›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›70›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›71›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›71›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›71›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›72›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›72›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›72›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›73›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›73›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›73›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›75›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›75›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›75›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›79›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›79›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›79›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›83›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›83›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›83›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›84›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›84›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›84›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›85›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›85›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›85›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›86›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›86›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›86›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›87›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›87›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›87›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›89›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›89›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›89›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›8›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›8›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›8›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›90›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›90›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›90›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›91›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›91›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›91›unverified": 1.0,
+   "p2_0_2/d_a2.json:rows›96›new_blocks": 1.0,
+   "p2_0_2/d_a2.json:rows›96›pass_0a": "inf",
+   "p2_0_2/d_a2.json:rows›96›unverified": 1.0,
+   "p2_0_2/d_c.json:accuracy": 0.21176470588235297,
+   "p2_0_2/d_c.json:accuracy_without_collide": 0.2116564417177914,
+   "p2_0_2/d_c.json:by_mode›apart›right": 0.21476510067114093,
+   "p2_0_2/d_c.json:by_mode›collide›right": 0.21428571428571427,
+   "p2_0_2/d_c.json:by_mode›same_doc_after›right": 0.17857142857142858,
+   "p2_0_2/d_c.json:partial_lines": 0.42857142857142855,
+   "p2_0_2/d_c.json:pass": "inf",
+   "p2_0_2/d_c.json:records›107›layer": "inf",
+   "p2_0_2/d_c.json:records›107›right": "inf",
+   "p2_0_2/d_c.json:records›109›layer": "inf",
+   "p2_0_2/d_c.json:records›109›right": "inf",
+   "p2_0_2/d_c.json:records›10›layer": "inf",
+   "p2_0_2/d_c.json:records›10›right": "inf",
+   "p2_0_2/d_c.json:records›11›layer": "inf",
+   "p2_0_2/d_c.json:records›11›right": "inf",
+   "p2_0_2/d_c.json:records›130›layer": "inf",
+   "p2_0_2/d_c.json:records›130›right": "inf",
+   "p2_0_2/d_c.json:records›131›layer": "inf",
+   "p2_0_2/d_c.json:records›131›right": "inf",
+   "p2_0_2/d_c.json:records›132›layer": "inf",
+   "p2_0_2/d_c.json:records›132›right": "inf",
+   "p2_0_2/d_c.json:records›13›layer": "inf",
+   "p2_0_2/d_c.json:records›13›right": "inf",
+   "p2_0_2/d_c.json:records›14›layer": "inf",
+   "p2_0_2/d_c.json:records›14›right": "inf",
+   "p2_0_2/d_c.json:records›153›layer": "inf",
+   "p2_0_2/d_c.json:records›153›right": "inf",
+   "p2_0_2/d_c.json:records›154›layer": "inf",
+   "p2_0_2/d_c.json:records›154›right": "inf",
+   "p2_0_2/d_c.json:records›157›layer": "inf",
+   "p2_0_2/d_c.json:records›157›right": "inf",
+   "p2_0_2/d_c.json:records›162›layer": "inf",
+   "p2_0_2/d_c.json:records›162›right": "inf",
+   "p2_0_2/d_c.json:records›164›layer": "inf",
+   "p2_0_2/d_c.json:records›164›right": "inf",
+   "p2_0_2/d_c.json:records›165›layer": "inf",
+   "p2_0_2/d_c.json:records›165›right": "inf",
+   "p2_0_2/d_c.json:records›169›layer": "inf",
+   "p2_0_2/d_c.json:records›169›right": "inf",
+   "p2_0_2/d_c.json:records›16›layer": "inf",
+   "p2_0_2/d_c.json:records›16›right": "inf",
+   "p2_0_2/d_c.json:records›171›layer": "inf",
+   "p2_0_2/d_c.json:records›171›right": "inf",
+   "p2_0_2/d_c.json:records›177›layer": "inf",
+   "p2_0_2/d_c.json:records›177›right": "inf",
+   "p2_0_2/d_c.json:records›17›layer": "inf",
+   "p2_0_2/d_c.json:records›17›right": "inf",
+   "p2_0_2/d_c.json:records›181›layer": "inf",
+   "p2_0_2/d_c.json:records›181›right": "inf",
+   "p2_0_2/d_c.json:records›185›layer": "inf",
+   "p2_0_2/d_c.json:records›185›right": "inf",
+   "p2_0_2/d_c.json:records›18›layer": "inf",
+   "p2_0_2/d_c.json:records›18›right": "inf",
+   "p2_0_2/d_c.json:records›195›layer": "inf",
+   "p2_0_2/d_c.json:records›195›right": "inf",
+   "p2_0_2/d_c.json:records›196›layer": "inf",
+   "p2_0_2/d_c.json:records›196›right": "inf",
+   "p2_0_2/d_c.json:records›197›layer": "inf",
+   "p2_0_2/d_c.json:records›197›right": "inf",
+   "p2_0_2/d_c.json:records›198›layer": "inf",
+   "p2_0_2/d_c.json:records›198›right": "inf",
+   "p2_0_2/d_c.json:records›205›layer": "inf",
+   "p2_0_2/d_c.json:records›205›right": "inf",
+   "p2_0_2/d_c.json:records›207›layer": "inf",
+   "p2_0_2/d_c.json:records›207›right": "inf",
+   "p2_0_2/d_c.json:records›215›layer": "inf",
+   "p2_0_2/d_c.json:records›215›right": "inf",
+   "p2_0_2/d_c.json:records›219›layer": "inf",
+   "p2_0_2/d_c.json:records›219›right": "inf",
+   "p2_0_2/d_c.json:records›222›layer": "inf",
+   "p2_0_2/d_c.json:records›222›right": "inf",
+   "p2_0_2/d_c.json:records›224›layer": "inf",
+   "p2_0_2/d_c.json:records›224›right": "inf",
+   "p2_0_2/d_c.json:records›225›layer": "inf",
+   "p2_0_2/d_c.json:records›225›right": "inf",
+   "p2_0_2/d_c.json:records›226›layer": "inf",
+   "p2_0_2/d_c.json:records›226›right": "inf",
+   "p2_0_2/d_c.json:records›235›layer": "inf",
+   "p2_0_2/d_c.json:records›235›right": "inf",
+   "p2_0_2/d_c.json:records›242›layer": "inf",
+   "p2_0_2/d_c.json:records›242›right": "inf",
+   "p2_0_2/d_c.json:records›247›layer": "inf",
+   "p2_0_2/d_c.json:records›247›right": "inf",
+   "p2_0_2/d_c.json:records›24›layer": "inf",
+   "p2_0_2/d_c.json:records›24›right": "inf",
+   "p2_0_2/d_c.json:records›254›layer": "inf",
+   "p2_0_2/d_c.json:records›254›right": "inf",
+   "p2_0_2/d_c.json:records›255›layer": "inf",
+   "p2_0_2/d_c.json:records›255›right": "inf",
+   "p2_0_2/d_c.json:records›256›layer": "inf",
+   "p2_0_2/d_c.json:records›256›right": "inf",
+   "p2_0_2/d_c.json:records›26›layer": "inf",
+   "p2_0_2/d_c.json:records›26›right": "inf",
+   "p2_0_2/d_c.json:records›273›layer": "inf",
+   "p2_0_2/d_c.json:records›273›right": "inf",
+   "p2_0_2/d_c.json:records›274›layer": "inf",
+   "p2_0_2/d_c.json:records›274›right": "inf",
+   "p2_0_2/d_c.json:records›278›layer": "inf",
+   "p2_0_2/d_c.json:records›278›right": "inf",
+   "p2_0_2/d_c.json:records›285›layer": "inf",
+   "p2_0_2/d_c.json:records›285›right": "inf",
+   "p2_0_2/d_c.json:records›291›layer": "inf",
+   "p2_0_2/d_c.json:records›291›right": "inf",
+   "p2_0_2/d_c.json:records›29›layer": "inf",
+   "p2_0_2/d_c.json:records›29›right": "inf",
+   "p2_0_2/d_c.json:records›306›layer": "inf",
+   "p2_0_2/d_c.json:records›306›right": "inf",
+   "p2_0_2/d_c.json:records›307›layer": "inf",
+   "p2_0_2/d_c.json:records›307›right": "inf",
+   "p2_0_2/d_c.json:records›308›layer": "inf",
+   "p2_0_2/d_c.json:records›308›right": "inf",
+   "p2_0_2/d_c.json:records›311›layer": "inf",
+   "p2_0_2/d_c.json:records›311›right": "inf",
+   "p2_0_2/d_c.json:records›313›layer": "inf",
+   "p2_0_2/d_c.json:records›313›right": "inf",
+   "p2_0_2/d_c.json:records›318›layer": "inf",
+   "p2_0_2/d_c.json:records›318›right": "inf",
+   "p2_0_2/d_c.json:records›322›layer": "inf",
+   "p2_0_2/d_c.json:records›322›right": "inf",
+   "p2_0_2/d_c.json:records›325›layer": "inf",
+   "p2_0_2/d_c.json:records›325›right": "inf",
+   "p2_0_2/d_c.json:records›326›layer": "inf",
+   "p2_0_2/d_c.json:records›326›right": "inf",
+   "p2_0_2/d_c.json:records›328›layer": "inf",
+   "p2_0_2/d_c.json:records›328›right": "inf",
+   "p2_0_2/d_c.json:records›339›layer": "inf",
+   "p2_0_2/d_c.json:records›339›right": "inf",
+   "p2_0_2/d_c.json:records›34›layer": "inf",
+   "p2_0_2/d_c.json:records›34›right": "inf",
+   "p2_0_2/d_c.json:records›35›layer": "inf",
+   "p2_0_2/d_c.json:records›35›right": "inf",
+   "p2_0_2/d_c.json:records›44›layer": "inf",
+   "p2_0_2/d_c.json:records›44›right": "inf",
+   "p2_0_2/d_c.json:records›46›layer": "inf",
+   "p2_0_2/d_c.json:records›46›right": "inf",
+   "p2_0_2/d_c.json:records›63›layer": "inf",
+   "p2_0_2/d_c.json:records›63›right": "inf",
+   "p2_0_2/d_c.json:records›65›layer": "inf",
+   "p2_0_2/d_c.json:records›65›right": "inf",
+   "p2_0_2/d_c.json:records›6›layer": "inf",
+   "p2_0_2/d_c.json:records›6›right": "inf",
+   "p2_0_2/d_c.json:records›72›layer": "inf",
+   "p2_0_2/d_c.json:records›72›right": "inf",
+   "p2_0_2/d_c.json:records›78›layer": "inf",
+   "p2_0_2/d_c.json:records›78›right": "inf",
+   "p2_0_2/d_c.json:records›79›layer": "inf",
+   "p2_0_2/d_c.json:records›79›right": "inf",
+   "p2_0_2/d_c.json:records›81›layer": "inf",
+   "p2_0_2/d_c.json:records›81›right": "inf",
+   "p2_0_2/d_c.json:records›92›layer": "inf",
+   "p2_0_2/d_c.json:records›92›right": "inf",
+   "p2_0_2/d_c.json:right": 0.21176470588235294,
+   "p2_0_2/d_c.json:wrong›#len": 1.0,
+   "p2_0_2/d_c.json:wrong›0›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›0›doc": {
+    "a": "absent",
+    "b": "agent-c/c001.md"
+   },
+   "p2_0_2/d_c.json:wrong›0›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›0›lineage_id": {
+    "a": "absent",
+    "b": "ea352b8c458e9ac36b97f0f450cb39f6"
+   },
+   "p2_0_2/d_c.json:wrong›0›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›0›tick": {
+    "a": "absent",
+    "b": "c015"
+   },
+   "p2_0_2/d_c.json:wrong›10›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›10›doc": {
+    "a": "absent",
+    "b": "agent-c/c003.md"
+   },
+   "p2_0_2/d_c.json:wrong›10›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›10›lineage_id": {
+    "a": "absent",
+    "b": "b2c2c01d75e361552958c7c769c33913"
+   },
+   "p2_0_2/d_c.json:wrong›10›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›10›tick": {
+    "a": "absent",
+    "b": "c115"
+   },
+   "p2_0_2/d_c.json:wrong›11›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›11›doc": {
+    "a": "absent",
+    "b": "agent-c/c003.md"
+   },
+   "p2_0_2/d_c.json:wrong›11›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›11›lineage_id": {
+    "a": "absent",
+    "b": "cd9a8ea3a6b73111ba45719cb3370591"
+   },
+   "p2_0_2/d_c.json:wrong›11›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›11›tick": {
+    "a": "absent",
+    "b": "c138"
+   },
+   "p2_0_2/d_c.json:wrong›12›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›12›doc": {
+    "a": "absent",
+    "b": "agent-c/c003.md"
+   },
+   "p2_0_2/d_c.json:wrong›12›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›12›lineage_id": {
+    "a": "absent",
+    "b": "5a16b4c09b7467361ac17c4d5195e81d"
+   },
+   "p2_0_2/d_c.json:wrong›12›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›12›tick": {
+    "a": "absent",
+    "b": "c145"
+   },
+   "p2_0_2/d_c.json:wrong›13›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›13›doc": {
+    "a": "absent",
+    "b": "agent-c/c012.md"
+   },
+   "p2_0_2/d_c.json:wrong›13›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›13›lineage_id": {
+    "a": "absent",
+    "b": "941151d3e621e0a9aa5b94439985e9c4"
+   },
+   "p2_0_2/d_c.json:wrong›13›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›13›tick": {
+    "a": "absent",
+    "b": "c044"
+   },
+   "p2_0_2/d_c.json:wrong›14›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›14›doc": {
+    "a": "absent",
+    "b": "agent-c/c012.md"
+   },
+   "p2_0_2/d_c.json:wrong›14›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›14›lineage_id": {
+    "a": "absent",
+    "b": "810e80da1545171421c9e56cc6e34118"
+   },
+   "p2_0_2/d_c.json:wrong›14›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›14›tick": {
+    "a": "absent",
+    "b": "c059"
+   },
+   "p2_0_2/d_c.json:wrong›15›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›15›doc": {
+    "a": "absent",
+    "b": "agent-c/c013.md"
+   },
+   "p2_0_2/d_c.json:wrong›15›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›15›lineage_id": {
+    "a": "absent",
+    "b": "c1b7c8474ba3cd195a3c4fe7c83720e9"
+   },
+   "p2_0_2/d_c.json:wrong›15›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›15›tick": {
+    "a": "absent",
+    "b": "c110"
+   },
+   "p2_0_2/d_c.json:wrong›16›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›16›doc": {
+    "a": "absent",
+    "b": "agent-c/c013.md"
+   },
+   "p2_0_2/d_c.json:wrong›16›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›16›lineage_id": {
+    "a": "absent",
+    "b": "1758b9f9033934a86e703f97bb48cc1c"
+   },
+   "p2_0_2/d_c.json:wrong›16›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›16›tick": {
+    "a": "absent",
+    "b": "c127"
+   },
+   "p2_0_2/d_c.json:wrong›17›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›17›doc": {
+    "a": "absent",
+    "b": "agent-c/c018.md"
+   },
+   "p2_0_2/d_c.json:wrong›17›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›17›lineage_id": {
+    "a": "absent",
+    "b": "2de59eaa12db1d58adc4a02f31738d40"
+   },
+   "p2_0_2/d_c.json:wrong›17›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›17›tick": {
+    "a": "absent",
+    "b": "c038"
+   },
+   "p2_0_2/d_c.json:wrong›18›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›18›doc": {
+    "a": "absent",
+    "b": "agent-c/c018.md"
+   },
+   "p2_0_2/d_c.json:wrong›18›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›18›lineage_id": {
+    "a": "absent",
+    "b": "f5b7b4a72eb9c3d67d96abb2c0b833ba"
+   },
+   "p2_0_2/d_c.json:wrong›18›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›18›tick": {
+    "a": "absent",
+    "b": "c086"
+   },
+   "p2_0_2/d_c.json:wrong›19›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›19›doc": {
+    "a": "absent",
+    "b": "agent-c/c018.md"
+   },
+   "p2_0_2/d_c.json:wrong›19›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›19›lineage_id": {
+    "a": "absent",
+    "b": "d2e889264f2819bfdb66f81412a24514"
+   },
+   "p2_0_2/d_c.json:wrong›19›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›19›tick": {
+    "a": "absent",
+    "b": "c093"
+   },
+   "p2_0_2/d_c.json:wrong›1›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›1›doc": {
+    "a": "absent",
+    "b": "agent-c/c001.md"
+   },
+   "p2_0_2/d_c.json:wrong›1›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›1›lineage_id": {
+    "a": "absent",
+    "b": "b0716eedee4a564d2555f5feb4257933"
+   },
+   "p2_0_2/d_c.json:wrong›1›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›1›tick": {
+    "a": "absent",
+    "b": "c023"
+   },
+   "p2_0_2/d_c.json:wrong›20›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›20›doc": {
+    "a": "absent",
+    "b": "agent-c/c018.md"
+   },
+   "p2_0_2/d_c.json:wrong›20›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›20›lineage_id": {
+    "a": "absent",
+    "b": "3e5ef8886a7aaee77b07118e1e6709e0"
+   },
+   "p2_0_2/d_c.json:wrong›20›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›20›tick": {
+    "a": "absent",
+    "b": "c107"
+   },
+   "p2_0_2/d_c.json:wrong›21›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›21›doc": {
+    "a": "absent",
+    "b": "agent-c/c023.md"
+   },
+   "p2_0_2/d_c.json:wrong›21›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›21›lineage_id": {
+    "a": "absent",
+    "b": "7e748f1efe131d2f1daa97220c05938b"
+   },
+   "p2_0_2/d_c.json:wrong›21›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›21›tick": {
+    "a": "absent",
+    "b": "c051"
+   },
+   "p2_0_2/d_c.json:wrong›22›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›22›doc": {
+    "a": "absent",
+    "b": "agent-c/c025.md"
+   },
+   "p2_0_2/d_c.json:wrong›22›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›22›lineage_id": {
+    "a": "absent",
+    "b": "458ec36fdf5b5bdda570a5f99b1fbcfd"
+   },
+   "p2_0_2/d_c.json:wrong›22›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›22›tick": {
+    "a": "absent",
+    "b": "c092"
+   },
+   "p2_0_2/d_c.json:wrong›23›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›23›doc": {
+    "a": "absent",
+    "b": "agent-c/c025.md"
+   },
+   "p2_0_2/d_c.json:wrong›23›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›23›lineage_id": {
+    "a": "absent",
+    "b": "d0187ac259ce7b5d6f29929bdcd7e1dc"
+   },
+   "p2_0_2/d_c.json:wrong›23›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›23›tick": {
+    "a": "absent",
+    "b": "c150"
+   },
+   "p2_0_2/d_c.json:wrong›24›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›24›doc": {
+    "a": "absent",
+    "b": "agent-c/c055.md"
+   },
+   "p2_0_2/d_c.json:wrong›24›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›24›lineage_id": {
+    "a": "absent",
+    "b": "97317576fc2fcd7a49132a06b19e4af4"
+   },
+   "p2_0_2/d_c.json:wrong›24›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›24›tick": {
+    "a": "absent",
+    "b": "c131"
+   },
+   "p2_0_2/d_c.json:wrong›25›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›25›doc": {
+    "a": "absent",
+    "b": "agent-c/c055.md"
+   },
+   "p2_0_2/d_c.json:wrong›25›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›25›lineage_id": {
+    "a": "absent",
+    "b": "8bbfc2f41dd4abfdc73a708965ffe229"
+   },
+   "p2_0_2/d_c.json:wrong›25›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›25›tick": {
+    "a": "absent",
+    "b": "c133"
+   },
+   "p2_0_2/d_c.json:wrong›26›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›26›doc": {
+    "a": "absent",
+    "b": "agent-c/c055.md"
+   },
+   "p2_0_2/d_c.json:wrong›26›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›26›lineage_id": {
+    "a": "absent",
+    "b": "d35f7c39b03f2d2eb1f23740a7294986"
+   },
+   "p2_0_2/d_c.json:wrong›26›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›26›tick": {
+    "a": "absent",
+    "b": "c140"
+   },
+   "p2_0_2/d_c.json:wrong›27›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›27›doc": {
+    "a": "absent",
+    "b": "agent-c/c074.md"
+   },
+   "p2_0_2/d_c.json:wrong›27›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›27›lineage_id": {
+    "a": "absent",
+    "b": "ffded9f13c97c40ffcd07109bebb0c0c"
+   },
+   "p2_0_2/d_c.json:wrong›27›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›27›tick": {
+    "a": "absent",
+    "b": "c123"
+   },
+   "p2_0_2/d_c.json:wrong›28›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›28›doc": {
+    "a": "absent",
+    "b": "agent-c/c074.md"
+   },
+   "p2_0_2/d_c.json:wrong›28›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›28›lineage_id": {
+    "a": "absent",
+    "b": "7cbd76e6d937a656c9b3c0cd4d4c03b4"
+   },
+   "p2_0_2/d_c.json:wrong›28›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›28›tick": {
+    "a": "absent",
+    "b": "c139"
+   },
+   "p2_0_2/d_c.json:wrong›29›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›29›doc": {
+    "a": "absent",
+    "b": "agent-c/c074.md"
+   },
+   "p2_0_2/d_c.json:wrong›29›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›29›lineage_id": {
+    "a": "absent",
+    "b": "2f86e833d04dba537f30a2f49ff85e14"
+   },
+   "p2_0_2/d_c.json:wrong›29›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›29›tick": {
+    "a": "absent",
+    "b": "c154"
+   },
+   "p2_0_2/d_c.json:wrong›2›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›2›doc": {
+    "a": "absent",
+    "b": "agent-c/c001.md"
+   },
+   "p2_0_2/d_c.json:wrong›2›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›2›lineage_id": {
+    "a": "absent",
+    "b": "4a01a144f951d8e118f083a2e5b53b08"
+   },
+   "p2_0_2/d_c.json:wrong›2›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›2›tick": {
+    "a": "absent",
+    "b": "c039"
+   },
+   "p2_0_2/d_c.json:wrong›30›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›30›doc": {
+    "a": "absent",
+    "b": "agent-c/c083.md"
+   },
+   "p2_0_2/d_c.json:wrong›30›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›30›lineage_id": {
+    "a": "absent",
+    "b": "94018e8682c14224be46e519b1217dd6"
+   },
+   "p2_0_2/d_c.json:wrong›30›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›30›tick": {
+    "a": "absent",
+    "b": "c118"
+   },
+   "p2_0_2/d_c.json:wrong›31›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›31›doc": {
+    "a": "absent",
+    "b": "agent-c/c083.md"
+   },
+   "p2_0_2/d_c.json:wrong›31›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›31›lineage_id": {
+    "a": "absent",
+    "b": "0a3373a36c050584209a29c8067b03e1"
+   },
+   "p2_0_2/d_c.json:wrong›31›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›31›tick": {
+    "a": "absent",
+    "b": "c120"
+   },
+   "p2_0_2/d_c.json:wrong›32›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›32›doc": {
+    "a": "absent",
+    "b": "agent-c/c083.md"
+   },
+   "p2_0_2/d_c.json:wrong›32›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›32›lineage_id": {
+    "a": "absent",
+    "b": "c12153a19ccca9fedee04426357c68d7"
+   },
+   "p2_0_2/d_c.json:wrong›32›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›32›tick": {
+    "a": "absent",
+    "b": "c126"
+   },
+   "p2_0_2/d_c.json:wrong›33›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›33›doc": {
+    "a": "absent",
+    "b": "agent-c/c096.md"
+   },
+   "p2_0_2/d_c.json:wrong›33›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›33›lineage_id": {
+    "a": "absent",
+    "b": "03477a64fa01d067d70b1bf91b1c105a"
+   },
+   "p2_0_2/d_c.json:wrong›33›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›33›tick": {
+    "a": "absent",
+    "b": "c102"
+   },
+   "p2_0_2/d_c.json:wrong›34›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›34›doc": {
+    "a": "absent",
+    "b": "agent-c/c096.md"
+   },
+   "p2_0_2/d_c.json:wrong›34›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›34›lineage_id": {
+    "a": "absent",
+    "b": "5a0d7c159b106cb9314bc09366dd1fce"
+   },
+   "p2_0_2/d_c.json:wrong›34›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›34›tick": {
+    "a": "absent",
+    "b": "c143"
+   },
+   "p2_0_2/d_c.json:wrong›35›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›35›doc": {
+    "a": "absent",
+    "b": "agent-c/c123.md"
+   },
+   "p2_0_2/d_c.json:wrong›35›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›35›lineage_id": {
+    "a": "absent",
+    "b": "8549e7686c2187ab82083c414c28e2fb"
+   },
+   "p2_0_2/d_c.json:wrong›35›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›35›tick": {
+    "a": "absent",
+    "b": "c132"
+   },
+   "p2_0_2/d_c.json:wrong›36›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›36›doc": {
+    "a": "absent",
+    "b": "agent-c/c128.md"
+   },
+   "p2_0_2/d_c.json:wrong›36›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›36›lineage_id": {
+    "a": "absent",
+    "b": "fc122d963fca82dbcb0cb52b868f2947"
+   },
+   "p2_0_2/d_c.json:wrong›36›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›36›tick": {
+    "a": "absent",
+    "b": "c144"
+   },
+   "p2_0_2/d_c.json:wrong›37›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›37›doc": {
+    "a": "absent",
+    "b": "agent-c/c129.md"
+   },
+   "p2_0_2/d_c.json:wrong›37›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›37›lineage_id": {
+    "a": "absent",
+    "b": "88a5bf7c2ae11d53d8d0c98698b471cb"
+   },
+   "p2_0_2/d_c.json:wrong›37›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›37›tick": {
+    "a": "absent",
+    "b": "c149"
+   },
+   "p2_0_2/d_c.json:wrong›38›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›38›doc": {
+    "a": "absent",
+    "b": "agent-c/c143.md"
+   },
+   "p2_0_2/d_c.json:wrong›38›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›38›lineage_id": {
+    "a": "absent",
+    "b": "02df708d718966e835ae3b8e92eb4ee6"
+   },
+   "p2_0_2/d_c.json:wrong›38›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›38›tick": {
+    "a": "absent",
+    "b": "c159"
+   },
+   "p2_0_2/d_c.json:wrong›39›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›39›doc": {
+    "a": "absent",
+    "b": "blends.md"
+   },
+   "p2_0_2/d_c.json:wrong›39›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›39›lineage_id": {
+    "a": "absent",
+    "b": "eb96c4c773d7e748b775ec99927493cc"
+   },
+   "p2_0_2/d_c.json:wrong›39›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›39›tick": {
+    "a": "absent",
+    "b": "c000"
+   },
+   "p2_0_2/d_c.json:wrong›3›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›3›doc": {
+    "a": "absent",
+    "b": "agent-c/c001.md"
+   },
+   "p2_0_2/d_c.json:wrong›3›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›3›lineage_id": {
+    "a": "absent",
+    "b": "67151405e94ad9b5fbcff3a4d413185b"
+   },
+   "p2_0_2/d_c.json:wrong›3›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›3›tick": {
+    "a": "absent",
+    "b": "c064"
+   },
+   "p2_0_2/d_c.json:wrong›40›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›40›doc": {
+    "a": "absent",
+    "b": "blends.md"
+   },
+   "p2_0_2/d_c.json:wrong›40›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›40›lineage_id": {
+    "a": "absent",
+    "b": "9792ec549ab52ec186f1d9c00ff5163d"
+   },
+   "p2_0_2/d_c.json:wrong›40›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›40›tick": {
+    "a": "absent",
+    "b": "c001"
+   },
+   "p2_0_2/d_c.json:wrong›41›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›41›doc": {
+    "a": "absent",
+    "b": "blends.md"
+   },
+   "p2_0_2/d_c.json:wrong›41›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›41›lineage_id": {
+    "a": "absent",
+    "b": "22722de572c086be4c733776b664e6aa"
+   },
+   "p2_0_2/d_c.json:wrong›41›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›41›tick": {
+    "a": "absent",
+    "b": "c007"
+   },
+   "p2_0_2/d_c.json:wrong›42›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›42›doc": {
+    "a": "absent",
+    "b": "blends.md"
+   },
+   "p2_0_2/d_c.json:wrong›42›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›42›lineage_id": {
+    "a": "absent",
+    "b": "de71c2e247ed3c560b92dea3a643dec0"
+   },
+   "p2_0_2/d_c.json:wrong›42›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›42›tick": {
+    "a": "absent",
+    "b": "c121"
+   },
+   "p2_0_2/d_c.json:wrong›43›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›43›doc": {
+    "a": "absent",
+    "b": "blends.md"
+   },
+   "p2_0_2/d_c.json:wrong›43›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›43›lineage_id": {
+    "a": "absent",
+    "b": "63d607a1b7f0220f0bf4e2ce27a0e5d8"
+   },
+   "p2_0_2/d_c.json:wrong›43›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›43›tick": {
+    "a": "absent",
+    "b": "c155"
+   },
+   "p2_0_2/d_c.json:wrong›44›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›44›doc": {
+    "a": "absent",
+    "b": "cupping.md"
+   },
+   "p2_0_2/d_c.json:wrong›44›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›44›lineage_id": {
+    "a": "absent",
+    "b": "493773201e17cf588343568fd60b478a"
+   },
+   "p2_0_2/d_c.json:wrong›44›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›44›tick": {
+    "a": "absent",
+    "b": "c081"
+   },
+   "p2_0_2/d_c.json:wrong›45›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›45›doc": {
+    "a": "absent",
+    "b": "cupping.md"
+   },
+   "p2_0_2/d_c.json:wrong›45›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›45›lineage_id": {
+    "a": "absent",
+    "b": "e734907545ccc76a5d0d5f4bed66c312"
+   },
+   "p2_0_2/d_c.json:wrong›45›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›45›tick": {
+    "a": "absent",
+    "b": "c124"
+   },
+   "p2_0_2/d_c.json:wrong›46›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›46›doc": {
+    "a": "absent",
+    "b": "cupping.md"
+   },
+   "p2_0_2/d_c.json:wrong›46›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›46›lineage_id": {
+    "a": "absent",
+    "b": "7d3e6cb39c65cb1779e4e2b55c68d3c9"
+   },
+   "p2_0_2/d_c.json:wrong›46›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›46›tick": {
+    "a": "absent",
+    "b": "c137"
+   },
+   "p2_0_2/d_c.json:wrong›47›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›47›doc": {
+    "a": "absent",
+    "b": "espresso.md"
+   },
+   "p2_0_2/d_c.json:wrong›47›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›47›lineage_id": {
+    "a": "absent",
+    "b": "3962aba09eb31d1b8e132efd1a96a6ad"
+   },
+   "p2_0_2/d_c.json:wrong›47›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›47›tick": {
+    "a": "absent",
+    "b": "c006"
+   },
+   "p2_0_2/d_c.json:wrong›48›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›48›doc": {
+    "a": "absent",
+    "b": "espresso.md"
+   },
+   "p2_0_2/d_c.json:wrong›48›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›48›lineage_id": {
+    "a": "absent",
+    "b": "4feb132f4b01b0f10a6c5fe9e207d2b9"
+   },
+   "p2_0_2/d_c.json:wrong›48›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›48›tick": {
+    "a": "absent",
+    "b": "c017"
+   },
+   "p2_0_2/d_c.json:wrong›49›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›49›doc": {
+    "a": "absent",
+    "b": "espresso.md"
+   },
+   "p2_0_2/d_c.json:wrong›49›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›49›lineage_id": {
+    "a": "absent",
+    "b": "3b935b42b3823c48bc8d84c3a00d8113"
+   },
+   "p2_0_2/d_c.json:wrong›49›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›49›tick": {
+    "a": "absent",
+    "b": "c031"
+   },
+   "p2_0_2/d_c.json:wrong›4›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›4›doc": {
+    "a": "absent",
+    "b": "agent-c/c001.md"
+   },
+   "p2_0_2/d_c.json:wrong›4›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›4›lineage_id": {
+    "a": "absent",
+    "b": "8e07bd7b7163179ca8dabaa5c4cd49fb"
+   },
+   "p2_0_2/d_c.json:wrong›4›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›4›tick": {
+    "a": "absent",
+    "b": "c077"
+   },
+   "p2_0_2/d_c.json:wrong›50›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›50›doc": {
+    "a": "absent",
+    "b": "espresso.md"
+   },
+   "p2_0_2/d_c.json:wrong›50›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›50›lineage_id": {
+    "a": "absent",
+    "b": "23c82e89ddb942693e23a75ff2806389"
+   },
+   "p2_0_2/d_c.json:wrong›50›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›50›tick": {
+    "a": "absent",
+    "b": "c082"
+   },
+   "p2_0_2/d_c.json:wrong›51›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›51›doc": {
+    "a": "absent",
+    "b": "filter.md"
+   },
+   "p2_0_2/d_c.json:wrong›51›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›51›lineage_id": {
+    "a": "absent",
+    "b": "12487beb620e2a95af294c2ec1df1d4a"
+   },
+   "p2_0_2/d_c.json:wrong›51›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›51›tick": {
+    "a": "absent",
+    "b": "c024"
+   },
+   "p2_0_2/d_c.json:wrong›52›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›52›doc": {
+    "a": "absent",
+    "b": "filter.md"
+   },
+   "p2_0_2/d_c.json:wrong›52›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›52›lineage_id": {
+    "a": "absent",
+    "b": "cd76d3ea61130c3bcc37fa1208a57da4"
+   },
+   "p2_0_2/d_c.json:wrong›52›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›52›tick": {
+    "a": "absent",
+    "b": "c045"
+   },
+   "p2_0_2/d_c.json:wrong›53›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›53›doc": {
+    "a": "absent",
+    "b": "filter.md"
+   },
+   "p2_0_2/d_c.json:wrong›53›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›53›lineage_id": {
+    "a": "absent",
+    "b": "bea258a00d6e1741f5c0d76caf3592e9"
+   },
+   "p2_0_2/d_c.json:wrong›53›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›53›tick": {
+    "a": "absent",
+    "b": "c114"
+   },
+   "p2_0_2/d_c.json:wrong›54›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›54›doc": {
+    "a": "absent",
+    "b": "filter.md"
+   },
+   "p2_0_2/d_c.json:wrong›54›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›54›lineage_id": {
+    "a": "absent",
+    "b": "4b4fd5c4d37f2e725f67aee525aeded2"
+   },
+   "p2_0_2/d_c.json:wrong›54›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›54›tick": {
+    "a": "absent",
+    "b": "c141"
+   },
+   "p2_0_2/d_c.json:wrong›55›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›55›doc": {
+    "a": "absent",
+    "b": "glossary.md"
+   },
+   "p2_0_2/d_c.json:wrong›55›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›55›lineage_id": {
+    "a": "absent",
+    "b": "c16982b3239f636fe1a447615af8ce4e"
+   },
+   "p2_0_2/d_c.json:wrong›55›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›55›tick": {
+    "a": "absent",
+    "b": "c012"
+   },
+   "p2_0_2/d_c.json:wrong›56›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›56›doc": {
+    "a": "absent",
+    "b": "grinders.md"
+   },
+   "p2_0_2/d_c.json:wrong›56›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›56›lineage_id": {
+    "a": "absent",
+    "b": "c643a8e1640fefcc5125ad36dd395e74"
+   },
+   "p2_0_2/d_c.json:wrong›56›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›56›tick": {
+    "a": "absent",
+    "b": "c125"
+   },
+   "p2_0_2/d_c.json:wrong›57›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›57›doc": {
+    "a": "absent",
+    "b": "grinders.md"
+   },
+   "p2_0_2/d_c.json:wrong›57›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›57›lineage_id": {
+    "a": "absent",
+    "b": "7006820bbede41dd438ff9b8988dd0da"
+   },
+   "p2_0_2/d_c.json:wrong›57›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›57›tick": {
+    "a": "absent",
+    "b": "c142"
+   },
+   "p2_0_2/d_c.json:wrong›58›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›58›doc": {
+    "a": "absent",
+    "b": "maintenance.md"
+   },
+   "p2_0_2/d_c.json:wrong›58›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›58›lineage_id": {
+    "a": "absent",
+    "b": "cea7a018c441eb3196d6270c84eeda3f"
+   },
+   "p2_0_2/d_c.json:wrong›58›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›58›tick": {
+    "a": "absent",
+    "b": "c065"
+   },
+   "p2_0_2/d_c.json:wrong›59›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›59›doc": {
+    "a": "absent",
+    "b": "origins.md"
+   },
+   "p2_0_2/d_c.json:wrong›59›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›59›lineage_id": {
+    "a": "absent",
+    "b": "2a96e8a78e9341a98c46a1617c17165f"
+   },
+   "p2_0_2/d_c.json:wrong›59›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›59›tick": {
+    "a": "absent",
+    "b": "c018"
+   },
+   "p2_0_2/d_c.json:wrong›5›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›5›doc": {
+    "a": "absent",
+    "b": "agent-c/c001.md"
+   },
+   "p2_0_2/d_c.json:wrong›5›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›5›lineage_id": {
+    "a": "absent",
+    "b": "b570a2fc1f12462e46c3ee05bd0d1b0a"
+   },
+   "p2_0_2/d_c.json:wrong›5›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›5›tick": {
+    "a": "absent",
+    "b": "c108"
+   },
+   "p2_0_2/d_c.json:wrong›60›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›60›doc": {
+    "a": "absent",
+    "b": "origins.md"
+   },
+   "p2_0_2/d_c.json:wrong›60›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›60›lineage_id": {
+    "a": "absent",
+    "b": "cf00bfbc9385a04880e7cc982b88bf19"
+   },
+   "p2_0_2/d_c.json:wrong›60›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›60›tick": {
+    "a": "absent",
+    "b": "c103"
+   },
+   "p2_0_2/d_c.json:wrong›61›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›61›doc": {
+    "a": "absent",
+    "b": "roast-log.md"
+   },
+   "p2_0_2/d_c.json:wrong›61›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›61›lineage_id": {
+    "a": "absent",
+    "b": "e111752596366679eee11545cf060232"
+   },
+   "p2_0_2/d_c.json:wrong›61›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›61›tick": {
+    "a": "absent",
+    "b": "c070"
+   },
+   "p2_0_2/d_c.json:wrong›62›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›62›doc": {
+    "a": "absent",
+    "b": "roast-log.md"
+   },
+   "p2_0_2/d_c.json:wrong›62›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›62›lineage_id": {
+    "a": "absent",
+    "b": "70abb87749146c4b74edfaa4ae179bac"
+   },
+   "p2_0_2/d_c.json:wrong›62›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›62›tick": {
+    "a": "absent",
+    "b": "c087"
+   },
+   "p2_0_2/d_c.json:wrong›63›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›63›doc": {
+    "a": "absent",
+    "b": "roast-log.md"
+   },
+   "p2_0_2/d_c.json:wrong›63›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›63›lineage_id": {
+    "a": "absent",
+    "b": "fc225df8149de083c573f0c06cf3b85c"
+   },
+   "p2_0_2/d_c.json:wrong›63›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›63›tick": {
+    "a": "absent",
+    "b": "c098"
+   },
+   "p2_0_2/d_c.json:wrong›64›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›64›doc": {
+    "a": "absent",
+    "b": "roasting.md"
+   },
+   "p2_0_2/d_c.json:wrong›64›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›64›lineage_id": {
+    "a": "absent",
+    "b": "557f6d40453c6209a2c55fd22ca0a127"
+   },
+   "p2_0_2/d_c.json:wrong›64›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›64›tick": {
+    "a": "absent",
+    "b": "c025"
+   },
+   "p2_0_2/d_c.json:wrong›65›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›65›doc": {
+    "a": "absent",
+    "b": "roasting.md"
+   },
+   "p2_0_2/d_c.json:wrong›65›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›65›lineage_id": {
+    "a": "absent",
+    "b": "a956522efb1368ea3ec72fee902fe851"
+   },
+   "p2_0_2/d_c.json:wrong›65›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›65›tick": {
+    "a": "absent",
+    "b": "c076"
+   },
+   "p2_0_2/d_c.json:wrong›66›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›66›doc": {
+    "a": "absent",
+    "b": "roasting.md"
+   },
+   "p2_0_2/d_c.json:wrong›66›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›66›lineage_id": {
+    "a": "absent",
+    "b": "f9a6e2e41e52277721adfe09db96cf49"
+   },
+   "p2_0_2/d_c.json:wrong›66›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›66›tick": {
+    "a": "absent",
+    "b": "c109"
+   },
+   "p2_0_2/d_c.json:wrong›67›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›67›doc": {
+    "a": "absent",
+    "b": "safety.md"
+   },
+   "p2_0_2/d_c.json:wrong›67›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›67›lineage_id": {
+    "a": "absent",
+    "b": "c3fce0b1bb8de82113346c70197cf5cd"
+   },
+   "p2_0_2/d_c.json:wrong›67›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›67›tick": {
+    "a": "absent",
+    "b": "c011"
+   },
+   "p2_0_2/d_c.json:wrong›68›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›68›doc": {
+    "a": "absent",
+    "b": "safety.md"
+   },
+   "p2_0_2/d_c.json:wrong›68›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›68›lineage_id": {
+    "a": "absent",
+    "b": "013c2167b6941898e756aab53dbd4892"
+   },
+   "p2_0_2/d_c.json:wrong›68›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›68›tick": {
+    "a": "absent",
+    "b": "c052"
+   },
+   "p2_0_2/d_c.json:wrong›69›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›69›doc": {
+    "a": "absent",
+    "b": "safety.md"
+   },
+   "p2_0_2/d_c.json:wrong›69›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›69›lineage_id": {
+    "a": "absent",
+    "b": "ff6bcd3d93a2177300cdf017d7a27f34"
+   },
+   "p2_0_2/d_c.json:wrong›69›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›69›tick": {
+    "a": "absent",
+    "b": "c097"
+   },
+   "p2_0_2/d_c.json:wrong›6›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›6›doc": {
+    "a": "absent",
+    "b": "agent-c/c001.md"
+   },
+   "p2_0_2/d_c.json:wrong›6›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›6›lineage_id": {
+    "a": "absent",
+    "b": "416907bd4486e4ef2011776a1115d036"
+   },
+   "p2_0_2/d_c.json:wrong›6›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›6›tick": {
+    "a": "absent",
+    "b": "c122"
+   },
+   "p2_0_2/d_c.json:wrong›70›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›70›doc": {
+    "a": "absent",
+    "b": "safety.md"
+   },
+   "p2_0_2/d_c.json:wrong›70›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›70›lineage_id": {
+    "a": "absent",
+    "b": "89b76dae1d640a09733127d71f2f9efb"
+   },
+   "p2_0_2/d_c.json:wrong›70›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›70›tick": {
+    "a": "absent",
+    "b": "c129"
+   },
+   "p2_0_2/d_c.json:wrong›71›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›71›doc": {
+    "a": "absent",
+    "b": "staff.md"
+   },
+   "p2_0_2/d_c.json:wrong›71›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›71›lineage_id": {
+    "a": "absent",
+    "b": "5c985db35c1766ce7710dd0b93b1dcbc"
+   },
+   "p2_0_2/d_c.json:wrong›71›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›71›tick": {
+    "a": "absent",
+    "b": "c128"
+   },
+   "p2_0_2/d_c.json:wrong›7›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›7›doc": {
+    "a": "absent",
+    "b": "agent-c/c001.md"
+   },
+   "p2_0_2/d_c.json:wrong›7›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›7›lineage_id": {
+    "a": "absent",
+    "b": "56c2a5493cea76e0e085ca936068353e"
+   },
+   "p2_0_2/d_c.json:wrong›7›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›7›tick": {
+    "a": "absent",
+    "b": "c134"
+   },
+   "p2_0_2/d_c.json:wrong›8›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›8›doc": {
+    "a": "absent",
+    "b": "agent-c/c003.md"
+   },
+   "p2_0_2/d_c.json:wrong›8›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›8›lineage_id": {
+    "a": "absent",
+    "b": "9448b246f680b469f3526d9bcd044e22"
+   },
+   "p2_0_2/d_c.json:wrong›8›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›8›tick": {
+    "a": "absent",
+    "b": "c060"
+   },
+   "p2_0_2/d_c.json:wrong›9›author": {
+    "a": "absent",
+    "b": "human"
+   },
+   "p2_0_2/d_c.json:wrong›9›doc": {
+    "a": "absent",
+    "b": "agent-c/c003.md"
+   },
+   "p2_0_2/d_c.json:wrong›9›layer": {
+    "a": "absent",
+    "b": "unverified"
+   },
+   "p2_0_2/d_c.json:wrong›9›lineage_id": {
+    "a": "absent",
+    "b": "fb9953b9bd895f95359f59c2dd7b7b89"
+   },
+   "p2_0_2/d_c.json:wrong›9›right": {
+    "a": "absent",
+    "b": false
+   },
+   "p2_0_2/d_c.json:wrong›9›tick": {
+    "a": "absent",
+    "b": "c071"
+   },
+   "p2_0_2/rules.json:pass": "inf",
+   "p2_0_2/rules.json:written›spec_7_1_draft": "inf",
+   "p2_0_2/tamper_p2_0_2.json:cases›13›detail›tools": 0.09090909090909091,
+   "p2_0_2_checks.json:H-P2-0·2a′›canonical_changed": 0.5192307692307693,
+   "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›atomic_rename›new_blocks": 0.2857142857142857,
+   "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›cat›new_blocks": 0.6,
+   "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›cp_rsync›new_blocks": 0.7142857142857143,
+   "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›git_apply›new_blocks": 0.5142857142857142,
+   "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›python›new_blocks": 0.6571428571428571,
+   "p2_0_2_checks.json:H-P2-0·2a›d_a2›by_path›sed›new_blocks": 0.5714285714285714,
+   "p2_0_2_checks.json:H-P2-0·2a›d_a2›new_blocks": 0.5571428571428572,
+   "p2_0_2_checks.json:H-P2-0·2a›d_a›new_blocks": 0.46285714285714286,
+   "p2_0_2_checks.json:H-P2-0·2a›pass": "inf",
+   "p2_0_2_checks.json:H-P2-0·2d›d_c›accuracy": 0.21176470588235297,
+   "p2_0_2_checks.json:H-P2-0·2d›d_c›by_mode›apart›right": 0.21476510067114093,
+   "p2_0_2_checks.json:H-P2-0·2d›d_c›by_mode›collide›right": 0.21428571428571427,
+   "p2_0_2_checks.json:H-P2-0·2d›d_c›by_mode›same_doc_after›right": 0.17857142857142858,
+   "p2_0_2_checks.json:H-P2-0·2d›d_c›partial_lines": 0.42857142857142855,
+   "p2_0_2_checks.json:H-P2-0·2d›d_c›pass": "inf",
+   "p2_0_2_checks.json:H-P2-0·2d›d_c›right": 0.21176470588235294,
+   "p2_0_2_checks.json:H-P2-0·2j›pass": "inf",
+   "p2_0_2_checks.json:H-P2-0·2j›spec_version": "inf",
+   "p2_0_2_checks.json:H-P2-0·2k›pass": "inf",
+   "p2_0_2_checks.json:H-P2-0·2k›written›spec_7_1_draft": "inf"
+  },
+  "excluded_differences": {
+   "p1d1/d1_13.json:codes": {
+    "decision": "K-P2A.2",
+    "leaves": 28
+   },
+   "p1d1/d1_13.json:http": {
+    "decision": "K-P2A.2",
+    "leaves": 88
+   },
+   "p1d1_checks.json:D1-13/codes": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:file_constants": {
+    "decision": "P2-A/F6",
+    "leaves": 1
+   },
+   "p1e/check_compare_fields.json:modules": {
+    "decision": "P2-A/F6",
+    "leaves": 7
+   },
+   "p1e/client.json:bundle_bytes": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e/client.json:vitest": {
+    "decision": "K-P2A.2",
+    "leaves": 3
+   },
+   "p1e/e0/e14.json:auto_rebuild_false": {
+    "decision": "K-P2A.2",
+    "leaves": 2
+   },
+   "p1e/e0/e14.json:pass": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e/e0/e14.json:passed": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:file_constants": {
+    "decision": "P2-A/F6",
+    "leaves": 1
+   },
+   "p1e1/check_compare_fields.json:modules": {
+    "decision": "P2-A/F6",
+    "leaves": 7
+   },
+   "p1e1/contract.json:codes": {
+    "decision": "K-P2A.2",
+    "leaves": 28
+   },
+   "p1e1/contract.json:http": {
+    "decision": "K-P2A.2",
+    "leaves": 88
+   },
+   "p1e1/historical.json:counted": {
+    "decision": "K-P2A.2",
+    "leaves": 13
+   },
+   "p1e1/historical.json:counted_fails": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/historical.json:fails": {
+    "decision": "K-P2A.2",
+    "leaves": 137
+   },
+   "p1e1/release/plugin_e2e_real.json:e1_9_connection": {
+    "decision": "K-P2A.2",
+    "leaves": 4
+   },
+   "p1e1/release/release.json:commit": {
+    "decision": "K-P2A.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:items": {
+    "decision": "K-P2A.3",
+    "leaves": 31
+   },
+   "p1e1/release/release_check.json:pass": {
+    "decision": "K-P2A.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:passed": {
+    "decision": "K-P2A.3",
+    "leaves": 1
+   },
+   "p1e1/release/release_check.json:total": {
+    "decision": "K-P2A.3",
+    "leaves": 1
+   },
+   "p1e1/status/e1_1.json:auto_rebuild_false": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/status/e1_1.json:cases": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/status/e1_1.json:pass": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1/status/e1_1.json:passed": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e1_checks.json:E1-1": {
+    "decision": "K-P2A.2",
+    "leaves": 3
+   },
+   "p1e1_checks.json:E1-4": {
+    "decision": "K-P2A.3",
+    "leaves": 23
+   },
+   "p1e1_checks.json:E1-6": {
+    "decision": "K-P2A.2",
+    "leaves": 284
+   },
+   "p1e1_checks.json:E1-9": {
+    "decision": "K-P2A.2",
+    "leaves": 4
+   },
+   "p1e_checks.json:E-10/bundle_bytes": {
+    "decision": "K-P2A.2",
+    "leaves": 1
+   },
+   "p1e_checks.json:E-10/vitest": {
+    "decision": "K-P2A.2",
+    "leaves": 3
+   },
+   "p1e_checks.json:E-14": {
+    "decision": "K-P2A.2",
+    "leaves": 2
+   },
+   "p1e_checks.json:E-9": {
+    "decision": "K-P2A.2",
+    "leaves": 81
+   },
+   "p2_0_2_checks.json:fail_summary": {
+    "decision": "K-P2A.2",
+    "leaves": 12
+   },
+   "p2_0_2_checks.json:regress": {
+    "decision": "K-P2A.2",
+    "leaves": 566
+   }
+  },
+  "exclusions_without_difference": [
+   "p1e1/release/plugin_e2e_real.json:pass"
+  ],
+  "n_fields": 108846,
+  "p2_0_2_bytes": {
+   "equal": false,
+   "files": {
+    "p2_0_2/d_a/attestations.jsonl": {
+     "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+     "bytes": 0,
+     "equal": true
+    },
+    "p2_0_2/d_a/events.jsonl": {
+     "blake3": "8969047e33d23e6a80f2ae799c5a341f",
+     "bytes": 428018,
+     "equal": false
+    },
+    "p2_0_2/d_a2/attestations.jsonl": {
+     "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+     "bytes": 0,
+     "equal": true
+    },
+    "p2_0_2/d_a2/events.jsonl": {
+     "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+     "bytes": 253173,
+     "equal": false
+    },
+    "p2_0_2/d_c/attestations.jsonl": {
+     "blake3": "768213cc89bbe2ce8dcb882696b484f8",
+     "bytes": 24237,
+     "equal": false
+    },
+    "p2_0_2/d_c/events.jsonl": {
+     "blake3": "01bc1eee5373f844dc5263d4377d57e0",
+     "bytes": 476847,
+     "equal": false
+    }
+   }
+  },
+  "pass": false,
+  "reference_run": "20261019T212951Z-72fd78f",
+  "source": "regress_vs_p2_0_2.json"
+ },
+ "tamper": {
+  "cases": {
+   "changed_vault_refused": true,
+   "damaged_record_refused": true,
+   "old_index_migration_required": true
+  },
+  "pass": true,
+  "source": "p2a/tamper.json"
+ }
+}

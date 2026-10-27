@@ -1,0 +1,55 @@
+{
+ "A-4_equal": true,
+ "H4-2_equal": true,
+ "differing_fields": {},
+ "excluded_latency_paths": {
+  "h2.json": [
+   "H2-3",
+   "latency_ms"
+  ],
+  "h3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ],
+  "h3_v3.json": [
+   "H3-1",
+   "summary/p50",
+   "summary/p95",
+   "latency/latencies_ms",
+   "latency/rows/*/ms"
+  ]
+ },
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json"
+ ],
+ "max_relative_difference": 0.0,
+ "n_fields": 1790,
+ "per_file": {
+  "h1r.json": 0.0,
+  "h1r_v3.json": 0.0,
+  "h1s.json": 0.0,
+  "h1s_tuning.json": 0.0,
+  "h1s_v3.json": 0.0,
+  "h1s_v3_tuning.json": 0.0,
+  "h3_v3.json": 0.0,
+  "h4_v2repro.json": 0.0,
+  "h4_v3.json": 0.0,
+  "holdout.json": 0.0,
+  "split_grid.json": 0.0
+ },
+ "run_a": "../reports/rounds/P1-A/runs/20261013T221822Z-27d8ae8",
+ "run_b": "reports/runs/20261026T222501Z-5b235b0"
+}
