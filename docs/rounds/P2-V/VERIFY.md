@@ -1,0 +1,10 @@
+# P2-V — Bağımsız Doğrulama (kısa; ölçüm aracı değiştiği için; K-P2V.1)
+
+P2-V ölçüm aracını değiştirir; P2-C bu araçla ölçüleceği için tur sonunda kısa bir bağımsız doğrulama yapılır ve `reports/rounds/P2-V/VERIFICATION.md`'ye yazılır. Doğrulayıcı ayrı oturumda, temiz klonda çalışır (DEV_PROCESS §5), kod değiştirmez. Hedef 1–2 saat (CI beklemesi hariç). Yerelde tam çift koşulmaz.
+
+- **VV1 — Kademe 2'yi kendin tetikle.** Doğrulanan commit'te `workflow_dispatch` ile tam çifti bir kez tetikle; yapıtı indir; karşılaştırmayı dondurulmuş karşılaştırıcıyla değil **kendi betiğinle** yeniden yap (D alanları A↔B). Karşılaştırma dışı listenin V1 envanteriyle birebir aynı olduğunu ve joker içermediğini denetle.
+- **VV2 — Hiçbir kriter kaybolmadı.** V0'ın eski zincir referansındaki kriter kimliklerini kendin çıkar; senin kademe 2 koşun ∪ Mac kümesi çıktısında hepsi var mı. Z'ye alınan her küme için onu getiren turun GOAL'ündeki eşiği kendin bul; `make verify-mac`'in uyguladığı eşikle aynı mı.
+- **VV3 — Kasıtlı bozmalar.** (a) Bir D alanını bir zincirde değiştir → karşılaştırma kırmızı; (b) bir kayda iş dizini yolu enjekte et → taşınabilirlik denetleyicisi kırmızı; (c) bir Z kümesinin değerini eşiğin dışına çek → Mac kümesi kırmızı; (d) bir kriter kimliğini kayıttan sil → kayıp tespit ediliyor mu.
+- **VV4 — Ürün kodu ve dondurma.** `git diff ROUND_START..<sha> -- core index server bindings clients spec` boş; `make conformance` 39/39; FREEZE_EXCEPTIONS'taki her girdi için önce/sonra kanıtı; V1'in envanter commit'i V2'den önce ve sonra değişmemiş.
+- **VV5 — Yerel kademeler ve süreç.** `make verify FAST=1` bir kez; `make verify-mac` bir kez (3 tekrar); süreler GOAL eşiklerinde mi. Karar kuralını GOAL'den türet, FINAL ile karşılaştır. Vaat sorusu: yeni kademelerle "iki bağımsız klon aynı sonucu üretir" iddiası eskisi kadar güçlü mü; zayıfladığı bir yer var mı.
+- **Sonuç:** ihlal/fark/şüphe; V-1..V-8 için geçti/kaldı; tek hüküm ("güvenilir" / "şu koşullarla güvenilir" / "güvenilir değil"); ≤ 3 öneri.

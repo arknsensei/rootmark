@@ -10,3 +10,13 @@ Blok 2 (P2-B + P2-R) bitince tek bir dar doğrulama koşulur ve `reports/rounds/
 - **VR6 — Hacim ve R-3.** D-VOL'u kendi koşturmanla yeniden üret (`p2r_volume.py` ön-kayıt commit'inde; `V_before`, `V_after`, `V_after2`); R-7 dallarını GOAL'den türet. R0 (a) uygulandıysa: D-NOTES değerini değiştirilmemiş `p2b_align.py` ile yeniden hesapla (manifest sha256'ları aynen); `git log` ölçücü ve korpusta değişiklik yok; R-3 dalı.
 - **VR7 — Süreç ve vaat.** `check_frozen`, `check_deps`, `check_dep_age`; `ROUND_START` birleşmiş `main`; karar kuralı GOAL'den türetilip FINAL ile karşılaştırılır; dondurma istisnaları önce/sonra kanıtlı; spec'e yalnız §8 bilgilendirici notu, §1–6 ve NORTH_STAR değişmemiş. Vaat sorusu: budama "her bloğun kim tarafından yazıldığı bilinir" ve "checkpoint'te aynı yanıt" vaatlerini hangi koşulda korur (arşivli checkpoint'e sorgu reddediliyor; bu açık bir sınır mı); damga görüşü (§7 `Demoted meta.prune`, §8 arşiv notu: "Validated kalır / not konabilir / konamaz, neden").
 - **Sonuç:** ihlal/fark/şüphe; P2-B kriterleri B-1..B-10 ve P2-R kriterleri R-1..R-10 için geçti/kaldı; tek hüküm ("güvenilir" / "şu koşullarla güvenilir" / "güvenilir değil"); ≤ 3 öneri.
+
+## Ek — K-P2R.5 (2026-10-27; tur kapandıktan sonra, doğrulama başlamadan yazıldı)
+
+Tam çift bu doğrulamada **koşulmaz** (K-P2R.5: farklar ölçüm tasarımından, ortamdan değil; tam çiftin onarımı P2-V'de). VR1 ve P2-B'nin VB1'i bunun yerine:
+
+- **VR1′ (a) — FAST çifti.** `8cf1c74`'te `make verify FAST=1`, bir kez (≤ 20 dk). Karşılaştırma çıkışı 0; P2-B ve P2-R yüzeyleri fark 0.
+- **VR1′ (b) — 3. denemenin kayıtları.** `reports/rounds/P2-R/runs/20261026T222501Z-5b235b0/` (A) ve `chain_B/` (B): `p2r/*`, `p2r_checks.json`, `p2b/*`, `p2b_checks.json` A↔B'yi kendi betiğinle (dondurulmuş karşılaştırıcıyı değil) yeniden karşılaştır; `eval.historical_p2r` satırları iki zincirde aynı mı; R0 (b) sonrası K-P2B.4 girdileri listeden çıkmış ve kaydediciler 11 araçla geçmiş mi.
+- **VR1′ (c) — Teşhisin teyidi.** CI koşusu `40265181721`'in yapıtını indir (`gh run download 40265181721`): farklı alanların hepsi (i) `p2_0_2/d_a.json` ve onu özetleyen kayıtlarda ya da (ii) `release_check.json` R17'nin `detail`'inde mi (klon yolu); başka bir fark var mı. 3. denemenin 2712 farklı alanının hepsi P2-0.2 izleme kümelerinde ve onları özetleyen kayıtlarda mı. Teşhis tutmuyorsa (ürün yüzeyinde fark) bunu bulgu olarak yaz; hüküm buna göre.
+- **Kapsam sınırı.** Zamanlamaya duyarlı kümeler (D-A, P2-0.2 izleme kümeleri, gerçek Obsidian) bu doğrulamanın dışındadır; VERIFICATION bunu açıkça yazar. R-6: K-P2R.5'in okumasını (budama kayıtlarının FAST ve 3. denemede bayt eşitliği) bağımsız değerlendir; R-10: "kaldı, kapanışı P2-V V-4" olarak yaz.
+- VR2–VR7 ve VB2–VB9 aynen. Hedef süre 2–3 saat.

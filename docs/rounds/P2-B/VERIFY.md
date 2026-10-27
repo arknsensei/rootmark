@@ -2,7 +2,7 @@
 
 Bu turun bağımsız doğrulaması tek başına yapılmaz. Blok 2 (P2-B + P2-R) bitince tek bir dar doğrulama koşulur ve `reports/rounds/P2-R/VERIFICATION.md`'ye yazılır; P2-B bölümü ayrı başlıkla. P2-B için doğrulayıcının bakacağı maddeler:
 
-- **VB1 — Tam çift.** `make verify`, bir kez: `loc`, `events`, zaman filtresi ve hizalama değerleri fark 0.
+- **VB1 — Tam çift.** `make verify`, bir kez: `loc`, `events`, zaman filtresi ve hizalama değerleri fark 0. *(K-P2R.5: tam çift koşulmaz; yerine `docs/rounds/P2-R/VERIFY.md` ekindeki VR1′ (a)–(c), P2-B yüzeyleri dahil.)*
 - **VB2 — Hizalama ölçümü:**
   - D-NOTES'un kaynakları, revizyonları, lisansları ve sha256'ları.
   - Seçim tohumu ve ölçüm betiği ölçümden önce commit'li.
