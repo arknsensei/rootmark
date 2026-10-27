@@ -1,0 +1,22 @@
+release_check: ok   R1 one version 0.2.0 — 0.2.0 0.2.0 0.2.0 0.2.0 0.2.0 0.2.0; CHANGELOG 0.2.0
+release_check: ok   R2 spec version 2.0.3
+release_check: ok   R3 rootmark --version / --spec-version
+release_check: ok   R4a release package fresh (inputs of 5b235b0 = HEAD, clean tree, version)
+release_check: FAIL R4 release binaries aarch64-apple-darwin, x86_64-unknown-linux-gnu: --version, --spec-version, rootmark conformance 39/39, sha256 — aarch64-apple-darwin: ok; x86_64-pc-windows-msvc (CI info): skipped; x86_64-unknown-linux-gnu: skipped
+release_check: ok   R5 rootmark conformance = make conformance — make exit 0, rootmark conformance exit 0
+release_check: ok   R6 archives and SHA256SUMS
+release_check: ok   R7 Python wheel (module rootmark_core) — rootmark_bindings-0.2.0-cp311-abi3-macosx_11_0_arm64.whl
+release_check: ok   R8 Obsidian package — files: main.js manifest.json styles.css ; main.js    79827 B
+release_check: ok   R9 spec publication dist/spec-2.0.3
+release_check: ok   R10 LICENSE Apache-2.0
+release_check: ok   R11 CHANGELOG, THREAT_MODEL, RELEASE
+release_check: ok   R12 cargo-binstall metadata, Homebrew draft
+release_check: ok   R13 CI release.yml: workflow_dispatch only, aarch64 and Linux required, Windows continue-on-error, rootmark conformance per job — on: workflow_dispatch:
+release_check: ok   R14 v0.2.0 tag absent or set by a human after a Güvenilir verification — v0.2.0 at fc645ed, newest round start ae7e692, reports/rounds/P2-A/VERIFICATION.md reports/rounds/P2-0.3/VERIFICATION.md: Güvenilir
+release_check: ok   R15 real-Obsidian e2e 11/11 and E1-9 (K-E1.3) — 11/11, E1-9 true
+release_check: ok   R16 RELEASE.md human step 1 waits for a verification that says Güvenilir — reports/rounds/P2-A/VERIFICATION.md reports/rounds/P2-0.3/VERIFICATION.md: Güvenilir
+release_check: ok   R17 installers install.sh / install.ps1 (SHA256SUMS checked, a changed archive refused) — installed rootmark-0.2.0-aarch64-apple-darwin.tar.gz; a changed archive refused
+release_check: ok   R18 CI release.yml: installer per job, SHA256SUMS, build provenance attestation
+release_check: ok   R19 RELEASE.md: signing and notarization are written human steps
+release_check: ok   R20 workflow actions pinned to full versions
+release_check: 20/21

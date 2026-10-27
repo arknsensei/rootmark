@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "rootmark": {
+      "command": "/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.ssyZ0neydC/A/repo/target/release/rootmark",
+      "args": [
+        "serve",
+        "--vault",
+        "vault",
+        "--mcp",
+        "stdio"
+      ]
+    }
+  }
+}

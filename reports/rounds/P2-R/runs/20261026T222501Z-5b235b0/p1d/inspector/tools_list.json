@@ -1,0 +1,308 @@
+{
+  "tools": [
+    {
+      "name": "status",
+      "description": "State of the served vault: its path, the spec and rootmark versions, the claimed conformance level (spec §12), the embedder of its index (spec §9), its last checkpoint (spec §8) and the active policy recipe (promotion policy, spec §7). Writes nothing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "search",
+      "description": "Retrieval as of a checkpoint (spec §9): ranked chunks for a query, lexical (BM25), flat (exact cosine) or hybrid (reciprocal rank fusion, the default), at the checkpoint `at` or at the checkpoint of the current state. Only `canonical` content is returned unless `include_proposal` is set; then up to `k` `proposal` chunks, ranked apart with the canonical statistics, labelled `proposal` with their score multiplied by 0.5, follow the unchanged canonical hits (spec §7, §9). `derived` is never returned. Records one consumption trace for the calling consumer (spec §8). With `path_prefix`, only documents under those vault-relative prefixes are ranked (the statistics stay the checkpoint's); the trace and the response carry the filter, and its `query_hash` covers it. An empty or whitespace-only query is an error and records nothing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "at": {
+            "description": "checkpoint id or name (default: the current state's)",
+            "minLength": 1,
+            "type": "string"
+          },
+          "date_from": {
+            "description": "only documents dated on or after this day (YYYY-MM-DD; the date from the vault's [index] date_from_path or date_field, never a file time); recorded in the trace",
+            "maxLength": 10,
+            "minLength": 10,
+            "type": "string"
+          },
+          "date_to": {
+            "description": "only documents dated on or before this day (YYYY-MM-DD); a document without a date is left out while a time filter is given",
+            "maxLength": 10,
+            "minLength": 10,
+            "type": "string"
+          },
+          "include_proposal": {
+            "description": "also return labelled proposal chunks (default false)",
+            "type": "boolean"
+          },
+          "k": {
+            "description": "canonical hits to return (default 10)",
+            "maximum": 1000,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "loc": {
+            "description": "also each hit's block locations: loc (per lineage: line and byte range, content_hash) and loc_stale (default false)",
+            "type": "boolean"
+          },
+          "mode": {
+            "description": "retrieval mode (default hybrid)",
+            "enum": [
+              "hybrid",
+              "lexical",
+              "flat"
+            ],
+            "type": "string"
+          },
+          "path_prefix": {
+            "description": "only documents whose vault-relative path is one of these or lies under it ('/' separated; no absolute path, no '..'); applied before ranking, recorded in the trace",
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 64,
+            "minItems": 1,
+            "type": "array"
+          },
+          "query": {
+            "description": "the query text (not empty, not only whitespace)",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "read_block",
+      "description": "One block as of a checkpoint (spec §8): its version (version id, type, text, heading path, parents), layer (spec §7) and provenance (author kind, source), for lineage `lineage_id` of document `doc_path`; at checkpoint `at` or at the checkpoint of the current state. Records one consumption trace for the calling consumer. A `derived` block is never returned; a lineage that is not live in that document at that checkpoint is an error and records nothing. The block also carries its location `loc` and `loc_stale` (as in blame).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "at": {
+            "description": "checkpoint id or name (default: the current state's)",
+            "minLength": 1,
+            "type": "string"
+          },
+          "doc_path": {
+            "description": "vault-relative path of the Markdown document",
+            "minLength": 1,
+            "type": "string"
+          },
+          "lineage_id": {
+            "description": "lineage id (32 lowercase hex)",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc_path",
+          "lineage_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "history",
+      "description": "Version chain of one lineage (spec §4–§5): every event of the log that names it (created, updated, moved, split, merged, deleted, promoted, demoted, layer changed), in log order, and its current layer (spec §7). Writes nothing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lineage_id": {
+            "description": "lineage id (32 lowercase hex)",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "lineage_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "blame",
+      "description": "Provenance of a document block by block, in document order (spec §4.3, §7): per block its lineage id, version id, layer (canonical, proposal, derived), author kind, source and the log offsets that created and last changed it; at the head, or as of a checkpoint (spec §8). Per block also its location `loc` (lines, UTF-8 byte range and the `content_hash` of the bytes they belong to) and `loc_stale` (the file on disk holds other bytes than that version: the locations are the version's, not the file's). Writes nothing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "at": {
+            "description": "checkpoint id or name (default: the head)",
+            "minLength": 1,
+            "type": "string"
+          },
+          "doc_path": {
+            "description": "vault-relative path of a Markdown document",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc_path"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "propose",
+      "description": "The only way an agent writes Markdown (spec §7, K8): the agent's text is written into the vault as plain Markdown — a new document (`mode` create, the default; an existing document is never overwritten), appended to an existing one (`append`), or as the body of the section under `heading` (`replace_section`) — and ingested with `author_kind` agent and the consumer as source, so new and changed blocks are `proposal`, excluded from default retrieval until a human promotes them. The vault's edit policy decides first (`[edit]`, default `append_only`): a write that would change or remove a `canonical` block, or a canonical retrieval unit (text appended to a section of canonical blocks joins their chunk), is refused with code `denied` and writes nothing. Agent guideline (K-E0.4): text appended to a document of human blocks is accepted only as a section of its own, so start it with a heading (`## …`); an append without one that the policy refuses answers `policy_violation` with the hint \"start the appended text with a heading\"; `replace_section` is allowed only on a section made of proposals. Change and delete events name the actor (spec §4.3). Nothing but the agent's text is written to the file (no ids, no metadata). `reason` is recorded beside the vault (`.rootmark/proposals.jsonl`). Promotion rules (P2-P): when the vault's `[[promotion.rules]]` name this agent (and source) and the path lies under a rule's `path_prefix`, the first such rule promotes the lineages this call wrote to `canonical` at once — one `Promoted` event each (actor policy:<rule>, reason \"rule:<rule>\"), returned in `promoted` and counted in `events`; a human can demote them. The path must stay inside the vault (no `..`, no absolute path, no hidden directory) and the text may not exceed the server's `max_propose_bytes`.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "description": "the agent's Markdown text",
+            "type": "string"
+          },
+          "doc_path": {
+            "description": "vault-relative path of a .md document",
+            "minLength": 1,
+            "type": "string"
+          },
+          "heading": {
+            "description": "the section heading text (replace_section only)",
+            "minLength": 1,
+            "type": "string"
+          },
+          "mode": {
+            "description": "create (default), append or replace_section",
+            "enum": [
+              "create",
+              "append",
+              "replace_section"
+            ],
+            "type": "string"
+          },
+          "reason": {
+            "description": "why the agent proposes this (recorded, not written to the document)",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc_path",
+          "content",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "promote",
+      "description": "Request the promotion of a lineage from `proposal` to `canonical` (spec §7). The kernel does not decide: the vault's promotion policy hook does, for the actor the channel gives (it cannot be chosen): over MCP the agent agent:<client>, over HTTP the vault's human human:<[identity] human_id>. Under `human_only` (the default) an agent's request is denied: the answer is `decision: denied` with the policy and its reason, not an error, and no event is written; a human's request writes a `Promoted` event (`decision: promoted`). `deny` refuses everyone. This governs manual promotion only; the vault's declarative rules (`[[promotion.rules]]`) promote in `propose`, never here.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lineage_id": {
+            "description": "lineage id (32 lowercase hex)",
+            "minLength": 1,
+            "type": "string"
+          },
+          "reason": {
+            "description": "why the promotion is requested",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "lineage_id",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "checkpoint",
+      "description": "Create a checkpoint of the vault's current state (spec §8): an immutable map doc path → snapshot at an event offset, optionally named; the same state gives the same checkpoint id. Queries can then be evaluated as of it (`search at`, `blame at`, `read_block at`). Returns the checkpoint. A state has one checkpoint: if a search or read already created its unnamed checkpoint, `name` names that one (same id, a `CheckpointNamed` event). A name another checkpoint holds, or another name for an already named state, is an error (`exists`).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "optional checkpoint name",
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "checkpoints",
+      "description": "Every checkpoint of the vault (spec §8: checkpoint id, optional name, event offset, snapshot per document), in creation order. Writes nothing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "trace",
+      "description": "Consumption traces (spec §8): which block versions (doc path, lineage id, version id) each retrieval returned, with its checkpoint, consumer and query hash; from trace offset `since_seq`, optionally for one consumer. Writes nothing.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "consumer": {
+            "description": "only traces of this consumer",
+            "minLength": 1,
+            "type": "string"
+          },
+          "since_seq": {
+            "description": "only traces with at_seq >= since_seq (default 0)",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "events",
+      "description": "The event log as a stream to pull (P2-B; contract §2.8): the events of `events.jsonl` from `since_seq` on (inclusive), in seq order, each object the bytes of its log line, at most `limit` (default 100, at most 1000; a larger limit is refused). `kinds` and `path_prefix` only filter, never reorder (`path_prefix` as in search: vault-relative, NFC). `next_seq` is where the next page starts, `head_seq` the log's length. Writes nothing (no event, no trace).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "kinds": {
+            "description": "only events of these kinds (BlockCreated, …, Promoted, Demoted, CheckpointCreated, …)",
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 12,
+            "minItems": 1,
+            "type": "array"
+          },
+          "limit": {
+            "description": "at most this many events (default 100, at most 1000)",
+            "maximum": 1000,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "path_prefix": {
+            "description": "only events of documents whose vault-relative path is one of these or lies under it (as in search)",
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 64,
+            "minItems": 1,
+            "type": "array"
+          },
+          "since_seq": {
+            "description": "first seq to return (default 0); beyond head_seq is refused",
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

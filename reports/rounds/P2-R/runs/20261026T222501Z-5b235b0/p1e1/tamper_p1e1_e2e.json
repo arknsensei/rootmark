@@ -1,0 +1,34 @@
+{
+  "cases": [
+    {
+      "group": "real-e2e",
+      "case": "no Obsidian binary: skip reported, not a pass",
+      "expected": "accepted",
+      "got": "accepted",
+      "detail": {
+        "skipped": true,
+        "pass": null,
+        "as_expected": true
+      },
+      "as_expected": true
+    },
+    {
+      "group": "real-e2e",
+      "case": "plugin bundle without the index state in the status bar",
+      "expected": "rejected",
+      "got": "rejected",
+      "detail": {
+        "passed": 11,
+        "e1_9": false,
+        "as_expected": true
+      },
+      "as_expected": true
+    }
+  ],
+  "rejected": 1,
+  "rejected_total": 1,
+  "controls_ok": 1,
+  "controls_total": 1,
+  "real_cases_run": true,
+  "pass": true
+}

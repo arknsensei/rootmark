@@ -1,0 +1,23 @@
+{
+ "H4-V2": {
+  "d3": {
+   "equal": true,
+   "events_hash": "e6945bbc2da9c47376e017e815d7e51b",
+   "expected": "e6945bbc2da9c47376e017e815d7e51b",
+   "manifest_events_hash": "e6945bbc2da9c47376e017e815d7e51b"
+  },
+  "equal": true,
+  "h1s": {
+   "H1-S1": 1.0,
+   "H1-S2": 0.037953795379537955,
+   "H1-S3": 0.961082910321489,
+   "H1-S4": 1.0,
+   "differing": [],
+   "equal": true,
+   "n_differing": 0,
+   "n_fields": 35,
+   "reference": "v2-final:reports/runs/20261013T154851Z-f133d0b/h1s.json"
+  }
+ },
+ "matcher": "v2"
+}

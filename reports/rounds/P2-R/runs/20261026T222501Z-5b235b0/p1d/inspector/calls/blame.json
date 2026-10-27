@@ -1,0 +1,196 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"at\":null,\"blocks\":[{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"74ecb4d582f0ffede4479a044f078542\",\"loc\":{\"byte_end\":10,\"byte_start\":0,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":1,\"line_start\":1},\"seq_created\":18,\"seq_last\":18,\"source\":\"\",\"version_id\":\"89d0a18e79e31ff49018e502401250e4\"},{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"c4bf6f31f6d9b9b83904d4d2d4cb8c22\",\"loc\":{\"byte_end\":79,\"byte_start\":12,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":3,\"line_start\":3},\"seq_created\":19,\"seq_last\":19,\"source\":\"\",\"version_id\":\"fa889c08d606d0a20dc7680c00784642\"},{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"b8207c223754799bd8d227b68dcb3518\",\"loc\":{\"byte_end\":90,\"byte_start\":81,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":5,\"line_start\":5},\"seq_created\":20,\"seq_last\":20,\"source\":\"\",\"version_id\":\"785a55dccf78d48d6ca2327c3e8fbf32\"},{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"ddde6b3b5dd3e2fb53dd11c9177b915b\",\"loc\":{\"byte_end\":104,\"byte_start\":92,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":7,\"line_start\":7},\"seq_created\":21,\"seq_last\":21,\"source\":\"\",\"version_id\":\"2e1daa661fb1aa5d53bc525a2165901d\"},{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"bde4a62ef108123db6225d3cc7469dba\",\"loc\":{\"byte_end\":118,\"byte_start\":105,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":8,\"line_start\":8},\"seq_created\":22,\"seq_last\":22,\"source\":\"\",\"version_id\":\"8ad3efef173ae2b9a8684a7fc01ccd20\"},{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"ccb4b5d556126285ce5c51379cb3f2d4\",\"loc\":{\"byte_end\":212,\"byte_start\":119,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":11,\"line_start\":9},\"seq_created\":23,\"seq_last\":23,\"source\":\"\",\"version_id\":\"f9cf861b32d6aacc54907b038ab7342b\"},{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"b950226d51df600280c2d5d172cf1c01\",\"loc\":{\"byte_end\":226,\"byte_start\":214,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":13,\"line_start\":13},\"seq_created\":24,\"seq_last\":24,\"source\":\"\",\"version_id\":\"35a3c10f6941ba9f66cfbf97642a5718\"},{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"0ac7567834b23705676531bd025b23c8\",\"loc\":{\"byte_end\":320,\"byte_start\":228,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":15,\"line_start\":15},\"seq_created\":25,\"seq_last\":25,\"source\":\"\",\"version_id\":\"9b758e879f21aca0808ef32ae53fa764\"},{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"28273578dc4c268579aa8945a7b08dcf\",\"loc\":{\"byte_end\":414,\"byte_start\":322,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":20,\"line_start\":17},\"seq_created\":26,\"seq_last\":26,\"source\":\"\",\"version_id\":\"f4173aeaa5a70b50ca09732821ed142f\"},{\"author_kind\":\"Human\",\"inactive\":false,\"layer\":\"canonical\",\"layer_source\":\"event\",\"lineage_id\":\"9167da9b3609a6a9c574eae9cff723e4\",\"loc\":{\"byte_end\":457,\"byte_start\":416,\"content_hash\":\"4d7568de2512522ac296843deb0658e7\",\"line_end\":22,\"line_start\":22},\"seq_created\":27,\"seq_last\":27,\"source\":\"\",\"version_id\":\"b4627a9650bbadeafc64fca956629e55\"}],\"doc_path\":\"espresso.md\",\"loc_stale\":true}"
+    }
+  ],
+  "structuredContent": {
+    "at": null,
+    "blocks": [
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "74ecb4d582f0ffede4479a044f078542",
+        "loc": {
+          "byte_end": 10,
+          "byte_start": 0,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 1,
+          "line_start": 1
+        },
+        "seq_created": 18,
+        "seq_last": 18,
+        "source": "",
+        "version_id": "89d0a18e79e31ff49018e502401250e4"
+      },
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "c4bf6f31f6d9b9b83904d4d2d4cb8c22",
+        "loc": {
+          "byte_end": 79,
+          "byte_start": 12,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 3,
+          "line_start": 3
+        },
+        "seq_created": 19,
+        "seq_last": 19,
+        "source": "",
+        "version_id": "fa889c08d606d0a20dc7680c00784642"
+      },
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "b8207c223754799bd8d227b68dcb3518",
+        "loc": {
+          "byte_end": 90,
+          "byte_start": 81,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 5,
+          "line_start": 5
+        },
+        "seq_created": 20,
+        "seq_last": 20,
+        "source": "",
+        "version_id": "785a55dccf78d48d6ca2327c3e8fbf32"
+      },
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "ddde6b3b5dd3e2fb53dd11c9177b915b",
+        "loc": {
+          "byte_end": 104,
+          "byte_start": 92,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 7,
+          "line_start": 7
+        },
+        "seq_created": 21,
+        "seq_last": 21,
+        "source": "",
+        "version_id": "2e1daa661fb1aa5d53bc525a2165901d"
+      },
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "bde4a62ef108123db6225d3cc7469dba",
+        "loc": {
+          "byte_end": 118,
+          "byte_start": 105,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 8,
+          "line_start": 8
+        },
+        "seq_created": 22,
+        "seq_last": 22,
+        "source": "",
+        "version_id": "8ad3efef173ae2b9a8684a7fc01ccd20"
+      },
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "ccb4b5d556126285ce5c51379cb3f2d4",
+        "loc": {
+          "byte_end": 212,
+          "byte_start": 119,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 11,
+          "line_start": 9
+        },
+        "seq_created": 23,
+        "seq_last": 23,
+        "source": "",
+        "version_id": "f9cf861b32d6aacc54907b038ab7342b"
+      },
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "b950226d51df600280c2d5d172cf1c01",
+        "loc": {
+          "byte_end": 226,
+          "byte_start": 214,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 13,
+          "line_start": 13
+        },
+        "seq_created": 24,
+        "seq_last": 24,
+        "source": "",
+        "version_id": "35a3c10f6941ba9f66cfbf97642a5718"
+      },
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "0ac7567834b23705676531bd025b23c8",
+        "loc": {
+          "byte_end": 320,
+          "byte_start": 228,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 15,
+          "line_start": 15
+        },
+        "seq_created": 25,
+        "seq_last": 25,
+        "source": "",
+        "version_id": "9b758e879f21aca0808ef32ae53fa764"
+      },
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "28273578dc4c268579aa8945a7b08dcf",
+        "loc": {
+          "byte_end": 414,
+          "byte_start": 322,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 20,
+          "line_start": 17
+        },
+        "seq_created": 26,
+        "seq_last": 26,
+        "source": "",
+        "version_id": "f4173aeaa5a70b50ca09732821ed142f"
+      },
+      {
+        "author_kind": "Human",
+        "inactive": false,
+        "layer": "canonical",
+        "layer_source": "event",
+        "lineage_id": "9167da9b3609a6a9c574eae9cff723e4",
+        "loc": {
+          "byte_end": 457,
+          "byte_start": 416,
+          "content_hash": "4d7568de2512522ac296843deb0658e7",
+          "line_end": 22,
+          "line_start": 22
+        },
+        "seq_created": 27,
+        "seq_last": 27,
+        "source": "",
+        "version_id": "b4627a9650bbadeafc64fca956629e55"
+      }
+    ],
+    "doc_path": "espresso.md",
+    "loc_stale": true
+  },
+  "isError": false
+}

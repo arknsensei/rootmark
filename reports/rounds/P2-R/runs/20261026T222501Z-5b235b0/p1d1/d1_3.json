@@ -1,0 +1,23 @@
+{
+  "accepted": 451,
+  "after_hash": "c30e86ba88091fa53447cd7f75e0606d",
+  "before_hash": "c30e86ba88091fa53447cd7f75e0606d",
+  "comparisons": 600,
+  "criterion": "D1-3",
+  "differing": 0,
+  "empty_canonical_results_before": 0,
+  "first_differing": null,
+  "modes": 3,
+  "outcomes": {
+    "append:accepted": 156,
+    "append:policy_violation": 13,
+    "create:accepted": 158,
+    "replace_section:accepted": 137,
+    "replace_section:denied": 36
+  },
+  "pass": true,
+  "proposal_docs_created": 158,
+  "proposal_hits_after_50_lexical_queries_with_include_proposal": 493,
+  "queries": 200,
+  "writes": 500
+}
