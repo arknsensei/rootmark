@@ -1,0 +1,121 @@
+{
+ "task": "P2-V/V4 (V-3): eski zincir (352f790, kademe 2 iş akışı sha=ROUND_START: 40613392932) ↔ yeni zincir (43055ee: A 40613401174, B 40613409396), ubuntu-latest; eval.tier2 equiv; Mac kümesi 20261028T013053Z-43055ee",
+ "sides": {
+  "A": {
+   "old": "40613392932 A",
+   "new": "40613401174 A",
+   "n_fields": 788021,
+   "pass": false,
+   "d_fields_differing": 209282,
+   "d_fields_differing_by_file": {
+    "p1c1_checks.json": 5813,
+    "p1c_checks.json": 1,
+    "p1c_index.json": 5819,
+    "p1d1/d1_3.json": 2,
+    "p1d1_checks.json": 11626,
+    "p1d_checks.json": 11626,
+    "p1e1/release/release_check.json": 1,
+    "p1e1_checks.json": 69756,
+    "p1e_checks.json": 34878,
+    "p2_0_2_checks.json": 34878,
+    "p2a_checks.json": 34878,
+    "p2l/d_tr.json": 4
+   },
+   "d_fields_differing_first": [
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›0›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›1›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›2›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›3›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›4›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›5›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›6›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›7›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›8›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›9›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›0›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›1›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›2›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›3›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›4›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›5›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›6›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›7›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›8›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›100›9›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›0›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›1›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›2›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›3›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›4›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›5›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›6›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›7›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›8›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›101›9›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›102›0›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›102›1›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›102›2›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›102›3›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›102›4›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›102›5›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›102›6›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›102›7›3",
+    "p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›102›8›3"
+   ],
+   "d_bytes_differing": [
+    "p1d1/d1_3.json"
+   ],
+   "named_differences": {
+    "H": 2,
+    "Z/O": 55,
+    "commit": 2
+   },
+   "named_H": [
+    "p1e1/release/release_check.json:items›17›detail",
+    "p2_0_2_checks.json:regress›differing_fields›p1e1/release/release_check·json:items›17›detail›b"
+   ],
+   "named_commit": [
+    "p1e1/release/release.json:commit",
+    "p1e1/release/release_check.json:items›3›item"
+   ],
+   "criteria_old": 134,
+   "criteria_new": 134,
+   "criteria_mac": 23,
+   "criteria_lost": [],
+   "criteria_new_only": []
+  },
+  "B": {
+   "old": "40613392932 B",
+   "new": "40613409396 B",
+   "n_fields": 788021,
+   "pass": false,
+   "d_fields_differing": 1,
+   "d_fields_differing_by_file": {
+    "p1e1/release/release_check.json": 1
+   },
+   "d_fields_differing_first": [
+    "p1e1/release/release_check.json:items›14›detail"
+   ],
+   "d_bytes_differing": [],
+   "named_differences": {
+    "H": 2,
+    "Z/O": 40,
+    "commit": 2
+   },
+   "named_H": [
+    "p1e1/release/release_check.json:items›17›detail",
+    "p2_0_2_checks.json:regress›differing_fields›p1e1/release/release_check·json:items›17›detail›b"
+   ],
+   "named_commit": [
+    "p1e1/release/release.json:commit",
+    "p1e1/release/release_check.json:items›3›item"
+   ],
+   "criteria_old": 134,
+   "criteria_new": 134,
+   "criteria_mac": 23,
+   "criteria_lost": [],
+   "criteria_new_only": []
+  }
+ }
+}

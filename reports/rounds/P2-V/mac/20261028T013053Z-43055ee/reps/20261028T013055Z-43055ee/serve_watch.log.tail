@@ -1,0 +1,40 @@
+assertion `left == right` failed: {"edits":20,"latencies_ms":[2000.2415,419.936667,694.065416,561.486542,734.163042,272.590958,309.53175,324.28341700000004,428.115541,477.43775,184.325542,467.645458,538.890584,3539.712375,1316.049125,1042.758791,427.789417,632.1131250000001,402.076083,288.617458],"layers_canonical_human":true,"max_ms":3539.712375,"p95_ms":2000.2415,"pass":false,"sigterm_compacted":true,"sigterm_exit_0":true}
+rootmark serve: no index: built one (33 records, 12 snapshots, minilm-l6-v2/e73168f9)
+rootmark serve: token Created (<tmp>/rootmark-d10-44117-vault/vault/.rootmark/server.token)
+rootmark serve: http listening on 127.0.0.1:52243
+rootmark serve: watching <tmp>/rootmark-d10-44117-vault/vault
+rootmark serve: watch: espresso.md ingested (2 events, 1 chunks embedded, snapshot 9c8ad049ba00c908bd2d8d65806095f0)
+rootmark serve: watch: filter.md ingested (2 events, 1 chunks embedded, snapshot 919e2f3371d74e39f099c4e29b689734)
+rootmark serve: watch: roasting.md ingested (2 events, 1 chunks embedded, snapshot bee1013e2954ae69c399de7b89391973)
+rootmark serve: watch: glossary.md ingested (2 events, 1 chunks embedded, snapshot 2929d2b5de30a09e30114d2ee72961b5)
+rootmark serve: watch: espresso.md ingested (2 events, 1 chunks embedded, snapshot 8e3da0cd49b90b3689b993c08c84e333)
+rootmark serve: watch: filter.md ingested (2 events, 1 chunks embedded, snapshot b2f29b9053f352d0f02cb291bc39de09)
+rootmark serve: watch: roasting.md ingested (2 events, 1 chunks embedded, snapshot 0b95e0e698e25f0687b7d8912b5e567d)
+rootmark serve: watch: glossary.md ingested (2 events, 1 chunks embedded, snapshot 5022724ca0f48b795a5ebffe224c741e)
+rootmark serve: watch: espresso.md ingested (2 events, 1 chunks embedded, snapshot f75a3d5179102c4fbb371aacd5cfd505)
+rootmark serve: watch: filter.md ingested (2 events, 1 chunks embedded, snapshot 9e2ac0b3ed94ad1eede0b26734b69e08)
+rootmark serve: watch: roasting.md ingested (2 events, 1 chunks embedded, snapshot abcf5c9c1fd3c57036af3df655946949)
+rootmark serve: watch: glossary.md ingested (2 events, 1 chunks embedded, snapshot 756c734ad75ee693210da08f20bcd336)
+rootmark serve: watch: espresso.md ingested (2 events, 1 chunks embedded, snapshot bbf76198020bdd648153d458139cc675)
+rootmark serve: watch: filter.md ingested (2 events, 1 chunks embedded, snapshot 265b3cee5f23a9bb3335a16eb0c10d87)
+rootmark serve: watch: roasting.md ingested (2 events, 1 chunks embedded, snapshot f9f345fd9bb5dbc2f0e89ad943923bea)
+rootmark serve: watch: glossary.md ingested (2 events, 1 chunks embedded, snapshot e39099a6c8dffda5f79e7895c20ec201)
+rootmark serve: watch: espresso.md ingested (2 events, 1 chunks embedded, snapshot 3df30ab32382ff1a51f8191930ddc257)
+rootmark serve: watch: filter.md ingested (2 events, 1 chunks embedded, snapshot 0cea5fafb288a75a15725a97a7a810b2)
+rootmark serve: watch: roasting.md ingested (2 events, 1 chunks embedded, snapshot 6a5361f9ad5414c6e32b9e43119c6b9e)
+rootmark serve: watch: glossary.md ingested (2 events, 1 chunks embedded, snapshot 4e060b9fdb9aa2314e5b15d7e7e48a92)
+rootmark serve: stopping (SIGTERM)
+rootmark serve: compact (shutdown): 53 records, 32 snapshots, 20 moved from the hot tier
+rootmark serve: stopped
+
+  left: Bool(false)
+ right: true
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    d10_watched_human_edit_is_indexed_within_a_second
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 39.69s
+
+error: test failed, to rerun pass `-p rootmark-server --test serve_watch`

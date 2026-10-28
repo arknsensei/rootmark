@@ -1,0 +1,618 @@
+{
+ "criteria": {
+  "p1c1_checks.json:C1-8": {
+   "differing_fields": [],
+   "n_differing": 0,
+   "n_fields": 99053,
+   "pass": true,
+   "reference_run": "20261015T014417Z-9aa326b"
+  },
+  "p1d_checks.json:D-10": {
+   "layers_canonical_human": true,
+   "measured": {
+    "edits": 20,
+    "max_ms": 3539.712375,
+    "p95_ms": 2000.2415
+   },
+   "pass": false,
+   "sigterm_compacts": true,
+   "sigterm_never_lost": true,
+   "threshold_p95_ms": 1000
+  },
+  "p1e1_checks.json:E1-3": {
+   "e3_md_changes_only_at_propose": true,
+   "e4_outside_contract": 0,
+   "e4_requests": 57,
+   "failed": [],
+   "pass": true,
+   "steps": "11/11"
+  },
+  "p1e1_checks.json:E1-4": {
+   "every_item_scripted": true,
+   "failed": [
+    "R4"
+   ],
+   "pass": false,
+   "release_check": "20/21"
+  },
+  "p1e1_checks.json:E1-9": {
+   "connection_step": {
+    "notice_shown": true,
+    "search_after_rebuild": {
+     "error": null,
+     "hits": 5
+    },
+    "search_before_rebuild": {
+     "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+     "hits": 0
+    },
+    "status_bar": "rootmark 0.2.0 · human:editor · index stale",
+    "status_bar_after_rebuild": "rootmark 0.2.0 · human:editor",
+    "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+   },
+   "half": "e2e step (the contract check is tier 2's)",
+   "pass": true
+  },
+  "p1e1_checks.json:tamper": {
+   "controls": "1/1",
+   "half": "tamper_p1e1_e2e (the real Obsidian); tamper_p1e1.json is deterministic, tier 2",
+   "pass": true,
+   "real_cases_run": true,
+   "rejected": "1/1"
+  },
+  "p1e_checks.json:E-7": {
+   "chain_local_target": {
+    "conformance": {
+     "exit": 0,
+     "level_claimed": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "pass": true,
+    "spec_version": "2.0.3",
+    "target": "aarch64-apple-darwin",
+    "version": "rootmark 0.2.0"
+   },
+   "four_targets": "2/4 (docs/rounds/P1-E/progress/E5_release.json)",
+   "pass": false
+  },
+  "p2_0_2_checks.json:H-P2-0.2a": {
+   "d_a": {
+    "canonical_leak": 0,
+    "new_blocks": 255,
+    "scenarios": 200
+   },
+   "d_a2": {
+    "by_path": {
+     "atomic_rename": {
+      "canonical_leak": 0,
+      "new_blocks": 19,
+      "scenarios": 20
+     },
+     "cat": {
+      "canonical_leak": 0,
+      "new_blocks": 13,
+      "scenarios": 20
+     },
+     "cp_rsync": {
+      "canonical_leak": 0,
+      "new_blocks": 13,
+      "scenarios": 20
+     },
+     "git_apply": {
+      "canonical_leak": 0,
+      "new_blocks": 22,
+      "scenarios": 20
+     },
+     "python": {
+      "canonical_leak": 0,
+      "new_blocks": 8,
+      "scenarios": 20
+     },
+     "sed": {
+      "canonical_leak": 0,
+      "new_blocks": 10,
+      "scenarios": 20
+     }
+    },
+    "canonical_leak": 0,
+    "new_blocks": 85,
+    "scenarios": 120
+   },
+   "pass": false,
+   "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+  },
+  "p2_0_2_checks.json:H-P2-0.2a′": {
+   "canonical_changed": 24,
+   "pass": true,
+   "scenarios": "200/200",
+   "source": "p2_0_2/d_a.json"
+  },
+  "p2_0_2_checks.json:H-P2-0.2d": {
+   "d_c": {
+    "accuracy": 0.7941176470588235,
+    "agent_canonical": 1,
+    "blocks": 340,
+    "by_mode": {
+     "apart": {
+      "blocks": 298,
+      "right": 237
+     },
+     "collide": {
+      "blocks": 14,
+      "right": 12
+     },
+     "same_doc_after": {
+      "blocks": 28,
+      "right": 21
+     }
+    },
+    "partial_lines": 5,
+    "pass": false,
+    "right": 270,
+    "ticks": 160
+   },
+   "half": "D-C (≥ 0.99); D-C′ (real Obsidian) is H-P2-0.3d",
+   "pass": false
+  },
+  "p2_0_2_checks.json:H-P2-0.2f": {
+   "by_kind": {
+    "append": {
+     "new_blocks": 19,
+     "sessions": 20,
+     "unverified_after_window": 1
+    },
+    "atomic": {
+     "new_blocks": 48,
+     "sessions": 50,
+     "unverified_after_window": 3
+    },
+    "inplace": {
+     "new_blocks": 30,
+     "sessions": 30,
+     "unverified_after_window": 1
+    },
+    "mv": {
+     "new_blocks": 459,
+     "sessions": 30,
+     "unverified_after_window": 66
+    },
+    "rapid": {
+     "new_blocks": 71,
+     "sessions": 20,
+     "unverified_after_window": 4
+    }
+   },
+   "false_unverified_rate": 0.11961722488038277,
+   "latency_p95_ms": null,
+   "latency_unsettled": 23,
+   "new_blocks": 627,
+   "pass": false,
+   "sessions": 150,
+   "source": "p2_0_2/d_b2.json",
+   "unverified_after_window": 75
+  },
+  "p2_0_2_checks.json:H-P2-0.2i": {
+   "logs": {
+    "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a/events.jsonl": "816cd9585151b1382a06bcac851bb336",
+    "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a2/events.jsonl": "224f038e2233fb658e8d87894632afb2",
+    "d_c/attestations.jsonl": "0dee1e9a0571b660bab618ae7dd57fbd",
+    "d_c/events.jsonl": "4d8d4a21b4ede19aca0a7d2380622432"
+   },
+   "pass": null
+  },
+  "p2_0_3_checks.json:H-P2-0.3a": {
+   "d_a": {
+    "canonical_leak": 0,
+    "new_blocks": 255,
+    "scenarios": 200
+   },
+   "d_a2": {
+    "by_path": {
+     "atomic_rename": {
+      "canonical_leak": 0,
+      "new_blocks": 19,
+      "scenarios": 20
+     },
+     "cat": {
+      "canonical_leak": 0,
+      "new_blocks": 13,
+      "scenarios": 20
+     },
+     "cp_rsync": {
+      "canonical_leak": 0,
+      "new_blocks": 13,
+      "scenarios": 20
+     },
+     "git_apply": {
+      "canonical_leak": 0,
+      "new_blocks": 22,
+      "scenarios": 20
+     },
+     "python": {
+      "canonical_leak": 0,
+      "new_blocks": 8,
+      "scenarios": 20
+     },
+     "sed": {
+      "canonical_leak": 0,
+      "new_blocks": 10,
+      "scenarios": 20
+     }
+    },
+    "canonical_leak": 0,
+    "new_blocks": 85,
+    "scenarios": 120
+   },
+   "pass": false,
+   "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+  },
+  "p2_0_3_checks.json:H-P2-0.3a′": {
+   "canonical_changed": 24,
+   "pass": true,
+   "scenarios": "200/200",
+   "source": "p2_0_2/d_a.json"
+  },
+  "p2_0_3_checks.json:H-P2-0.3b": {
+   "by_kind": {
+    "char": {
+     "new_blocks": 22,
+     "saves": 22,
+     "unverified": 1
+    },
+    "focus": {
+     "new_blocks": 21,
+     "saves": 21,
+     "unverified": 0
+    },
+    "move_folder": {
+     "new_blocks": 350,
+     "saves": 15,
+     "unverified": 38
+    },
+    "multi": {
+     "new_blocks": 56,
+     "saves": 56,
+     "unverified": 0
+    },
+    "paragraph": {
+     "new_blocks": 22,
+     "saves": 22,
+     "unverified": 1
+    },
+    "paste": {
+     "new_blocks": 270,
+     "saves": 21,
+     "unverified": 0
+    },
+    "rapid": {
+     "new_blocks": 77,
+     "saves": 22,
+     "unverified": 2
+    },
+    "rename": {
+     "new_blocks": 1038,
+     "saves": 173,
+     "unverified": 130
+    },
+    "rename_again": {
+     "new_blocks": 372,
+     "saves": 61,
+     "unverified": 9
+    }
+   },
+   "coverage": {
+    "link_counts": {
+     "embed": 7,
+     "md_label": 7,
+     "md_name": 8,
+     "md_path": 4,
+     "self_md": 2,
+     "self_wiki": 2,
+     "self_wiki_heading": 2,
+     "wiki": 8,
+     "wiki_alias": 7,
+     "wiki_heading": 8
+    },
+    "ok": true,
+    "rename_facts": {
+     "in_folder": 39,
+     "incoming_md": 45,
+     "renames": 70,
+     "self_link": 35,
+     "self_link_by_kind": {
+      "move_folder": 10,
+      "rename": 17,
+      "rename_again": 8
+     }
+    },
+    "seed": 2671050228,
+    "session_kinds": {
+     "char": 22,
+     "focus": 21,
+     "move_folder": 15,
+     "multi": 22,
+     "paragraph": 22,
+     "paste": 21,
+     "rapid": 22,
+     "rename": 40,
+     "rename_again": 15
+    },
+    "zero": []
+   },
+   "false_unverified_rate": 0.08123877917414722,
+   "link_settings": {
+    "alwaysUpdateLinks": true,
+    "newLinkFormat": "shortest",
+    "useMarkdownLinks": false
+   },
+   "new_blocks": 2228,
+   "pass": false,
+   "saves": 413,
+   "seed": 2671050228,
+   "sessions": 200,
+   "set": "D-B test-4",
+   "side_notes": 179,
+   "source": "p2_0_3/d_b.json",
+   "unverified_after_window": 181
+  },
+  "p2_0_3_checks.json:H-P2-0.3b-yük": {
+   "false_unverified_rate": 0.08123877917414722,
+   "pass": false,
+   "source": "p2_0_3/d_b.json",
+   "threshold": 0.02
+  },
+  "p2_0_3_checks.json:H-P2-0.3b′": {
+   "by_class": {
+    "embed": {
+     "blocks": 35,
+     "unverified": 5
+    },
+    "md_label": {
+     "blocks": 26,
+     "unverified": 2
+    },
+    "md_name": {
+     "blocks": 44,
+     "unverified": 6
+    },
+    "none": {
+     "blocks": 1541,
+     "unverified": 155
+    },
+    "self": {
+     "blocks": 35,
+     "unverified": 4
+    },
+    "wiki": {
+     "blocks": 42,
+     "unverified": 5
+    },
+    "wiki_alias": {
+     "blocks": 24,
+     "unverified": 0
+    },
+    "wiki_heading": {
+     "blocks": 50,
+     "unverified": 4
+    }
+   },
+   "by_kind": {
+    "move_folder": {
+     "blocks": 350,
+     "records": 15,
+     "unverified": 38
+    },
+    "rename": {
+     "blocks": 1038,
+     "records": 173,
+     "unverified": 130
+    },
+    "rename_again": {
+     "blocks": 372,
+     "records": 61,
+     "unverified": 9
+    }
+   },
+   "false_unverified_rate": 0.10056818181818182,
+   "new_blocks": 1760,
+   "pass": null,
+   "records": 249,
+   "sessions": 70,
+   "source": "p2_0_3/d_b.json (renames)",
+   "unverified_after_window": 177
+  },
+  "p2_0_3_checks.json:H-P2-0.3c": {
+   "latency_measured": 164,
+   "latency_p95_ms": 292,
+   "latency_p95_over_window": false,
+   "latency_unsettled": 3,
+   "no_write": 249,
+   "pass": true,
+   "source": "p2_0_3/d_b.json"
+  },
+  "p2_0_3_checks.json:H-P2-0.3d": {
+   "d_c": {
+    "accuracy": 0.7941176470588235,
+    "agent_canonical": 1,
+    "blocks": 340,
+    "by_mode": {
+     "apart": {
+      "blocks": 298,
+      "right": 237
+     },
+     "collide": {
+      "blocks": 14,
+      "right": 12
+     },
+     "same_doc_after": {
+      "blocks": 28,
+      "right": 21
+     }
+    },
+    "partial_lines": 5,
+    "pass": false,
+    "right": 270,
+    "ticks": 160
+   },
+   "d_c_prime": {
+    "agent_canonical": 0,
+    "by_delay": {
+     "0": {
+      "agent_canonical": 0,
+      "human_blocks": 10,
+      "human_canonical": 10,
+      "ticks": 10
+     },
+     "100": {
+      "agent_canonical": 0,
+      "human_blocks": 10,
+      "human_canonical": 10,
+      "ticks": 10
+     },
+     "20": {
+      "agent_canonical": 0,
+      "human_blocks": 10,
+      "human_canonical": 10,
+      "ticks": 10
+     },
+     "50": {
+      "agent_canonical": 0,
+      "human_blocks": 10,
+      "human_canonical": 10,
+      "ticks": 10
+     }
+    },
+    "human_accuracy": 1,
+    "human_blocks": 40,
+    "human_canonical": 40,
+    "pass": true,
+    "ticks": 40
+   },
+   "pass": false,
+   "source": "p2_0_2/d_c.json, p2_0_3/d_c_prime.json"
+  },
+  "p2_0_3_checks.json:H-P2-0.3e": {
+   "agent_blocks": 50,
+   "agent_canonical": 0,
+   "by_kind": {
+    "carry": {
+     "agent_canonical": 0,
+     "scenarios": 10
+    },
+    "in_agent_block": {
+     "agent_canonical": 0,
+     "scenarios": 25
+    },
+    "in_human_block": {
+     "agent_canonical": 0,
+     "scenarios": 15
+    },
+    "unobserved": {
+     "agent_canonical": 0,
+     "scenarios": 10
+    }
+   },
+   "carry_agent_blocks": 10,
+   "carry_agent_canonical": 0,
+   "carry_human_canonical_after": 76,
+   "carry_human_canonical_before": 90,
+   "carry_scenarios": 10,
+   "fakes": 10,
+   "fakes_denied": 10,
+   "link_settings": {
+    "alwaysUpdateLinks": true,
+    "newLinkFormat": "shortest",
+    "useMarkdownLinks": false
+   },
+   "links_rewritten": 46,
+   "pass": true,
+   "scenarios": 50,
+   "source": "p2_0_3/d_a_prime.json"
+  },
+  "p2_0_3_checks.json:H-P2-0.3f": {
+   "by_kind": {
+    "append": {
+     "new_blocks": 19,
+     "sessions": 20,
+     "unverified_after_window": 1
+    },
+    "atomic": {
+     "new_blocks": 48,
+     "sessions": 50,
+     "unverified_after_window": 3
+    },
+    "inplace": {
+     "new_blocks": 30,
+     "sessions": 30,
+     "unverified_after_window": 1
+    },
+    "mv": {
+     "new_blocks": 459,
+     "sessions": 30,
+     "unverified_after_window": 66
+    },
+    "rapid": {
+     "new_blocks": 71,
+     "sessions": 20,
+     "unverified_after_window": 4
+    }
+   },
+   "false_unverified_rate": 0.11961722488038277,
+   "latency_p95_ms": null,
+   "latency_unsettled": 23,
+   "new_blocks": 627,
+   "pass": false,
+   "sessions": 150,
+   "source": "p2_0_2/d_b2.json",
+   "unverified_after_window": 75
+  },
+  "p2_0_3_checks.json:H-P2-0.3i": {
+   "logs": {
+    "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a/events.jsonl": "816cd9585151b1382a06bcac851bb336",
+    "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a2/events.jsonl": "224f038e2233fb658e8d87894632afb2",
+    "d_c/attestations.jsonl": "0dee1e9a0571b660bab618ae7dd57fbd",
+    "d_c/events.jsonl": "4d8d4a21b4ede19aca0a7d2380622432"
+   },
+   "pass": null
+  },
+  "p2_0_3_checks.json:logs_vs_p2a": {
+   "logs": {
+    "d_a/attestations.jsonl": {
+     "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+     "equal": true
+    },
+    "d_a/events.jsonl": {
+     "blake3": "816cd9585151b1382a06bcac851bb336",
+     "equal": false
+    },
+    "d_a2/attestations.jsonl": {
+     "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+     "equal": true
+    },
+    "d_a2/events.jsonl": {
+     "blake3": "224f038e2233fb658e8d87894632afb2",
+     "equal": false
+    },
+    "d_c/attestations.jsonl": {
+     "blake3": "0dee1e9a0571b660bab618ae7dd57fbd",
+     "equal": false
+    },
+    "d_c/events.jsonl": {
+     "blake3": "4d8d4a21b4ede19aca0a7d2380622432",
+     "equal": false
+    }
+   },
+   "pass": false,
+   "reference_run": "reports/rounds/P2-A/runs/20261020T230453Z-1a775d3"
+  }
+ },
+ "elapsed_s": 2834,
+ "errors": [],
+ "rep": 1,
+ "run": "20261028T013055Z-43055ee"
+}

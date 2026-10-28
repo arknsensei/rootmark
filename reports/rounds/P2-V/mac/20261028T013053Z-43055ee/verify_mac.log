@@ -1,0 +1,153 @@
+[verify-mac 01:28:09] warning: /Users/arkns/Works/mdkernel has uncommitted changes; only its committed HEAD is measured
+[verify-mac 01:28:09] clone /Users/arkns/Works/mdkernel -> <tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo
+[verify-mac 01:28:13] commit 43055ee0778ed51d2663f764765207bc8512dcb6
+[verify-mac 01:30:53] RUN=20261028T013053Z-43055ee (setup 164 s)
+[verify-mac 01:30:55] rep 1/3: RUN 20261028T013055Z-43055ee
+[verify-mac 01:30:55] rep 1: P2-0.2 sets under serve --watch (D-A, D-A2, D-C, D-B2; D-E, rules)
+[verify-mac 01:44:54] rep 1: P2-0.3 real-Obsidian sets (D-B test-4, D-A′, D-C′)
+[verify-mac 01:57:45] rep 1: P1-C.1 C1-8 (the chain's steps holdout … p1c1-checks, against the P1-C RUN)
+[verify-mac 02:15:27] rep 1: serve_watch (D-10, SIGTERM)
+[verify-mac 02:16:07] rep 1: serve_watch exit 101 (recorded)
+[verify-mac 02:16:07] rep 1: local release binary (E-7), release package with the real-Obsidian e2e and its check (E1-3, E1-4, E1-9), the e2e's deliberate cases
+[verify-mac 02:17:49] rep 1: release_check exit 1 (recorded)
+verify-mac rep 1: p1c1_checks.json:C1-8 pass
+verify-mac rep 1: p1d_checks.json:D-10 FAIL
+verify-mac rep 1: p1e_checks.json:E-7 FAIL
+verify-mac rep 1: p1e1_checks.json:E1-3 pass
+verify-mac rep 1: p1e1_checks.json:E1-4 FAIL
+verify-mac rep 1: p1e1_checks.json:tamper pass
+verify-mac rep 1: p1e1_checks.json:E1-9 pass
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2a FAIL
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2a′ pass
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2d FAIL
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2f FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3a FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3a′ pass
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3b FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3b-yük FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3b′ -
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3c pass
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3d FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3e pass
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3f FAIL
+verify-mac rep 1: p2_0_3_checks.json:logs_vs_p2a FAIL
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2i -
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3i -
+[verify-mac 02:18:09] rep 2/3: RUN 20261028T021809Z-43055ee
+[verify-mac 02:18:09] rep 2: P2-0.2 sets under serve --watch (D-A, D-A2, D-C, D-B2; D-E, rules)
+[verify-mac 02:26:32] rep 2: run_p2_0_2 stopped (recorded)
+    cli_attest(rootmark, sv.vault, s["to"], renamed_from=doc)
+  File "<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/research/eval/run_p2_0_1.py", line 315, in cli_attest
+    raise RuntimeError(f"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}")
+RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log
+
+[verify-mac 02:26:32] rep 2: P2-0.3 real-Obsidian sets (D-B test-4, D-A′, D-C′)
+[verify-mac 02:42:20] rep 2: run_p2_0_3 stopped (recorded)
+Error: p000: the human's linking paragraph is unverified, not canonical
+    at file://<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/clients/obsidian/e2e/p2_0_2/.build/real.mjs:543:40
+
+Node.js v24.3.0
+
+[verify-mac 02:42:20] rep 2: P1-C.1 C1-8 (the chain's steps holdout … p1c1-checks, against the P1-C RUN)
+[verify-mac 02:59:32] rep 2: serve_watch (D-10, SIGTERM)
+[verify-mac 03:00:20] rep 2: serve_watch exit 101 (recorded)
+[verify-mac 03:00:20] rep 2: local release binary (E-7), release package with the real-Obsidian e2e and its check (E1-3, E1-4, E1-9), the e2e's deliberate cases
+[verify-mac 03:02:03] rep 2: release_check exit 1 (recorded)
+verify-mac rep 2: p1c1_checks.json:C1-8 pass
+verify-mac rep 2: p1d_checks.json:D-10 FAIL
+verify-mac rep 2: p1e_checks.json:E-7 FAIL
+verify-mac rep 2: p1e1_checks.json:E1-3 pass
+verify-mac rep 2: p1e1_checks.json:E1-4 FAIL
+verify-mac rep 2: p1e1_checks.json:tamper pass
+verify-mac rep 2: p1e1_checks.json:E1-9 pass
+verify-mac rep 2: p2_0_2_checks.json:H-P2-0.2a FAIL
+verify-mac rep 2: p2_0_2_checks.json:H-P2-0.2a′ FAIL
+verify-mac rep 2: p2_0_2_checks.json:H-P2-0.2d FAIL
+verify-mac rep 2: p2_0_2_checks.json:H-P2-0.2f FAIL
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3a FAIL
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3a′ FAIL
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3b FAIL
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3b-yük FAIL
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3b′ FAIL
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3c FAIL
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3d FAIL
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3e FAIL
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3f FAIL
+verify-mac rep 2: p2_0_3_checks.json:logs_vs_p2a FAIL
+verify-mac rep 2: p2_0_2_checks.json:H-P2-0.2i -
+verify-mac rep 2: p2_0_3_checks.json:H-P2-0.3i -
+[verify-mac 03:02:23] rep 3/3: RUN 20261028T030223Z-43055ee
+[verify-mac 03:02:23] rep 3: P2-0.2 sets under serve --watch (D-A, D-A2, D-C, D-B2; D-E, rules)
+[verify-mac 03:15:58] rep 3: P2-0.3 real-Obsidian sets (D-B test-4, D-A′, D-C′)
+[verify-mac 03:32:18] rep 3: run_p2_0_3 stopped (recorded)
+Error: p000: the human's linking paragraph is unverified, not canonical
+    at file://<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/clients/obsidian/e2e/p2_0_2/.build/real.mjs:543:40
+
+Node.js v24.3.0
+
+[verify-mac 03:32:18] rep 3: P1-C.1 C1-8 (the chain's steps holdout … p1c1-checks, against the P1-C RUN)
+[verify-mac 03:49:32] rep 3: serve_watch (D-10, SIGTERM)
+[verify-mac 03:50:23] rep 3: serve_watch exit 101 (recorded)
+[verify-mac 03:50:23] rep 3: local release binary (E-7), release package with the real-Obsidian e2e and its check (E1-3, E1-4, E1-9), the e2e's deliberate cases
+[verify-mac 03:52:09] rep 3: release_check exit 1 (recorded)
+verify-mac rep 3: p1c1_checks.json:C1-8 pass
+verify-mac rep 3: p1d_checks.json:D-10 FAIL
+verify-mac rep 3: p1e_checks.json:E-7 FAIL
+verify-mac rep 3: p1e1_checks.json:E1-3 pass
+verify-mac rep 3: p1e1_checks.json:E1-4 FAIL
+verify-mac rep 3: p1e1_checks.json:tamper pass
+verify-mac rep 3: p1e1_checks.json:E1-9 pass
+verify-mac rep 3: p2_0_2_checks.json:H-P2-0.2a FAIL
+verify-mac rep 3: p2_0_2_checks.json:H-P2-0.2a′ pass
+verify-mac rep 3: p2_0_2_checks.json:H-P2-0.2d FAIL
+verify-mac rep 3: p2_0_2_checks.json:H-P2-0.2f FAIL
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3a FAIL
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3a′ pass
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3b FAIL
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3b-yük FAIL
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3b′ FAIL
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3c FAIL
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3d FAIL
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3e FAIL
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3f FAIL
+verify-mac rep 3: p2_0_3_checks.json:logs_vs_p2a FAIL
+verify-mac rep 3: p2_0_2_checks.json:H-P2-0.2i -
+verify-mac rep 3: p2_0_3_checks.json:H-P2-0.3i -
+verify-mac: Z-D10 (Z) FAIL
+verify-mac:   p1d_checks.json:D-10 0/3
+verify-mac: Z-DA (Z) FAIL
+verify-mac:   p2_0_2_checks.json:H-P2-0.2a 0/3
+verify-mac:   p2_0_2_checks.json:H-P2-0.2a′ 2/3
+verify-mac:   p2_0_3_checks.json:H-P2-0.3a 0/3
+verify-mac:   p2_0_3_checks.json:H-P2-0.3a′ 2/3
+verify-mac:   p2_0_2_checks.json:H-P2-0.2i eşik yok
+verify-mac:   p2_0_3_checks.json:H-P2-0.3i eşik yok
+verify-mac:   p2_0_3_checks.json:logs_vs_p2a eşik yok
+verify-mac: Z-DC (Z) FAIL
+verify-mac:   p2_0_2_checks.json:H-P2-0.2d 0/3
+verify-mac: Z-DB2 (Z) FAIL
+verify-mac:   p2_0_2_checks.json:H-P2-0.2f 0/3
+verify-mac:   p2_0_3_checks.json:H-P2-0.3f 0/3
+verify-mac: O-DB4 (O) FAIL
+verify-mac:   p2_0_3_checks.json:H-P2-0.3b 0/3
+verify-mac:   p2_0_3_checks.json:H-P2-0.3b-yük 0/3
+verify-mac:   p2_0_3_checks.json:H-P2-0.3b′ eşik yok
+verify-mac:   p2_0_3_checks.json:H-P2-0.3c 1/3
+verify-mac: O-DC′ (O) FAIL
+verify-mac:   p2_0_3_checks.json:H-P2-0.3d 0/3
+verify-mac: O-DA′ (O) FAIL
+verify-mac:   p2_0_3_checks.json:H-P2-0.3e 1/3
+verify-mac: O-REL (O) FAIL
+verify-mac:   p1e_checks.json:E-7 0/3
+verify-mac:   p1e1_checks.json:E1-3 3/3
+verify-mac:   p1e1_checks.json:E1-4 0/3
+verify-mac:   p1e1_checks.json:E1-9 3/3
+verify-mac:   p1e1_checks.json:tamper 3/3
+verify-mac: O-C18 (O) pass
+verify-mac:   p1c1_checks.json:C1-8 3/3
+verify-mac: FAIL; reps [2834, 2654, 3005] s, total 8660 s
+make: *** [verify-mac] Error 3
+
+real	144m19.157s
+user	68m49.002s
+sys	16m2.685s

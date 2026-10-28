@@ -1,0 +1,40 @@
+running 1 test
+.
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 16.28s
+
+/Applications/Xcode.app/Contents/Developer/usr/bin/make c3-quality RUN=20261028T013055Z-43055ee
+cd research && uv run --frozen python -m eval.run_c3_quality --run 20261028T013055Z-43055ee
+C-3 hybrid/single: nDCG@10 0.6769 (v2 0.6740, Δ +0.0029)
+C-3 hybrid/multi: nDCG@10 0.4800 (v2 0.4936, Δ -0.0136)
+C-3 FAIL (|Δ| ≤ 0.01)
+rc=0; cd research && uv run --frozen python -m eval.compare_p1c regress ../reports/rounds/P1-B.1/runs/20261014T212243Z-226b511 reports/runs/20261028T013055Z-43055ee \
+	  --out reports/runs/20261028T013055Z-43055ee/regress_vs_p1b1.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+regress FAILED: differing ['p1b1_checks.json:criteria›B1-3›pass', 'p1b1_checks.json:criteria›B1-3›spec_version']
+cd research && uv run --frozen python -m eval.run_p1c_checks --run 20261028T013055Z-43055ee --work "<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/p1c_work_1/20261028T013055Z-43055ee"
+C-1 pass; C-2 pass; C-3 FAIL; C-4 pass; C-5 pass; C-7 pass; C-9 pass; C-10 pass; C-11 FAIL; C-12 pass; C-13 pass
+/Applications/Xcode.app/Contents/Developer/usr/bin/make c1-variant RUN=20261028T013055Z-43055ee
+cd research && uv run --frozen python -m eval.run_c1_variant --run 20261028T013055Z-43055ee
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 46293.75it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+C1-1 hybrid/structural/single: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 hybrid/structural/multi: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 flat/structural/single: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 flat/structural/multi: Δ nDCG@10 +0.000000, recall@10 +0.000000, MRR +0.000000 ok
+C1-1 pass (|Δ| ≤ 0.001)
+mkdir -p research/reports/runs/20261028T013055Z-43055ee/p1c1
+ROOTMARK_P1C1_OUT="<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/research/reports/runs/20261028T013055Z-43055ee/p1c1" \
+	  cargo test -q -p rootmark-index --release --test p1c1 -- --test-threads=1
+
+running 4 tests
+....
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 42.41s
+
+bash scripts/test_p1c1.sh research/reports/runs/20261028T013055Z-43055ee/p1c1_cli.json \
+	  >research/reports/runs/20261028T013055Z-43055ee/p1c1_cli.log 2>&1 \
+	  || { cat research/reports/runs/20261028T013055Z-43055ee/p1c1_cli.log >&2; exit 1; }
+rc=0; cd research && uv run --frozen python -m eval.compare_p1c1 regress ../reports/rounds/P1-C/runs/20261015T014417Z-9aa326b reports/runs/20261028T013055Z-43055ee \
+	  --out reports/runs/20261028T013055Z-43055ee/regress_vs_p1c.json >/dev/null || rc=$?; \
+	  [ $rc -eq 0 ] || [ $rc -eq 3 ]
+cd research && uv run --frozen python -m eval.run_p1c1_checks --run 20261028T013055Z-43055ee
+C1-1 pass; C1-2 pass; C1-3 pass; C1-4 pass; C1-5 pass; C1-6 pass; C1-7 FAIL; C1-8 pass; C1-9 pass

@@ -1,0 +1,82 @@
+{
+ "files": 133,
+ "findings": [
+  {
+   "context": "0\",\n  \"fixtures_manifest_problems\": [],\n  \"fixtures_root\": \"/home/runner/work/_temp/v/B/repo/spec/fixtures\",\n  \"",
+   "file": "conformance_p1d1.json",
+   "kind": "path",
+   "match": "/home/runner"
+  },
+  {
+   "context": "0\",\n  \"fixtures_manifest_problems\": [],\n  \"fixtures_root\": \"/home/runner/work/_temp/v/B/repo/spec/fixtures\",\n  \"fixtures_ro",
+   "file": "conformance_p1d1.json",
+   "kind": "path",
+   "match": "/home/runner/work/_temp"
+  },
+  {
+   "context": "0\",\n  \"fixtures_manifest_problems\": [],\n  \"fixtures_root\": \"/home/runner/work/_temp/v/B/repo/spec/fixtures\",\n  \"fixtures_root_s",
+   "file": "conformance_p1d1.json",
+   "kind": "path",
+   "match": "/home/runner/work/_temp/v/B"
+  },
+  {
+   "context": " \"fixtures_manifest_problems\": [],\n  \"fixtures_root\": \"/home/runner/work/_temp/v/B/repo/spec/fixtures\",\n  \"",
+   "file": "conformance_p1d1.json",
+   "kind": "user",
+   "match": "/runner"
+  },
+  {
+   "context": "false,\n      \"detail\": \"no archive of this host's target in /home/runner/work/_temp/v/B/repo/target/p1e1-dist/bi",
+   "file": "p1e1/release/release_check.json",
+   "kind": "path",
+   "match": "/home/runner"
+  },
+  {
+   "context": "false,\n      \"detail\": \"no archive of this host's target in /home/runner/work/_temp/v/B/repo/target/p1e1-dist/bin\"\n    },\n ",
+   "file": "p1e1/release/release_check.json",
+   "kind": "path",
+   "match": "/home/runner/work/_temp"
+  },
+  {
+   "context": "false,\n      \"detail\": \"no archive of this host's target in /home/runner/work/_temp/v/B/repo/target/p1e1-dist/bin\"\n    },\n    {",
+   "file": "p1e1/release/release_check.json",
+   "kind": "path",
+   "match": "/home/runner/work/_temp/v/B"
+  },
+  {
+   "context": ",\n      \"detail\": \"no archive of this host's target in /home/runner/work/_temp/v/B/repo/target/p1e1-dist/bi",
+   "file": "p1e1/release/release_check.json",
+   "kind": "user",
+   "match": "/runner"
+  },
+  {
+   "context": "a\": \"absent\",\n    \"b\": \"no archive of this host's target in /home/runner/work/_temp/v/B/repo/target/p1e1-dist/bi",
+   "file": "p2_0_2_checks.json",
+   "kind": "path",
+   "match": "/home/runner"
+  },
+  {
+   "context": "a\": \"absent\",\n    \"b\": \"no archive of this host's target in /home/runner/work/_temp/v/B/repo/target/p1e1-dist/bin\"\n   },\n  ",
+   "file": "p2_0_2_checks.json",
+   "kind": "path",
+   "match": "/home/runner/work/_temp"
+  },
+  {
+   "context": "a\": \"absent\",\n    \"b\": \"no archive of this host's target in /home/runner/work/_temp/v/B/repo/target/p1e1-dist/bin\"\n   },\n   \"p1",
+   "file": "p2_0_2_checks.json",
+   "kind": "path",
+   "match": "/home/runner/work/_temp/v/B"
+  },
+  {
+   "context": "absent\",\n    \"b\": \"no archive of this host's target in /home/runner/work/_temp/v/B/repo/target/p1e1-dist/bi",
+   "file": "p2_0_2_checks.json",
+   "kind": "user",
+   "match": "/runner"
+  }
+ ],
+ "hosts": 2,
+ "missing": null,
+ "mode": "pair",
+ "pass": false,
+ "run": "run"
+}

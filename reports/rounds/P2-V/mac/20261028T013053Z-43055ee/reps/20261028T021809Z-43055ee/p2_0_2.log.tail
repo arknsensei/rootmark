@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/research/eval/run_p2_0_2.py", line 506, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/research/eval/run_p2_0_2.py", line 490, in main
+    r = p1.run_d_b2(rootmark, window_s, out, work / "b2")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/research/eval/run_p2_0_1.py", line 355, in run_d_b2
+    cli_attest(rootmark, sv.vault, s["to"], renamed_from=doc)
+  File "<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/research/eval/run_p2_0_1.py", line 315, in cli_attest
+    raise RuntimeError(f"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}")
+RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log
+

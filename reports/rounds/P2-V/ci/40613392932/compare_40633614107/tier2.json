@@ -1,0 +1,12 @@
+{
+  "run_id": "40633614107",
+  "chains_run": "40613392932",
+  "tools_commit": "ccfad5993b8e563b2e2c21be006821ec77faee5d",
+  "commit_a": "352f7903f5fbcf324bfef03e10305cb502c38f99",
+  "commit_b": "352f7903f5fbcf324bfef03e10305cb502c38f99",
+  "started": "2026-10-28T01:10:14Z",
+  "chains_wall_s": 9708,
+  "compare_s": 1572,
+  "wall_s": 11280,
+  "pass": false
+}
