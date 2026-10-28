@@ -1,0 +1,376 @@
+{
+ "criteria": {
+  "p1c1_checks.json:C1-8": {
+   "differing_fields": [],
+   "n_differing": 0,
+   "n_fields": 99053,
+   "pass": true,
+   "reference_run": "20261015T014417Z-9aa326b"
+  },
+  "p1d_checks.json:D-10": {
+   "layers_canonical_human": true,
+   "measured": {
+    "edits": 20,
+    "max_ms": 4165.012708,
+    "p95_ms": 2036.394166
+   },
+   "pass": false,
+   "sigterm_compacts": true,
+   "sigterm_never_lost": true,
+   "threshold_p95_ms": 1000
+  },
+  "p1e1_checks.json:E1-3": {
+   "e3_md_changes_only_at_propose": true,
+   "e4_outside_contract": 0,
+   "e4_requests": 57,
+   "failed": [],
+   "pass": true,
+   "steps": "11/11"
+  },
+  "p1e1_checks.json:E1-4": {
+   "every_item_scripted": true,
+   "failed": [
+    "R4"
+   ],
+   "pass": false,
+   "release_check": "20/21"
+  },
+  "p1e1_checks.json:E1-9": {
+   "connection_step": {
+    "notice_shown": true,
+    "search_after_rebuild": {
+     "error": null,
+     "hits": 5
+    },
+    "search_before_rebuild": {
+     "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+     "hits": 0
+    },
+    "status_bar": "rootmark 0.2.0 · human:editor · index stale",
+    "status_bar_after_rebuild": "rootmark 0.2.0 · human:editor",
+    "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+   },
+   "half": "e2e step (the contract check is tier 2's)",
+   "pass": true
+  },
+  "p1e1_checks.json:tamper": {
+   "controls": "1/1",
+   "half": "tamper_p1e1_e2e (the real Obsidian); tamper_p1e1.json is deterministic, tier 2",
+   "pass": true,
+   "real_cases_run": true,
+   "rejected": "1/1"
+  },
+  "p1e_checks.json:E-7": {
+   "chain_local_target": {
+    "conformance": {
+     "exit": 0,
+     "level_claimed": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "pass": true,
+    "spec_version": "2.0.3",
+    "target": "aarch64-apple-darwin",
+    "version": "rootmark 0.2.0"
+   },
+   "four_targets": "2/4 (docs/rounds/P1-E/progress/E5_release.json)",
+   "pass": false
+  },
+  "p2_0_2_checks.json:H-P2-0.2a": {
+   "d_a": {
+    "canonical_leak": 0,
+    "new_blocks": 222,
+    "scenarios": 200
+   },
+   "d_a2": {
+    "by_path": {
+     "atomic_rename": {
+      "canonical_leak": 0,
+      "new_blocks": 9,
+      "scenarios": 20
+     },
+     "cat": {
+      "canonical_leak": 0,
+      "new_blocks": 15,
+      "scenarios": 20
+     },
+     "cp_rsync": {
+      "canonical_leak": 0,
+      "new_blocks": 16,
+      "scenarios": 20
+     },
+     "git_apply": {
+      "canonical_leak": 0,
+      "new_blocks": 14,
+      "scenarios": 20
+     },
+     "python": {
+      "canonical_leak": 0,
+      "new_blocks": 22,
+      "scenarios": 20
+     },
+     "sed": {
+      "canonical_leak": 0,
+      "new_blocks": 18,
+      "scenarios": 20
+     }
+    },
+    "canonical_leak": 0,
+    "new_blocks": 94,
+    "scenarios": 120
+   },
+   "pass": false,
+   "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+  },
+  "p2_0_2_checks.json:H-P2-0.2a′": {
+   "canonical_changed": 8,
+   "pass": true,
+   "scenarios": "200/200",
+   "source": "p2_0_2/d_a.json"
+  },
+  "p2_0_2_checks.json:H-P2-0.2d": {
+   "d_c": {
+    "accuracy": 0.8382352941176471,
+    "agent_canonical": 2,
+    "blocks": 340,
+    "by_mode": {
+     "apart": {
+      "blocks": 298,
+      "right": 251
+     },
+     "collide": {
+      "blocks": 14,
+      "right": 14
+     },
+     "same_doc_after": {
+      "blocks": 28,
+      "right": 20
+     }
+    },
+    "partial_lines": 7,
+    "pass": false,
+    "right": 285,
+    "ticks": 160
+   },
+   "half": "D-C (≥ 0.99); D-C′ (real Obsidian) is H-P2-0.3d",
+   "pass": false
+  },
+  "p2_0_2_checks.json:H-P2-0.2f": {
+   "by_kind": {
+    "append": {
+     "new_blocks": 16,
+     "sessions": 20,
+     "unverified_after_window": 7
+    },
+    "atomic": {
+     "new_blocks": 43,
+     "sessions": 50,
+     "unverified_after_window": 22
+    },
+    "inplace": {
+     "new_blocks": 24,
+     "sessions": 30,
+     "unverified_after_window": 9
+    },
+    "mv": {
+     "new_blocks": 380,
+     "sessions": 30,
+     "unverified_after_window": 275
+    },
+    "rapid": {
+     "new_blocks": 65,
+     "sessions": 20,
+     "unverified_after_window": 24
+    }
+   },
+   "false_unverified_rate": 0.6382575757575758,
+   "latency_p95_ms": null,
+   "latency_unsettled": 90,
+   "new_blocks": 528,
+   "pass": false,
+   "sessions": 150,
+   "source": "p2_0_2/d_b2.json",
+   "unverified_after_window": 337
+  },
+  "p2_0_2_checks.json:H-P2-0.2i": {
+   "logs": {
+    "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a/events.jsonl": "ee390a3346893af45e5db006371390b2",
+    "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a2/events.jsonl": "08d0ac7d0b1cdbd4fa74999c47a8da44",
+    "d_c/attestations.jsonl": "a88f1b10a3986138aef5570900fdfa12",
+    "d_c/events.jsonl": "82ac5f1a738f5285bc32a512522ded7f"
+   },
+   "pass": null
+  },
+  "p2_0_3_checks.json:H-P2-0.3a": {
+   "d_a": {
+    "canonical_leak": 0,
+    "new_blocks": 222,
+    "scenarios": 200
+   },
+   "d_a2": {
+    "by_path": {
+     "atomic_rename": {
+      "canonical_leak": 0,
+      "new_blocks": 9,
+      "scenarios": 20
+     },
+     "cat": {
+      "canonical_leak": 0,
+      "new_blocks": 15,
+      "scenarios": 20
+     },
+     "cp_rsync": {
+      "canonical_leak": 0,
+      "new_blocks": 16,
+      "scenarios": 20
+     },
+     "git_apply": {
+      "canonical_leak": 0,
+      "new_blocks": 14,
+      "scenarios": 20
+     },
+     "python": {
+      "canonical_leak": 0,
+      "new_blocks": 22,
+      "scenarios": 20
+     },
+     "sed": {
+      "canonical_leak": 0,
+      "new_blocks": 18,
+      "scenarios": 20
+     }
+    },
+    "canonical_leak": 0,
+    "new_blocks": 94,
+    "scenarios": 120
+   },
+   "from": "H-P2-0.2a",
+   "pass": false,
+   "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+  },
+  "p2_0_3_checks.json:H-P2-0.3a′": {
+   "canonical_changed": 8,
+   "from": "H-P2-0.2a′",
+   "pass": true,
+   "scenarios": "200/200",
+   "source": "p2_0_2/d_a.json"
+  },
+  "p2_0_3_checks.json:H-P2-0.3b": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3b-yük": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3b′": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3c": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3d": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3e": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3f": {
+   "by_kind": {
+    "append": {
+     "new_blocks": 16,
+     "sessions": 20,
+     "unverified_after_window": 7
+    },
+    "atomic": {
+     "new_blocks": 43,
+     "sessions": 50,
+     "unverified_after_window": 22
+    },
+    "inplace": {
+     "new_blocks": 24,
+     "sessions": 30,
+     "unverified_after_window": 9
+    },
+    "mv": {
+     "new_blocks": 380,
+     "sessions": 30,
+     "unverified_after_window": 275
+    },
+    "rapid": {
+     "new_blocks": 65,
+     "sessions": 20,
+     "unverified_after_window": 24
+    }
+   },
+   "false_unverified_rate": 0.6382575757575758,
+   "from": "H-P2-0.2f",
+   "latency_p95_ms": null,
+   "latency_unsettled": 90,
+   "new_blocks": 528,
+   "pass": false,
+   "sessions": 150,
+   "source": "p2_0_2/d_b2.json",
+   "unverified_after_window": 337
+  },
+  "p2_0_3_checks.json:H-P2-0.3i": {
+   "logs": {
+    "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a/events.jsonl": "ee390a3346893af45e5db006371390b2",
+    "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a2/events.jsonl": "08d0ac7d0b1cdbd4fa74999c47a8da44",
+    "d_c/attestations.jsonl": "a88f1b10a3986138aef5570900fdfa12",
+    "d_c/events.jsonl": "82ac5f1a738f5285bc32a512522ded7f"
+   },
+   "pass": null
+  },
+  "p2_0_3_checks.json:logs_vs_p2a": {
+   "logs": {
+    "d_a/attestations.jsonl": {
+     "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+     "equal": true
+    },
+    "d_a/events.jsonl": {
+     "blake3": "ee390a3346893af45e5db006371390b2",
+     "equal": false
+    },
+    "d_a2/attestations.jsonl": {
+     "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+     "equal": true
+    },
+    "d_a2/events.jsonl": {
+     "blake3": "08d0ac7d0b1cdbd4fa74999c47a8da44",
+     "equal": false
+    },
+    "d_c/attestations.jsonl": {
+     "blake3": "a88f1b10a3986138aef5570900fdfa12",
+     "equal": false
+    },
+    "d_c/events.jsonl": {
+     "blake3": "82ac5f1a738f5285bc32a512522ded7f",
+     "equal": false
+    }
+   },
+   "pass": false,
+   "reference_run": "reports/rounds/P2-A/runs/20261020T230453Z-1a775d3"
+  }
+ },
+ "elapsed_s": 3005,
+ "errors": [
+  "p2_0_3"
+ ],
+ "rep": 3,
+ "run": "20261028T030223Z-43055ee"
+}

@@ -1,0 +1,9 @@
+{
+ "files": 133,
+ "findings": [],
+ "hosts": 2,
+ "missing": null,
+ "mode": "pair",
+ "pass": true,
+ "run": "run"
+}

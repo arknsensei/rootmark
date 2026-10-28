@@ -1,0 +1,10 @@
+error: RuntimeError: node <tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/clients/obsidian/e2e/p2_0_2/.build/real.mjs --set d_a_prime --data <tmp>/rootmark-p2-0-3-4z65bjft/d_a_prime/try1/d_a_prime.json --rootmark <tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/target/release/rootmark --obsidian /Applications/Obsidian.app/Contents/MacOS/Obsidian --plugin <tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/clients/obsidian --vault-src <tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/spec/fixtures/mini_vault --window 0.5 --out <tmp>/rootmark-p2-0-3-4z65bjft/d_a_prime/try1/d_a_prime-out: exit 1
+file://<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/clients/obsidian/e2e/p2_0_2/.build/real.mjs:543
+          if (l !== "canonical") throw new Error(`${sc.id}: the human's linking paragraph is ${String(l)}, not canonical`);
+                                       ^
+
+Error: p000: the human's linking paragraph is unverified, not canonical
+    at file://<tmp>/rootmark-verify-mac.XXXXXX.HBugob5z28/repo/clients/obsidian/e2e/p2_0_2/.build/real.mjs:543:40
+
+Node.js v24.3.0
+

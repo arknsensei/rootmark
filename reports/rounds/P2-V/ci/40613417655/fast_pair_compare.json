@@ -1,0 +1,23 @@
+{
+ "differing_fields": {},
+ "environment_fields": [],
+ "equal": true,
+ "files": [
+  "fast/conformance.json",
+  "fast/conformance_rootmark.json",
+  "fast/conformance_equiv.json",
+  "fast/regress.json",
+  "c3_quality.json",
+  "p2b_checks.json",
+  "p2b/align.json",
+  "p2b/det.json",
+  "p2b/client_checks.json",
+  "p2b/obsidian_e2e.json",
+  "p2b/vscode_e2e.json",
+  "p2r_checks.json",
+  "p2r/volume.json",
+  "p2r/det.json",
+  "p2b/align_regress.json"
+ ],
+ "n_fields": 18550
+}

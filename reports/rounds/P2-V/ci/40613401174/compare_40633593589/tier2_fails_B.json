@@ -1,0 +1,135 @@
+{
+ "classifier_counted": 16,
+ "counted": [],
+ "counted_fails": 0,
+ "mode": "fails",
+ "pass": true,
+ "reference_run": "reports/rounds/P2-B/runs/20261025T211044Z-cad7663",
+ "run": "run",
+ "set_aside": [
+  {
+   "class": "O",
+   "criterion": "p1c1_checks.json:C1-8",
+   "mac_set": "O-C18"
+  },
+  {
+   "class": "türev",
+   "criterion": "p1d1_checks.json:D1-12",
+   "differing": [
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›pass",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/vectors·f32/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/vectors·f32/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_final›hot/vectors·f32/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_final›hot/vectors·f32/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_final›vectors/vectors·f32/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_final›vectors/vectors·f32/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›0›3/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›0›3/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›1›3/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›1›3/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›2›3/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›2›3/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›3›3/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›3›3/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›4›3/a"
+   ],
+   "why": "every reported difference is an embedded entry of a Z/O field or criterion"
+  },
+  {
+   "class": "türev",
+   "criterion": "p1d_checks.json:D-9",
+   "differing": [
+    "differing_fields/p1c1_checks.json:C1-8›pass",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/vectors·f32/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/vectors·f32/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_final›hot/vectors·f32/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_final›hot/vectors·f32/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_final›vectors/vectors·f32/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_final›vectors/vectors·f32/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›0›3/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›0›3/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›1›3/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›1›3/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›2›3/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›2›3/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›3›3/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›3›3/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:rankings_200›flat›0›4›3/a"
+   ],
+   "why": "every reported difference is an embedded entry of a Z/O field or criterion"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-3",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-4",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-9",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:tamper",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e_checks.json:E-7",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_2_checks.json:H-P2-0.2a",
+   "mac_set": "Z-DA"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3a",
+   "mac_set": "Z-DA"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3b",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3b-yük",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3c",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3d",
+   "mac_set": "O-DC′"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3e",
+   "mac_set": "O-DA′"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_3_checks.json:logs_vs_p2a",
+   "mac_set": "Z-DA"
+  }
+ ]
+}

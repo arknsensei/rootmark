@@ -1,0 +1,183 @@
+{
+ "criteria": {
+  "p1c1_checks.json:C1-8": {
+   "differing_fields": [],
+   "n_differing": 0,
+   "n_fields": 99053,
+   "pass": true,
+   "reference_run": "20261015T014417Z-9aa326b"
+  },
+  "p1d_checks.json:D-10": {
+   "layers_canonical_human": true,
+   "measured": {
+    "edits": 20,
+    "max_ms": 3702.890083,
+    "p95_ms": 2782.842709
+   },
+   "pass": false,
+   "sigterm_compacts": true,
+   "sigterm_never_lost": true,
+   "threshold_p95_ms": 1000
+  },
+  "p1e1_checks.json:E1-3": {
+   "e3_md_changes_only_at_propose": true,
+   "e4_outside_contract": 0,
+   "e4_requests": 57,
+   "failed": [],
+   "pass": true,
+   "steps": "11/11"
+  },
+  "p1e1_checks.json:E1-4": {
+   "every_item_scripted": true,
+   "failed": [
+    "R4"
+   ],
+   "pass": false,
+   "release_check": "20/21"
+  },
+  "p1e1_checks.json:E1-9": {
+   "connection_step": {
+    "notice_shown": true,
+    "search_after_rebuild": {
+     "error": null,
+     "hits": 5
+    },
+    "search_before_rebuild": {
+     "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+     "hits": 0
+    },
+    "status_bar": "rootmark 0.2.0 · human:editor · index stale",
+    "status_bar_after_rebuild": "rootmark 0.2.0 · human:editor",
+    "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+   },
+   "half": "e2e step (the contract check is tier 2's)",
+   "pass": true
+  },
+  "p1e1_checks.json:tamper": {
+   "controls": "1/1",
+   "half": "tamper_p1e1_e2e (the real Obsidian); tamper_p1e1.json is deterministic, tier 2",
+   "pass": true,
+   "real_cases_run": true,
+   "rejected": "1/1"
+  },
+  "p1e_checks.json:E-7": {
+   "chain_local_target": {
+    "conformance": {
+     "exit": 0,
+     "level_claimed": 3,
+     "passed": 39,
+     "total": 39
+    },
+    "pass": true,
+    "spec_version": "2.0.3",
+    "target": "aarch64-apple-darwin",
+    "version": "rootmark 0.2.0"
+   },
+   "four_targets": "2/4 (docs/rounds/P1-E/progress/E5_release.json)",
+   "pass": false
+  },
+  "p2_0_2_checks.json:H-P2-0.2a": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_2_checks.json:H-P2-0.2a′": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_2_checks.json:H-P2-0.2d": {
+   "d_c": {
+    "error": "the set's harness stopped (a failed repetition)",
+    "log_tail": [],
+    "pass": false
+   },
+   "half": "D-C (≥ 0.99); D-C′ (real Obsidian) is H-P2-0.3d",
+   "pass": false
+  },
+  "p2_0_2_checks.json:H-P2-0.2f": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_2_checks.json:H-P2-0.2i": {
+   "logs": {
+    "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a/events.jsonl": "ecfe37cbfa9826669bc75fbc14c25a70",
+    "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a2/events.jsonl": "2365d1db774503ad7eaf4ed3268f5622",
+    "d_c/attestations.jsonl": "1a2b6ebf9809781ae1fccc81e0d5804b",
+    "d_c/events.jsonl": "5d7ba1a9550b9305f560d7ac7897cc2a"
+   },
+   "pass": null
+  },
+  "p2_0_3_checks.json:H-P2-0.3a": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3a′": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3b": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3b-yük": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3b′": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3c": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3d": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3e": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3f": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  },
+  "p2_0_3_checks.json:H-P2-0.3i": {
+   "logs": {
+    "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a/events.jsonl": "ecfe37cbfa9826669bc75fbc14c25a70",
+    "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "d_a2/events.jsonl": "2365d1db774503ad7eaf4ed3268f5622",
+    "d_c/attestations.jsonl": "1a2b6ebf9809781ae1fccc81e0d5804b",
+    "d_c/events.jsonl": "5d7ba1a9550b9305f560d7ac7897cc2a"
+   },
+   "pass": null
+  },
+  "p2_0_3_checks.json:logs_vs_p2a": {
+   "error": "the set's harness stopped (a failed repetition)",
+   "log_tail": [],
+   "pass": false
+  }
+ },
+ "elapsed_s": 2654,
+ "errors": [
+  "p2_0_2",
+  "p2_0_3"
+ ],
+ "rep": 2,
+ "run": "20261028T021809Z-43055ee"
+}
