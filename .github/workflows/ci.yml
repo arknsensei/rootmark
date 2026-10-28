@@ -94,3 +94,102 @@ jobs:
       - run: make test
       - run: make lint
       - run: make conformance
+
+  # Tier 1 of the verification chain (GOAL P2-V V2, K-P2V.1; docs/DEV_PROCESS.md
+  # §3): `make verify FAST=1` as it is — two clean fast chains (the active
+  # block's checks, conformance, the regress against the last official RUN)
+  # compared with the frozen `eval.compare_p2r fast` — on every pull request,
+  # each chain on its own runner (`scripts/verify.sh chain-fast`, the
+  # commit's own).
+  fast:
+    name: fast chain ${{ matrix.side }} (tier 1)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        side: [A, B]
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0   # the chain clones this repository (tags, ROUND_START shas, history)
+      - uses: dtolnay/rust-toolchain@1.92.0
+        with:
+          components: rustfmt, clippy
+      - uses: astral-sh/setup-uv@v10.2.0
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: "24"
+      - uses: actions/cache@v6.1.0
+        with:
+          path: |
+            models/minilm-l6-v2
+            models/multilingual-minilm-l12-v2
+            ~/.cache/ort.pyke.io
+          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST*.json', 'Cargo.lock') }}
+      # crate sources only (checked against Cargo.lock's checksums); nothing
+      # compiled is cached: each chain builds everything in its own clone
+      - uses: actions/cache@v6.1.0
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: cargo-sources-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+      - name: verify.sh chain-fast
+        env:
+          SIDE: ${{ matrix.side }}
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/out"; work="$RUNNER_TEMP/f/$SIDE"
+          mkdir -p "$out"
+          date -u +%s >"$out/started_epoch"
+          jq -n --arg w "$work" --arg h "$HOME" --arg t "${TMPDIR:-}" --arg u "$(id -un)" --arg n "$(hostname)" \
+            --arg rt "$RUNNER_TEMP" --arg ws "$GITHUB_WORKSPACE" \
+            '{workdir: $w, home: $h, tmpdir: $t, user: $u, host: $n, extra: [$rt, $ws]}' >"$out/host.json"
+          bash scripts/verify.sh chain-fast "$GITHUB_WORKSPACE" "$work" >"$out/result" 2>"$out/chain.log" \
+            || { tail -60 "$out/chain.log"; exit 1; }
+          date -u +%s >"$out/finished_epoch"
+          tail -20 "$out/chain.log"
+          run_dir="$(sed -n 's/^RUN_DIR=//p' "$out/result")"
+          mkdir -p "$out/run"
+          cp -R "$run_dir/." "$out/run/"
+      - name: keep the fast chain's RUN
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: tier1-${{ matrix.side }}
+          if-no-files-found: error
+          include-hidden-files: true
+          path: ${{ runner.temp }}/out/
+
+  fast-compare:
+    name: fast pair compare (tier 1)
+    needs: fast
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: research environment
+        run: cd research && uv sync --frozen --inexact
+      - uses: actions/download-artifact@v8.0.1
+        with:
+          pattern: tier1-*
+          path: ${{ runner.temp }}/in
+      - name: compare_p2r fast, time
+        run: |
+          set -euo pipefail
+          in="$RUNNER_TEMP/in"; o="$RUNNER_TEMP/compare"; mkdir -p "$o"
+          cd research
+          uv run --frozen python -m eval.compare_p2r fast "$in/tier1-A/run" "$in/tier1-B/run" --out "$o/fast_pair_compare.json" >/dev/null
+          echo "fast pair equal ($(jq -r .n_fields "$o/fast_pair_compare.json") fields)"
+          t0="$(cat "$in"/tier1-*/started_epoch | sort -n | head -1)"
+          jq -n --argjson s "$(( $(date -u +%s) - t0 ))" '{elapsed_s: $s, from: "the first fast chain started"}' | tee "$o/fast_pair_time.json"
+      - name: keep the comparison
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: tier1-compare
+          if-no-files-found: warn
+          path: ${{ runner.temp }}/compare/

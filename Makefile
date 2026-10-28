@@ -23,7 +23,7 @@ TS_PKGS := $(wildcard clients/*/package.json)
         eval-h4-v2repro d1ho d1sh d1hs eval-holdout eval-split-grid eval-holdout-split p1a-checks p1b-checks p1b1-checks report-p1b1 test test-rust test-py test-ts lint lint-rust lint-py lint-ts \
         check-deps test-check-deps check-compare-fields check-client-types conformance regress verify models c3-quality p1c-checks report-p1c \
         c1-variant p1c1-checks report-p1c1 p1d-checks report-p1d p1d1-checks report-p1d1 p1e-checks report-p1e p1e1-checks report-p1e1 \
-        p2-0-harness p2-0-tune p2-0-test p2-0-checks p2-0-1-harness p2-0-1-checks p2-0-2-harness p2-0-2-checks p2a-checks p2-0-3-checks
+        p2-0-harness p2-0-tune p2-0-test p2-0-checks p2-0-1-harness p2-0-1-checks p2-0-2-harness p2-0-2-checks p2a-checks p2-0-3-checks verify-mac
 
 setup: setup-py build
 
@@ -819,3 +819,9 @@ p2r-checks: require-run
 # `make verify FAST=1`: the fast pair (scripts/verify.sh, P2-L/F3)
 verify:
 	FAST="$(FAST)" bash scripts/verify.sh
+# P2-V (K-P2V.1): the Mac set — the inventory's timing-sensitive (Z) and
+# real-Obsidian (O) sets, 3 repetitions each against their rounds'
+# thresholds, on this Mac (scripts/verify_mac.sh; <RUN>/mac_checks.json).
+# The full pair runs in CI only (.github/workflows/verify.yml, tier 2).
+verify-mac:
+	bash scripts/verify_mac.sh
