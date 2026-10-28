@@ -20,5 +20,11 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Önce/sonra:** iki sürümün Python AST'si eşit (`ast.dump` aynı); `test_p2v_tools` 11/11 iki sürümde; kademe 2'nin `43055ee`'de başlatılan koşuları önceki sürümle aynı şeyi hesaplar.
 - **Gözden geçirici onayı:** V6.review.md.
 
+## F4 · V4 · `scripts/verify_mac.sh` — kümelerden biri kalınca da RUN satırları ve çalışma ağacı denetimi
+- **Ne:** `eval.verify_mac summary`'nin çıkış 3'ü (bir küme kaldı: kayıtlı sonuç) `set -e` ile betiği durduruyordu; artık yakalanır, betik çalışma ağacı denetimini yapar, `RUN=`/`RUN_DIR=` satırlarını yazar ve aynı kodla (3) çıkar; başka bir çıkış hata olarak kalır (`V4_f4.diff`). Kümeler, sıraları, komutlar, değerlendirme aynen.
+- **Neden:** V4'ün Mac kümesi (`20261028T013053Z-43055ee`) bütün tekrarları kaydetti ve `mac_checks.json`'u yazdı, ama çıkış 3'te `RUN_DIR` satırı ve kirli ağaç denetimi koşmadı; ölçüm etkilenmedi, kaydın yeri betiğin çıktısında yoktu. Aynı klonda denetim elle yapıldı: `git status --porcelain --untracked-files=no` boş.
+- **Önce/sonra:** `V4_f4.diff` (yalnız çıkış yolu); `bash -n` temiz; ölçülen RUN önceki sürümle, sonuçlar aynı kalır (özet adımından sonrası).
+- **Gözden geçirici onayı:** V6.review.md.
+
 ## Dondurmaya ilk giren dosyalar (istisna değil; yeni satırlar, `P2-V/V3:`)
 `research/eval/tier2.py`, `research/eval/portable.py`, `research/eval/verify_mac.py`, `scripts/verify_mac.sh`, `scripts/check_records_portable.sh`, `.github/workflows/verify.yml` — kademe 2'nin karşılaştırıcısı ve iş akışı, host denetleyicisi, Mac kümesi; V4'ün ölçümlerinden önce.

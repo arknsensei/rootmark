@@ -430,6 +430,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `scripts/check_records_portable.sh` | `P2-V/V3:` | `eval.portable`'ın betiği |
 | `.github/workflows/verify.yml` | `P2-V/V3:` | kademe 2'nin iş akışı (iki koşucu, karşılaştırma işi) |
 | `research/eval/tier2.py` | `P2-V/V3-f3:` | yeniden dondurma P2-V/F3: biçim (`ruff format`; AST aynı) |
+| `scripts/verify_mac.sh` | `P2-V/V4-f4:` | yeniden dondurma P2-V/F4: özetin çıkış 3'ünde RUN satırları ve çalışma ağacı denetimi |
 <!-- /frozen-table -->
 
 ## Notlar

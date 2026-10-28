@@ -108,8 +108,12 @@ for i in $(seq 1 "$reps"); do
   (cd research && uv run --frozen python -m eval.verify_mac rep --run "$rr" --main "$run" --rep "$i" \
     --elapsed "$((SECONDS - ts))" ${errs[@]+"${errs[@]}"}) >&2
 done
+# a set that failed is the verdict (exit 3), recorded: the RUN lines and the
+# work-tree check still come (P2-V/F4)
+src=0
 (cd research && uv run --frozen python -m eval.verify_mac summary --run "$run" --reps "$reps" \
-  --elapsed "$((SECONDS - t1))" --setup "$((t1 - t0))") >&2
+  --elapsed "$((SECONDS - t1))" --setup "$((t1 - t0))") >&2 || src=$?
+[ "$src" -eq 0 ] || [ "$src" -eq 3 ] || { echo "error: the Mac set's summary failed (exit $src)" >&2; exit "$src"; }
 if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
   echo "error: the Mac set ran on a dirty work tree" >&2
   git status --porcelain --untracked-files=all >&2
@@ -118,3 +122,4 @@ fi
 log "finished in $((SECONDS - t0)) s"
 echo "RUN=$run"
 echo "RUN_DIR=$work/repo/$main"
+exit "$src"
