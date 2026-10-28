@@ -1,0 +1,11 @@
+110a111,113
+> # a set that failed is the verdict (exit 3), recorded: the RUN lines and the
+> # work-tree check still come (P2-V/F4)
+> src=0
+112c115,116
+<   --elapsed "$((SECONDS - t1))" --setup "$((t1 - t0))") >&2
+---
+>   --elapsed "$((SECONDS - t1))" --setup "$((t1 - t0))") >&2 || src=$?
+> [ "$src" -eq 0 ] || [ "$src" -eq 3 ] || { echo "error: the Mac set's summary failed (exit $src)" >&2; exit "$src"; }
+120a125
+> exit "$src"
