@@ -431,6 +431,9 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `.github/workflows/verify.yml` | `P2-V/V3:` | kademe 2'nin iş akışı (iki koşucu, karşılaştırma işi) |
 | `research/eval/tier2.py` | `P2-V/V3-f3:` | yeniden dondurma P2-V/F3: biçim (`ruff format`; AST aynı) |
 | `scripts/verify_mac.sh` | `P2-V/V4-f4:` | yeniden dondurma P2-V/F4: özetin çıkış 3'ünde RUN satırları ve çalışma ağacı denetimi |
+| `research/eval/tier2.py` | `P2-V/V4-f5:` | yeniden dondurma P2-V/F5: `pair --frozen` (dondurulmuş karşılaştırmanın sonucunu okur) |
+| `research/eval/portable.py` | `P2-V/V4-f5:` | yeniden dondurma P2-V/F6: `--files-from` |
+| `.github/workflows/verify.yml` | `P2-V/V4-f5:` | yeniden dondurma P2-V/F7: karşılaştırma bir kez, zaman aşımı 120 dk, `chains_run` |
 <!-- /frozen-table -->
 
 ## Notlar
