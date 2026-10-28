@@ -345,7 +345,11 @@ c3-quality: require-run
 P1B1_REF_RUN := ../reports/rounds/P1-B.1/runs/20261014T212243Z-226b511
 P1C_WORK ?= $(CURDIR)/research/reports/p1c_work
 p1c-checks: require-run
-	cargo run -q --release -p rootmark-index --bin rootmark-index -- models verify >research/reports/runs/$(RUN)/models_verify.json
+	@# P2-V/V3: the model root relative to the repository (no host value in a record)
+	cargo run -q --release -p rootmark-index --bin rootmark-index -- models verify >research/reports/runs/$(RUN)/models_verify.raw.json
+	jq -c --arg r "$$(pwd -P)/" --arg l "$$(pwd)/" '.root |= (if startswith($$r) then .[($$r | length):] elif startswith($$l) then .[($$l | length):] else . end)' \
+	  research/reports/runs/$(RUN)/models_verify.raw.json >research/reports/runs/$(RUN)/models_verify.json
+	rm research/reports/runs/$(RUN)/models_verify.raw.json
 	$(MAKE) conformance
 	@# since P1-C.1 the report holds C3-05 (K-C1.3, 31 entries, spec 1.0.2);
 	@# the frozen P1-C recorder reads the P1-C view of it (C1, C2, C3-01..04:
@@ -358,7 +362,11 @@ p1c-checks: require-run
 	@# entries, spec 2.0.0); the P1-C.1 and P1-C views leave them out, and
 	@# conformance_p1d1.json stays the full report (37). P2-0.1: C2-13 too; P2-0.2: C2-14 too
 	@# (38 entries, spec 2.0.1), left out of the same views
-	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_p1d1.json
+	@# P2-V/V3 (K-P2V.2, no host value in a record): the RUN's copy names the
+	@# fixture root relative to the repository (reports/conformance.json keeps
+	@# the absolute root its checks read)
+	jq --arg r "$$(pwd -P)/" '.fixtures_root |= (if startswith($$r) then .[($$r | length):] else . end)' \
+	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_p1d1.json
 	jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14" and .id != "C3-08")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_p1c1.json
 	jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14" and .id != "C3-08")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
@@ -819,6 +827,7 @@ p2r-checks: require-run
 # `make verify FAST=1`: the fast pair (scripts/verify.sh, P2-L/F3)
 verify:
 	FAST="$(FAST)" bash scripts/verify.sh
+
 # P2-V (K-P2V.1): the Mac set — the inventory's timing-sensitive (Z) and
 # real-Obsidian (O) sets, 3 repetitions each against their rounds'
 # thresholds, on this Mac (scripts/verify_mac.sh; <RUN>/mac_checks.json).

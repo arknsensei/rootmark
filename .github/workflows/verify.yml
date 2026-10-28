@@ -14,7 +14,8 @@
 # (`eval.tier2 fails`; those are `make verify-mac`'s — the real Obsidian,
 # the watcher's timing, and the criteria whose reference RUN is bound to the
 # release Mac: vector numerics (C1-8), the local release target (E-7), the
-# release checklist (E1-4)). The frozen comparator's own verdict is recorded beside
+# release checklist (E1-4)), and checks that no record carries a host value
+# (`eval.portable`). The frozen comparator's own verdict is recorded beside
 # it. Its tools are the dispatched ref's; the chains run the commit given as
 # `sha` (default: the ref's HEAD), so an older commit's chain can be
 # verified with today's comparison. No Obsidian binary on a runner: the
@@ -127,7 +128,7 @@ jobs:
           path: ${{ runner.temp }}/out/
 
   compare:
-    name: compare (D class), FAILs
+    name: compare (D class), FAILs, host values
     needs: chain
     if: always()
     runs-on: ubuntu-latest
@@ -163,6 +164,8 @@ jobs:
             for s in A B; do
               rc=0; uv run --frozen python -m eval.tier2 fails "$in/tier2-$s/run" --summary "$in/tier2-$s/fail_summary.json" --out "$o/tier2_fails_$s.json" >/dev/null || rc=$?
               echo "tier2 fails $s: exit $rc ($(jq -r .counted_fails "$o/tier2_fails_$s.json" 2>/dev/null) counted)"; [ "$rc" -eq 0 ] || bad=1
+              rc=0; uv run --frozen python -m eval.portable "$in/tier2-$s/run" --host "$in/tier2-$s/host.json" --out "$o/portable_$s.json" >/dev/null || rc=$?
+              echo "portable $s: exit $rc"; [ "$rc" -eq 0 ] || bad=1
               uv run --frozen python -m eval.tier2 criteria "$in/tier2-$s/run" --out "$o/criteria_$s.json" >/dev/null || bad=1
             done
           fi

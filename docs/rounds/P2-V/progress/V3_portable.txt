@@ -1,0 +1,13 @@
+# P2-V/V3: scripts/check_records_portable.sh, kasıtlı bozma (P2-R 3. denemesinin arşivinin bir kopyası, zincir A'nın host değerleriyle; arşiv büyük transkriptleri dışarıda bıraktığı için --skip-missing)
+## 1. arşiv olduğu gibi (eski zincirin kaydı: H2 conformance_p1d1.json fixtures_root)
+exit 3
+portable: FOUND path '/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T' in conformance_p1d1.json
+portable: FOUND path '/private/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.ssyZ0neydC/A' in conformance_p1d1.json
+portable: FOUND path '/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T' in conformance_p1d1.json
+portable: FOUND path '/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.ssyZ0neydC/A' in conformance_p1d1.json
+## 2. fixtures_root depo köküne göreli (yeni Makefile'ın yazdığı gibi: spec/fixtures)
+exit 0 (bulgu 0, dosya 133)
+## 3. kasıtlı: p2r/det.json'a (D kaydı) zincirin iş dizini yolu enjekte edildi
+exit 3
+portable: FOUND path '/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T' in p2r/det.json
+portable: FOUND path '/var/folders/3h/tkg8gmr96tscr2t77stj77v40000gn/T/rootmark-verify.XXXXXX.ssyZ0neydC/A' in p2r/det.json

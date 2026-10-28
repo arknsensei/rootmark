@@ -163,7 +163,10 @@ item R16 "RELEASE.md human step 1 waits for a verification that says Güvenilir"
 # from a local SHA256SUMS (no model download) and refuses a changed archive
 # (nothing installed)
 host_t="$(case "$(uname -s)-$(uname -m)" in (Linux-x86_64) echo x86_64-unknown-linux-gnu ;; (Darwin-arm64) echo aarch64-apple-darwin ;; esac)"
-r17=1; r17d="no archive of this host's target in $dist/bin"
+# P2-V/F1 (K-P2V.2): the detail names no host path — the package directory
+# and the check's temp directory are the chain's (a clone path in a record
+# differs between two chains, K-P2R.5)
+r17=1; r17d="no archive of this host's target (${host_t:-unknown host}) in the package's bin/"
 ha="$(ls "$dist"/bin/rootmark-*-"$host_t".tar.gz 2>/dev/null | head -1 || true)"
 if [ -f packaging/install.sh ] && [ -f packaging/install.ps1 ] && bash -n packaging/install.sh && [ -n "$ha" ]; then
   mkdir -p "$tmp/inst/src" && cp "$ha" "$tmp/inst/src/"
@@ -174,7 +177,7 @@ if [ -f packaging/install.sh ] && [ -f packaging/install.ps1 ] && bash -n packag
     if ! bash packaging/install.sh --from "$tmp/inst/src" --prefix "$tmp/inst/bad" --no-model >"$tmp/inst/bad.log" 2>&1 \
       && [ ! -e "$tmp/inst/bad/bin/rootmark" ]; then r17=0; r17d="installed ${ha##*/}; a changed archive refused"
     else r17d="a changed archive was not refused"; fi
-  else r17d="install.sh failed: $(tail -1 "$tmp/inst/ok.log")"; fi
+  else r17d="install.sh failed: $(tail -1 "$tmp/inst/ok.log" | sed -e "s#$tmp#<tmp>#g" -e "s#$dist#<dist>#g" -e "s#$root#<repo>#g")"; fi
 fi
 item R17 "installers install.sh / install.ps1 (SHA256SUMS checked, a changed archive refused)" "$r17" "$r17d"
 # R18: release.yml installs each archive with its installer and checks the

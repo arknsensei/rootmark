@@ -100,7 +100,7 @@ jobs:
   # block's checks, conformance, the regress against the last official RUN)
   # compared with the frozen `eval.compare_p2r fast` — on every pull request,
   # each chain on its own runner (`scripts/verify.sh chain-fast`, the
-  # commit's own).
+  # commit's own); the records carry no host value (`eval.portable --fast`).
   fast:
     name: fast chain ${{ matrix.side }} (tier 1)
     runs-on: ubuntu-latest
@@ -177,13 +177,17 @@ jobs:
         with:
           pattern: tier1-*
           path: ${{ runner.temp }}/in
-      - name: compare_p2r fast, time
+      - name: compare_p2r fast, host values, time
         run: |
           set -euo pipefail
           in="$RUNNER_TEMP/in"; o="$RUNNER_TEMP/compare"; mkdir -p "$o"
           cd research
           uv run --frozen python -m eval.compare_p2r fast "$in/tier1-A/run" "$in/tier1-B/run" --out "$o/fast_pair_compare.json" >/dev/null
           echo "fast pair equal ($(jq -r .n_fields "$o/fast_pair_compare.json") fields)"
+          for s in A B; do
+            uv run --frozen python -m eval.portable "$in/tier1-$s/run" --fast --host "$in/tier1-$s/host.json" --out "$o/portable_$s.json" >/dev/null
+          done
+          echo "no host value in the fast records"
           t0="$(cat "$in"/tier1-*/started_epoch | sort -n | head -1)"
           jq -n --argjson s "$(( $(date -u +%s) - t0 ))" '{elapsed_s: $s, from: "the first fast chain started"}' | tee "$o/fast_pair_time.json"
       - name: keep the comparison

@@ -1,0 +1,5 @@
+# P2-V/F2 önce/sonra: scripts/verify.sh chain-fast'in fast/conformance.json'u, aynı reports/conformance.json'dan (bu ağaçtaki son make conformance)
+# önce = cp (352f790), sonra = P2-V/F2'nin jq satırı; alan alan fark (leaves):
+alan sayısı 281 281 farklı ['fixtures_root']
+ önce: <home>/Works/mdkernel/spec/fixtures | sonra: spec/fixtures
+# eval.fast_regress fixtures_root'u okumaz (grep: research/eval/fast_regress.py'de yok); compare_p2l/p2r fast onu 'ortam' sayar (P2L_INFO).
