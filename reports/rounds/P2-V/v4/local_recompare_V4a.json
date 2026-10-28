@@ -1,0 +1,41 @@
+{
+ "what": "P2-V/F5 önce/sonra: V4a'nın (40613401174) aynı iki zincir yapıtı üzerinde yerelde eval.tier2 pair, dondurulmuş karşılaştırmayı YENİDEN hesaplayarak (F5'ten önceki yol, 735 s), CI'daki chains_run karşılaştırmasıyla (40633593589, --frozen) karşılaştırılır",
+ "local": {
+  "equal": true,
+  "n_fields": 788021,
+  "differing_bytes": [],
+  "exclusions_used": [
+   "Z11",
+   "Z13",
+   "Z18",
+   "Z20",
+   "Z28",
+   "Z32",
+   "Z33",
+   "Z4",
+   "Z7"
+  ],
+  "differing_fields": 0,
+  "set_aside_fields": 55
+ },
+ "ci": {
+  "equal": true,
+  "n_fields": 788021,
+  "differing_bytes": [],
+  "exclusions_used": [
+   "Z11",
+   "Z13",
+   "Z18",
+   "Z20",
+   "Z28",
+   "Z32",
+   "Z33",
+   "Z4",
+   "Z7"
+  ],
+  "differing_fields": 0,
+  "set_aside_fields": 55
+ },
+ "set_aside_fields_equal": true,
+ "same": true
+}
