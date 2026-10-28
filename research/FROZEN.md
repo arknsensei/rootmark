@@ -419,6 +419,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/DETERMINISTIC_FIELDS.md` | `P2-R/R5-dev:` | yeniden dondurma P2-R/F7: `compare_p2r` bölümü, alan ve dosya satırları |
 | `research/eval/**` | `P2-R/R5-dev:` | yeniden dondurma P2-R/F7: `check_compare_fields.py`, `DETERMINISTIC_FIELDS.md`; bu commit'te var olan yeni P2-R dosyaları (`compare_p2r.py`, `historical_p2r.py`, `historical_fails_p2r.json`, `migration_required_fails_p2r.json`) |
 | `research/eval/**` | `P2-R/R5-rec:` | yeniden dondurma P2-R/F8: `historical_fails_p2r.json`'a K-P2R.3 yolları (geliştirme RUN'ı `20261026T114425Z-95139c8`) |
+| `reports/rounds/P2-V/inventory.json` | `P2-V/V1:` | P2-V envanteri ve D/Z/O/H sınıflandırması (ön-kayıt; GOAL P2-V V1, V-1): kademe 2'nin karşılaştırma dışı listesi, Mac kümesinin kümeleri ve eşikleri, kriter kimlikleri; V2'den önce, sonra değişmez |
+| `reports/rounds/P2-V/inventory.md` | `P2-V/V1:` | `inventory.json`'ın okunur biçimi (aynı commit) |
 <!-- /frozen-table -->
 
 ## Notlar
