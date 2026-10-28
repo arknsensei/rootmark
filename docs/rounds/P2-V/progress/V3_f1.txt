@@ -1,0 +1,7 @@
+# P2-V/F1 önce/sonra: scripts/release_check.sh boş bir paket dizinine (host arşivi yok), aynı ağaçta
+# önce = 352f790'daki betik, sonra = P2-V/F1; .items[] | [id, ok, detail] farkı (başka madde aynı):
+18c18
+< ["R17",false,"no archive of this host's target in <scratch>/f1/before/bin"]
+---
+> ["R17",false,"no archive of this host's target (aarch64-apple-darwin) in the package's bin/"]
+# passed/total önce 11/21, sonra 11/21

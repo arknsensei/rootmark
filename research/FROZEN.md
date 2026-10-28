@@ -421,6 +421,14 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/**` | `P2-R/R5-rec:` | yeniden dondurma P2-R/F8: `historical_fails_p2r.json`'a K-P2R.3 yolları (geliştirme RUN'ı `20261026T114425Z-95139c8`) |
 | `reports/rounds/P2-V/inventory.json` | `P2-V/V1:` | P2-V envanteri ve D/Z/O/H sınıflandırması (ön-kayıt; GOAL P2-V V1, V-1): kademe 2'nin karşılaştırma dışı listesi, Mac kümesinin kümeleri ve eşikleri, kriter kimlikleri; V2'den önce, sonra değişmez |
 | `reports/rounds/P2-V/inventory.md` | `P2-V/V1:` | `inventory.json`'ın okunur biçimi (aynı commit) |
+| `scripts/release_check.sh` | `P2-V/V3:` | yeniden dondurma P2-V/F1: R17'nin `detail`'i host yolu yazmaz (envanter H1) |
+| `scripts/verify.sh` | `P2-V/V3:` | yeniden dondurma P2-V/F2: hızlı zincirin `fast/conformance.json`'u `fixtures_root`'u depoya göreli (envanter H4) |
+| `research/eval/tier2.py` | `P2-V/V3:` | kademe 2'nin karşılaştırıcısı (D sınıfı, adlı Z/O listesi, FAIL sayımı, eşdeğerlik; GOAL P2-V V2, V-3, V-4) |
+| `research/eval/portable.py` | `P2-V/V3:` | kayıtlarda host değeri denetleyicisi (GOAL P2-V V3, V-5) |
+| `research/eval/verify_mac.py` | `P2-V/V3:` | Mac kümesinin değerlendiricisi (GOAL P2-V V2, V-6) |
+| `scripts/verify_mac.sh` | `P2-V/V3:` | `make verify-mac` (Mac kümesi, 3 tekrar) |
+| `scripts/check_records_portable.sh` | `P2-V/V3:` | `eval.portable`'ın betiği |
+| `.github/workflows/verify.yml` | `P2-V/V3:` | kademe 2'nin iş akışı (iki koşucu, karşılaştırma işi) |
 <!-- /frozen-table -->
 
 ## Notlar

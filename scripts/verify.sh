@@ -321,7 +321,10 @@ chain_fast() {
   mkdir -p "$fd"
   log "fast: conformance (make conformance, rootmark conformance)"
   make conformance
-  cp reports/conformance.json "$fd/conformance.json"
+  # P2-V/F2 (K-P2V.2): the record names the fixture root relative to the
+  # clone (no host path in a record; reports/conformance.json keeps it)
+  jq --arg r "$(pwd -P)/" '.fixtures_root |= (if startswith($r) then .[($r | length):] else . end)' \
+    reports/conformance.json >"$fd/conformance.json"
   ROOTMARK_MODELS="$work/repo/models" target/release/rootmark conformance >"$fd/conformance_rootmark.json"
   local erc=0
   bash scripts/conformance_equiv.sh reports/conformance.json "$fd/conformance_rootmark.json" >"$fd/conformance_equiv.log" 2>&1 || erc=$?
