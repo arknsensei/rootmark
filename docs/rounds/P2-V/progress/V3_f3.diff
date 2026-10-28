@@ -1,0 +1,17 @@
+diff --git a/research/eval/tier2.py b/research/eval/tier2.py
+index 3932a1d..d514c2c 100644
+--- a/research/eval/tier2.py
++++ b/research/eval/tier2.py
+@@ -190,7 +190,11 @@ def _criterion_fields(inv: dict) -> list[dict]:
+     """The Z/O criteria's own records as named fields (comparator key form):
+     a regress that differs only in them is a derived FAIL."""
+     return [
+-        {"id": f"{c['file']}:{c['criterion']}", "file": c["file"], "field": c["criterion"].replace(".", "·")}
++        {
++            "id": f"{c['file']}:{c['criterion']}",
++            "file": c["file"],
++            "field": c["criterion"].replace(".", "·"),
++        }
+         for c in inv.get("tier2_set_aside_criteria", [])
+     ]
+ 

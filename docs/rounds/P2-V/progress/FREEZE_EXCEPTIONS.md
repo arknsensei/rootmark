@@ -14,5 +14,11 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Önce/sonra:** `docs/rounds/P2-V/progress/V3_f2.txt` — aynı rapordan iki kayıt: 281 yaprağın yalnız `fixtures_root`'u farklı (mutlak → `spec/fixtures`). Hızlı çiftin sonucu: V4/V6'nın FAST koşuları (alan sayısı ve eşitlik).
 - **Gözden geçirici onayı:** V6.review.md.
 
+## F3 · V3 · `research/eval/tier2.py` — biçim (`ruff format`)
+- **Ne:** bir sözlük ifadesi satırlara bölündü (`V3_f3.diff`); başka değişiklik yok.
+- **Neden:** `make lint` (`ruff format --check`) CI'da kırmızıydı (koşu 40613417655); dondurma `P2-V/V3:`'te biçim denetiminden önce yapılmıştı (emsal P2-R/F5).
+- **Önce/sonra:** iki sürümün Python AST'si eşit (`ast.dump` aynı); `test_p2v_tools` 11/11 iki sürümde; kademe 2'nin `43055ee`'de başlatılan koşuları önceki sürümle aynı şeyi hesaplar.
+- **Gözden geçirici onayı:** V6.review.md.
+
 ## Dondurmaya ilk giren dosyalar (istisna değil; yeni satırlar, `P2-V/V3:`)
 `research/eval/tier2.py`, `research/eval/portable.py`, `research/eval/verify_mac.py`, `scripts/verify_mac.sh`, `scripts/check_records_portable.sh`, `.github/workflows/verify.yml` — kademe 2'nin karşılaştırıcısı ve iş akışı, host denetleyicisi, Mac kümesi; V4'ün ölçümlerinden önce.

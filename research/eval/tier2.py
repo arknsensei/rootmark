@@ -190,7 +190,11 @@ def _criterion_fields(inv: dict) -> list[dict]:
     """The Z/O criteria's own records as named fields (comparator key form):
     a regress that differs only in them is a derived FAIL."""
     return [
-        {"id": f"{c['file']}:{c['criterion']}", "file": c["file"], "field": c["criterion"].replace(".", "·")}
+        {
+            "id": f"{c['file']}:{c['criterion']}",
+            "file": c["file"],
+            "field": c["criterion"].replace(".", "·"),
+        }
         for c in inv.get("tier2_set_aside_criteria", [])
     ]
 
