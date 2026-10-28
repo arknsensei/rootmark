@@ -1,0 +1,65 @@
+35a36,39
+>       chains_run:
+>         description: "compare only: the run id whose two chains' artifacts are compared again (no chain runs)"
+>         required: false
+>         default: ""
+43a48
+>     if: ${{ !inputs.chains_run }}
+129a135,137
+>   # P2-V/F7: the frozen comparison runs once (it reads ~790 000 fields; three
+>   # more passes of it did not fit the first 30 minutes): `eval.tier2 pair`
+>   # and `eval.portable` read its result instead of comparing again
+135c143
+<     timeout-minutes: 30
+---
+>     timeout-minutes: 120
+145c153
+<           pattern: tier2-*
+---
+>           pattern: tier2-[AB]
+146a155,156
+>           run-id: ${{ inputs.chains_run || github.run_id }}
+>           github-token: ${{ github.token }}
+150a161
+>           CHAINS_RUN: ${{ inputs.chains_run || github.run_id }}
+152a164
+>           t0="$(date -u +%s)"
+156,157c168,174
+<           [ "$CHAINS" = success ] || { echo "a chain failed ($CHAINS)"; bad=1; }
+<           for s in A B; do echo "chain $s: commit $(cat "$in/tier2-$s/commit" 2>/dev/null), exit $(cat "$in/tier2-$s/exit" 2>/dev/null)"; done
+---
+>           if [ "$CHAINS_RUN" = "$GITHUB_RUN_ID" ]; then
+>             [ "$CHAINS" = success ] || { echo "a chain failed ($CHAINS)"; bad=1; }
+>           fi
+>           for s in A B; do
+>             e="$(cat "$in/tier2-$s/exit" 2>/dev/null || echo missing)"
+>             echo "chain $s: commit $(cat "$in/tier2-$s/commit" 2>/dev/null), exit $e"; [ "$e" = 0 ] || bad=1
+>           done
+161,162c178,179
+<             echo "frozen compare_p2r pair (recorded, not the verdict): exit $rc"
+<             rc=0; uv run --frozen python -m eval.tier2 pair "$a/run" "$b/run" --out "$o/tier2_pair.json" >/dev/null || rc=$?
+---
+>             echo "frozen compare_p2r pair (recorded, not the verdict): exit $rc"; [ "$rc" -eq 0 ] || [ "$rc" -eq 3 ] || bad=1
+>             rc=0; uv run --frozen python -m eval.tier2 pair "$a/run" "$b/run" --frozen "$o/frozen_pair_compare.json" --out "$o/tier2_pair.json" >/dev/null || rc=$?
+167c184
+<               rc=0; uv run --frozen python -m eval.portable "$in/tier2-$s/run" --host "$in/tier2-$s/host.json" --out "$o/portable_$s.json" >/dev/null || rc=$?
+---
+>               rc=0; uv run --frozen python -m eval.portable "$in/tier2-$s/run" --host "$in/tier2-$s/host.json" --files-from "$o/frozen_pair_compare.json" --out "$o/portable_$s.json" >/dev/null || rc=$?
+172,173c189,192
+<           started="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .run_started_at)"
+<           jq -n --arg started "$started" --arg now "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --argjson bad "$bad" \
+---
+>           started="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$CHAINS_RUN" --jq .run_started_at)"
+>           fin="$(cat "$in"/tier2-*/finished_epoch 2>/dev/null | sort -n | tail -1)"
+>           now="$(date -u +%s)"
+>           jq -n --arg started "$started" --argjson fin "${fin:-0}" --argjson now "$now" --argjson t0 "$t0" --argjson bad "$bad" \
+175,177c194,198
+<             --arg tools "$GITHUB_SHA" --arg run "$GITHUB_RUN_ID" \
+<             '{run_id: $run, tools_commit: $tools, commit_a: $sa, commit_b: $sb, started: $started, compared: $now,
+<               wall_s: (($now | fromdateiso8601) - ($started | fromdateiso8601)), pass: ($bad == 0)}' >"$o/tier2.json"
+---
+>             --arg tools "$GITHUB_SHA" --arg run "$GITHUB_RUN_ID" --arg chains "$CHAINS_RUN" \
+>             '{run_id: $run, chains_run: $chains, tools_commit: $tools, commit_a: $sa, commit_b: $sb, started: $started,
+>               chains_wall_s: ($fin - ($started | fromdateiso8601)), compare_s: ($now - $t0),
+>               wall_s: (if $chains == $run then $now - ($started | fromdateiso8601) else ($fin - ($started | fromdateiso8601)) + ($now - $t0) end),
+>               pass: ($bad == 0)}' >"$o/tier2.json"

@@ -1,0 +1,57 @@
+diff --git a/research/eval/tier2.py b/research/eval/tier2.py
+index d514c2c..94555a6 100644
+--- a/research/eval/tier2.py
++++ b/research/eval/tier2.py
+@@ -20,7 +20,7 @@ record that embeds another record's per-field differences (a regress's
+ such an entry set aside iff the field it names is set aside — recursively,
+ so a regress of a regress follows the same list.
+ 
+-    python -m eval.tier2 pair <run_A> <run_B> [--out path.json]
++    python -m eval.tier2 pair <run_A> <run_B> [--frozen compare_p2r.json] [--out path.json]
+     python -m eval.tier2 fails <run_dir> --summary <classifier.json> [--out path.json]
+     python -m eval.tier2 criteria <run_dir> [--out path.json]
+     python -m eval.tier2 equiv <old_run> <new_run> [--mac mac_checks.json] [--out path.json]
+@@ -119,8 +119,21 @@ def _split(k: str) -> tuple[str, str]:
+     return name, key
+ 
+ 
+-def pair(a: Path, b: Path, inv: dict) -> dict:
+-    res = compare_p2r.pair(a, b)
++def frozen_result(path: Path, a: Path, b: Path) -> dict:
++    """The frozen comparator's own output (`compare_p2r pair --out`) for the
++    RUNs `a` and `b`, read instead of comparing again (P2-V/F5)."""
++    res = json.loads(path.read_text(encoding="utf-8"))
++    names = (str(Path(res.get("run_a", "")).resolve()), str(Path(res.get("run_b", "")).resolve()))
++    if names != (str(a.resolve()), str(b.resolve())):
++        raise ValueError(f"{path} compares {names}, not ({a}, {b})")
++    for k in ("files", "n_fields", "differing_fields", "bytes"):
++        if k not in res:
++            raise ValueError(f"{path}: no `{k}` (not a compare_p2r pair result)")
++    return res
++
++
++def pair(a: Path, b: Path, inv: dict, frozen: dict | None = None) -> dict:
++    res = frozen if frozen is not None else compare_p2r.pair(a, b)
+     excl = inv["pair_exclusions"]
+     bex = {e["path"]: e for e in inv["byte_exclusions"]}
+     differing, aside = {}, {}
+@@ -295,6 +308,9 @@ def main(argv: list[str] | None = None) -> None:
+     p = sub.add_parser("pair")
+     p.add_argument("a", type=Path)
+     p.add_argument("b", type=Path)
++    p.add_argument(
++        "--frozen", type=Path, help="the frozen `compare_p2r pair --out` result of these RUNs"
++    )
+     f = sub.add_parser("fails")
+     f.add_argument("run", type=Path)
+     f.add_argument("--summary", type=Path, required=True)
+@@ -311,7 +327,8 @@ def main(argv: list[str] | None = None) -> None:
+     try:
+         inv = load_inventory(x.inventory)
+         if x.mode == "pair":
+-            res = pair(x.a, x.b, inv)
++            res = pair(x.a, x.b, inv, frozen_result(x.frozen, x.a, x.b) if x.frozen else None)
++            res["frozen_result_read"] = str(x.frozen) if x.frozen else None
+             ok = res["equal"]
+         elif x.mode == "fails":
+             summary = json.loads(x.summary.read_text(encoding="utf-8"))

@@ -265,3 +265,28 @@ def test_the_mac_summary_needs_every_thresholded_criterion_in_three_of_three(tmp
     assert "p2_0_2_checks.json:H-P2-0.2i" in res["no_threshold"] and not res["pass"]
     nt = next(c for c in by["Z-DA"]["criteria"] if c["criterion"].endswith("H-P2-0.2i"))
     assert nt["pass"] is None and nt["equal_across_reps"] is True
+
+
+def test_a_frozen_result_is_read_only_for_the_runs_it_compared(tmp_path):
+    a, b = tmp_path / "A" / "run", tmp_path / "B" / "run"
+    a.mkdir(parents=True)
+    b.mkdir(parents=True)
+    res = {
+        "run_a": str(a),
+        "run_b": str(b),
+        "files": ["p1d/d10.json"],
+        "n_fields": 3,
+        "differing_fields": {"p1d/d10.json:p95_ms": 1.0},
+        "bytes": {},
+    }
+    f = tmp_path / "frozen.json"
+    f.write_text(json.dumps(res))
+    out = tier2.pair(a, b, INV, tier2.frozen_result(f, a, b))
+    assert out["equal"] and out["exclusions_used"] == ["Z1"]
+    with pytest.raises(ValueError):
+        tier2.frozen_result(f, b, a)
+    (a / "p1d").mkdir()
+    (a / "p1d/d10.json").write_text("{}")
+    assert portable.record_files(a, False, files_from=f) == ["p1d/d10.json"]
+    with pytest.raises(FileNotFoundError):
+        portable.record_files(tmp_path, False, files_from=f)

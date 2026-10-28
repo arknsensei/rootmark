@@ -1,0 +1,65 @@
+diff --git a/research/eval/portable.py b/research/eval/portable.py
+index 5fe4a21..210b01c 100644
+--- a/research/eval/portable.py
++++ b/research/eval/portable.py
+@@ -14,7 +14,7 @@ too. Each path is searched as given and as its real path (`/var` →
+ shorter than 4 characters and `/tmp` itself are not searched (they are
+ not specific to a host).
+ 
+-    python -m eval.portable <run_dir> [--host host.json …] [--fast] [--skip-missing] [--out path.json]
++    python -m eval.portable <run_dir> [--host host.json …] [--fast] [--skip-missing] [--files-from compare.json] [--out path.json]
+ 
+ Exit 0 when nothing is found, 3 when something is (the record names the
+ file, the value's kind and the first match), 1 on a missing file.
+@@ -92,16 +92,26 @@ def this_host() -> dict:
+     }
+ 
+ 
+-def record_files(run_dir: Path, fast: bool, archived: bool = False) -> list[str]:
++def record_files(
++    run_dir: Path, fast: bool, archived: bool = False, files_from: Path | None = None
++) -> list[str]:
+     if fast:
+         return list(compare_p2r.P2R_FAST_FILES)
+-    try:
+-        res = compare_p2r.pair(run_dir, run_dir)
+-    except FileNotFoundError:
+-        if not archived:
+-            raise
+-        # an archive without some artefacts: the files its own pair compared
+-        res = json.loads((run_dir / "pair_compare.json").read_text(encoding="utf-8"))
++    if files_from is not None:
++        # the frozen comparator's result of this pair (P2-V/F6): its files and
++        # byte-compared artefacts, without comparing again
++        res = json.loads(files_from.read_text(encoding="utf-8"))
++        runs = {str(Path(res.get(k, "")).resolve()) for k in ("run_a", "run_b")}
++        if str(run_dir.resolve()) not in runs:
++            raise FileNotFoundError(f"{files_from} is not a comparison of {run_dir.name}")
++    else:
++        try:
++            res = compare_p2r.pair(run_dir, run_dir)
++        except FileNotFoundError:
++            if not archived:
++                raise
++            # an archive without some artefacts: the files its own pair compared
++            res = json.loads((run_dir / "pair_compare.json").read_text(encoding="utf-8"))
+     files = list(res["files"])
+     for p in res["bytes"]:
+         q = run_dir / p
+@@ -145,12 +155,15 @@ def main(argv: list[str] | None = None) -> None:
+     ap.add_argument(
+         "--skip-missing", action="store_true", help="an archived RUN: list missing files"
+     )
++    ap.add_argument(
++        "--files-from", type=Path, help="the frozen `compare_p2r pair --out` result naming this RUN"
++    )
+     ap.add_argument("--out", type=Path)
+     a = ap.parse_args(argv)
+     missing: list[str] | None = [] if a.skip_missing else None
+     try:
+         hosts = [json.loads(h.read_text(encoding="utf-8")) for h in a.host] + [this_host()]
+-        files = record_files(a.run_dir, a.fast, a.skip_missing)
++        files = record_files(a.run_dir, a.fast, a.skip_missing, a.files_from)
+         hits = scan(a.run_dir, files, needles(hosts), missing)
+     except (FileNotFoundError, json.JSONDecodeError) as e:
+         print(f"error: {e}", file=sys.stderr)
