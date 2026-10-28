@@ -1,0 +1,2976 @@
+{
+ "round": "P2-V",
+ "task": "V1 (ön-kayıt; bu commit'ten sonra değişmez)",
+ "round_start": "352f7903f5fbcf324bfef03e10305cb502c38f99",
+ "classes": {
+  "D": "deterministik: aynı girdi → aynı çıktı; kademe 2 A↔B bayt/alan eşitliği",
+  "Z": "zamanlamaya duyarlı (pencere, gecikme, yarış): karşılaştırma dışı, Mac kümesinde kendi eşiğiyle 3 tekrar",
+  "O": "gerçek Obsidian ya da macOS'a özgü yol — ve referans RUN'ları yayım Mac'inde kaydedilmiş, değeri o donanıma/platforma bağlı kriterler (vektör sayısalları C1-8, yerel yayım hedefi E-7, yayım kontrol listesi E1-4): Mac kümesinde kendi eşiğiyle; gerçek Obsidian alanları karşılaştırma dışı, platforma bağlı kriterlerin kayıtları aynı platformdaki iki zincirde deterministik olduğu için karşılaştırmada kalır (yalnız kademe 2'nin FAIL sayımından düşer)",
+  "H": "host'a bağlı değer: kayıt düzeltilir (V3), sonra D"
+ },
+ "rules": [
+  "Karşılaştırma dondurulmuş `eval.compare_p2r.pair`'dir (eski tam çiftin her dosyası ve alanı); `eval.tier2 pair` yalnız aşağıda adı geçenleri kenara alır.",
+  "Her girdi bir dosya ya da bir alan (alt ağacıyla); desen yok (`*`, `?`, `[` hata).",
+  "Gömülü fark kuralı: başka kayıtların alan farklarını `<dosya>:<alan>` anahtarıyla taşıyan bir alan (`differing_fields`, `excluded_differences`) içinde bir girdi, adlandırdığı alan kenara alınmışsa kenara alınır (özyinelemeli).",
+  "Dondurulmuş karşılaştırıcıların kendi zaman/ortam/bilgi alanları (DETERMINISTIC_FIELDS.md) aynen dışarıda kalır; bu listeye eklenmez.",
+  "Kademe 2'nin sayılan FAIL'i: zincirin kendi sınıflandırıcısının (`eval.historical_p2r`) sayılan FAIL'lerinden `tier2_set_aside_criteria` (Mac kümesi ölçer) ve bildirdiği her farkı gömülü kuralla kenara alınan bir Z/O alanı olanlar düşülür; geri kalan sayılır.",
+  "Eski ↔ yeni eşdeğerlik (V-3, `eval.tier2 equiv`): farklar yalnız Z/O, H ve `commit_bound` alanlarında; kriter kimlikleri eski ⊆ yeni ∪ Mac kümesi."
+ ],
+ "steps": [
+  {
+   "id": "clone",
+   "runs": "git clone",
+   "inputs": "kaynak depo (commit)",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 3,
+    "P2-R 3. deneme B": 3,
+    "CI 40265181721 A": 1,
+    "CI 40265181721 B": 1,
+    "V0 40582139980 A": 0,
+    "V0 40582139980 B": 0
+   }
+  },
+  {
+   "id": "setup",
+   "runs": "make setup",
+   "inputs": "Cargo.lock, uv.lock; Rust + maturin",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 45,
+    "P2-R 3. deneme B": 44,
+    "CI 40265181721 A": 217,
+    "CI 40265181721 B": 186,
+    "V0 40582139980 A": 206,
+    "V0 40582139980 B": 195
+   }
+  },
+  {
+   "id": "models",
+   "runs": "make models",
+   "inputs": "models/MANIFEST.json (ağ: HF)",
+   "platform": "ağ",
+   "duration_s": {
+    "P2-R 3. deneme A": 12,
+    "P2-R 3. deneme B": 12,
+    "CI 40265181721 A": 25,
+    "CI 40265181721 B": 26,
+    "V0 40582139980 A": 28,
+    "V0 40582139980 B": 26
+   }
+  },
+  {
+   "id": "datasets",
+   "runs": "make datasets",
+   "inputs": "research/data manifest'leri",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 58,
+    "P2-R 3. deneme B": 60,
+    "CI 40265181721 A": 23,
+    "CI 40265181721 B": 22,
+    "V0 40582139980 A": 23,
+    "V0 40582139980 B": 21
+   }
+  },
+  {
+   "id": "freeze",
+   "runs": "make freeze-check freeze-check-v3; scripts/check_frozen.sh",
+   "inputs": "FROZEN.md, v2/v3 fixture'ları",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 68,
+    "P2-R 3. deneme B": 69,
+    "CI 40265181721 A": 38,
+    "CI 40265181721 B": 37,
+    "V0 40582139980 A": 38,
+    "V0 40582139980 B": 32
+   }
+  },
+  {
+   "id": "conformance",
+   "runs": "make conformance",
+   "inputs": "spec/fixtures, modeller",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 18,
+    "P2-R 3. deneme B": 18,
+    "CI 40265181721 A": 29,
+    "CI 40265181721 B": 30,
+    "V0 40582139980 A": 29,
+    "V0 40582139980 B": 29
+   }
+  },
+  {
+   "id": "holdout",
+   "runs": "make eval-holdout eval-split-grid",
+   "inputs": "d1ho, d1sh",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 28,
+    "P2-R 3. deneme B": 27,
+    "CI 40265181721 A": 3,
+    "CI 40265181721 B": 3,
+    "V0 40582139980 A": 3,
+    "V0 40582139980 B": 3
+   }
+  },
+  {
+   "id": "regress",
+   "runs": "make regress",
+   "inputs": "v2/v3 RUN'ları, P1-A RUN'ı",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 362,
+    "P2-R 3. deneme B": 363,
+    "CI 40265181721 A": 213,
+    "CI 40265181721 B": 217,
+    "V0 40582139980 A": 136,
+    "V0 40582139980 B": 135
+   }
+  },
+  {
+   "id": "p1a",
+   "runs": "make p1a-checks",
+   "inputs": "RUN kayıtları",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 24,
+    "P2-R 3. deneme B": 22,
+    "CI 40265181721 A": 12,
+    "CI 40265181721 B": 13,
+    "V0 40582139980 A": 12,
+    "V0 40582139980 B": 11
+   }
+  },
+  {
+   "id": "p1b",
+   "runs": "make p1b-checks",
+   "inputs": "v3-final ikilisi, fuzz tohumları",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 45,
+    "P2-R 3. deneme B": 46,
+    "CI 40265181721 A": 64,
+    "CI 40265181721 B": 64,
+    "V0 40582139980 A": 66,
+    "V0 40582139980 B": 60
+   }
+  },
+  {
+   "id": "p1b1",
+   "runs": "make p1b1-checks",
+   "inputs": "RUN kayıtları",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 2,
+    "P2-R 3. deneme B": 2,
+    "CI 40265181721 A": 1,
+    "CI 40265181721 B": 1,
+    "V0 40582139980 A": 2,
+    "V0 40582139980 B": 1
+   }
+  },
+  {
+   "id": "p1c",
+   "runs": "make p1c-checks",
+   "inputs": "D3, D4, model",
+   "platform": "vektör sayısalları donanıma bağlı (C1-8'in referansı yayım Mac'inde)",
+   "duration_s": {
+    "P2-R 3. deneme A": 511,
+    "P2-R 3. deneme B": 511,
+    "CI 40265181721 A": 1014,
+    "CI 40265181721 B": 997,
+    "V0 40582139980 A": 974,
+    "V0 40582139980 B": 869
+   }
+  },
+  {
+   "id": "tamper_p1c",
+   "runs": "scripts/test_tamper_p1c.sh",
+   "inputs": "model manifest, fixture'lar",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 23,
+    "P2-R 3. deneme B": 22,
+    "CI 40265181721 A": 12,
+    "CI 40265181721 B": 12,
+    "V0 40582139980 A": 12,
+    "V0 40582139980 B": 11
+   }
+  },
+  {
+   "id": "p1c1",
+   "runs": "make p1c1-checks",
+   "inputs": "P1-C RUN'ı, CLI",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 64,
+    "P2-R 3. deneme B": 63,
+    "CI 40265181721 A": 52,
+    "CI 40265181721 B": 50,
+    "V0 40582139980 A": 45,
+    "V0 40582139980 B": 42
+   }
+  },
+  {
+   "id": "p1d",
+   "runs": "make p1d-checks",
+   "inputs": "MCP Inspector (ağ, Node), serve --watch (FSEvents/inotify), P1-C.1 RUN'ı",
+   "platform": "ağ; izleme gecikmesi (D-10)",
+   "duration_s": {
+    "P2-R 3. deneme A": 98,
+    "P2-R 3. deneme B": 101,
+    "CI 40265181721 A": 179,
+    "CI 40265181721 B": 163,
+    "V0 40582139980 A": 177,
+    "V0 40582139980 B": 156
+   }
+  },
+  {
+   "id": "p1d1",
+   "runs": "make p1d1-checks",
+   "inputs": "p1d-final ağacı, P1-D RUN'ı",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 149,
+    "P2-R 3. deneme B": 152,
+    "CI 40265181721 A": 278,
+    "CI 40265181721 B": 279,
+    "V0 40582139980 A": 276,
+    "V0 40582139980 B": 257
+   }
+  },
+  {
+   "id": "p1e",
+   "runs": "make p1e-checks",
+   "inputs": "eklenti e2e (başsız), yerel yayım ikilisi, P1-D.1 RUN'ı",
+   "platform": "yerel yayım hedefi aarch64-apple-darwin (E-7)",
+   "duration_s": {
+    "P2-R 3. deneme A": 83,
+    "P2-R 3. deneme B": 82,
+    "CI 40265181721 A": 175,
+    "CI 40265181721 B": 183,
+    "V0 40582139980 A": 192,
+    "V0 40582139980 B": 176
+   }
+  },
+  {
+   "id": "p1e1",
+   "runs": "make p1e1-checks",
+   "inputs": "yayım paketi (release.sh), gerçek Obsidian e2e ve kasıtlı bozmaları, P1-E RUN'ı",
+   "platform": "gerçek Obsidian (E1-3, E1-9 adımı, R15, tamper e2e); macOS arşivi (R17, E1-4)",
+   "duration_s": {
+    "P2-R 3. deneme A": 154,
+    "P2-R 3. deneme B": 152,
+    "CI 40265181721 A": 909,
+    "CI 40265181721 B": 897,
+    "V0 40582139980 A": 884,
+    "V0 40582139980 B": 838
+   }
+  },
+  {
+   "id": "p2a",
+   "runs": "make p2a-checks (içinde p2-0-2-checks)",
+   "inputs": "serve --watch kümeleri D-A, D-A2, D-C, D-B2; altı eski vault; P2-0.2 RUN'ı",
+   "platform": "izleme gecikmesi ve pencere yarışı (D-A quiesce 0.4 s)",
+   "duration_s": {
+    "P2-R 3. deneme A": 835,
+    "P2-R 3. deneme B": 952,
+    "CI 40265181721 A": 1849,
+    "CI 40265181721 B": 1904,
+    "V0 40582139980 A": 1948,
+    "V0 40582139980 B": 1904
+   }
+  },
+  {
+   "id": "p2_0_3",
+   "runs": "make p2-0-3-checks",
+   "inputs": "gerçek Obsidian: D-B test-4, D-A′, D-C′; P2-A RUN'ı",
+   "platform": "gerçek Obsidian (macOS)",
+   "duration_s": {
+    "P2-R 3. deneme A": 747,
+    "P2-R 3. deneme B": 747,
+    "CI 40265181721 A": 3,
+    "CI 40265181721 B": 3,
+    "V0 40582139980 A": 3,
+    "V0 40582139980 B": 2
+   }
+  },
+  {
+   "id": "p2l",
+   "runs": "make p2l-checks p2l-quality",
+   "inputs": "çok dilli model (ağ), D-TR",
+   "platform": "ağ",
+   "duration_s": {
+    "P2-R 3. deneme A": 369,
+    "P2-R 3. deneme B": 369,
+    "CI 40265181721 A": 597,
+    "CI 40265181721 B": 576,
+    "V0 40582139980 A": 655,
+    "V0 40582139980 B": 558
+   }
+  },
+  {
+   "id": "p2p",
+   "runs": "make p2p-checks",
+   "inputs": "sunucu testleri",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 46,
+    "P2-R 3. deneme B": 47,
+    "CI 40265181721 A": 31,
+    "CI 40265181721 B": 30,
+    "V0 40582139980 A": 34,
+    "V0 40582139980 B": 29
+   }
+  },
+  {
+   "id": "p2b",
+   "runs": "make p2b-checks",
+   "inputs": "D-NOTES, iki istemci (Node), başsız e2e",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 173,
+    "P2-R 3. deneme B": 174,
+    "CI 40265181721 A": 185,
+    "CI 40265181721 B": 183,
+    "V0 40582139980 A": 184,
+    "V0 40582139980 B": 156
+   }
+  },
+  {
+   "id": "p2r",
+   "runs": "make p2r-checks",
+   "inputs": "D-VOL tohumu",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 464,
+    "P2-R 3. deneme B": 468,
+    "CI 40265181721 A": null,
+    "CI 40265181721 B": null,
+    "V0 40582139980 A": 661,
+    "V0 40582139980 B": 572
+   }
+  },
+  {
+   "id": "tamper",
+   "runs": "scripts/test_tamper.sh",
+   "inputs": "RUN dosyaları, FROZEN.md",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 193,
+    "P2-R 3. deneme B": 195,
+    "CI 40265181721 A": 126,
+    "CI 40265181721 B": 141,
+    "V0 40582139980 A": 113,
+    "V0 40582139980 B": 115
+   }
+  },
+  {
+   "id": "summary",
+   "runs": "python -m eval.historical_p2r --summary",
+   "inputs": "P2-B resmi RUN'ı, listeler",
+   "platform": "-",
+   "duration_s": {
+    "P2-R 3. deneme A": 0,
+    "P2-R 3. deneme B": 0,
+    "CI 40265181721 A": 40,
+    "CI 40265181721 B": 42,
+    "V0 40582139980 A": 39,
+    "V0 40582139980 B": 39
+   }
+  }
+ ],
+ "records": [
+  {
+   "file": "h1s_tuning.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "h1s.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "h1r.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "h1s_v3_tuning.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "h1s_v3.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "h1r_v3.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "h3_v3.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "h4_v3.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "h4_v2repro.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "holdout.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "split_grid.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "holdout_split.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1b_checks.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "governance/governance.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1b1_checks.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "c3_quality.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1c_checks.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1c_index.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "c1_variant.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1c1_checks.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d_checks.json",
+   "class": "D",
+   "fields_set_aside": [
+    "Z3"
+   ],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d/inspector/inspector.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d/mcp_e2e/mcp_e2e.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d/http/http_e2e.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d/scene/scene.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d/tamper_p1d.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d/d10.json",
+   "class": "Z",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d/sigterm.json",
+   "class": "Z",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1_checks.json",
+   "class": "D",
+   "fields_set_aside": [
+    "Z21",
+    "Z22"
+   ],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "conformance_p1d1.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [
+    "H2"
+   ],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/p1d1.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_1.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_2.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_3.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_4.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_5.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_6.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_7.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_8.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_9.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_11.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/d1_13.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/v3_compat.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/v3_compat_mixed.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1d1/tamper_p1d1.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e_checks.json",
+   "class": "D",
+   "fields_set_aside": [
+    "Z23",
+    "Z24"
+   ],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/e0/e14.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/e0/e15.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/scene/scene.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/plugin_e2e/plugin_e2e.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/plugin_e2e/access_log.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/client.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/release/release_local.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/release/conformance_rootmark.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/release/conformance_equiv.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/tamper_p1e.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e/check_compare_fields.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1_checks.json",
+   "class": "D",
+   "fields_set_aside": [
+    "Z25",
+    "Z26",
+    "O3",
+    "O4",
+    "O5",
+    "O6",
+    "O12"
+   ],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1/status/e1_1.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1/status/e1_2.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1/contract.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1/tamper_p1e1.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1/tamper_p1e1_e2e.json",
+   "class": "O",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1/release/release.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": [
+    "C1"
+   ]
+  },
+  {
+   "file": "p1e1/release/release_check.json",
+   "class": "D",
+   "fields_set_aside": [
+    "O13"
+   ],
+   "host_fields": [
+    "H1"
+   ],
+   "commit_bound": [
+    "C2"
+   ]
+  },
+  {
+   "file": "p1e1/release/plugin_e2e_real.json",
+   "class": "O",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1/release/access_log_real.json",
+   "class": "O",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1/historical.json",
+   "class": "Z",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p1e1/check_compare_fields.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "class": "D",
+   "fields_set_aside": [
+    "Z7",
+    "Z8",
+    "Z9",
+    "Z10",
+    "Z11",
+    "Z12",
+    "Z13",
+    "Z14",
+    "Z15",
+    "Z16",
+    "O7",
+    "O8",
+    "O9",
+    "O10"
+   ],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2_0_2/rules.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2_0_2/d_e.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2_0_2/d_a.json",
+   "class": "Z",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2_0_2/d_a2.json",
+   "class": "Z",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2_0_2/d_c.json",
+   "class": "Z",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2_0_2/tamper_p2_0_2.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2a_checks.json",
+   "class": "D",
+   "fields_set_aside": [
+    "Z17",
+    "Z18",
+    "Z19",
+    "Z20"
+   ],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2a/migrate_old.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2a/fixture.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2a/tamper.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2a/tests.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2l_checks.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2l_quality.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2l/d_tr.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2l/english.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2l/migrate.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2p_checks.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2b_checks.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2b/align.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2b/det.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2b/client_checks.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2b/obsidian_e2e.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2b/vscode_e2e.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2r_checks.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2r/volume.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2r/det.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "p2b/align_regress.json",
+   "class": "D",
+   "fields_set_aside": [],
+   "host_fields": [],
+   "commit_bound": []
+  },
+  {
+   "file": "governance/vault/.rootmark/checkpoints/",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "governance/vault/.rootmark/events.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "governance/vault/.rootmark/traces.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/inspector/tools_list.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/mcp_e2e/run1/cli_promote.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/mcp_e2e/run1/transcript.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/mcp_e2e/run1/transcript_b.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/mcp_e2e/run1/vault/.rootmark/events.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/mcp_e2e/run1/vault/.rootmark/proposals.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/mcp_e2e/run1/vault/.rootmark/traces.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/mcp_e2e/run1/vault/agent/plan.md",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/mcp_e2e/run1/vault/espresso.md",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d/scene/scene.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d1/d1_13.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d1/d1_3.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1d1/d1_8.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e/plugin_e2e/access_log.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e/plugin_e2e/events.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e/plugin_e2e/plugin_e2e.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e/plugin_e2e/proposals.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e/plugin_e2e/traces.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e/scene/events.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e/scene/proposals.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e/scene/scene.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e/scene/traces.jsonl",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e1/release/access_log_real.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p1e1/release/plugin_e2e_real.json",
+   "class": "D",
+   "bytes": true,
+   "set_aside": []
+  },
+  {
+   "file": "p2_0_2/d_a/attestations.jsonl",
+   "class": "Z",
+   "bytes": true,
+   "set_aside": [
+    "Z29"
+   ]
+  },
+  {
+   "file": "p2_0_2/d_a/events.jsonl",
+   "class": "Z",
+   "bytes": true,
+   "set_aside": [
+    "Z28"
+   ]
+  },
+  {
+   "file": "p2_0_2/d_a2/attestations.jsonl",
+   "class": "Z",
+   "bytes": true,
+   "set_aside": [
+    "Z31"
+   ]
+  },
+  {
+   "file": "p2_0_2/d_a2/events.jsonl",
+   "class": "Z",
+   "bytes": true,
+   "set_aside": [
+    "Z30"
+   ]
+  },
+  {
+   "file": "p2_0_2/d_c/attestations.jsonl",
+   "class": "Z",
+   "bytes": true,
+   "set_aside": [
+    "Z33"
+   ]
+  },
+  {
+   "file": "p2_0_2/d_c/events.jsonl",
+   "class": "Z",
+   "bytes": true,
+   "set_aside": [
+    "Z32"
+   ]
+  }
+ ],
+ "pair_exclusions": [
+  {
+   "id": "Z1",
+   "file": "p1d/d10.json",
+   "field": null,
+   "class": "Z",
+   "set": "Z-D10",
+   "why": "D-10: dış md düzenlemesinden `search`'e gecikme (p95) ve geçiş kararı; serve --watch altında dosya olayı (FSEvents/inotify) ile ölçüm arasındaki zamanlama; kayıt girdiye ek olarak zamanlamanın fonksiyonu"
+  },
+  {
+   "id": "Z2",
+   "file": "p1d/sigterm.json",
+   "field": null,
+   "class": "Z",
+   "set": "Z-D10",
+   "why": "D-10'un SIGTERM yarısı: `serve --watch` durdurulurken yazılan değişikliğin kaydı (zamanlama)"
+  },
+  {
+   "id": "Z3",
+   "file": "p1d_checks.json",
+   "field": "D-10",
+   "class": "Z",
+   "set": "Z-D10",
+   "why": "D-10 kriterinin kaydı (Z1, Z2'den)"
+  },
+  {
+   "id": "Z4",
+   "file": "p2_0_2/d_a.json",
+   "field": null,
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "D-A: 200 senaryo, dondurulmuş `Served.quiesce(settle_s=0.4)`; FSEvents geç gelirse ölçüm alımdan önce (K-P2R.5 (1), P2-0 Z5 N5)"
+  },
+  {
+   "id": "Z5",
+   "file": "p2_0_2/d_a2.json",
+   "field": null,
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "D-A2: D-A ile aynı mekanizma (quiesce)"
+  },
+  {
+   "id": "Z6",
+   "file": "p2_0_2/d_c.json",
+   "field": null,
+   "class": "Z",
+   "set": "Z-DC",
+   "why": "D-C: insan/ajan yazımı arasındaki gecikmeler ve çakışma (collide) tikleri; serve --watch altında dosya olayı (FSEvents/inotify) ile ölçüm arasındaki zamanlama; kayıt girdiye ek olarak zamanlamanın fonksiyonu"
+  },
+  {
+   "id": "Z7",
+   "file": "p2_0_2_checks.json",
+   "field": "H-P2-0·2a",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "H-P2-0.2a: Z4, Z5'ten"
+  },
+  {
+   "id": "Z8",
+   "file": "p2_0_2_checks.json",
+   "field": "H-P2-0·2a′",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "H-P2-0.2a′: Z4'ten"
+  },
+  {
+   "id": "Z9",
+   "file": "p2_0_2_checks.json",
+   "field": "H-P2-0·2d",
+   "class": "Z",
+   "set": "Z-DC",
+   "why": "H-P2-0.2d: Z6'dan (D-C′ yarısı O, zincirde ölçülmez)"
+  },
+  {
+   "id": "Z10",
+   "file": "p2_0_2_checks.json",
+   "field": "H-P2-0·2f",
+   "class": "Z",
+   "set": "Z-DB2",
+   "why": "H-P2-0.2f: D-B2 (Obsidian dışı insan oturumları, `serve --watch`) yanlış `unverified` ve p95 gecikmesi"
+  },
+  {
+   "id": "Z11",
+   "file": "p2_0_2_checks.json",
+   "field": "regress›p2_0_1_sets›d_a",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "P2-0.1 RUN'ına karşı D-A kümesi (Z4'ün regress'i)"
+  },
+  {
+   "id": "Z12",
+   "file": "p2_0_2_checks.json",
+   "field": "regress›p2_0_1_sets›d_a2",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "P2-0.1 RUN'ına karşı D-A2 (Z5'in regress'i)"
+  },
+  {
+   "id": "Z13",
+   "file": "p2_0_2_checks.json",
+   "field": "regress›p2_0_1_sets›d_c",
+   "class": "Z",
+   "set": "Z-DC",
+   "why": "P2-0.1 RUN'ına karşı D-C (Z6'nın regress'i)"
+  },
+  {
+   "id": "Z14",
+   "file": "p2_0_2_checks.json",
+   "field": "regress›p2_0_1_sets›equal",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "Z11–Z13'ün birleşimi (`d_e_p2_0_1` ayrıca karşılaştırılır)"
+  },
+  {
+   "id": "Z15",
+   "file": "p2_0_2_checks.json",
+   "field": "regress›pass",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "regress'in `pass`'ı Z alanlarına da bağlı; D içeriği alan alan (gömülü fark kuralı) karşılaştırılır"
+  },
+  {
+   "id": "Z16",
+   "file": "p2_0_2_checks.json",
+   "field": "fail_summary",
+   "class": "Z",
+   "set": "FAIL özeti",
+   "why": "P2-0.2'nin sınıflandırıcısının FAIL özeti: Z/O kriterlerini sayar; D kriterlerinin kayıtları ayrı ayrı karşılaştırılır ve kademe 2 FAIL'leri D sınıfında yeniden sayar (`eval.tier2 fails`)"
+  },
+  {
+   "id": "Z17",
+   "file": "p2a_checks.json",
+   "field": "fail_summary",
+   "class": "Z",
+   "set": "FAIL özeti",
+   "why": "P2-A sınıflandırıcısının FAIL özeti (Z16 gibi)"
+  },
+  {
+   "id": "Z18",
+   "file": "p2a_checks.json",
+   "field": "regress›p2_0_2_bytes",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "D-A, D-A2, D-C günlüklerinin P2-0.2 RUN'ına bayt eşitliği (Z4–Z6'nın günlükleri)"
+  },
+  {
+   "id": "Z19",
+   "file": "p2a_checks.json",
+   "field": "regress›pass",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "regress'in `pass`'ı (Z15 gibi)"
+  },
+  {
+   "id": "Z20",
+   "file": "p2a_checks.json",
+   "field": "regress›excluded_differences›p2_0_2_checks·json:regress›leaves",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "P2-0.2 regress'inin karar dışlamalarındaki yaprak sayısı: Z alanlarının farkını sayar"
+  },
+  {
+   "id": "Z21",
+   "file": "p1d1_checks.json",
+   "field": "D1-12›pass",
+   "class": "Z",
+   "set": "Z-D10",
+   "why": "D1-12: P1-D RUN'ına karşı regress; `pass`'ı D-10'u taşır (P2-R FINAL not 9); D içeriği gömülü fark kuralıyla"
+  },
+  {
+   "id": "Z22",
+   "file": "p1d1_checks.json",
+   "field": "D1-12›regress_vs_p1d›equal",
+   "class": "Z",
+   "set": "Z-D10",
+   "why": "Z21'in `equal`'ı"
+  },
+  {
+   "id": "Z23",
+   "file": "p1e_checks.json",
+   "field": "E-9›pass",
+   "class": "Z",
+   "set": "Z-D10",
+   "why": "E-9: P1-D.1 RUN'ına karşı regress; gömülü farkları D-10'u ve D1-12'yi taşır"
+  },
+  {
+   "id": "Z24",
+   "file": "p1e_checks.json",
+   "field": "E-9›regress_vs_p1d1›equal",
+   "class": "Z",
+   "set": "Z-D10",
+   "why": "Z23'ün `equal`'ı"
+  },
+  {
+   "id": "Z25",
+   "file": "p1e1_checks.json",
+   "field": "E1-6›pass",
+   "class": "Z",
+   "set": "Z-D10",
+   "why": "E1-6: P1-E RUN'ına karşı regress; gömülü farkları D-10'u taşır"
+  },
+  {
+   "id": "Z26",
+   "file": "p1e1_checks.json",
+   "field": "E1-6›regress_vs_p1e›equal",
+   "class": "Z",
+   "set": "Z-D10",
+   "why": "Z25'in `equal`'ı"
+  },
+  {
+   "id": "Z27",
+   "file": "p1e1/historical.json",
+   "field": null,
+   "class": "Z",
+   "set": "FAIL özeti",
+   "why": "P1-E.1 sınıflandırıcısının FAIL özeti (Z16 gibi; D-10'u ve gerçek Obsidian kayıtlarını sayar)"
+  },
+  {
+   "id": "O1",
+   "file": "p1e1/release/plugin_e2e_real.json",
+   "field": null,
+   "class": "O",
+   "set": "O-REL",
+   "why": "gerçek Obsidian e2e (K-E1.3): ayrı örnek, CDP; Obsidian yoksa `skipped`"
+  },
+  {
+   "id": "O2",
+   "file": "p1e1/release/access_log_real.json",
+   "field": null,
+   "class": "O",
+   "set": "O-REL",
+   "why": "O1'in erişim günlüğü"
+  },
+  {
+   "id": "O3",
+   "file": "p1e1_checks.json",
+   "field": "E1-3",
+   "class": "O",
+   "set": "O-REL",
+   "why": "E1-3: O1'den"
+  },
+  {
+   "id": "O4",
+   "file": "p1e1_checks.json",
+   "field": "E1-9›connection_step",
+   "class": "O",
+   "set": "O-REL",
+   "why": "E1-9'un e2e adımı (O1'den); `contract_check_pass` D, karşılaştırılır"
+  },
+  {
+   "id": "O5",
+   "file": "p1e1_checks.json",
+   "field": "E1-9›skipped",
+   "class": "O",
+   "set": "O-REL",
+   "why": "E1-9'un e2e adımı ölçüldü mü (O1)"
+  },
+  {
+   "id": "O6",
+   "file": "p1e1_checks.json",
+   "field": "E1-9›pass",
+   "class": "O",
+   "set": "O-REL",
+   "why": "E1-9'un `pass`'ı O1'e bağlı; D yarısı `contract_check_pass`"
+  },
+  {
+   "id": "O11",
+   "file": "p1e1/tamper_p1e1_e2e.json",
+   "field": null,
+   "class": "O",
+   "set": "O-REL",
+   "why": "P1-E.1'in gerçek Obsidian kasıtlı bozmaları (`scripts/test_tamper_p1e1_e2e.sh`); Obsidian yoksa `real_cases_run: false`"
+  },
+  {
+   "id": "O12",
+   "file": "p1e1_checks.json",
+   "field": "tamper",
+   "class": "O",
+   "set": "O-REL",
+   "why": "P1-E.1 `tamper`: `tamper_p1e1.json` (D, ayrıca karşılaştırılır) ile O11'in birleşimi"
+  },
+  {
+   "id": "O13",
+   "file": "p1e1/release/release_check.json",
+   "field": "items›15",
+   "class": "O",
+   "set": "O-REL",
+   "why": "R15: yayım paketinin gerçek Obsidian e2e'si (O1); Obsidian yoksa `skipped`"
+  },
+  {
+   "id": "O7",
+   "file": "p2_0_2_checks.json",
+   "field": "H-P2-0·2b",
+   "class": "O",
+   "set": "O-DB4",
+   "why": "D-B test-3, gerçek Obsidian; K-P2.3'ten beri zincirde ölçülmez (`skipped`); ölçümü P2-0.3'ün D-B test-4'ü (Mac kümesi)"
+  },
+  {
+   "id": "O8",
+   "file": "p2_0_2_checks.json",
+   "field": "H-P2-0·2b′",
+   "class": "O",
+   "set": "O-DB4",
+   "why": "O7 gibi"
+  },
+  {
+   "id": "O9",
+   "file": "p2_0_2_checks.json",
+   "field": "H-P2-0·2c",
+   "class": "O",
+   "set": "O-DB4",
+   "why": "O7 gibi (tasdik gecikmesi)"
+  },
+  {
+   "id": "O10",
+   "file": "p2_0_2_checks.json",
+   "field": "H-P2-0·2e",
+   "class": "O",
+   "set": "O-DA′",
+   "why": "D-A′, gerçek Obsidian; O7 gibi, ölçümü P2-0.3'ün D-A′'sü"
+  }
+ ],
+ "byte_exclusions": [
+  {
+   "id": "Z28",
+   "path": "p2_0_2/d_a/events.jsonl",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "D-A günlüğü (H-P2-0.2i); Z4–Z6'nın vault'u"
+  },
+  {
+   "id": "Z29",
+   "path": "p2_0_2/d_a/attestations.jsonl",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "D-A günlüğü (H-P2-0.2i); Z4–Z6'nın vault'u"
+  },
+  {
+   "id": "Z30",
+   "path": "p2_0_2/d_a2/events.jsonl",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "D-A2 günlüğü (H-P2-0.2i); Z4–Z6'nın vault'u"
+  },
+  {
+   "id": "Z31",
+   "path": "p2_0_2/d_a2/attestations.jsonl",
+   "class": "Z",
+   "set": "Z-DA",
+   "why": "D-A2 günlüğü (H-P2-0.2i); Z4–Z6'nın vault'u"
+  },
+  {
+   "id": "Z32",
+   "path": "p2_0_2/d_c/events.jsonl",
+   "class": "Z",
+   "set": "Z-DC",
+   "why": "D-C günlüğü (H-P2-0.2i); Z4–Z6'nın vault'u"
+  },
+  {
+   "id": "Z33",
+   "path": "p2_0_2/d_c/attestations.jsonl",
+   "class": "Z",
+   "set": "Z-DC",
+   "why": "D-C günlüğü (H-P2-0.2i); Z4–Z6'nın vault'u"
+  }
+ ],
+ "host_fields": [
+  {
+   "id": "H1",
+   "file": "p1e1/release/release_check.json",
+   "field": "items›17›detail",
+   "where": "scripts/release_check.sh R17 (dondurulmuş; istisna P2-V/F1)",
+   "fix": "paketin dizini ve geçici dizin yerine sabit metin (`the package's bin/`, `<tmp>`, `<dist>`, `<repo>`); Mac arşivi olmayan hostta klon yolunu yazıyordu (K-P2R.5 (2), CI 40265181721)"
+  },
+  {
+   "id": "H2",
+   "file": "conformance_p1d1.json",
+   "field": "fixtures_root",
+   "where": "Makefile p1c-checks (RUN'a kopya)",
+   "fix": "depo köküne göreli (`spec/fixtures`); `reports/conformance.json` mutlak kalır (dondurulmuş `make conformance` denetimi onu okur); dondurulmuş karşılaştırıcılar bu alanı zaten `ortam` sayar (DETERMINISTIC_FIELDS)"
+  },
+  {
+   "id": "H3",
+   "file": "models_verify.json",
+   "field": "root",
+   "where": "Makefile p1c-checks",
+   "fix": "depo köküne göreli (`index/../models`); çift karşılaştırmasında değil, Blok 2 doğrulaması önerisi 2"
+  },
+  {
+   "id": "H4",
+   "file": "fast/conformance.json",
+   "field": "fixtures_root",
+   "where": "scripts/verify.sh chain-fast (dondurulmuş; istisna P2-V/F2)",
+   "fix": "H2 gibi; kademe 1'in kaydı"
+  }
+ ],
+ "commit_bound": [
+  {
+   "id": "C1",
+   "file": "p1e1/release/release.json",
+   "field": "commit",
+   "why": "paketin commit'i: girdisi commit kimliğinin kendisi (D: aynı commit'te iki zincir eşit)"
+  },
+  {
+   "id": "C2",
+   "file": "p1e1/release/release_check.json",
+   "field": "items›3›item",
+   "why": "R4 maddesinin metni paketin commit'ini adlandırır (`inputs of <sha> = HEAD`)"
+  }
+ ],
+ "mac_sets": [
+  {
+   "id": "Z-D10",
+   "class": "Z",
+   "set": "P1-D D-10 (`serve_watch` testi)",
+   "criteria": [
+    {
+     "file": "p1d_checks.json",
+     "criterion": "D-10",
+     "threshold": "p95 < 1000 ms, katman doğru (SIGTERM'de kayıp yok)",
+     "source": "docs/rounds/P1-D/GOAL.md:48"
+    }
+   ]
+  },
+  {
+   "id": "Z-DA",
+   "class": "Z",
+   "set": "P2-0.2 D-A, D-A2 (`serve --watch`, quiesce)",
+   "criteria": [
+    {
+     "file": "p2_0_2_checks.json",
+     "criterion": "H-P2-0.2a",
+     "threshold": "= 0 (canonical sızıntısı)",
+     "source": "docs/rounds/P2-0.2/GOAL.md:31"
+    },
+    {
+     "file": "p2_0_2_checks.json",
+     "criterion": "H-P2-0.2a′",
+     "threshold": "200/200",
+     "source": "docs/rounds/P2-0.2/GOAL.md:32"
+    },
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3a",
+     "threshold": "= 0",
+     "source": "docs/rounds/P2-0.3/GOAL.md:17"
+    },
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3a′",
+     "threshold": "200/200",
+     "source": "docs/rounds/P2-0.3/GOAL.md:18"
+    },
+    {
+     "file": "p2_0_2_checks.json",
+     "criterion": "H-P2-0.2i",
+     "threshold": null,
+     "source": "docs/rounds/P2-0.2/GOAL.md:40",
+     "why_no_threshold": "eşiği iki zincirin günlüklerinin bayt eşitliği; tekrarlar arası eşitlik raporlanır"
+    },
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3i",
+     "threshold": null,
+     "source": "docs/rounds/P2-0.3/GOAL.md:27",
+     "why_no_threshold": "H-P2-0.2i gibi"
+    },
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "logs_vs_p2a",
+     "threshold": null,
+     "source": "research/eval/run_p2_0_3.py (`_logs`)",
+     "why_no_threshold": "D-A, D-A2, D-C günlüklerinin P2-A resmi RUN'ına bayt eşitliği; GOAL eşiği değil, kaydedicinin denetimi"
+    }
+   ]
+  },
+  {
+   "id": "Z-DC",
+   "class": "Z",
+   "set": "P2-0.2 D-C (`serve --watch`)",
+   "criteria": [
+    {
+     "file": "p2_0_2_checks.json",
+     "criterion": "H-P2-0.2d",
+     "threshold": "D-C ≥ 0.99 (D-C′ yarısı H-P2-0.3d)",
+     "source": "docs/rounds/P2-0.2/GOAL.md:36"
+    }
+   ]
+  },
+  {
+   "id": "Z-DB2",
+   "class": "Z",
+   "set": "P2-0.2 D-B2 (Obsidian dışı insan, `serve --watch`)",
+   "criteria": [
+    {
+     "file": "p2_0_2_checks.json",
+     "criterion": "H-P2-0.2f",
+     "threshold": "≤ 0.01; p95 < 500 ms",
+     "source": "docs/rounds/P2-0.2/GOAL.md:38"
+    },
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3f",
+     "threshold": "≤ 0.01; p95 < 500 ms",
+     "source": "docs/rounds/P2-0.3/GOAL.md:25"
+    }
+   ]
+  },
+  {
+   "id": "O-DB4",
+   "class": "O",
+   "set": "P2-0.3 D-B test-4 (gerçek Obsidian)",
+   "criteria": [
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3b",
+     "threshold": "≤ 0.01",
+     "source": "docs/rounds/P2-0.3/GOAL.md:19"
+    },
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3b-yük",
+     "threshold": "≤ 0.02 (yüklü çift; Mac kümesi yüksüz koşar, değer bu eşikle raporlanır)",
+     "source": "docs/rounds/P2-0.3/GOAL.md:20"
+    },
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3b′",
+     "threshold": null,
+     "source": "docs/rounds/P2-0.3/GOAL.md:21",
+     "why_no_threshold": "GOAL: raporlanır (bilgi)"
+    },
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3c",
+     "threshold": "p95 < 500 ms",
+     "source": "docs/rounds/P2-0.3/GOAL.md:22"
+    }
+   ]
+  },
+  {
+   "id": "O-DC′",
+   "class": "O",
+   "set": "P2-0.3 D-C′ (gerçek Obsidian) ve D-C",
+   "criteria": [
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3d",
+     "threshold": "D-C ≥ 0.99; D-C′ ≥ 0.95 ve ajan canonical = 0",
+     "source": "docs/rounds/P2-0.3/GOAL.md:23"
+    }
+   ]
+  },
+  {
+   "id": "O-DA′",
+   "class": "O",
+   "set": "P2-0.3 D-A′ (gerçek Obsidian)",
+   "criteria": [
+    {
+     "file": "p2_0_3_checks.json",
+     "criterion": "H-P2-0.3e",
+     "threshold": "ajan canonical = 0; sahte 10/10",
+     "source": "docs/rounds/P2-0.3/GOAL.md:24"
+    }
+   ]
+  },
+  {
+   "id": "O-REL",
+   "class": "O",
+   "set": "P1-E/P1-E.1 yerel yayım ikilisi ve yayım paketi, gerçek Obsidian e2e'si ve kasıtlı bozmaları (`release_local.sh`, `release.sh`, `release_check.sh`, `test_tamper_p1e1_e2e.sh`)",
+   "criteria": [
+    {
+     "file": "p1e_checks.json",
+     "criterion": "E-7",
+     "threshold": "4/4 (yayım paketi; K-E5-T ile ertelendi: kayıtlı 2/4)",
+     "source": "docs/rounds/P1-E/GOAL.md:36"
+    },
+    {
+     "file": "p1e1_checks.json",
+     "criterion": "E1-3",
+     "threshold": "11/11",
+     "source": "docs/rounds/P1-E.1/GOAL.md:16"
+    },
+    {
+     "file": "p1e1_checks.json",
+     "criterion": "E1-4",
+     "threshold": "geçer (kontrol listesinin bütün maddeleri)",
+     "source": "docs/rounds/P1-E.1/GOAL.md:17"
+    },
+    {
+     "file": "p1e1_checks.json",
+     "criterion": "E1-9",
+     "threshold": "1/1 (e2e adımı; sözleşme yarısı kademe 2'de)",
+     "source": "docs/rounds/P1-E.1/GOAL.md:22"
+    },
+    {
+     "file": "p1e1_checks.json",
+     "criterion": "tamper",
+     "threshold": "gerçek Obsidian kasıtlı vakaları reddedilir, kontroller geçer (e2e yarısı; `tamper_p1e1.json` kademe 2'de)",
+     "source": "research/eval/run_p1e1_checks.py (`tamper`)"
+    }
+   ]
+  },
+  {
+   "id": "O-C18",
+   "class": "O",
+   "set": "P1-C.1 C1-8: P1-C kayıtları P1-C resmi RUN'ına karşı (vektörler ve skorlar referans Mac'in donanımına bağlı; zincirin `holdout`…`p1c1-checks` adımları)",
+   "criteria": [
+    {
+     "file": "p1c1_checks.json",
+     "criterion": "C1-8",
+     "threshold": "fark 0 (karar dışlamalarıyla)",
+     "source": "docs/rounds/P1-C.1/GOAL.md:22"
+    }
+   ]
+  }
+ ],
+ "tier2_set_aside_criteria": [
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-10",
+   "class": "Z",
+   "mac_set": "Z-D10"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2a",
+   "class": "Z",
+   "mac_set": "Z-DA"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2a′",
+   "class": "Z",
+   "mac_set": "Z-DA"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3a",
+   "class": "Z",
+   "mac_set": "Z-DA"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3a′",
+   "class": "Z",
+   "mac_set": "Z-DA"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2i",
+   "class": "Z",
+   "mac_set": "Z-DA"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3i",
+   "class": "Z",
+   "mac_set": "Z-DA"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "logs_vs_p2a",
+   "class": "Z",
+   "mac_set": "Z-DA"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2d",
+   "class": "Z",
+   "mac_set": "Z-DC"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2f",
+   "class": "Z",
+   "mac_set": "Z-DB2"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3f",
+   "class": "Z",
+   "mac_set": "Z-DB2"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b",
+   "class": "O",
+   "mac_set": "O-DB4"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b-yük",
+   "class": "O",
+   "mac_set": "O-DB4"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b′",
+   "class": "O",
+   "mac_set": "O-DB4"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3c",
+   "class": "O",
+   "mac_set": "O-DB4"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3d",
+   "class": "O",
+   "mac_set": "O-DC′"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3e",
+   "class": "O",
+   "mac_set": "O-DA′"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-7",
+   "class": "O",
+   "mac_set": "O-REL"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-3",
+   "class": "O",
+   "mac_set": "O-REL"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-4",
+   "class": "O",
+   "mac_set": "O-REL"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-9",
+   "class": "O",
+   "mac_set": "O-REL"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "tamper",
+   "class": "O",
+   "mac_set": "O-REL"
+  },
+  {
+   "file": "p1c1_checks.json",
+   "criterion": "C1-8",
+   "class": "O",
+   "mac_set": "O-C18"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b",
+   "class": "O",
+   "mac_set": "O-DB4",
+   "why": "gerçek Obsidian kümesi; K-P2.3'ten beri zincirde `skipped`; ölçümü P2-0.3'ün karşılığı"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b′",
+   "class": "O",
+   "mac_set": "O-DB4",
+   "why": "gerçek Obsidian kümesi; K-P2.3'ten beri zincirde `skipped`; ölçümü P2-0.3'ün karşılığı"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2c",
+   "class": "O",
+   "mac_set": "O-DB4",
+   "why": "gerçek Obsidian kümesi; K-P2.3'ten beri zincirde `skipped`; ölçümü P2-0.3'ün karşılığı"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2e",
+   "class": "O",
+   "mac_set": "O-DA′",
+   "why": "gerçek Obsidian kümesi; K-P2.3'ten beri zincirde `skipped`; ölçümü P2-0.3'ün karşılığı"
+  }
+ ],
+ "criteria": [
+  {
+   "id": "p1b1_checks.json:B1-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1b1_checks.json:B1-2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1b1_checks.json:B1-3",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1b1_checks.json:B1-4",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1b1_checks.json:B1-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1b1_checks.json:B1-6",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1b_checks.json:B-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c1_checks.json:C1-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c1_checks.json:C1-2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c1_checks.json:C1-3",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c1_checks.json:C1-4",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c1_checks.json:C1-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c1_checks.json:C1-6",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c1_checks.json:C1-7",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c1_checks.json:C1-8",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-C18"
+  },
+  {
+   "id": "p1c1_checks.json:C1-9",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-10",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-11",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-12",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-13",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-3",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-4",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-7",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1c_checks.json:C-9",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-10",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-11",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-12",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-13",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-3",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-4",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-6",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-7",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-8",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:D1-9",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d1_checks.json:tamper",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-10",
+   "class": "Z",
+   "tier": "mac",
+   "mac_set": "Z-D10"
+  },
+  {
+   "id": "p1d_checks.json:D-11",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-3",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-4",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-6",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-7",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-8",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:D-9",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:scene",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1d_checks.json:tamper",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e1_checks.json:E1-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e1_checks.json:E1-2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e1_checks.json:E1-3",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-REL"
+  },
+  {
+   "id": "p1e1_checks.json:E1-4",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-REL"
+  },
+  {
+   "id": "p1e1_checks.json:E1-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e1_checks.json:E1-6",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e1_checks.json:E1-8",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e1_checks.json:E1-9",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-REL"
+  },
+  {
+   "id": "p1e1_checks.json:tamper",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-REL"
+  },
+  {
+   "id": "p1e_checks.json:E-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-10",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-12",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-13",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-14",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-15",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-16",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-3",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-4",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-6",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:E-7",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-REL"
+  },
+  {
+   "id": "p1e_checks.json:E-9",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p1e_checks.json:tamper",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2a",
+   "class": "Z",
+   "tier": "mac",
+   "mac_set": "Z-DA"
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2a′",
+   "class": "Z",
+   "tier": "mac",
+   "mac_set": "Z-DA"
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2b",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DB4"
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2b′",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DB4"
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2c",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DB4"
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2d",
+   "class": "Z",
+   "tier": "mac",
+   "mac_set": "Z-DC"
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2e",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DA′"
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2f",
+   "class": "Z",
+   "tier": "mac",
+   "mac_set": "Z-DB2"
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2h",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2j",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_2_checks.json:H-P2-0.2k",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_2_checks.json:fail_summary",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_2_checks.json:regress",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_2_checks.json:tamper",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3a",
+   "class": "Z",
+   "tier": "mac",
+   "mac_set": "Z-DA"
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3a′",
+   "class": "Z",
+   "tier": "mac",
+   "mac_set": "Z-DA"
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3b",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DB4"
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3b-yük",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DB4"
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3b′",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DB4"
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3c",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DB4"
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3d",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DC′"
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3e",
+   "class": "O",
+   "tier": "mac",
+   "mac_set": "O-DA′"
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3f",
+   "class": "Z",
+   "tier": "mac",
+   "mac_set": "Z-DB2"
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3h",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_3_checks.json:H-P2-0.3j",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_3_checks.json:logs_vs_p2a",
+   "class": "Z",
+   "tier": "mac",
+   "mac_set": "Z-DA"
+  },
+  {
+   "id": "p2_0_3_checks.json:rules",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2_0_3_checks.json:seed",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:A-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:A-2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:A-3",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:A-4",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:A-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:A-6",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:A-7",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:A-8",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:fail_summary",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:regress",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2a_checks.json:tamper",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2b_checks.json:B-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2b_checks.json:B-2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2b_checks.json:B-5/B-6",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2l_checks.json:L-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2l_checks.json:L-10",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2l_checks.json:L-7",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2l_checks.json:L-8",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2l_checks.json:L0",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2l_checks.json:L2",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2p_checks.json:P-2/P-3",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2p_checks.json:P-3/P-6",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2p_checks.json:P-4/P-5",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2p_checks.json:P-7",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2p_checks.json:P0",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2r_checks.json:R-1",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2r_checks.json:R-2/R-4",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  },
+  {
+   "id": "p2r_checks.json:R-5/R-8",
+   "class": "D",
+   "tier": "tier2",
+   "mac_set": null
+  }
+ ],
+ "observed_differences": {
+  "P2-R 3. deneme (Mac)": {
+   "n_fields": 204172,
+   "differing": 2712,
+   "differing_files": [
+    "p2_0_2/d_a.json",
+    "p2_0_2/d_a2.json",
+    "p2_0_2/d_c.json",
+    "p2_0_2_checks.json",
+    "p2a_checks.json"
+   ],
+   "bytes_differing": [
+    "p2_0_2/d_a/events.jsonl",
+    "p2_0_2/d_a2/events.jsonl",
+    "p2_0_2/d_c/attestations.jsonl",
+    "p2_0_2/d_c/events.jsonl"
+   ]
+  },
+  "P2-R 1. deneme (Mac)": {
+   "n_fields": 203776,
+   "differing": 33,
+   "differing_files": [
+    "p2_0_2/d_a.json",
+    "p2_0_2_checks.json",
+    "p2a_checks.json"
+   ],
+   "bytes_differing": [
+    "p2_0_2/d_a/events.jsonl"
+   ]
+  },
+  "CI 40265181721 pair_compare": {
+   "n_fields": 786981,
+   "differing": 40,
+   "differing_files": [
+    "p1e1/release/release_check.json",
+    "p2_0_2/d_a.json",
+    "p2_0_2_checks.json",
+    "p2a_checks.json"
+   ],
+   "bytes_differing": [
+    "p2_0_2/d_a/events.jsonl"
+   ]
+  },
+  "V0 40582139980 pair_compare": {
+   "n_fields": 788033,
+   "differing": 31,
+   "differing_files": [
+    "p1e1/release/release_check.json",
+    "p2_0_2/d_a.json",
+    "p2_0_2_checks.json",
+    "p2a_checks.json"
+   ],
+   "bytes_differing": [
+    "p2_0_2/d_a/events.jsonl"
+   ]
+  }
+ },
+ "observations": [
+  "V0 (`verify.yml`, `352f790`, `ubuntu-latest`, koşu 40582139980): farklar yalnız D-A kümesinde (`p2_0_2/d_a.json` ve onu özetleyen `p2_0_2_checks.json`, `p2a_checks.json` alanları, D-A `events.jsonl`) ve R17 `detail`'inde (H1) — K-P2R.5 teşhisi. Her zincirde sayılan FAIL 16: Z (H-P2-0.2a, H-P2-0.3a, logs_vs_p2a), O-Obsidian (E1-3, E1-9, H-P2-0.3b, b-yük, c, d, e, p1e1 tamper), O-platform (C1-8; D-9 ve D1-12 yalnız C1-8'in alanlarında farklı; E-7; E1-4).",
+  "Geliştirme koşusu, kademe 2 `macos-14` (karalama dalı `p2-v/scratch`, koşu 40590891313; V1-4): zincirler 2 sa 31 dk ve 2 sa 55 dk (ubuntu'da V0: 1 sa 44 dk ve 1 sa 52 dk). Sayılan FAIL (taslak envanterle) her zincirde aynı beş: C1-8 (C-10 `min_cosine` 0.9999999999991904, yayım Mac'inde 0.9999999999992171; vektör dosyalarının özetleri ve sıralama skorları), D-9 ve D1-12 (yalnız C1-8'in alanları), E1-4 (R4, R15), p1e1 tamper (`real_cases_run: false`). Sonuç: C1-8 ailesi her yayım-Mac'i-olmayan donanımda farklıdır; kademe 2 `ubuntu-latest`'e döndü (V1-1), platforma bağlı kriterler O.",
+  "Geliştirme koşusu, kademe 1 (`ubuntu-latest`, koşu 40590894752): hızlı çift 18 550 alan eşit (yayım Mac'indeki son FAST ile aynı sayı); zincirler 26 ve 31 dk; `fast/conformance.json` `fixtures_root` host yolu (H4) yakalandı.",
+  "Geliştirme koşusu, Mac kümesi (yerel, 1. tekrar): P2-0.2 kümeleri 11,5 dk; P2-0.3'ün D-C′'sü `roasting.md was not written by Obsidian within 2 s of the save` ile durdu (dondurulmuş yeniden deneme de) — durmuş harness başarısız tekrar sayılır (V2-2)."
+ ]
+}
