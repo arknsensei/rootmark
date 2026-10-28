@@ -26,11 +26,17 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Önce/sonra:** `V4_f4.diff` (yalnız çıkış yolu); `bash -n` temiz; ölçülen RUN önceki sürümle, sonuçlar aynı kalır (özet adımından sonrası).
 - **Gözden geçirici onayı:** V6.review.md.
 
-## F5, F6, F7 · V4 · `research/eval/tier2.py`, `research/eval/portable.py`, `.github/workflows/verify.yml` — karşılaştırma bir kez hesaplanır
+## F5 · V4 · `research/eval/tier2.py`, `research/eval/portable.py`, `.github/workflows/verify.yml` — karşılaştırma bir kez hesaplanır (F5, F6, F7 birlikte)
 - **Ne:** F5 `tier2 pair --frozen <compare_p2r pair --out sonucu>`: dondurulmuş karşılaştırıcının bu iki RUN'ın (çözülmüş yolları birebir aynı olmalı, yoksa hata) sonucunu okur, yeniden karşılaştırmaz; adlandırma kuralları, gömülü kural, hüküm aynen. F6 `portable --files-from <aynı sonuç>`: dosya listesini (dosyalar ve bayt artefaktları) ondan okur; aranan değerler, desenler, hüküm aynen. F7 `verify.yml`'ın karşılaştırma işi: `compare_p2r pair` bir kez, `tier2 pair` ve `portable` onun sonucuyla; zaman aşımı 30 → 120 dk; `chains_run` girdisi: verilen koşunun iki zincirinin yapıtlarını yeniden karşılaştırır (zincir koşmaz; kaydı `chains_run`, `chains_wall_s`, `compare_s`); bir zincirin `exit`'i 0 değilse kırmızı. Zincir işleri aynen (`V4_f5.diff`, `V4_f6.diff`, `V4_f7.diff`).
 - **Neden:** V4'ün üç tetiklemesinde (40613392932, 40613401174, 40613409396) altı zincirin hepsi başarıyla bitti ve yapıtlarını yükledi, ama karşılaştırma işi 30 dk zaman aşımında iptal oldu: işin `compare_p2r.pair`'i dört kez koşturuyordu (dondurulmuş hüküm, `tier2 pair`, iki `portable`'ın dosya listesi), her biri ~790 000 alanlık iki RUN üzerinde (yerelde de 10 dk'dan uzun). Ölçülen şey değişmez: aynı fonksiyonun aynı girdideki sonucu bir kez hesaplanıp üç yerde okunur.
 - **Önce/sonra:** `test_p2v_tools` (yeni: `test_a_frozen_result_is_read_only_for_the_runs_it_compared` — sonucun okunması, başka RUN'ların sonucunun reddi); `chains_run` ile yeniden karşılaştırmanın sonucu, aynı yapıtlar üzerinde yerelde `tier2 pair` (dondurulmuş karşılaştırmayı yeniden hesaplayarak) ile aynı (V4.md).
 - **Gözden geçirici onayı:** V6.review.md.
+
+## F6 · V4 · `research/eval/portable.py` — `--files-from`
+F5'te (birlikte: ne, neden, önce/sonra, onay).
+
+## F7 · V4 · `.github/workflows/verify.yml` — karşılaştırma bir kez, zaman aşımı 120 dk, `chains_run`
+F5'te (birlikte: ne, neden, önce/sonra, onay).
 
 ## Dondurmaya ilk giren dosyalar (istisna değil; yeni satırlar, `P2-V/V3:`)
 `research/eval/tier2.py`, `research/eval/portable.py`, `research/eval/verify_mac.py`, `scripts/verify_mac.sh`, `scripts/check_records_portable.sh`, `.github/workflows/verify.yml` — kademe 2'nin karşılaştırıcısı ve iş akışı, host denetleyicisi, Mac kümesi; V4'ün ölçümlerinden önce.
