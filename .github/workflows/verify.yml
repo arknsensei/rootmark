@@ -1,37 +1,55 @@
-# Independent reproduction (GOAL GH-0 G2; docs/DEV_PROCESS.md §3 `make
-# verify`): two independent clones and chains, compared field by field and
-# byte by byte (scripts/verify.sh pair). A non-zero exit is red. Weekly and
-# by hand.
+# Tier 2 of the verification chain (GOAL P2-V V2, K-P2V.1; docs/DEV_PROCESS.md
+# §3): the full pair, in CI only. Two independent clones, each running the
+# whole chain (`scripts/verify.sh chain`, the commit's own, nothing cached
+# or skipped) on its own ubuntu-latest runner in parallel; a third job
+# compares them. One chain per runner also removes the disk shortage of two
+# chains on one runner (GH-0 G5).
 #
-# Runs on ubuntu-latest (GH-0 ASSUMPTIONS G2-2). The chain was written on the
-# release platform (macOS arm64): here the real-Obsidian e2e is recorded as
-# skipped (no Obsidian binary), the Linux cross build in Docker is skipped,
-# and the chain's release step packages the native Linux binary under the
-# aarch64-apple-darwin label — its record is a determinism artefact, not a
-# release record (release records come from release.yml). The verdict of
-# this workflow is the pair comparison (exit code); the recorded criteria and
-# the FAIL summary are kept as an artefact.
+# The compare job decides on the deterministic (D) class only
+# (`eval.tier2 pair`: the frozen `eval.compare_p2r.pair`, every file and
+# field of the old full pair, with the timing-sensitive (Z) and
+# real-Obsidian/macOS (O) fields of the pre-registered inventory
+# reports/rounds/P2-V/inventory.json set aside by name and listed in its
+# output), counts each chain's FAILs without the Z/O criteria
+# (`eval.tier2 fails`; those are `make verify-mac`'s — the real Obsidian,
+# the watcher's timing, and the criteria whose reference RUN is bound to the
+# release Mac: vector numerics (C1-8), the local release target (E-7), the
+# release checklist (E1-4)). The frozen comparator's own verdict is recorded beside
+# it. Its tools are the dispatched ref's; the chains run the commit given as
+# `sha` (default: the ref's HEAD), so an older commit's chain can be
+# verified with today's comparison. No Obsidian binary on a runner: the
+# real-Obsidian sets are recorded as skipped, as before; the chain's Linux
+# cross build in Docker is skipped and its release step packages the native
+# Linux binary under the aarch64-apple-darwin label (a determinism artefact,
+# not a release record; release records come from release.yml).
 name: verify
 on:
   schedule:
     - cron: "17 3 * * 1"   # Mondays 03:17 UTC
   workflow_dispatch:
+    inputs:
+      sha:
+        description: "commit whose chain runs (default: the dispatched ref's HEAD)"
+        required: false
+        default: ""
 
 permissions:
   contents: read
-
-concurrency:
-  group: verify
-  cancel-in-progress: false
+  actions: read
 
 jobs:
-  pair:
-    name: verify.sh pair
+  chain:
+    name: chain ${{ matrix.side }}
     runs-on: ubuntu-latest
-    timeout-minutes: 340
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        side: [A, B]
     steps:
       - uses: actions/checkout@v7.0.1
         with:
+          ref: ${{ inputs.sha || github.sha }}
           fetch-depth: 0   # the chain clones this repository (tags and history)
       - uses: dtolnay/rust-toolchain@1.92.0
         with:
@@ -40,39 +58,127 @@ jobs:
       - uses: actions/setup-node@v7.0.0
         with:
           node-version: "24"
+      # the embedder models and the ONNX Runtime download (inputs checked
+      # against models/MANIFEST*.json by the chain); never a result
       - uses: actions/cache@v6.1.0
         with:
           path: |
             models/minilm-l6-v2
+            models/multilingual-minilm-l12-v2
             ~/.cache/ort.pyke.io
-          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST.json', 'Cargo.lock') }}
-      # the two chains build several Rust trees each (current, p1d-final,
-      # p1e-final, v3-final, generators): the runner's free disk is not
-      # enough (the first dispatch stopped in chain A with `tar: Cannot
-      # write: Broken pipe`, GH-0 G5)
+          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST*.json', 'Cargo.lock') }}
+      # crate sources only (checked against Cargo.lock's checksums); nothing
+      # compiled is cached: each chain builds everything in its own clone
+      - uses: actions/cache@v6.1.0
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: cargo-sources-${{ runner.os }}-${{ hashFiles('Cargo.lock') }}
+      # the chain builds several Rust trees (current, p1d-final, p1e-final,
+      # v3-final, generators): as the old pair job, free the runner's disk
       - name: free runner disk
         run: |
           df -h /
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL
           sudo docker image prune --all --force >/dev/null || true
           df -h /
-      - name: verify.sh pair
+          nproc; free -g
+      - name: verify.sh chain
         env:
           ROOTMARK_RELEASE_LINUX: "0"
+          SIDE: ${{ matrix.side }}
         run: |
           set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/verify"
-          bash scripts/verify.sh pair "$GITHUB_WORKSPACE" "$RUNNER_TEMP/verify/A" "$RUNNER_TEMP/verify/B" 2>&1 | tee "$RUNNER_TEMP/verify/verify.log"
+          out="$RUNNER_TEMP/out"; work="$RUNNER_TEMP/v/$SIDE"
+          mkdir -p "$out"
+          git rev-parse HEAD >"$out/commit"
+          date -u +%s >"$out/started_epoch"
+          jq -n --arg w "$work" --arg h "$HOME" --arg t "${TMPDIR:-}" --arg u "$(id -un)" --arg n "$(hostname)" \
+            --arg rt "$RUNNER_TEMP" --arg ws "$GITHUB_WORKSPACE" \
+            '{workdir: $w, home: $h, tmpdir: $t, user: $u, host: $n, extra: [$rt, $ws]}' >"$out/host.json"
+          rc=0
+          bash scripts/verify.sh chain "$GITHUB_WORKSPACE" "$work" >"$out/result" 2>"$out/chain.log" || rc=$?
+          date -u +%s >"$out/finished_epoch"
+          echo "$rc" >"$out/exit"
+          tail -60 "$out/chain.log"
+          [ "$rc" -eq 0 ] || exit "$rc"
+          run_dir="$(sed -n 's/^RUN_DIR=//p' "$out/result")"
+          [ -f "$run_dir/manifest.json" ] || { echo "error: no run directory ($run_dir)" >&2; exit 1; }
+          # the chain's own FAIL classifier (the one its summary printed), as JSON
+          cls="$(grep -oE 'python -m eval\.historical_[a-z0-9_]+ --run-dir' scripts/verify.sh | head -1 | cut -d' ' -f3)"
+          echo "$cls" >"$out/classifier"
+          crc=0
+          (cd "$work/repo/research" && uv run --frozen python -m "$cls" --run-dir "$run_dir" --out "$out/fail_summary.json" >/dev/null) || crc=$?
+          [ "$crc" -eq 0 ] || [ "$crc" -eq 3 ]
+          mkdir -p "$out/run"
+          cp -R "$run_dir/." "$out/run/"
       - name: disk at the end
         if: always()
         run: df -h /
-      - name: keep the pair record and the logs
+      - name: keep the chain's RUN, log and host values
         if: always()
         uses: actions/upload-artifact@v7.0.1
         with:
-          name: verify-pair
+          name: tier2-${{ matrix.side }}
+          if-no-files-found: error
+          include-hidden-files: true   # the vaults' .rootmark/ (byte-compared artefacts)
+          path: ${{ runner.temp }}/out/
+
+  compare:
+    name: compare (D class), FAILs
+    needs: chain
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: research environment
+        run: cd research && uv sync --frozen --inexact
+      - uses: actions/download-artifact@v8.0.1
+        with:
+          pattern: tier2-*
+          path: ${{ runner.temp }}/in
+      - name: compare
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CHAINS: ${{ needs.chain.result }}
+        run: |
+          set -uo pipefail
+          in="$RUNNER_TEMP/in"; o="$RUNNER_TEMP/compare"; mkdir -p "$o"
+          a="$in/tier2-A"; b="$in/tier2-B"
+          bad=0
+          [ "$CHAINS" = success ] || { echo "a chain failed ($CHAINS)"; bad=1; }
+          for s in A B; do echo "chain $s: commit $(cat "$in/tier2-$s/commit" 2>/dev/null), exit $(cat "$in/tier2-$s/exit" 2>/dev/null)"; done
+          cd research
+          if [ "$bad" -eq 0 ]; then
+            rc=0; uv run --frozen python -m eval.compare_p2r pair "$a/run" "$b/run" --out "$o/frozen_pair_compare.json" >/dev/null 2>"$o/frozen_pair_compare.log" || rc=$?
+            echo "frozen compare_p2r pair (recorded, not the verdict): exit $rc"
+            rc=0; uv run --frozen python -m eval.tier2 pair "$a/run" "$b/run" --out "$o/tier2_pair.json" >/dev/null || rc=$?
+            echo "tier2 pair (D class): exit $rc"; [ "$rc" -eq 0 ] || bad=1
+            for s in A B; do
+              rc=0; uv run --frozen python -m eval.tier2 fails "$in/tier2-$s/run" --summary "$in/tier2-$s/fail_summary.json" --out "$o/tier2_fails_$s.json" >/dev/null || rc=$?
+              echo "tier2 fails $s: exit $rc ($(jq -r .counted_fails "$o/tier2_fails_$s.json" 2>/dev/null) counted)"; [ "$rc" -eq 0 ] || bad=1
+              uv run --frozen python -m eval.tier2 criteria "$in/tier2-$s/run" --out "$o/criteria_$s.json" >/dev/null || bad=1
+            done
+          fi
+          started="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .run_started_at)"
+          jq -n --arg started "$started" --arg now "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --argjson bad "$bad" \
+            --arg sa "$(cat "$a/commit" 2>/dev/null)" --arg sb "$(cat "$b/commit" 2>/dev/null)" \
+            --arg tools "$GITHUB_SHA" --arg run "$GITHUB_RUN_ID" \
+            '{run_id: $run, tools_commit: $tools, commit_a: $sa, commit_b: $sb, started: $started, compared: $now,
+              wall_s: (($now | fromdateiso8601) - ($started | fromdateiso8601)), pass: ($bad == 0)}' >"$o/tier2.json"
+          cat "$o/tier2.json"
+          [ -f "$o/tier2_pair.json" ] && jq -r '"karşılaştırma dışı: " + (.exclusions_used | join(", "))' "$o/tier2_pair.json"
+          exit "$bad"
+      - name: keep the comparison
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: tier2-compare
           if-no-files-found: warn
-          path: |
-            ${{ runner.temp }}/verify/verify.log
-            ${{ runner.temp }}/verify/*/repo/research/reports/runs/*/pair_compare.json
-            ${{ runner.temp }}/verify/*/repo/research/reports/runs/*/*_checks.json
+          path: ${{ runner.temp }}/compare/
