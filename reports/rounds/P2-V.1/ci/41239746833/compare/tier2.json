@@ -1,0 +1,15 @@
+{
+  "run_id": "41239746833",
+  "chains_run": "41239746833",
+  "tools_commit": "58377deadc5b360cc010b7f7049e37f4de555459",
+  "commit_a": "58377deadc5b360cc010b7f7049e37f4de555459",
+  "commit_b": "58377deadc5b360cc010b7f7049e37f4de555459",
+  "started": "2026-10-31T20:37:06Z",
+  "chains_wall_s": 8805,
+  "compare_s": 215,
+  "wall_s": 9141,
+  "cpu_model_a": "AMD EPYC 7763 64-Core Processor",
+  "cpu_model_b": "AMD EPYC 7763 64-Core Processor",
+  "same_processor": true,
+  "pass": false
+}

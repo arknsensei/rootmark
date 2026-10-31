@@ -1,0 +1,1499 @@
+{
+ "criteria": [
+  "p1c1_checks.json:C1-8",
+  "p1d_checks.json:D-10",
+  "p1e1_checks.json:E1-3",
+  "p1e1_checks.json:E1-4",
+  "p1e1_checks.json:E1-9",
+  "p1e1_checks.json:tamper",
+  "p1e_checks.json:E-7",
+  "p2_0_2_checks.json:H-P2-0.2a",
+  "p2_0_2_checks.json:H-P2-0.2a′",
+  "p2_0_2_checks.json:H-P2-0.2d",
+  "p2_0_2_checks.json:H-P2-0.2f",
+  "p2_0_2_checks.json:H-P2-0.2i",
+  "p2_0_3_checks.json:H-P2-0.3a",
+  "p2_0_3_checks.json:H-P2-0.3a′",
+  "p2_0_3_checks.json:H-P2-0.3b",
+  "p2_0_3_checks.json:H-P2-0.3b-yük",
+  "p2_0_3_checks.json:H-P2-0.3b′",
+  "p2_0_3_checks.json:H-P2-0.3c",
+  "p2_0_3_checks.json:H-P2-0.3d",
+  "p2_0_3_checks.json:H-P2-0.3e",
+  "p2_0_3_checks.json:H-P2-0.3f",
+  "p2_0_3_checks.json:H-P2-0.3i",
+  "p2_0_3_checks.json:logs_vs_p2a"
+ ],
+ "elapsed_s": 7023,
+ "historical": {
+  "p1e1_checks.json:E1-4": true,
+  "p1e_checks.json:E-7": true,
+  "p2_0_3_checks.json:H-P2-0.3b": true
+ },
+ "no_threshold": [
+  "p2_0_2_checks.json:H-P2-0.2i",
+  "p2_0_3_checks.json:H-P2-0.3b′",
+  "p2_0_3_checks.json:H-P2-0.3i",
+  "p2_0_3_checks.json:logs_vs_p2a"
+ ],
+ "pass": true,
+ "reading": "P2-V.1 mac_reading (K-P2V.3 T2 (b)+(c))",
+ "rep_elapsed_s": [
+  3524,
+  1747,
+  1749
+ ],
+ "rep_runs": [
+  "20261031T204026Z-58377de",
+  "20261031T213912Z-58377de",
+  "20261031T220819Z-58377de"
+ ],
+ "reps": 3,
+ "sets": [
+  {
+   "class": "Z",
+   "criteria": [
+    {
+     "criterion": "p1d_checks.json:D-10",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P1-D/GOAL.md:48",
+     "threshold": "p95 < 1000 ms, katman doğru (SIGTERM'de kayıp yok)",
+     "values": [
+      {
+       "decided_by": [],
+       "layers_canonical_human": true,
+       "measured": {
+        "edits": 20,
+        "max_ms": 8110.958625,
+        "p95_ms": 3006.051
+       },
+       "pass": false,
+       "sigterm_compacts": true,
+       "sigterm_never_lost": true,
+       "threshold_p95_ms": 1000
+      },
+      {
+       "decided_by": [],
+       "layers_canonical_human": true,
+       "measured": {
+        "edits": 20,
+        "max_ms": 3898.632459,
+        "p95_ms": 3334.151
+       },
+       "pass": false,
+       "sigterm_compacts": true,
+       "sigterm_never_lost": true,
+       "threshold_p95_ms": 1000
+      },
+      {
+       "decided_by": [],
+       "layers_canonical_human": true,
+       "measured": {
+        "edits": 20,
+        "max_ms": 5795.788042,
+        "p95_ms": 3843.404041
+       },
+       "pass": false,
+       "sigterm_compacts": true,
+       "sigterm_never_lost": true,
+       "threshold_p95_ms": 1000
+      }
+     ]
+    }
+   ],
+   "id": "Z-D10",
+   "pass": null,
+   "pass_3of3": false
+  },
+  {
+   "class": "Z",
+   "criteria": [
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2a",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.2/GOAL.md:31",
+     "threshold": "= 0 (canonical sızıntısı)",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2a′",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.2/GOAL.md:32",
+     "threshold": "200/200",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3a",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:17",
+     "threshold": "= 0",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3a′",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:18",
+     "threshold": "200/200",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2i",
+     "equal_across_reps": false,
+     "eşik yok": "eşiği iki zincirin günlüklerinin bayt eşitliği; tekrarlar arası eşitlik raporlanır",
+     "pass": null,
+     "threshold": null,
+     "values": [
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "2e0771694ff3f25a4dbb177f9c4f2fa7",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "09670d8ce865f7a3d184450a87c0d5e4",
+        "d_c/attestations.jsonl": "716f888b99c84e9c38fc749d36daa6b6",
+        "d_c/events.jsonl": "907cc3b95045a1c27b115719ff23b335"
+       },
+       "pass": null
+      },
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "3827dca032dd7ec96879f44a296321cd",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "16d785752e8102e7e9c1b19b6b08699f",
+        "d_c/attestations.jsonl": "35d3d5b195324b383e55b5ba72097e2e",
+        "d_c/events.jsonl": "2d0e630a03558dd91a2da7a2eb5744d7"
+       },
+       "pass": null
+      },
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "f5bd70560ae1ca8faf7aa1c90d4bd0cd",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "778315922321784598db98db58b12362",
+        "d_c/attestations.jsonl": "b5cbeb1ea9d3cf5cb2c6dcc53fb9a13e",
+        "d_c/events.jsonl": "9247834e0705453e46c86e76b9043700"
+       },
+       "pass": null
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3i",
+     "equal_across_reps": false,
+     "eşik yok": "H-P2-0.2i gibi",
+     "pass": null,
+     "threshold": null,
+     "values": [
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "2e0771694ff3f25a4dbb177f9c4f2fa7",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "09670d8ce865f7a3d184450a87c0d5e4",
+        "d_c/attestations.jsonl": "716f888b99c84e9c38fc749d36daa6b6",
+        "d_c/events.jsonl": "907cc3b95045a1c27b115719ff23b335"
+       },
+       "pass": null
+      },
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "3827dca032dd7ec96879f44a296321cd",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "16d785752e8102e7e9c1b19b6b08699f",
+        "d_c/attestations.jsonl": "35d3d5b195324b383e55b5ba72097e2e",
+        "d_c/events.jsonl": "2d0e630a03558dd91a2da7a2eb5744d7"
+       },
+       "pass": null
+      },
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "f5bd70560ae1ca8faf7aa1c90d4bd0cd",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "778315922321784598db98db58b12362",
+        "d_c/attestations.jsonl": "b5cbeb1ea9d3cf5cb2c6dcc53fb9a13e",
+        "d_c/events.jsonl": "9247834e0705453e46c86e76b9043700"
+       },
+       "pass": null
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:logs_vs_p2a",
+     "equal_across_reps": null,
+     "eşik yok": "D-A, D-A2, D-C günlüklerinin P2-A resmi RUN'ına bayt eşitliği; GOAL eşiği değil, kaydedicinin denetimi",
+     "pass": null,
+     "threshold": null,
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    }
+   ],
+   "id": "Z-DA",
+   "pass": null,
+   "pass_3of3": false
+  },
+  {
+   "class": "Z",
+   "criteria": [
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2d",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.2/GOAL.md:36",
+     "threshold": "D-C ≥ 0.99 (D-C′ yarısı H-P2-0.3d)",
+     "values": [
+      {
+       "d_c": {
+        "decided_by": [],
+        "error": "the set's harness stopped (a failed repetition)",
+        "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+        "log_tail": [
+         "  File \"<frozen runpy>\", line 88, in _run_code",
+         "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+         "    raise SystemExit(main())",
+         "                     ^^^^^^",
+         "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+         "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+         "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+         "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+         "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+         "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+         "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+         "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+        ],
+        "pass": false
+       },
+       "decided_by": [
+        "d_c›pass"
+       ],
+       "half": "D-C (≥ 0.99); D-C′ (real Obsidian) is H-P2-0.3d",
+       "pass": false
+      },
+      {
+       "d_c": {
+        "decided_by": [],
+        "error": "the set's harness stopped (a failed repetition)",
+        "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+        "log_tail": [
+         "  File \"<frozen runpy>\", line 88, in _run_code",
+         "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+         "    raise SystemExit(main())",
+         "                     ^^^^^^",
+         "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+         "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+         "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+         "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+         "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+         "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+         "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+         "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+        ],
+        "pass": false
+       },
+       "decided_by": [
+        "d_c›pass"
+       ],
+       "half": "D-C (≥ 0.99); D-C′ (real Obsidian) is H-P2-0.3d",
+       "pass": false
+      },
+      {
+       "d_c": {
+        "decided_by": [],
+        "error": "the set's harness stopped (a failed repetition)",
+        "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+        "log_tail": [
+         "  File \"<frozen runpy>\", line 88, in _run_code",
+         "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+         "    raise SystemExit(main())",
+         "                     ^^^^^^",
+         "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+         "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+         "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+         "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+         "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+         "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+         "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+         "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+        ],
+        "pass": false
+       },
+       "decided_by": [
+        "d_c›pass"
+       ],
+       "half": "D-C (≥ 0.99); D-C′ (real Obsidian) is H-P2-0.3d",
+       "pass": false
+      }
+     ]
+    }
+   ],
+   "id": "Z-DC",
+   "pass": null,
+   "pass_3of3": false
+  },
+  {
+   "class": "Z",
+   "criteria": [
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2f",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.2/GOAL.md:38",
+     "threshold": "≤ 0.01; p95 < 500 ms",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3f",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:25",
+     "threshold": "≤ 0.01; p95 < 500 ms",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    }
+   ],
+   "id": "Z-DB2",
+   "pass": null,
+   "pass_3of3": false
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3b",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "reading": "kalış korunuyor (`pass` false, referansla aynı); değeri raporlanır (gerçek Obsidian, yarışa bağlı: kayıt baytları tekrar eşit olamaz)",
+     "record_equal": true,
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:19",
+     "tarihsel": [
+      "K-P2-03.1"
+     ],
+     "threshold": "≤ 0.01",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ],
+     "why": "kalış korunuyor (K-P2-03.1: pass false); değeri raporlanır"
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3b-yük",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:20",
+     "threshold": "≤ 0.02 (yüklü çift; Mac kümesi yüksüz koşar, değer bu eşikle raporlanır)",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3b′",
+     "equal_across_reps": null,
+     "eşik yok": "GOAL: raporlanır (bilgi)",
+     "pass": null,
+     "threshold": null,
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3c",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:22",
+     "threshold": "p95 < 500 ms",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    }
+   ],
+   "id": "O-DB4",
+   "pass": null,
+   "pass_3of3": false
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3d",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:23",
+     "threshold": "D-C ≥ 0.99; D-C′ ≥ 0.95 ve ajan canonical = 0",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    }
+   ],
+   "id": "O-DC′",
+   "pass": null,
+   "pass_3of3": false
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3e",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:24",
+     "threshold": "ajan canonical = 0; sahte 10/10",
+     "values": [
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T204026Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m019-m015-m012-m001-cupping.md: exit 1: error: attest: HTTP 403 denied: attest: m019-m015-m012-m001-cupping.md is not a rename of the content of m015-m012-m001-cupping.md: 30 blocks against 29 in m015-m012-m001-cupping.md"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T213912Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      },
+      {
+       "decided_by": [],
+       "error": "the set's harness stopped (a failed repetition)",
+       "log": "research/reports/runs/20261031T220819Z-58377de/p2_0_2.log",
+       "log_tail": [
+        "  File \"<frozen runpy>\", line 88, in _run_code",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 506, in <module>",
+        "    raise SystemExit(main())",
+        "                     ^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_2.py\", line 490, in main",
+        "    r = p1.run_d_b2(rootmark, window_s, out, work / \"b2\")",
+        "        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 355, in run_d_b2",
+        "    cli_attest(rootmark, sv.vault, s[\"to\"], renamed_from=doc)",
+        "  File \"<repo>/research/eval/run_p2_0_1.py\", line 315, in cli_attest",
+        "    raise RuntimeError(f\"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}\")",
+        "RuntimeError: rootmark attest m005-m004-m003-origins.md: exit 1: error: attest: HTTP 403 denied: attest: m004-m003-origins.md is not a document of the log"
+       ],
+       "pass": false
+      }
+     ]
+    }
+   ],
+   "id": "O-DA′",
+   "pass": null,
+   "pass_3of3": false
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p1e_checks.json:E-7",
+     "pass": null,
+     "pass_3of3": null,
+     "passed": "0/1",
+     "reading": "kayıt eşitliği: hedef başına sonuç referansla aynı (2/4)",
+     "record_equal": true,
+     "runs": 1,
+     "source": "docs/rounds/P1-E/GOAL.md:36",
+     "tarihsel": [
+      "K-E5-T",
+      "K-E1.1"
+     ],
+     "threshold": "4/4 (yayım paketi; K-E5-T ile ertelendi: kayıtlı 2/4)",
+     "values": [
+      {
+       "chain_local_target": {
+        "conformance": {
+         "exit": 0,
+         "level_claimed": 3,
+         "passed": 39,
+         "total": 39
+        },
+        "pass": true,
+        "spec_version": "2.0.3",
+        "target": "aarch64-apple-darwin",
+        "version": "rootmark 0.2.0"
+       },
+       "decided_by": [],
+       "four_targets": "2/4 (docs/rounds/P1-E/progress/E5_release.json)",
+       "pass": false
+      }
+     ],
+     "why": "yerel hedef (aarch64-apple-darwin) geçti ve dört hedefin kaydı 2/4 (K-E5-T)"
+    },
+    {
+     "criterion": "p1e1_checks.json:E1-3",
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P1-E.1/GOAL.md:16",
+     "threshold": "11/11",
+     "values": [
+      {
+       "e3_md_changes_only_at_propose": true,
+       "e4_outside_contract": 0,
+       "e4_requests": 57,
+       "failed": [],
+       "pass": true,
+       "steps": "11/11"
+      },
+      {
+       "e3_md_changes_only_at_propose": true,
+       "e4_outside_contract": 0,
+       "e4_requests": 57,
+       "failed": [],
+       "pass": true,
+       "steps": "11/11"
+      },
+      {
+       "e3_md_changes_only_at_propose": true,
+       "e4_outside_contract": 0,
+       "e4_requests": 57,
+       "failed": [],
+       "pass": true,
+       "steps": "11/11"
+      }
+     ]
+    },
+    {
+     "criterion": "p1e1_checks.json:E1-4",
+     "pass": null,
+     "pass_3of3": null,
+     "passed": "0/1",
+     "reading": "kayıt eşitliği: kontrol listesinin maddelerinin `ok`'u, tarihsel maddeler (R4, R15, R17) dışında geçer; tarihsel maddeler referansla aynı",
+     "record_equal": true,
+     "runs": 1,
+     "source": "docs/rounds/P1-E.1/GOAL.md:17",
+     "tarihsel": [
+      "K-E1.4"
+     ],
+     "threshold": "geçer (kontrol listesinin bütün maddeleri)",
+     "values": [
+      {
+       "decided_by": [],
+       "every_item_scripted": true,
+       "failed": [
+        "R4"
+       ],
+       "pass": false,
+       "release_check": "20/21"
+      }
+     ],
+     "why": "kontrol listesinin kalan maddeleri yalnız tarihsel maddeler (R4, R15, R17)"
+    },
+    {
+     "criterion": "p1e1_checks.json:E1-9",
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P1-E.1/GOAL.md:22",
+     "threshold": "1/1 (e2e adımı; sözleşme yarısı kademe 2'de)",
+     "values": [
+      {
+       "connection_step": {
+        "notice_shown": true,
+        "search_after_rebuild": {
+         "error": null,
+         "hits": 5
+        },
+        "search_before_rebuild": {
+         "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+         "hits": 0
+        },
+        "status_bar": "rootmark 0.2.0 · human:editor · index stale",
+        "status_bar_after_rebuild": "rootmark 0.2.0 · human:editor",
+        "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+       },
+       "half": "e2e step (the contract check is tier 2's)",
+       "pass": true
+      },
+      {
+       "connection_step": {
+        "notice_shown": true,
+        "search_after_rebuild": {
+         "error": null,
+         "hits": 5
+        },
+        "search_before_rebuild": {
+         "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+         "hits": 0
+        },
+        "status_bar": "rootmark 0.2.0 · human:editor · index stale",
+        "status_bar_after_rebuild": "rootmark 0.2.0 · human:editor",
+        "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+       },
+       "half": "e2e step (the contract check is tier 2's)",
+       "pass": true
+      },
+      {
+       "connection_step": {
+        "notice_shown": true,
+        "search_after_rebuild": {
+         "error": null,
+         "hits": 5
+        },
+        "search_before_rebuild": {
+         "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+         "hits": 0
+        },
+        "status_bar": "rootmark 0.2.0 · human:editor · index stale",
+        "status_bar_after_rebuild": "rootmark 0.2.0 · human:editor",
+        "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+       },
+       "half": "e2e step (the contract check is tier 2's)",
+       "pass": true
+      }
+     ]
+    },
+    {
+     "criterion": "p1e1_checks.json:tamper",
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "2/3",
+     "runs": 3,
+     "source": "research/eval/run_p1e1_checks.py (`tamper`)",
+     "threshold": "gerçek Obsidian kasıtlı vakaları reddedilir, kontroller geçer (e2e yarısı; `tamper_p1e1.json` kademe 2'de)",
+     "values": [
+      {
+       "controls": "1/1",
+       "half": "tamper_p1e1_e2e (the real Obsidian); tamper_p1e1.json is deterministic, tier 2",
+       "pass": true,
+       "real_cases_run": true,
+       "rejected": "1/1"
+      },
+      {
+       "controls": "1/1",
+       "decided_by": [],
+       "half": "tamper_p1e1_e2e (the real Obsidian); tamper_p1e1.json is deterministic, tier 2",
+       "pass": false,
+       "real_cases_run": true,
+       "rejected": "0/1"
+      },
+      {
+       "controls": "1/1",
+       "half": "tamper_p1e1_e2e (the real Obsidian); tamper_p1e1.json is deterministic, tier 2",
+       "pass": true,
+       "real_cases_run": true,
+       "rejected": "1/1"
+      }
+     ]
+    }
+   ],
+   "id": "O-REL",
+   "pass": true,
+   "pass_3of3": false
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p1c1_checks.json:C1-8",
+     "pass": true,
+     "pass_3of3": null,
+     "passed": "1/1",
+     "runs": 1,
+     "source": "docs/rounds/P1-C.1/GOAL.md:22",
+     "threshold": "fark 0 (karar dışlamalarıyla)",
+     "values": [
+      {
+       "differing_outside_e1": [],
+       "n_differing": 6014,
+       "n_e1": 6014,
+       "n_fields": 99053,
+       "pass": true,
+       "reading": "farklar yalnız E1 alanlarında (envanter `e1_fields`)",
+       "recorder_pass": false,
+       "reference_run": "20261015T014417Z-9aa326b"
+      }
+     ]
+    }
+   ],
+   "id": "O-C18",
+   "pass": true,
+   "pass_3of3": true
+  }
+ ],
+ "setup_s": 165,
+ "single_run": [
+  "p1c1_checks.json:C1-8",
+  "p1e1_checks.json:E1-4",
+  "p1e_checks.json:E-7"
+ ],
+ "total_s": 7188
+}

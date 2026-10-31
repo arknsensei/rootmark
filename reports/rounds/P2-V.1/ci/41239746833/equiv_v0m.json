@@ -1,0 +1,37 @@
+{
+ "criteria_lost": [],
+ "criteria_mac": 23,
+ "criteria_new": 135,
+ "criteria_new_only": [],
+ "criteria_old": 135,
+ "d_bytes_differing": [],
+ "d_fields_differing": {
+  "p1e1/release/release_check.json:items›7›detail": "inf"
+ },
+ "e1_bytes_differing": [
+  "p1d/mcp_e2e/run1/transcript.jsonl",
+  "p1d/scene/scene.json",
+  "p1d1/d1_3.json"
+ ],
+ "mode": "equiv",
+ "n_fields": 787998,
+ "named_H": [
+  "p1e1/release/release_check.json:items›17›detail",
+  "p2_0_2_checks.json:regress›differing_fields›p1e1/release/release_check·json:items›17›detail›b"
+ ],
+ "named_commit": [
+  "p1e1/release/release.json:commit",
+  "p1e1/release/release_check.json:items›14›detail",
+  "p1e1/release/release_check.json:items›3›item"
+ ],
+ "named_counts": {
+  "E1": 216975,
+  "H": 2,
+  "Z/O": 133,
+  "commit": 3
+ },
+ "new_run": "run",
+ "note": "named_differences condensed to counts (full list 49.9 MB; regenerate: python -m eval.tier2 equiv <V0m 40613392932 A run> <41239746833 chain A run> --mac reports/rounds/P2-V.1/mac/20261031T204025Z-58377de/mac_checks.json)",
+ "old_run": "run",
+ "pass": false
+}
