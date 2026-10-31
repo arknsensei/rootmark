@@ -2,7 +2,7 @@
 
 Ayrı oturum, temiz klon (doğrulayıcının scratchpad'i), kod değiştirilmedi. Yerel koşturmalar o klonda; kademe 2 CI'da kendi tetiklememle.
 
-**Doğrulanan commit: `a4d5d01` (PR #35'in başı, READY).** [varsayım] İstemdeki "P2-V'nin birleşmiş `main` commit'i" doğrulama başladığında yoktu: PR #35 birleşmemişti, `main` `352f790`'daydı (`ROUND_START`). Bu yüzden READY'nin commit'i doğrulandı; ölçülen ürün kodu `ROUND_START` ile aynıdır (VV4). Birleştirme bu commit'i değiştirmeden yaparsa (rebase yalnız dal commit'lerini yeniden yazar) bu doğrulama birleşmiş içeriğe de uygulanır. Bu VERIFICATION `main`'den açılan ayrı bir dalda girer; P2-V'nin dosyaları PR #35 birleşince `main`'e gelir.
+**Doğrulanan commit: `44441df` (P2-V'nin birleşmiş `main` commit'i, PR #35 rebase ile; ağacı `a4d5d01` ile bayt bayt aynı: `git diff a4d5d01 44441df` boş).** Ölçümler PR #35'in başı `a4d5d01` (READY) üzerinde yapıldı, çünkü doğrulama başladığında PR birleşmemişti; rebase yalnız commit kimliklerini yeniden yazdı, içerik değişmedi. Ölçülen ürün kodu `ROUND_START` (`352f790`) ile aynıdır (VV4). Bu VERIFICATION `main`'den açılan ayrı bir dalda girer.
 
 **Kademe 2 koşum: `41128634412`** (`gh workflow run verify.yml --ref p2-v/round -f sha=a4d5d01270e98dda2e68386cab990a882ab3f67d`; iş akışı `main`'de henüz eski sürümüyle durduğu için `--ref p2-v/round`).
 
