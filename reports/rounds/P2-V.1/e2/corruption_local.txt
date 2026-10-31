@@ -1,0 +1,8 @@
+# P2-V.1/E2 — kasıtlı bozma (yerel): bir koşucunun yapıtında tek bileşenin son mantis biti
+bozma: component 1000 of minilm-l6-v2/vectors.f32: 0.05225107818841934 -> 0.05225108191370964 (son mantis biti; yapıtın hashes.json'u yeniden yazıldı, karşılaştırıcı bayt farkını kendisi buluyor)
+e2: 2 runners, 11 files: DIFFERENT (1 files)
+  copy: arm64 other
+  local: arm64 Apple M4 Max
+  processors differ
+  differs: minilm-l6-v2/vectors.f32 {'copy': '343ce8ca71b55e29021b63e80732c5d5f0d720700c4bd81e32ea7bd4fab127994e4c9b6a54f5588ea069e2706ba81b1fa9a6c0d2c0fab7bae02f35e9811d91c3', 'local': '2480ff5dfc664c221ccb3aae3f64b393f4e0f07bc1c5a1b8cb1254de84a40f6990761ccc36e2ffd70c154bca41cc1b34abe1a41c829d80e7ce442b8b34a23ec0'}
+exit 3
