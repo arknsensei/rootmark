@@ -1,0 +1,10 @@
+# P2-V.1 — Bağımsız Doğrulama (kısa; ürün sayısalları ve ölçüm aracı değiştiği için)
+
+P2-V.1 gömmenin sayısal çıktısını ve kademelerin araçlarını değiştirir; kademeler bu turla yürürlüğe girer. Tur sonunda kısa bir bağımsız doğrulama yapılır ve `reports/rounds/P2-V.1/VERIFICATION.md`'ye yazılır. Doğrulayıcı ayrı oturumda, temiz klonda çalışır (DEV_PROCESS §5), kod değiştirmez. Hedef 1–2 saat (CI beklemesi hariç). Yerelde tam çift koşulmaz.
+
+- **VW1 — İşlemciler arası.** E2 işini doğrulanan commit'te kendin tetikle; üç koşucunun vektör dosyalarını indir ve **kendi betiğinle** bayt bayt karşılaştır; CPU modellerinin gerçekten farklı olduğunu yapıttan göster. E0'ın ham sayılarından seçimin gerekçesini yeniden hesapla.
+- **VW2 — Kademe 2'yi kendin tetikle.** Tam çifti bir kez tetikle; A↔B karşılaştırmasını kendi betiğinle yeniden yap; `host.json` CPU modelleri ve karşılaştırma işinin yazdığı hüküm tutarlı mı; karşılaştırma dışı liste P2-V.1 envanteriyle birebir mi, joker yok mu.
+- **VW3 — Kasıtlı bozmalar.** (a) D1-12'nin tam regress listesinde Z/O dışı bir girdiyi boz → türev koruması saymalı (B1); (b) C1-8'in sıralama kimliklerinden birini değiştir → karşılaştırma kırmızı (B2); (c) p1e1 tamper'ın deterministik yarısını boz → yeni kimlik FAIL (B3); (d) bir vektör dosyasında tek bileşeni değiştir → E2 kırmızı.
+- **VW4 — Ürün sınırı ve kalite.** `git diff ROUND_START..<sha> -- core bindings clients spec` boş; `server/` farkı yalnız göç kaydı; `make conformance` 39/39; C-10 ve P1-C/P1-C.1 kalite kriterlerini kendin yeniden koştur; eski bir vault'u göç ettir, taze kurulumla bayt eşit mi, geri alma çalışıyor mu.
+- **VW5 — Yerel kademeler ve karar kuralı.** `make verify FAST=1` bir kez; `make verify-mac` bir kez; süreler GOAL eşiklerinde mi. Karar kuralını GOAL'den türet, FINAL ile karşılaştır. Vaat sorusu: NORTH_STAR ilke 2 ("her makinede aynı sonuç") vektör indeksi için artık doğru mu; doğru olmadığı bir yer kaldı mı.
+- **Sonuç:** ihlal/fark/şüphe; V1-1..V1-11 için geçti/kaldı; tek hüküm ("güvenilir" / "şu koşullarla güvenilir" / "güvenilir değil"); ≤ 3 öneri.
