@@ -444,6 +444,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/portable.py` | `P2-V.1/E3-f:` | yeniden dondurma P2-V.1/F4: `--all` (çifte girmeyen kayıtlar) |
 | `research/eval/verify_mac.py` | `P2-V.1/E3-f:` | yeniden dondurma P2-V.1/F5: harness hatasının son satırları, kararı veren alanlar |
 | `research/eval/compare_runs.py` | `P2-V.1/E4:` | yeniden dondurma P2-V.1/F6: `leaves`'in çakışma denetimi doğrusal (aynı küme, aynı çıktı) |
+| `research/eval/**` | `P2-V.1/E4:` | yeniden dondurma P2-V.1/F6: `compare_runs.py` (kalıbın yeniden dondurulması; P2-V.1/F2, F4, F5, F8'in dosyaları kendi satırlarıyla) |
 | `scripts/verify_mac.sh` | `P2-V.1/E4:` | yeniden dondurma P2-V.1/F7: deterministik O kriterleri (C1-8, E-7) yalnız 1. tekrarda |
 | `research/eval/verify_mac.py` | `P2-V.1/E4:` | yeniden dondurma P2-V.1/F8: `mac_reading` (tek koşu, E1 okuması, tarihsel kayıt eşitliği) |
 <!-- /frozen-table -->
