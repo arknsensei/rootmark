@@ -1,0 +1,36 @@
+{
+  "mode": "equiv",
+  "old_run": "run",
+  "new_run": "run",
+  "n_fields": 788017,
+  "pass": false,
+  "d_fields_differing": {
+    "p1e1/release/release_check.json:items›7›detail": "inf"
+  },
+  "d_bytes_differing": [],
+  "e1_bytes_differing": [
+    "p1d/mcp_e2e/run1/transcript.jsonl",
+    "p1d/scene/scene.json",
+    "p1d1/d1_3.json"
+  ],
+  "named_counts": {
+    "E1": 216975,
+    "H": 2,
+    "Z/O": 103,
+    "commit": 3
+  },
+  "named_commit": [
+    "p1e1/release/release.json:commit",
+    "p1e1/release/release_check.json:items›14›detail",
+    "p1e1/release/release_check.json:items›3›item"
+  ],
+  "named_H": [
+    "p1e1/release/release_check.json:items›17›detail",
+    "p2_0_2_checks.json:regress›differing_fields›p1e1/release/release_check·json:items›17›detail›b"
+  ],
+  "criteria_old": 135,
+  "criteria_new": 135,
+  "criteria_mac": 0,
+  "criteria_lost": [],
+  "criteria_new_only": []
+}

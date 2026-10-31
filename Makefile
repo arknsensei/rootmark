@@ -241,9 +241,12 @@ p1b-checks: require-run
 	@# 25 entries, level 2 iff all 25 pass with an intact manifest), as
 	@# p1a-checks reads the level-1 view; the full report is kept beside it
 	@# (P1-D.1: C2-10 is outside the P1-B view too; P2-0: C2-11, C2-12 too; P2-0.1: C2-13 too; P2-0.2: C2-14 too)
-	cp reports/conformance.json research/reports/runs/$(RUN)/conformance_full.json
-	jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
-	  reports/conformance.json >research/reports/runs/$(RUN)/conformance.json
+	@# P2-V.1/E3 (Ş2 of P2-V's verification): every conformance copy in the RUN
+	@# names its fixture root relative to the repository (no host value in a
+	@# record; reports/conformance.json keeps the absolute root its checks read)
+	jq --arg r "$$(pwd -P)/" --arg l "$$(pwd)/" '.fixtures_root |= (if startswith($$r) then .[($$r | length):] elif startswith($$l) then .[($$l | length):] else . end)' reports/conformance.json >research/reports/runs/$(RUN)/conformance_full.json
+	jq --arg r "$$(pwd -P)/" --arg l "$$(pwd)/" '.fixtures_root |= (if startswith($$r) then .[($$r | length):] elif startswith($$l) then .[($$l | length):] else . end)' reports/conformance.json | jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
+	  >research/reports/runs/$(RUN)/conformance.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
 	cargo build --release -q -p rootmark-server --bin rootmark
@@ -367,10 +370,10 @@ p1c-checks: require-run
 	@# the absolute root its checks read)
 	jq --arg r "$$(pwd -P)/" '.fixtures_root |= (if startswith($$r) then .[($$r | length):] else . end)' \
 	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_p1d1.json
-	jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14" and .id != "C3-08")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
-	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_p1c1.json
-	jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14" and .id != "C3-08")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
-	  reports/conformance.json >research/reports/runs/$(RUN)/conformance_full.json
+	jq --arg r "$$(pwd -P)/" --arg l "$$(pwd)/" '.fixtures_root |= (if startswith($$r) then .[($$r | length):] elif startswith($$l) then .[($$l | length):] else . end)' reports/conformance.json | jq '.tests |= map(select(.id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14" and .id != "C3-08")) | .total = 31 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 31 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	  >research/reports/runs/$(RUN)/conformance_p1c1.json
+	jq --arg r "$$(pwd -P)/" --arg l "$$(pwd)/" '.fixtures_root |= (if startswith($$r) then .[($$r | length):] elif startswith($$l) then .[($$l | length):] else . end)' reports/conformance.json | jq '.tests |= map(select(.id != "C3-05" and .id != "C2-10" and .id != "C3-06" and .id != "C3-07" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14" and .id != "C3-08")) | .total = 30 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 30 and .fixtures_manifest == "ok" then 3 else .level_claimed end)' \
+	  >research/reports/runs/$(RUN)/conformance_full.json
 	cargo test -p rootmark-core --release --test compat_v3final kc01 -- --test-threads=1 \
 	  >research/reports/runs/$(RUN)/c13_tests.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/c13_tests.log >&2; exit 1; }
@@ -445,6 +448,13 @@ p1d-checks: require-run
 	bash scripts/mcp_inspector.sh $(P1D_DIR)/inspector >$(P1D_DIR)/inspector.log 2>&1 \
 	  || echo "p1d-checks: mcp_inspector.sh exit $$? (recorded)" >&2
 	@test -f $(P1D_DIR)/inspector/inspector.json || { cat $(P1D_DIR)/inspector.log >&2; exit 1; }
+	@# P2-V.1/E3 (Ş2): the Inspector's config (the server command) and the
+	@# schema record (`source`) name repository-relative paths in the RUN;
+	@# both are read only while mcp_inspector.sh runs (inspector.json is its result)
+	for f in inspector_config.json schemas.json; do \
+	  jq --arg r "$$(pwd -P)/" --arg l "$$(pwd)/" 'def rel: if type == "string" and startswith($$r) then .[($$r | length):] elif type == "string" and startswith($$l) then .[($$l | length):] else . end; (.. | strings) |= rel' \
+	    $(P1D_DIR)/inspector/$$f >$(P1D_DIR)/inspector/$$f.tmp && mv $(P1D_DIR)/inspector/$$f.tmp $(P1D_DIR)/inspector/$$f; \
+	done
 	bash scripts/mcp_e2e.sh $(P1D_DIR)/mcp_e2e >$(P1D_DIR)/mcp_e2e.log 2>&1 \
 	  || echo "p1d-checks: mcp_e2e.sh exit $$? (recorded)" >&2
 	@test -f $(P1D_DIR)/mcp_e2e/mcp_e2e.json || { tail -40 $(P1D_DIR)/mcp_e2e.log >&2; exit 1; }

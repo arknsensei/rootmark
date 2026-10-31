@@ -14,7 +14,11 @@ too. Each path is searched as given and as its real path (`/var` →
 shorter than 4 characters and `/tmp` itself are not searched (they are
 not specific to a host).
 
-    python -m eval.portable <run_dir> [--host host.json …] [--fast] [--skip-missing] [--files-from compare.json] [--out path.json]
+P2-V.1/F4 (Ş2 of P2-V's verification): with `--all` every record of the
+RUN is read too — each `*.json` and `*.jsonl` file under it, whether the
+pair compares it or not (logs, `*.log`, are diagnostics, not records).
+
+    python -m eval.portable <run_dir> [--host host.json …] [--fast] [--all] [--skip-missing] [--files-from compare.json] [--out path.json]
 
 Exit 0 when nothing is found, 3 when something is (the record names the
 file, the value's kind and the first match), 1 on a missing file.
@@ -92,9 +96,26 @@ def this_host() -> dict:
     }
 
 
+def all_records(run_dir: Path) -> list[str]:
+    """Every record of the RUN (P2-V.1/F4): `*.json` and `*.jsonl` files."""
+    return sorted(
+        str(p.relative_to(run_dir))
+        for p in run_dir.rglob("*")
+        if p.is_file() and p.suffix in (".json", ".jsonl")
+    )
+
+
 def record_files(
-    run_dir: Path, fast: bool, archived: bool = False, files_from: Path | None = None
+    run_dir: Path,
+    fast: bool,
+    archived: bool = False,
+    files_from: Path | None = None,
+    every: bool = False,
 ) -> list[str]:
+    if every:
+        base = [] if fast else record_files(run_dir, False, archived, files_from)
+        fast_files = list(compare_p2r.P2R_FAST_FILES) if fast else []
+        return sorted(set(base) | set(fast_files) | set(all_records(run_dir)))
     if fast:
         return list(compare_p2r.P2R_FAST_FILES)
     if files_from is not None:
@@ -153,6 +174,11 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--host", type=Path, action="append", default=[])
     ap.add_argument("--fast", action="store_true")
     ap.add_argument(
+        "--all",
+        action="store_true",
+        help="every record of the RUN too (*.json, *.jsonl; P2-V.1/F4)",
+    )
+    ap.add_argument(
         "--skip-missing", action="store_true", help="an archived RUN: list missing files"
     )
     ap.add_argument(
@@ -163,14 +189,14 @@ def main(argv: list[str] | None = None) -> None:
     missing: list[str] | None = [] if a.skip_missing else None
     try:
         hosts = [json.loads(h.read_text(encoding="utf-8")) for h in a.host] + [this_host()]
-        files = record_files(a.run_dir, a.fast, a.skip_missing, a.files_from)
+        files = record_files(a.run_dir, a.fast, a.skip_missing, a.files_from, a.all)
         hits = scan(a.run_dir, files, needles(hosts), missing)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"error: {e}", file=sys.stderr)
         sys.exit(1)
     res = {
         "run": a.run_dir.name,
-        "mode": "fast" if a.fast else "pair",
+        "mode": ("fast" if a.fast else "pair") + (" + all records" if a.all else ""),
         "files": len(files),
         "hosts": len(hosts),
         "missing": missing,

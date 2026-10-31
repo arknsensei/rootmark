@@ -189,9 +189,9 @@ jobs:
           uv run --frozen python -m eval.compare_p2r fast "$in/tier1-A/run" "$in/tier1-B/run" --out "$o/fast_pair_compare.json" >/dev/null
           echo "fast pair equal ($(jq -r .n_fields "$o/fast_pair_compare.json") fields)"
           for s in A B; do
-            uv run --frozen python -m eval.portable "$in/tier1-$s/run" --fast --host "$in/tier1-$s/host.json" --out "$o/portable_$s.json" >/dev/null
+            uv run --frozen python -m eval.portable "$in/tier1-$s/run" --fast --all --host "$in/tier1-$s/host.json" --out "$o/portable_$s.json" >/dev/null
           done
-          echo "no host value in the fast records"
+          echo "no host value in the fast records (and every record of the RUN, P2-V.1/F4)"
           t0="$(cat "$in"/tier1-*/started_epoch | sort -n | head -1)"
           jq -n --argjson s "$(( $(date -u +%s) - t0 ))" '{elapsed_s: $s, from: "the first fast chain started"}' | tee "$o/fast_pair_time.json"
       - name: keep the comparison

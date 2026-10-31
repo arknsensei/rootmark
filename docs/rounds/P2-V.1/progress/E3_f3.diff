@@ -1,0 +1,32 @@
+103a104,106
+>           # P2-V.1/F3 (K-P2V.3 T1 (c)): the chain's processor model (information)
+>           cpu="$(lscpu | sed -n 's/^Model name:[[:space:]]*//p' | head -1)"
+>           [ -n "$cpu" ] || { echo "error: no processor model (lscpu)" >&2; exit 1; }
+105,106c108,109
+<             --arg rt "$RUNNER_TEMP" --arg ws "$GITHUB_WORKSPACE" \
+<             '{workdir: $w, home: $h, tmpdir: $t, user: $u, host: $n, extra: [$rt, $ws]}' >"$out/host.json"
+---
+>             --arg rt "$RUNNER_TEMP" --arg ws "$GITHUB_WORKSPACE" --arg cpu "$cpu" \
+>             '{workdir: $w, home: $h, tmpdir: $t, user: $u, host: $n, extra: [$rt, $ws], cpu_model: $cpu}' >"$out/host.json"
+182c185,186
+<               rc=0; uv run --frozen python -m eval.tier2 fails "$in/tier2-$s/run" --summary "$in/tier2-$s/fail_summary.json" --out "$o/tier2_fails_$s.json" >/dev/null || rc=$?
+---
+>               # P2-V.1/F2 (B1): the chain's own classifier, full difference lists
+>               rc=0; uv run --frozen python -m eval.tier2 fails "$in/tier2-$s/run" --summary "$in/tier2-$s/fail_summary.json" --classifier "$(cat "$in/tier2-$s/classifier")" --out "$o/tier2_fails_$s.json" >/dev/null || rc=$?
+184c188
+<               rc=0; uv run --frozen python -m eval.portable "$in/tier2-$s/run" --host "$in/tier2-$s/host.json" --files-from "$o/frozen_pair_compare.json" --out "$o/portable_$s.json" >/dev/null || rc=$?
+---
+>               rc=0; uv run --frozen python -m eval.portable "$in/tier2-$s/run" --host "$in/tier2-$s/host.json" --files-from "$o/frozen_pair_compare.json" --all --out "$o/portable_$s.json" >/dev/null || rc=$?
+191a196,203
+>           # P2-V.1/F3: the two chains' processor models, and whether they differ
+>           ca="$(jq -r '.cpu_model // empty' "$a/host.json" 2>/dev/null)"; cb="$(jq -r '.cpu_model // empty' "$b/host.json" 2>/dev/null)"
+>           if [ -n "$ca" ] && [ -n "$cb" ]; then
+>             [ "$ca" = "$cb" ] && same=true || same=false
+>             echo "processors: A $ca, B $cb ($([ "$same" = true ] && echo same || echo different))"
+>           else
+>             same=null; echo "processors: not recorded (a chain before P2-V.1/F3)"
+>           fi
+192a205
+>             --arg ca "$ca" --arg cb "$cb" --argjson same "$same" \
+197a211
+>               cpu_model_a: $ca, cpu_model_b: $cb, same_processor: $same,

@@ -212,7 +212,10 @@ def test_the_mac_set_applies_the_frozen_recorders_formulas():
 
 @pytest.mark.skipif(not P2R_RUN.is_dir(), reason="the P2-R archive is not in this tree")
 def test_tier2_counts_no_fail_of_the_p2r_attempt_outside_the_z_and_o_sets():
-    res = tier2.fails(P2R_RUN, historical_p2r.classify(P2R_RUN), tier2.load_inventory())
+    # P2-V's inventory, the one this test was written for (P2-V.1/F2 made
+    # P2-V.1's the default; its B3 criterion is test_p2v1_tools')
+    p2v = tier2.load_inventory(REPO / "reports/rounds/P2-V/inventory.json")
+    res = tier2.fails(P2R_RUN, historical_p2r.classify(P2R_RUN), p2v)
     assert res["classifier_counted"] == 5 and res["counted_fails"] == 0
 
 
