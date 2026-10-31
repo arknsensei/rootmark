@@ -1,0 +1,259 @@
+{
+  "chunks": [
+    {
+      "chunk_id": "00f23050fbb03320c29b203eee4647a1",
+      "cosine": 0.9999999999996994,
+      "doc_path": "asset.preview.md"
+    },
+    {
+      "chunk_id": "204f167bc3930aa6a973fb7c3a959bfc",
+      "cosine": 0.9999999999993732,
+      "doc_path": "changelog.md"
+    },
+    {
+      "chunk_id": "828ae1f2b731541eef9d30de56c84375",
+      "cosine": 0.9999999999996627,
+      "doc_path": "changelog.md"
+    },
+    {
+      "chunk_id": "eaa259910a81a5381fb4a6c503acda29",
+      "cosine": 0.9999999999996151,
+      "doc_path": "changelog.md"
+    },
+    {
+      "chunk_id": "8ae40b9d673138a8614bcc58c673a164",
+      "cosine": 0.9999999999994081,
+      "doc_path": "changelog.past-versions.0-1-x.md"
+    },
+    {
+      "chunk_id": "8c9be67ff30ee7967cd0400a1ebc4164",
+      "cosine": 0.9999999999995621,
+      "doc_path": "changelog.past-versions.0-2-x.md"
+    },
+    {
+      "chunk_id": "bdd95c7e9ed3f5dffecefeba1abe5b39",
+      "cosine": 0.9999999999995319,
+      "doc_path": "changelog.past-versions.0-3-x.md"
+    },
+    {
+      "chunk_id": "d322685596cdd93626707880c9652f68",
+      "cosine": 0.9999999999994886,
+      "doc_path": "changelog.past-versions.0-4-x.md"
+    },
+    {
+      "chunk_id": "c763d1887ddf9463d4f3d92542a09b2f",
+      "cosine": 0.9999999999995273,
+      "doc_path": "changelog.past-versions.0-5-x.md"
+    },
+    {
+      "chunk_id": "a69e90ae3a000b772fb812d6a81d9569",
+      "cosine": 0.9999999999995923,
+      "doc_path": "changelog.release.2020-08-16.md"
+    },
+    {
+      "chunk_id": "ec1817b866dfa195f6e64ed81cde6cab",
+      "cosine": 0.9999999999996252,
+      "doc_path": "changelog.release.2020-09-20.md"
+    },
+    {
+      "chunk_id": "09a792c5dd74ccee0633cb922e7ddefb",
+      "cosine": 0.9999999999996576,
+      "doc_path": "changelog.release.2021-04-25.md"
+    },
+    {
+      "chunk_id": "64adc5e1ac4fb00981377fb7b2f99c9e",
+      "cosine": 0.9999999999994686,
+      "doc_path": "changelog.release.2021-08-17.md"
+    },
+    {
+      "chunk_id": "ef12b5138c7a0b5bb2595b1d2b11c197",
+      "cosine": 0.9999999999997358,
+      "doc_path": "changelog.release.2021-11-16.md"
+    },
+    {
+      "chunk_id": "bc84f5336e2f1ed1af1af16b1826665a",
+      "cosine": 0.999999999999521,
+      "doc_path": "changelog.release.2022-02-01.md"
+    },
+    {
+      "chunk_id": "0ab92bf22042b57fcf732a20f2ba01dd",
+      "cosine": 0.999999999999327,
+      "doc_path": "changelog.release.2022-04-19.md"
+    },
+    {
+      "chunk_id": "4d97fc0fc58b97764b092f46ef848a05",
+      "cosine": 0.9999999999996172,
+      "doc_path": "changelog.release.2022-07-05.md"
+    },
+    {
+      "chunk_id": "6cefb68f0e071f389c79b033d61b3132",
+      "cosine": 0.9999999999995343,
+      "doc_path": "changelog.release.2022-09-27.md"
+    },
+    {
+      "chunk_id": "ad749aedf54284ebfde93ab385258f20",
+      "cosine": 0.9999999999996938,
+      "doc_path": "community.discord.roles.md"
+    },
+    {
+      "chunk_id": "35932265d24c3b908eb73e9d7c34880f",
+      "cosine": 0.9999999999993492,
+      "doc_path": "community.events.new-user-tuesdays.2021.12.21.md"
+    },
+    {
+      "chunk_id": "c8035c9feb56d8a6f0740b29150ef952",
+      "cosine": 0.9999999999993593,
+      "doc_path": "community.events.office-hours.2022.01.19.md"
+    },
+    {
+      "chunk_id": "ef5566b71d9489f2d0a02b9a63cc7d00",
+      "cosine": 0.9999999999996361,
+      "doc_path": "community.showcase.md"
+    },
+    {
+      "chunk_id": "18ce68230a3188d84fecf08048c99ce1",
+      "cosine": 0.9999999999994429,
+      "doc_path": "dendron.contribute.dev.md"
+    },
+    {
+      "chunk_id": "29f6ca02c8572980b26aa9896ce3ce10",
+      "cosine": 0.999999999999716,
+      "doc_path": "dendron.guides.cook.md"
+    },
+    {
+      "chunk_id": "70109fb01b8cbbaaa40437984cc8c20d",
+      "cosine": 0.9999999999996017,
+      "doc_path": "dendron.guides.troubleshooting.md"
+    },
+    {
+      "chunk_id": "5db0d7661bc844256cbbdf001b06a560",
+      "cosine": 0.9999999999995851,
+      "doc_path": "dendron.principles.md"
+    },
+    {
+      "chunk_id": "c6194c8e25a35721f0408a16f91481dd",
+      "cosine": 0.999999999999553,
+      "doc_path": "dendron.ref.config.commands.md"
+    },
+    {
+      "chunk_id": "76cc570f6d132640a282d9c5bdeba4ff",
+      "cosine": 0.9999999999996724,
+      "doc_path": "dendron.ref.config.workspace.md"
+    },
+    {
+      "chunk_id": "93b0f1fa7a60eb39f6a93b957b196432",
+      "cosine": 0.9999999999994573,
+      "doc_path": "dendron.roadmap.project.n.2020.multi-vault.md"
+    },
+    {
+      "chunk_id": "489f8ef8b6be5d5bab473bfd4932cb8d",
+      "cosine": 0.9999999999995608,
+      "doc_path": "dendron.testimonials.matthew-bellringer.md"
+    },
+    {
+      "chunk_id": "3cb4a269f147bb0691e76ce05a78ef28",
+      "cosine": 0.9999999999994555,
+      "doc_path": "dendron.topic.graph-view.md"
+    },
+    {
+      "chunk_id": "68fdbbb771527371c80b8694f43fbbff",
+      "cosine": 0.9999999999994007,
+      "doc_path": "dendron.topic.links.commands.insert-note-link.md"
+    },
+    {
+      "chunk_id": "684212197e23b39bd07af451bf031d84",
+      "cosine": 0.9999999999996136,
+      "doc_path": "dendron.topic.lookup.modifiers.md"
+    },
+    {
+      "chunk_id": "3b319731435ff248c7471cead7d163fe",
+      "cosine": 0.9999999999993425,
+      "doc_path": "dendron.topic.navigation.md"
+    },
+    {
+      "chunk_id": "7ef4fe7b8a3d0b7b59b7744cf6a82269",
+      "cosine": 0.9999999999995224,
+      "doc_path": "dendron.topic.pod-v2.config.md"
+    },
+    {
+      "chunk_id": "65c51cabf064916893a60e021cb92d0b",
+      "cosine": 0.999999999999605,
+      "doc_path": "dendron.topic.pod-v2.upgrade.md"
+    },
+    {
+      "chunk_id": "7aebdecbefdbc03f38d053ca66d2dd0e",
+      "cosine": 0.9999999999995857,
+      "doc_path": "dendron.topic.pod.builtin.nextjs.md"
+    },
+    {
+      "chunk_id": "3e25127d1d83fed81e38754c836ab894",
+      "cosine": 0.999999999999533,
+      "doc_path": "dendron.topic.publish-legacy.configuration.md"
+    },
+    {
+      "chunk_id": "2d23fa915908939a5baaf4722259172d",
+      "cosine": 0.9999999999993585,
+      "doc_path": "dendron.topic.publish.config.copyAssets.md"
+    },
+    {
+      "chunk_id": "2d23fa915908939a5baaf4722259172d",
+      "cosine": 0.9999999999993585,
+      "doc_path": "dendron.topic.publish.config.github.enableEditLink.md"
+    },
+    {
+      "chunk_id": "57799473ee3775d61c875d2f24de08e4",
+      "cosine": 0.9999999999995463,
+      "doc_path": "dendron.topic.publish.cook.drawio.md"
+    },
+    {
+      "chunk_id": "1f2a3ea9fb827a9fe14a6c600103f20b",
+      "cosine": 0.9999999999997194,
+      "doc_path": "dendron.topic.publish.trouble.md"
+    },
+    {
+      "chunk_id": "8e310ffb891a335353b09d67b935c4a0",
+      "cosine": 0.9999999999992675,
+      "doc_path": "dendron.topic.schema.tutorial.first-schema.md"
+    },
+    {
+      "chunk_id": "7958d26ee7f1490be36cf103b0cd1361",
+      "cosine": 0.9999999999996663,
+      "doc_path": "dendron.topic.special-notes.md"
+    },
+    {
+      "chunk_id": "343e5f67c434d4029f12ac9315593dbb",
+      "cosine": 0.9999999999996081,
+      "doc_path": "dendron.topic.templates.handlebars.migration.md"
+    },
+    {
+      "chunk_id": "279495f2ba547f03474db33b6006107f",
+      "cosine": 0.9999999999997454,
+      "doc_path": "dendron.topic.vaults.md"
+    },
+    {
+      "chunk_id": "0a29118fbdbfeb4be4419d156b44186f",
+      "cosine": 0.9999999999996267,
+      "doc_path": "dendron.tutorial.taking-notes.md"
+    },
+    {
+      "chunk_id": "bd64545bbfe897d32ee6d3a40d69ab6f",
+      "cosine": 0.9999999999996598,
+      "doc_path": "tags.feature.refactor.md"
+    },
+    {
+      "chunk_id": "8587283e8779b8c2f49da0396257bdf8",
+      "cosine": 0.9999999999994469,
+      "doc_path": "templates.feature.md"
+    },
+    {
+      "chunk_id": "b49016eccdabaa8a141ac4f7ea5a821c",
+      "cosine": 0.9999999999995289,
+      "doc_path": "tutorial.md"
+    }
+  ],
+  "embedder_id": "minilm-l6-v2/e73168f9+fixed1",
+  "min_cosine": 0.9999999999992675,
+  "n": 50,
+  "pass": true,
+  "threshold": 0.999
+}

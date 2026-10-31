@@ -1,0 +1,154 @@
+{
+ "task": "P2-V.1/E1 (V1-3)",
+ "run": "20261031T144520Z-7955b6e",
+ "embedder_id": "minilm-l6-v2/e73168f9+fixed1",
+ "C-3": {
+  "values": {
+   "multi": {
+    "delta": -0.013603101688366315,
+    "ndcg@10": 0.47997718805613127,
+    "reference": 0.4935802897444976
+   },
+   "single": {
+    "delta": 0.002898382452435788,
+    "ndcg@10": 0.6768569809546352,
+    "reference": 0.6739585985021994
+   }
+  },
+  "pass": false,
+  "threshold": 0.01,
+  "vs_p1c_official_run": {
+   "leaves": 4838,
+   "differing": [
+    "index/embedder_id"
+   ]
+  }
+ },
+ "C-10": {
+  "min_cosine": 0.9999999999992675,
+  "threshold": 0.999,
+  "pass": true,
+  "n": 50,
+  "embedder_id": "minilm-l6-v2/e73168f9+fixed1"
+ },
+ "C1-1": {
+  "pass": true,
+  "cells_pass": {
+   "flat/structural/multi": true,
+   "flat/structural/single": true,
+   "hybrid/structural/multi": true,
+   "hybrid/structural/single": true
+  }
+ },
+ "C1-9": {
+  "reference": "quality_ref_rust.json",
+  "source_run": "20261015T014417Z-9aa326b",
+  "compared": 618,
+  "differing": [],
+  "pass": true
+ },
+ "p2l_vs_p2l_official_run": {
+  "reference_run": "20261024T184609Z-ced61f9",
+  "p2l/d_tr.json": {
+   "leaves": 67572,
+   "differing": {
+    "builds/mdk_lower_alnum/minilm-l6-v2/index/embedder_id": [
+     "minilm-l6-v2/e73168f9",
+     "minilm-l6-v2/e73168f9+fixed1"
+    ],
+    "builds/mdk_lower_alnum/minilm-l6-v2/manifest/embedder_id": [
+     "minilm-l6-v2/e73168f9",
+     "minilm-l6-v2/e73168f9+fixed1"
+    ],
+    "builds/mdk_lower_alnum/minilm-l6-v2/manifest/embedders_blake3": [
+     "857fd7c0f1c427754459c4723982c78dd39dc8d471338866852ef8d1c137b245",
+     "574e446e54c382493f003850977f41a59ccaddccea2dff4f3ee96949c68ca9ca"
+    ],
+    "builds/mdk_lower_alnum/minilm-l6-v2/manifest/vectors_blake3": [
+     "fe05a52596076e19e13c09d98073297d32f3dd2f96e38604f1f565ac76e959ff",
+     "0d4c3c33864bca798a0d792791166ef2b4d96e4cce0ea360952ea2004ec32ff5"
+    ],
+    "builds/mdk_lower_alnum/multilingual-minilm-l12-v2/index/embedder_id": [
+     "multilingual-minilm-l12-v2/ca55a866",
+     "multilingual-minilm-l12-v2/ca55a866+fixed1"
+    ],
+    "builds/mdk_lower_alnum/multilingual-minilm-l12-v2/manifest/embedder_id": [
+     "multilingual-minilm-l12-v2/ca55a866",
+     "multilingual-minilm-l12-v2/ca55a866+fixed1"
+    ],
+    "builds/mdk_lower_alnum/multilingual-minilm-l12-v2/manifest/embedders_blake3": [
+     "448d4b078b4b7491b14d593a21d9154ec83206864a924604724874020035af09",
+     "2b4e36eb1f35497364d7e05e58ca266abf822444e194a032019dc556989ef420"
+    ],
+    "builds/mdk_lower_alnum/multilingual-minilm-l12-v2/manifest/vectors_blake3": [
+     "18099365f79ca8b2e491b4ebc8ff3d15279b48a9a11657bfa1da77170de5218c",
+     "384816f7eab8528abd5a62fc451ad42dff70568ba2e8802dd881315e79f85ac5"
+    ],
+    "builds/uni_fold_tr/minilm-l6-v2/index/embedder_id": [
+     "minilm-l6-v2/e73168f9",
+     "minilm-l6-v2/e73168f9+fixed1"
+    ],
+    "builds/uni_fold_tr/minilm-l6-v2/manifest/embedder_id": [
+     "minilm-l6-v2/e73168f9",
+     "minilm-l6-v2/e73168f9+fixed1"
+    ],
+    "builds/uni_fold_tr/minilm-l6-v2/manifest/embedders_blake3": [
+     "857fd7c0f1c427754459c4723982c78dd39dc8d471338866852ef8d1c137b245",
+     "574e446e54c382493f003850977f41a59ccaddccea2dff4f3ee96949c68ca9ca"
+    ],
+    "builds/uni_fold_tr/minilm-l6-v2/manifest/vectors_blake3": [
+     "fe05a52596076e19e13c09d98073297d32f3dd2f96e38604f1f565ac76e959ff",
+     "0d4c3c33864bca798a0d792791166ef2b4d96e4cce0ea360952ea2004ec32ff5"
+    ],
+    "builds/uni_fold_tr/multilingual-minilm-l12-v2/index/embedder_id": [
+     "multilingual-minilm-l12-v2/ca55a866",
+     "multilingual-minilm-l12-v2/ca55a866+fixed1"
+    ],
+    "builds/uni_fold_tr/multilingual-minilm-l12-v2/manifest/embedder_id": [
+     "multilingual-minilm-l12-v2/ca55a866",
+     "multilingual-minilm-l12-v2/ca55a866+fixed1"
+    ],
+    "builds/uni_fold_tr/multilingual-minilm-l12-v2/manifest/embedders_blake3": [
+     "448d4b078b4b7491b14d593a21d9154ec83206864a924604724874020035af09",
+     "2b4e36eb1f35497364d7e05e58ca266abf822444e194a032019dc556989ef420"
+    ],
+    "builds/uni_fold_tr/multilingual-minilm-l12-v2/manifest/vectors_blake3": [
+     "18099365f79ca8b2e491b4ebc8ff3d15279b48a9a11657bfa1da77170de5218c",
+     "384816f7eab8528abd5a62fc451ad42dff70568ba2e8802dd881315e79f85ac5"
+    ]
+   }
+  },
+  "p2l/english.json": {
+   "leaves": 9604,
+   "differing": {
+    "mdk_lower_alnum/index/embedder_id": [
+     "minilm-l6-v2/e73168f9",
+     "minilm-l6-v2/e73168f9+fixed1"
+    ],
+    "uni_fold_tr/index/embedder_id": [
+     "minilm-l6-v2/e73168f9",
+     "minilm-l6-v2/e73168f9+fixed1"
+    ]
+   }
+  }
+ },
+ "rankings_200_vs_p1c_official_run": {
+  "reference_run": "20261015T014417Z-9aa326b",
+  "queries": 200,
+  "changed_queries": {
+   "flat": 0,
+   "lexical": 0,
+   "hybrid": 0
+  },
+  "max_abs_score_delta_unchanged_rankings": {
+   "flat": 5.51783925883953e-07,
+   "lexical": 0.0,
+   "hybrid": 0.0
+  },
+  "changes": {
+   "flat": [],
+   "lexical": [],
+   "hybrid": []
+  }
+ }
+}

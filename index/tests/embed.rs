@@ -37,7 +37,8 @@ fn bits(v: &[Vec<f32>]) -> Vec<Vec<u32>> {
 fn embedder_id_is_derived_from_the_manifest() {
     let m = models::verify(&models::models_root()).unwrap();
     let b3 = &m.manifest().files[models::MODEL_FILE].blake3;
-    assert_eq!(embedder().id(), format!("minilm-l6-v2/{}", &b3[..8]));
+    // the rule of P2-V.1/E1: name, model hash, numerics tag
+    assert_eq!(embedder().id(), format!("minilm-l6-v2/{}+fixed1", &b3[..8]));
     assert_eq!(embedder().id(), m.embedder_id());
     assert_eq!(embedder().dim(), DIM);
 }

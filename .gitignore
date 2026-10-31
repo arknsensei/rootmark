@@ -40,6 +40,8 @@ node_modules/
 **/fixtures/**/.rootmark/
 # the P1-E.1 old-index fixture is a vault with its .rootmark/ (scripts/gen_old_index.sh)
 !/server/tests/fixtures/index_v2/vault/.rootmark/
+# the P2-V.1 ONNX Runtime index fixture (built by the rootmark of ROUND_START 749a4a5)
+!/server/tests/fixtures/index_ort/vault/.rootmark/
 
 # macOS
 .DS_Store

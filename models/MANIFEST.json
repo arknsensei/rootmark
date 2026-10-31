@@ -2,7 +2,7 @@
   "name": "minilm-l6-v2",
   "source": "sentence-transformers/all-MiniLM-L6-v2",
   "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
-  "embedder_id_rule": "\"minilm-l6-v2/\" + blake3(model.onnx)[:8]",
+  "embedder_id_rule": "\"minilm-l6-v2/\" + blake3(model.onnx)[:8] + \"+fixed1\"",
   "files": {
     "model.onnx": {
       "remote_path": "onnx/model.onnx",

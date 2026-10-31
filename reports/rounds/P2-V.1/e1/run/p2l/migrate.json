@@ -1,0 +1,83 @@
+{
+ "criterion": "L-8",
+ "pass": true,
+ "passed": 3,
+ "total": 3,
+ "vaults": [
+  {
+   "applied": [
+    "index_rebuild"
+   ],
+   "checks": {
+    "blame_equal": true,
+    "events_hash_equal": true,
+    "index_rebuild_applied": true,
+    "migration_required": true,
+    "new_variant_in_manifest": true,
+    "nothing_required_after": true,
+    "old_index_this_format": true,
+    "replay_equal": true,
+    "rollback_byte_equal": true
+   },
+   "docs": 13,
+   "events_hash": "f4100b644d14e6ea22644fdf9d314ae6",
+   "first_migrate": [
+    "policy_attestation_1",
+    "log_readers",
+    "checkpoints"
+   ],
+   "pass": true,
+   "vault": "e2e"
+  },
+  {
+   "applied": [
+    "index_rebuild"
+   ],
+   "checks": {
+    "blame_equal": true,
+    "events_hash_equal": true,
+    "index_rebuild_applied": true,
+    "migration_required": true,
+    "new_variant_in_manifest": true,
+    "nothing_required_after": true,
+    "old_index_this_format": true,
+    "replay_equal": true,
+    "rollback_byte_equal": true
+   },
+   "docs": 6,
+   "events_hash": "952cf4830310b10ba8c124366ec6c1b3",
+   "first_migrate": [
+    "policy_attestation_1",
+    "log_readers",
+    "checkpoints"
+   ],
+   "pass": true,
+   "vault": "mixed"
+  },
+  {
+   "applied": [
+    "index_rebuild"
+   ],
+   "checks": {
+    "blame_equal": true,
+    "events_hash_equal": true,
+    "index_rebuild_applied": true,
+    "migration_required": true,
+    "new_variant_in_manifest": true,
+    "nothing_required_after": true,
+    "old_index_this_format": true,
+    "replay_equal": true,
+    "rollback_byte_equal": true
+   },
+   "docs": 13,
+   "events_hash": "10972fd963231d012db854a1d1a4dc7e",
+   "first_migrate": [
+    "policy_attestation_1",
+    "log_readers",
+    "checkpoints"
+   ],
+   "pass": true,
+   "vault": "scene"
+  }
+ ]
+}

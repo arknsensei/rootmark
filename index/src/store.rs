@@ -259,6 +259,14 @@ fn manifest_of(dir: &Path, want: Option<&LexicalParams>) -> Result<Manifest> {
         )));
     }
     let manifest: Manifest = serde_json::from_value(raw).context("index manifest.json")?;
+    // P2-V.1: vectors of the ONNX Runtime numerics (an older rootmark's)
+    if crate::embed::onnx_runtime_numerics(&manifest.embedder_id) {
+        return Err(stale(format!(
+            "index embedder_id {:?} holds an older rootmark's vectors (ONNX Runtime numerics, not {:?}); rebuild it",
+            manifest.embedder_id,
+            crate::embed::NUMERICS
+        )));
+    }
     match want {
         Some(w) if manifest.lexical != *w => {
             return Err(stale(format!(

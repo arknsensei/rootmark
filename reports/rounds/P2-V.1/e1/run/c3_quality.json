@@ -1,0 +1,6074 @@
+{
+ "C-3": {
+  "multi": {
+   "delta": -0.013603101688366315,
+   "ndcg@10": 0.47997718805613127,
+   "reference": 0.4935802897444976
+  },
+  "single": {
+   "delta": 0.002898382452435788,
+   "ndcg@10": 0.6768569809546352,
+   "reference": 0.6739585985021994
+  }
+ },
+ "cells": {
+  "flat/structural/multi": {
+   "full_cover@10": 0.21774193548387097,
+   "mrr": 0.4377272145417307,
+   "n": 124,
+   "ndcg@10": 0.36129397892005544,
+   "recall@10": 0.4596774193548387,
+   "recall@5": 0.3387096774193548
+  },
+  "flat/structural/single": {
+   "full_cover@10": 0.6705202312138728,
+   "mrr": 0.48061978163134234,
+   "n": 173,
+   "ndcg@10": 0.5261436973303083,
+   "recall@10": 0.6705202312138728,
+   "recall@5": 0.6011560693641619
+  },
+  "hybrid/structural/multi": {
+   "full_cover@10": 0.20161290322580644,
+   "mrr": 0.6362871223758321,
+   "n": 124,
+   "ndcg@10": 0.47997718805613127,
+   "recall@10": 0.5403225806451613,
+   "recall@5": 0.4475806451612903
+  },
+  "hybrid/structural/single": {
+   "full_cover@10": 0.8323699421965318,
+   "mrr": 0.6286402422240572,
+   "n": 173,
+   "ndcg@10": 0.6768569809546352,
+   "recall@10": 0.8323699421965318,
+   "recall@5": 0.7341040462427746
+  }
+ },
+ "checkpoint_id": "368158345bfc9f0d6cc1daf23f6bf6ee",
+ "criterion": "C-3",
+ "delta": {
+  "flat/structural/multi": {
+   "full_cover@10": 0.0,
+   "mrr": 0.0,
+   "ndcg@10": 0.0,
+   "recall@10": 0.0,
+   "recall@5": 0.0
+  },
+  "flat/structural/single": {
+   "full_cover@10": 0.0,
+   "mrr": 0.0,
+   "ndcg@10": 0.0,
+   "recall@10": 0.0,
+   "recall@5": 0.0
+  },
+  "hybrid/structural/multi": {
+   "full_cover@10": -0.03225806451612903,
+   "mrr": -0.003225806451612856,
+   "ndcg@10": -0.013603101688366315,
+   "recall@10": -0.024193548387096864,
+   "recall@5": -0.024193548387096808
+  },
+  "hybrid/structural/single": {
+   "full_cover@10": -0.011560693641618491,
+   "mrr": 0.006874483897605255,
+   "ndcg@10": 0.002898382452435788,
+   "recall@10": -0.011560693641618491,
+   "recall@5": 0.011560693641618491
+  }
+ },
+ "index": {
+  "embedded": 5998,
+  "embedder_id": "minilm-l6-v2/e73168f9+fixed1",
+  "records": 5998,
+  "reuse": "none: no previous index",
+  "snapshots": 1012
+ },
+ "n_questions": {
+  "multi": 124,
+  "single": 173
+ },
+ "pass": false,
+ "per_query": {
+  "flat/structural": [
+   {
+    "full_cover@10": 1.0,
+    "id": "s000",
+    "mrr": 0.25,
+    "ndcg@10": 0.43067655807339306,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "153e9f8159c19863b21061423034090d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s001",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e4e14a43c604eb97d50475b73600c756",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s002",
+    "mrr": 0.1,
+    "ndcg@10": 0.2890648263178879,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "f1c420d71e8e747bc1e8f42b0ad3ba6a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s003",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5aa1bbae4f62827e3434b9d48512d5b3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s004",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1bf161ff281c536714ba9462c05019ad",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s005",
+    "mrr": 0.1,
+    "ndcg@10": 0.2890648263178879,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "a4e9aa5b2036573d9e0e94c441706249",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s006",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "6ba189cec194facc4c2f5849b7943390",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s007",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e784baa21e2ab2d25e98d64fec117474",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s008",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "fb9c5632de7860846423d29353cd719e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s009",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "db5b45361b2dc129d66358e8ee68442b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s010",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "3c5218cabae70ac1e29832807d14b0f2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s012",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "cf525b230c91ea745e507336138b4a63",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s013",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "891a183a7e2e36daf47d9121e801187e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s014",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "f24608c1850c13491155d408dac3bad2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s015",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "9af1967d289b0c7bea5fa68a54c5b1b0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s017",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "adf3ef052054796efae798de200ebfcc",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s018",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "39567fd3987cb2e12cb7f0d390e78cad",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s019",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "27a937f592c151ad0c83cc9a9055c025",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s020",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "80e3a8535690a0c500d869a5041bef48",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s021",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "d8642c14a3e098152ed1a0c45a3826f2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s022",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "d297e8805897e3acb7b7eb29a3db8e13",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s023",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "73925e5ded062b4e262d69b93dbf6fe4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s024",
+    "mrr": 0.1,
+    "ndcg@10": 0.2890648263178879,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "b41ed4266977275c23499b0e94b341ad",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s026",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "81e206e2e3a552b6ace65c8d1f27ddc4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s027",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "58077be723c49af3e36c31e4d6488a12",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s028",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "34f301271166cdb2c3eb45dfa4501ed9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s030",
+    "mrr": 0.25,
+    "ndcg@10": 0.43067655807339306,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "36d83e554bf50f923d7582951a9a544f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s031",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "1e913e0a6e7bc34877cd7b77b0776717",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s032",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "52b32983788ddcd60fd4c4d1799760f4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s033",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "8880e8ff3f29eacbc750bf704adcb15d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s034",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e412b2232c03cbf6cfb1affc1b329d43",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s035",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "b14ae12d286f5ebc53d8bdb674165bc9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s036",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "60b0d59cbfb6d7882f2b9552a8a5ce41",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s037",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.3562071871080222,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "994099a3f5ccd87faa6421991422d326",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s038",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "dac80a36d7b46fb383fe8a8f62c14729",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s039",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "9be1950787063b51e1e4887e2e655859",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s041",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "74ebd055c429bf4cb9fe03aa590807a8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s042",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "72f1394f2166d3de46ee1441b670db80",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s043",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "2d07233d7059912c97466f8ef31a048b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s044",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "ce53d0772d6881b61679a32874a83f84",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s045",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f2a38b4e412d2debf59e3063831ca913",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s046",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "079795d404234a1523da9edf0d046461",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s048",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "02d4e46126c137697f82e9ce189ed575",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s049",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "fa335856554e8389cdab846738e5226e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s051",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f19a677291a981275269bcc7b15e164b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s052",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.3562071871080222,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "bd5ed92344d8d8c9b40ed99d5743b586",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s053",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "696853e65fe8580c482407b4666c1192",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s054",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "36b09457b41d0694f3ea88da1e56c393",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s055",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "07656bf579cb4e60e7cd5f68992c685f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s056",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e341699189d1be67039e0e5371d139c9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s057",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "70fd5e9bd69a94385583b5a9ca8a2eff",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s058",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "a6884a896bc131c26fbfb660d5285a8f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s059",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5f79067cbc00bc5df0f09859078a2b05",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s060",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "b53db7c8ca23df851c27d78e623eb8bd",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s061",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "a9343a6ca9c07df4c0c73ada2fefaab9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s063",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.3562071871080222,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "917d5e77ccc3fe3f58166c9a7baeff6d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s065",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "351dcf26cf4c2fc55e69599dc7e033e3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s067",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "fcd4109889a0c4f2a98783e1de5db789",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s069",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4da80be7e11a1bac33e4982665062c95",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s071",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4113e2eea94ccf21da51427b638ea96e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s072",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "ebfe7c7cfbc6759fe508ed40e5c3688f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s073",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "1a75365e82df73f927f338fef6ebff7d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s074",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "0b927973cbeb189a57f8c2eded017f77",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s075",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "89c710b9c189d920d51de5f6c2781388",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s076",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "25ca37619ee48952e2611506e00f97a3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s077",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "d287a870bda24bb81890c7d6ad901784",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s078",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "1ac0bffc46aa946703c2660acfcf4e93",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s079",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "073ca99fb4a9632ecf859b04c0358464",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s080",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "75e958aafd6d4f46588d578aded5d00a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s081",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "46404cc270d056717ec73b4cf8cbe19a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s082",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e37e50fb5ec5670af64406792bf7a0f5",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s083",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "32fbb43c703d602e7f439a081c735c9a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s084",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "bd33e62095731ea50240ae980b2192a7",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s085",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "d49aeda4c2068526d2dcdc030b8ec69d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s086",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "7242a57ad70df0fd3e5bea90194880f0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s087",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "fb0b7f554e796b9e85549a08bf1ea5b4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s088",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f54db0f39dab65f65336a0f0443e18af",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s089",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "ddb89a859b207ecf19baaa64c761d8e7",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s090",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "286d34a7c2a24467db570e1016b816ec",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s091",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "cd7bf2793a5d406528f9f9e468ea14d4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s092",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "acee68610a142f7a553b2ec4d1b58b8c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s093",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "8e135e2f2ff597d7ce39b2e651c12fa1",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s094",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "afc411cdfb08f4e9ca9ed337c5844526",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s096",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "6fbc541242cef5dc5431878efdb0fac8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s097",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "6f8b4d9a7be0131849def79310336872",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s098",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "fef990fd50656a10cb4793e83d79acad",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s099",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5b493cd5c5826bc1b5c669fcd4f99f04",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s100",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "278536e2842ea922f5e572d3e0cc9b7b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s101",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "807e09b14819470ab4e1c58690b04f0a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s102",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "36d346620f7153b8aadaef2339fe775e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s103",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "94a5854a24367b97c6e875ead8eee67a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s104",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "612f1a24454d617a1009aa7e19d6bff3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s105",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "bc0d1ff7ab5b77d2e004369cef7f6b43",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s106",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "bd6a4d96924fc8a8063d5d7efbd09d52",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s107",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "31dd66ba18655d233766b36b64824f41",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s108",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "2ecc1b8a192d0431a2ef2419d58f07d2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s109",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "b3f4802a247c07d6d24eb3437f2eead8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s110",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "28ecfb313582f07e259b3bb9aec3fcaf",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s111",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "b523267690f18d5aa24e6fc343223673",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s112",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f8feb14f94c33f4b54b136c6c972bc79",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s113",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "b3fc301b21706244f4342029e173cf44",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s114",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "22d812b3a0bfd19e023933e5b63fc98b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s115",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "329bb0db5bfc32edf56707ae3c446a1b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s116",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c51c5d88969503de99e27401e0385ce3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s117",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "8bd4aba11e6f218c7bed9aae4c0b555d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s119",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1291e19dc73f41a0cf3d26348017f4cf",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s120",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "a6cc0e4b3fe68ba83c7e7ef43a147db6",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s121",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "7386e312f5f49e919281a25de67c457c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s122",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "d4cc1a85cae2af1bea89f3ce2af527bc",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s123",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "bc00cb2df08a720c14fa9c56fd74f60d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s124",
+    "mrr": 0.1111111111111111,
+    "ndcg@10": 0.3010299956639812,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "264188056b95e55b9dd8afaf8b52214d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s125",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "dce38b9fd6a9331c7faf11deb4825fe9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s126",
+    "mrr": 0.1111111111111111,
+    "ndcg@10": 0.3010299956639812,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "18a20428051e1e86ed0ac0a6bcf8fb41",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s129",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "a38ec090b1ecb2468d1e7df37e3b11d5",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s132",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "dc179156f67daff5e21240134ffd2eef",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s133",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "ec4addc733e88ee238e1132c690f0d3d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s134",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0450ea6b4806cbe1c8d04aeaf5e91267",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s135",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4934fce6968d8f0cfdb9851c911fc6fc",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s136",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "ce49b1618296a565b6c11f8d743f9033",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s137",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f78969640b34b70ec6ed27addb2c63fa",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s139",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "325a1a561364f78d32b895fa2954080d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s141",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "02c1c5940278bb3a62262baf1e07159b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s142",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "2de4358f5914e5b2d152ea0c11e80394",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s143",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4c17a4c4c36d5a00aec8cc79d1a358e0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s144",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "01282f33d5effb62ba2d2509852f9ccd",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s145",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "7c93b4ee7b0c32771eef84c0f6e98661",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s147",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "80980eb7196a9d9a22f8b4627e09c3f2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s148",
+    "mrr": 0.25,
+    "ndcg@10": 0.43067655807339306,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1dfaaf801631a0d85b811d7f69a65d4f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s149",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "ac89fab2a437cb31224753393f2efdd8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s151",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "1fc66c5fc7a9d5c45169d1867f8682e2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s152",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "69d1119b3a3d12911a388749d3579dfd",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s153",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "cbd89ec7dbb70d91b13dfc08ace51cf8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s154",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "8fa5545dd6b6cecf57e31b5c9d4e56e9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s155",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "22fe8f060eb7ab72099fccebefefd885",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s156",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "bff2f003b7f98b71add080ff165df153",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s157",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "936bb25b630643a85d1261ae9614de25",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s158",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "2766650cf63d57d2d467bb0346d59bf3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s159",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "e4546a5bc0a643aa730de73ba9304c3a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s160",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "497c74b857207a4fed58c3aae8007f46",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s161",
+    "mrr": 0.125,
+    "ndcg@10": 0.31546487678572877,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "2c2f360395bb5eb4ac9171f1f1c0d4a6",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s162",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "b366a71ced77deb90f074a930908a03b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s163",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e199b048b624808380400098e95a1197",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s164",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "9558e60b1a74bff72537e13996e673d0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s166",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "7e769f368a46033c90a9a6caa0406074",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s167",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "142d183a3ca590495326ff4397602926",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s168",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "6a5cb5802d3ab9a213de56d854b0d466",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s169",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c761473f3738bb00a55314e0631d3081",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s170",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "e99a45905574f440810d70bc59995eca",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s173",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0dc393ffe2facc3993ad874abac029e3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s174",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "a56876adcde0a990943a717df5b94b84",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s175",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "b2026c0e388ecd7f69d71063e0e7529f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s176",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "bf793e28bc61788a8dd288b0aa677106",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s177",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "b39e34cd6171c73147b77bbabfacdf6d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s178",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "ef1dfbf6bfb837de8d4b6da04b3aa0d1",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s179",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5afefa551448641308ce6f7c36714814",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s180",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "65b059e9a71bc10cef2eedf68e4c5308",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s181",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "17b5599626f6c40a02d55a1899bd3b22",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s182",
+    "mrr": 0.125,
+    "ndcg@10": 0.31546487678572877,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "2ee052e7c1572083965287065d3df678",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s184",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c36e0d647d9e7ce4c3772d70320f8a73",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s185",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "5ab70de3de11eb66acbe1a1bad830dfd",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s186",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "9695bb204bef0d55a7b4b4dc5a6dcf36",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s187",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f21d9321f2af1dec22302ab1e73925d4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s188",
+    "mrr": 0.1,
+    "ndcg@10": 0.2890648263178879,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "870f618460b612388b3e3370dd388734",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s189",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "7776ed0529c252cb0db63b0a5916ed2e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s190",
+    "mrr": 0.125,
+    "ndcg@10": 0.31546487678572877,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "dbf4290eea73c4d84416ebcac4d3c406",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s191",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "eee57bdc7f20a408c705e5e6906aa952",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s192",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e9603159427fbbe708f7f4ec6b3f8f87",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s193",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "477d510ab165bf466a6bad79bb0fe176",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s194",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "13c4aae4350deca1bd4f8fe134af9fc9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s195",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "6d6816681d14ee7db5ebb6ab48926f6a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s196",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "bd45a4105e3755d8fa62f4019b3222ea",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s197",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "facc7e78ec107e2460380b20b3981417",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s199",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "b830fb7bfeef6858bdfe3b947f3a3cf4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m000",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "116240bc03f9588de77acb8143e10032",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m001",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "bddaef961f20c35753fdd301fcc0327f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m003",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "bbd350ad709648d2b0540d2e3f606cb3",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m004",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "7138ae12f3f28f1bd67f48707aab1b9e",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m005",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5706417189553201,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c8b899c8da9ca0e4374f12e21c421289",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m006",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "22581848509230ccf99d6e2342943401",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m007",
+    "mrr": 0.1111111111111111,
+    "ndcg@10": 0.18457569677956817,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "aa735301150f61e284361b5ed04add1f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m008",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "e85cd1e93baf64a1d5fee3e9bf83b3a5",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m010",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "ac803e977c61740e3a0bdde63d8114ec",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m011",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "809dab8569ccb459292c38137c9dbd62",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m013",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "682c0b514d56afef2b01f4d66bb9468a",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m014",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "d6eb8fcf1c3a77ad35f2a402316cceae",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m015",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "979ab2e31a815b74cda6379e584299b5",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m016",
+    "mrr": 1.0,
+    "ndcg@10": 0.8772153153380493,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "94392cd39a2ec47935c4f5a6622bb24d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m017",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "5c6f05d02f26f37cf0d651a63db2c0d2",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m018",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "ac3ec24464efec8f8df80670a2891b60",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m019",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "dbcd5ef48c03f4865b6f7573dc7715d0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m021",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "89972d4eb3677efad3e5b998bd3625fd",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m022",
+    "mrr": 0.5,
+    "ndcg@10": 0.5912352048230277,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "14490a799d37f04fd2fd549ba081322c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m023",
+    "mrr": 0.1111111111111111,
+    "ndcg@10": 0.18457569677956817,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "75d872af89e21f4fcba70f1894e5fc71",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m025",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "fa4718106d6ed6beeaddbf4160f57ecb",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m026",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "f6ce73d03a86580873ab51f44a69eb44",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m028",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "6d665914a1e4561f320a8c465cf977a1",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m030",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "ff87f6eb43d322ce18fed6f9a1fd9f4f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m031",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.3065735963827292,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "9008a23e9439c87655fb130267a355cf",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m032",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "ffdc670dcc0bab23c3ac81d962628e60",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m033",
+    "mrr": 0.5,
+    "ndcg@10": 0.5802792108518124,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "d220f5c23a6f8f1cc8ca18e5ac3167ae",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m035",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.21840743681816419,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "c3d2dc6c2c424932273d2f9a1c84ba5e",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m036",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "8db3e96289b60a16961eeb06b9bc0db1",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m037",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "7d7fce182bf593c2b2e68280eb5bb136",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m039",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "ef6dac1c371242c8f354de7350dc345c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m040",
+    "mrr": 1.0,
+    "ndcg@10": 0.9197207891481876,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5c444045cb15a9018dd142369149063d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m041",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "1ce7137992b6c514ed5b05284f6b8710",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m042",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "1977e2cbf87572dd0614f3ff67466bde",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m043",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.3065735963827292,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "f5cae4a3e1ef87a9fcf0c180a1f00dca",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m044",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "c86f692414149691143522a22ac2eea8",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m045",
+    "mrr": 0.125,
+    "ndcg@10": 0.19342640361727081,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "ea7c5e4286da2c73d5ff03431e7668c4",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m047",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5706417189553201,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "a279e246d7e4b7682e1af9a417f5c833",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m048",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "7cc1536d14720d9e1c053c369300f91f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m049",
+    "mrr": 0.125,
+    "ndcg@10": 0.19342640361727081,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "e053f89e9d3a1061a2bebd690c14dc9f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m050",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "0b6f28fd0a720cb2a62b4f60b9bfb172",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m051",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "79b1039e3f8b3bf5c897c2093c922aff",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m053",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.21840743681816419,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "117aa9c8a499e82c46740bc5cf2108d9",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m054",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c9b15f87af6eec059efac5c4977c282d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m055",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "f12d811baf717f93525c676149e6e434",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m056",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "362ed3a317310e4641f53dda48524c96",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m057",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "6c03831b7716e02700c60a72b3386c5f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m059",
+    "mrr": 0.5,
+    "ndcg@10": 0.5714285040141098,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "1adee7a95511fb62be7ec64dfab15a45",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m060",
+    "mrr": 0.125,
+    "ndcg@10": 0.19342640361727081,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "1310f6ab7c40fe61a0767daefc023be6",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m061",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "3a0113c0a1e74ca9231b5491569ec250",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m063",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "b5dea868b0f22379c9a98e105d7311ec",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m064",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5706417189553201,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "01b1ba17b135604603c32dfe44e111a0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m065",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "0bbaa2e469632b5eef6ecce1c1a7c17e",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m066",
+    "mrr": 0.1,
+    "ndcg@10": 0.17723928678404774,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "b3a852ebb0c85fbe7af4a3e3c7096e0b",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m067",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "809d90dd3ae50071994d242048fa7c2d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m069",
+    "mrr": 0.125,
+    "ndcg@10": 0.19342640361727081,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "d8cb9adff38233236044472418d2c207",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m070",
+    "mrr": 1.0,
+    "ndcg@10": 0.9197207891481876,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "47d27514e0a3bc035aaffd5e883477e2",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m071",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.38162168437253385,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "68d9e9ebc13ac25ed705baca47c07f9d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m073",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c3d79e1e1205d81852777d133d9b569d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m074",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "ebe994ae5f5bea718fe0f04bb3e1a3e0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m075",
+    "mrr": 1.0,
+    "ndcg@10": 0.7903864795495061,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "aedf26c2aab5545590809f106b9404db",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m076",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "bbc727a7676a68a770d57b26a5635dbe",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m077",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "ac1d8887724a0887b3a1f645f134059a",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m078",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "ab8a1a307413e2f3d03ed80da0badd2c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m079",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "138dd89ce6ef2d1b46ee4f3fd82f6720",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m080",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5249810332008933,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "c6d2fd23efd1e1e9fce66f756d6e8e2c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m083",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "e9784451d6522196fd67933c0d870263",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m084",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "6a1b21668aac1bf5b3839568ae752ee0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m089",
+    "mrr": 1.0,
+    "ndcg@10": 0.8772153153380493,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "27a6f95d1560fc266b1727d95870352c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m090",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "3f88ef1995eea23698c20e7f6aac22e3",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m091",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "0e2403960a260545497968b2fc4199f7",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m092",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "4a117b1b6cb0d57fc70fa4262d697f60",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m093",
+    "mrr": 1.0,
+    "ndcg@10": 0.8503449055347546,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "6bb508c27440d7f779d39f554d9f15b3",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m094",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "d3937ba13926bc9e26646a2b1e284c59",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m095",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.20438239758848611,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "5d8efebdf9e2dbafa43f97ae3d97088e",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m096",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.20438239758848611,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "7f6988d7a68f106e4116e43a8b19640c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m097",
+    "mrr": 1.0,
+    "ndcg@10": 0.8315546295836225,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "ecde38533ba042df0a55e8c90f0481e8",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m098",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.20438239758848611,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "ad0e022cbb3f71e0b851d3baadd0be9d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m099",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "3c49c1e6e1fa201c83355a0359862e73",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m100",
+    "mrr": 1.0,
+    "ndcg@10": 0.7903864795495061,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "cb837be9317797de46a0cfe23736b663",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m101",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "1dc911c64b9bc1502fa5bcd2732d6067",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m102",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "9dc831a49661e29164b74a926b8b83f1",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m103",
+    "mrr": 0.2,
+    "ndcg@10": 0.23719771276929622,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "607789642a2a4c1d02bb036a46dce5b9",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m104",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "27c5330a9c6301ce96b68080795bf222",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m105",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "6087d23e7636e1e7a965318107b8ecac",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m106",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "a85f259f92a9452e469a6ca03ce91bda",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m108",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.21840743681816419,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "57d572031c0608c96ee7c2cb3e1eebea",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m111",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e7d661baf9e1ac2ecbe9a7c7957e2467",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m112",
+    "mrr": 1.0,
+    "ndcg@10": 0.9197207891481876,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c9b4da3c9d6dcf38bdd5a29c221f14f0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m113",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "08ed093f4e440bd62806ca77e1a63d00",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m114",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "306eb538d4bb0a290635beb6b178ea5d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m115",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "95509fb0ab3ea4d55bb7fa1f8e65c011",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m116",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "7bc1a3ac691cdeab478c88f66809b7c4",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m117",
+    "mrr": 0.5,
+    "ndcg@10": 0.6934264036172708,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "9f5fa55aa72a1cd40ed87a8c9218d2b8",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m118",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "a334112569ec7808a63dbf34a9015119",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m119",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "ad33380f5001a8fbe4583ca7296e78cb",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m120",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "0d7ecc40bcbabda522da630e543b0033",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m122",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "bad5deae359800c09d49e9590848ce90",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m123",
+    "mrr": 1.0,
+    "ndcg@10": 0.9197207891481876,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "105e1fe52c0e51b6c49061cf9a5a6954",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m124",
+    "mrr": 0.25,
+    "ndcg@10": 0.46845052016107697,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "65e7f9dcb9cceca5a2fb0da22522511d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m125",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "74e3c1533d09ad0aae10b0835842db5d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m126",
+    "mrr": 1.0,
+    "ndcg@10": 0.8315546295836225,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "f5bbf2cea93b83f1ca15a94b4deea6f5",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m127",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.20438239758848611,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "ca742268d5ac69f84654619c6ba44c70",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m128",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "a2a33d239e0a8067118b351723f5133e",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m129",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "af2b4c4ddbefd1338f176b57326a15bd",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m130",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "4e2fb4c7d4fbc8b6c308dc738c23b2b1",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m131",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "936895e10a50305bffdb0344e1f4972e",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m132",
+    "mrr": 0.125,
+    "ndcg@10": 0.19342640361727081,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "af3ccde2d8aa4fa437d0e6dcf6621106",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m133",
+    "mrr": 0.1,
+    "ndcg@10": 0.17723928678404774,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "2f3f421449003eec73bb7e16a7b690f3",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m134",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "cf9ce5488c853d5c2be8419bddcff029",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m135",
+    "mrr": 1.0,
+    "ndcg@10": 0.7903864795495061,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "0fc2810461ee9f95fb525b50eb92d36f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m136",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "04a4ce02b224c20e39d414fc6e438877",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m137",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "66e7cd86b910a4cfe6abb8479683703b",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m138",
+    "mrr": 0.2,
+    "ndcg@10": 0.23719771276929622,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "fac9772a8da1385d69ddad5beb77f4d6",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m139",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "4484c8b5b1b39c30ce965d372bfba2f1",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m140",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "719ecb971cabf9c9b912cbdb7afc19d5",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m141",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "2d65c3fcdada95f3592b89e24cf8d991",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m142",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "e69017901752d16a5ff452f1a794ba85",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m143",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.3065735963827292,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "e04ad3676fa0f4d2c2d61854d2bba459",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m144",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "3fe22faabf198d0a06f8fca64f33e5d3",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m145",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "5c5fc84336785ed38fb52cefa80385e6",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m147",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "190799a2af7c76958e2c934a4e484de0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m148",
+    "mrr": 0.2,
+    "ndcg@10": 0.42177340954886444,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "8ec73650eedc08fa6cb7e3218dda2384",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m149",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "333e3e12686641c41ba34a29f80a8da4",
+    "type": "multi"
+   }
+  ],
+  "hybrid/structural": [
+   {
+    "full_cover@10": 1.0,
+    "id": "s000",
+    "mrr": 0.25,
+    "ndcg@10": 0.43067655807339306,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "cca45c2a34085686b115b533e470230d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s001",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "32ed7192c36d70c5c06cdf0a0b1b08c0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s002",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "942c6c9ecdcb68bd056a9cdc0735b303",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s003",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "309c91fa07fe2540e04af5a9991401d9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s004",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4d177b6d8c6106ff171edfdcc4b89c22",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s005",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "64cc47c571658b88b50ffb275e6fe475",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s006",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "7540c64b03aebc34d4ec22e467a5edb1",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s007",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "2359d75e7841d2a57fcc3756c282aa18",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s008",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "ea45bcfb6cdd03ccc9eefd78d94dd890",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s009",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1002474463d7b3697403c8f374e3f807",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s010",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4c77d319058f7347140f093a4ac99e2d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s012",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "f560786c85e033604c0759b8e4a5b122",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s013",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "57872a19630b0854dfcaf2208eef1232",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s014",
+    "mrr": 0.125,
+    "ndcg@10": 0.31546487678572877,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "1946e82276eb5d03afc1c0b8cd7002a7",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s015",
+    "mrr": 0.25,
+    "ndcg@10": 0.43067655807339306,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f8c7b146d0c3e6a3e297f74acf589b69",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s017",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4031b273dd01e0702fa2c4e9a7562ad5",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s018",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "3eebb2f544fa918854cbd8731ebf1488",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s019",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.3333333333333333,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "92dc645931aed7d9bfe354952ecd87f0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s020",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "27b58d82bb4f018a0d161aac68c0a16c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s021",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "31fb6d5ab60d22228818dfbd1a92ed2b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s022",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.3562071871080222,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "7a3601acd83c0fefc1bc54e81cd55122",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s023",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "295b82d78b3792ed78123deaf100e4c4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s024",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "856b2a67c8b1eb82f9f83c9a34c5dbf4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s026",
+    "mrr": 0.1,
+    "ndcg@10": 0.2890648263178879,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "a0d91135a8e3f0dc3339a24278c1c6f0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s027",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "40aefa4f63c3a499fe2f55e51111505d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s028",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "51314930c24d2b9d05a5f9e502445615",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s030",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "971295a12ec70c297413594e31d91ca5",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s031",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "29066305b79574a3bdb10d5d6476a4e5",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s032",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "9febacff9de76b5ad3fd1805e32be8b1",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s033",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "313ad2e10c481ccac021c24fb7bbd5d6",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s034",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5d49938ef3880d0e15c51b6bc386050f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s035",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "48859b95f18aafc0ef39942a277b66b8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s036",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "9eabd1a55aec1db11e6167a7d00059d5",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s037",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "d3a1904d868023d0ff454195df260f2c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s038",
+    "mrr": 0.1111111111111111,
+    "ndcg@10": 0.3010299956639812,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "0977511345483087bf81e7492b973ae0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s039",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.3333333333333333,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "beab492696f94b661d11231b50bc8be4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s041",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "055c56a9be1ac46e4888dcc66a8554ff",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s042",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0b0f157e431e09a7d55d1afaf1e29833",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s043",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c1d57ebe49e23973c06958a8f55d9f3b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s044",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "31ca41fb6d3b7cf5f18f04c20355921e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s045",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "8656701dbc7aea612a4e6c2ef10bccb3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s046",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "0b7cfc2639e160b760220fcbb408198d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s048",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0ed78b46465997c5112ad89a76dfcf94",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s049",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "2a8df074ba8f21a9b152fd6c2fe255f5",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s051",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0796ee697ffb7ac5dac61ab82d4b7c2c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s052",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "347a7e898ae87add08bbae4f87f2c5c9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s053",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "59176269ff18676c18a3cb12b434d61d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s054",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "6e0e69088d8ae9ab21ea10c98b97081d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s055",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "fb5c79abc8f92a8bdafb8f0aa11e3b06",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s056",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c275f3799474802ec190acdfe30fbb74",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s057",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "fc52790fc8f68ba29e1ac6a65fe12563",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s058",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f5b008d73fee6a72e6325cc24b09083c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s059",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "69060e2b621fe64bdaa7ec79efe55b28",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s060",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "11698863615223232179acf8ceef4679",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s061",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "b7cd3ee8397d3dfc0bc3f05f5d6cc4c3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s063",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "de7e42ac00eb72820b32a0b63d811aef",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s065",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "15520e412b56ba72a02dd18878dffaac",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s067",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "499d5382ba5da74e6b528fbf0484109a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s069",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "8ebfd84efbe506d6499e0cd491eae55b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s071",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "69e7f5aa8ffdc8e5f77d48e23e8bfd13",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s072",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "903aea2de7fb41011afa8601999195f3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s073",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "195e1083a8968ae1b8dc5ca5195f833f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s074",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "9a57880becffa8d2749fb679a0e2455a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s075",
+    "mrr": 0.25,
+    "ndcg@10": 0.43067655807339306,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "12735b87c6ce690c187dd56612112312",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s076",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c73cc3cf1ce000189bfc12d34453d39c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s077",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "8d20d8502620024ff14764fd92863b44",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s078",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c1c1b2bc342427edbb52d03ad59643ea",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s079",
+    "mrr": 0.125,
+    "ndcg@10": 0.31546487678572877,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "b797e229e9338e1dfce8250eb23cd6f2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s080",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c45775589adbd14d8917e3441a3ad615",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s081",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "fa925b9834ab55450f7125cfd41e21a0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s082",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "141e7acf1cf067c4b0d124b3ddaa8cca",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s083",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "10ef7dad128f316b234e5dcb3a8ab795",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s084",
+    "mrr": 0.1111111111111111,
+    "ndcg@10": 0.3010299956639812,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "f5975d7827e1e843bd780df7de30c82d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s085",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "dabec156bdf7fa53ee5446d0d73aa72a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s086",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1b93592bc39f6ee85a60439cb91edbf4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s087",
+    "mrr": 0.25,
+    "ndcg@10": 0.43067655807339306,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "dd7068ed287e4de1fec50961b3b858ae",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s088",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "3d4f5c650bbd0a6a06d5e580e4f3ce88",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s089",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5ff36ab3bd384c7303b440ff71b92dcc",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s090",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "7f1bd78e2e4af513926868b131b7bd69",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s091",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4af87adb84753df55d42904bce9a59b9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s092",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5373113dbf5c0363067ed584f28a2746",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s093",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "33612da3eeeea3ddc9aead85dc3d8dc3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s094",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "71f1e91c2888745a1a413c9773cc10f8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s096",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0ae2a437058f335c4480d6f2250aac04",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s097",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.3562071871080222,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "ec654b31e70d07dbbcff52c1084f8f9b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s098",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "095cd26a61a0080d0a5ba98d30bbfcd0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s099",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "32199e631882e0bcecac716f4c49c183",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s100",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "d03980ce4d92f6fe95ad8b41f16964a6",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s101",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "89f99092267b19f8baa09ddcbdc48281",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s102",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "97f8c78d0ff73f698f3c2e55a8b69e68",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s103",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "7b8ba569cf3f0bc83b83b077e22cd9ef",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s104",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "be6c96dc139d81bd58ae439abbacec62",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s105",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.3562071871080222,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "7fff209b9fc1f436106565459019aad8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s106",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "80aceb5fcaacb8987e288dabc0e83cd0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s107",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c6cfc4364c1349770e3c8f13984d8946",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s108",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c70d5c7a3155a5d9ad066dfabb37a3bb",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s109",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "2293ec03f35dd3826c4e476f47026940",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s110",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0ee0528fef73fe1faae9f8117751d758",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s111",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e6cdc5719c3a1a1bfc10776e0549568a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s112",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "dcbc1c393b44c9eac1fc1daf2f17317d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s113",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "30a07c58f63e24578eb2c115e28ba349",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s114",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "109322045777bd168ce18a3318e6ecaf",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s115",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.3333333333333333,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "53d5f5f19ea7221f7360bbbc6c7a2439",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s116",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0b851fefcbffca2514170543afd0311e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s117",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "8228f670fe339016be4b9450dbef501e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s119",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "14624030ee6542ed3dd6184ad02588df",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s120",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1d5c107d4166f543049920f582fe744c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s121",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0ab385a2d9af8914f6d7d8911764178b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s122",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "a607e458fb3b53da60598e0976564baf",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s123",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "2915c92a97d1945f8acba8e8ec37ad58",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s124",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "25b6231ec8ddfc920860ab0a9b6b23fa",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s125",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "da122ee18881aa9814959129533149b2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s126",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e780a5fbee489bc726f26c36776e41eb",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s129",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e4ddb3932b0db09f3eab40472eb9696b",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s132",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "60700db8a2bfee67356441a0b09024c0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s133",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "76768df3c78302912e0f5b9d4f4ecf2a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s134",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "ac7b4eeaa96b226c952cfa2508fd656c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s135",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4e139d1a86f0022b79326b092b158ad5",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s136",
+    "mrr": 0.5,
+    "ndcg@10": 0.6309297535714575,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1fccb8b8a8d4bb6f187a34727b1bf28c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s137",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "7bfb05142a7cb3f2c46dd50c344c3084",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s139",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "6bfafbf265b196ffd330941aea214b79",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s141",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.3333333333333333,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "fa6a0fa7b5e5842f8c8a8cab52e63aa5",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s142",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "f8d94b1e1dd07c7faa41cf62a9606268",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s143",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "7e818fb3024c73b4c758202eb24897a4",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s144",
+    "mrr": 0.125,
+    "ndcg@10": 0.31546487678572877,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "d92888c747a8eda3cd9396c7ceb8c812",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s145",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "70a95b0b7c4f6366533dcc174e92d6bc",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s147",
+    "mrr": 0.2,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "8fb40f5beb34ab490967147a15096c73",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s148",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.3562071871080222,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "b7f986379a5828c32b1834eb27b6fc4d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s149",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "2c37c44cc16126d6b7f2ca3f611edac2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s151",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c5034e3091280c7da57bc6504be5a724",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s152",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "d7c8e1940660c3d4ad8f065fd3367da2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s153",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1a1adafc3cae78485f8a32c17875b089",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s154",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5a18cbc41689e0a3a2fd7c9753a0e236",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s155",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "7c3b8013e99aedaf5c1866c17c1b965f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s156",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "7876d9b15e854eb0e7a0f541c3c05c5e",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s157",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "858aeee944057698b64fded81e880e5a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s158",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c57e7b330f1e3de1d8852e6b27287a9f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s159",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "aa3b6de44aac915e276d04f366ff2ce9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s160",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "3235a28b7718ab827b14fa2e1f83fa95",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s161",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.3562071871080222,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "bef7de7eb7f399c2f5115aea98d625f9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s162",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "28faeabc5bc87542f2395b54004258e7",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s163",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "81222869a47d0a9b3241646d7a433720",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s164",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "ab858a7bb33d08468fedb8a505eb5d24",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s166",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e864347f39448781475183e4de110cc2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s167",
+    "mrr": 0.125,
+    "ndcg@10": 0.31546487678572877,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "33936ddc5daf5f45092eebd33553ea9a",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s168",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "da141ca9035c15de3847b93644a70b28",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s169",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "a83577fb198e35b2ee7d6fc3678d8b24",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s170",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "250f8cc2d7357b5ea838e788b5975176",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s173",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "3570546242b1ad2626c1ce4d0f3df9ab",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s174",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "42902bbbd0ac22f605803589d3aab5a2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s175",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "9834df78954196e9a2d502ffa2136f60",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s176",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "b0b05e4049815c1304c82fcd1ef7087f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s177",
+    "mrr": 0.1111111111111111,
+    "ndcg@10": 0.3010299956639812,
+    "recall@10": 1.0,
+    "recall@5": 0.0,
+    "trace_id": "5a79b31cd09f8240c5ef8e12cead5e07",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s178",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "6d46cf90cd7b28e08f051324d883ef5c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s179",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "052d8d0ef8408d09af8eb039cfa890b2",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s180",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c70d6f14c9a165b372e9f1b0603db8eb",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s181",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "ab13cfcd74f0d22ea593ab1b43c1ec5d",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s182",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "d5bb023b5d1f82b7145da05fa4592635",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "s184",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c5b0ff80e5c89048c8379bc221fc6594",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s185",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.5,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e4cf79b78a5b70f356b923343bc5ce3c",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s186",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "e615c646607e6e0d6eadd151e0b9caed",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s187",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "a13f535a117238e08800721b04206a11",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s188",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4ce9304adec92d666681799c83f9dbab",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s189",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "d02b359853b84de99fdee9d08b7357f9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s190",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "43d0c14f9ac00d67a9e27604b1ad88c8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s191",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f2f7a86cef7b062bdb42565fb95a08c0",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s192",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c85c5e1575ba6f64d60250c38150b2e8",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s193",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "9e8d3fb93b6489e1fb13a36b18e6dfb3",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s194",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "84bfdac8d0653fc840854f794c635bd9",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s195",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1b42143a393b5a003548c504d4b0c565",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s196",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "0a2553521c6a7d53fe248cab52b75216",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s197",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "3365aa31fce6348e5ade1f97316afc5f",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "s199",
+    "mrr": 0.25,
+    "ndcg@10": 0.43067655807339306,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "2544ab489ac9bd882e3f50c5fcc00d24",
+    "type": "single"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m000",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "744338efba0c466cb6223b6f0b13233c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m001",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "d1a30cd8b1c9608464be702014c76fb8",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m003",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "3a861a05e70c2e55f6fb35a2852f3dd9",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m004",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "915f9f1906e8c1cda243383eacbf3242",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m005",
+    "mrr": 0.5,
+    "ndcg@10": 0.5714285040141098,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "8ee7ef083d4cc883c543d1a021ccf7ff",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m006",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "f454ecf312600960ff636344ec82a184",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m007",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.21840743681816419,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "a2949eeb372b8255e56a26b847684af0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m008",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "ba7f0b4d6d7dcb20e3ef4f0ab9d3833d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m010",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "6ba12bae9697cd19b6b60826863fb398",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m011",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "08edb9f17d25ec0bbb039033ceee6bdf",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m013",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "e5133455c14e4d8327d963d819a0fb1e",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m014",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "924e69d2f803c2a2af2c3b27e078d90e",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m015",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "2b7018251e19be4ccddc7c983f11a5ce",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m016",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "49df8cd7d3663b2aea06e12a15e569fe",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m017",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "556476fc6cc3753e09c4db2078daa7d2",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m018",
+    "mrr": 0.1111111111111111,
+    "ndcg@10": 0.18457569677956817,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "41df5b587c3f0329a93d7ad9393cd866",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m019",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.21840743681816419,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "aef2a764764f0e0fc2ce12ef42a62b27",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m021",
+    "mrr": 0.1,
+    "ndcg@10": 0.17723928678404774,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "c4b61532f907b152e99307abcc32f8dd",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m022",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "aebb20c7259d8f1cfc2cf5ecc9df5667",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m023",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "57f3ef42f0bd9138868221d321c8b5fa",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m025",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "86fcba3f7ed36618de4346005a344e82",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m026",
+    "mrr": 0.2,
+    "ndcg@10": 0.23719771276929622,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "65ef755f50cd197d7a10c879b1da1529",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m028",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.20438239758848611,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "dbcf3ee542d6325a957aabdb32adc831",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m030",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "dca7df219a248ddcd46e10a9c42b6088",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m031",
+    "mrr": 1.0,
+    "ndcg@10": 0.8772153153380493,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "ffc3f9a45178023a9eb80b28edc50902",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m032",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "16a46b45e171dd0afe8efd60aa14c83f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m033",
+    "mrr": 0.5,
+    "ndcg@10": 0.6509209298071326,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "5145568724266aa4f8755fc9c5ecc0df",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m035",
+    "mrr": 1.0,
+    "ndcg@10": 0.7977228895450266,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "7770d55a7ca5aa48f305e794da4d9097",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m036",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "8b3d32855b36a2b4b0fc2199161b4045",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m037",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "918e19f1439f2123c8dce32506c2b1b6",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m039",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "d992006938d4c5ee6233ed8d7e9978a2",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m040",
+    "mrr": 1.0,
+    "ndcg@10": 0.8065735963827293,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "9959a3398f0c61cdcdf729d7865dee8d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m041",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "0daf0d91f95089f648b470e88042a8c3",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m042",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "98689c8815bee4b16cc0ec55ac9217f6",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m043",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "d7e415ba982414e809517f8384fb5fef",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m044",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "5aff1e896263bf9980e65d0de82f1ebd",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m045",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "038176f4a26e703efcf227da00efacb5",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m047",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "1c9a375ebcb13cc2626f8b6151f31e0a",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m048",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "99779a56afb267eb2c51e487e42119fb",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m049",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "ffd955bb939aee2650270400b6b3b6aa",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m050",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.21840743681816419,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "f793fdda98fc119719be8328f6731849",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m051",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.21840743681816419,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "56d6a5b70d35db1e82d38cd671d928c5",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m053",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "daae49e7fc1dac9ab52d9870ce73e594",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m054",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "a04aaffbdb1c9ac6ba95029417a082f4",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m055",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.3065735963827292,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "13484130d6b4ecb7f6575ade3a9e160f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m056",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "351e085793c87b4bcecd232af541b10d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m057",
+    "mrr": 1.0,
+    "ndcg@10": 0.8772153153380493,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "8157a4ef16ebd683986168e3f98c3886",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m059",
+    "mrr": 1.0,
+    "ndcg@10": 0.8503449055347546,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "596358cc248f99e387c4ffab9186b64c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m060",
+    "mrr": 0.2,
+    "ndcg@10": 0.23719771276929622,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "b934f473e4c8de364f5b70da0a4028f0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m061",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "c6b7916496a56419cf46848d0a7122cf",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m063",
+    "mrr": 0.125,
+    "ndcg@10": 0.19342640361727081,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "e6e717793863784a4b5f583a3292f3f8",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m064",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c105c0303696a16efeb32801539ecd99",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m065",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "b6319685d449b8400a7928d13b89ee98",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m066",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "c0ee4d18acf13d13400607cdc3eb39ff",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m067",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "fa08dc102d4fb18858b18a9f2dbed3c4",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m069",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "a0322ec82b20178508c627f547094e57",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m070",
+    "mrr": 1.0,
+    "ndcg@10": 0.9197207891481876,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "deb008bcceb199589d97220dcc7d2eb4",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m071",
+    "mrr": 0.5,
+    "ndcg@10": 0.6052602440527057,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "54170798881f011816ea4871ff49a8bf",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m073",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "c5d83ae4f86882e3474a0fca9cf63b2f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m074",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "a34ed6165dac54e34ad0bc89222c6a26",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m075",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "3099272118ab9c724c213774e63cdd55",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m076",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "a79f166cb59be507de7e1b685d4f420f",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m077",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "5f5780b92320032bb8ceb83eb2087bfa",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m078",
+    "mrr": 1.0,
+    "ndcg@10": 0.8503449055347546,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "31f4d69113c5e205474d237f74770629",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m079",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "998a4a81ff79a868f25e89de331794d4",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m080",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "6e236848159dd9cb3250e9422407c2d9",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m083",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "7327a2345ef9abe8c57a01887d4a07d5",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m084",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "91e7b29e8fd9c33a2b5057f69a165aa9",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m089",
+    "mrr": 1.0,
+    "ndcg@10": 0.8175295903539445,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "266fa3359d99f13a6ef6adba6b74e793",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m090",
+    "mrr": 1.0,
+    "ndcg@10": 0.8315546295836225,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "2501864a7f58c84cc92c89468e0af026",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m091",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.3065735963827292,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "2681701e1e076b0f522e85afe9e959bf",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m092",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "c048b337202562d450bdfaecd321f4d1",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m093",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "fa43124853cc2f6046c26dd6d25bc8e6",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m094",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "0ed109adea4a72078d53d9369ea5e397",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m095",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "9843eb1ed17f16e52a18b5f4ae85538a",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m096",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "d46104adba64c24d29603713a37aacf7",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m097",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "40a80b94ba58390e4090bf78768f1e5a",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m098",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "86d35fbfc4d0c91572a827b23800cb8b",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m099",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "63238b8f6c4fdce947e9e9f3ff095e01",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m100",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "c29455b6a6c64cb23983aeba8747751c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m101",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "d2308b65381fb3c3034c3fc4e3a7ab37",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m102",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "589b730b633189c8f8c53d4e131ee2a0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m103",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "28c0883af01780bd26a6e031b03bfae0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m104",
+    "mrr": 1.0,
+    "ndcg@10": 0.8503449055347546,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "4a1eed729ce6f247e12a0a2e8c2f7868",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m105",
+    "mrr": 1.0,
+    "ndcg@10": 0.8315546295836225,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "4ce3c1070f93173f84bb01c34b416db9",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m106",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "9091877bbcb5960c0c5ead3ea85a3beb",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m108",
+    "mrr": 0.14285714285714285,
+    "ndcg@10": 0.20438239758848611,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "2d165136bb74109dd0eadb9094ace79b",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m111",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "751185c62898cc3b1944a65aef73499d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m112",
+    "mrr": 1.0,
+    "ndcg@10": 1.0,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "a5cf7912c1efb8b37c43fdf814f94e13",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m113",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "63fde712d7b0b953369bf6b80d5e9eda",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m114",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "2cf5da489c0ec9e8b30ec1b051a70fb8",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m115",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "b749642f94bbf3ede36dc1f6925afe1d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m116",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "c7fa2c49ef8ff7b056aa0b61bcdb0e02",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m117",
+    "mrr": 0.16666666666666666,
+    "ndcg@10": 0.21840743681816419,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "8c81c0ab1381a8a8980952c48132ead9",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m118",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "69850cea8dc5341a1573bebc49c196c5",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m119",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "3bd90cb60f0908f8837624f0a33a2d20",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m120",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "b446b0d943911afe6b72ad9720b244d6",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m122",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "c0c3f5de8d52ec68a0ce00aa7b184029",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m123",
+    "mrr": 1.0,
+    "ndcg@10": 0.9197207891481876,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "a4e615a8689679793f08675e78c3b7df",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m124",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "acdfb8196a3a9a7e86638d6264c4f473",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m125",
+    "mrr": 0.1,
+    "ndcg@10": 0.17723928678404774,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "4f76ec39a43fda0fbc50475a5cd1ee50",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m126",
+    "mrr": 0.5,
+    "ndcg@10": 0.6934264036172708,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "1f04fd532aa89d4176b83e918f4e0a4c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m127",
+    "mrr": 0.25,
+    "ndcg@10": 0.2640681225725909,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "e8a20e1f35d637147eb776411d8edc44",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m128",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "a9e94d9ca6165ae6d8d999e6a14a2f10",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m129",
+    "mrr": 0.125,
+    "ndcg@10": 0.19342640361727081,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "ce218f87a6d8dd57428e7488a1bad1ef",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m130",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "24291b80b27197e85d9c93ed4e998397",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m131",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "0eb87b34c1343645c6b8babef30a73af",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m132",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "66012c49d9a16d0b230f3cdbee88d08b",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m133",
+    "mrr": 1.0,
+    "ndcg@10": 0.9197207891481876,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "f4c5eba9c6c4e39b44135298873f9f3c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m134",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "fdb465d6fd52c0113347faa77f7e942e",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m135",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "1fc133ca8abfd81663666690fc65922d",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m136",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.3065735963827292,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "2e479a497c3e13f0eb5ec4e2048200e4",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m137",
+    "mrr": 0.1111111111111111,
+    "ndcg@10": 0.18457569677956817,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "353e63eea16ac587cc2c3bcdfffe29d1",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m138",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "7b0363204c56e3a4cb8a96e74daef0df",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m139",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "3773260926c9b71b9b9552e4ad3759b9",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m140",
+    "mrr": 0.3333333333333333,
+    "ndcg@10": 0.3065735963827292,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "29ae671fc4ec456bd5826dd184cf5eea",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m141",
+    "mrr": 0.125,
+    "ndcg@10": 0.19342640361727081,
+    "recall@10": 0.5,
+    "recall@5": 0.0,
+    "trace_id": "c94f99253c34d937b506e0e806a0911c",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m142",
+    "mrr": 0.5,
+    "ndcg@10": 0.38685280723454163,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "61fe5a76c23b511785a6699380cdc251",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m143",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "708879d9be63426f196ed1ebbd40eba0",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m144",
+    "mrr": 1.0,
+    "ndcg@10": 0.8772153153380493,
+    "recall@10": 1.0,
+    "recall@5": 1.0,
+    "trace_id": "90ec69d7614a080d7aec8ebeb052a783",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m145",
+    "mrr": 0.0,
+    "ndcg@10": 0.0,
+    "recall@10": 0.0,
+    "recall@5": 0.0,
+    "trace_id": "b34598188690f11d6d407102a945f773",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m147",
+    "mrr": 1.0,
+    "ndcg@10": 0.7903864795495061,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "a22143b61988e3527284b6ded932a9a8",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 1.0,
+    "id": "m148",
+    "mrr": 1.0,
+    "ndcg@10": 0.8175295903539445,
+    "recall@10": 1.0,
+    "recall@5": 0.5,
+    "trace_id": "ee8d90562c5da7f0fd189a0d3e0ca7a7",
+    "type": "multi"
+   },
+   {
+    "full_cover@10": 0.0,
+    "id": "m149",
+    "mrr": 1.0,
+    "ndcg@10": 0.6131471927654584,
+    "recall@10": 0.5,
+    "recall@5": 0.5,
+    "trace_id": "698c1d11f96af515e8cb7b5075478470",
+    "type": "multi"
+   }
+  ]
+ },
+ "reference_cells": {
+  "flat/structural/multi": {
+   "full_cover@10": 0.21774193548387097,
+   "mrr": 0.4377272145417307,
+   "n": 124,
+   "ndcg@10": 0.36129397892005544,
+   "recall@10": 0.4596774193548387,
+   "recall@5": 0.3387096774193548
+  },
+  "flat/structural/single": {
+   "full_cover@10": 0.6705202312138728,
+   "mrr": 0.48061978163134234,
+   "n": 173,
+   "ndcg@10": 0.5261436973303083,
+   "recall@10": 0.6705202312138728,
+   "recall@5": 0.6011560693641619
+  },
+  "hybrid/structural/multi": {
+   "full_cover@10": 0.23387096774193547,
+   "mrr": 0.6395129288274449,
+   "n": 124,
+   "ndcg@10": 0.4935802897444976,
+   "recall@10": 0.5645161290322581,
+   "recall@5": 0.4717741935483871
+  },
+  "hybrid/structural/single": {
+   "full_cover@10": 0.8439306358381503,
+   "mrr": 0.621765758326452,
+   "n": 173,
+   "ndcg@10": 0.6739585985021994,
+   "recall@10": 0.8439306358381503,
+   "recall@5": 0.7225433526011561
+  }
+ },
+ "reference_run": "20261013T154851Z-f133d0b",
+ "threshold_abs_delta_ndcg@10": 0.01
+}
