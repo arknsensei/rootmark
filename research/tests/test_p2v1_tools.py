@@ -76,3 +76,36 @@ def test_the_derived_tamper_criterion_is_counted_as_registered():
     assert [c["criterion"] for c in res["counted"]] == ["p1e1_checks.json:tamper·det"]
     assert res["derived_criteria"][0]["value"] is False
     assert "p1e1_checks.json:tamper·det" in tier2.criteria(P2R_RUN)
+
+
+@pytest.mark.skipif(not P2R_RUN.is_dir(), reason="the P2-R archive is not in this tree")
+def test_the_mac_reading_runs_deterministic_o_once_and_reads_decisions_by_record(tmp_path):
+    import tempfile
+
+    from eval import verify_mac
+
+    with tempfile.TemporaryDirectory() as t:
+        v = Path(t)
+        for f in P2R_RUN.iterdir():
+            (v / f.name).symlink_to(f)
+        first, later = verify_mac.rep(v, first=True), verify_mac.rep(v, first=False)
+    assert "p1c1_checks.json:C1-8" in first and "p1c1_checks.json:C1-8" not in later
+    for i, c in ((1, first), (2, later), (3, later)):
+        (tmp_path / "mac" / f"rep{i}").mkdir(parents=True)
+        rec = {"run": f"r{i}", "rep": i, "elapsed_s": 1, "errors": [], "criteria": c}
+        (tmp_path / "mac" / f"rep{i}" / "rep.json").write_text(json.dumps(rec))
+    res = verify_mac.summary(tmp_path, 3, INV)
+    by = {s["id"]: s for s in res["sets"]}
+    c18 = by["O-C18"]["criteria"][0]
+    assert c18["passed"] == "1/1" and c18["pass"] is True and c18["values"][0]["n_differing"] == 0
+    rel = {c["criterion"]: c for c in by["O-REL"]["criteria"]}
+    assert (
+        rel["p1e_checks.json:E-7"]["passed"] == "0/1" and rel["p1e_checks.json:E-7"]["record_equal"]
+    )
+    assert (
+        rel["p1e1_checks.json:E1-3"]["passed"] == "3/3"
+        and rel["p1e1_checks.json:E1-3"]["pass"] is None
+    )
+    # Z sets: values and 3/3 reported, outside the verdict
+    assert by["Z-D10"]["pass"] is None and by["Z-D10"]["pass_3of3"] is False
+    assert res["historical"]["p2_0_3_checks.json:H-P2-0.3b"] is True and res["pass"] is True

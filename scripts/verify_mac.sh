@@ -4,6 +4,10 @@
 # which the tier 2 pair leaves out of its byte comparison by name
 # (reports/rounds/P2-V/inventory.json `mac_sets`), each measured 3 times on
 # this Mac with its own round's threshold.
+# P2-V.1/F7 (K-P2V.3 T2 (b)): the deterministic O criteria — C1-8 (the
+# chain's steps holdout … p1c1-checks) and E-7 (release_local.sh) — run in
+# the first repetition only (E1-4 is read from that repetition too); the
+# reading is P2-V.1's inventory's `mac_reading` (eval.verify_mac).
 #
 # A clean clone of this repository's committed HEAD, `make setup`, the
 # models, the conformance report, the session harness and the
@@ -83,11 +87,15 @@ for i in $(seq 1 "$reps"); do
   (cd research && uv run --frozen python -m eval.run_p2_0_3 test --run "$rr" \
     --rootmark ../target/release/rootmark) >"$d/p2_0_3.log" 2>&1 \
     || { errs+=(--error "p2_0_3=$d/p2_0_3.log"); log "rep $i: run_p2_0_3 stopped (recorded)"; tail -5 "$d/p2_0_3.log" >&2; }
-  log "rep $i: P1-C.1 C1-8 (the chain's steps holdout … p1c1-checks, against the P1-C RUN)"
+  # P2-V.1/F7 (K-P2V.3 T2 (b); inventory `mac_reading`): the deterministic O
+  # criteria (C1-8, E-7, E1-4) run once, in the first repetition
+  if [ "$i" -eq 1 ]; then
+  log "rep $i: P1-C.1 C1-8 (the chain's steps holdout … p1c1-checks, against the P1-C RUN; once)"
   if ! { make eval-holdout eval-split-grid RUN="$rr" && make regress RUN="$rr" && make p1a-checks RUN="$rr" \
     && make p1b-checks RUN="$rr" && make p1b1-checks RUN="$rr" && make p1c-checks RUN="$rr" P1C_WORK="$work/p1c_work_$i" \
     && make p1c1-checks RUN="$rr"; } >"$d/p1c.log" 2>&1; then
     errs+=(--error "p1c=$d/p1c.log"); log "rep $i: the P1-C steps stopped (recorded)"; tail -5 "$d/p1c.log" >&2
+  fi
   fi
   log "rep $i: serve_watch (D-10, SIGTERM)"
   ROOTMARK_D10_OUT="$(pwd)/$d/p1d/d10.json" ROOTMARK_SIGTERM_OUT="$(pwd)/$d/p1d/sigterm.json" \
@@ -96,8 +104,10 @@ for i in $(seq 1 "$reps"); do
   [ -f "$d/p1d/d10.json" ] && [ -f "$d/p1d/sigterm.json" ] || { tail -30 "$d/p1d/serve_watch.log" >&2; exit 1; }
   log "rep $i: local release binary (E-7), release package with the real-Obsidian e2e and its check (E1-3, E1-4, E1-9), the e2e's deliberate cases"
   mkdir -p "$d/p1e" "$d/p1e1/release"
+  if [ "$i" -eq 1 ]; then
   bash scripts/release_local.sh "$d/p1e/release" >"$d/p1e/release.log" 2>&1 || log "rep $i: release_local exit $? (recorded)"
   [ -f "$d/p1e/release/release_local.json" ] || { tail -30 "$d/p1e/release.log" >&2; exit 1; }
+  fi
   dist="$work/dist_$i"
   ROOTMARK_RELEASE_LINUX=0 bash scripts/release.sh "$dist" >"$d/p1e1/release.log" 2>&1 || log "rep $i: release.sh exit $? (recorded)"
   bash scripts/release_check.sh "$dist" >"$d/p1e1/release_check.log" 2>&1 || log "rep $i: release_check exit $? (recorded)"

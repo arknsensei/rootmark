@@ -252,7 +252,10 @@ def test_the_mac_summary_needs_every_thresholded_criterion_in_three_of_three(tmp
         (tmp_path / "mac" / f"rep{i}").mkdir(parents=True)
         rec = {"run": f"r{i}", "rep": i, "elapsed_s": 10, "errors": [], "criteria": crit}
         (tmp_path / "mac" / f"rep{i}" / "rep.json").write_text(json.dumps(rec))
-    res = verify_mac.summary(tmp_path, 3, tier2.load_inventory())
+    # P2-V's inventory: P2-V's reading (P2-V.1/F8 keeps it for that inventory)
+    res = verify_mac.summary(
+        tmp_path, 3, tier2.load_inventory(REPO / "reports/rounds/P2-V/inventory.json")
+    )
     by = {s["id"]: s for s in res["sets"]}
     # the P2-R attempt: D-10 and D-A failed there, D-B test-4 too (0.3b, K-P2-03.1)
     assert (

@@ -1,0 +1,6 @@
+113c113,115
+<             clash = set(sub) & set(out)
+---
+>             # the same clash set as `set(sub) & set(out)`, without rebuilding
+>             # the growing output's set for every key (P2-V.1/F6: quadratic)
+>             clash = {x for x in sub if x in out}

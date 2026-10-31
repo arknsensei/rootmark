@@ -1,0 +1,3 @@
+# P2-V.1/F6: compare_p2r pair, donmuş compare_runs (önce) ↔ doğrusal çakışma denetimi (sonra), aynı girdi
+V4b A/B (koşu 40613409396, iki zincirin RUN'ı): önce 770 s (cProfile; leaves 753 s), sonra 7,4 s; --out çıktıları cmp ile bayt eşit
+gözlem A/B (koşu 41215091092, E1 commit'i): önce 742,1 s, sonra 6,8 s; --out çıktıları cmp ile bayt eşit (788 906 alan; farklı 27 alan + d_a/events.jsonl: D-A yarışı, Z)
