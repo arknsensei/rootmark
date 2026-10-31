@@ -38,8 +38,12 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}   # the actions' release dates (API rate limit)
 
   test:
+    # the check's name is the ruleset's required check and stays; GitHub
+    # retires the macos-14 image on 2026-11-02 (brownouts before it), so the
+    # job runs on macos-15, the same arm64 platform (P2-V.1, ASSUMPTIONS E2-1;
+    # renaming the check is a ruleset change, a human step)
     name: test + lint + conformance (macos-14)
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -195,5 +199,69 @@ jobs:
         uses: actions/upload-artifact@v7.0.1
         with:
           name: tier1-compare
+          if-no-files-found: warn
+          path: ${{ runner.temp }}/compare/
+
+  # P2-V.1/E2 (GOAL P2-V.1 Kapsam 3, V1-2; part of tier 1): the embedder's
+  # processor independence on every pull request. The designated subset of
+  # the P1-C corpus D3 (`scripts/embed_cpu.sh`: every tenth document, 102)
+  # is indexed with both manifest models on three processors — x86_64 Linux,
+  # aarch64 Linux, macOS arm64 (macos-15) — and the vector files, index manifests and
+  # flat-mode search records (cosine scores) are compared byte for byte
+  # (`research/p2v1/e2_compare.py`); one differing byte is red. The processor
+  # models are recorded with the verdict.
+  embed-cpu:
+    name: embed cpu ${{ matrix.label }} (tier 1, E2)
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-latest, label: x86_64-linux }
+          - { os: ubuntu-24.04-arm, label: aarch64-linux }
+          - { os: macos-15, label: arm64-macos }   # GOAL's macos-14 is retired (ASSUMPTIONS E2-1)
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: dtolnay/rust-toolchain@1.92.0
+      - uses: astral-sh/setup-uv@v10.2.0
+      - uses: actions/cache@v6.1.0
+        with:
+          path: |
+            models/minilm-l6-v2
+            models/multilingual-minilm-l12-v2
+          key: embed-cpu-models-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('models/MANIFEST*.json') }}
+      - run: make models models-multilingual
+      - name: D3 (verified against research/data/MANIFEST.d3.json)
+        run: make d3
+      - run: cargo build --release -p rootmark-server --bin rootmark
+      - name: embed_cpu.sh
+        env:
+          LABEL: ${{ matrix.label }}
+        run: bash scripts/embed_cpu.sh target/release/rootmark "$RUNNER_TEMP/out/embed-cpu-$LABEL" "$LABEL"
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: embed-cpu-${{ matrix.label }}
+          if-no-files-found: error
+          path: ${{ runner.temp }}/out/
+
+  embed-cpu-compare:
+    name: embed cpu compare (tier 1, E2)
+    needs: embed-cpu
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/download-artifact@v8.0.1
+        with:
+          pattern: embed-cpu-*
+          path: ${{ runner.temp }}/in
+      - name: byte equality on three processors
+        run: python3 research/p2v1/e2_compare.py "$RUNNER_TEMP/in" --out "$RUNNER_TEMP/compare/e2_compare.json"
+      - name: keep the comparison
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: embed-cpu-compare
           if-no-files-found: warn
           path: ${{ runner.temp }}/compare/
