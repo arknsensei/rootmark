@@ -1,0 +1,45 @@
+{
+ "cpu_models": [
+  "Apple M1 (Virtual)",
+  "Intel(R) Xeon(R) 6973P-C",
+  "Neoverse-N2"
+ ],
+ "differing": {},
+ "equal": true,
+ "files": 11,
+ "files_compared": {
+  "corpus.txt": "ae8785ca1fc7437b1625ca148fc2770c071a23ecf8440c017227b68809b7167cd25068c8339464077de08e86b9c8223650c02409d29e2523b02eaaf8b17a9f14",
+  "minilm-l6-v2.build.json": "d301b6d6184292cc9e392071807ce676359f26cfafb81eea4074504aacffa0059126fd815fd1598429226ee86c57ac8634bc88363ed982d3209792e2ce76c166",
+  "minilm-l6-v2/embedders.jsonl": "0a3f3e89a9a2519489596e6d16ac0dbbe6ff435efb9934bf164f2558bb4bd1a6e22892ec328a64c2d2a1928ddbded3035a07ed836a9ebc35b3ea8cf507e6ca4c",
+  "minilm-l6-v2/flat.jsonl": "54d68fb45bc26b3240fead3b8a9c04ae6a10716cec363983285f4a0a08bb4fc65525056fbc1879c92276214a93b807439baed4c3a27571cdbe3babcda830d3f2",
+  "minilm-l6-v2/manifest.json": "41ffc39a50e0107c4725bf0521a6f3faf4dc0ec1b174dd94179e189912921796664c9042558543b48be56669e6d1bf8eaf1967cce828597f368767d52e60bdaf",
+  "minilm-l6-v2/vectors.f32": "2480ff5dfc664c221ccb3aae3f64b393f4e0f07bc1c5a1b8cb1254de84a40f6990761ccc36e2ffd70c154bca41cc1b34abe1a41c829d80e7ce442b8b34a23ec0",
+  "multilingual-minilm-l12-v2.build.json": "f40180b51c851f4af25546b85db262c017e67fe2a3c4278d346316f34370add39e009adb84c3750cb54a3de5674ee23d13598ddce08f8aea5b39ecc0b811e0b3",
+  "multilingual-minilm-l12-v2/embedders.jsonl": "ec77dc75ee1e17d81ec59633d904c0e1b65095c75c412e27d090d14ab22d34f0c3acd84632a549553e8309b1de9e2d96c32fd5bdaff5080e9e625d18ee6ea6e3",
+  "multilingual-minilm-l12-v2/flat.jsonl": "2f2d27bc201962a683323375660c7242b4498685507d191f0e102502defed19aaeeff8b08b6f62c79e85f44a7601f48fe8fd0f1b26daa8d9687fce27a0094fe8",
+  "multilingual-minilm-l12-v2/manifest.json": "f8ec7aa9c777cb915ce0199fc52579dfc53f4aa7735e1804a77f10ad3cac5ccedc95ba7aa0bc1c1530c7a841ec6ff4e3102afc1c8c0abaa2acdd4bb26fad4766",
+  "multilingual-minilm-l12-v2/vectors.f32": "f650a68f340a28d31527c75df2a0d1e7dc1b10d82dae95969e87a4b7cde945e346f5e34bc4d6bfaeda48d646a7adeb26973902562e64d74d8559996b1bb48cdb"
+ },
+ "processors_differ": true,
+ "runners": {
+  "aarch64-linux": {
+   "arch": "aarch64",
+   "cpu_model": "Neoverse-N2",
+   "label": "aarch64-linux",
+   "os": "Linux"
+  },
+  "arm64-macos": {
+   "arch": "arm64",
+   "cpu_model": "Apple M1 (Virtual)",
+   "label": "arm64-macos",
+   "os": "Darwin"
+  },
+  "x86_64-linux": {
+   "arch": "x86_64",
+   "cpu_model": "Intel(R) Xeon(R) 6973P-C",
+   "label": "x86_64-linux",
+   "os": "Linux"
+  }
+ },
+ "task": "P2-V.1/E2"
+}
