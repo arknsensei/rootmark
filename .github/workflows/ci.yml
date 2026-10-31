@@ -232,9 +232,10 @@ jobs:
             models/multilingual-minilm-l12-v2
           key: embed-cpu-models-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('models/MANIFEST*.json') }}
       - run: make models models-multilingual
+      # the workspace (the `rootmark` binary) and the binding D3's builder uses
+      - run: make setup-py build
       - name: D3 (verified against research/data/MANIFEST.d3.json)
         run: make d3
-      - run: cargo build --release -p rootmark-server --bin rootmark
       - name: embed_cpu.sh
         env:
           LABEL: ${{ matrix.label }}
