@@ -244,7 +244,7 @@ jobs:
         with:
           name: embed-cpu-${{ matrix.label }}
           if-no-files-found: error
-          path: ${{ runner.temp }}/out/
+          path: ${{ runner.temp }}/out/embed-cpu-${{ matrix.label }}/
 
   embed-cpu-compare:
     name: embed cpu compare (tier 1, E2)
