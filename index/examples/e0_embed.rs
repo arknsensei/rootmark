@@ -24,12 +24,33 @@ fn main() -> Result<()> {
     let model = args.get(3).map(String::as_str).unwrap_or("minilm-l6-v2");
     std::fs::create_dir_all(&out)?;
     let vroot = out.join("vault");
-    let _ = std::fs::remove_dir_all(&vroot);
-    std::fs::create_dir_all(&vroot)?;
-    let mut v = Vault::open(&vroot)?;
-    v.ingest_dir(&corpus, MatcherVersion::V3)?;
-    let (records, _) = store::collect(&v)?;
-    let texts: Vec<&str> = records.iter().map(|r| r.text.as_str()).collect();
+    // a corpus directory of markdown notes, or a JSON file with `chunks[].text`
+    // (`research/data/embed_ref.json`, GOAL P1-C C-10)
+    let (ids, owned): (Vec<String>, Vec<String>) = if corpus.is_file() {
+        let j: serde_json::Value = serde_json::from_str(&std::fs::read_to_string(&corpus)?)?;
+        j["chunks"]
+            .as_array()
+            .context("chunks")?
+            .iter()
+            .enumerate()
+            .map(|(i, c)| {
+                Ok((
+                    format!("chunk{i}"),
+                    c["text"].as_str().context("text")?.to_string(),
+                ))
+            })
+            .collect::<Result<Vec<_>>>()?
+            .into_iter()
+            .unzip()
+    } else {
+        let _ = std::fs::remove_dir_all(&vroot);
+        std::fs::create_dir_all(&vroot)?;
+        let mut v = Vault::open(&vroot)?;
+        v.ingest_dir(&corpus, MatcherVersion::V3)?;
+        let (records, _) = store::collect(&v)?;
+        records.into_iter().map(|r| (r.record_id, r.text)).unzip()
+    };
+    let texts: Vec<&str> = owned.iter().map(String::as_str).collect();
     eprintln!("{} records", texts.len());
 
     let verified = models::verify_named(&models::models_root(), model)?;
@@ -89,8 +110,8 @@ fn main() -> Result<()> {
         "model": model,
         "embedder_id": onnx.id(),
         "layers": bert.layers(),
-        "records": records.len(),
-        "record_ids": records.iter().map(|r| r.record_id.clone()).collect::<Vec<_>>(),
+        "records": ids.len(),
+        "record_ids": ids,
         "tokens": tokens,
         "ort_s": ort_s,
         "det_s": det_s,
