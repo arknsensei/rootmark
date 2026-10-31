@@ -1,0 +1,46 @@
+17c17,19
+<     python -m eval.portable <run_dir> [--host host.json …] [--fast] [--skip-missing] [--files-from compare.json] [--out path.json]
+---
+> P2-V.1/F4 (Ş2 of P2-V's verification): with `--all` every record of the
+> RUN is read too — each `*.json` and `*.jsonl` file under it, whether the
+> pair compares it or not (logs, `*.log`, are diagnostics, not records).
+18a21,22
+>     python -m eval.portable <run_dir> [--host host.json …] [--fast] [--all] [--skip-missing] [--files-from compare.json] [--out path.json]
+> 
+94a99,107
+> def all_records(run_dir: Path) -> list[str]:
+>     """Every record of the RUN (P2-V.1/F4): `*.json` and `*.jsonl` files."""
+>     return sorted(
+>         str(p.relative_to(run_dir))
+>         for p in run_dir.rglob("*")
+>         if p.is_file() and p.suffix in (".json", ".jsonl")
+>     )
+> 
+> 
+96c109,113
+<     run_dir: Path, fast: bool, archived: bool = False, files_from: Path | None = None
+---
+>     run_dir: Path,
+>     fast: bool,
+>     archived: bool = False,
+>     files_from: Path | None = None,
+>     every: bool = False,
+97a115,118
+>     if every:
+>         base = [] if fast else record_files(run_dir, False, archived, files_from)
+>         fast_files = list(compare_p2r.P2R_FAST_FILES) if fast else []
+>         return sorted(set(base) | set(fast_files) | set(all_records(run_dir)))
+155a177,181
+>         "--all",
+>         action="store_true",
+>         help="every record of the RUN too (*.json, *.jsonl; P2-V.1/F4)",
+>     )
+>     ap.add_argument(
+166c192
+<         files = record_files(a.run_dir, a.fast, a.skip_missing, a.files_from)
+---
+>         files = record_files(a.run_dir, a.fast, a.skip_missing, a.files_from, a.all)
+173c199
+<         "mode": "fast" if a.fast else "pair",
+---
+>         "mode": ("fast" if a.fast else "pair") + (" + all records" if a.all else ""),

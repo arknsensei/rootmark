@@ -1,0 +1,9 @@
+# Ş2: eval.portable --all (P2-V.1/F4), gözlem koşusu 41215091092 A RUN'ı
+## önce (RUN olduğu gibi)
+{"mode":"pair + all records","files":1153,"findings":20,"in":["conformance.json","conformance_full.json","conformance_p1c1.json","p1d/inspector/inspector_config.json","p1d/inspector/schemas.json"]}
+## önce, P2-V'nin kipi (yalnız çiftin dosyaları)
+{"mode":"pair","files":133,"findings":0}
+## sonra (Makefile P2-V.1/E3 dönüşümleri uygulanmış kopya: conformance kopyaları ve Inspector kayıtları depoya göreli)
+{"mode":"pair + all records","files":1153,"findings":0}
+## kasıtlı enjeksiyon: çifte girmeyen bir kayda (p1d/inspector/schemas.json) zincirin iş dizini
+{"mode":"fast + all records","findings":4,"in":["p1d/inspector/schemas.json"]}  # çıkış 3 (bulundu: path /home/runner/work/_temp/v/A, user /runner); --fast --all --skip-missing ile, karşılaştırıcı yeniden koşmadan

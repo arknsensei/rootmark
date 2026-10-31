@@ -435,6 +435,14 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/portable.py` | `P2-V/V4-f5:` | yeniden dondurma P2-V/F6: `--files-from` |
 | `.github/workflows/verify.yml` | `P2-V/V4-f5:` | yeniden dondurma P2-V/F7: karşılaştırma bir kez, zaman aşımı 120 dk, `chains_run` |
 | `index/tests/embed.rs` | `P2-V.1/E1:` | yeniden dondurma P2-V.1/F1: `embedder_id` kuralının iddiası (`+fixed1`, GOAL P2-V.1 Kapsam 2); C-10, bayt eşitliği, toplu ≡ tek tek ve manifest testleri aynen |
+| `reports/rounds/P2-V.1/inventory.json` | `P2-V.1/E3:` | P2-V.1'in envanteri (ön-kayıt; GOAL P2-V.1 İlkeler, TASKS E3); `research/p2v1/inventory.py` üretir |
+| `research/p2v1/inventory.py` | `P2-V.1/E3:` | envanterin üreteci |
+| `scripts/embed_cpu.sh` | `P2-V.1/E2:` | E2: işlemciler arası kanıtın koşucu yarısı (kademe 1) |
+| `research/p2v1/e2_compare.py` | `P2-V.1/E2:` | E2: üç koşucunun bayt karşılaştırıcısı (kademe 1) |
+| `research/eval/tier2.py` | `P2-V.1/E3-f:` | yeniden dondurma P2-V.1/F2: yeni envanter, B1 tam liste, B2, B3, B6, R14, E1 adları |
+| `.github/workflows/verify.yml` | `P2-V.1/E3-f:` | yeniden dondurma P2-V.1/F3: CPU modeli köprüsü, `fails --classifier` |
+| `research/eval/portable.py` | `P2-V.1/E3-f:` | yeniden dondurma P2-V.1/F4: `--all` (çifte girmeyen kayıtlar) |
+| `research/eval/verify_mac.py` | `P2-V.1/E3-f:` | yeniden dondurma P2-V.1/F5: harness hatasının son satırları, kararı veren alanlar |
 <!-- /frozen-table -->
 
 ## Notlar

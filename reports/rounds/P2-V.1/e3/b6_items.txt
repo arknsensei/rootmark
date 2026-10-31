@@ -1,0 +1,4 @@
+# B6 (P2-V.1/F2): madde kimliğiyle ad; gözlem A RUN'ının release_check.json'u ve ona bir madde eklenmiş kopyası
+gözlem RUN (P2-V konumu, P2-V.1 çözümü): {'O13': ('items›15', 'items›15'), 'H1': ('items›17›detail', 'items›17›detail'), 'C2': ('items›3›item', 'items›3›item'), 'C3': (None, 'items›14›detail')}
+bir madde eklenince: {'O13': ('items›15', 'items›16'), 'H1': ('items›17›detail', 'items›18›detail'), 'C2': ('items›3›item', 'items›4›item'), 'C3': (None, 'items›15›detail')}
+P2-V konumu items›15 artık R14 (R15 değil); P2-V.1 adı R15: [16]

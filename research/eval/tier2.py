@@ -20,8 +20,22 @@ record that embeds another record's per-field differences (a regress's
 such an entry set aside iff the field it names is set aside — recursively,
 so a regress of a regress follows the same list.
 
+P2-V.1/E3 (FREEZE_EXCEPTIONS F2; K-P2V.3 T4): the inventory is P2-V.1's
+(`reports/rounds/P2-V.1/inventory.json`: P2-V's entries as they were, plus
+the round's). Entries may name a checklist item by its id (`item`, B6),
+resolved to its position in each record. `fails` reads the chain's own
+classifier (`--classifier`) and recomputes each counted FAIL's **full**
+difference list (B1; the classifier keeps the first 20): a FAIL is
+derived only when every difference is set aside by name — an embedded
+entry of a Z/O field, an E1 field (`e1_fields`) or a set-aside criterion's
+named fields (`criterion_fields`, B2; a criterion without such an entry
+keeps its whole record, as in P2-V), or a field of the criterion's own
+record so named; the inventory's `derived_criteria` (B3) are counted like
+criteria. `equiv` names the E1 fields and bytes as their own group and
+reads `commit_bound` items (R14). `pair` is unchanged but for the items.
+
     python -m eval.tier2 pair <run_A> <run_B> [--frozen compare_p2r.json] [--out path.json]
-    python -m eval.tier2 fails <run_dir> --summary <classifier.json> [--out path.json]
+    python -m eval.tier2 fails <run_dir> --summary <classifier.json> [--classifier eval.historical_p2r] [--out path.json]
     python -m eval.tier2 criteria <run_dir> [--out path.json]
     python -m eval.tier2 equiv <old_run> <new_run> [--mac mac_checks.json] [--out path.json]
 
@@ -50,7 +64,7 @@ from eval import compare_runs as C
 from eval import metrics as M
 from eval.datasets.common import ROOT, dump_json
 
-INVENTORY = ROOT.parent / "reports/rounds/P2-V/inventory.json"
+INVENTORY = ROOT.parent / "reports/rounds/P2-V.1/inventory.json"
 EMBEDDING = ("differing_fields", "excluded_differences")
 PATTERN_CHARS = set("*?[")
 
@@ -73,7 +87,51 @@ def load_inventory(path: Path = INVENTORY) -> dict:
     for e in inv.get("tier2_set_aside_criteria", []):
         if not e.get("mac_set") and not e.get("why"):
             raise InventoryError(f"criterion {e.get('file')}:{e.get('criterion')}: no reason")
+    named = [
+        *inv.get("e1_fields", []),
+        *inv.get("e1_bytes", []),
+        *inv.get("derived_criteria", []),
+        *[f for c in inv.get("criterion_fields", {}).values() for f in c.get("fields", [])],
+    ]
+    for e in named:
+        names = [e.get("file"), e.get("field"), e.get("path"), e.get("item")]
+        if any(isinstance(n, str) and PATTERN_CHARS & set(n) for n in names):
+            raise InventoryError(
+                f"{e.get('id', e.get('field'))}: a pattern is not a name ({names})"
+            )
+        if not e.get("why"):
+            raise InventoryError(f"{e.get('id', e.get('field'))}: no reason")
     return inv
+
+
+def resolve(entries: list[dict], run: Path) -> list[dict]:
+    """Entries naming a checklist item by id (`item`, B6) with `field` set to
+    the item's position in `run`'s record (`items›<i>[›<field_in_item>]`);
+    an item absent from the record is an error, never a silent skip."""
+    out, docs = [], {}
+    for e in entries:
+        if not e.get("item"):
+            out.append(e)
+            continue
+        if e["file"] not in docs:
+            docs[e["file"]] = json.loads((run / e["file"]).read_text(encoding="utf-8"))
+        items = docs[e["file"]].get("items", [])
+        idx = [i for i, it in enumerate(items) if it.get("id") == e["item"]]
+        if len(idx) != 1:
+            raise InventoryError(f"{e['id']}: item {e['item']} is not once in {run / e['file']}")
+        f = f"items›{idx[0]}" + (f"›{e['field_in_item']}" if e.get("field_in_item") else "")
+        out.append({**e, "field": f})
+    return out
+
+
+def _resolved_pair(entries: list[dict], a: Path, b: Path) -> list[dict]:
+    ra, rb = resolve(entries, a), resolve(entries, b)
+    for x, y in zip(ra, rb, strict=True):
+        if x.get("field") != y.get("field"):
+            raise InventoryError(
+                f"{x['id']}: item {x['item']} at {x['field']} in A, {y['field']} in B"
+            )
+    return ra
 
 
 def _under(key: str, field: str | None) -> bool:
@@ -134,7 +192,7 @@ def frozen_result(path: Path, a: Path, b: Path) -> dict:
 
 def pair(a: Path, b: Path, inv: dict, frozen: dict | None = None) -> dict:
     res = frozen if frozen is not None else compare_p2r.pair(a, b)
-    excl = inv["pair_exclusions"]
+    excl = _resolved_pair(inv["pair_exclusions"], a, b)
     bex = {e["path"]: e for e in inv["byte_exclusions"]}
     differing, aside = {}, {}
     for k, v in res["differing_fields"].items():
@@ -163,7 +221,7 @@ def pair(a: Path, b: Path, inv: dict, frozen: dict | None = None) -> dict:
         "set_aside_fields": aside,
         "set_aside_bytes": bytes_aside,
         "not_compared": [
-            {k: e.get(k) for k in ("id", "class", "set", "file", "field", "path")}
+            {k: e.get(k) for k in ("id", "class", "set", "file", "field", "path", "item")}
             for e in [*excl, *inv["byte_exclusions"]]
         ],
         "exclusions_used": used,
@@ -201,20 +259,85 @@ def _row_paths(row: dict) -> list[tuple[str, str]] | None:
 
 def _criterion_fields(inv: dict) -> list[dict]:
     """The Z/O criteria's own records as named fields (comparator key form):
-    a regress that differs only in them is a derived FAIL."""
-    return [
-        {
-            "id": f"{c['file']}:{c['criterion']}",
-            "file": c["file"],
-            "field": c["criterion"].replace(".", "·"),
-        }
-        for c in inv.get("tier2_set_aside_criteria", [])
-    ]
+    a regress that differs only in them is a derived FAIL. A criterion with
+    an entry in `criterion_fields` (B2) names only its listed fields there
+    (its other fields stay counted); the others their whole record."""
+    narrowed = inv.get("criterion_fields", {})
+    out = []
+    for c in inv.get("tier2_set_aside_criteria", []):
+        cid = f"{c['file']}:{c['criterion']}"
+        if cid in narrowed:
+            out += [
+                {"id": cid, "file": f["file"], "field": f["field"]}
+                for f in narrowed[cid].get("fields", [])
+            ]
+            continue
+        out.append({"id": cid, "file": c["file"], "field": c["criterion"].replace(".", "·")})
+    return out
 
 
-def fails(run_dir: Path, summary: dict, inv: dict) -> dict:
+def _classifier_rows(run_dir: Path, module: str, row: dict) -> list[str] | None:
+    """The full difference list of a classifier FAIL row (B1): the chain's
+    own classifier (`historical_p2a`'s rules with `module`'s listings and
+    excluded subtrees), without the cut to 20. None when the row has no
+    difference list (not a listed FAIL, absent from the reference, …)."""
+    import importlib
+
+    from eval import historical_p2a as H
+
+    if "differing" not in row:
+        return None
+    m = importlib.import_module(module)
+    listing, migration, excl = historical.load(m.LIST), historical.load(m.MIGRATION), m.excluded()
+    f, cid = row["file"], row["criterion"]
+    doc = historical.load(run_dir / f)
+    rec = historical.criteria(doc)[cid]
+    ref = historical.criteria(historical.load(ROOT.parent / listing["reference_run"] / f)).get(cid)
+    dec = H.decided(f, cid, isinstance(doc.get("criteria"), dict), excl)
+    moved = {(e["file"], e["criterion"]): e for e in migration["entries"]}.get((f, cid))
+    if moved is not None:
+        paths = [p["path"] for p in moved["paths"]]
+        full = historical.differing(rec, ref, ["pass"] + paths + [p for p, _ in dec])
+        if not full:
+            changed = [p for p in moved["paths"] if H.differs_under(rec, ref, p["path"])]
+            full = [p["path"] for p in changed if not H.holds(rec, p)]
+    else:
+        e = {(x["file"], x["criterion"]): x for x in listing["entries"]}.get((f, cid))
+        allowed = [c["path"] for c in (e or {}).get("changes", [])] + [p for p, _ in dec]
+        full = historical.differing(rec, ref, allowed)
+    if full[: len(row["differing"])] != row["differing"]:
+        raise ValueError(f"{f}:{cid}: the classifier's list is not the head of the recomputed one")
+    return full
+
+
+def _own_field(cid: str, path: str) -> str:
+    """A classifier path of criterion `cid`'s record (`/`-joined keys) as a
+    comparator key of its file (`cid›…`, dots as `·`)."""
+    return "›".join(p.replace(".", "·") for p in [cid, *path.split("/")])
+
+
+def _derived_path(named: list[dict], file: str, cid: str, path: str) -> bool:
+    """Whether one difference of a classifier row is set aside by name: an
+    embedded entry (`…differing_fields/<file>:<field>`, the fields `a`/`b`
+    of a difference record as subfields) naming a set-aside field, or a
+    field of the criterion's own record so named."""
+    hit = _row_paths({"differing": [path]})
+    if hit:
+        n, fld = hit[0]
+        if fld[-2:] in ("/a", "/b"):
+            fld = fld[:-2] + "›" + fld[-1]
+        if set_aside(named, n, fld) is not None:
+            return True
+    return set_aside(named, file, _own_field(cid, path)) is not None
+
+
+def fails(run_dir: Path, summary: dict, inv: dict, classifier: str | None = None) -> dict:
     counted, aside = [], []
-    named = [*inv["pair_exclusions"], *_criterion_fields(inv)]
+    named = [
+        *resolve(inv["pair_exclusions"], run_dir),
+        *_criterion_fields(inv),
+        *inv.get("e1_fields", []),
+    ]
     for row in summary["fails"]:
         if row.get("label") in ("historical", "migration_required", "not_measured"):
             continue
@@ -223,31 +346,55 @@ def fails(run_dir: Path, summary: dict, inv: dict) -> dict:
         if e is not None:
             aside.append({"criterion": key, "class": e["class"], "mac_set": e.get("mac_set")})
             continue
-        paths = _row_paths(row)
-        if paths and all(set_aside(named, n, f) for n, f in paths):
+        full = _classifier_rows(run_dir, classifier, row) if classifier else None
+        listed = full if full is not None else row.get("differing")
+        if listed and all(_derived_path(named, row["file"], row["criterion"], p) for p in listed):
             aside.append(
                 {
                     "criterion": key,
                     "class": "türev",
-                    "why": "every reported difference is an embedded entry of a Z/O field or criterion",
-                    "differing": row["differing"],
+                    "why": "every difference of its full list is set aside by name (a Z/O field, an E1 field or a set-aside criterion's named field)",
+                    "differences": len(listed),
+                    "full_list": full is not None,
                 }
             )
             continue
-        counted.append({"criterion": key, "why": row.get("why"), "differing": row.get("differing")})
+        bad = [
+            p for p in (listed or []) if not _derived_path(named, row["file"], row["criterion"], p)
+        ]
+        counted.append(
+            {
+                "criterion": key,
+                "why": row.get("why"),
+                "differences": len(listed or []),
+                "not_set_aside": bad[:50],
+                "n_not_set_aside": len(bad),
+            }
+        )
     if summary.get("counted") is not None:
-        listed = sorted(summary["counted"])
+        listed_ids = sorted(summary["counted"])
         seen = sorted({c["criterion"] for c in counted} | {s["criterion"] for s in aside})
-        if listed != seen:
-            raise ValueError(f"the classifier's counted list {listed} is not its rows {seen}")
+        if listed_ids != seen:
+            raise ValueError(f"the classifier's counted list {listed_ids} is not its rows {seen}")
+    # B3: the inventory's derived criteria count as criteria of their own
+    derived = []
+    for d in inv.get("derived_criteria", []):
+        p = run_dir / d["file"]
+        doc = json.loads(p.read_text(encoding="utf-8")) if p.is_file() else None
+        val = doc.get(d["field"]) if isinstance(doc, dict) else None
+        derived.append({"criterion": d["id"], "file": d["file"], "field": d["field"], "value": val})
+        if val is not True:
+            counted.append({"criterion": d["id"], "why": f"{d['file']} {d['field']} is {val!r}"})
     return {
         "mode": "fails",
         "run": run_dir.name,
         "reference_run": summary.get("reference_run"),
+        "classifier": classifier,
         "classifier_counted": len(summary.get("counted") or []),
         "counted": counted,
         "counted_fails": len(counted),
         "set_aside": aside,
+        "derived_criteria": derived,
         "pass": not counted,
     }
 
@@ -260,18 +407,24 @@ def criteria(run_dir: Path) -> list[str]:
     for f in files:
         doc = json.loads((run_dir / f).read_text(encoding="utf-8"))
         out += [f"{f}:{c}" for c in historical.criteria(doc)]
+    # B3: the inventory's derived criteria whose record is in the RUN
+    for d in load_inventory().get("derived_criteria", []):
+        if (run_dir / d["file"]).is_file():
+            out.append(d["id"])
     return sorted(out)
 
 
 def equiv(old: Path, new: Path, inv: dict, mac: dict | None) -> dict:
     res = compare_p2r.pair(old, new)
     named = [
-        *[{**e, "group": "Z/O"} for e in inv["pair_exclusions"]],
-        *[{**e, "group": "H"} for e in inv["host_fields"]],
-        *[{**e, "group": "commit"} for e in inv.get("commit_bound", [])],
+        *[{**e, "group": "Z/O"} for e in _resolved_pair(inv["pair_exclusions"], old, new)],
+        *[{**e, "group": "H"} for e in _resolved_pair(inv["host_fields"], old, new)],
+        *[{**e, "group": "commit"} for e in _resolved_pair(inv.get("commit_bound", []), old, new)],
+        *[{**e, "group": "E1"} for e in inv.get("e1_fields", [])],
     ]
+    e1_bytes = {e["path"] for e in inv.get("e1_bytes", [])}
     bex = {e["path"] for e in inv["byte_exclusions"]}
-    by_group: dict[str, list[str]] = {"Z/O": [], "H": [], "commit": []}
+    by_group: dict[str, list[str]] = {"Z/O": [], "H": [], "commit": [], "E1": []}
     unnamed = {}
     for k, v in res["differing_fields"].items():
         e = set_aside(named, *_split(k))
@@ -280,7 +433,10 @@ def equiv(old: Path, new: Path, inv: dict, mac: dict | None) -> dict:
         else:
             by_group[e["group"]].append(k)
     bytes_unnamed = sorted(
-        p for p, r in res["bytes"].items() if not r.get("equal", True) and p not in bex
+        p for p, r in res["bytes"].items() if not r.get("equal", True) and p not in bex | e1_bytes
+    )
+    bytes_e1 = sorted(
+        p for p, r in res["bytes"].items() if not r.get("equal", True) and p in e1_bytes
     )
     c_old, c_new = criteria(old), criteria(new)
     c_mac = sorted(mac.get("criteria", [])) if mac else []
@@ -293,6 +449,7 @@ def equiv(old: Path, new: Path, inv: dict, mac: dict | None) -> dict:
         "d_fields_differing": unnamed,
         "d_bytes_differing": bytes_unnamed,
         "named_differences": {g: sorted(v) for g, v in by_group.items()},
+        "e1_bytes_differing": bytes_e1,
         "criteria_old": len(c_old),
         "criteria_new": len(c_new),
         "criteria_mac": len(c_mac),
@@ -314,6 +471,11 @@ def main(argv: list[str] | None = None) -> None:
     f = sub.add_parser("fails")
     f.add_argument("run", type=Path)
     f.add_argument("--summary", type=Path, required=True)
+    f.add_argument(
+        "--classifier",
+        required=True,
+        help="the chain's classifier module (its `classifier` file, e.g. eval.historical_p2r): full difference lists (B1)",
+    )
     c = sub.add_parser("criteria")
     c.add_argument("run", type=Path)
     e = sub.add_parser("equiv")
@@ -332,7 +494,7 @@ def main(argv: list[str] | None = None) -> None:
             ok = res["equal"]
         elif x.mode == "fails":
             summary = json.loads(x.summary.read_text(encoding="utf-8"))
-            res = fails(x.run, summary, inv)
+            res = fails(x.run, summary, inv, x.classifier)
             ok = res["pass"]
         elif x.mode == "criteria":
             ids = criteria(x.run)

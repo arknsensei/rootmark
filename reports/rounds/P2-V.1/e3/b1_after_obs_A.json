@@ -1,0 +1,109 @@
+{
+ "classifier": "eval.historical_p2r",
+ "classifier_counted": 16,
+ "counted": [
+  {
+   "criterion": "p1e1_checks.json:tamper·det",
+   "why": "p1e1/tamper_p1e1.json pass is False"
+  }
+ ],
+ "counted_fails": 1,
+ "derived_criteria": [
+  {
+   "criterion": "p1e1_checks.json:tamper·det",
+   "field": "pass",
+   "file": "p1e1/tamper_p1e1.json",
+   "value": false
+  }
+ ],
+ "mode": "fails",
+ "pass": false,
+ "reference_run": "reports/rounds/P2-B/runs/20261025T211044Z-cad7663",
+ "run": "run",
+ "set_aside": [
+  {
+   "class": "O",
+   "criterion": "p1c1_checks.json:C1-8",
+   "mac_set": "O-C18"
+  },
+  {
+   "class": "türev",
+   "criterion": "p1d1_checks.json:D1-12",
+   "differences": 18058,
+   "full_list": true,
+   "why": "every difference of its full list is set aside by name (a Z/O field, an E1 field or a set-aside criterion's named field)"
+  },
+  {
+   "class": "türev",
+   "criterion": "p1d_checks.json:D-9",
+   "differences": 18056,
+   "full_list": true,
+   "why": "every difference of its full list is set aside by name (a Z/O field, an E1 field or a set-aside criterion's named field)"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-3",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-4",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-9",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:tamper",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e_checks.json:E-7",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_2_checks.json:H-P2-0.2a",
+   "mac_set": "Z-DA"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3a",
+   "mac_set": "Z-DA"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3b",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3b-yük",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3c",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3d",
+   "mac_set": "O-DC′"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3e",
+   "mac_set": "O-DA′"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_3_checks.json:logs_vs_p2a",
+   "mac_set": "Z-DA"
+  }
+ ]
+}

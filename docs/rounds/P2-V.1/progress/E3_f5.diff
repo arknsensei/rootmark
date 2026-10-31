@@ -1,0 +1,88 @@
+30a31,36
+> P2-V.1/F5 (Ş3 of P2-V's verification): a stopped harness's error carries
+> its log's last lines (the log path resolved against the repository root,
+> where `verify_mac.sh` names it); every failed criterion carries
+> `decided_by`, its false fields, and the D-A criteria the formula inputs
+> their records leave out (`pass_0a`, D-A2's `pass`).
+> 
+124,128c130,140
+<     lines = (
+<         Path(log).read_text(encoding="utf-8", errors="replace").splitlines()
+<         if Path(log).is_file()
+<         else []
+<     )
+---
+>     # P2-V.1/F5 (Ş3): verify_mac.sh names the log relative to the repository
+>     # root; this module runs in research/ — resolve it there, and say so when
+>     # it is missing instead of an empty tail
+>     p = Path(log)
+>     if not p.is_absolute() and not p.is_file():
+>         p = ROOT.parent / log
+>     if p.is_file():
+>         lines = p.read_text(encoding="utf-8", errors="replace").splitlines()
+>         tail = [_no_host(x) for x in lines if x.strip()][-12:]
+>     else:
+>         tail = [f"(log missing: {log})"]
+131c143,144
+<         "log_tail": lines[-6:],
+---
+>         "log": log,
+>         "log_tail": tail,
+133a147,164
+> 
+> 
+> def _no_host(line: str) -> str:
+>     """A log line without this machine's paths (no host value in a record):
+>     the clone, the temporary directory and the home directory as
+>     `<repo>`, `<tmp>`, `~`."""
+>     import os
+>     import tempfile
+> 
+>     for value, tag in (
+>         (str(ROOT.parent), "<repo>"),
+>         (os.path.realpath(tempfile.gettempdir()), "<tmp>"),
+>         (tempfile.gettempdir(), "<tmp>"),
+>         (os.path.expanduser("~"), "~"),
+>     ):
+>         if value and len(value) > 4:
+>             line = line.replace(value, tag)
+>     return line
+135a167,194
+> def _false_fields(v, path=()) -> list[str]:
+>     """Every boolean leaf of a criterion record that is false (its `pass`
+>     aside): the fields that decided a FAIL (P2-V.1/F5, Ş3)."""
+>     out = []
+>     if isinstance(v, dict):
+>         for k, x in v.items():
+>             if path == () and k == "pass":
+>                 continue
+>             out += _false_fields(x, (*path, k))
+>     elif v is False:
+>         out.append("›".join(map(str, path)))
+>     return out
+> 
+> 
+> def _d_a_inputs(d: Path) -> dict:
+>     """The inputs of the D-A criteria's formula that their records leave out
+>     (`run_p2_0_2_checks`: H-P2-0.2a = leak 0 ∧ `pass_0a` ∧ 200 scenarios ∧
+>     D-A2 leak 0 ∧ D-A2 `pass`)."""
+>     da, da2 = d / "p2_0_2" / "d_a.json", d / "p2_0_2" / "d_a2.json"
+>     out = {}
+>     if da.is_file():
+>         x = _load(da)
+>         out |= {"d_a.pass_0a": x.get("pass_0a"), "d_a.pass_0a_prime": x.get("pass_0a_prime")}
+>     if da2.is_file():
+>         out["d_a2.pass"] = _load(da2).get("pass")
+>     return out
+> 
+> 
+241a301,309
+>     # P2-V.1/F5 (Ş3): the fields that decided each FAIL
+>     inputs = _d_a_inputs(d) if "p2_0_2" not in errors else {}
+>     for k, v in out.items():
+>         if not isinstance(v, dict) or v.get("pass") is not False:
+>             continue
+>         v["decided_by"] = _false_fields(v)
+>         if k.endswith(("H-P2-0.2a", "H-P2-0.2a′", "H-P2-0.3a", "H-P2-0.3a′")) and inputs:
+>             v["formula_inputs"] = inputs
+>             v["decided_by"] += [f"{n} = {x}" for n, x in inputs.items() if x is False]

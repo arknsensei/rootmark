@@ -101,9 +101,12 @@ jobs:
           mkdir -p "$out"
           git rev-parse HEAD >"$out/commit"
           date -u +%s >"$out/started_epoch"
+          # P2-V.1/F3 (K-P2V.3 T1 (c)): the chain's processor model (information)
+          cpu="$(lscpu | sed -n 's/^Model name:[[:space:]]*//p' | head -1)"
+          [ -n "$cpu" ] || { echo "error: no processor model (lscpu)" >&2; exit 1; }
           jq -n --arg w "$work" --arg h "$HOME" --arg t "${TMPDIR:-}" --arg u "$(id -un)" --arg n "$(hostname)" \
-            --arg rt "$RUNNER_TEMP" --arg ws "$GITHUB_WORKSPACE" \
-            '{workdir: $w, home: $h, tmpdir: $t, user: $u, host: $n, extra: [$rt, $ws]}' >"$out/host.json"
+            --arg rt "$RUNNER_TEMP" --arg ws "$GITHUB_WORKSPACE" --arg cpu "$cpu" \
+            '{workdir: $w, home: $h, tmpdir: $t, user: $u, host: $n, extra: [$rt, $ws], cpu_model: $cpu}' >"$out/host.json"
           rc=0
           bash scripts/verify.sh chain "$GITHUB_WORKSPACE" "$work" >"$out/result" 2>"$out/chain.log" || rc=$?
           date -u +%s >"$out/finished_epoch"
@@ -179,9 +182,10 @@ jobs:
             rc=0; uv run --frozen python -m eval.tier2 pair "$a/run" "$b/run" --frozen "$o/frozen_pair_compare.json" --out "$o/tier2_pair.json" >/dev/null || rc=$?
             echo "tier2 pair (D class): exit $rc"; [ "$rc" -eq 0 ] || bad=1
             for s in A B; do
-              rc=0; uv run --frozen python -m eval.tier2 fails "$in/tier2-$s/run" --summary "$in/tier2-$s/fail_summary.json" --out "$o/tier2_fails_$s.json" >/dev/null || rc=$?
+              # P2-V.1/F2 (B1): the chain's own classifier, full difference lists
+              rc=0; uv run --frozen python -m eval.tier2 fails "$in/tier2-$s/run" --summary "$in/tier2-$s/fail_summary.json" --classifier "$(cat "$in/tier2-$s/classifier")" --out "$o/tier2_fails_$s.json" >/dev/null || rc=$?
               echo "tier2 fails $s: exit $rc ($(jq -r .counted_fails "$o/tier2_fails_$s.json" 2>/dev/null) counted)"; [ "$rc" -eq 0 ] || bad=1
-              rc=0; uv run --frozen python -m eval.portable "$in/tier2-$s/run" --host "$in/tier2-$s/host.json" --files-from "$o/frozen_pair_compare.json" --out "$o/portable_$s.json" >/dev/null || rc=$?
+              rc=0; uv run --frozen python -m eval.portable "$in/tier2-$s/run" --host "$in/tier2-$s/host.json" --files-from "$o/frozen_pair_compare.json" --all --out "$o/portable_$s.json" >/dev/null || rc=$?
               echo "portable $s: exit $rc"; [ "$rc" -eq 0 ] || bad=1
               uv run --frozen python -m eval.tier2 criteria "$in/tier2-$s/run" --out "$o/criteria_$s.json" >/dev/null || bad=1
             done
@@ -189,12 +193,22 @@ jobs:
           started="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$CHAINS_RUN" --jq .run_started_at)"
           fin="$(cat "$in"/tier2-*/finished_epoch 2>/dev/null | sort -n | tail -1)"
           now="$(date -u +%s)"
+          # P2-V.1/F3: the two chains' processor models, and whether they differ
+          ca="$(jq -r '.cpu_model // empty' "$a/host.json" 2>/dev/null)"; cb="$(jq -r '.cpu_model // empty' "$b/host.json" 2>/dev/null)"
+          if [ -n "$ca" ] && [ -n "$cb" ]; then
+            [ "$ca" = "$cb" ] && same=true || same=false
+            echo "processors: A $ca, B $cb ($([ "$same" = true ] && echo same || echo different))"
+          else
+            same=null; echo "processors: not recorded (a chain before P2-V.1/F3)"
+          fi
           jq -n --arg started "$started" --argjson fin "${fin:-0}" --argjson now "$now" --argjson t0 "$t0" --argjson bad "$bad" \
+            --arg ca "$ca" --arg cb "$cb" --argjson same "$same" \
             --arg sa "$(cat "$a/commit" 2>/dev/null)" --arg sb "$(cat "$b/commit" 2>/dev/null)" \
             --arg tools "$GITHUB_SHA" --arg run "$GITHUB_RUN_ID" --arg chains "$CHAINS_RUN" \
             '{run_id: $run, chains_run: $chains, tools_commit: $tools, commit_a: $sa, commit_b: $sb, started: $started,
               chains_wall_s: ($fin - ($started | fromdateiso8601)), compare_s: ($now - $t0),
               wall_s: (if $chains == $run then $now - ($started | fromdateiso8601) else ($fin - ($started | fromdateiso8601)) + ($now - $t0) end),
+              cpu_model_a: $ca, cpu_model_b: $cb, same_processor: $same,
               pass: ($bad == 0)}' >"$o/tier2.json"
           cat "$o/tier2.json"
           [ -f "$o/tier2_pair.json" ] && jq -r '"karşılaştırma dışı: " + (.exclusions_used | join(", "))' "$o/tier2_pair.json"
