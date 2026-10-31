@@ -434,6 +434,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/tier2.py` | `P2-V/V4-f5:` | yeniden dondurma P2-V/F5: `pair --frozen` (dondurulmuş karşılaştırmanın sonucunu okur) |
 | `research/eval/portable.py` | `P2-V/V4-f5:` | yeniden dondurma P2-V/F6: `--files-from` |
 | `.github/workflows/verify.yml` | `P2-V/V4-f5:` | yeniden dondurma P2-V/F7: karşılaştırma bir kez, zaman aşımı 120 dk, `chains_run` |
+| `index/tests/embed.rs` | `P2-V.1/E1:` | yeniden dondurma P2-V.1/F1: `embedder_id` kuralının iddiası (`+fixed1`, GOAL P2-V.1 Kapsam 2); C-10, bayt eşitliği, toplu ≡ tek tek ve manifest testleri aynen |
 <!-- /frozen-table -->
 
 ## Notlar

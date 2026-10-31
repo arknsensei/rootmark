@@ -2,7 +2,7 @@
   "name": "multilingual-minilm-l12-v2",
   "source": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
   "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
-  "embedder_id_rule": "\"multilingual-minilm-l12-v2/\" + blake3(model.onnx)[:8]",
+  "embedder_id_rule": "\"multilingual-minilm-l12-v2/\" + blake3(model.onnx)[:8] + \"+fixed1\"",
   "files": {
     "model.onnx": {
       "remote_path": "onnx/model.onnx",

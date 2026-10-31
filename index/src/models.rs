@@ -1,7 +1,7 @@
 //! Embedder model files pinned by `models/MANIFEST.json` (GOAL P1-C
 //! "Embedder"): every file is checked against its manifest size and blake3
 //! before use; any mismatch is an error. `embedder_id` is derived from the
-//! manifest-verified `model.onnx` hash.
+//! manifest-verified `model.onnx` hash and the numerics tag (P2-V.1).
 
 use anyhow::{bail, Context, Result};
 use serde::Deserialize;
@@ -50,12 +50,16 @@ impl VerifiedModel {
         self.dir.join(file)
     }
 
-    /// `"<name>/" + blake3(model.onnx)[:8]` (TASKS C1).
+    /// `"<name>/" + blake3(model.onnx)[:8] + "+" + NUMERICS` (TASKS C1;
+    /// P2-V.1/E1 adds the numerics tag: the same model computed by
+    /// `crate::detbert` gives other vector bytes than the ONNX Runtime
+    /// vectors stored under the id without it, so the two never mix).
     pub fn embedder_id(&self) -> String {
         format!(
-            "{}/{}",
+            "{}/{}+{}",
             self.manifest.name,
-            &self.manifest.files[MODEL_FILE].blake3[..8]
+            &self.manifest.files[MODEL_FILE].blake3[..8],
+            crate::embed::NUMERICS
         )
     }
 }

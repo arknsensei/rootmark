@@ -57,7 +57,12 @@ fn the_multilingual_model_is_pinned_and_named_by_its_manifest() {
     let b3 = &m.manifest().files[models::MODEL_FILE].blake3;
     assert_eq!(
         multilingual().id(),
-        format!("{EMBEDDER_MULTILINGUAL}/{}", &b3[..8])
+        // the rule of P2-V.1/E1: name, model hash, numerics tag
+        format!(
+            "{EMBEDDER_MULTILINGUAL}/{}+{}",
+            &b3[..8],
+            rootmarkindex::embed::NUMERICS
+        )
     );
     assert_eq!(multilingual().dim(), DIM);
     // the default model and its manifest are unchanged

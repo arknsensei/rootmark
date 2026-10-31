@@ -2,7 +2,7 @@
 name = "rootmark-index"
 version = "0.2.0"
 edition = "2021"
-description = "Derived indexes over rootmark-core (spec §9): tantivy lexical, exact cosine vectors, ONNX MiniLM embedder, RRF hybrid, checkpoint-scoped queries, hot tier."
+description = "Derived indexes over rootmark-core (spec §9): tantivy lexical, exact cosine vectors, MiniLM embedder (fixed-order forward pass of the ONNX weights), RRF hybrid, checkpoint-scoped queries, hot tier."
 
 [lib]
 name = "rootmarkindex"
@@ -17,8 +17,6 @@ anyhow = "1.0.104"
 rootmark-core = { path = "../core" }
 blake3 = { version = "1.8.7", features = ["pure"] }
 clap = { version = "4.6.7", features = ["derive"] }
-ndarray = "=0.17.2"
-ort = { version = "=2.0.0-rc.13", default-features = false, features = ["std", "ndarray", "download-binaries", "copy-dylibs", "tls-rustls"] }
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
 tantivy = { version = "=0.26.2", default-features = false, features = ["mmap"] }

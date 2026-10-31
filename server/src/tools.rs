@@ -2729,10 +2729,16 @@ fn index_readable(v: &Vault) -> Result<()> {
                 .ok();
         let lexical = found.as_ref() == Some(&want);
         let format = raw["format"].as_str().unwrap_or_default().to_string();
-        if crate::migrate::index_needs_migration(&format, lexical) {
+        // P2-V.1: an older rootmark's embedder numerics (ONNX Runtime)
+        let old_embedder = crate::migrate::index_embedder_old(&raw);
+        if crate::migrate::index_needs_migration(&format, lexical && !old_embedder) {
             // a stable hint (contract §3: "kararlı bir dizge"): no path of
             // this machine (A5: the vault's path made two clean chains differ)
             let why = match found.filter(|_| format == store::FORMAT) {
+                Some(_) if lexical && old_embedder => format!(
+                    "index embedder_id {} holds an older rootmark's vectors (ONNX Runtime numerics): the index needs migration",
+                    raw["embedder_id"]
+                ),
                 // this format, the other lexical variant (P2-L/L1)
                 Some(l) => format!(
                     "index tokenizer {:?} is not the vault's [index] tokenizer {:?}: the index needs migration",

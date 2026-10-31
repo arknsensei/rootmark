@@ -876,6 +876,32 @@ fn gelu(x: f32) -> f32 {
 mod tests {
     use super::*;
 
+    /// The SIMD tile (NEON / AVX2+FMA) and the scalar `f32::mul_add` tile
+    /// give the same bits: the scalar path runs on no CI runner otherwise.
+    #[test]
+    fn simd_tile_equals_scalar_tile() {
+        let din = 37;
+        let mut seed = 0x9e37_79b9_7f4a_7c15u64;
+        let mut next = || {
+            seed ^= seed << 13;
+            seed ^= seed >> 7;
+            seed ^= seed << 17;
+            ((seed >> 40) as f32 / (1u64 << 24) as f32) * 2.0 - 1.0
+        };
+        let rows: Vec<Vec<f32>> = (0..TR)
+            .map(|_| (0..din).map(|_| next()).collect())
+            .collect();
+        let strip: Vec<f32> = (0..din * TC).map(|_| next()).collect();
+        let xr: [&[f32]; TR] = std::array::from_fn(|r| rows[r].as_slice());
+        let a = tile(&xr, &strip);
+        let b = tile_scalar(&xr, &strip);
+        for r in 0..TR {
+            for c in 0..TC {
+                assert_eq!(a[r][c].to_bits(), b[r][c].to_bits(), "row {r} col {c}");
+            }
+        }
+    }
+
     #[test]
     fn exp64_is_accurate() {
         for &x in &[-50.0, -10.5, -1.0, -1e-3, 0.0, 1e-3, 0.5, 1.0, 3.7, 20.0] {

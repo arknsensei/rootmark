@@ -19,8 +19,9 @@
 //!
 //! The registered migrations, in order: `rename_store` (`.mdkernel/` →
 //! `.rootmark/`, K-GH.1: the directory is renamed, every byte kept),
-//! `index_rebuild` (an index of an older format or lexical record → this
-//! format, rebuilt; the old index is kept in the record),
+//! `index_rebuild` (an index of an older format or lexical record, or of an
+//! older rootmark's embedder numerics (P2-V.1) → this format, rebuilt; the
+//! old index is kept in the record),
 //! `policy_attestation_1` (P2-P/P0, K-P2L-T1: a recipe without an
 //! `[attestation]` table gets `[attestation] unattested = "canonical"`
 //! appended, every other byte kept; recommended, not required), `log_readers`
@@ -47,6 +48,10 @@ pub const MIGRATIONS_DIR: &str = "migrations";
 /// Index formats this implementation can migrate from (older than
 /// `rootmarkindex::store::FORMAT`; `/1` before P1-C.1, `/2` before P1-D.1).
 pub const OLD_INDEX_FORMATS: [&str; 2] = ["mdkernel-index/1", "mdkernel-index/2"];
+/// Embedder ids of an older rootmark's index: the two manifest models
+/// computed by ONNX Runtime, whose vector bytes depend on the processor
+/// (P2-V.1/E1, K-P2V.3 T1 (a); `rootmarkindex::embed::ONNX_RUNTIME_IDS`).
+pub const OLD_EMBEDDER_IDS: [&str; 2] = rootmarkindex::embed::ONNX_RUNTIME_IDS;
 /// The store formats (`status.migrations.artifacts.store`).
 pub const STORE_FORMAT: &str = "rootmark-store/1";
 pub const LEGACY_STORE_FORMAT: &str = "mdkernel-store/1";
@@ -311,8 +316,9 @@ impl Migration for RenameStore {
 /// this implementation builds for the vault — its `[index] tokenizer`
 /// (P2-L/L1: an index of the other variant is migrated by `index_rebuild`;
 /// a recipe that cannot be read counts as not current, and the rebuild then
-/// fails on it) (`None`: no manifest or not readable).
-fn index_manifest(vault: &Path) -> Option<(String, bool)> {
+/// fails on it) — and whether its `embedder_id` is an older rootmark's
+/// (`OLD_EMBEDDER_IDS`, P2-V.1) (`None`: no manifest or not readable).
+fn index_manifest(vault: &Path) -> Option<(String, bool, bool)> {
     let p = store_of(vault).join("index/manifest.json");
     let raw: Value = serde_json::from_slice(&std::fs::read(p).ok()?).ok()?;
     let format = raw["format"].as_str()?.to_string();
@@ -322,7 +328,7 @@ fn index_manifest(vault: &Path) -> Option<(String, bool)> {
     let lexical =
         serde_json::from_value::<rootmarkindex::store::LexicalParams>(raw["lexical"].clone())
             .is_ok_and(|l| Some(l) == want);
-    Some((format, lexical))
+    Some((format, lexical, index_embedder_old(&raw)))
 }
 
 /// Whether an index manifest of `format` (lexical record current or not)
@@ -330,6 +336,14 @@ fn index_manifest(vault: &Path) -> Option<(String, bool)> {
 pub fn index_needs_migration(format: &str, lexical_current: bool) -> bool {
     OLD_INDEX_FORMATS.contains(&format)
         || (format == rootmarkindex::store::FORMAT && !lexical_current)
+}
+
+/// Whether the index manifest `raw` names an older rootmark's embedder
+/// numerics (`OLD_EMBEDDER_IDS`): `index_rebuild` migrates it (P2-V.1).
+pub fn index_embedder_old(raw: &Value) -> bool {
+    raw["embedder_id"]
+        .as_str()
+        .is_some_and(|id| OLD_EMBEDDER_IDS.contains(&id))
 }
 
 impl Migration for IndexRebuild {
@@ -342,10 +356,10 @@ impl Migration for IndexRebuild {
     fn applies(&self, vault: &Path, _: &[Record]) -> Result<bool> {
         // after the store has its name (`rename_store` comes first)
         Ok(meta::check(vault).is_ok()
-            && index_manifest(vault).is_some_and(|(f, l)| index_needs_migration(&f, l)))
+            && index_manifest(vault).is_some_and(|(f, l, e)| index_needs_migration(&f, l && !e)))
     }
     fn plan(&self, vault: &Path) -> Result<Plan> {
-        let (format, _) = index_manifest(vault).context("no index manifest")?;
+        let (format, _, _) = index_manifest(vault).context("no index manifest")?;
         let before = hashes(vault, &format!("{}/index", meta::META_DIR), None)?;
         Ok(Plan {
             migration: self.id(),
@@ -666,11 +680,14 @@ pub fn matrix(vault: &Path) -> Result<Value> {
             "unknown",
             Some("index manifest not readable".into()),
         ),
-        Some((f, l)) if f == rootmarkindex::store::FORMAT && l => {
+        Some((f, l, e)) if f == rootmarkindex::store::FORMAT && l && !e => {
             row(Some(f), rootmarkindex::store::FORMAT, "ok", None)
         }
-        Some((f, l)) if index_needs_migration(&f, l) => {
-            let note = if f == rootmarkindex::store::FORMAT {
+        Some((f, l, e)) if index_needs_migration(&f, l && !e) => {
+            let note = if f == rootmarkindex::store::FORMAT && l {
+                // P2-V.1: this format and lexical variant, ONNX Runtime vectors
+                "the index holds an older rootmark's embedder numerics (ONNX Runtime; migration index_rebuild)"
+            } else if f == rootmarkindex::store::FORMAT {
                 // P2-L/L1: this format, another lexical variant
                 "the index's lexical variant is not the vault's [index] tokenizer (migration index_rebuild)"
             } else {
@@ -683,7 +700,7 @@ pub fn matrix(vault: &Path) -> Result<Value> {
                 Some(note.into()),
             )
         }
-        Some((f, _)) => row(
+        Some((f, _, _)) => row(
             Some(f),
             rootmarkindex::store::FORMAT,
             "unknown",

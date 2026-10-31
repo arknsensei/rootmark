@@ -1,22 +1,23 @@
 //! Embedders (GOAL P1-C "Embedder"). One embedder per index: every vector
 //! carries the `embedder_id` it was made with, and mixing ids is an error.
 //!
-//! `OnnxMiniLm`: `all-MiniLM-L6-v2` as ONNX (`models/MANIFEST.json`), CPU,
-//! one intra-op and one inter-op thread, sequential execution, deterministic
-//! compute. Texts are tokenized with the model's own `tokenizer.json`,
+//! `OnnxMiniLm`: `all-MiniLM-L6-v2` as ONNX (`models/MANIFEST.json`); the
+//! graph's forward pass is computed by `crate::detbert` in fixed-order Rust
+//! (P2-V.1/E1; K-P2V.3 T1 (a), `reports/rounds/P2-V.1/e0/feasibility.md`):
+//! every vector component is one defined sequence of IEEE 754 operations,
+//! the same bytes on every processor (x86_64, aarch64, Apple silicon).
+//! Until P2-V.1 the graph ran on ONNX Runtime, whose kernels depend on the
+//! processor. Texts are tokenized with the model's own `tokenizer.json`,
 //! truncated to `max_seq_length` of `sentence_bert_config.json` (256, as
 //! `sentence-transformers` does) and never padded; each text runs alone, so
 //! a batch gives bit-identical vectors to one-by-one calls. Pooling is the
 //! attention-masked mean of `last_hidden_state`, then L2 normalization
 //! (`1_Pooling/config.json`: mean tokens only).
 
+use crate::detbert::DetBert;
 use crate::models::{self, VerifiedModel};
 use anyhow::{anyhow, bail, Context, Result};
-use ort::session::builder::GraphOptimizationLevel;
-use ort::session::Session;
-use ort::value::TensorRef;
 use std::sync::atomic::{AtomicU64, Ordering};
-use std::sync::Mutex;
 use tokenizers::{Tokenizer, TruncationParams, TruncationStrategy};
 
 /// Text → unit vectors. Implementations MUST be deterministic (spec §10).
@@ -32,10 +33,28 @@ pub trait Embedder {
 
 pub const DIM: usize = 384;
 
+/// The numerics of the vectors, the last part of every manifest model's
+/// `embedder_id` (`crate::models`): `fixed1` = `crate::detbert` (P2-V.1).
+pub const NUMERICS: &str = "fixed1";
+
+/// The `embedder_id`s of the two manifest models as an older rootmark
+/// computed them, with ONNX Runtime (processor-dependent vector bytes;
+/// P2-V.1, K-P2V.3 T1 (a)). An index holding one is stale: `rootmark
+/// migrate` (`index_rebuild`) rebuilds it.
+pub const ONNX_RUNTIME_IDS: [&str; 2] = [
+    "minilm-l6-v2/e73168f9",
+    "multilingual-minilm-l12-v2/ca55a866",
+];
+
+/// Whether `embedder_id` is one of [`ONNX_RUNTIME_IDS`].
+pub fn onnx_runtime_numerics(embedder_id: &str) -> bool {
+    ONNX_RUNTIME_IDS.contains(&embedder_id)
+}
+
 pub struct OnnxMiniLm {
     id: String,
     tokenizer: Tokenizer,
-    session: Mutex<Session>,
+    bert: DetBert,
     count: AtomicU64,
 }
 
@@ -91,56 +110,27 @@ impl OnnxMiniLm {
                 ..Default::default()
             }))
             .map_err(|e| anyhow!("tokenizer truncation: {e}"))?;
-        let ort_err = |e: ort::Error| anyhow!("onnx runtime: {e}");
-        let session = Session::builder()
-            .map_err(ort_err)?
-            .with_intra_threads(1)
-            .map_err(|e| anyhow!("{e}"))?
-            .with_inter_threads(1)
-            .map_err(|e| anyhow!("{e}"))?
-            .with_parallel_execution(false)
-            .map_err(|e| anyhow!("{e}"))?
-            .with_deterministic_compute(true)
-            .map_err(|e| anyhow!("{e}"))?
-            .with_optimization_level(GraphOptimizationLevel::Level3)
-            .map_err(|e| anyhow!("{e}"))?
-            .commit_from_file(model.path(models::MODEL_FILE))
-            .map_err(ort_err)?;
+        let bert = DetBert::load(&model.path(models::MODEL_FILE))?;
         Ok(OnnxMiniLm {
             id: model.embedder_id(),
             tokenizer,
-            session: Mutex::new(session),
+            bert,
             count: AtomicU64::new(0),
         })
     }
 
-    fn embed_one(&self, session: &mut Session, text: &str) -> Result<Vec<f32>> {
+    fn embed_one(&self, text: &str) -> Result<Vec<f32>> {
         let enc = self
             .tokenizer
             .encode(text, true)
             .map_err(|e| anyhow!("tokenize: {e}"))?;
         let n = enc.get_ids().len();
-        let col = |v: &[u32]| -> Result<ndarray::Array2<i64>> {
-            Ok(ndarray::Array2::from_shape_vec(
-                (1, n),
-                v.iter().map(|&x| i64::from(x)).collect(),
-            )?)
-        };
-        let ids = col(enc.get_ids())?;
-        let mask = col(enc.get_attention_mask())?;
-        let types = col(enc.get_type_ids())?;
-        let out = session
-            .run(ort::inputs![
-                "input_ids" => TensorRef::from_array_view(&ids)?,
-                "attention_mask" => TensorRef::from_array_view(&mask)?,
-                "token_type_ids" => TensorRef::from_array_view(&types)?,
-            ])
-            .map_err(|e| anyhow!("onnx run: {e}"))?;
-        let (shape, data) = out["last_hidden_state"]
-            .try_extract_tensor::<f32>()
-            .map_err(|e| anyhow!("last_hidden_state: {e}"))?;
-        if shape.len() != 3 || shape[0] != 1 || shape[1] as usize != n || shape[2] as usize != DIM {
-            bail!("last_hidden_state shape {shape:?}, expected [1, {n}, {DIM}]");
+        let data = self.bert.forward(enc.get_ids(), enc.get_type_ids())?;
+        if data.len() != n * DIM {
+            bail!(
+                "last_hidden_state of {} values, expected {n} × {DIM}",
+                data.len()
+            );
         }
         // attention-masked mean (no padding: every mask value is 1)
         let mut sum = vec![0f32; DIM];
@@ -171,13 +161,9 @@ impl Embedder for OnnxMiniLm {
     }
 
     fn embed(&self, texts: &[&str]) -> Result<Vec<Vec<f32>>> {
-        let mut session = self
-            .session
-            .lock()
-            .map_err(|_| anyhow!("embedder session poisoned"))?;
         let mut out = Vec::with_capacity(texts.len());
         for t in texts {
-            out.push(self.embed_one(&mut session, t)?);
+            out.push(self.embed_one(t)?);
             self.count.fetch_add(1, Ordering::SeqCst);
         }
         Ok(out)
