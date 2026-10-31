@@ -18,7 +18,8 @@ Sorun: (1) Aynı platformun iki koşucusu farklı işlemciye düşünce gömme v
    - (k) ORT/MLAS çekirdeklerini işlemciden bağımsız bir yola sabitlemek (yapılandırma ya da derleme bayrağı; mümkünse);
    - (s) gömmenin son adımlarını (havuzlama, normalizasyon) sabit sıralı skaler Rust'ta yapmak;
    - ya da bunların birleşimi.
-   Çıktı `reports/rounds/P2-V.1/e0/feasibility.md`; **seçim ve gerekçesi E1'den önce commit'lenir.** Hiçbir yöntem korpusta 0 fark vermiyorsa: STOP.md ve karar talebi (K-P2V-T1 (b) kapsam kararı).
+   Her yöntem için gözlenen fark sayısının yanında, ölçülen |δ| dağılımından (bileşen başına |a − b|, iki işlemci) 10⁵ doküman ölçeğine beklenen ızgara sınırı çarpışması sayısı da yazılır (V1-1): yuvarlama determinizmi garanti etmez, sınırın iki yanına düşen bileşen farklı yuvarlanır; küçük korpusta gözlenen 0 şans olabilir.
+   Çıktı `reports/rounds/P2-V.1/e0/feasibility.md`; **seçim ve gerekçesi E1'den önce commit'lenir.** Hiçbir yöntem korpusta gözlenen 0 **ve** beklenen < 1 vermiyorsa: STOP.md ve karar talebi (K-P2V-T1 (b) kapsam kararı).
 2. **E1 — Gömme determinizmi (ürün).** Seçilen yöntem `index/`'te; embedder kimliği ya da indeks biçim sürümü değişir; eski indeks `migration_required` verir ve `rootmark migrate` ile yeniden kurulur (P2-A çerçevesi: ileri göç, kuru koşturma, geri alma). C-10 ve P1-C/P1-C.1 kalite kriterleri kendi eşikleriyle yeniden ölçülür; sıralamalardaki her değişiklik raporlanır.
 3. **E2 — İşlemciler arası kanıt.** CI'da üç koşucuda (`ubuntu-latest` x86_64, `ubuntu-24.04-arm` aarch64, `macos-14` arm64) sabit bir korpusun (P1-C korpusu ya da onun belirlenmiş alt kümesi) indeksi kurulur; vektör dosyalarının ve vektör türevli kayıtların baytları karşılaştırılır. Kademe 1'in bir parçası olur (her PR'da).
 4. **E3 — Araç düzeltmeleri (istisna prosedürüyle; K-P2V-T4, doğrulamanın Ş1–Ş3'ü).**
@@ -36,7 +37,7 @@ Sorun: (1) Aynı platformun iki koşucusu farklı işlemciye düşünce gömme v
 ## Önceden kayıtlı çıkış kriterleri
 | Kod | Ölçüm | Eşik |
 |---|---|---|
-| V1-1 | E0 fizibilitesi ve seçim E1'den önce commit'li; seçilen yöntem E0 korpusunda farklı bileşen 0 | commit'li; 0 |
+| V1-1 | E0 fizibilitesi ve seçim E1'den önce commit'li; seçilen yöntem E0 korpusunda farklı bileşen 0 **ve** E0'ın ölçtüğü \|δ\| dağılımından 10⁵ doküman ölçeğine (384 × 10⁵ × ortalama parça sayısı bileşen) hesaplanan beklenen ızgara sınırı çarpışması sayısı < 1 (bileşen sayısı × ortalama \|δ\| / adım); E0 her yöntem için gözlenen sayının yanında bu beklenen sayıyı da yazar. Yalnız gözlenen 0 (beklenen ≥ 1) V1-1'i geçirmez: STOP ve karar kuralının V1-1 dalı | commit'li; 0; < 1 |
 | V1-2 | İşlemciler arası: E2'nin üç koşucusunda vektör dosyaları ve vektör türevli kayıtlar bayt eşit; turun PR'ında ve son commit'inde | eşit (3/3) |
 | V1-3 | Kalite: C-10 ve P1-C/P1-C.1 kalite kriterleri kendi GOAL eşiklerinde; sıralama değişiklikleri adlarıyla raporlandı | eşiklerde |
 | V1-4 | Göç: P2-L/P2-R dönemi bir vault'un indeksi `migration_required` → `rootmark migrate` → taze kurulumla bayt eşit; geri alma eski indeksi geri getirir | eşit; geri alındı |
@@ -52,7 +53,7 @@ Z kümelerinin kaynak eşikleri bu turun hükmüne girmez (K-P2V.3: sessiz koşu
 
 ## Karar kuralı
 - **Hepsi geçti** → kademeler (K-P2V.1) yürürlüğe girer; P2-V doğrulamasının iki koşulu kapanır; NORTH_STAR ilke 2 vektör indeksi için yeniden doğrudur (notu FINAL'de, değişiklik insan kararı); kısa bağımsız doğrulama (VW1–VW5); P2-C ardından yeni kademelerle açılır.
-- **V1-1 ya da V1-2 kaldı** → işlemciden bağımsız gömme bu yöntemlerle kurulamadı; E1 birleşmez (ürün kodu `ROUND_START`'taki haliyle kalır); araç düzeltmeleri (E3, E4) ayrı PR olarak sürer; karar talebi: K-P2V-T1 (b) kapsam kararı (vektör baytları "işlemci ailesine bağlı türev" diye O'ya, NORTH_STAR notu).
+- **V1-1 ya da V1-2 kaldı** → işlemciden bağımsız gömme bu yöntemlerle kurulamadı; E1 birleşmez (ürün kodu `ROUND_START`'taki haliyle kalır); araç düzeltmeleri (E3, E4) ayrı PR olarak sürer; karar talebi: K-P2V-T1 (b) kapsam kararı (vektör baytları "işlemci ailesine bağlı türev" diye O'ya, NORTH_STAR notu). Bu dalda kademeler (K-P2V.1), K-P2V-T1 (b) kararı yazıldığında ve E3/E4'ün PR'ı birleştiğinde yürürlüğe girer (doğrulamanın iki koşulu: B1 düzeltmesi E3'te, T1 kararı (b) ile kapanır); vektör baytları ve düz kip skorları E3'ün yeni envanteriyle O sınıfındadır, karşılaştırma dışı değil: iki zincirde kaydedilir, FAIL sayımına girmez. (b) yazılmadan kademeler yürürlüğe girmez ve blok sonunun hükmü eski tam çift kalır.
 - **V1-3 kaldı** → yöntem kaliteyi düşürüyor; değerler raporlanır, optimize edilmez; karar talebi (daha ince adım ya da başka yöntem).
 - **V1-4, V1-5 ya da V1-6 kaldı** → tur kaldı; eski zincir yürürlükte; karar talebi.
 - **V1-7 süre kısmı kaldı** (geri kalan geçti) → değer raporlanır; kademeler yürürlüğe girer, kademe 2'nin süresi için karar talebi.
