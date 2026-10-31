@@ -1,0 +1,18 @@
+6a7,10
+> # P2-V.1/F7 (K-P2V.3 T2 (b)): the deterministic O criteria — C1-8 (the
+> # chain's steps holdout … p1c1-checks) and E-7 (release_local.sh) — run in
+> # the first repetition only (E1-4 is read from that repetition too); the
+> # reading is P2-V.1's inventory's `mac_reading` (eval.verify_mac).
+86c90,93
+<   log "rep $i: P1-C.1 C1-8 (the chain's steps holdout … p1c1-checks, against the P1-C RUN)"
+---
+>   # P2-V.1/F7 (K-P2V.3 T2 (b); inventory `mac_reading`): the deterministic O
+>   # criteria (C1-8, E-7, E1-4) run once, in the first repetition
+>   if [ "$i" -eq 1 ]; then
+>   log "rep $i: P1-C.1 C1-8 (the chain's steps holdout … p1c1-checks, against the P1-C RUN; once)"
+91a99
+>   fi
+98a107
+>   if [ "$i" -eq 1 ]; then
+100a110
+>   fi

@@ -32,3 +32,21 @@ Her girdi: ne değişti, neden, önce/sonra kanıtı, gözden geçirici onayı. 
 - **Neden:** P2-V doğrulamasının Ş3'ü (`log_tail` boş; 0.2a "sızıntı 0, kaldı" okunuyordu).
 - **Önce/sonra:** `e3/s3_mac.txt` (aynı günlük: önce boş liste, sonra son satırlar; gözlem RUN'ının 0.2a'sı `decided_by: d_a.pass_0a = False`).
 - **Gözden geçirici onayı:** `E5.review.md`.
+
+## F6 · E4 · `research/eval/compare_runs.py` — `leaves`'in çakışma denetimi doğrusal
+- **Ne** (`E4_f6.diff`): `leaves`'in, iki anahtarın yeniden adlandırmadan sonra aynı yola düşmesini denetleyen satırı `clash = set(sub) & set(out)` → `clash = {x for x in sub if x in out}`. Aynı küme (sözlük üyeliği), aynı hata, aynı çıktı; başka satır yok.
+- **Neden:** GOAL P2-V.1 Kapsam 5, K-P2V.3 T1 ("karşılaştırıcı istisna prosedürüyle hızlandırılır"). Profil (V4b'nin iki RUN'ı, cProfile): `compare_p2r pair`'in 770 s'sinin 753 s'si `leaves`'te; biriken çıktının kümesi her anahtar için yeniden kuruluyordu (≈790 000 yaprakta karesel). Kademe 2'nin karşılaştırma işi 18–27 dk sürüyordu.
+- **Önce/sonra (aynı girdi, bayt eşit):** V4b A/B (`40613409396`): donmuş sürümün `--out`'u ile yenisininki `cmp` eşit; süre **770 s → 7,4 s**. Gözlem koşusu A/B (`41215091092`): `e4/compare_speed.txt` (742,1 s → 6,8 s, bayt eşit). `compare_runs`'ı kullanan bütün karşılaştırıcılar (`compare_p1a` … `compare_p2r`) aynı fonksiyonu çağırır; davranışları aynı.
+- **Gözden geçirici onayı:** `E5.review.md`.
+
+## F7 · E4 · `scripts/verify_mac.sh` — deterministik O kriterleri bir kez
+- **Ne** (`E4_f7.diff`): C1-8'in zincir adımları (`holdout` … `p1c1-checks`) ve E-7'nin `release_local.sh`'ı yalnız 1. tekrarda; öteki adımlar (P2-0.2/P2-0.3 kümeleri, `serve_watch`, `release.sh` + `release_check.sh` gerçek Obsidian e2e'siyle, tamper e2e) üç tekrarda aynen.
+- **Neden:** K-P2V.3 T2 (b) ("deterministik O kriterleri tekrarsız koşar"); envanterin `mac_reading`'i (ön-kayıt `0a62484`): C1-8, E-7, E1-4 tek koşu.
+- **Önce/sonra:** `bash -n` temiz; ölçümün kendisi E4'ün Mac kümesi koşusu (aynı komutlar, tekrar sayısı farkı).
+- **Gözden geçirici onayı:** `E5.review.md`.
+
+## F8 · E4 · `research/eval/verify_mac.py` — P2-V.1'in okuması (`mac_reading`)
+- **Ne** (`E4_f8.diff`): envanter P2-V.1'inki (Mac kümeleri P2-V'ninkilerle aynı); `rep(…, first)`: tek koşu kriterleri (C1-8, E-7) yalnız 1. tekrarda; C1-8 kaydedicinin kendi regress'inin farkları envanterin `e1_fields`'ıyla okunur (`pass` = her fark bir E1 alanı; kaydedicinin kendi hükmü `recorder_pass` olarak yanında); `summary`: tek koşu kriterleri 1/1, tarihsel kriterler (E-7, E1-4, H-P2-0.3b) ham eşikle değil kayıt eşitliğiyle (`record_equal`, `tarihsel`: kararları), Z ve gerçek Obsidian kriterleri 3 tekrar, değerleri ve `pass_3of3` raporlanır; hüküm (`pass`) tek koşu kriterleridir (tarihsel olanlarda `record_equal`). P2-V'nin envanteriyle (`mac_reading` yok) P2-V'nin okuması aynen (`_summary_p2v`).
+- **Neden:** K-P2V.3 T2 (b)+(c) (deterministik O tekrarsız; kararla kapanmış kalışlar "tarihsel" etiketiyle kayıt eşitliğiyle; Z eşikleri kademe hükmüne girmez); GOAL V1-10; C1-8'in referansı ORT sayısalıdır, E1'den sonra her makinede E1 alanlarında farklıdır (E1'in aileleri).
+- **Önce/sonra:** `research/tests/test_p2v1_tools.py` (P2-R'nin Mac arşiviyle: C1-8 1/1, E-7/E1-4/0.3b kayıt eşit, Z kümeleri hükmün dışında) ve `test_p2v_tools.py`'nin P2-V okumasını sınayan testi P2-V envanteriyle aynen geçer. Ölçüm: E4'ün Mac kümesi koşusu.
+- **Gözden geçirici onayı:** `E5.review.md`.

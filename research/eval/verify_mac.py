@@ -28,6 +28,18 @@ Criteria whose round set no threshold but byte equality between two chains
 (`H-P2-0.3b′`) are recorded with their values and marked `eşik yok`: the
 logs' blake3 per repetition, equal or not across the three.
 
+P2-V.1/F8 (K-P2V.3 T2 (b)+(c); P2-V.1's inventory `mac_reading`, its
+`mac_sets` are P2-V's): the deterministic O criteria (C1-8, E-7, E1-4) are
+measured once, in repetition 1, and pass or fail on that one value; C1-8
+is read with the inventory's E1 names (its regress against the P1-C RUN
+differs only in fields of the embedder's numerics — `e1_fields` — or not);
+the criteria closed by decision (E-7, E1-4, H-P2-0.3b) are `tarihsel`:
+reported by record equality with their decision's value, not by the raw
+threshold, and outside the verdict. The verdict (`pass`) is the single-run
+criteria; the Z and real-Obsidian sets keep their 3 repetitions, values and
+3/3 (`pass_3of3`), reported (K-P2V.3: their thresholds are not this
+verdict's).
+
 P2-V.1/F5 (Ş3 of P2-V's verification): a stopped harness's error carries
 its log's last lines (the log path resolved against the repository root,
 where `verify_mac.sh` names it); every failed criterion carries
@@ -59,7 +71,7 @@ from eval import run_p2_0_3 as c3
 from eval import runinfo
 from eval.datasets.common import ROOT, dump_json
 
-INVENTORY = ROOT.parent / "reports/rounds/P2-V/inventory.json"
+INVENTORY = ROOT.parent / "reports/rounds/P2-V.1/inventory.json"
 LOGS = [f"{s}/{f}" for s in ("d_a", "d_a2", "d_c") for f in ("events.jsonl", "attestations.jsonl")]
 
 
@@ -233,20 +245,30 @@ def _tamper_e2e(d: Path) -> dict:
 
 
 def _c18(d: Path) -> dict:
+    from eval import tier2
+
     doc = _load(d / "p1c1_checks.json")
     c = doc.get("criteria", doc)["C1-8"]
     reg = c["regress"]
-    # the frozen recorder's own C1-8 (make p1c1-checks in the repetition)
+    # the frozen recorder's own C1-8 (make p1c1-checks in the repetition),
+    # read with the inventory's E1 names (P2-V.1/F8): every difference from
+    # the P1-C RUN (ONNX Runtime) must be a field of the embedder's numerics
+    e1 = tier2.load_inventory(INVENTORY)["e1_fields"]
+    diff = sorted(reg["differing_fields"])
+    outside = [k for k in diff if tier2.set_aside(e1, *tier2._split(k)) is None]
     return {
         "reference_run": reg["reference_run"],
         "n_fields": reg["n_fields"],
-        "differing_fields": sorted(reg["differing_fields"])[:50],
-        "n_differing": len(reg["differing_fields"]),
-        "pass": c["pass"],
+        "n_differing": len(diff),
+        "n_e1": len(diff) - len(outside),
+        "differing_outside_e1": outside[:50],
+        "recorder_pass": c["pass"],
+        "reading": "farklar yalnız E1 alanlarında (envanter `e1_fields`)",
+        "pass": not outside,
     }
 
 
-def rep(d: Path, errors: dict[str, str] | None = None) -> dict:
+def rep(d: Path, errors: dict[str, str] | None = None, first: bool = True) -> dict:
     """Every Mac criterion of one repetition, keyed `<checks file>:<id>`; a
     harness that stopped (`errors`: `p2_0_2` / `p2_0_3` → its log) makes its
     sets' criteria failed, with the error."""
@@ -270,10 +292,16 @@ def rep(d: Path, errors: dict[str, str] | None = None) -> dict:
             b = _p2_0_3(d)
     dc = a["H-P2-0.2d"]["d_c"]
     e13, e19 = _e1(d)
+    once = {}
+    if first:
+        # P2-V.1/F7, F8: the deterministic O criteria, repetition 1 only
+        once = {
+            "p1c1_checks.json:C1-8": _err(errors["p1c"]) if "p1c" in errors else _c18(d),
+            "p1e_checks.json:E-7": _e7(d),
+        }
     out = {
-        "p1c1_checks.json:C1-8": _err(errors["p1c"]) if "p1c" in errors else _c18(d),
+        **once,
         "p1d_checks.json:D-10": _d10(d),
-        "p1e_checks.json:E-7": _e7(d),
         "p1e1_checks.json:E1-3": e13,
         "p1e1_checks.json:E1-4": _e14(d),
         "p1e1_checks.json:tamper": _tamper_e2e(d),
@@ -310,10 +338,8 @@ def rep(d: Path, errors: dict[str, str] | None = None) -> dict:
     return out
 
 
-def summary(main: Path, reps: int, inv: dict) -> dict:
-    rows = []
-    for i in range(1, reps + 1):
-        rows.append(_load(main / "mac" / f"rep{i}" / "rep.json"))
+def _summary_p2v(rows: list[dict], reps: int, inv: dict) -> dict:
+    """P2-V's summary as it was (P2-V/V3), for P2-V's inventory."""
     sets = []
     for s in inv["mac_sets"]:
         crit = []
@@ -361,6 +387,114 @@ def summary(main: Path, reps: int, inv: dict) -> dict:
     }
 
 
+def _historical(key: str, v: dict, h: dict) -> dict:
+    """A criterion closed by decision, read by record equality (`mac_reading`)."""
+    if key.endswith(":E-7"):
+        loc = v.get("chain_local_target", {})
+        kept = loc.get("pass") is True and str(v.get("four_targets", "")).startswith("2/4")
+        why = "yerel hedef (aarch64-apple-darwin) geçti ve dört hedefin kaydı 2/4 (K-E5-T)"
+    elif key.endswith(":E1-4"):
+        failed = set(v.get("failed", []))
+        kept = v.get("every_item_scripted") is True and failed <= {"R4", "R15", "R17"}
+        why = "kontrol listesinin kalan maddeleri yalnız tarihsel maddeler (R4, R15, R17)"
+    else:
+        kept = v.get("pass") is False
+        why = "kalış korunuyor (K-P2-03.1: pass false); değeri raporlanır"
+    return {"tarihsel": h["decisions"], "reading": h["reading"], "record_equal": kept, "why": why}
+
+
+def summary(main: Path, reps: int, inv: dict) -> dict:
+    rows = []
+    for i in range(1, reps + 1):
+        rows.append(_load(main / "mac" / f"rep{i}" / "rep.json"))
+    reading = inv.get("mac_reading")
+    if reading is None:
+        # P2-V's inventory: P2-V's reading (every thresholded criterion 3/3)
+        return _summary_p2v(rows, reps, inv)
+    single = {c["criterion"] for c in reading.get("single_run", [])}
+    hist = {c["criterion"]: c for c in reading.get("historical", [])}
+    sets = []
+    for s in inv["mac_sets"]:
+        crit = []
+        for c in s["criteria"]:
+            key = f"{c['file']}:{c['criterion']}"
+            src = rows[:1] if key in single else rows
+            vals = [r["criteria"][key] for r in src if key in r["criteria"]]
+            if len(vals) != len(src):
+                raise KeyError(f"{key}: missing from a repetition")
+            if c.get("threshold") is None:
+                same = None
+                if all("logs" in v for v in vals):
+                    same = all(v["logs"] == vals[0]["logs"] for v in vals)
+                crit.append(
+                    {
+                        "criterion": key,
+                        "threshold": None,
+                        "eşik yok": c.get("why_no_threshold"),
+                        "equal_across_reps": same,
+                        "values": vals,
+                        "pass": None,
+                    }
+                )
+                continue
+            passes = [v.get("pass") is True for v in vals]
+            row = {
+                "criterion": key,
+                "threshold": c["threshold"],
+                "source": c["source"],
+                "runs": len(vals),
+                "passed": f"{sum(passes)}/{len(vals)}",
+                "values": vals,
+                "pass_3of3": all(passes) and len(vals) == 3 if key not in single else None,
+            }
+            if key in hist:
+                row |= _historical(key, vals[0], hist[key])
+                row["pass"] = None  # outside the verdict, reported
+            elif key in single:
+                row["pass"] = all(passes)
+            else:
+                row["pass"] = None  # Z / real Obsidian: values and 3/3 reported
+            crit.append(row)
+        single_rows = [x for x in crit if x["criterion"] in single]
+        held = [(x["record_equal"] if x["criterion"] in hist else x["pass"]) for x in single_rows]
+        sets.append(
+            {
+                "id": s["id"],
+                "class": s["class"],
+                "criteria": crit,
+                "pass": all(held) if held else None,
+                "pass_3of3": all(
+                    x.get("pass_3of3") for x in crit if x.get("pass_3of3") is not None
+                ),
+            }
+        )
+    verdict = [
+        (x["record_equal"] if x["criterion"] in hist else x["pass"])
+        for s in sets
+        for x in s["criteria"]
+        if x["criterion"] in single
+    ]
+    return {
+        "reps": reps,
+        "reading": "P2-V.1 mac_reading (K-P2V.3 T2 (b)+(c))",
+        "rep_runs": [r["run"] for r in rows],
+        "rep_elapsed_s": [r["elapsed_s"] for r in rows],
+        "sets": sets,
+        "criteria": sorted({c["criterion"] for s in sets for c in s["criteria"]}),
+        "no_threshold": sorted(
+            c["criterion"] for s in sets for c in s["criteria"] if c["threshold"] is None
+        ),
+        "single_run": sorted(single),
+        "historical": {
+            c["criterion"]: c.get("record_equal")
+            for s in sets
+            for c in s["criteria"]
+            if c["criterion"] in hist
+        },
+        "pass": bool(verdict) and all(verdict) and reps == 3,
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -387,7 +521,7 @@ def main(argv: list[str] | None = None) -> int:
             "rep": a.rep,
             "elapsed_s": a.elapsed,
             "errors": sorted(errors),
-            "criteria": rep(d, errors),
+            "criteria": rep(d, errors, first=a.rep == 1),
         }
         o = main_dir / "mac" / f"rep{a.rep}"
         o.mkdir(parents=True, exist_ok=True)
@@ -401,9 +535,12 @@ def main(argv: list[str] | None = None) -> int:
     res |= {"elapsed_s": a.elapsed, "setup_s": a.setup, "total_s": a.elapsed + a.setup}
     (main_dir / "mac_checks.json").write_text(dump_json(res), encoding="utf-8")
     for x in res["sets"]:
-        print(f"verify-mac: {x['id']} ({x['class']}) {'pass' if x['pass'] else 'FAIL'}")
+        v = "-" if x["pass"] is None else "pass" if x["pass"] else "FAIL"
+        print(f"verify-mac: {x['id']} ({x['class']}) {v} (3/3: {x['pass_3of3']})")
         for c in x["criteria"]:
             tag = "eşik yok" if c["threshold"] is None else c["passed"]
+            if "tarihsel" in c:
+                tag += f", tarihsel: kayıt {'eşit' if c['record_equal'] else 'FARKLI'}"
             print(f"verify-mac:   {c['criterion']} {tag}")
     print(
         f"verify-mac: {'pass' if res['pass'] else 'FAIL'}; reps {res['rep_elapsed_s']} s, total {res['total_s']} s"

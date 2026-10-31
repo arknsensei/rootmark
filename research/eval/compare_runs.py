@@ -110,7 +110,9 @@ def leaves(obj, prefix: tuple = ()) -> dict[tuple, object]:
         out = {}
         for k, v in obj.items():
             sub = leaves(v, prefix + (renamed(k) if isinstance(k, str) else k,))
-            clash = set(sub) & set(out)
+            # the same clash set as `set(sub) & set(out)`, without rebuilding
+            # the growing output's set for every key (P2-V.1/F6: quadratic)
+            clash = {x for x in sub if x in out}
             if clash:  # an old and a new name side by side: never drop one silently
                 raise M.MetricError(f"keys equal after the rename: {sorted(map(_key, clash))[:3]}")
             out.update(sub)
