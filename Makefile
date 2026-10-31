@@ -241,12 +241,14 @@ p1b-checks: require-run
 	@# 25 entries, level 2 iff all 25 pass with an intact manifest), as
 	@# p1a-checks reads the level-1 view; the full report is kept beside it
 	@# (P1-D.1: C2-10 is outside the P1-B view too; P2-0: C2-11, C2-12 too; P2-0.1: C2-13 too; P2-0.2: C2-14 too)
-	@# P2-V.1/E3 (Ş2 of P2-V's verification): every conformance copy in the RUN
-	@# names its fixture root relative to the repository (no host value in a
-	@# record; reports/conformance.json keeps the absolute root its checks read)
+	@# P2-V.1/E3 (Ş2 of P2-V's verification): the conformance copies in the RUN
+	@# name their fixture root relative to the repository (no host value in a
+	@# record) — but this P1-B view (conformance.json): the frozen P1-B
+	@# recorder writes `fixtures_root_absolute` from it and B1-6 compares that
+	@# with its reference RUN (a relative root failed the chain: CI 41235960263)
 	jq --arg r "$$(pwd -P)/" --arg l "$$(pwd)/" '.fixtures_root |= (if startswith($$r) then .[($$r | length):] elif startswith($$l) then .[($$l | length):] else . end)' reports/conformance.json >research/reports/runs/$(RUN)/conformance_full.json
-	jq --arg r "$$(pwd -P)/" --arg l "$$(pwd)/" '.fixtures_root |= (if startswith($$r) then .[($$r | length):] elif startswith($$l) then .[($$l | length):] else . end)' reports/conformance.json | jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
-	  >research/reports/runs/$(RUN)/conformance.json
+	jq '.tests |= map(select(.level <= 2 and .id != "C2-09" and .id != "C2-10" and .id != "C2-11" and .id != "C2-12" and .id != "C2-13" and .id != "C2-14")) | .total = 25 | .passed = ([.tests[] | select(.result == "pass")] | length) | .level_claimed = (if .passed == 25 and .fixtures_manifest == "ok" then 2 else 0 end)' \
+	  reports/conformance.json >research/reports/runs/$(RUN)/conformance.json
 	{ bash scripts/check_deps.sh && bash scripts/test_check_deps.sh; } >research/reports/runs/$(RUN)/check_deps.log 2>&1 \
 	  || { cat research/reports/runs/$(RUN)/check_deps.log >&2; exit 1; }
 	cargo build --release -q -p rootmark-server --bin rootmark
