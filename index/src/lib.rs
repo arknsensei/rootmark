@@ -8,6 +8,7 @@
 pub mod cli;
 pub mod config;
 pub mod date;
+pub mod detbert;
 pub mod embed;
 pub mod lexical;
 pub mod models;
