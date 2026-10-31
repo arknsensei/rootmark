@@ -1,0 +1,15 @@
+{
+  "run_id": "41235960263",
+  "chains_run": "41235960263",
+  "tools_commit": "1d97064c025dd30d4917e447ab7481aafb3fb4c5",
+  "commit_a": "1d97064c025dd30d4917e447ab7481aafb3fb4c5",
+  "commit_b": "1d97064c025dd30d4917e447ab7481aafb3fb4c5",
+  "started": "2026-10-31T19:48:53Z",
+  "chains_wall_s": 1016,
+  "compare_s": 1,
+  "wall_s": 1100,
+  "cpu_model_a": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "cpu_model_b": "AMD EPYC 9V74 80-Core Processor",
+  "same_processor": false,
+  "pass": false
+}
