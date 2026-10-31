@@ -13,10 +13,10 @@ Genel kurallar:
 **Yapar:**
 - `ROUND_START`; DECISIONS'ta K-P2V1.1 (açılış).
 - İki işlemcinin vektörleri: P2-V V4b'nin (`reports/rounds/P2-V/v4/`, CI koşuları) yapıtları hâlâ indirilebiliyorsa onlar; değilse sabit korpusu `ubuntu-latest` ve `ubuntu-24.04-arm`'da gömen tek seferlik bir `workflow_dispatch` işi (yapıtı ham `f32` vektörler + CPU modeli).
-- Her aday yöntem için (GOAL Kapsam 1: (y) adımlar 2⁻¹⁰…2⁻²⁰, (k), (s), birleşimler): farklı bileşen sayısı, farklı vektör sayısı, C-10 `min_cosine`, kalite referansının Δ'sı. Bir yöntem için ölçüm yapılamıyorsa (örn. (k) yapılandırılamıyor) "denenemedi + neden".
+- Her aday yöntem için (GOAL Kapsam 1: (y) adımlar 2⁻¹⁰…2⁻²⁰, (k), (s), birleşimler): farklı bileşen sayısı, farklı vektör sayısı, C-10 `min_cosine`, kalite referansının Δ'sı. Ayrıca iki işlemcinin ham vektörlerinde bileşen başına |δ| dağılımı (en büyük, ortalama, sıfır olmayan oranı) ve her adım için beklenen sınır çarpışması sayısı (bileşen sayısı × ortalama |δ| / adım), E0 korpusu ve 10⁵ doküman ölçeği için. Bir yöntem için ölçüm yapılamıyorsa (örn. (k) yapılandırılamıyor) "denenemedi + neden".
 - `reports/rounds/P2-V.1/e0/feasibility.md` + ham sayılar JSON; seçim ve gerekçe; commit `P2-V.1/E0: fizibilite ve seçim (ön-kayıt)`.
 
-**Kabul:** V1-1'in ilk yarısı; seçilen yöntem E0 korpusunda 0 fark. Hiçbir yöntem 0 vermiyorsa STOP.md + karar talebi, E1 başlamaz; E3 ve E4 bağımsız sürer.
+**Kabul:** V1-1'in ilk yarısı; seçilen yöntem E0 korpusunda gözlenen 0 fark **ve** 10⁵ doküman ölçeğine beklenen sınır çarpışması < 1 (her yöntem için ikisi de `feasibility.md`'de). Hiçbir yöntem ikisini birden vermiyorsa STOP.md + karar talebi, E1 başlamaz; E3 ve E4 bağımsız sürer.
 
 ## E1 — Gömme determinizmi (ürün)
 **Yapar:**
