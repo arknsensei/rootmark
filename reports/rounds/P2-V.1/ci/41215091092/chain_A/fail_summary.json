@@ -1,0 +1,429 @@
+{
+ "reference_run": "reports/rounds/P2-B/runs/20261025T211044Z-cad7663",
+ "fails": [
+  {
+   "file": "p1b1_checks.json",
+   "criterion": "B1-3",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version"
+  },
+  {
+   "file": "p1c1_checks.json",
+   "criterion": "C1-7",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version"
+  },
+  {
+   "file": "p1c1_checks.json",
+   "criterion": "C1-8",
+   "label": "fail",
+   "why": "not a listed historical FAIL"
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-11",
+   "label": "historical",
+   "decisions": [
+    "K-D1.2",
+    "K-D1.4-T",
+    "K-E0.1"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1c_checks.json",
+   "criterion": "C-3",
+   "label": "historical",
+   "decisions": [
+    "K-C8-T",
+    "K-C1.1",
+    "K-C1.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-10",
+   "label": "historical",
+   "decisions": [
+    "K-P2-01.3",
+    "K-P2L.2"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-L: spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version"
+  },
+  {
+   "file": "p1d1_checks.json",
+   "criterion": "D1-12",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "regress_vs_p1d/differing_fields/c3_quality.json:index›embedder_id",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›pass",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›c3_quality·json:index›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›c3_quality·json:index›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-5›rebuild›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-5›rebuild›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-9›hot_status›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-9›hot_status›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:determinism_vault›build›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:determinism_vault›build›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:models›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:models›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/embedders·jsonl/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/embedders·jsonl/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/embedders·jsonl/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/embedders·jsonl/b"
+   ]
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-2",
+   "label": "historical",
+   "decisions": [
+    "K-D1.1",
+    "K-D1.5",
+    "K-E0.4",
+    "K-D1.4-T",
+    "K-P2R.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): mcp_e2e.sh's check 'tools/list has every tool of this round' compares with its frozen 10-tool set and fails on 11 (handshake 1/2); every tool's own checks unchanged; P2-R (K-P2R.3): mcp_e2e.sh adapted to 11 tools (P2-R/F1, F2): its handshake passes again (K-P2B.4's paths left); the new tool's checks and the passed-tool count are new against P2-P's record; P2-R/F8 (K-P2R.3): against P2-B's RUN (handshake false, 1/2) the adapted handshake passes (true, 2/2)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-7",
+   "label": "historical",
+   "decisions": [
+    "K-D1.4-T",
+    "K-D1.5"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference)"
+  },
+  {
+   "file": "p1d_checks.json",
+   "criterion": "D-9",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "differing_fields/c3_quality.json:index›embedder_id",
+    "differing_fields/p1c1_checks.json:C1-8›pass",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›c3_quality·json:index›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›c3_quality·json:index›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-5›rebuild›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-5›rebuild›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-9›hot_status›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-9›hot_status›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:determinism_vault›build›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:determinism_vault›build›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:models›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:models›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/embedders·jsonl/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/embedders·jsonl/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/embedders·jsonl/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/embedders·jsonl/b"
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-1",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "the /2 index (an older rootmark's) answers search 503 migration_required, not index_stale (K-P2A.2); the other 7 cases unchanged"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-3",
+   "label": "fail",
+   "why": "not a listed historical FAIL"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-4",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "release_check"
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-5",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.6",
+    "K-P2L.1",
+    "K-P2L.2"
+   ],
+   "why": "Linux x86_64 is a required release target since 0.2.0 (K-P2A.6) and the chain runs scripts/release.sh with ROOTMARK_RELEASE_LINUX=0: the required Linux record is skipped; rootmark 0.2.0, spec 2.0.3"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-6",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "E1-6 regresses P1-E.1 against P1-E: its differing fields grow by the contract's new code migration_required (D1-13's contract and server code lists)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-8",
+   "label": "historical",
+   "decisions": [
+    "K-P2-0.5",
+    "K-P2R.3"
+   ],
+   "why": "historical in the P2-0.2 official RUN, its record unchanged (the reference); P2-B: the contract's 11th tool `events` (GOAL P2-B 4 (a), K-P2B.4): its contract check (scripts/contract_check.sh, frozen) fails on the absent `tool:events` / `POST /v1/events`, so the deliberate case 'untouched contract and server' is rejected; P2-R (K-P2R.3, P2-R/F1, F8): the adapted contract check passes again against P2-B's RUN (contract_check_pass, the deliberate case as expected)"
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "E1-9",
+   "label": "fail",
+   "why": "listed as migration required, but its record differs elsewhere",
+   "differing": [
+    "connection_step",
+    "connection_step/notice_shown",
+    "connection_step/search_after_rebuild/error",
+    "connection_step/search_after_rebuild/hits",
+    "connection_step/search_before_rebuild/hits",
+    "connection_step/status_bar",
+    "connection_step/status_bar_after_rebuild",
+    "contract_check_pass",
+    "skipped"
+   ]
+  },
+  {
+   "file": "p1e1_checks.json",
+   "criterion": "tamper",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "real_cases_run",
+    "rejected"
+   ]
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-14",
+   "label": "migration_required",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "auto_rebuild = false on the /2 index: search 503 migration_required, not index_stale (K-P2A.2); auto_rebuild = true unchanged"
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-7",
+   "label": "fail",
+   "why": "its record differs from the reference RUN outside the declared changes",
+   "differing": [
+    "chain_local_target/target"
+   ]
+  },
+  {
+   "file": "p1e_checks.json",
+   "criterion": "E-9",
+   "label": "historical",
+   "decisions": [
+    "K-P2A.2"
+   ],
+   "why": "E-9 regresses P1-E against P1-D.1: the excluded D1-13 leaves grow by the new code migration_required"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2a",
+   "label": "fail",
+   "why": "not a listed historical FAIL"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2b′",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2c",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2d",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "D-C′ (real Obsidian) not run in a development round's chain; D-C ran"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2e",
+   "label": "historical",
+   "decisions": [
+    "K-P2.3"
+   ],
+   "why": "a real-Obsidian set of P2-0.2 (hypothesis round), not run in a development round's chain (K-P2.3); A0's information measurement is reports/rounds/P2-A/info_d_b_test3.json"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2j",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.2's recorder expects 2.0.2; 39/39 and level 3 unchanged"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "H-P2-0.2k",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "spec §7.1's Draft status no longer cites 'the independent verification of Phase 2 round P2-0.2' (SPEC_EDITS P2-L E3, K-P2-03.1 (4)): the frozen check looks for that phrase; the status is Draft"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "fail_summary",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2",
+    "K-P2A.2"
+   ],
+   "why": "P2-0.2's own classifier (against the P2-0.1 RUN) sees the migration-required FAILs E1-1, E1-4, E1-9, E-14; P2-A's classifier is this one; P2-L: P2-0.2's own classifier sees P2-L's decisions"
+  },
+  {
+   "file": "p2_0_2_checks.json",
+   "criterion": "regress",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2",
+    "K-P2A.2"
+   ],
+   "why": "P2-0.2's regress against the P2-0.1 RUN sees P2-A's decisions (contract code, installers, field audit) and the skipped real-Obsidian sets; P2-A's regress is eval.compare_p2a against the P2-0.2 RUN; P2-L: P2-0.2's regress against the P2-0.1 RUN sees P2-L's decisions (spec 2.0.3, 0.2.0, the round's comparator)"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3a",
+   "label": "fail",
+   "why": "not a listed historical FAIL"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b",
+   "label": "fail",
+   "why": "pass is not a boolean (None)"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b-yük",
+   "label": "fail",
+   "why": "pass is not a boolean (None)"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3b′",
+   "label": "historical",
+   "decisions": [
+    "K-P2-03.1"
+   ],
+   "why": "P2-0.3's measured hypothesis (real Obsidian, race-dependent; the '0.3b kaldı' branch, K-P2-03.1): its values differ from run to run; informational (pass null by design)"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3c",
+   "label": "fail",
+   "why": "pass is not a boolean (None)"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3d",
+   "label": "fail",
+   "why": "pass is not a boolean (None)"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3e",
+   "label": "fail",
+   "why": "pass is not a boolean (None)"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "H-P2-0.3j",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "spec 2.0.3 (SPEC_EDITS P2-L E1, E2; K-P2L.2): the frozen record names the spec version: P2-0.3's recorder expects 2.0.2"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "logs_vs_p2a",
+   "label": "fail",
+   "why": "not a listed historical FAIL"
+  },
+  {
+   "file": "p2_0_3_checks.json",
+   "criterion": "rules",
+   "label": "historical",
+   "decisions": [
+    "K-P2L.2"
+   ],
+   "why": "as H-P2-0.2k (SPEC_EDITS P2-L E3)"
+  }
+ ],
+ "historical": 23,
+ "migration_required": 2,
+ "counted_fails": 16,
+ "counted": [
+  "p1c1_checks.json:C1-8",
+  "p1d1_checks.json:D1-12",
+  "p1d_checks.json:D-9",
+  "p1e1_checks.json:E1-3",
+  "p1e1_checks.json:E1-4",
+  "p1e1_checks.json:E1-9",
+  "p1e1_checks.json:tamper",
+  "p1e_checks.json:E-7",
+  "p2_0_2_checks.json:H-P2-0.2a",
+  "p2_0_3_checks.json:H-P2-0.3a",
+  "p2_0_3_checks.json:H-P2-0.3b",
+  "p2_0_3_checks.json:H-P2-0.3b-yük",
+  "p2_0_3_checks.json:H-P2-0.3c",
+  "p2_0_3_checks.json:H-P2-0.3d",
+  "p2_0_3_checks.json:H-P2-0.3e",
+  "p2_0_3_checks.json:logs_vs_p2a"
+ ]
+}

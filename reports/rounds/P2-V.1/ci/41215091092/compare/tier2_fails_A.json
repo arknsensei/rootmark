@@ -1,0 +1,134 @@
+{
+ "classifier_counted": 16,
+ "counted": [
+  {
+   "criterion": "p1d1_checks.json:D1-12",
+   "differing": [
+    "regress_vs_p1d/differing_fields/c3_quality.json:index›embedder_id",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›pass",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›c3_quality·json:index›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›c3_quality·json:index›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-5›rebuild›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-5›rebuild›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-9›hot_status›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-9›hot_status›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:determinism_vault›build›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:determinism_vault›build›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:models›embedder_id/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:models›embedder_id/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/embedders·jsonl/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/embedders·jsonl/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/b",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/embedders·jsonl/a",
+    "regress_vs_p1d/differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/embedders·jsonl/b"
+   ],
+   "why": "its record differs from the reference RUN outside the declared changes"
+  },
+  {
+   "criterion": "p1d_checks.json:D-9",
+   "differing": [
+    "differing_fields/c3_quality.json:index›embedder_id",
+    "differing_fields/p1c1_checks.json:C1-8›pass",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›c3_quality·json:index›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›c3_quality·json:index›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-10›min_cosine/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-5›rebuild›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-5›rebuild›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-9›hot_status›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:C-9›hot_status›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:determinism_vault›build›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:determinism_vault›build›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:models›embedder_id/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_checks·json:models›embedder_id/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/embedders·jsonl/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/embedders·jsonl/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_build›vectors/vectors·f32/b",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/embedders·jsonl/a",
+    "differing_fields/p1c1_checks.json:C1-8›regress›differing_fields›p1c_index·json:index_files_compact›vectors/embedders·jsonl/b"
+   ],
+   "why": "its record differs from the reference RUN outside the declared changes"
+  }
+ ],
+ "counted_fails": 2,
+ "mode": "fails",
+ "pass": false,
+ "reference_run": "reports/rounds/P2-B/runs/20261025T211044Z-cad7663",
+ "run": "run",
+ "set_aside": [
+  {
+   "class": "O",
+   "criterion": "p1c1_checks.json:C1-8",
+   "mac_set": "O-C18"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-3",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-4",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-9",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:tamper",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e_checks.json:E-7",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_2_checks.json:H-P2-0.2a",
+   "mac_set": "Z-DA"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3a",
+   "mac_set": "Z-DA"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3b",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3b-yük",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3c",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3d",
+   "mac_set": "O-DC′"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3e",
+   "mac_set": "O-DA′"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_3_checks.json:logs_vs_p2a",
+   "mac_set": "Z-DA"
+  }
+ ]
+}
