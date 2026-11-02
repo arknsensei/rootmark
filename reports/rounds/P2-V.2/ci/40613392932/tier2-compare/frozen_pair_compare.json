@@ -1,0 +1,436 @@
+{
+ "bytes": {
+  "governance/vault/.rootmark/checkpoints/": {
+   "equal": true,
+   "files": 4
+  },
+  "governance/vault/.rootmark/events.jsonl": {
+   "blake3": "2b0dc8e88f8d56ee4c6be6356d4c0fee",
+   "equal": true
+  },
+  "governance/vault/.rootmark/traces.jsonl": {
+   "blake3": "4e0906770480e03802021d9dfb2a67a5",
+   "equal": true
+  },
+  "p1d/inspector/tools_list.json": {
+   "blake3": "873c39d8eb218941669c3d62ef6b0558",
+   "bytes": 14756,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/cli_promote.jsonl": {
+   "blake3": "343094e8f7255147a905c40d6bb88062",
+   "bytes": 1714,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/transcript.jsonl": {
+   "blake3": "755b2bc140b02349f339bcb42a6273de",
+   "bytes": 11315804,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/transcript_b.jsonl": {
+   "blake3": "29d889909cc6c7b91053f42233ef26bc",
+   "bytes": 13531,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/.rootmark/events.jsonl": {
+   "blake3": "453c8685fd05e0161d7b07a5eff36f0d",
+   "bytes": 42898,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/.rootmark/proposals.jsonl": {
+   "blake3": "bc64f3c96faca2a10454daf6dac3f5ea",
+   "bytes": 642,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/.rootmark/traces.jsonl": {
+   "blake3": "d04f86889aacdf47aa1edf5e15323903",
+   "bytes": 156679,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/agent/plan.md": {
+   "blake3": "bb7a57f8d1071b59435bf4a8b70e0ac7",
+   "bytes": 46,
+   "equal": true
+  },
+  "p1d/mcp_e2e/run1/vault/espresso.md": {
+   "blake3": "4d7568de2512522ac296843deb0658e7",
+   "bytes": 458,
+   "equal": true
+  },
+  "p1d/scene/scene.json": {
+   "blake3": "c93a5d9f6d806ae9b5179240a06138e6",
+   "bytes": 2563,
+   "equal": true
+  },
+  "p1d1/d1_13.json": {
+   "blake3": "ad22db1a1deb840af6df589c3c7f4bac",
+   "bytes": 7718,
+   "equal": true
+  },
+  "p1d1/d1_3.json": {
+   "blake3": "882660255e17accae828b0ce279da8e0",
+   "bytes": 606,
+   "equal": true
+  },
+  "p1d1/d1_8.json": {
+   "blake3": "4e38addedc84e01bf0068d148969f477",
+   "bytes": 3705,
+   "equal": true
+  },
+  "p1e/plugin_e2e/access_log.json": {
+   "blake3": "9cc73bdbcf8c78fb83d72190ebee6ece",
+   "bytes": 3529,
+   "equal": true
+  },
+  "p1e/plugin_e2e/events.jsonl": {
+   "blake3": "657927f1f0032c9eb06e817a2af324a4",
+   "bytes": 39860,
+   "equal": true
+  },
+  "p1e/plugin_e2e/plugin_e2e.json": {
+   "blake3": "88fafbd02f548074146f9e7c87398dd7",
+   "bytes": 4051,
+   "equal": true
+  },
+  "p1e/plugin_e2e/proposals.jsonl": {
+   "blake3": "f57191232551d54e3f6c2291a9b1ac34",
+   "bytes": 219,
+   "equal": true
+  },
+  "p1e/plugin_e2e/traces.jsonl": {
+   "blake3": "853a5bed00823a3bf6e89d241dfb3c00",
+   "bytes": 8446,
+   "equal": true
+  },
+  "p1e/scene/events.jsonl": {
+   "blake3": "f90e4cab2421fed8b23bf674efda62d6",
+   "bytes": 39840,
+   "equal": true
+  },
+  "p1e/scene/proposals.jsonl": {
+   "blake3": "f33b9aa3c575e075cdb973bd943aa38f",
+   "bytes": 223,
+   "equal": true
+  },
+  "p1e/scene/scene.json": {
+   "blake3": "e0d8670b6e9d285b447601071887b272",
+   "bytes": 4193,
+   "equal": true
+  },
+  "p1e/scene/traces.jsonl": {
+   "blake3": "4d6129a7db24c86828097d638d3835df",
+   "bytes": 8386,
+   "equal": true
+  },
+  "p1e1/release/access_log_real.json": {
+   "blake3": "9fa8dc9570625be2be53d308f9583329",
+   "bytes": 3,
+   "equal": true
+  },
+  "p1e1/release/plugin_e2e_real.json": {
+   "blake3": "f119b5aedd9ff75a766488f579d2c24d",
+   "bytes": 150,
+   "equal": true
+  },
+  "p2_0_2/d_a/attestations.jsonl": {
+   "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+   "bytes": 0,
+   "equal": true
+  },
+  "p2_0_2/d_a/events.jsonl": {
+   "blake3": "b84b7e8829bc484dabb1d074cece76a3",
+   "bytes": 417584,
+   "equal": false
+  },
+  "p2_0_2/d_a2/attestations.jsonl": {
+   "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+   "bytes": 0,
+   "equal": true
+  },
+  "p2_0_2/d_a2/events.jsonl": {
+   "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+   "bytes": 253173,
+   "equal": true
+  },
+  "p2_0_2/d_c/attestations.jsonl": {
+   "blake3": "7c847b373c1ace0bd268598f46566dbe",
+   "bytes": 24237,
+   "equal": false
+  },
+  "p2_0_2/d_c/events.jsonl": {
+   "blake3": "a2a42c6588b1227450e9778f7832cb9f",
+   "bytes": 476429,
+   "equal": false
+  }
+ },
+ "bytes_equal": false,
+ "differing_fields": {
+  "p1e1/release/release_check.json:items›17›detail": "inf",
+  "p2_0_2/d_a.json:new_blocks": 0.015384615384615385,
+  "p2_0_2/d_a.json:rows›20›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›20›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›20›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›35›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›35›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›35›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›4›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›4›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›4›unverified": 1.0,
+  "p2_0_2/d_a.json:rows›96›new_blocks": 1.0,
+  "p2_0_2/d_a.json:rows›96›pass_0a": "inf",
+  "p2_0_2/d_a.json:rows›96›unverified": 1.0,
+  "p2_0_2_checks.json:H-P2-0·2a›d_a›new_blocks": 0.015384615384615385,
+  "p2_0_2_checks.json:regress›differing_fields›p1e1/release/release_check·json:items›17›detail›b": "inf",
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›#len": 0.5454545454545454,
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›10": {
+   "a": "rows›20›unverified",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›11": {
+   "a": "rows›35›new_blocks",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›12": {
+   "a": "rows›35›pass_0a",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›13": {
+   "a": "rows›35›unverified",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›14": {
+   "a": "rows›3›new_blocks",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›15": {
+   "a": "rows›3›unverified",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›16": {
+   "a": "rows›4›new_blocks",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›17": {
+   "a": "rows›4›pass_0a",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›18": {
+   "a": "rows›4›unverified",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›19": {
+   "a": "rows›96›new_blocks",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›20": {
+   "a": "rows›96›pass_0a",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›21": {
+   "a": "rows›96›unverified",
+   "b": "absent"
+  },
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›8": "inf",
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_a›differing›9": "inf",
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_c›attestations_equal_but_matched": "inf",
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_c›equal": "inf",
+  "p2_0_2_checks.json:regress›p2_0_1_sets›d_c›events_same_multiset": "inf",
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:new_blocks": 0.6153846153846153,
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›20›new_blocks": {
+   "a": 1.0,
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›20›pass_0a": {
+   "a": "inf",
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›20›unverified": {
+   "a": 1.0,
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›35›new_blocks": {
+   "a": 1.0,
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›35›pass_0a": {
+   "a": "inf",
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›35›unverified": {
+   "a": 1.0,
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›4›new_blocks": {
+   "a": 1.0,
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›4›pass_0a": {
+   "a": "inf",
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›4›unverified": {
+   "a": 1.0,
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›96›new_blocks": {
+   "a": 1.0,
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›96›pass_0a": {
+   "a": "inf",
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2/d_a·json:rows›96›unverified": {
+   "a": 1.0,
+   "b": "absent"
+  },
+  "p2a_checks.json:regress›differing_fields›p2_0_2_checks·json:H-P2-0·2a›d_a›new_blocks": 0.6153846153846153,
+  "p2a_checks.json:regress›excluded_differences›p2_0_2_checks·json:regress›leaves": 0.00040582219576862724,
+  "p2a_checks.json:regress›p2_0_2_bytes›files›p2_0_2/d_c/attestations·jsonl›equal": "inf",
+  "p2a_checks.json:regress›p2_0_2_bytes›files›p2_0_2/d_c/events·jsonl›equal": "inf"
+ },
+ "equal": false,
+ "files": [
+  "h1s_tuning.json",
+  "h1s.json",
+  "h1r.json",
+  "h1s_v3_tuning.json",
+  "h1s_v3.json",
+  "h1r_v3.json",
+  "h3_v3.json",
+  "h4_v3.json",
+  "h4_v2repro.json",
+  "holdout.json",
+  "split_grid.json",
+  "holdout_split.json",
+  "p1b_checks.json",
+  "governance/governance.json",
+  "p1b1_checks.json",
+  "c3_quality.json",
+  "p1c_checks.json",
+  "p1c_index.json",
+  "c1_variant.json",
+  "p1c1_checks.json",
+  "p1d_checks.json",
+  "p1d/inspector/inspector.json",
+  "p1d/mcp_e2e/mcp_e2e.json",
+  "p1d/http/http_e2e.json",
+  "p1d/scene/scene.json",
+  "p1d/tamper_p1d.json",
+  "p1d/d10.json",
+  "p1d/sigterm.json",
+  "p1d1_checks.json",
+  "conformance_p1d1.json",
+  "p1d1/p1d1.json",
+  "p1d1/d1_1.json",
+  "p1d1/d1_2.json",
+  "p1d1/d1_3.json",
+  "p1d1/d1_4.json",
+  "p1d1/d1_5.json",
+  "p1d1/d1_6.json",
+  "p1d1/d1_7.json",
+  "p1d1/d1_8.json",
+  "p1d1/d1_9.json",
+  "p1d1/d1_11.json",
+  "p1d1/d1_13.json",
+  "p1d1/v3_compat.json",
+  "p1d1/v3_compat_mixed.json",
+  "p1d1/tamper_p1d1.json",
+  "p1e_checks.json",
+  "p1e/e0/e14.json",
+  "p1e/e0/e15.json",
+  "p1e/scene/scene.json",
+  "p1e/plugin_e2e/plugin_e2e.json",
+  "p1e/plugin_e2e/access_log.json",
+  "p1e/client.json",
+  "p1e/release/release_local.json",
+  "p1e/release/conformance_rootmark.json",
+  "p1e/release/conformance_equiv.json",
+  "p1e/tamper_p1e.json",
+  "p1e/check_compare_fields.json",
+  "p1e1_checks.json",
+  "p1e1/status/e1_1.json",
+  "p1e1/status/e1_2.json",
+  "p1e1/contract.json",
+  "p1e1/tamper_p1e1.json",
+  "p1e1/tamper_p1e1_e2e.json",
+  "p1e1/release/release.json",
+  "p1e1/release/release_check.json",
+  "p1e1/release/plugin_e2e_real.json",
+  "p1e1/release/access_log_real.json",
+  "p1e1/historical.json",
+  "p1e1/check_compare_fields.json",
+  "p2_0_2_checks.json",
+  "p2_0_2/rules.json",
+  "p2_0_2/d_e.json",
+  "p2_0_2/d_a.json",
+  "p2_0_2/d_a2.json",
+  "p2_0_2/d_c.json",
+  "p2_0_2/tamper_p2_0_2.json",
+  "p2a_checks.json",
+  "p2a/migrate_old.json",
+  "p2a/fixture.json",
+  "p2a/tamper.json",
+  "p2a/tests.json",
+  "p2l_checks.json",
+  "p2l_quality.json",
+  "p2l/d_tr.json",
+  "p2l/english.json",
+  "p2l/migrate.json",
+  "p2p_checks.json",
+  "p2b_checks.json",
+  "p2b/align.json",
+  "p2b/det.json",
+  "p2b/client_checks.json",
+  "p2b/obsidian_e2e.json",
+  "p2b/vscode_e2e.json",
+  "p2r_checks.json",
+  "p2r/volume.json",
+  "p2r/det.json",
+  "p2b/align_regress.json"
+ ],
+ "h_p2_0_2i": {
+  "equal": false,
+  "files": {
+   "p2_0_2/d_a/attestations.jsonl": {
+    "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "bytes": 0,
+    "equal": true
+   },
+   "p2_0_2/d_a/events.jsonl": {
+    "blake3": "b84b7e8829bc484dabb1d074cece76a3",
+    "bytes": 417584,
+    "equal": false
+   },
+   "p2_0_2/d_a2/attestations.jsonl": {
+    "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+    "bytes": 0,
+    "equal": true
+   },
+   "p2_0_2/d_a2/events.jsonl": {
+    "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+    "bytes": 253173,
+    "equal": true
+   },
+   "p2_0_2/d_c/attestations.jsonl": {
+    "blake3": "7c847b373c1ace0bd268598f46566dbe",
+    "bytes": 24237,
+    "equal": false
+   },
+   "p2_0_2/d_c/events.jsonl": {
+    "blake3": "a2a42c6588b1227450e9778f7832cb9f",
+    "bytes": 476429,
+    "equal": false
+   }
+  }
+ },
+ "informational_fields": {
+  "p1d1/d1_5.json": [
+   "responses_a_vs_b_equal",
+   "responses_pipelined_vs_lockstep_equal"
+  ]
+ },
+ "n_fields": 788021,
+ "run_a": "/home/runner/work/_temp/in/tier2-A/run",
+ "run_b": "/home/runner/work/_temp/in/tier2-B/run"
+}

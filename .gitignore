@@ -56,3 +56,12 @@ dist/
 !/research/data/p2_0_old_vaults/
 # P2-0.1 D-E: vaults written by the P2-0 build ce4cf04 (scripts/gen_p2_0_1_old_vaults.sh)
 !/research/data/p2_0_1_old_vaults/
+
+# P2-V.2/Y0: the downloaded tier-2 artifacts (GOAL P2-V.2 Kapsam 1): the
+# chains' RUN directories (~289 MB of JSON each, ~465 MB in all per run) and
+# logs stay out; every file's blake2b is in ci/<run>/manifest.json, and the
+# artifacts are downloadable until 2027-01-26/29/30 (ASSUMPTIONS Y0-2)
+/reports/rounds/P2-V.2/ci/*/tier2-A/run/
+/reports/rounds/P2-V.2/ci/*/tier2-B/run/
+/reports/rounds/P2-V.2/ci/*/tier2-A/chain.log
+/reports/rounds/P2-V.2/ci/*/tier2-B/chain.log
