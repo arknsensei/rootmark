@@ -1,0 +1,81 @@
+[verify-mac 20:43:59] clone <repo> -> <tmp>/rootmark-verify-mac.XXXXXX.YRu898B3dG/repo
+[verify-mac 20:44:03] commit 46b8df816c73c697ac304201a77450f21324651f
+[verify-mac 20:47:17] RUN=20261102T204717Z-46b8df8 (setup 198 s)
+[verify-mac 20:47:18] rep 1/1: RUN 20261102T204718Z-46b8df8
+[verify-mac 20:47:18] rep 1: P2-0.2 sets under serve --watch (D-A, D-A2, D-C, D-B2; D-E, rules)
+[verify-mac 21:01:54] rep 1: run_p2_0_2 stopped (recorded)
+    cli_attest(rootmark, sv.vault, s["to"], renamed_from=doc)
+  File "<tmp>/rootmark-verify-mac.XXXXXX.YRu898B3dG/repo/research/eval/run_p2_0_1.py", line 315, in cli_attest
+    raise RuntimeError(f"rootmark attest {doc}: exit {r.returncode}: {r.stderr[-400:]}")
+RuntimeError: rootmark attest m023-blends.md: exit 1: error: attest: HTTP 403 denied: attest: m023-blends.md is not a rename of the content of blends.md: 14 blocks against 13 in blends.md
+
+[verify-mac 21:01:54] rep 1: P2-0.3 real-Obsidian sets (D-B test-4, D-A′, D-C′)
+[verify-mac 21:19:59] rep 1: run_p2_0_3 stopped (recorded)
+Error: p000: the human's linking paragraph is unverified, not canonical
+    at file://<tmp>/rootmark-verify-mac.XXXXXX.YRu898B3dG/repo/clients/obsidian/e2e/p2_0_2/.build/real.mjs:543:40
+
+Node.js v24.3.0
+
+[verify-mac 21:19:59] rep 1: P1-C.1 C1-8 (the chain's steps holdout … p1c1-checks, against the P1-C RUN; once)
+[verify-mac 21:44:31] rep 1: serve_watch (D-10, SIGTERM)
+[verify-mac 21:45:01] rep 1: serve_watch exit 101 (recorded)
+[verify-mac 21:45:01] rep 1: local release binary (E-7), release package with the real-Obsidian e2e and its check (E1-3, E1-4, E1-9), the e2e's deliberate cases
+[verify-mac 21:46:36] rep 1: release_check exit 1 (recorded)
+verify-mac rep 1: p1c1_checks.json:C1-8 pass
+verify-mac rep 1: p1e_checks.json:E-7 FAIL
+verify-mac rep 1: p1d_checks.json:D-10 FAIL
+verify-mac rep 1: p1e1_checks.json:E1-3 pass
+verify-mac rep 1: p1e1_checks.json:E1-4 FAIL
+verify-mac rep 1: p1e1_checks.json:tamper pass
+verify-mac rep 1: p1e1_checks.json:E1-9 pass
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2a FAIL
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2a′ FAIL
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2d FAIL
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2f FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3a FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3a′ FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3b FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3b-yük FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3b′ FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3c FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3d FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3e FAIL
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3f FAIL
+verify-mac rep 1: p2_0_3_checks.json:logs_vs_p2a FAIL
+verify-mac rep 1: p2_0_2_checks.json:H-P2-0.2i -
+verify-mac rep 1: p2_0_3_checks.json:H-P2-0.3i -
+verify-mac: Z-D10 (Z) - (3/3: False)
+verify-mac:   p1d_checks.json:D-10 0/1
+verify-mac: Z-DA (Z) - (3/3: False)
+verify-mac:   p2_0_2_checks.json:H-P2-0.2a 0/1
+verify-mac:   p2_0_2_checks.json:H-P2-0.2a′ 0/1
+verify-mac:   p2_0_3_checks.json:H-P2-0.3a 0/1
+verify-mac:   p2_0_3_checks.json:H-P2-0.3a′ 0/1
+verify-mac:   p2_0_2_checks.json:H-P2-0.2i eşik yok
+verify-mac:   p2_0_3_checks.json:H-P2-0.3i eşik yok
+verify-mac:   p2_0_3_checks.json:logs_vs_p2a eşik yok
+verify-mac: Z-DC (Z) - (3/3: False)
+verify-mac:   p2_0_2_checks.json:H-P2-0.2d 0/1
+verify-mac: Z-DB2 (Z) - (3/3: False)
+verify-mac:   p2_0_2_checks.json:H-P2-0.2f 0/1
+verify-mac:   p2_0_3_checks.json:H-P2-0.3f 0/1
+verify-mac: O-DB4 (O) - (3/3: False)
+verify-mac:   p2_0_3_checks.json:H-P2-0.3b 0/1, tarihsel: kayıt eşit
+verify-mac:   p2_0_3_checks.json:H-P2-0.3b-yük 0/1
+verify-mac:   p2_0_3_checks.json:H-P2-0.3b′ eşik yok
+verify-mac:   p2_0_3_checks.json:H-P2-0.3c 0/1
+verify-mac: O-DC′ (O) - (3/3: False)
+verify-mac:   p2_0_3_checks.json:H-P2-0.3d 0/1
+verify-mac: O-DA′ (O) - (3/3: False)
+verify-mac:   p2_0_3_checks.json:H-P2-0.3e 0/1
+verify-mac: O-REL (O) FAIL (3/3: False)
+verify-mac:   p1e_checks.json:E-7 0/1, tarihsel: kayıt eşit
+verify-mac:   p1e1_checks.json:E1-3 1/1
+verify-mac:   p1e1_checks.json:E1-4 0/1, tarihsel: kayıt eşit
+verify-mac:   p1e1_checks.json:E1-9 1/1
+verify-mac:   p1e1_checks.json:tamper 1/1
+verify-mac: O-C18 (O) pass (3/3: True)
+verify-mac:   p1c1_checks.json:C1-8 1/1
+verify-mac: FAIL; reps [3579] s, total 3780 s
+[verify-mac 21:46:59] finished in 3780 s
+make: *** [verify-mac] Error 3
