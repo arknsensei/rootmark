@@ -65,3 +65,6 @@ dist/
 /reports/rounds/P2-V.2/ci/*/tier2-B/run/
 /reports/rounds/P2-V.2/ci/*/tier2-A/chain.log
 /reports/rounds/P2-V.2/ci/*/tier2-B/chain.log
+
+# P2-V.2/Y2: the full equiv result (~50 MB; its condensed form is committed)
+/reports/rounds/P2-V.2/**/equiv_v0m.full.json

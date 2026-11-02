@@ -18,7 +18,14 @@ P2-V.1/F4 (Ş2 of P2-V's verification): with `--all` every record of the
 RUN is read too — each `*.json` and `*.jsonl` file under it, whether the
 pair compares it or not (logs, `*.log`, are diagnostics, not records).
 
-    python -m eval.portable <run_dir> [--host host.json …] [--fast] [--all] [--skip-missing] [--files-from compare.json] [--out path.json]
+P2-V.2/F2 (K-P2V1.2 T4): the inventory's `host_fields` entries of class
+`measured_host_value` (H5: `conformance.json` `fixtures_root`, the host
+value B1-6 measures) are skipped by name — that one field of that one
+record, nothing else of it — and reported in `skipped_by_name`; any other
+host value, in the same record or another, is still a finding. With an
+inventory without such entries (P2-V.1's) the output is as before.
+
+    python -m eval.portable <run_dir> [--host host.json …] [--fast] [--all] [--skip-missing] [--files-from compare.json] [--inventory inventory.json] [--out path.json]
 
 Exit 0 when nothing is found, 3 when something is (the record names the
 file, the value's kind and the first match), 1 on a missing file.
@@ -36,7 +43,9 @@ import sys
 from pathlib import Path
 
 from eval import compare_p2r
-from eval.datasets.common import dump_json
+from eval.datasets.common import ROOT, dump_json
+
+INVENTORY = ROOT.parent / "reports/rounds/P2-V.2/inventory.json"
 
 GENERIC = {"/", "/tmp", "/private/tmp", "/var", "/private/var", "/home", "/Users"}
 
@@ -143,11 +152,54 @@ def record_files(
     return files
 
 
+def measured_host_values(inv: dict) -> list[dict]:
+    """The inventory's host fields that a criterion measures (P2-V.2/F2):
+    `host_fields` entries of class `measured_host_value`, each one record
+    and one field, never a pattern."""
+    out = []
+    for e in inv.get("host_fields", []):
+        if e.get("class") != "measured_host_value":
+            continue
+        if not e.get("file") or not e.get("field") or set("*?[") & set(e["file"] + e["field"]):
+            raise ValueError(f"{e.get('id')}: a measured host value names one file and field")
+        out.append(e)
+    return out
+
+
+def _without(text: str, f: str, named: list[dict], skipped: list[dict]) -> str:
+    """The record's text with the named fields' values replaced by a
+    placeholder; the rest of the record is searched as before."""
+    mine = [e for e in named if e["file"] == f]
+    if not mine:
+        return text
+    doc = json.loads(text)
+    for e in mine:
+        *head, last = e["field"].split("›")
+        node = doc
+        for k in head:
+            node = node.get(k) if isinstance(node, dict) else None
+        if isinstance(node, dict) and last in node:
+            v = node[last]
+            node[last] = f"<{e['id']}: measured host value>"
+            skipped.append(
+                {
+                    "id": e["id"],
+                    "file": f,
+                    "field": e["field"],
+                    "value_kind": type(v).__name__,
+                    "why": "kriterin ölçtüğü host değeri (envanter `host_fields`, K-P2V1.2 T4)",
+                }
+            )
+    return json.dumps(doc, indent=2, ensure_ascii=False)
+
+
 def scan(
     run_dir: Path,
     files: list[str],
     pats: list[tuple[str, re.Pattern]],
     missing: list[str] | None = None,
+    named: list[dict] | None = None,
+    skipped: list[dict] | None = None,
 ) -> list[dict]:
     """Every hit; a missing file is an error unless `missing` collects it
     (an archived RUN that left large artefacts out names them)."""
@@ -160,6 +212,8 @@ def scan(
             missing.append(f)
             continue
         text = p.read_text(encoding="utf-8", errors="replace")
+        if named:
+            text = _without(text, f, named, skipped if skipped is not None else [])
         for kind, rx in pats:
             m = rx.search(text)
             if m:
@@ -184,14 +238,24 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument(
         "--files-from", type=Path, help="the frozen `compare_p2r pair --out` result naming this RUN"
     )
+    ap.add_argument(
+        "--inventory",
+        type=Path,
+        default=INVENTORY,
+        help="its `measured_host_value` host fields are skipped by name (P2-V.2/F2)",
+    )
     ap.add_argument("--out", type=Path)
     a = ap.parse_args(argv)
     missing: list[str] | None = [] if a.skip_missing else None
+    skipped: list[dict] = []
     try:
+        if not a.inventory.is_file():
+            raise FileNotFoundError(f"{a.inventory} missing")
+        named = measured_host_values(json.loads(a.inventory.read_text(encoding="utf-8")))
         hosts = [json.loads(h.read_text(encoding="utf-8")) for h in a.host] + [this_host()]
         files = record_files(a.run_dir, a.fast, a.skip_missing, a.files_from, a.all)
-        hits = scan(a.run_dir, files, needles(hosts), missing)
-    except (FileNotFoundError, json.JSONDecodeError) as e:
+        hits = scan(a.run_dir, files, needles(hosts), missing, named, skipped)
+    except (FileNotFoundError, json.JSONDecodeError, ValueError) as e:
         print(f"error: {e}", file=sys.stderr)
         sys.exit(1)
     res = {
@@ -201,12 +265,15 @@ def main(argv: list[str] | None = None) -> None:
         "hosts": len(hosts),
         "missing": missing,
         "findings": hits,
+        **({"skipped_by_name": skipped} if named else {}),
         "pass": not hits,
     }
     text = dump_json(res)
     if a.out:
         a.out.write_text(text, encoding="utf-8")
     print(text, end="")
+    for x in skipped:
+        print(f"portable: skipped by name {x['id']} {x['file']}:{x['field']}", file=sys.stderr)
     if hits:
         for h in hits:
             print(f"portable: FOUND {h['kind']} {h['match']!r} in {h['file']}", file=sys.stderr)

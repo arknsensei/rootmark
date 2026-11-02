@@ -1,0 +1,30 @@
+{
+ "criteria": 23,
+ "equal": 23,
+ "pass": true,
+ "per_criterion": {
+  "p1c1_checks.json:C1-8": true,
+  "p1d_checks.json:D-10": true,
+  "p1e1_checks.json:E1-3": true,
+  "p1e1_checks.json:E1-4": true,
+  "p1e1_checks.json:E1-9": true,
+  "p1e1_checks.json:tamper": true,
+  "p1e_checks.json:E-7": true,
+  "p2_0_2_checks.json:H-P2-0.2a": true,
+  "p2_0_2_checks.json:H-P2-0.2a′": true,
+  "p2_0_2_checks.json:H-P2-0.2d": true,
+  "p2_0_2_checks.json:H-P2-0.2f": true,
+  "p2_0_2_checks.json:H-P2-0.2i": true,
+  "p2_0_3_checks.json:H-P2-0.3a": true,
+  "p2_0_3_checks.json:H-P2-0.3a′": true,
+  "p2_0_3_checks.json:H-P2-0.3b": true,
+  "p2_0_3_checks.json:H-P2-0.3b-yük": true,
+  "p2_0_3_checks.json:H-P2-0.3b′": true,
+  "p2_0_3_checks.json:H-P2-0.3c": true,
+  "p2_0_3_checks.json:H-P2-0.3d": true,
+  "p2_0_3_checks.json:H-P2-0.3e": true,
+  "p2_0_3_checks.json:H-P2-0.3f": true,
+  "p2_0_3_checks.json:H-P2-0.3i": true,
+  "p2_0_3_checks.json:logs_vs_p2a": true
+ }
+}

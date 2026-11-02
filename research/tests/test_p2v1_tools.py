@@ -11,7 +11,9 @@ from eval import historical_p2r, tier2
 
 REPO = Path(__file__).resolve().parents[2]
 P2R_RUN = REPO / "reports/rounds/P2-R/runs/20261026T222501Z-5b235b0"
-INV = tier2.load_inventory()
+# P2-V.2/Y2: pinned to the inventory these tests were written for (the
+# default is P2-V.2's since F1; P2-V.1/F2 pinned P2-V's tests alike)
+INV = tier2.load_inventory(REPO / "reports/rounds/P2-V.1/inventory.json")
 
 
 def test_p2v1_inventory_carries_every_p2v_entry():

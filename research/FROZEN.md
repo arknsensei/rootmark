@@ -449,6 +449,14 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/verify_mac.py` | `P2-V.1/E4:` | yeniden dondurma P2-V.1/F8: `mac_reading` (tek koşu, E1 okuması, tarihsel kayıt eşitliği) |
 | `reports/rounds/P2-V.2/inventory.json` | `P2-V.2/Y1:` | P2-V.2'nin envanteri (ön-kayıt; GOAL P2-V.2 İlkeler, TASKS Y1; P2-V.1'inki + K-P2V1.2'nin dört adı); `research/p2v2/inventory.py` üretir |
 | `research/p2v2/inventory.py` | `P2-V.2/Y1:` | envanterin üreteci ve programla farkı (`diff`, V2-1) |
+| `research/eval/tier2.py` | `P2-V.2/Y2:` | yeniden dondurma P2-V.2/F1: P2-V.2 envanteri, `tamper·det` tarihsel okuma (kayıt eşitliği), E1-W, okunan envanterin adı |
+| `research/eval/portable.py` | `P2-V.2/Y2:` | yeniden dondurma P2-V.2/F2: `measured_host_value` (H5) adıyla atlanır, `skipped_by_name` |
+| `research/eval/verify_mac.py` | `P2-V.2/Y2:` | yeniden dondurma P2-V.2/F3: `reported_only`, `in_verdict`, Ş1 (eksik/zaman aşımı kaydı başarısız tekrar), `reread` |
+| `research/eval/**` | `P2-V.2/Y2:` | yeniden dondurma P2-V.2/F1: kalıbın yeniden dondurulması (P2-V.2/F1, F2, F3'ün dosyaları kendi satırlarıyla) |
+| `scripts/verify_mac.sh` | `P2-V.2/Y2:` | yeniden dondurma P2-V.2/F4: eksik kayıt `--error` ile kaydedilir, küme devam eder; `VERIFY_MAC_REPS` |
+| `server/tests/serve_watch.rs` | `P2-V.2/Y2:` | yeniden dondurma P2-V.2/F5: zaman aşımında kayıt (`timeout: true`), `ROOTMARK_D10_DEADLINE_MS` (test kodu) |
+| `research/p2v2/reread.py` | `P2-V.2/Y2:` | Y2/Y3'ün yeniden okuma sürücüsü (verify.yml'nin karşılaştırma komutları) |
+| `research/p2v2/before_after.py` | `P2-V.2/Y2:` | önce/sonra bayt karşılaştırıcısı (V2-5) |
 <!-- /frozen-table -->
 
 ## Notlar
