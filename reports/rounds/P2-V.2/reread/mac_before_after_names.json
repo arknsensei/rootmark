@@ -1,0 +1,290 @@
+{
+ "differing_leaves": 71,
+ "leaves": [
+  {
+   "leaf": "in_verdict›0",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "in_verdict›1",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "in_verdict›2",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "in_verdict›3",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "in_verdict›4",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reading",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›0›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›0›criterion",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›0›passed",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›0›source",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›0›threshold",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›1›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›1›criterion",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›1›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›1›passed",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›1›source",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›1›threshold",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›2›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›2›criterion",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›2›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›2›passed",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›2›source",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›2›threshold",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›3›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›3›criterion",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›3›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›3›passed",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›3›source",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›3›threshold",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›4›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›4›criterion",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›4›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›4›passed",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›4›source",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "reported_only›4›threshold",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›0›criteria›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›1›criteria›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›1›criteria›1›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›1›criteria›2›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›1›criteria›3›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›1›criteria›4›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›1›criteria›5›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›1›criteria›6›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›2›criteria›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›3›criteria›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›3›criteria›1›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›4›criteria›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›4›criteria›1›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›4›criteria›1›reported_only›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›4›criteria›1›reported_only›decision",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›4›criteria›2›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›4›criteria›3›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›4›criteria›3›reported_only›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›4›criteria›3›reported_only›decision",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›5›criteria›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›5›criteria›0›reported_only›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›5›criteria›0›reported_only›decision",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›6›criteria›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›6›criteria›0›reported_only›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›6›criteria›0›reported_only›decision",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›7›criteria›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›7›criteria›1›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›7›criteria›1›pass",
+   "why": "öteki O kriteri 3/3 ile hükümde (T5: muaf tutulan yalnız beş)"
+  },
+  {
+   "leaf": "sets›7›criteria›2›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›7›criteria›3›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›7›criteria›3›pass",
+   "why": "öteki O kriteri 3/3 ile hükümde (T5: muaf tutulan yalnız beş)"
+  },
+  {
+   "leaf": "sets›7›criteria›4›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›7›criteria›4›reported_only›carry",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›7›criteria›4›reported_only›decision",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  },
+  {
+   "leaf": "sets›8›criteria›0›in_verdict",
+   "why": "P2-V.2 okumasının etiketi (T5)"
+  }
+ ],
+ "unexplained": []
+}

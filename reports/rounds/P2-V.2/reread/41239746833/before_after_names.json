@@ -1,0 +1,395 @@
+{
+ "files": {
+  "tier2_pair.json": {
+   "differing_leaves": 2,
+   "leaves": [
+    {
+     "leaf": "frozen_result_read",
+     "why": "okunan envanter / girdi yolu (yankı)"
+    },
+    {
+     "leaf": "inventory",
+     "why": "okunan envanter / girdi yolu (yankı)"
+    }
+   ]
+  },
+  "tier2_fails_A.json": {
+   "differing_leaves": 18,
+   "leaves": [
+    {
+     "leaf": "counted›0›criterion",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    },
+    {
+     "leaf": "counted›0›why",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    },
+    {
+     "leaf": "counted",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    },
+    {
+     "leaf": "counted_fails",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    },
+    {
+     "leaf": "derived_criteria›0›reading",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "derived_criteria›0›record_equal",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›blake2b",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›class",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›criterion",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›decision",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›differs",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›failing_cases›0",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›failing_cases›1",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›pass",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›record_equal",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›reference",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›until",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "pass",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    }
+   ]
+  },
+  "tier2_fails_B.json": {
+   "differing_leaves": 18,
+   "leaves": [
+    {
+     "leaf": "counted›0›criterion",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    },
+    {
+     "leaf": "counted›0›why",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    },
+    {
+     "leaf": "counted",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    },
+    {
+     "leaf": "counted_fails",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    },
+    {
+     "leaf": "derived_criteria›0›reading",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "derived_criteria›0›record_equal",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›blake2b",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›class",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›criterion",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›decision",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›differs",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›failing_cases›0",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›failing_cases›1",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›pass",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›record_equal",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›reference",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "historical›0›until",
+     "why": "T3 tamper·det tarihsel okuma"
+    },
+    {
+     "leaf": "pass",
+     "why": "T3 tamper·det tarihsel (sayılan → tarihsel)"
+    }
+   ]
+  },
+  "portable_A.json": {
+   "differing_leaves": 23,
+   "leaves": [
+    {
+     "leaf": "findings›0›context",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›0›file",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›0›kind",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›0›match",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›1›context",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›1›file",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›1›kind",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›1›match",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›2›context",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›2›file",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›2›kind",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›2›match",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›3›context",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›3›file",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›3›kind",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›3›match",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "pass",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "skipped_by_name›0›field",
+     "why": "T4 H5 adıyla atlama raporu"
+    },
+    {
+     "leaf": "skipped_by_name›0›file",
+     "why": "T4 H5 adıyla atlama raporu"
+    },
+    {
+     "leaf": "skipped_by_name›0›id",
+     "why": "T4 H5 adıyla atlama raporu"
+    },
+    {
+     "leaf": "skipped_by_name›0›value_kind",
+     "why": "T4 H5 adıyla atlama raporu"
+    },
+    {
+     "leaf": "skipped_by_name›0›why",
+     "why": "T4 H5 adıyla atlama raporu"
+    }
+   ]
+  },
+  "portable_B.json": {
+   "differing_leaves": 23,
+   "leaves": [
+    {
+     "leaf": "findings›0›context",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›0›file",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›0›kind",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›0›match",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›1›context",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›1›file",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›1›kind",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›1›match",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›2›context",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›2›file",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›2›kind",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›2›match",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›3›context",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›3›file",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›3›kind",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings›3›match",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "findings",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "pass",
+     "why": "T4 H5 adıyla atlandı (conformance.json fixtures_root)"
+    },
+    {
+     "leaf": "skipped_by_name›0›field",
+     "why": "T4 H5 adıyla atlama raporu"
+    },
+    {
+     "leaf": "skipped_by_name›0›file",
+     "why": "T4 H5 adıyla atlama raporu"
+    },
+    {
+     "leaf": "skipped_by_name›0›id",
+     "why": "T4 H5 adıyla atlama raporu"
+    },
+    {
+     "leaf": "skipped_by_name›0›value_kind",
+     "why": "T4 H5 adıyla atlama raporu"
+    },
+    {
+     "leaf": "skipped_by_name›0›why",
+     "why": "T4 H5 adıyla atlama raporu"
+    }
+   ]
+  },
+  "criteria_A.json": {
+   "differing_leaves": 0,
+   "leaves": []
+  },
+  "criteria_B.json": {
+   "differing_leaves": 0,
+   "leaves": []
+  },
+  "equiv_v0m.json": {
+   "differing_leaves": 4,
+   "leaves": [
+    {
+     "leaf": "d_fields_differing›p1e1/release/release_check.json:items›7›detail",
+     "why": "T2 E1-W (R7 detail adlandırıldı)"
+    },
+    {
+     "leaf": "d_fields_differing",
+     "why": "T2 E1-W (R7 detail adlandırıldı)"
+    },
+    {
+     "leaf": "named_counts›E1",
+     "why": "T2 E1-W (E1 grubunda +1)"
+    },
+    {
+     "leaf": "pass",
+     "why": "T2 E1-W (R7 detail adlandırıldı)"
+    }
+   ]
+  }
+ },
+ "unexplained": []
+}
