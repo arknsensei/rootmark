@@ -8,6 +8,15 @@
 //! Pass: p95 < 1000 ms.
 //! `ROOTMARK_D10_OUT` receives the latencies and the result. Then SIGTERM: the
 //! server compacts and exits 0. Needs the model files (`make models`).
+//!
+//! P2-V.2/Y2 (Ş1 of P2-V.1's verification; K-P2V1.2 T5 condition 2): when an
+//! edit is not searchable within the deadline (`ROOTMARK_D10_DEADLINE_MS`,
+//! default 10 000 — test code only, the product is unchanged) the record is
+//! still written, with `timeout: true`, `pass: false`, the latencies measured
+//! so far and the edit it stopped at; the server is stopped and the test then
+//! fails as before. The SIGTERM test writes its record (`ROOTMARK_SIGTERM_OUT`)
+//! with `timeout: true` when a server does not start within its 60 s; its
+//! 15 s exit wait is its measurement (a lost signal), recorded as before.
 
 use serde_json::{json, Value};
 use std::io::{BufRead, BufReader, Read, Write};
@@ -56,6 +65,31 @@ fn blame(port: u16, token: &str, doc: &str) -> Vec<Value> {
     );
     assert_eq!(st, 200, "{v}");
     v["blocks"].as_array().unwrap().clone()
+}
+
+/// D-10's per-edit deadline (P2-V.2/Y2): `ROOTMARK_D10_DEADLINE_MS`,
+/// default 10 000 ms; a value that is not a positive integer is an error.
+fn d10_deadline() -> Duration {
+    match std::env::var("ROOTMARK_D10_DEADLINE_MS") {
+        Ok(v) if !v.is_empty() => {
+            let ms: u64 =
+                v.parse().ok().filter(|&m| m > 0).unwrap_or_else(|| {
+                    panic!("ROOTMARK_D10_DEADLINE_MS={v}: not a positive integer")
+                });
+            Duration::from_millis(ms)
+        }
+        _ => Duration::from_millis(10_000),
+    }
+}
+
+/// Writes `report` to the file named by the environment variable `var`, if
+/// set (the Mac set's record).
+fn write_out(var: &str, report: &Value) {
+    if let Ok(p) = std::env::var(var) {
+        if !p.is_empty() {
+            std::fs::write(&p, serde_json::to_string_pretty(report).unwrap() + "\n").unwrap();
+        }
+    }
 }
 
 fn p95(v: &[f64]) -> f64 {
@@ -131,7 +165,8 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
         .to_string();
 
     let docs = ["espresso.md", "filter.md", "roasting.md", "glossary.md"];
-    let mut lat = Vec::new();
+    let deadline = d10_deadline();
+    let mut lat: Vec<f64> = Vec::new();
     let mut layers_ok = true;
     for i in 0..20 {
         let doc = docs[i % docs.len()];
@@ -158,10 +193,29 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
                     break h.clone();
                 }
             }
-            assert!(
-                t0.elapsed() < Duration::from_secs(10),
-                "edit {i} of {doc} not searchable after 10 s"
-            );
+            if t0.elapsed() >= deadline {
+                // Ş1: the record is written before the test fails
+                let report = json!({
+                    "timeout": true,
+                    "deadline_ms": deadline.as_millis() as u64,
+                    "stopped_at": {"edit": i, "doc": doc},
+                    "edits": lat.len(),
+                    "latencies_ms": lat.clone(),
+                    "p95_ms": if lat.is_empty() { Value::Null } else { json!(p95(&lat)) },
+                    "max_ms": lat.iter().cloned().fold(0.0, f64::max),
+                    "layers_canonical_human": layers_ok,
+                    "sigterm_exit_0": Value::Null,
+                    "sigterm_compacted": Value::Null,
+                    "pass": false,
+                });
+                write_out("ROOTMARK_D10_OUT", &report);
+                let _ = child.kill();
+                let _ = child.wait();
+                panic!(
+                    "edit {i} of {doc} not searchable after {} ms\n{report}",
+                    deadline.as_millis()
+                );
+            }
             std::thread::sleep(Duration::from_millis(5));
         };
         lat.push(t0.elapsed().as_secs_f64() * 1000.0);
@@ -196,11 +250,7 @@ fn d10_watched_human_edit_is_indexed_within_a_second() {
         "sigterm_compacted": tail.contains("compact (shutdown)"),
         "pass": p95v < 1000.0 && layers_ok && code.success() && tail.contains("compact (shutdown)"),
     });
-    if let Ok(p) = std::env::var("ROOTMARK_D10_OUT") {
-        if !p.is_empty() {
-            std::fs::write(&p, serde_json::to_string_pretty(&report).unwrap() + "\n").unwrap();
-        }
-    }
+    write_out("ROOTMARK_D10_OUT", &report);
     assert_eq!(report["pass"], true, "{report}\n{log}{tail}");
     std::fs::remove_dir_all(root).unwrap();
 }
@@ -292,9 +342,20 @@ fn sigterm_is_never_lost_during_timer_compaction() {
             all
         });
         loop {
-            let l = rx
-                .recv_timeout(Duration::from_secs(60))
-                .expect("server start");
+            let Ok(l) = rx.recv_timeout(Duration::from_secs(60)) else {
+                // Ş1: the record is written before the test fails
+                let _ = child.kill();
+                let _ = child.wait();
+                stop.store(true, std::sync::atomic::Ordering::Relaxed);
+                let report = json!({
+                    "timeout": true,
+                    "stopped_at": {"trial": trial, "phase": "server start (60 s)"},
+                    "trials": outcomes.clone(),
+                    "pass": false,
+                });
+                write_out("ROOTMARK_SIGTERM_OUT", &report);
+                panic!("server start: no `watching` line within 60 s\n{report}");
+            };
             if l.contains("rootmark serve: watching") {
                 break;
             }
@@ -339,11 +400,7 @@ fn sigterm_is_never_lost_during_timer_compaction() {
         .map(|o| o["timer_compactions"].as_u64().unwrap())
         .sum::<u64>();
     let report = json!({"trials": outcomes, "timer_compactions": timer_ran, "pass": all_ok && timer_ran > 0});
-    if let Ok(p) = std::env::var("ROOTMARK_SIGTERM_OUT") {
-        if !p.is_empty() {
-            std::fs::write(&p, serde_json::to_string_pretty(&report).unwrap() + "\n").unwrap();
-        }
-    }
+    write_out("ROOTMARK_SIGTERM_OUT", &report);
     assert_eq!(report["pass"], true, "{report}");
     std::fs::remove_dir_all(root).unwrap();
 }

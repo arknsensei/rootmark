@@ -34,6 +34,18 @@ record so named; the inventory's `derived_criteria` (B3) are counted like
 criteria. `equiv` names the E1 fields and bytes as their own group and
 reads `commit_bound` items (R14). `pair` is unchanged but for the items.
 
+P2-V.2/Y2 (FREEZE_EXCEPTIONS F1; K-P2V1.2): the inventory is P2-V.2's
+(`reports/rounds/P2-V.2/inventory.json`: P2-V.1's entries as they were plus
+K-P2V1.2's four names). A derived criterion with `reading: "historical"`
+(T3, `tamper·det`) is read by record equality: its record's blake2b, its
+field's value and its unexpected cases' text equal to the inventory's
+`reference` → not counted (listed under `historical`), any of them
+different → counted. `equiv` names `e1_families.named` (T2, E1-W: R7's
+`detail`) in the E1 group. `pair`'s `inventory` names the inventory read
+(`--inventory`), not the module's default; `criteria` lists the derived
+criteria of the inventory read. With P2-V.1's inventory every output is
+P2-V.1's, byte for byte.
+
     python -m eval.tier2 pair <run_A> <run_B> [--frozen compare_p2r.json] [--out path.json]
     python -m eval.tier2 fails <run_dir> --summary <classifier.json> [--classifier eval.historical_p2r] [--out path.json]
     python -m eval.tier2 criteria <run_dir> [--out path.json]
@@ -64,7 +76,7 @@ from eval import compare_runs as C
 from eval import metrics as M
 from eval.datasets.common import ROOT, dump_json
 
-INVENTORY = ROOT.parent / "reports/rounds/P2-V.1/inventory.json"
+INVENTORY = ROOT.parent / "reports/rounds/P2-V.2/inventory.json"
 EMBEDDING = ("differing_fields", "excluded_differences")
 PATTERN_CHARS = set("*?[")
 
@@ -92,6 +104,7 @@ def load_inventory(path: Path = INVENTORY) -> dict:
         *inv.get("e1_bytes", []),
         *inv.get("derived_criteria", []),
         *[f for c in inv.get("criterion_fields", {}).values() for f in c.get("fields", [])],
+        *inv.get("e1_families", {}).get("named", []),
     ]
     for e in named:
         names = [e.get("file"), e.get("field"), e.get("path"), e.get("item")]
@@ -190,7 +203,19 @@ def frozen_result(path: Path, a: Path, b: Path) -> dict:
     return res
 
 
-def pair(a: Path, b: Path, inv: dict, frozen: dict | None = None) -> dict:
+def _inventory_name(path: Path) -> str:
+    """The inventory read, relative to the repository root when inside it
+    (P2-V.2/F1: the file given, not the module's default)."""
+    p = path.resolve()
+    try:
+        return str(p.relative_to(ROOT.parent.resolve()))
+    except ValueError:
+        return str(path)
+
+
+def pair(
+    a: Path, b: Path, inv: dict, frozen: dict | None = None, inventory: Path = INVENTORY
+) -> dict:
     res = frozen if frozen is not None else compare_p2r.pair(a, b)
     excl = _resolved_pair(inv["pair_exclusions"], a, b)
     bex = {e["path"]: e for e in inv["byte_exclusions"]}
@@ -213,7 +238,7 @@ def pair(a: Path, b: Path, inv: dict, frozen: dict | None = None) -> dict:
     return {
         "mode": "pair",
         "frozen_comparison": "eval.compare_p2r.pair (every file and field of the old full pair)",
-        "inventory": str(INVENTORY.relative_to(ROOT.parent)),
+        "inventory": _inventory_name(inventory),
         "files": res["files"],
         "n_fields": res["n_fields"],
         "differing_fields": differing,
@@ -377,14 +402,39 @@ def fails(run_dir: Path, summary: dict, inv: dict, classifier: str | None = None
         if listed_ids != seen:
             raise ValueError(f"the classifier's counted list {listed_ids} is not its rows {seen}")
     # B3: the inventory's derived criteria count as criteria of their own
-    derived = []
+    derived, hist = [], []
     for d in inv.get("derived_criteria", []):
         p = run_dir / d["file"]
         doc = json.loads(p.read_text(encoding="utf-8")) if p.is_file() else None
         val = doc.get(d["field"]) if isinstance(doc, dict) else None
-        derived.append({"criterion": d["id"], "file": d["file"], "field": d["field"], "value": val})
+        row = {"criterion": d["id"], "file": d["file"], "field": d["field"], "value": val}
+        if d.get("reading") == "historical":
+            # P2-V.2/F1 (K-P2V1.2 T3): record equality with the reference
+            h = historical_reading(p, doc, d)
+            row["reading"] = "historical"
+            row["record_equal"] = h["record_equal"]
+            derived.append(row)
+            if h["record_equal"]:
+                hist.append(h)
+            else:
+                counted.append(
+                    {
+                        "criterion": d["id"],
+                        "why": "tarihsel okuma: kayıt referansla aynı değil ("
+                        + ", ".join(h["differs"])
+                        + ")",
+                        "historical": h,
+                    }
+                )
+            continue
+        derived.append(row)
         if val is not True:
             counted.append({"criterion": d["id"], "why": f"{d['file']} {d['field']} is {val!r}"})
+    extra = (
+        {"historical": hist}
+        if any(d.get("reading") == "historical" for d in inv.get("derived_criteria", []))
+        else {}
+    )
     return {
         "mode": "fails",
         "run": run_dir.name,
@@ -395,11 +445,45 @@ def fails(run_dir: Path, summary: dict, inv: dict, classifier: str | None = None
         "counted_fails": len(counted),
         "set_aside": aside,
         "derived_criteria": derived,
+        **extra,
         "pass": not counted,
     }
 
 
-def criteria(run_dir: Path) -> list[str]:
+def historical_reading(p: Path, doc: dict | None, d: dict) -> dict:
+    """A derived criterion read by record equality (P2-V.2/F1, K-P2V1.2 T3):
+    the record's blake2b, its field's value and the text of its cases that
+    did not go as expected, each against the inventory's `reference`."""
+    import hashlib
+
+    ref = d["reference"]
+    raw = p.read_bytes() if p.is_file() else None
+    digest = hashlib.blake2b(raw).hexdigest() if raw is not None else None
+    cases = doc.get("cases", []) if isinstance(doc, dict) else []
+    failing = [c.get("case") for c in cases if c.get("as_expected") is not True]
+    val = doc.get(d["field"]) if isinstance(doc, dict) else None
+    differs = []
+    if digest != ref["blake2b"]:
+        differs.append("blake2b")
+    if val != ref[d["field"]]:
+        differs.append(d["field"])
+    if failing != ref["failing_cases"] or not any(ref["reason"] in c for c in failing):
+        differs.append("failing_cases")
+    return {
+        "criterion": d["id"],
+        "class": "tarihsel",
+        "decision": d.get("decision"),
+        "until": d.get("until"),
+        "reference": ref["record"],
+        "blake2b": digest,
+        d["field"]: val,
+        "failing_cases": failing,
+        "differs": differs,
+        "record_equal": not differs,
+    }
+
+
+def criteria(run_dir: Path, inv: dict | None = None) -> list[str]:
     files = sorted(p.name for p in run_dir.glob("*_checks.json"))
     if not files:
         raise FileNotFoundError(f"no *_checks.json in {run_dir}")
@@ -408,7 +492,7 @@ def criteria(run_dir: Path) -> list[str]:
         doc = json.loads((run_dir / f).read_text(encoding="utf-8"))
         out += [f"{f}:{c}" for c in historical.criteria(doc)]
     # B3: the inventory's derived criteria whose record is in the RUN
-    for d in load_inventory().get("derived_criteria", []):
+    for d in (inv if inv is not None else load_inventory()).get("derived_criteria", []):
         if (run_dir / d["file"]).is_file():
             out.append(d["id"])
     return sorted(out)
@@ -421,6 +505,11 @@ def equiv(old: Path, new: Path, inv: dict, mac: dict | None) -> dict:
         *[{**e, "group": "H"} for e in _resolved_pair(inv["host_fields"], old, new)],
         *[{**e, "group": "commit"} for e in _resolved_pair(inv.get("commit_bound", []), old, new)],
         *[{**e, "group": "E1"} for e in inv.get("e1_fields", [])],
+        # P2-V.2/F1 (K-P2V1.2 T2): E1-W, by item id
+        *[
+            {**e, "group": "E1"}
+            for e in _resolved_pair(inv.get("e1_families", {}).get("named", []), old, new)
+        ],
     ]
     e1_bytes = {e["path"] for e in inv.get("e1_bytes", [])}
     bex = {e["path"] for e in inv["byte_exclusions"]}
@@ -438,7 +527,7 @@ def equiv(old: Path, new: Path, inv: dict, mac: dict | None) -> dict:
     bytes_e1 = sorted(
         p for p, r in res["bytes"].items() if not r.get("equal", True) and p in e1_bytes
     )
-    c_old, c_new = criteria(old), criteria(new)
+    c_old, c_new = criteria(old, inv), criteria(new, inv)
     c_mac = sorted(mac.get("criteria", [])) if mac else []
     lost = sorted(set(c_old) - set(c_new) - set(c_mac))
     return {
@@ -489,7 +578,13 @@ def main(argv: list[str] | None = None) -> None:
     try:
         inv = load_inventory(x.inventory)
         if x.mode == "pair":
-            res = pair(x.a, x.b, inv, frozen_result(x.frozen, x.a, x.b) if x.frozen else None)
+            res = pair(
+                x.a,
+                x.b,
+                inv,
+                frozen_result(x.frozen, x.a, x.b) if x.frozen else None,
+                x.inventory,
+            )
             res["frozen_result_read"] = str(x.frozen) if x.frozen else None
             ok = res["equal"]
         elif x.mode == "fails":
@@ -497,7 +592,7 @@ def main(argv: list[str] | None = None) -> None:
             res = fails(x.run, summary, inv, x.classifier)
             ok = res["pass"]
         elif x.mode == "criteria":
-            ids = criteria(x.run)
+            ids = criteria(x.run, inv)
             res, ok = {"mode": "criteria", "run": x.run.name, "n": len(ids), "criteria": ids}, True
         else:
             mac = json.loads(x.mac.read_text(encoding="utf-8")) if x.mac else None

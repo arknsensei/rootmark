@@ -8,6 +8,14 @@
 # chain's steps holdout … p1c1-checks) and E-7 (release_local.sh) — run in
 # the first repetition only (E1-4 is read from that repetition too); the
 # reading is P2-V.1's inventory's `mac_reading` (eval.verify_mac).
+# P2-V.2/F4 (Ş1 of P2-V.1's verification; K-P2V1.2 T5 condition 2): a
+# harness that writes no record (serve_watch's d10.json/sigterm.json, E-7's
+# release_local.json, release.sh/release_check.sh's records, the tamper
+# e2e's) is that repetition's failed result, recorded with its log
+# (`verify_mac rep --error <harness>=<log>`), and the set goes on — never the
+# loss of the set. `VERIFY_MAC_REPS` (default 3; the verdict needs 3) runs
+# fewer repetitions, for a harness test only. The reading is the inventory's
+# (reports/rounds/P2-V.2/inventory.json, eval.verify_mac's default).
 #
 # A clean clone of this repository's committed HEAD, `make setup`, the
 # models, the conformance report, the session harness and the
@@ -36,7 +44,8 @@ set -euo pipefail
 
 log() { printf '[verify-mac %s] %s\n' "$(date -u +%H:%M:%S)" "$*" >&2; }
 
-reps=3
+reps="${VERIFY_MAC_REPS:-3}"
+case "$reps" in ''|*[!0-9]*|0) echo "error: VERIFY_MAC_REPS=$reps is not a positive integer" >&2; exit 1 ;; esac
 [ "$(uname -s)" = Darwin ] || { echo "verify-mac: the Mac set runs on macOS (FSEvents, the real Obsidian)" >&2; exit 1; }
 src="$(git rev-parse --show-toplevel)"
 work="${1:-$(mktemp -d -t rootmark-verify-mac.XXXXXX)}"
@@ -101,20 +110,26 @@ for i in $(seq 1 "$reps"); do
   ROOTMARK_D10_OUT="$(pwd)/$d/p1d/d10.json" ROOTMARK_SIGTERM_OUT="$(pwd)/$d/p1d/sigterm.json" \
     cargo test -q -p rootmark-server --release --test serve_watch -- --test-threads=1 >"$d/p1d/serve_watch.log" 2>&1 \
     || log "rep $i: serve_watch exit $? (recorded)"
-  [ -f "$d/p1d/d10.json" ] && [ -f "$d/p1d/sigterm.json" ] || { tail -30 "$d/p1d/serve_watch.log" >&2; exit 1; }
+  [ -f "$d/p1d/d10.json" ] && [ -f "$d/p1d/sigterm.json" ] \
+    || { errs+=(--error "serve_watch=$d/p1d/serve_watch.log"); log "rep $i: serve_watch wrote no record (recorded)"; tail -30 "$d/p1d/serve_watch.log" >&2; }
   log "rep $i: local release binary (E-7), release package with the real-Obsidian e2e and its check (E1-3, E1-4, E1-9), the e2e's deliberate cases"
   mkdir -p "$d/p1e" "$d/p1e1/release"
   if [ "$i" -eq 1 ]; then
   bash scripts/release_local.sh "$d/p1e/release" >"$d/p1e/release.log" 2>&1 || log "rep $i: release_local exit $? (recorded)"
-  [ -f "$d/p1e/release/release_local.json" ] || { tail -30 "$d/p1e/release.log" >&2; exit 1; }
+  [ -f "$d/p1e/release/release_local.json" ] \
+    || { errs+=(--error "release_local=$d/p1e/release.log"); log "rep $i: release_local wrote no record (recorded)"; tail -30 "$d/p1e/release.log" >&2; }
   fi
   dist="$work/dist_$i"
   ROOTMARK_RELEASE_LINUX=0 bash scripts/release.sh "$dist" >"$d/p1e1/release.log" 2>&1 || log "rep $i: release.sh exit $? (recorded)"
   bash scripts/release_check.sh "$dist" >"$d/p1e1/release_check.log" 2>&1 || log "rep $i: release_check exit $? (recorded)"
-  [ -f "$dist/release_check.json" ] && [ -f "$dist/plugin_e2e_real/plugin_e2e_real.json" ] || { tail -30 "$d/p1e1/release.log" >&2; exit 1; }
-  cp "$dist/release.json" "$dist/release_check.json" "$dist/plugin_e2e_real/plugin_e2e_real.json" "$d/p1e1/release/"
+  if [ -f "$dist/release_check.json" ] && [ -f "$dist/plugin_e2e_real/plugin_e2e_real.json" ]; then
+    cp "$dist/release.json" "$dist/release_check.json" "$dist/plugin_e2e_real/plugin_e2e_real.json" "$d/p1e1/release/"
+  else
+    errs+=(--error "release=$d/p1e1/release.log"); log "rep $i: release.sh/release_check.sh wrote no record (recorded)"; tail -30 "$d/p1e1/release.log" >&2
+  fi
   bash scripts/test_tamper_p1e1_e2e.sh "$d/p1e1/tamper_p1e1_e2e.json" >"$d/p1e1/tamper_p1e1_e2e.log" 2>&1 || log "rep $i: tamper e2e exit $? (recorded)"
-  [ -f "$d/p1e1/tamper_p1e1_e2e.json" ] || { tail -30 "$d/p1e1/tamper_p1e1_e2e.log" >&2; exit 1; }
+  [ -f "$d/p1e1/tamper_p1e1_e2e.json" ] \
+    || { errs+=(--error "tamper_e2e=$d/p1e1/tamper_p1e1_e2e.log"); log "rep $i: tamper e2e wrote no record (recorded)"; tail -30 "$d/p1e1/tamper_p1e1_e2e.log" >&2; }
   (cd research && uv run --frozen python -m eval.verify_mac rep --run "$rr" --main "$run" --rep "$i" \
     --elapsed "$((SECONDS - ts))" ${errs[@]+"${errs[@]}"}) >&2
 done

@@ -1,0 +1,34 @@
+{
+ "files": 1153,
+ "findings": [
+  {
+   "context": "0\",\n  \"fixtures_manifest_problems\": [],\n  \"fixtures_root\": \"/home/runner/work/_temp/v/A/repo/spec/fixtures\",\n  \"",
+   "file": "conformance.json",
+   "kind": "path",
+   "match": "/home/runner"
+  },
+  {
+   "context": "0\",\n  \"fixtures_manifest_problems\": [],\n  \"fixtures_root\": \"/home/runner/work/_temp/v/A/repo/spec/fixtures\",\n  \"fixtures_ro",
+   "file": "conformance.json",
+   "kind": "path",
+   "match": "/home/runner/work/_temp"
+  },
+  {
+   "context": "0\",\n  \"fixtures_manifest_problems\": [],\n  \"fixtures_root\": \"/home/runner/work/_temp/v/A/repo/spec/fixtures\",\n  \"fixtures_root_s",
+   "file": "conformance.json",
+   "kind": "path",
+   "match": "/home/runner/work/_temp/v/A"
+  },
+  {
+   "context": " \"fixtures_manifest_problems\": [],\n  \"fixtures_root\": \"/home/runner/work/_temp/v/A/repo/spec/fixtures\",\n  \"",
+   "file": "conformance.json",
+   "kind": "user",
+   "match": "/runner"
+  }
+ ],
+ "hosts": 2,
+ "missing": null,
+ "mode": "pair + all records",
+ "pass": false,
+ "run": "run"
+}
