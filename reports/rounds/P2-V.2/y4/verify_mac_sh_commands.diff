@@ -1,0 +1,29 @@
+5c5,6
+< reps=3
+---
+> reps="${VERIFY_MAC_REPS:-3}"
+> case "$reps" in ''|*[!0-9]*|0) echo "error: VERIFY_MAC_REPS=$reps is not a positive integer" >&2; exit 1 ;; esac
+66c67,68
+<   [ -f "$d/p1d/d10.json" ] && [ -f "$d/p1d/sigterm.json" ] || { tail -30 "$d/p1d/serve_watch.log" >&2; exit 1; }
+---
+>   [ -f "$d/p1d/d10.json" ] && [ -f "$d/p1d/sigterm.json" ] \
+>     || { errs+=(--error "serve_watch=$d/p1d/serve_watch.log"); log "rep $i: serve_watch wrote no record (recorded)"; tail -30 "$d/p1d/serve_watch.log" >&2; }
+71c73,74
+<   [ -f "$d/p1e/release/release_local.json" ] || { tail -30 "$d/p1e/release.log" >&2; exit 1; }
+---
+>   [ -f "$d/p1e/release/release_local.json" ] \
+>     || { errs+=(--error "release_local=$d/p1e/release.log"); log "rep $i: release_local wrote no record (recorded)"; tail -30 "$d/p1e/release.log" >&2; }
+76,77c79,83
+<   [ -f "$dist/release_check.json" ] && [ -f "$dist/plugin_e2e_real/plugin_e2e_real.json" ] || { tail -30 "$d/p1e1/release.log" >&2; exit 1; }
+<   cp "$dist/release.json" "$dist/release_check.json" "$dist/plugin_e2e_real/plugin_e2e_real.json" "$d/p1e1/release/"
+---
+>   if [ -f "$dist/release_check.json" ] && [ -f "$dist/plugin_e2e_real/plugin_e2e_real.json" ]; then
+>     cp "$dist/release.json" "$dist/release_check.json" "$dist/plugin_e2e_real/plugin_e2e_real.json" "$d/p1e1/release/"
+>   else
+>     errs+=(--error "release=$d/p1e1/release.log"); log "rep $i: release.sh/release_check.sh wrote no record (recorded)"; tail -30 "$d/p1e1/release.log" >&2
+>   fi
+79c85,86
+<   [ -f "$d/p1e1/tamper_p1e1_e2e.json" ] || { tail -30 "$d/p1e1/tamper_p1e1_e2e.log" >&2; exit 1; }
+---
+>   [ -f "$d/p1e1/tamper_p1e1_e2e.json" ] \
+>     || { errs+=(--error "tamper_e2e=$d/p1e1/tamper_p1e1_e2e.log"); log "rep $i: tamper e2e wrote no record (recorded)"; tail -30 "$d/p1e1/tamper_p1e1_e2e.log" >&2; }
