@@ -447,6 +447,8 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/eval/**` | `P2-V.1/E4:` | yeniden dondurma P2-V.1/F6: `compare_runs.py` (kalıbın yeniden dondurulması; P2-V.1/F2, F4, F5, F8'in dosyaları kendi satırlarıyla) |
 | `scripts/verify_mac.sh` | `P2-V.1/E4:` | yeniden dondurma P2-V.1/F7: deterministik O kriterleri (C1-8, E-7) yalnız 1. tekrarda |
 | `research/eval/verify_mac.py` | `P2-V.1/E4:` | yeniden dondurma P2-V.1/F8: `mac_reading` (tek koşu, E1 okuması, tarihsel kayıt eşitliği) |
+| `reports/rounds/P2-V.2/inventory.json` | `P2-V.2/Y1:` | P2-V.2'nin envanteri (ön-kayıt; GOAL P2-V.2 İlkeler, TASKS Y1; P2-V.1'inki + K-P2V1.2'nin dört adı); `research/p2v2/inventory.py` üretir |
+| `research/p2v2/inventory.py` | `P2-V.2/Y1:` | envanterin üreteci ve programla farkı (`diff`, V2-1) |
 <!-- /frozen-table -->
 
 ## Notlar
