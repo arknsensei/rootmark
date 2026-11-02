@@ -1,0 +1,50 @@
+{
+ "echo_fields_allowed": [
+  "run_a",
+  "run_b"
+ ],
+ "pairs": [
+  {
+   "out": "../reports/rounds/P2-V.2/reread/41239746833/frozen_pair_compare.json",
+   "reference": "../reports/rounds/P2-V.2/ci/41239746833/tier2-compare/frozen_pair_compare.json",
+   "bytes": [
+    13220,
+    13194
+   ],
+   "result": "equal_but_echo",
+   "echo_fields": [
+    "run_a",
+    "run_b"
+   ]
+  },
+  {
+   "out": "../reports/rounds/P2-V.2/reread/41239754895/frozen_pair_compare.json",
+   "reference": "../reports/rounds/P2-V.2/ci/41239754895/tier2-compare/frozen_pair_compare.json",
+   "bytes": [
+    10133,
+    10107
+   ],
+   "result": "equal_but_echo",
+   "echo_fields": [
+    "run_a",
+    "run_b"
+   ]
+  },
+  {
+   "out": "../reports/rounds/P2-V.2/reread/41292205176/frozen_pair_compare.json",
+   "reference": "../reports/rounds/P2-V.2/ci/41292205176/tier2-compare/frozen_pair_compare.json",
+   "bytes": [
+    9242,
+    9216
+   ],
+   "result": "equal_but_echo",
+   "echo_fields": [
+    "run_a",
+    "run_b"
+   ]
+  }
+ ],
+ "byte_equal": 0,
+ "equal_but_echo": 3,
+ "different": 0
+}
