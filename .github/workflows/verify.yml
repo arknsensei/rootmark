@@ -8,9 +8,11 @@
 # The compare job decides on the deterministic (D) class only
 # (`eval.tier2 pair`: the frozen `eval.compare_p2r.pair`, every file and
 # field of the old full pair, with the timing-sensitive (Z) and
-# real-Obsidian/macOS (O) fields of the pre-registered inventory
-# reports/rounds/P2-V/inventory.json set aside by name and listed in its
-# output), counts each chain's FAILs without the Z/O criteria
+# real-Obsidian/macOS (O) fields of the pre-registered inventory set aside
+# by name and listed in its output; the inventory is eval.tier2's default,
+# reports/rounds/P2-V.2/inventory.json since P2-V.2/F1 — P2-V's and P2-V.1's
+# entries as they were plus K-P2V1.2's four names), counts each chain's FAILs
+# without the Z/O criteria
 # (`eval.tier2 fails`; those are `make verify-mac`'s — the real Obsidian,
 # the watcher's timing, and the criteria whose reference RUN is bound to the
 # release Mac: vector numerics (C1-8), the local release target (E-7), the
