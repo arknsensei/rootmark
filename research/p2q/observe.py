@@ -93,7 +93,8 @@ def summarize_events(events: list[dict], since: int) -> dict:
     promo_rules = Counter()
     demo = Counter()
     late = 0
-    checkpoints = named = 0
+    checkpoints = 0
+    names: set[str] = set()
     unverified_at_checkpoint = []
     head = 0
     docs_written = set()
@@ -141,8 +142,11 @@ def summarize_events(events: list[dict], since: int) -> dict:
             late += len(ev.get("lineage_ids", []))
         elif kind == "CheckpointCreated":
             checkpoints += 1
+            if meta.get("name"):
+                names.add(str(meta["name"]))
         elif kind == "CheckpointNamed":
-            named += 1
+            if meta.get("name"):
+                names.add(str(meta["name"]))
     layers = Counter(layer.values())
     agent_created = writers.get("agent", 0)
     return {
@@ -161,7 +165,7 @@ def summarize_events(events: list[dict], since: int) -> dict:
             "late_attestation_raises": late,
         },
         "demotions": {"lineages_by_actor": dict(sorted(demo.items()))},
-        "checkpoints": {"created": checkpoints, "named": named},
+        "checkpoints": {"created": checkpoints, "named": len(names)},
         "layers": {
             "lineages": dict(sorted(layers.items())),
             "unverified_at_each_checkpoint": unverified_at_checkpoint,
