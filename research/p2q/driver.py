@@ -99,7 +99,15 @@ class Server:
     """`rootmark serve --mcp stdio --http 127.0.0.1:0 --watch` with an MCP
     client on its stdio and an HTTP client on its port."""
 
-    def __init__(self, rootmark: str, vault: Path, log: Path, attest_log: Path, client: dict):
+    def __init__(
+        self,
+        rootmark: str,
+        vault: Path,
+        log: Path,
+        attest_log: Path,
+        client: dict,
+        http: str = "127.0.0.1:0",
+    ):
         self.err = open(log, "ab")  # noqa: SIM115 (open while the server runs)
         self.p = subprocess.Popen(
             [
@@ -110,7 +118,7 @@ class Server:
                 "--mcp",
                 "stdio",
                 "--http",
-                "127.0.0.1:0",
+                http,
                 "--watch",
                 "--attest-log",
                 str(attest_log),
