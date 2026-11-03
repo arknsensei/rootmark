@@ -4,12 +4,53 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
-## Unreleased
+## 0.3.0 — 2026-11-03 (phase 2, blocks 1 and 2: Turkish vaults, promotion rules, contract v2, retention, CPU-independent embeddings)
 
-Rounds P2-L and P2-P (block 1 of phase 2). Spec 2.0.3: §7.1 (Draft) default
-`canonical`, rename back onto an earlier path; §7 (Validated) the optional
-`meta.source` of `Promoted`/`Demoted`; §8 an informative note on the search
-path filter.
+Rounds P2-L (after 0.2.0's release), P2-P, P2-B, P2-R and P2-V.1. Spec
+2.0.3: §7.1 (Draft) default `canonical`, rename back onto an earlier path;
+§7 (Validated) the optional `meta.source` of `Promoted`/`Demoted`; §8 an
+informative note on the search path filter. Start here:
+[docs/GUIDE.md](docs/GUIDE.md) (install, a vault's recipe, `serve`,
+connecting an agent, the Obsidian plugin, daily use, upgrading, headless
+use, collecting data for an evaluation, troubleshooting).
+
+### Upgrading from 0.2.0 (P2-V.1)
+- The embedder's arithmetic no longer depends on the processor: the same
+  vault gives the same vector bytes on macOS arm64 and Linux x86_64/aarch64
+  (`embedder` id `…+fixed1`, e.g. `minilm-l6-v2/e73168f9+fixed1`). An index
+  built by 0.2.0 (or an earlier build of this line) is reported
+  `migration_required` by `status` (searches answer `migration_required`
+  until then): run `rootmark migrate <vault>` once (it re-embeds every chunk;
+  `--dry-run` shows the plan, `--rollback <id>` undoes it). Events, ids and
+  `events_hash` are unchanged.
+- The fixed-order embedding is slower than 0.2.0's: on an Apple M4 about
+  50 ms per chunk (about 5× 0.2.0), on x86_64 servers about 2–3×; the first
+  index build and every migration re-embed the whole vault. A speed round
+  (P2-H) is planned.
+
+### Client contract version 2 (P2-B)
+- Block locations: `blame`, `replay`, `search` (`loc: true`) and
+  `read_block` carry each block's `loc` (line range and byte offsets in the
+  file) and `loc_stale` (CLIENT_CONTRACT §2.5); the Obsidian client aligns its
+  gutter with them. Experimental (K-P2B-T1).
+- Event stream: `events {since_seq, kinds, path_prefix, limit}` (HTTP
+  `POST /v1/events`, MCP `events`), read-only, the log's lines byte for byte.
+- Date filter: `search` takes `date_from`/`date_to` (`YYYY-MM-DD`); a
+  document's date comes only from its path (`[index] date_from_path`) or its
+  front matter (`[index] date_field`), never from the file time.
+- `include_proposal` shows `unverified` blocks with their label; a VS Code
+  client scaffold (`clients/vscode`, not published) speaks the same contract.
+
+### Known issues
+- A live `canonical` block that shares a search chunk with a block a prune
+  rule made inactive is not retrieved after that prune (Block 2
+  verification F1; nothing is deleted, the block is read at an earlier
+  checkpoint and by `blame`/`read_block`). Run `rootmark prune <vault>
+  --dry-run` (or `POST /v1/prune {"dry_run": true}`) first; the fix is
+  planned for P2-C.
+- The release archive carries only the default model's manifest: the
+  multilingual model of a Turkish vault is fetched with the manifest from the
+  release tag (docs/GUIDE.md "Turkish and mixed-language vaults").
 
 ### Retention and pruning (P2-R)
 - `rootmark prune <vault> [--dry-run] [--now-ms <ms>]` and `POST /v1/prune`
@@ -79,8 +120,9 @@ path filter.
 ### Turkish vaults (P2-L, K-P2L-T2)
 - Recommended configuration for a Turkish or Turkish/English vault:
   `[index] tokenizer = "uni_fold_tr"` and
-  `[index] embedder = "multilingual-minilm-l12-v2"` (`make models-multilingual`,
-  then `rootmark migrate` rebuilds the index). Measured on P2-L's D-TR set
+  `[index] embedder = "multilingual-minilm-l12-v2"` (fetch the model as in
+  docs/GUIDE.md, then `rootmark index build`, or `rootmark migrate` for an
+  existing index). Measured on P2-L's D-TR set
   (400 documents, 800 queries): hybrid nDCG@10 0.8801 against 0.8029 with
   the defaults; the defaults (`mdk_lower_alnum`, `minilm-l6-v2`) are
   unchanged.

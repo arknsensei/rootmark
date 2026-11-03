@@ -3,8 +3,10 @@
 **rootmark** is named for what it keeps: the *root* of every block of a Markdown knowledge base, meaning where it came from, who wrote it and what it was derived from, while the Markdown (*mark*) files stay the one source of truth. It is a client-independent kernel that gives a Markdown corpus written by people and agents together block-level lineage, provenance and a deterministic derived index.
 
 [![Conformance](https://img.shields.io/endpoint?url=https%3A%2F%2Farknsensei.github.io%2Frootmark%2Fspec%2Fbadge.json)](https://arknsensei.github.io/rootmark/spec/conformance.json)
-[![Spec 2.0.0](https://img.shields.io/badge/spec-2.0.0-blue)](https://arknsensei.github.io/rootmark/spec/)
+[![Spec 2.0.3](https://img.shields.io/badge/spec-2.0.3-blue)](https://arknsensei.github.io/rootmark/spec/)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+
+**[Running rootmark — the guide](docs/GUIDE.md)**: install, prepare a vault, run the server, connect an agent, install the Obsidian plugin, daily use, collecting data for an evaluation, upgrading, headless use.
 
 > When an agent writes into a knowledge base, every block records who wrote it, when, and which block it came from. Nothing unapproved counts as knowledge. Every answer says which blocks it rests on. You can go back to yesterday's state block by block, and the files stay plain Markdown.
 
@@ -37,34 +39,29 @@ The full contract (every tool, field and error code) is [docs/CLIENT_CONTRACT.md
 
 ## Install
 
-Release targets of 0.2.0: macOS on Apple silicon (`aarch64-apple-darwin`) and Linux x86_64 (`x86_64-unknown-linux-gnu`). Windows x86_64 is built, installed and checked in CI for information (K-E1.1, K-P2A.6).
-
-- **Installer:** download `install.sh` and `SHA256SUMS` from the [release](https://github.com/arknsensei/rootmark/releases), check them (`gh attestation verify install.sh -R arknsensei/rootmark`, `grep ' install.sh$' SHA256SUMS | sha256sum -c`), then `bash install.sh --version 0.2.0` (needs `tar`, `sha256sum` or `shasum`, `curl` and `jq`); Windows: `install.ps1`. Details: [docs/RELEASE.md](docs/RELEASE.md) "Kurulum".
-- **Release archive:** download `rootmark-0.2.0-<target>.tar.gz` from the [releases](https://github.com/arknsensei/rootmark/releases), check it against `SHA256SUMS`, put `rootmark` on your `PATH`. The embedder model is fetched and checked by `models/fetch_model.sh` in the archive (pinned revision, sha256 and blake3).
-- **cargo-binstall:** `cargo binstall rootmark-server` (installs the `rootmark` binary from the release archive; works once the crate is published).
-- **Homebrew:** a formula draft is in [`packaging/homebrew/rootmark.rb.in`](packaging/homebrew/rootmark.rb.in) (filled by `scripts/release.sh`); there is no tap yet.
-- **From source:** Rust 1.92.0, `cargo build --release -p rootmark-server --bin rootmark`, then `make models`.
+Release 0.3.0 targets macOS on Apple silicon (`aarch64-apple-darwin`) and Linux x86_64 (`x86_64-unknown-linux-gnu`, glibc 2.38+); a Windows x86_64 archive is built and checked in CI for information. Step by step, with checks and outputs: [docs/GUIDE.md §1](docs/GUIDE.md#1-install).
 
 ```sh
-rootmark --version            # rootmark 0.2.0
-rootmark --spec-version       # 2.0.2
-rootmark conformance          # Levels 1–3 on the embedded fixtures: 39/39 (spec 2.0.2)
+VER=0.3.0
+curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/install.sh"
+curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/SHA256SUMS"
+grep ' install.sh$' SHA256SUMS | shasum -a 256 -c      # Linux: sha256sum -c
+bash install.sh --version "$VER"                       # needs curl, tar, shasum/sha256sum, jq
+export PATH="$HOME/.local/bin:$PATH" ROOTMARK_MODELS="$HOME/.local/share/rootmark/models"
+rootmark --version            # rootmark 0.3.0
+rootmark --spec-version       # 2.0.3
+rootmark conformance >/dev/null   # rootmark conformance: level 3, 39/39 (spec 2.0.3)
 ```
 
-**Turkish vaults** (P2-L, K-P2L-T2): set `[index] tokenizer = "uni_fold_tr"` and `[index] embedder = "multilingual-minilm-l12-v2"` in `.rootmark/policy.toml` (`make models-multilingual` fetches the model; `rootmark migrate <vault>` rebuilds the index). On P2-L's Turkish set this gave hybrid nDCG@10 0.8801 against 0.8029 with the defaults, which stay `mdk_lower_alnum` and `minilm-l6-v2` (the gain was below the round's threshold; a new measurement comes with R-1).
+Other ways: the release archives (`rootmark-0.3.0-<target>.tar.gz`, checked against `SHA256SUMS`; provenance with `gh attestation verify <file> -R arknsensei/rootmark`); `cargo binstall rootmark-server` once the crate is published; a Homebrew formula draft in [`packaging/homebrew/rootmark.rb.in`](packaging/homebrew/rootmark.rb.in) (no tap yet); from source with Rust 1.92.0: `cargo build --release -p rootmark-server --bin rootmark`, then `make models`.
 
-**Upgrading a 0.1.0 vault:** its recipe has no `[attestation]` table and is read as `unattested = "unverified"`; `rootmark status` shows `attestation.implicit: true` and `rootmark serve` warns. `rootmark migrate <vault>` appends `unattested = "canonical"` (the default; rollback record kept, `--dry-run` shows the plan).
+**Turkish and mixed-language vaults:** `[index] tokenizer = "uni_fold_tr"` and `embedder = "multilingual-minilm-l12-v2"` in the vault's `.rootmark/policy.toml`, with the multilingual model fetched as in [GUIDE §1.2](docs/GUIDE.md#12-turkish-and-mixed-language-vaults-the-multilingual-model) (on P2-L's Turkish set: hybrid nDCG@10 0.8801 against 0.8029 with the defaults).
 
-A vault written by a build from before the project's rename is opened after `rootmark migrate --rename-store <vault>`, which moves its metadata directory to `.rootmark/` and changes no byte inside it (same event log, same `events_hash`, same index).
+**Upgrading:** from 0.2.0, `rootmark migrate <vault>` rebuilds the index once (the embedder's arithmetic no longer depends on the processor; until then the index is `migration_required`); from 0.1.0, the same command adds `[attestation] unattested = "canonical"` to the recipe (a recipe without the table is read as `unverified`; the HTTP/MCP `status` says `attestation.implicit: true` and `rootmark serve` warns). `--dry-run` shows the plan. A vault from before the project's rename opens after `rootmark migrate --rename-store <vault>`. Details: [GUIDE §8](docs/GUIDE.md#8-upgrading-and-migrating), [CHANGELOG.md](CHANGELOG.md).
 
-### Obsidian (BRAT)
+### Obsidian
 
-The Obsidian client is not in the community store yet. With [BRAT](https://github.com/TfTHacker/obsidian42-brat):
-
-1. Install and enable BRAT in Obsidian.
-2. BRAT → *Add beta plugin* → `arknsensei/rootmark` (the release assets carry `main.js`, `manifest.json`, `styles.css`).
-3. Enable **rootmark**. In your vault set `[server] http_port` and `[identity] human_id` in `.rootmark/policy.toml` and run `rootmark serve --vault <vault> --http 127.0.0.1:<port>`.
-4. The status bar says `rootmark 0.2.0 · human:<you>`. A stale or damaged index is shown there with the way to rebuild it.
+The Obsidian plugin (status bar, blame gutter, proposals with Promote/Demote, search, checkpoints, traces; it attests your saves) is not in the community store. Install it from the release's `rootmark-0.3.0.zip` into `<vault>/.obsidian/plugins/rootmark/` and enable it under *Settings → Community plugins*, or with [BRAT](https://github.com/TfTHacker/obsidian42-brat) (`arknsensei/rootmark`): [GUIDE §5](docs/GUIDE.md#5-the-obsidian-plugin). It connects to a running `rootmark serve` on the recipe's `[server] http_port` as `[identity] human_id`; the status bar says `rootmark 0.3.0 · human:<you>`.
 
 ## Specification
 
