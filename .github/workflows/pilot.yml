@@ -1,0 +1,48 @@
+# P2-Q pilot, one-off measurement job (GOAL P2-Q Q3 (b); TASKS Q3): not a
+# product check, not frozen, not a tier. Started by hand only:
+#   gh workflow run pilot.yml --ref p2-q/round
+# On ubuntu-latest it installs the published release by docs/GUIDE.md's
+# Linux section (the guide's blocks as they are written, research/p2q/
+# guide_run.py --only), runs the headless scene on the open D-NOTES corpus
+# only (research/p2q/driver.py; the same driver and pre-registration as on
+# the Mac and in Docker) and the observation script, and keeps the records
+# (numbers, processor model, events_hash, index blake2b) as an artefact.
+# No personal corpus ever reaches this job.
+name: pilot
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dnotes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: prerequisites (GUIDE §1)
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends curl ca-certificates jq
+      - name: install by the guide (GUIDE §1.1, blocks 1.1#1 and 1.1#2)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/p2q"
+          cd research && python3 -m p2q.guide_run --guide ../docs/GUIDE.md --work "$RUNNER_TEMP/p2q/guide" \
+            --mode release --only '1.1#1,1.1#2'
+      - name: headless scene on D-NOTES
+        run: |
+          export ROOTMARK_MODELS="$RUNNER_TEMP/p2q/guide/home/.local/share/rootmark/models"
+          cd research && python3 -m p2q.driver --corpus dnotes --snapshot data/d_notes/notes \
+            --work "$RUNNER_TEMP/p2q/work" --out "$RUNNER_TEMP/p2q/out/dnotes" \
+            --rootmark "$RUNNER_TEMP/p2q/guide/home/.local/bin/rootmark"
+      - name: records
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/p2q/out"
+          cp "$RUNNER_TEMP/p2q/guide/guide_run.json" "$RUNNER_TEMP/p2q/out/" 2>/dev/null || true
+          { echo "{"; echo "\"cpu\": \"$(sed -n 's/^model name\s*: //p' /proc/cpuinfo | head -1)\","; \
+            echo "\"nproc\": $(nproc), \"run_id\": \"$GITHUB_RUN_ID\", \"sha\": \"$GITHUB_SHA\"}"; } >"$RUNNER_TEMP/p2q/out/host.json"
+      - uses: actions/upload-artifact@v7.0.1
+        if: always()
+        with:
+          name: pilot-dnotes
+          path: ${{ runner.temp }}/p2q/out/
