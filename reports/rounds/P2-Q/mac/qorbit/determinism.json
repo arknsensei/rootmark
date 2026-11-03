@@ -1,0 +1,19 @@
+{
+ "all_byte_equal": true,
+ "all_rankings_equal": true,
+ "base": "run1",
+ "pairs": [
+  {
+   "byte_equal": true,
+   "events_hash": true,
+   "index_files_differing": [],
+   "manifest": true,
+   "max_ulp": 0,
+   "other": "run2",
+   "rankings_differing": [],
+   "rankings_equal": true,
+   "scores_differing": [],
+   "vectors": true
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "cpu": "Apple M4 Max",
+ "direct_write_to_ingested_ms": {
+  "n": 20,
+  "p50": 192.704,
+  "p95": 199.958
+ },
+ "documents": 399,
+ "embedder_id": "minilm-l6-v2/e73168f9+fixed1",
+ "index_build_s": 297.428,
+ "index_chunks_per_s": 20.385,
+ "index_embedded": 6063,
+ "index_records": 6063,
+ "ingest_s": 5.998,
+ "platform": "Darwin arm64",
+ "propose_ms": {
+  "n": 100,
+  "p50": 175.685,
+  "p95": 241.923
+ },
+ "propose_to_searchable_ms": {
+  "n": 50,
+  "p50": 279.094,
+  "p95": 297.099
+ },
+ "python": "3.13.5",
+ "rootmark_dir_bytes": 47631419,
+ "search_ms": {
+  "n": 192,
+  "p50": 198.888,
+  "p95": 208.143
+ },
+ "serve_peak_rss_kib": 682992,
+ "serve_start_s": 0.221
+}

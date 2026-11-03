@@ -1,0 +1,401 @@
+{
+ "rows": [
+  {
+   "TR-2": true,
+   "docs": 37,
+   "error": null,
+   "group": "fold",
+   "hits": 71,
+   "id": "tr01",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 37
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 37,
+   "error": null,
+   "group": "fold",
+   "hits": 71,
+   "id": "tr02",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 37
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 37,
+   "error": null,
+   "group": "fold",
+   "hits": 71,
+   "id": "tr03",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 37
+  },
+  {
+   "TR-2": true,
+   "docs": 5,
+   "error": null,
+   "group": "fold",
+   "hits": 5,
+   "id": "tr04",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 5
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 5,
+   "error": null,
+   "group": "fold",
+   "hits": 5,
+   "id": "tr05",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 5
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 5,
+   "error": null,
+   "group": "fold",
+   "hits": 5,
+   "id": "tr06",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 5
+  },
+  {
+   "TR-2": true,
+   "docs": 11,
+   "error": null,
+   "group": "fold",
+   "hits": 16,
+   "id": "tr07",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 11
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 11,
+   "error": null,
+   "group": "fold",
+   "hits": 16,
+   "id": "tr08",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 11
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 11,
+   "error": null,
+   "group": "fold",
+   "hits": 16,
+   "id": "tr09",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 11
+  },
+  {
+   "TR-2": true,
+   "docs": 21,
+   "error": null,
+   "group": "fold",
+   "hits": 23,
+   "id": "tr10",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 21
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 21,
+   "error": null,
+   "group": "fold",
+   "hits": 23,
+   "id": "tr11",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 21
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 21,
+   "error": null,
+   "group": "fold",
+   "hits": 23,
+   "id": "tr12",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 21
+  },
+  {
+   "TR-2": true,
+   "docs": 11,
+   "error": null,
+   "group": "fold",
+   "hits": 14,
+   "id": "tr13",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 11
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 11,
+   "error": null,
+   "group": "fold",
+   "hits": 14,
+   "id": "tr14",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 11
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 11,
+   "error": null,
+   "group": "fold",
+   "hits": 14,
+   "id": "tr15",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 11
+  },
+  {
+   "TR-2": true,
+   "docs": 15,
+   "error": null,
+   "group": "fold",
+   "hits": 36,
+   "id": "tr16",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 15
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 15,
+   "error": null,
+   "group": "fold",
+   "hits": 36,
+   "id": "tr17",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 15
+  },
+  {
+   "TR-1": true,
+   "TR-2": true,
+   "docs": 15,
+   "error": null,
+   "group": "fold",
+   "hits": 36,
+   "id": "tr18",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 15
+  },
+  {
+   "TR-2": true,
+   "docs": 17,
+   "error": null,
+   "group": "ascii_i",
+   "hits": 27,
+   "id": "tr19",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 17
+  },
+  {
+   "TR-2": true,
+   "docs": 0,
+   "error": null,
+   "group": "ascii_i",
+   "hits": 0,
+   "id": "tr20",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 0
+  },
+  {
+   "TR-2": true,
+   "accented_docs_lost": 11,
+   "docs": 0,
+   "error": null,
+   "group": "accentless",
+   "hits": 0,
+   "id": "tr21",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 0,
+   "registered_pair": true
+  },
+  {
+   "TR-2": true,
+   "accented_docs_lost": 21,
+   "docs": 0,
+   "error": null,
+   "group": "accentless",
+   "hits": 0,
+   "id": "tr22",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 0,
+   "registered_pair": true
+  },
+  {
+   "TR-2": true,
+   "accented_docs_lost": 10,
+   "docs": 10,
+   "error": null,
+   "group": "accentless",
+   "hits": 15,
+   "id": "tr23",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 10,
+   "registered_pair": true
+  },
+  {
+   "TR-2": true,
+   "accented_docs_lost": 13,
+   "docs": 13,
+   "error": null,
+   "group": "accentless",
+   "hits": 14,
+   "id": "tr24",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 13,
+   "registered_pair": true
+  },
+  {
+   "TR-2": true,
+   "accented_docs_lost": 5,
+   "docs": 0,
+   "error": null,
+   "group": "accentless",
+   "hits": 0,
+   "id": "tr25",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 0,
+   "registered_pair": true
+  },
+  {
+   "TR-2": true,
+   "accented_docs_lost": 4,
+   "docs": 16,
+   "error": null,
+   "group": "accentless",
+   "hits": 44,
+   "id": "tr26",
+   "only_oracle": 0,
+   "only_search": 0,
+   "oracle_docs": 16,
+   "registered_pair": true
+  },
+  {
+   "docs": 9,
+   "error": null,
+   "group": "accentless_hybrid",
+   "hits": 10,
+   "id": "tr27",
+   "registered_pair": false,
+   "top10_overlap_with_accented": 6
+  },
+  {
+   "docs": 10,
+   "error": null,
+   "group": "accentless_hybrid",
+   "hits": 10,
+   "id": "tr28",
+   "registered_pair": false,
+   "top10_overlap_with_accented": 2
+  },
+  {
+   "docs": 8,
+   "error": null,
+   "group": "mixed",
+   "hits": 10,
+   "id": "tr29"
+  },
+  {
+   "docs": 8,
+   "error": null,
+   "group": "mixed",
+   "hits": 10,
+   "id": "tr30"
+  },
+  {
+   "docs": 7,
+   "error": null,
+   "group": "mixed",
+   "hits": 10,
+   "id": "tr31"
+  },
+  {
+   "docs": 9,
+   "error": null,
+   "group": "mixed",
+   "hits": 10,
+   "id": "tr32"
+  },
+  {
+   "docs": 9,
+   "error": null,
+   "group": "semantic",
+   "hits": 10,
+   "id": "tr33"
+  },
+  {
+   "docs": 5,
+   "error": null,
+   "group": "semantic",
+   "hits": 10,
+   "id": "tr34"
+  },
+  {
+   "docs": 8,
+   "error": null,
+   "group": "semantic",
+   "hits": 10,
+   "id": "tr35"
+  },
+  {
+   "docs": 8,
+   "error": null,
+   "group": "semantic",
+   "hits": 10,
+   "id": "tr36"
+  }
+ ],
+ "summary": {
+  "TR-1": {
+   "of": 12,
+   "passed": 12
+  },
+  "TR-2": {
+   "of": 26,
+   "passed": 26
+  },
+  "corpus": "qorbit",
+  "queries": 36,
+  "serve_rc": 0
+ }
+}
