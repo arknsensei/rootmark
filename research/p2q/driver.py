@@ -108,6 +108,7 @@ class Server:
         client: dict,
         http: str = "127.0.0.1:0",
     ):
+        start = log.stat().st_size if log.exists() else 0
         self.err = open(log, "ab")  # noqa: SIM115 (open while the server runs)
         self.p = subprocess.Popen(
             [
@@ -131,7 +132,7 @@ class Server:
         self.rss = RSS(self.p.pid)
         self.port = None
         for _ in range(1200):
-            m = re.search(rb"http listening on 127\.0\.0\.1:(\d+)", log.read_bytes())
+            m = re.search(rb"http listening on 127\.0\.0\.1:(\d+)", log.read_bytes()[start:])
             if m:
                 self.port = int(m.group(1))
                 break

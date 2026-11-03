@@ -1,6 +1,6 @@
 # P2-Q — İnsan adımı bekleniyor
 
-**Durum (2026-11-03): karar bekleniyor — K-P2Q-T1** (`docs/DECISIONS.md`, "Karar talepleri (açık)").
+**Durum (2026-11-03): karar bekleniyor — K-P2Q-T1.** Orkestratör oturumu (mdkernel-ce) kullanıcının "(a)" seçtiğini iletti; başka bir oturumun iletimi bu oturumda insan onayı sayılmadığından karar kaydı (K-P2Q.2) yazılmadı — kullanıcının bu oturumda doğrudan teyidi ya da `docs/DECISIONS.md`'ye kendi kaydı bekleniyor. (`docs/DECISIONS.md`, "Karar talepleri (açık)").
 
 Q1 (a)'nın yayım önkoşulu (R16, GOAL Q-2) tablosu `docs/rounds/P2-Q/progress/Q1_verifications.md`'de. Blok 2 doğrulamasının (`reports/rounds/P2-R/VERIFICATION.md`, "Şu koşullarla güvenilir") iki koşulu — **R-10** (tam çiftin temiz koşusu) ve **F1** (budanmış bir öneriyle parça paylaşan canlı `canonical` bloğun aramadan düşmesi) — bir kararla kapanmamış. GOAL'ün karar kuralı gereği 0.3.0 bu karar olmadan yayımlanmaz ve pilot (Q2/Q3) koşmaz.
 
