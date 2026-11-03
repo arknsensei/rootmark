@@ -62,14 +62,6 @@
   ],
   "per_corpus": {
    "dnotes": {
-    "append_paths": [
-     "tasks/docs/Editing/Editing Dates.md",
-     "react_tr/src/content/reference/react-compiler/target.md",
-     "tasks/docs/Advanced/Notifications.md",
-     "terminal/doc/specs/#1502 - Advanced Tab Switcher/spec.md",
-     "react_tr/src/content/blog/2020/12/21/data-fetching-with-react-server-components.md",
-     "react_tr/src/content/reference/eslint-plugin-react-hooks/lints/preserve-manual-memoization.md"
-    ],
     "demote_docs": [
      "toplayici/toplayici-notu/pqk024.md",
      "toplayici/toplayici-notu/pqk026.md",
@@ -191,7 +183,7 @@
      {
       "code": "pqd014",
       "content": "\n## Ajan notu pqd014\n\nAjan bu bölümü dosyaya doğrudan ekledi: kur hareketi (borsa duyurusu), 11 gözlem.\n",
-      "doc_path_b2": "057b276c2b64a3c5a7604c7d013302f0",
+      "doc_ref": "tasks/docs/Editing/Editing Dates.md",
       "j": 14,
       "lang": "tr",
       "op": "append"
@@ -199,7 +191,7 @@
      {
       "code": "pqd015",
       "content": "\n## Agent note pqd015\n\nThe agent appended this section to the file directly: credit growth (ministry statement), 17 observations.\n",
-      "doc_path_b2": "54df7a5904d56291fe2d54ab0d6f0708",
+      "doc_ref": "react_tr/src/content/reference/react-compiler/target.md",
       "j": 15,
       "lang": "en",
       "op": "append"
@@ -207,7 +199,7 @@
      {
       "code": "pqd016",
       "content": "\n## Ajan notu pqd016\n\nAjan bu bölümü dosyaya doğrudan ekledi: kredi büyümesi (borsa duyurusu), 19 gözlem.\n",
-      "doc_path_b2": "b9f119d6dd5184b666e0334d18f9e13c",
+      "doc_ref": "tasks/docs/Advanced/Notifications.md",
       "j": 16,
       "lang": "tr",
       "op": "append"
@@ -215,7 +207,7 @@
      {
       "code": "pqd017",
       "content": "\n## Agent note pqd017\n\nThe agent appended this section to the file directly: inflation print (central bank bulletin), 31 observations.\n",
-      "doc_path_b2": "77bcd2331c5587197510c6f2afe85cbd",
+      "doc_ref": "terminal/doc/specs/#1502 - Advanced Tab Switcher/spec.md",
       "j": 17,
       "lang": "en",
       "op": "append"
@@ -223,7 +215,7 @@
      {
       "code": "pqd018",
       "content": "\n## Ajan notu pqd018\n\nAjan bu bölümü dosyaya doğrudan ekledi: kredi büyümesi (istatistik kurumu), 6 gözlem.\n",
-      "doc_path_b2": "94be91dad30d90a18e439e00ce2be49a",
+      "doc_ref": "react_tr/src/content/blog/2020/12/21/data-fetching-with-react-server-components.md",
       "j": 18,
       "lang": "tr",
       "op": "append"
@@ -231,7 +223,7 @@
      {
       "code": "pqd019",
       "content": "\n## Agent note pqd019\n\nThe agent appended this section to the file directly: credit growth (ministry statement), 26 observations.\n",
-      "doc_path_b2": "96ee7e1bbae9c6db6b529eda3855bd16",
+      "doc_ref": "react_tr/src/content/reference/eslint-plugin-react-hooks/lints/preserve-manual-memoization.md",
       "j": 19,
       "lang": "en",
       "op": "append"
@@ -2269,14 +2261,14 @@
        "ajan-yazdi": {
         "default": [],
         "include_proposal": [
-         "b2:057b276c2b64a3c5a7604c7d013302f0"
+         "tasks/docs/Editing/Editing Dates.md"
         ],
         "layer": "unverified"
        },
        "son": {
         "default": [],
         "include_proposal": [
-         "b2:057b276c2b64a3c5a7604c7d013302f0"
+         "tasks/docs/Editing/Editing Dates.md"
         ],
         "layer": "unverified"
        }
@@ -2287,7 +2279,7 @@
       "mode": "lexical",
       "query": "pqd014",
       "targets": [
-       "b2:057b276c2b64a3c5a7604c7d013302f0"
+       "tasks/docs/Editing/Editing Dates.md"
       ]
      },
      {
@@ -2295,14 +2287,14 @@
        "ajan-yazdi": {
         "default": [],
         "include_proposal": [
-         "b2:54df7a5904d56291fe2d54ab0d6f0708"
+         "react_tr/src/content/reference/react-compiler/target.md"
         ],
         "layer": "unverified"
        },
        "son": {
         "default": [],
         "include_proposal": [
-         "b2:54df7a5904d56291fe2d54ab0d6f0708"
+         "react_tr/src/content/reference/react-compiler/target.md"
         ],
         "layer": "unverified"
        }
@@ -2313,7 +2305,7 @@
       "mode": "lexical",
       "query": "pqd015",
       "targets": [
-       "b2:54df7a5904d56291fe2d54ab0d6f0708"
+       "react_tr/src/content/reference/react-compiler/target.md"
       ]
      },
      {
@@ -2690,7 +2682,7 @@
      {
       "code": "pqd014",
       "content": "\n## Ajan notu pqd014\n\nAjan bu bölümü dosyaya doğrudan ekledi: kur hareketi (borsa duyurusu), 11 gözlem.\n",
-      "doc_path_b2": "cb983bea3ee95a222464742df93c46ad",
+      "doc_ref": "k2:eed685ed401fa63b447ec128d7b532ea",
       "j": 14,
       "lang": "tr",
       "op": "append"
@@ -2698,7 +2690,7 @@
      {
       "code": "pqd015",
       "content": "\n## Agent note pqd015\n\nThe agent appended this section to the file directly: credit growth (ministry statement), 17 observations.\n",
-      "doc_path_b2": "834450f31fd6997a3086ec32e53b0126",
+      "doc_ref": "k2:22c4d10e237f339fd5f417357819e9af",
       "j": 15,
       "lang": "en",
       "op": "append"
@@ -2706,7 +2698,7 @@
      {
       "code": "pqd016",
       "content": "\n## Ajan notu pqd016\n\nAjan bu bölümü dosyaya doğrudan ekledi: kredi büyümesi (borsa duyurusu), 19 gözlem.\n",
-      "doc_path_b2": "45988633ee0c38758be36396dc5e3597",
+      "doc_ref": "k2:0684cff7dde001930e45215e44984e1d",
       "j": 16,
       "lang": "tr",
       "op": "append"
@@ -2714,7 +2706,7 @@
      {
       "code": "pqd017",
       "content": "\n## Agent note pqd017\n\nThe agent appended this section to the file directly: inflation print (central bank bulletin), 31 observations.\n",
-      "doc_path_b2": "055d126021e83507ce24662a428d2a1f",
+      "doc_ref": "k2:6fe202ef0a858db109ec3e72836505d7",
       "j": 17,
       "lang": "en",
       "op": "append"
@@ -2722,7 +2714,7 @@
      {
       "code": "pqd018",
       "content": "\n## Ajan notu pqd018\n\nAjan bu bölümü dosyaya doğrudan ekledi: kredi büyümesi (istatistik kurumu), 6 gözlem.\n",
-      "doc_path_b2": "a51301ef421994c40fa962651a8c965a",
+      "doc_ref": "k2:3e3b7a4fe2cfcd05d9da2d2b1d9e47df",
       "j": 18,
       "lang": "tr",
       "op": "append"
@@ -2730,7 +2722,7 @@
      {
       "code": "pqd019",
       "content": "\n## Agent note pqd019\n\nThe agent appended this section to the file directly: credit growth (ministry statement), 26 observations.\n",
-      "doc_path_b2": "e9a921f4cf4fabadf19d0246d4afa972",
+      "doc_ref": "k2:fdc76c9330c7a2ffb575ef94e66ead6e",
       "j": 19,
       "lang": "en",
       "op": "append"
@@ -4768,14 +4760,14 @@
        "ajan-yazdi": {
         "default": [],
         "include_proposal": [
-         "b2:cb983bea3ee95a222464742df93c46ad"
+         "k2:eed685ed401fa63b447ec128d7b532ea"
         ],
         "layer": "unverified"
        },
        "son": {
         "default": [],
         "include_proposal": [
-         "b2:cb983bea3ee95a222464742df93c46ad"
+         "k2:eed685ed401fa63b447ec128d7b532ea"
         ],
         "layer": "unverified"
        }
@@ -4786,7 +4778,7 @@
       "mode": "lexical",
       "query": "pqd014",
       "targets": [
-       "b2:cb983bea3ee95a222464742df93c46ad"
+       "k2:eed685ed401fa63b447ec128d7b532ea"
       ]
      },
      {
@@ -4794,14 +4786,14 @@
        "ajan-yazdi": {
         "default": [],
         "include_proposal": [
-         "b2:834450f31fd6997a3086ec32e53b0126"
+         "k2:22c4d10e237f339fd5f417357819e9af"
         ],
         "layer": "unverified"
        },
        "son": {
         "default": [],
         "include_proposal": [
-         "b2:834450f31fd6997a3086ec32e53b0126"
+         "k2:22c4d10e237f339fd5f417357819e9af"
         ],
         "layer": "unverified"
        }
@@ -4812,7 +4804,7 @@
       "mode": "lexical",
       "query": "pqd015",
       "targets": [
-       "b2:834450f31fd6997a3086ec32e53b0126"
+       "k2:22c4d10e237f339fd5f417357819e9af"
       ]
      },
      {
@@ -5317,56 +5309,56 @@
    {
     "code": "pqo009",
     "content": "\n\nPilot ekleme pqo009: Obsidian'da kur hareketi üzerine 39 sözcük eklendi.\n",
-    "doc_path_b2": "d6b4a7971cf912f717976e39ee72a968",
+    "doc_ref": "k2:49b330c1b3506537dc851390948a0072",
     "e": 9,
     "op": "append"
    },
    {
     "code": "pqo010",
     "content": "\n\nPilot ekleme pqo010: Obsidian'da enflasyon verisi üzerine 35 sözcük eklendi.\n",
-    "doc_path_b2": "349d9c4297802cb9b732cfb856a1744b",
+    "doc_ref": "k2:922b9c586ab43ef3c1bfe07cd8ceda4d",
     "e": 10,
     "op": "append"
    },
    {
     "code": "pqo011",
     "content": "\n\nPilot ekleme pqo011: Obsidian'da cari açık üzerine 21 sözcük eklendi.\n",
-    "doc_path_b2": "d612c4d548bba2a9f404e8a7b3e3d964",
+    "doc_ref": "k2:85e757e79505c3cfb52fb8edd05b503d",
     "e": 11,
     "op": "append"
    },
    {
     "code": "pqo012",
     "content": "\n\nPilot ekleme pqo012: Obsidian'da enflasyon verisi üzerine 4 sözcük eklendi.\n",
-    "doc_path_b2": "232b1562dc912cfa377d91b3cc3f4d2d",
+    "doc_ref": "k2:0f4e20cef97ee8aa6176b8fdfa76276d",
     "e": 12,
     "op": "append"
    },
    {
     "code": "pqo013",
     "content": "\n\nPilot ekleme pqo013: Obsidian'da bilanço dönemi üzerine 26 sözcük eklendi.\n",
-    "doc_path_b2": "40f187778d5c788fe606707777241afa",
+    "doc_ref": "k2:c8dfb07f5bca2027b27bd50ff6a4a930",
     "e": 13,
     "op": "append"
    },
    {
     "code": "pqo014",
     "content": "\n\nPilot ekleme pqo014: Obsidian'da bilanço dönemi üzerine 34 sözcük eklendi.\n",
-    "doc_path_b2": "7d387c30a130258bb149530511728531",
+    "doc_ref": "k2:7dce03d00cfb12340d61044c908d145d",
     "e": 14,
     "op": "append"
    },
    {
     "code": "pqo015",
     "content": "\n\nPilot ekleme pqo015: Obsidian'da enflasyon verisi üzerine 29 sözcük eklendi.\n",
-    "doc_path_b2": "16e22c8b943712a3d87e37168e37d844",
+    "doc_ref": "k2:febf7fe641a21b73353606a4ed2de553",
     "e": 15,
     "op": "append"
    },
    {
     "code": "pqo016",
     "content": "\n\nPilot ekleme pqo016: Obsidian'da sanayi üretimi üzerine 29 sözcük eklendi.\n",
-    "doc_path_b2": "389dcb231ed731216f19bb4b68111d3c",
+    "doc_ref": "k2:780315ffac4eb95c9a856c6b9f1f028c",
     "e": 16,
     "op": "append"
    },
@@ -5395,12 +5387,12 @@
     "op": "delete"
    },
    {
-    "doc_path_b2": "9dabd1ec406919a8482a724cac7457f0",
+    "doc_ref": "k2:572794d2fba6316ba9c6052da6044a76",
     "e": 21,
     "op": "delete"
    },
    {
-    "doc_path_b2": "1479e79afbb7ad1de638b9c59c8e6191",
+    "doc_ref": "k2:4596ab4ac3ba1c330572db142691d18a",
     "e": 22,
     "op": "delete"
    }
@@ -5527,7 +5519,7 @@
    },
    {
     "expect_default": [
-     "b2:d6b4a7971cf912f717976e39ee72a968"
+     "k2:49b330c1b3506537dc851390948a0072"
     ],
     "id": "o09",
     "mode": "lexical",
@@ -5535,7 +5527,7 @@
    },
    {
     "expect_default": [
-     "b2:349d9c4297802cb9b732cfb856a1744b"
+     "k2:922b9c586ab43ef3c1bfe07cd8ceda4d"
     ],
     "id": "o10",
     "mode": "lexical",
@@ -5543,7 +5535,7 @@
    },
    {
     "expect_default": [
-     "b2:d612c4d548bba2a9f404e8a7b3e3d964"
+     "k2:85e757e79505c3cfb52fb8edd05b503d"
     ],
     "id": "o11",
     "mode": "lexical",
@@ -5551,7 +5543,7 @@
    },
    {
     "expect_default": [
-     "b2:232b1562dc912cfa377d91b3cc3f4d2d"
+     "k2:0f4e20cef97ee8aa6176b8fdfa76276d"
     ],
     "id": "o12",
     "mode": "lexical",
@@ -5559,7 +5551,7 @@
    },
    {
     "expect_default": [
-     "b2:40f187778d5c788fe606707777241afa"
+     "k2:c8dfb07f5bca2027b27bd50ff6a4a930"
     ],
     "id": "o13",
     "mode": "lexical",
@@ -5567,7 +5559,7 @@
    },
    {
     "expect_default": [
-     "b2:7d387c30a130258bb149530511728531"
+     "k2:7dce03d00cfb12340d61044c908d145d"
     ],
     "id": "o14",
     "mode": "lexical",
@@ -5575,7 +5567,7 @@
    },
    {
     "expect_default": [
-     "b2:16e22c8b943712a3d87e37168e37d844"
+     "k2:febf7fe641a21b73353606a4ed2de553"
     ],
     "id": "o15",
     "mode": "lexical",
@@ -5583,7 +5575,7 @@
    },
    {
     "expect_default": [
-     "b2:389dcb231ed731216f19bb4b68111d3c"
+     "k2:780315ffac4eb95c9a856c6b9f1f028c"
     ],
     "id": "o16",
     "mode": "lexical",
@@ -5671,7 +5663,7 @@
    },
    {
     "expect_default": [
-     "b2:d6b4a7971cf912f717976e39ee72a968"
+     "k2:49b330c1b3506537dc851390948a0072"
     ],
     "id": "o27",
     "match": "contains",
@@ -5680,7 +5672,7 @@
    },
    {
     "expect_default": [
-     "b2:349d9c4297802cb9b732cfb856a1744b"
+     "k2:922b9c586ab43ef3c1bfe07cd8ceda4d"
     ],
     "id": "o28",
     "match": "contains",
@@ -5689,7 +5681,7 @@
    },
    {
     "expect_default": [
-     "b2:d612c4d548bba2a9f404e8a7b3e3d964"
+     "k2:85e757e79505c3cfb52fb8edd05b503d"
     ],
     "id": "o29",
     "match": "contains",
@@ -5698,7 +5690,7 @@
    },
    {
     "expect_default": [
-     "b2:232b1562dc912cfa377d91b3cc3f4d2d"
+     "k2:0f4e20cef97ee8aa6176b8fdfa76276d"
     ],
     "id": "o30",
     "match": "contains",
@@ -5707,7 +5699,7 @@
    },
    {
     "expect_default": [
-     "b2:40f187778d5c788fe606707777241afa"
+     "k2:c8dfb07f5bca2027b27bd50ff6a4a930"
     ],
     "id": "o31",
     "match": "contains",
@@ -5716,7 +5708,7 @@
    },
    {
     "expect_default": [
-     "b2:7d387c30a130258bb149530511728531"
+     "k2:7dce03d00cfb12340d61044c908d145d"
     ],
     "id": "o32",
     "match": "contains",
@@ -5725,7 +5717,7 @@
    },
    {
     "expect_default": [
-     "b2:16e22c8b943712a3d87e37168e37d844"
+     "k2:febf7fe641a21b73353606a4ed2de553"
     ],
     "id": "o33",
     "match": "contains",
@@ -5734,7 +5726,7 @@
    },
    {
     "expect_default": [
-     "b2:389dcb231ed731216f19bb4b68111d3c"
+     "k2:780315ffac4eb95c9a856c6b9f1f028c"
     ],
     "id": "o34",
     "match": "contains",
@@ -5804,12 +5796,12 @@
   ],
   "renames": [
    {
-    "doc_path_b2": "a34c5f8e785699a5f80f242ea7e7302e",
+    "doc_ref": "k2:0f98a067a21ed136e9374d44cd482883",
     "new_name": "pilot-adlandirma-1",
     "r": 1
    },
    {
-    "doc_path_b2": "29d3bd365a8cf39fe46132d5a8552c9f",
+    "doc_ref": "k2:4f898ca2cef0be3493133861bf48e807",
     "new_name": "pilot-adlandirma-2",
     "r": 2
    }
@@ -5887,6 +5879,7 @@
    "id": "O14"
   }
  ],
+ "personal_paths": "k2:<keyed blake2b-128>; the key (32 bytes) lies outside the repository (P2Q_PATH_KEY_FILE)",
  "recipes": {
   "default": "[promotion]\npolicy = \"human_only\"\nversion = \"p2q-1\"\n\n[[promotion.rules]]\nid = \"toplayici\"\nactor = \"agent:toplayici\"\npath_prefix = \"toplayici/\"\nto = \"canonical\"\n\n[edit]\npolicy = \"append_only\"\n\n[version_trigger]\nidle_ms = 30000\nmin_sim_change = 0.2\n\n[journal]\nretention_hours = 168\n\n[server]\ntoken_rotate_days = 30\nmax_propose_bytes = 1048576\n\n[index]\ncompact_every_s = 300\n\n[identity]\nhuman_id = \"pilot\"\n\n[attestation]\nunattested = \"unverified\"\n",
   "obsidian": "[promotion]\npolicy = \"human_only\"\nversion = \"p2q-1\"\n\n[[promotion.rules]]\nid = \"toplayici\"\nactor = \"agent:toplayici\"\npath_prefix = \"toplayici/\"\nto = \"canonical\"\n\n[edit]\npolicy = \"append_only\"\n\n[version_trigger]\nidle_ms = 30000\nmin_sim_change = 0.2\n\n[journal]\nretention_hours = 168\n\n[server]\ntoken_rotate_days = 30\nmax_propose_bytes = 1048576\nhttp_port = 27357\n\n[index]\ncompact_every_s = 300\ntokenizer = \"uni_fold_tr\"\nembedder = \"multilingual-minilm-l12-v2\"\n\n[identity]\nhuman_id = \"pilot\"\n\n[attestation]\nunattested = \"unverified\"\n",
