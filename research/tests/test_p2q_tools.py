@@ -400,3 +400,26 @@ def test_compare_names_last_ulp_score_differences_and_ranking_changes(tmp_path):
     assert C.main([str(a), str(c)]) == 1
     e = _run(tmp_path, "other", 1.0, eh="x")
     assert C.compare(C.load(a), C.load(e))["byte_equal"] is False
+
+
+# ---- the Turkish pre-registration (K-P2Q.3)
+def test_turkish_scenario_and_folding_rule():
+    from p2q import make_scenario_tr as T
+    from p2q.tr_queries import body, fold_tokens
+
+    reg = json.loads((REPO / "research/p2q/scenario_tr.json").read_text(encoding="utf-8"))
+    assert reg == json.loads(json.dumps(T.build()))
+    assert len(reg["queries"]) >= 30
+    assert {q["group"] for q in reg["queries"]} >= {
+        "fold",
+        "ascii_i",
+        "accentless",
+        "mixed",
+        "semantic",
+    }
+    assert fold_tokens("İSTANBUL") == ["istanbul"]
+    assert fold_tokens("ISTANBUL") == ["ıstanbul"]
+    assert fold_tokens("IŞIK ışık Işık") == ["ışık"] * 3
+    assert fold_tokens("Şirket-değişikliği 2026") == ["şirket", "değişikliği", "2026"]
+    assert fold_tokens("sirket") != fold_tokens("şirket")
+    assert body("---\ndate: x\n---\nmetin") == "\nmetin"
