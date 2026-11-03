@@ -1,0 +1,43 @@
+[
+ {
+  "driver": 12,
+  "equal": true,
+  "observe": 12,
+  "what": "promotions by the human (lineages)"
+ },
+ {
+  "driver": 6,
+  "equal": true,
+  "observe": 6,
+  "what": "demotions by the human (lineages)"
+ },
+ {
+  "driver": {
+   "canonical": 43286,
+   "proposal": 6,
+   "unverified": 4
+  },
+  "equal": false,
+  "observe": {
+   "canonical": 43440,
+   "proposal": 6,
+   "unverified": 4
+  },
+  "what": "live lineages per layer"
+ },
+ {
+  "driver": {
+   "canonical": 43440,
+   "proposal": 6,
+   "unverified": 4
+  },
+  "equal": true,
+  "note": "the scene's own count (files on disk and deleted paths) missed the 154 live blocks of the two renamed notes' old paths: a counting-tool omission; PQ-18",
+  "observe": {
+   "canonical": 43440,
+   "proposal": 6,
+   "unverified": 4
+  },
+  "what": "live lineages per layer — recount (blame over every document the log names: the files on disk, the deleted ones and the old paths of renamed notes; same final state, server reopened HTTP-only after the scene, no write)"
+ }
+]

@@ -186,6 +186,8 @@ class Scene:
         self.vault = self.work / "vault"
         self.steps, self.numbers, self.edits = [], {}, []
         self.md_ok = []  # (operation, files it may change)
+        self.view_ms = []  # opening and refreshing the plugin's proposals view
+        self.deleted = []  # paths deleted in Obsidian (counted with the log's documents)
 
     def ref(self, p: str) -> str:
         return p if p.startswith(SYNTHETIC) else k2(p, self.key)
@@ -325,6 +327,17 @@ class Scene:
         )
         try:
             return self.scene(port, gr, md_before, att)
+        except (
+            RuntimeError,
+            TimeoutError,
+            KeyError,
+            ValueError,
+            OSError,
+        ) as ex:  # a harness stop is the step's recorded failure (Q-7)
+            self.step("stopped", False, error=f"{type(ex).__name__}: {str(ex)[:300]}")
+            dump(self.steps, self.out / "steps.json")
+            dump(self.numbers, self.out / "numbers.json")
+            return 1
         finally:
             self.obs.send_signal(signal.SIGTERM)
             try:
@@ -378,7 +391,8 @@ class Scene:
                 )
             else:
                 pg.ev(f"app.vault.delete(app.vault.getAbstractFileByPath({J})).then(() => true)")
-            w = self.wait_events(h, [path])
+                self.deleted.append(path)
+            w = self.wait_events(h, [path], s=10 if e["op"] == "delete" else 30)
             rec = {"e": e["e"], "op": e["op"], "doc": self.ref(path), "ingested": w is not None}
             if w:
                 lat.append(w["ms"])
@@ -459,9 +473,9 @@ class Scene:
                     "mode": "create",
                 },
             )
-            lay = [x["layer"] for x in (res or {}).get("layers", [])]
+            lay = [x["layer"] for x in (res or {}).get("blocks", [])]
             okp &= bool(lay) and set(lay) == {"proposal"}
-            lin[p["doc_path"]] = [x["lineage_id"] for x in (res or {}).get("layers", [])]
+            lin[p["doc_path"]] = [x["lineage_id"] for x in (res or {}).get("blocks", [])]
         md_cur = self.md()
         self.step("O08", okp, proposals=len(lin))
         # O09 promote 4 from Obsidian (the plugin's proposals view), demote 2 (HTTP)
@@ -475,12 +489,21 @@ class Scene:
                         f"{d} in Obsidian",
                         30,
                     )
+                    t_view = time.perf_counter()
                     pg.ev("(app.commands.executeCommandById('rootmark:proposals'), true)")
-                    pg.wait(
-                        "!!document.querySelector('.workspace-leaf-content[data-type=\"rootmark-proposals\"] table')",
-                        "the proposals table",
-                        30,
+                    tbl = (
+                        '!!document.querySelector(\'.workspace-leaf-content[data-type="rootmark-proposals"]'
+                        " table.rootmark-proposals')"
                     )
+                    pg.wait(tbl, "the proposals table", 180)
+                    # the view lists what the server had when it opened: its
+                    # own Refresh button shows the latest proposals
+                    pg.ev(
+                        "(__p2q.button(__p2q.view('rootmark-proposals'), 'Refresh').click(), true)"
+                    )
+                    time.sleep(0.5)
+                    pg.wait(tbl, "the refreshed proposals table", 180)
+                    self.view_ms.append((time.perf_counter() - t_view) * 1000)
                     n = pg.ev(f"""(() => {{ const v = __p2q.view('rootmark-proposals'); let n = 0;
                       v.querySelectorAll('tr').forEach((tr) => {{ const c = tr.querySelector('input[type="checkbox"]');
                         if (!c) return; const on = tr.textContent.includes({json.dumps(d)});
@@ -534,8 +557,8 @@ class Scene:
         self.step(
             "O09", okl and all("error" not in x for x in notes), ops=notes, final_layers=final
         )
-        self.promoted_human = sum(x["blocks"] for x in notes if x["op"] == "promote")
-        self.demoted_human = sum(x["blocks"] for x in notes if x["op"] == "demote")
+        self.promoted_human = sum(x.get("blocks", 0) for x in notes if x["op"] == "promote")
+        self.demoted_human = sum(x.get("blocks", 0) for x in notes if x["op"] == "demote")
         # O10 queries
         qres, fails, qlat = {}, [], []
         for q in self.o["queries"]:
@@ -582,7 +605,24 @@ class Scene:
         )
         # counts for O14 while the server runs
         counts = {}
-        for p in list_md(self.vault):
+        # every document the log knows: the files on disk and the ones deleted
+        # in Obsidian (the watcher does not ingest removals, so their blocks
+        # stay live in rootmark's state; PQ-18)
+        log_docs = {
+            e["doc_path"]
+            for e in self.srv.http("events", {"since_seq": 0, "limit": 1000}).get("events", [])
+        }
+        since = 0
+        while True:
+            page = self.srv.http("events", {"since_seq": since, "limit": 1000})
+            log_docs |= {e["doc_path"] for e in page.get("events", []) if e["doc_path"]}
+            if page.get("next_seq", page.get("head_seq", 0)) >= page.get(
+                "head_seq", 0
+            ) or not page.get("events"):
+                break
+            since = page["next_seq"]
+        log_docs.discard("")
+        for p in sorted(set(list_md(self.vault)) | set(self.deleted) | log_docs):
             for b in self.srv.http("blame", {"doc_path": p}).get("blocks", []):
                 if not b.get("inactive"):
                     counts[b["layer"]] = counts.get(b["layer"], 0) + 1
