@@ -295,7 +295,7 @@ jq -r 'select(.meta.provenance.author_kind == "Agent") | .meta.provenance.source
 
 ## 5. The Obsidian plugin
 
-The plugin shows rootmark inside Obsidian: the status bar, a blame gutter, proposals with Promote/Demote, search, checkpoints and traces; and it **attests** every save you make in Obsidian, so that with `unattested = "unverified"` your own edits count as yours (`canonical`) while files written by other processes stay `unverified`. It talks only HTTP to a running `rootmark serve` and never starts one; it reads `[server] http_port` and `[identity] human_id` from the vault's recipe and the token from `.rootmark/server.token`. It has no settings page: the recipe is its configuration. It is not in the community store; install it from the release by hand or with BRAT. Desktop only.
+The plugin shows rootmark inside Obsidian: the status bar, a blame gutter, proposals with Promote, search, checkpoints and traces; and it **attests** every save you make in Obsidian, so that with `unattested = "unverified"` your own edits count as yours (`canonical`) while files written by other processes stay `unverified`. It talks only HTTP to a running `rootmark serve` and never starts one; it reads `[server] http_port` and `[identity] human_id` from the vault's recipe and the token from `.rootmark/server.token`. It has no settings page: the recipe is its configuration. It is not in the community store; install it from the release by hand or with BRAT. Desktop only.
 
 ### 5.1 Install from the release (by hand)
 
@@ -333,7 +333,7 @@ main.js		manifest.json	styles.css
 
 ### 5.2 Use
 
-Commands (Ctrl/Cmd-P, "rootmark: …"): **Show proposal blocks** (the vault's `proposal` and `unverified` blocks, each with **Promote** / **Demote**; promoting asks for a reason), **Search** (query, mode, `k`, *Include proposals*, *At checkpoint*), **Checkpoints** (name the current state, list), **Traces** (what each answer relied on), **Refresh blame of the active note** (the gutter: every block's layer and author). Each save in Obsidian is attested: the watcher then takes the change as yours. Renaming a note in Obsidian (with *Settings → Files and links → Automatically update internal links* on) is attested as a rename, and the notes whose links Obsidian rewrote as link updates.
+Commands (Ctrl/Cmd-P, "rootmark: …"): **Show proposal blocks** (the vault's `proposal` and `unverified` blocks with **Promote**, which asks for a reason; the plugin's **Demote** button is shown disabled in 0.3.0 — undo a promotion over HTTP, `rmk demote` in §6.4, or with `rootmark demote`), **Search** (query, mode, `k`, *Include proposals*, *At checkpoint*), **Checkpoints** (name the current state, list), **Traces** (what each answer relied on), **Refresh blame of the active note** (the gutter: every block's layer and author). Each save in Obsidian is attested: the watcher then takes the change as yours. Renaming a note in Obsidian (with *Settings → Files and links → Automatically update internal links* on) is attested as a rename, and the notes whose links Obsidian rewrote as link updates.
 
 ### 5.3 Install with BRAT
 
