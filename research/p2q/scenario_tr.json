@@ -1,0 +1,311 @@
+{
+ "corpora": [
+  "obsidian",
+  "qorbit"
+ ],
+ "criteria": {
+  "TR-1": "upper-case and title-case variants: lexical hits (document, chunk, order) equal to the lower-case form's",
+  "TR-2": "every lexical query's document set equals the documents of the copy that contain its folded token (oracle: the same rule applied locally to each document's text)",
+  "report": "accentless vs accented: documents lost (lexical) and top-10 overlap (hybrid); mixed and semantic: hit counts and overlaps; no threshold"
+ },
+ "decision": "K-P2Q.3",
+ "folding_rule": "uni_fold_tr: NFC; İ→i, I→ı; then Unicode lower case; tokens are maximal runs of alphabetic/numeric characters; no diacritic folding",
+ "k": {
+  "hybrid": 10,
+  "lexical": 1000
+ },
+ "pass": [
+  "fresh copy",
+  "ingest-dir",
+  "recipe tr",
+  "index build",
+  "serve --http 127.0.0.1:0 (no MCP, no watch)",
+  "queries (default search)",
+  "SIGTERM"
+ ],
+ "queries": [
+  {
+   "base": "istanbul",
+   "criterion": "TR-2",
+   "group": "fold",
+   "id": "tr01",
+   "mode": "lexical",
+   "query": "istanbul"
+  },
+  {
+   "base": "istanbul",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr02",
+   "mode": "lexical",
+   "query": "İSTANBUL"
+  },
+  {
+   "base": "istanbul",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr03",
+   "mode": "lexical",
+   "query": "İstanbul"
+  },
+  {
+   "base": "ışık",
+   "criterion": "TR-2",
+   "group": "fold",
+   "id": "tr04",
+   "mode": "lexical",
+   "query": "ışık"
+  },
+  {
+   "base": "ışık",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr05",
+   "mode": "lexical",
+   "query": "IŞIK"
+  },
+  {
+   "base": "ışık",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr06",
+   "mode": "lexical",
+   "query": "Işık"
+  },
+  {
+   "base": "şirket",
+   "criterion": "TR-2",
+   "group": "fold",
+   "id": "tr07",
+   "mode": "lexical",
+   "query": "şirket"
+  },
+  {
+   "base": "şirket",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr08",
+   "mode": "lexical",
+   "query": "ŞİRKET"
+  },
+  {
+   "base": "şirket",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr09",
+   "mode": "lexical",
+   "query": "Şirket"
+  },
+  {
+   "base": "değişiklik",
+   "criterion": "TR-2",
+   "group": "fold",
+   "id": "tr10",
+   "mode": "lexical",
+   "query": "değişiklik"
+  },
+  {
+   "base": "değişiklik",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr11",
+   "mode": "lexical",
+   "query": "DEĞİŞİKLİK"
+  },
+  {
+   "base": "değişiklik",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr12",
+   "mode": "lexical",
+   "query": "Değişiklik"
+  },
+  {
+   "base": "güncelleme",
+   "criterion": "TR-2",
+   "group": "fold",
+   "id": "tr13",
+   "mode": "lexical",
+   "query": "güncelleme"
+  },
+  {
+   "base": "güncelleme",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr14",
+   "mode": "lexical",
+   "query": "GÜNCELLEME"
+  },
+  {
+   "base": "güncelleme",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr15",
+   "mode": "lexical",
+   "query": "Güncelleme"
+  },
+  {
+   "base": "çalışma",
+   "criterion": "TR-2",
+   "group": "fold",
+   "id": "tr16",
+   "mode": "lexical",
+   "query": "çalışma"
+  },
+  {
+   "base": "çalışma",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr17",
+   "mode": "lexical",
+   "query": "ÇALIŞMA"
+  },
+  {
+   "base": "çalışma",
+   "criterion": "TR-1,TR-2",
+   "group": "fold",
+   "id": "tr18",
+   "mode": "lexical",
+   "query": "Çalışma"
+  },
+  {
+   "criterion": "TR-2",
+   "folded": "ıstanbul",
+   "group": "ascii_i",
+   "id": "tr19",
+   "mode": "lexical",
+   "query": "ISTANBUL"
+  },
+  {
+   "criterion": "TR-2",
+   "folded": "ılıskı",
+   "group": "ascii_i",
+   "id": "tr20",
+   "mode": "lexical",
+   "query": "ILISKI"
+  },
+  {
+   "accented": "şirket",
+   "criterion": "TR-2",
+   "group": "accentless",
+   "id": "tr21",
+   "mode": "lexical",
+   "query": "sirket"
+  },
+  {
+   "accented": "değişiklik",
+   "criterion": "TR-2",
+   "group": "accentless",
+   "id": "tr22",
+   "mode": "lexical",
+   "query": "degisiklik"
+  },
+  {
+   "accented": "güncelleme",
+   "criterion": "TR-2",
+   "group": "accentless",
+   "id": "tr23",
+   "mode": "lexical",
+   "query": "guncelleme"
+  },
+  {
+   "accented": "çalışma",
+   "criterion": "TR-2",
+   "group": "accentless",
+   "id": "tr24",
+   "mode": "lexical",
+   "query": "calisma"
+  },
+  {
+   "accented": "ışık",
+   "criterion": "TR-2",
+   "group": "accentless",
+   "id": "tr25",
+   "mode": "lexical",
+   "query": "isik"
+  },
+  {
+   "accented": "öğrenme",
+   "criterion": "TR-2",
+   "group": "accentless",
+   "id": "tr26",
+   "mode": "lexical",
+   "query": "ogrenme"
+  },
+  {
+   "accented": "şirket",
+   "criterion": "report",
+   "group": "accentless_hybrid",
+   "id": "tr27",
+   "mode": "hybrid",
+   "query": "sirket"
+  },
+  {
+   "accented": "değişiklik",
+   "criterion": "report",
+   "group": "accentless_hybrid",
+   "id": "tr28",
+   "mode": "hybrid",
+   "query": "degisiklik"
+  },
+  {
+   "criterion": "report",
+   "group": "mixed",
+   "id": "tr29",
+   "mode": "hybrid",
+   "query": "şirket company"
+  },
+  {
+   "criterion": "report",
+   "group": "mixed",
+   "id": "tr30",
+   "mode": "hybrid",
+   "query": "güncelleme update notes"
+  },
+  {
+   "criterion": "report",
+   "group": "mixed",
+   "id": "tr31",
+   "mode": "hybrid",
+   "query": "faiz rate decision"
+  },
+  {
+   "criterion": "report",
+   "group": "mixed",
+   "id": "tr32",
+   "mode": "hybrid",
+   "query": "toplantı meeting notes"
+  },
+  {
+   "criterion": "report",
+   "group": "semantic",
+   "id": "tr33",
+   "mode": "hybrid",
+   "query": "proje planındaki değişiklikler"
+  },
+  {
+   "criterion": "report",
+   "group": "semantic",
+   "id": "tr34",
+   "mode": "hybrid",
+   "query": "veri toplama yöntemi"
+  },
+  {
+   "criterion": "report",
+   "group": "semantic",
+   "id": "tr35",
+   "mode": "hybrid",
+   "query": "kullanıcı geri bildirimi"
+  },
+  {
+   "criterion": "report",
+   "group": "semantic",
+   "id": "tr36",
+   "mode": "hybrid",
+   "query": "haftalık rapor özeti"
+  }
+ ],
+ "reading": "TR-1/TR-2 failure is a finding (FINDINGS.md, target P2-C); GOAL Q-1..Q-11 thresholds unchanged",
+ "recipe": "tr",
+ "version": "p2q-scenario-tr/1"
+}
