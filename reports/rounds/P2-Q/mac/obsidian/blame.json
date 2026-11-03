@@ -1,0 +1,56 @@
+{
+ "ajan/oneri-1.md": {
+  "proposal": 3
+ },
+ "ajan/oneri-2.md": {
+  "proposal": 3
+ },
+ "ajan/oneri-3.md": {
+  "canonical": 3
+ },
+ "ajan/oneri-4.md": {
+  "canonical": 3
+ },
+ "k2:0f4e20cef97ee8aa6176b8fdfa76276d": {
+  "canonical": 31
+ },
+ "k2:49b330c1b3506537dc851390948a0072": {
+  "canonical": 34
+ },
+ "k2:780315ffac4eb95c9a856c6b9f1f028c": {
+  "canonical": 38
+ },
+ "k2:7dce03d00cfb12340d61044c908d145d": {
+  "canonical": 40
+ },
+ "k2:85e757e79505c3cfb52fb8edd05b503d": {
+  "canonical": 33
+ },
+ "k2:922b9c586ab43ef3c1bfe07cd8ceda4d": {
+  "canonical": 36
+ },
+ "k2:c8dfb07f5bca2027b27bd50ff6a4a930": {
+  "canonical": 56
+ },
+ "k2:febf7fe641a21b73353606a4ed2de553": {
+  "canonical": 39
+ },
+ "pilot/yeni-1.md": {
+  "canonical": 3
+ },
+ "pilot/yeni-2.md": {
+  "canonical": 3
+ },
+ "pilot/yeni-3.md": {
+  "canonical": 3
+ },
+ "pilot/yeni-4.md": {
+  "canonical": 3
+ },
+ "pilot/yeni-5.md": {
+  "canonical": 3
+ },
+ "pilot/yeni-6.md": {
+  "canonical": 3
+ }
+}

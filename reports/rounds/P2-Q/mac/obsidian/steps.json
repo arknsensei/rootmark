@@ -1,0 +1,269 @@
+[
+ {
+  "id": "O01",
+  "pass": true,
+  "summary": {
+   "bytes": 4513708,
+   "files": 658,
+   "summary_b2": "b0b17dfc45a5a966c0a1beea9ede7000"
+  }
+ },
+ {
+  "id": "O02",
+  "pass": true,
+  "rc": 0
+ },
+ {
+  "id": "O03",
+  "pass": true,
+  "rc": 0
+ },
+ {
+  "id": "O04",
+  "index": "ok",
+  "pass": true,
+  "port": 27357
+ },
+ {
+  "guide_block": {
+   "failed": [],
+   "mode": "release",
+   "not_run": [],
+   "ok": 1,
+   "skipped": []
+  },
+  "id": "O05",
+  "pass": true,
+  "status_bar": "rootmark 0.3.0 · human:pilot"
+ },
+ {
+  "canonical_blocks": 38,
+  "edits": 22,
+  "false_unverified_blocks": 0,
+  "id": "O06",
+  "not_ingested": [
+   19,
+   20,
+   21,
+   22
+  ],
+  "pass": false
+ },
+ {
+  "id": "O07",
+  "pass": true,
+  "renames": [
+   {
+    "docs_changed": 4,
+    "ingested": true,
+    "layers": {
+     "k2:41df1f9b1b10517eb9646024403a9057": {
+      "unverified": 1
+     },
+     "k2:ab027ca2dadd3845843aea64440b841c": {
+      "unverified": 1
+     },
+     "k2:b538d38c672bc30aef1a53e006af76e4": {
+      "unverified": 1
+     },
+     "renamed": {
+      "canonical": 47
+     }
+    },
+    "ms": 1881.2,
+    "r": 1
+   },
+   {
+    "docs_changed": 2,
+    "ingested": true,
+    "layers": {
+     "k2:4ca0e227c92e14debcbfe0c56d679e41": {
+      "unverified": 1
+     },
+     "renamed": {
+      "canonical": 107
+     }
+    },
+    "ms": 1888.1,
+    "r": 2
+   }
+  ]
+ },
+ {
+  "id": "O08",
+  "pass": true,
+  "proposals": 4
+ },
+ {
+  "final_layers": {
+   "ajan/oneri-1.md": [
+    "proposal"
+   ],
+   "ajan/oneri-2.md": [
+    "proposal"
+   ],
+   "ajan/oneri-3.md": [
+    "canonical"
+   ],
+   "ajan/oneri-4.md": [
+    "canonical"
+   ]
+  },
+  "id": "O09",
+  "ops": [
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-1.md",
+    "op": "promote",
+    "via": "plugin"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-2.md",
+    "op": "promote",
+    "via": "plugin"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-3.md",
+    "op": "promote",
+    "via": "plugin"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-4.md",
+    "op": "promote",
+    "via": "plugin"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-1.md",
+    "op": "demote",
+    "plugin_demote_disabled": null,
+    "via": "http"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-2.md",
+    "op": "demote",
+    "plugin_demote_disabled": null,
+    "via": "http"
+   }
+  ],
+  "pass": true
+ },
+ {
+  "failures": [
+   "o07: docs ['pilot/yeni-7.md'] != []",
+   "o08: docs ['pilot/yeni-8.md'] != []",
+   "o29: target k2:85e757e79505c3cfb52fb8edd05b503d not among the hits",
+   "o30: target k2:0f4e20cef97ee8aa6176b8fdfa76276d not among the hits",
+   "o31: target k2:c8dfb07f5bca2027b27bd50ff6a4a930 not among the hits",
+   "o32: target k2:7dce03d00cfb12340d61044c908d145d not among the hits"
+  ],
+  "id": "O10",
+  "n_failures": 6,
+  "pass": false
+ },
+ {
+  "documents": 18,
+  "id": "O11",
+  "pass": true
+ },
+ {
+  "id": "O12",
+  "md_changes_not_by_obsidian_or_agent": 0,
+  "operations": 24,
+  "outside_target": [],
+  "pass": true
+ },
+ {
+  "attest": {
+   "attest": {
+    "link_update:refused": 8,
+    "plain:accepted": 18,
+    "rename:accepted": 2
+   },
+   "observe": {
+    "attested": 20,
+    "unverified": 4
+   },
+   "refused": [
+    {
+     "code": "denied",
+     "doc": "k2:41df1f9b1b10517eb9646024403a9057",
+     "kind": "link_update",
+     "reason": "attest: k2:41df1f9b1b10517eb9646024403a9057 is not a link update of k2:41df1f9b1b10517eb9646024403a9057 for k2:3e83f165db927e72c942fb2e01f3ab68: block 50: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:41df1f9b1b10517eb9646024403a9057",
+     "kind": "link_update",
+     "reason": "attest: k2:41df1f9b1b10517eb9646024403a9057 is not a link update of k2:41df1f9b1b10517eb9646024403a9057 for k2:3e83f165db927e72c942fb2e01f3ab68: block 50: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:ab027ca2dadd3845843aea64440b841c",
+     "kind": "link_update",
+     "reason": "attest: k2:ab027ca2dadd3845843aea64440b841c is not a link update of k2:ab027ca2dadd3845843aea64440b841c for k2:3e83f165db927e72c942fb2e01f3ab68: block 114: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:ab027ca2dadd3845843aea64440b841c",
+     "kind": "link_update",
+     "reason": "attest: k2:ab027ca2dadd3845843aea64440b841c is not a link update of k2:ab027ca2dadd3845843aea64440b841c for k2:3e83f165db927e72c942fb2e01f3ab68: block 114: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:b538d38c672bc30aef1a53e006af76e4",
+     "kind": "link_update",
+     "reason": "attest: k2:b538d38c672bc30aef1a53e006af76e4 is not a link update of k2:b538d38c672bc30aef1a53e006af76e4 for k2:3e83f165db927e72c942fb2e01f3ab68: block 54: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:b538d38c672bc30aef1a53e006af76e4",
+     "kind": "link_update",
+     "reason": "attest: k2:b538d38c672bc30aef1a53e006af76e4 is not a link update of k2:b538d38c672bc30aef1a53e006af76e4 for k2:3e83f165db927e72c942fb2e01f3ab68: block 54: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:4ca0e227c92e14debcbfe0c56d679e41",
+     "kind": "link_update",
+     "reason": "attest: k2:4ca0e227c92e14debcbfe0c56d679e41 is not a link update of k2:4ca0e227c92e14debcbfe0c56d679e41 for k2:83c907939251845ec8c48aca9c8df7de: block 3: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:4ca0e227c92e14debcbfe0c56d679e41",
+     "kind": "link_update",
+     "reason": "attest: k2:4ca0e227c92e14debcbfe0c56d679e41 is not a link update of k2:4ca0e227c92e14debcbfe0c56d679e41 for k2:83c907939251845ec8c48aca9c8df7de: block 3: the text differs outside link targets"
+    }
+   ]
+  },
+  "attest_bar": "attested 20 · unattested 4",
+  "id": "O13",
+  "panics": 0,
+  "pass": false,
+  "sigterm_rc": "timeout"
+ },
+ {
+  "id": "O14",
+  "pass": false,
+  "read_only": true,
+  "unequal": [
+   {
+    "driver": {
+     "canonical": 43286,
+     "proposal": 6,
+     "unverified": 4
+    },
+    "equal": false,
+    "observe": {
+     "canonical": 43440,
+     "proposal": 6,
+     "unverified": 4
+    },
+    "what": "live lineages per layer"
+   }
+  ]
+ }
+]
