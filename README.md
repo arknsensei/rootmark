@@ -61,7 +61,7 @@ Other ways: the release archives (`rootmark-0.3.0-<target>.tar.gz`, checked agai
 
 ### Obsidian
 
-The Obsidian plugin (status bar, blame gutter, proposals with Promote/Demote, search, checkpoints, traces; it attests your saves) is not in the community store. Install it from the release's `rootmark-0.3.0.zip` into `<vault>/.obsidian/plugins/rootmark/` and enable it under *Settings → Community plugins*, or with [BRAT](https://github.com/TfTHacker/obsidian42-brat) (`arknsensei/rootmark`): [GUIDE §5](docs/GUIDE.md#5-the-obsidian-plugin). It connects to a running `rootmark serve` on the recipe's `[server] http_port` as `[identity] human_id`; the status bar says `rootmark 0.3.0 · human:<you>`.
+The Obsidian plugin (status bar, blame gutter, proposals with Promote, search, checkpoints, traces; it attests your saves) is not in the community store. Install it from the release's `rootmark-0.3.0.zip` into `<vault>/.obsidian/plugins/rootmark/` and enable it under *Settings → Community plugins*, or with [BRAT](https://github.com/TfTHacker/obsidian42-brat) (`arknsensei/rootmark`): [GUIDE §5](docs/GUIDE.md#5-the-obsidian-plugin). It connects to a running `rootmark serve` on the recipe's `[server] http_port` as `[identity] human_id`; the status bar says `rootmark 0.3.0 · human:<you>`.
 
 ## Specification
 
