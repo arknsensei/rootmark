@@ -1,7 +1,7 @@
 {
   "name": "rootmark-vscode",
   "displayName": "rootmark",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "VS Code client skeleton of rootmark serve: status, search, block blame with locations, history, promote and demote over the HTTP contract (docs/CLIENT_CONTRACT.md v2). Saves are not attested.",
   "license": "Apache-2.0",
