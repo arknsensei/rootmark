@@ -5,6 +5,7 @@ fixtures (no personal corpus is read here)."""
 import json
 import random
 import re
+import struct
 from pathlib import Path
 
 from p2q import evaluate as E
@@ -359,3 +360,43 @@ def test_observe_is_read_only_and_prints_no_content(tmp_path, capsys):
         assert "outside the vault" in str(e)
     else:
         raise AssertionError("--out inside the vault was accepted")
+
+
+# ---- the comparison (Q-6, Q-8)
+def _run(tmp: Path, name: str, score: float, chunk: str = "c1", eh: str = "e") -> Path:
+    d = tmp / name
+    d.mkdir()
+    (d / "hashes.json").write_text(
+        json.dumps(
+            {
+                "events_hash": eh,
+                "index_files": {"vectors/vectors.f32": "v", "manifest.json": "m"},
+                "vectors": "v",
+                "manifest": "m",
+            }
+        )
+    )
+    hit = {"doc": "a.md", "chunk_id": chunk, "layer": "canonical", "score": score}
+    (d / "queries.json").write_text(
+        json.dumps({"son": {"q01": {"default": [hit], "include_proposal": [hit]}}})
+    )
+    return d
+
+
+def test_compare_names_last_ulp_score_differences_and_ranking_changes(tmp_path):
+    from p2q import compare as C
+
+    assert C.ulp_distance(1.0, 1.0) == 0
+    nxt = struct.unpack(
+        "<d", struct.pack("<q", struct.unpack("<q", struct.pack("<d", 1.0))[0] + 1)
+    )[0]
+    assert C.ulp_distance(1.0, nxt) == 1
+    a = _run(tmp_path, "mac", 1.0)
+    b = _run(tmp_path, "docker", nxt)
+    assert C.main([str(a), str(b)]) == 0
+    r = C.compare(C.load(a), C.load(b))
+    assert r["max_ulp"] == 1 and len(r["scores_differing"]) == 2 and r["rankings_equal"]
+    c = _run(tmp_path, "ci", 1.0, chunk="c2")
+    assert C.main([str(a), str(c)]) == 1
+    e = _run(tmp_path, "other", 1.0, eh="x")
+    assert C.compare(C.load(a), C.load(e))["byte_equal"] is False
