@@ -194,3 +194,168 @@ def test_leakcheck_piece_is_seeded():
     a = L.piece_of(data.encode(), random.Random("s"))
     b = L.piece_of(data.encode(), random.Random("s"))
     assert a == b and a is not None
+
+
+# ---- the observation script (Q-11; TASKS Q2 (e))
+def _ev(seq, kind, doc, lids, meta):
+    return {
+        "seq": seq,
+        "doc_path": doc,
+        "kind": kind,
+        "lineage_ids": lids,
+        "old_version_ids": [],
+        "new_version_ids": [],
+        "snapshot_id": None,
+        "meta": meta,
+    }
+
+
+def _obs_vault(tmp: Path) -> Path:
+    v = tmp / "vault"
+    (v / ".rootmark").mkdir(parents=True)
+    (v / "gizli-not.md").write_text("# Gizli başlık\n\nözel metin\n", encoding="utf-8")
+    human = {"provenance": {"author_kind": "Human", "source": ""}}
+    agent = {"provenance": {"author_kind": "Agent", "source": "toplayici/1.0"}}
+    unatt = {
+        "layer": "unverified",
+        "provenance": {"author_kind": "Human", "source": "unattested_fs"},
+    }
+    evs = [
+        _ev(0, "BlockCreated", "gizli-not.md", ["h1"], human),
+        _ev(1, "BlockCreated", "toplayici/a.md", ["a1"], agent),
+        _ev(
+            2,
+            "Promoted",
+            "toplayici/a.md",
+            ["a1"],
+            {"actor": {"kind": "policy", "id": "toplayici"}, "from": "proposal", "to": "canonical"},
+        ),
+        _ev(3, "BlockCreated", "yorum/b.md", ["b1"], agent),
+        _ev(4, "BlockCreated", "yorum/b.md", ["b2"], agent),
+        _ev(
+            5,
+            "Promoted",
+            "yorum/b.md",
+            ["b1"],
+            {"actor": {"kind": "human", "id": "pilot"}, "from": "proposal", "to": "canonical"},
+        ),
+        _ev(6, "CheckpointCreated", "", [], {"checkpoint_id": "c", "event_seq": 6, "name": None}),
+        _ev(7, "BlockCreated", "d.md", ["d1"], unatt),
+        _ev(
+            8,
+            "Demoted",
+            "toplayici/a.md",
+            ["a1"],
+            {"actor": {"kind": "human", "id": "pilot"}, "from": "canonical", "to": "proposal"},
+        ),
+        _ev(
+            9,
+            "Demoted",
+            "yorum/b.md",
+            ["b2"],
+            {"actor": {"kind": "policy", "id": "stale"}, "prune": True, "to": "proposal"},
+        ),
+        _ev(10, "CheckpointCreated", "", [], {"checkpoint_id": "d", "event_seq": 10, "name": "x"}),
+        _ev(11, "CheckpointNamed", "", [], {"checkpoint_id": "d", "name": "x"}),
+    ]
+    (v / ".rootmark/events.jsonl").write_text(
+        "".join(json.dumps(e) + "\n" for e in evs) + '{"seq": 12, "partial', encoding="utf-8"
+    )
+    tr = [
+        {
+            "trace_id": "t1",
+            "consumer": "brif",
+            "query_hash": "q",
+            "at_seq": 5,
+            "returned": [{"doc_path": "gizli-not.md", "lineage_id": "h1", "version_id": "v"}],
+        },
+        {
+            "trace_id": "t2",
+            "consumer": "brif",
+            "query_hash": None,
+            "at_seq": 9,
+            "returned": [
+                {"doc_path": "gizli-not.md", "lineage_id": "h1", "version_id": "v"},
+                {"doc_path": "yorum/b.md", "lineage_id": "b1", "version_id": "w"},
+            ],
+        },
+    ]
+    (v / ".rootmark/traces.jsonl").write_text("".join(json.dumps(t) + "\n" for t in tr))
+    return v
+
+
+def test_observe_counts_and_layers(tmp_path):
+    from p2q import observe as O
+
+    v = _obs_vault(tmp_path)
+    log = tmp_path / "attest.log"
+    log.write_text(
+        "\n".join(
+            json.dumps(x)
+            for x in [
+                {
+                    "event": "attest",
+                    "kind": "plain",
+                    "result": "accepted",
+                    "doc_path": "gizli-not.md",
+                },
+                {
+                    "event": "attest",
+                    "kind": "rename",
+                    "result": "refused",
+                    "code": "denied",
+                    "reason": "gizli-not.md: bytes differ",
+                    "doc_path": "gizli-not.md",
+                },
+                {"event": "observe", "ingest": "attested", "doc_path": "gizli-not.md"},
+                {
+                    "event": "observe",
+                    "ingest": "unverified",
+                    "doc_path": "d.md",
+                    "accepted_before": [{"why": "expired"}],
+                },
+            ]
+        )
+        + "\n"
+    )
+    s = O.observe(v, log, None, 0)
+    assert s["head_seq"] == 12  # the partial last line is left out
+    assert s["events"]["by_kind"]["BlockCreated"] == 5
+    assert s["writes"]["events_by_writer"] == {"agent": 3, "human": 1, "unattested_fs": 1}
+    assert s["writes"]["agent_events_by_client"] == {"toplayici": 3}
+    assert s["promotions"]["lineages_by_actor"] == {"human": 1, "policy": 1}
+    assert s["promotions"]["lineages_by_rule"] == {"toplayici": 1}
+    assert s["demotions"]["lineages_by_actor"] == {"human": 1, "pruned": 1}
+    assert s["layers"]["lineages"] == {
+        "canonical": 2,
+        "inactive": 1,
+        "proposal": 1,
+        "unverified": 1,
+    }
+    assert s["layers"]["unverified_at_each_checkpoint"] == [0, 1]
+    assert s["checkpoints"] == {"created": 2, "named": 1}
+    assert s["traces"]["searches"] == 1 and s["traces"]["reads"] == 1
+    assert s["traces"]["most_relied_on"][0] == {"lineage_b2": b2("h1"), "count": 2}
+    assert s["attest"]["refusal_classes"] == {"rename:denied": 1}
+    assert s["attest"]["observations"]["unverified_because:expired"] == 1
+    p = O.observe(v, None, None, 7)
+    assert p["events"]["total"] == 5 and p["traces"]["total"] == 1
+
+
+def test_observe_is_read_only_and_prints_no_content(tmp_path, capsys):
+    from p2q import observe as O
+    from p2q.common import tree_b2
+
+    v = _obs_vault(tmp_path)
+    before = tree_b2(v)
+    assert O.main(["--vault", str(v)]) == 0
+    out = capsys.readouterr().out
+    assert tree_b2(v) == before
+    for secret in ("gizli", "özel", "toplayici/a.md", "yorum/b.md", "d.md"):
+        assert secret not in out
+    try:
+        O.main(["--vault", str(v), "--out", str(v / "x.json")])
+    except SystemExit as e:
+        assert "outside the vault" in str(e)
+    else:
+        raise AssertionError("--out inside the vault was accepted")
