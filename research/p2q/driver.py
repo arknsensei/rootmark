@@ -191,8 +191,14 @@ class Server:
         try:
             rc = self.p.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
-            self.p.kill()
+            # still running after the signal: close the MCP stream (the
+            # server's other way to stop) and record the timeout
             rc = "timeout"
+            try:
+                self.p.stdin.close()
+                self.p.wait(timeout=60)
+            except (subprocess.TimeoutExpired, OSError):
+                self.p.kill()
         peak = self.rss.done()
         self.err.close()
         return {"rc": rc, "seconds": round(time.perf_counter() - t0, 3), "peak_rss_kib": peak}
@@ -396,7 +402,7 @@ class Driver:
                 len(e.get("lineage_ids", [])) for e in (res.get("promoted") or [])
             )
             want = "canonical" if w["rule"] else "proposal"
-            got = [x.get("layer") for x in res.get("layers", [])]
+            got = [x.get("layer") for x in res.get("blocks", [])]
             if not got or any(g != want for g in got):
                 layer_fail.append({"i": w["i"], "layers": got})
             if w["rule"]:
@@ -466,7 +472,7 @@ class Driver:
             t0 = time.perf_counter()
             os.replace(tmp, target)
             seen = None
-            while time.perf_counter() - t0 < 30:
+            while time.perf_counter() - t0 < 120:
                 ev = srv.http("events", {"since_seq": head, "path_prefix": [path], "limit": 1000})
                 kinds = [e["kind"] for e in ev.get("events", [])]
                 if "SnapshotCommitted" in kinds:
@@ -638,7 +644,7 @@ class Driver:
         stop = srv.close(signal.SIGTERM)
         self.numbers["serve_peak_rss_kib"] = stop["peak_rss_kib"]
         r, _ = self.run("events-hash", str(self.vault))
-        eh_mid = r.stdout.strip().strip('"')
+        eh_mid = json.loads(r.stdout)["events_hash"] if r.returncode == 0 else None
         srv = Server(a.rootmark, self.vault, log, att, self.client)
         st2 = srv.http("status")
         r_after = self.search(srv, q0, False)
@@ -670,7 +676,7 @@ class Driver:
         )
         r, _ = self.run("index", "compact", str(self.vault))
         r2, _ = self.run("events-hash", str(self.vault))
-        events_hash = r2.stdout.strip().strip('"')
+        events_hash = json.loads(r2.stdout)["events_hash"] if r2.returncode == 0 else None
         idx = tree_b2(self.vault / ".rootmark/index")
         qres = json.dumps({"ajan-yazdi": res1, "son": res2}, sort_keys=True).encode()
         hashes = {
