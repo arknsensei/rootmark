@@ -1,0 +1,5 @@
+# P2-Q — Varsayımlar
+
+- **Q1-1 [-]** RELEASE.md insan adımı 1'in 0.3.0 satırı, R16'nın (dondurulmuş `scripts/release_check.sh`) hükmünü okuyabildiği raporları yol biçimiyle anar (Blok 1 `reports/rounds/P2-P/VERIFICATION.md`, Blok 2 `reports/rounds/P2-R/VERIFICATION.md`); P2-V dizisinin üç raporu, hüküm satırları R16'nın biçiminde olmadığı için (küçük harf, başlıkta hüküm) `Q1_verifications.md`'ye ve K-P2V2.2'ye atıfla, yol biçimi olmadan anılır. Hükümleri olumludur ve koşulları kapatılmıştır (tablo). 0.2.0 emsali: adım 1 yalnız son kapanış doğrulamalarını andı. Ölçüm aracı bulgusu olarak FINDINGS'e (hedef P2-C).
+- **Q0-1 [-]** Obsidian kopyası `.obsidian/` yapılandırmasıyla birlikte kopyalandı (gerçek kullanıcının ayarları; topluluk eklentisi yok); `.trash/` alınmadı.
+- **Q0-2 [-]** D-NOTES'ta tarif `default` (İngilizce korpus, indeks varsayılanları); qorbit ve Obsidian kopyasında `tr` (`uni_fold_tr` + çok dilli gömme), kılavuzun Türkçe vault önerisi. Böylece Mac ↔ Linux karşılaştırması iki gömücüyü de kapsar (qorbit: Docker; D-NOTES: Docker ve CI).
