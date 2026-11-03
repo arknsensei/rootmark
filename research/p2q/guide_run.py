@@ -92,18 +92,22 @@ __stop_server() {
 """
 
 
-def script(bl: list[dict], mode: str, work: Path) -> str:
-    skip = dict(SKIP)
+def script(bl: list[dict], mode: str, work: Path, only: bool = False) -> str:
+    skip = {} if only else dict(SKIP)
     if mode == "candidate":
         skip.update(SKIP_CANDIDATE)
     parts = ["set -o pipefail", START, '__CWD_SERVE="$HOME"']
-    order = [b for b in bl if b["id"] not in DEFER] + [b for b in bl if b["id"] in DEFER]
+    order = (
+        bl
+        if only
+        else ([b for b in bl if b["id"] not in DEFER] + [b for b in bl if b["id"] in DEFER])
+    )
     for b in order:
         bid = b["id"]
         if bid in skip:
             parts.append(f"echo '@@BLOCK {bid} SKIP'")
             continue
-        if bid in STOP_BEFORE:
+        if bid in STOP_BEFORE and not only:
             parts.append("__stop_server")
         text = b["text"]
         serve = text.lstrip().startswith("rootmark serve ")
@@ -114,7 +118,7 @@ def script(bl: list[dict], mode: str, work: Path) -> str:
         else:
             parts.append(text)
         parts.append('trap - ERR; echo "@@BLOCK ' + bid + ' END fails=$__fails"')
-        if bid in START_AFTER:
+        if bid in START_AFTER and not only:
             parts.append("__start_server")
     parts.append("__stop_server")
     return "\n".join(parts) + "\n"
@@ -158,16 +162,18 @@ def main(argv=None) -> int:
     ap.add_argument("--guide", type=Path, required=True)
     ap.add_argument("--work", type=Path, required=True)
     ap.add_argument("--mode", choices=["release", "candidate"], required=True)
+    ap.add_argument("--keep-home", action="store_true", help="use an existing home (Linux stages)")
     ap.add_argument("--binary", type=Path)
     ap.add_argument("--models", type=Path)
     ap.add_argument("--observe", type=Path)
+    ap.add_argument("--only", help="comma-separated block ids: run only these (Linux stages)")
     ap.add_argument("--vault-seed", type=Path, help="a folder of Markdown copied to ~/notes")
     a = ap.parse_args(argv)
     work = a.work.resolve()
     home = work / "home"
-    if home.exists():
+    if home.exists() and not a.keep_home:
         shutil.rmtree(home)
-    home.mkdir(parents=True)
+    home.mkdir(parents=True, exist_ok=True)
     if a.vault_seed:
         shutil.copytree(a.vault_seed, home / "notes")
     if a.mode == "candidate":
@@ -178,7 +184,14 @@ def main(argv=None) -> int:
         os.symlink(a.models.resolve(), share / "models")
         (home / "rootmark-install").mkdir()
     bl = blocks(a.guide.read_text(encoding="utf-8"))
-    sh = script(bl, a.mode, work)
+    if a.only:
+        want = a.only.split(",")
+        bl = [b for b in bl if b["id"] in want]
+        missing = sorted(set(want) - {b["id"] for b in bl})
+        if missing:
+            raise SystemExit(f"guide_run: no block {missing} in the guide")
+        bl.sort(key=lambda b: want.index(b["id"]))
+    sh = script(bl, a.mode, work, only=bool(a.only))
     if a.mode == "candidate" and a.observe:
         # §7 downloads observe.py from the release tag: the candidate's copy
         sh = sh.replace(
