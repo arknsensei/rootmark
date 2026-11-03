@@ -6,6 +6,7 @@ Koşucu `research/p2q/guide_run.py`: kılavuzun `sh` bloklarını yazıldığı 
 
 | Koşu | İkili | Kılavuz | Sonuç |
 |---|---|---|---|
+| R1 (Q2, yayımlanmış) | `v0.3.0` (`install.sh` ile kurulan; blake2b arşivdekiyle eşit `a8f25965…`) | `v0.3.0` etiketindeki `docs/GUIDE.md` (G1, G2 ve Demote düzeltmeleri dahil) | **23 blok `ok`, 0 başarısız**; atlanan yalnız `1.3#1`, `1.3#2` (Docker, Q3). §1.1 indirme + `SHA256SUMS` + `gh attestation verify` (çıkış 0) + kurulum; §1.2 çok dilli model; §5.1 eklenti zip'i `SHA256SUMS.local` ile `zip OK`; §7 `observe.py` etiketten indirildi ve koştu; §4.1 `claude mcp list` → `Pending approval` (kılavuzun söylediği gibi) |
 | C1 (Q1, aday) | `release/0.3.0` `49fd5cd`'nin derlemesi (`rootmark 0.3.0`, yerel) | `49fd5cd`'den önceki taslak | 20 blok `ok`, 0 başarısız; atlanan 5: `1.1#1`, `1.2#1`, `5.1#1` (sürüm henüz yok: indirme), `1.3#1`, `1.3#2` (Docker, Q3) |
 
 ## Sapmalar (her biri bir belge bulgusu, kılavuz düzeltildi, yeniden koşulacak)
@@ -17,3 +18,8 @@ Koşucu `research/p2q/guide_run.py`: kılavuzun `sh` bloklarını yazıldığı 
 Belge bulguları ayrıca (koşudan önce, adayla denemede): en küçük tarif `missing field version_trigger` ile reddediliyor (§2.2 tam tarif verir ve tabloları "required" diye anar); `rootmark propose` (CLI) sunucu çalışırken kullanılmamalı (§6.1 sunucuyu durdurmayı söyler); `migrate --dry-run`'ın çıktısında `required`/`recommended` üst alanları yok (`.plan[]`).
 
 Q2'de: yayımlanmış `v0.3.0` ile bütün bloklar (`--mode release`), düzeltilmiş kılavuzla.
+
+## R1 notları (sapma değil)
+- `gh attestation verify` TTY olmayan çıktıda hiçbir şey yazmaz; çıkış 0 doğrulamadır (koşucu ERR tuzağıyla denetler).
+- `fetch_model.sh` kurulu kullanıcıya "run `make models` for the blake3 manifest check" der — kurulumda olmayan bir depo komutu (PQ-17, UX).
+- Sahneler için kurulum ayrı bir önekte kılavuzun kurulum bloklarıyla (`--only 1.1#1,1.1#2,1.2#1`; 3/3 `ok`, 32 s), çünkü tam koşu §1.4'le kaldırarak biter.
