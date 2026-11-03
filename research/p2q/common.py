@@ -27,6 +27,25 @@ def b2(data: bytes | str, size: int = 16) -> str:
     return hashlib.blake2b(data, digest_size=size).hexdigest()
 
 
+def path_key(env: str = "P2Q_PATH_KEY_FILE") -> bytes:
+    """The secret key for personal paths: a file outside the repository
+    (32 random bytes, made once per pilot in the round's work directory).
+    Missing → error (a personal path is never hashed without it)."""
+    f = os.environ.get(env)
+    if not f:
+        raise SystemExit(f"{env} is not set (the key file lies outside the repository)")
+    key = Path(f).read_bytes()
+    if len(key) != 32:
+        raise SystemExit(f"{env}: the key must be 32 bytes")
+    return key
+
+
+def k2(path: str, key: bytes) -> str:
+    """Keyed blake2b of a personal path, "k2:<32 hex>": without the key a
+    guessed path (README.md, …) cannot be checked against the record."""
+    return "k2:" + hashlib.blake2b(path.encode("utf-8"), key=key, digest_size=16).hexdigest()
+
+
 def b2_file(p: Path, size: int = 16) -> str:
     h = hashlib.blake2b(digest_size=size)
     with open(p, "rb") as f:

@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 from urllib.parse import unquote
 
-from p2q.common import b2, corpus_summary, list_md, seeded_sample
+from p2q.common import corpus_summary, k2, list_md, path_key, seeded_sample
 
 SEED = 20261103
 REPO = Path(__file__).resolve().parents[2]
@@ -197,7 +197,7 @@ def fill(kind: str, lang: str, code: str, rng: random.Random) -> str:
     )
 
 
-def headless(seed: int, corpus_paths: list[str], salt: str) -> dict:
+def headless(seed: int, corpus_paths: list[str], salt: str, ph=None) -> dict:
     """The headless agent scene (GOAL Q2 (b), (d)); `corpus_paths` only picks
     the six documents the agent appends to directly."""
     rng = random.Random(f"{seed}:writes")
@@ -245,7 +245,7 @@ def headless(seed: int, corpus_paths: list[str], salt: str) -> dict:
                 {
                     "j": j,
                     "op": "append",
-                    "doc_path_b2": b2(appends[j - 14]),
+                    "doc_ref": ph(appends[j - 14]),
                     "lang": lang,
                     "code": code,
                     "content": fill("dogrudan-ek", lang, code, rng),
@@ -284,7 +284,7 @@ def headless_queries(h: dict, seed: int) -> list[dict]:
     qs = []
 
     def target(doc):
-        return doc.get("doc_path") or ("b2:" + doc["doc_path_b2"])
+        return doc.get("doc_path") or doc["doc_ref"]
 
     def exp(doc):
         out = {}
@@ -453,7 +453,7 @@ TRACE_QUERIES = [
 ]
 
 
-def obsidian(seed: int, notes: list[str], linked: list[str]) -> dict:
+def obsidian(seed: int, notes: list[str], linked: list[str], ph) -> dict:
     """The Obsidian scene (GOAL Q2 (c)): edits through the real Obsidian."""
     rng = random.Random(f"{seed}:obsidian")
     mod = seeded_sample(notes, 8, seed, "obs:modify")
@@ -486,7 +486,7 @@ def obsidian(seed: int, notes: list[str], linked: list[str]) -> dict:
             {
                 "e": len(edits) + 1,
                 "op": "append",
-                "doc_path_b2": b2(p),
+                "doc_ref": ph(p),
                 "code": c,
                 "content": fill("obs-ek", "tr", c, rng),
             }
@@ -505,9 +505,9 @@ def obsidian(seed: int, notes: list[str], linked: list[str]) -> dict:
     for n in (7, 8):
         edits.append({"e": len(edits) + 1, "op": "delete", "doc_path": f"pilot/yeni-{n}.md"})
     for p in dele:
-        edits.append({"e": len(edits) + 1, "op": "delete", "doc_path_b2": b2(p)})
+        edits.append({"e": len(edits) + 1, "op": "delete", "doc_ref": ph(p)})
     renames = [
-        {"r": i + 1, "doc_path_b2": b2(p), "new_name": f"pilot-adlandirma-{i + 1}"}
+        {"r": i + 1, "doc_ref": ph(p), "new_name": f"pilot-adlandirma-{i + 1}"}
         for i, p in enumerate(ren)
     ]
     proposals = []
@@ -533,7 +533,7 @@ def obsidian(seed: int, notes: list[str], linked: list[str]) -> dict:
                 "pilot/yeni-1.md",
                 "pilot/yeni-2.md",
             )
-            target = e.get("doc_path") or "b2:" + e["doc_path_b2"]
+            target = e.get("doc_path") or e["doc_ref"]
             queries.append(
                 {
                     "id": f"o{len(queries) + 1:02d}",
@@ -688,14 +688,20 @@ def build(qorbit: Path, obs: Path) -> dict:
     q_paths = list_md(qorbit)
     d_paths = list_md(DNOTES)
     o_paths = list_md(obs)
-    hq = headless(SEED, q_paths, "qorbit")
-    hd = headless(SEED, d_paths, "dnotes")
+    key = path_key()
+
+    def ph(p: str) -> str:  # a personal path: keyed (common.k2)
+        return k2(p, key)
+
+    hq = headless(SEED, q_paths, "qorbit", ph)
+    hd = headless(SEED, d_paths, "dnotes", lambda p: p)  # open corpus: in the clear
     linked = wikilink_targets(obs, o_paths)
-    ob, *_ = obsidian(SEED, o_paths, linked)
+    ob, *_ = obsidian(SEED, o_paths, linked, ph)
     scen = {
         "version": "p2q-scenario/1",
         "seed": SEED,
         "registered": "P2-Q/Q0 (before Q2's first measurement; GOAL Q-1)",
+        "personal_paths": "k2:<keyed blake2b-128>; the key (32 bytes) lies outside the repository (P2Q_PATH_KEY_FILE)",
         "corpora": {
             "qorbit": {
                 "kind": "personal",
@@ -775,8 +781,6 @@ def build(qorbit: Path, obs: Path) -> dict:
     }
     for name, h in (("qorbit", hq), ("dnotes", hd)):
         h = dict(h)
-        if name == "dnotes":
-            h["append_paths"] = h["_appends"]  # open corpus: paths in the clear
         del h["_appends"]
         h["queries"] = headless_queries(h, SEED)
         scen["headless"]["per_corpus"][name] = h

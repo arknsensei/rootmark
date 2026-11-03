@@ -4,6 +4,7 @@ fixtures (no personal corpus is read here)."""
 
 import json
 import random
+import re
 from pathlib import Path
 
 from p2q import evaluate as E
@@ -43,18 +44,21 @@ def test_rule_writes_are_under_the_prefix_and_comments_are_not():
         assert 'unattested = "unverified"' in r and 'human_id = "pilot"' in r
 
 
-def test_personal_paths_are_hashed_only():
-    """Personal corpora appear as blake2b; only D-NOTES lists paths."""
+def test_personal_paths_are_keyed_only():
+    """Personal paths appear only as keyed blake2b (k2); D-NOTES in the clear."""
     q = SCEN["headless"]["per_corpus"]["qorbit"]
-    assert "append_paths" not in q
-    assert all("doc_path" not in d for d in q["direct"] if d["op"] == "append")
+    for d in q["direct"]:
+        assert ("doc_path" in d) != ("doc_ref" in d)
+        if "doc_ref" in d:
+            assert re.fullmatch(r"k2:[0-9a-f]{32}", d["doc_ref"])
     for e in SCEN["obsidian"]["edits"] + SCEN["obsidian"]["renames"]:
         if "doc_path" in e:
             assert e["doc_path"].startswith("pilot/")
+        else:
+            assert re.fullmatch(r"k2:[0-9a-f]{32}", e["doc_ref"])
     d = SCEN["headless"]["per_corpus"]["dnotes"]
-    assert [b2(p) for p in d["append_paths"]] == [
-        x["doc_path_b2"] for x in d["direct"] if x["op"] == "append"
-    ]
+    known = set(list_md(REPO / "research/data/d_notes/notes"))
+    assert all(x["doc_ref"] in known for x in d["direct"] if x["op"] == "append")
 
 
 def test_dnotes_snapshot_is_the_repositorys():
@@ -71,7 +75,7 @@ def test_agent_content_is_deterministic_and_synthetic():
     from p2q import make_scenario as M
 
     paths = list_md(REPO / "research/data/d_notes/notes")
-    h = M.headless(M.SEED, paths, "dnotes")
+    h = M.headless(M.SEED, paths, "dnotes", lambda p: p)
     reg = SCEN["headless"]["per_corpus"]["dnotes"]
     assert [w["content"] for w in h["propose"]] == [w["content"] for w in reg["propose"]]
     assert [w["content"] for w in h["direct"]] == [w["content"] for w in reg["direct"]]
@@ -176,6 +180,13 @@ def test_leakcheck_finds_a_piece_and_reports_no_text(tmp_path):
     assert rep["found"] == 1 and rep["pass"] is False
     out = json.dumps(rep).encode()
     assert all(p not in out for p in ps)
+
+
+def test_keyed_path_hash_needs_the_key():
+    from p2q.common import k2
+
+    a, b = k2("README.md", b"\x01" * 32), k2("README.md", b"\x02" * 32)
+    assert a != b and a.startswith("k2:") and b2("README.md") not in a
 
 
 def test_leakcheck_piece_is_seeded():
