@@ -192,6 +192,16 @@ class Scene:
     def ref(self, p: str) -> str:
         return p if p.startswith(SYNTHETIC) else k2(p, self.key)
 
+    def scrub(self, msg: str) -> str:
+        """An error message fit for a record: the work directory as <work>,
+        every personal note path as its k2 ref (longest first)."""
+        msg = msg.replace(str(self.work), "<work>")
+        names = set(getattr(self, "paths", [])) | set(self.deleted)
+        for n in sorted(names, key=len, reverse=True):
+            if n in msg and not n.startswith(SYNTHETIC):
+                msg = msg.replace(n, self.ref(n))
+        return msg
+
     def resolve(self, ref: str) -> str:
         for p in self.paths:
             if k2(p, self.key) == ref:
@@ -334,7 +344,7 @@ class Scene:
             ValueError,
             OSError,
         ) as ex:  # a harness stop is the step's recorded failure (Q-7)
-            self.step("stopped", False, error=f"{type(ex).__name__}: {str(ex)[:300]}")
+            self.step("stopped", False, error=f"{type(ex).__name__}: {self.scrub(str(ex))[:300]}")
             dump(self.steps, self.out / "steps.json")
             dump(self.numbers, self.out / "numbers.json")
             return 1
@@ -525,7 +535,12 @@ class Scene:
                     notes.append({"op": "promote", "doc": d, "blocks": n, "via": "plugin"})
                 except (RuntimeError, TimeoutError) as ex:
                     notes.append(
-                        {"op": "promote", "doc": d, "via": "plugin", "error": str(ex)[:200]}
+                        {
+                            "op": "promote",
+                            "doc": d,
+                            "via": "plugin",
+                            "error": self.scrub(str(ex))[:200],
+                        }
                     )
             else:
                 dis = pg.ev(

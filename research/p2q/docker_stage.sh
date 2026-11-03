@@ -28,7 +28,7 @@ docker run --rm --name "$name" --platform linux/amd64 \
   -v "$root/research/p2q:/p2q/src/research/p2q:ro" \
   -v "$root/research/data/d_notes:/p2q/src/research/data/d_notes:ro" \
   -v "$root/docs/GUIDE.md:/p2q/src/docs/GUIDE.md:ro" \
-  -v "$snap:/p2q/snapshot:ro" -v "$out:/p2q/out" "${keyargs[@]}" \
+  -v "$snap:/p2q/snapshot:ro" -v "$out:/p2q/out" ${keyargs[@]+"${keyargs[@]}"} \
   "$image" bash -c "
     set -euo pipefail
     apt-get update -qq >/dev/null && apt-get install -y -qq --no-install-recommends python3 >/dev/null
