@@ -1,0 +1,63 @@
+{
+  "version": "0.3.0",
+  "spec_version": "2.0.3",
+  "commit": "0528ee88bf6fa4f194817c4cacea2b58b2001de8",
+  "worktree_dirty": false,
+  "required_targets": [
+    "aarch64-apple-darwin",
+    "x86_64-unknown-linux-gnu"
+  ],
+  "targets": [
+    {
+      "target": "aarch64-apple-darwin",
+      "required": true,
+      "built": true,
+      "sha256": "3354bc1b5d16ad5373cb9a5046b150ee2217876a10efcfb35e8f03a71d9ae81d",
+      "version": "rootmark 0.3.0",
+      "spec_version": "2.0.3",
+      "conformance": {
+        "level_claimed": 3,
+        "passed": 39,
+        "total": 39,
+        "fixtures_manifest": "ok"
+      },
+      "conformance_exit": 0,
+      "ok": true
+    },
+    {
+      "target": "x86_64-pc-windows-msvc",
+      "required": false,
+      "built": true,
+      "sha256": "5976f3e138dcaa9b2ab98fc6c41cba17933a4237ddcc5ea1c51c7bc913b275b6",
+      "version": "rootmark 0.3.0",
+      "spec_version": "2.0.3",
+      "conformance": {
+        "level_claimed": 3,
+        "passed": 39,
+        "total": 39,
+        "fixtures_manifest": "ok"
+      },
+      "conformance_exit": 0,
+      "ok": true
+    },
+    {
+      "target": "x86_64-unknown-linux-gnu",
+      "required": true,
+      "built": true,
+      "sha256": "d54d721456a843b32e7338b82c03e597cf8aca862c3866cf9acc8fb222d0cc9d",
+      "version": "rootmark 0.3.0",
+      "spec_version": "2.0.3",
+      "conformance": {
+        "level_claimed": 3,
+        "passed": 39,
+        "total": 39,
+        "fixtures_manifest": "ok"
+      },
+      "conformance_exit": 0,
+      "ok": true
+    }
+  ],
+  "built": 3,
+  "ok": 3,
+  "required_ok": true
+}
