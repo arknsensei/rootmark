@@ -1,0 +1,5898 @@
+{
+ "agent": {
+  "client": {
+   "name": "toplayici",
+   "version": "1.0"
+  },
+  "human_id": "pilot",
+  "rule_prefix": "toplayici/"
+ },
+ "ci": {
+  "corpus": "dnotes only (open)",
+  "runner": "ubuntu-latest",
+  "workflow": ".github/workflows/pilot.yml"
+ },
+ "corpora": {
+  "dnotes": {
+   "kind": "open",
+   "recipe": "default",
+   "scene": "headless",
+   "snapshot": {
+    "bytes": 4926763,
+    "files": 400,
+    "summary_b2": "99282c64eec75fc90625fe7ba1eefd61"
+   },
+   "source": "research/data/d_notes/notes (NOTICE.md)"
+  },
+  "obsidian": {
+   "kind": "personal",
+   "linked_notes": 161,
+   "recipe": "obsidian",
+   "scene": "obsidian",
+   "snapshot": {
+    "bytes": 4513708,
+    "files": 658,
+    "summary_b2": "b0b17dfc45a5a966c0a1beea9ede7000"
+   },
+   "source": "~/Works/Obs: the whole vault except .trash/ (notes: *.md outside .obsidian/)"
+  },
+  "qorbit": {
+   "kind": "personal",
+   "recipe": "tr",
+   "scene": "headless",
+   "snapshot": {
+    "bytes": 1565500,
+    "files": 111,
+    "summary_b2": "f7bcd2c3709a6abef45e2483f1efea08"
+   },
+   "source": "~/Works/qorbit: every *.md outside node_modules/ and .git/"
+  }
+ },
+ "docker": {
+  "image": "debian:trixie-slim@sha256:f6b08b09a05725f9431502d3b5714f5c4576e82c1a84fa1debe0c24a7e0c3ec4",
+  "image_amd64_manifest": "sha256:1e1a22175fbf1b32157ddaf0219e1db4e5401fab2b94ed285add64d18587cd2d",
+  "note": "emulated: times are information, not speed numbers",
+  "platform": "linux/amd64"
+ },
+ "headless": {
+  "checkpoints": [
+   "baslangic",
+   "ajan-yazdi",
+   "insan-onayladi"
+  ],
+  "per_corpus": {
+   "dnotes": {
+    "append_paths": [
+     "tasks/docs/Editing/Editing Dates.md",
+     "react_tr/src/content/reference/react-compiler/target.md",
+     "tasks/docs/Advanced/Notifications.md",
+     "terminal/doc/specs/#1502 - Advanced Tab Switcher/spec.md",
+     "react_tr/src/content/blog/2020/12/21/data-fetching-with-react-server-components.md",
+     "react_tr/src/content/reference/eslint-plugin-react-hooks/lints/preserve-manual-memoization.md"
+    ],
+    "demote_docs": [
+     "toplayici/toplayici-notu/pqk024.md",
+     "toplayici/toplayici-notu/pqk026.md",
+     "toplayici/toplayici-notu/pqk032.md"
+    ],
+    "direct": [
+     {
+      "code": "pqd000",
+      "content": "# Doğrudan not pqd000\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: tahvil getirisi, bakanlık açıklaması.\n\nKayıt pqd000: 18 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd000.md",
+      "j": 0,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd001",
+      "content": "# Direct note pqd001\n\nThe agent wrote this file directly, bypassing the server: rate decision, statistics office.\n\nRecord pqd001: 20 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd001.md",
+      "j": 1,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd002",
+      "content": "# Doğrudan not pqd002\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: bilanço dönemi, borsa duyurusu.\n\nKayıt pqd002: 23 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd002.md",
+      "j": 2,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd003",
+      "content": "# Direct note pqd003\n\nThe agent wrote this file directly, bypassing the server: currency move, central bank bulletin.\n\nRecord pqd003: 7 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd003.md",
+      "j": 3,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd004",
+      "content": "# Doğrudan not pqd004\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: sanayi üretimi, merkez bankası bülteni.\n\nKayıt pqd004: 19 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd004.md",
+      "j": 4,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd005",
+      "content": "# Direct note pqd005\n\nThe agent wrote this file directly, bypassing the server: credit growth, exchange notice.\n\nRecord pqd005: 36 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd005.md",
+      "j": 5,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd006",
+      "content": "# Doğrudan not pqd006\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: faiz kararı, bakanlık açıklaması.\n\nKayıt pqd006: 22 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd006.md",
+      "j": 6,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd007",
+      "content": "# Direct note pqd007\n\nThe agent wrote this file directly, bypassing the server: bond yield, ministry statement.\n\nRecord pqd007: 21 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd007.md",
+      "j": 7,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd008",
+      "content": "# Doğrudan not pqd008\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: enflasyon verisi, bakanlık açıklaması.\n\nKayıt pqd008: 27 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd008.md",
+      "j": 8,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd009",
+      "content": "# Direct note pqd009\n\nThe agent wrote this file directly, bypassing the server: current account, ministry statement.\n\nRecord pqd009: 29 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd009.md",
+      "j": 9,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd010",
+      "content": "# Doğrudan not pqd010\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: faiz kararı, bakanlık açıklaması.\n\nKayıt pqd010: 35 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd010.md",
+      "j": 10,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd011",
+      "content": "# Direct note pqd011\n\nThe agent wrote this file directly, bypassing the server: bond yield, central bank bulletin.\n\nRecord pqd011: 27 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd011.md",
+      "j": 11,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd012",
+      "content": "# Doğrudan not pqd012\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: cari açık, istatistik kurumu.\n\nKayıt pqd012: 17 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd012.md",
+      "j": 12,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd013",
+      "content": "# Direct note pqd013\n\nThe agent wrote this file directly, bypassing the server: earnings season, statistics office.\n\nRecord pqd013: 29 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd013.md",
+      "j": 13,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd014",
+      "content": "\n## Ajan notu pqd014\n\nAjan bu bölümü dosyaya doğrudan ekledi: kur hareketi (borsa duyurusu), 11 gözlem.\n",
+      "doc_path_b2": "057b276c2b64a3c5a7604c7d013302f0",
+      "j": 14,
+      "lang": "tr",
+      "op": "append"
+     },
+     {
+      "code": "pqd015",
+      "content": "\n## Agent note pqd015\n\nThe agent appended this section to the file directly: credit growth (ministry statement), 17 observations.\n",
+      "doc_path_b2": "54df7a5904d56291fe2d54ab0d6f0708",
+      "j": 15,
+      "lang": "en",
+      "op": "append"
+     },
+     {
+      "code": "pqd016",
+      "content": "\n## Ajan notu pqd016\n\nAjan bu bölümü dosyaya doğrudan ekledi: kredi büyümesi (borsa duyurusu), 19 gözlem.\n",
+      "doc_path_b2": "b9f119d6dd5184b666e0334d18f9e13c",
+      "j": 16,
+      "lang": "tr",
+      "op": "append"
+     },
+     {
+      "code": "pqd017",
+      "content": "\n## Agent note pqd017\n\nThe agent appended this section to the file directly: inflation print (central bank bulletin), 31 observations.\n",
+      "doc_path_b2": "77bcd2331c5587197510c6f2afe85cbd",
+      "j": 17,
+      "lang": "en",
+      "op": "append"
+     },
+     {
+      "code": "pqd018",
+      "content": "\n## Ajan notu pqd018\n\nAjan bu bölümü dosyaya doğrudan ekledi: kredi büyümesi (istatistik kurumu), 6 gözlem.\n",
+      "doc_path_b2": "94be91dad30d90a18e439e00ce2be49a",
+      "j": 18,
+      "lang": "tr",
+      "op": "append"
+     },
+     {
+      "code": "pqd019",
+      "content": "\n## Agent note pqd019\n\nThe agent appended this section to the file directly: credit growth (ministry statement), 26 observations.\n",
+      "doc_path_b2": "96ee7e1bbae9c6db6b529eda3855bd16",
+      "j": 19,
+      "lang": "en",
+      "op": "append"
+     }
+    ],
+    "promote_docs": [
+     "yorum/brif/pqy059.md",
+     "yorum/brif/pqy073.md",
+     "yorum/brif/pqy077.md",
+     "yorum/brif/pqy083.md",
+     "yorum/brif/pqy087.md",
+     "yorum/brif/pqy093.md",
+     "yorum/llm-yorumu/pqy050.md",
+     "yorum/llm-yorumu/pqy066.md",
+     "yorum/llm-yorumu/pqy080.md",
+     "yorum/llm-yorumu/pqy088.md",
+     "yorum/llm-yorumu/pqy090.md",
+     "yorum/llm-yorumu/pqy096.md"
+    ],
+    "propose": [
+     {
+      "code": "pqk000",
+      "content": "# Toplayıcı notu pqk000\n\nKaynak: borsa duyurusu. Konu: bilanço dönemi.\n\npqk000 kodlu derlemede bilanço dönemi için 37 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk000.md",
+      "i": 0,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk000",
+      "rule": true
+     },
+     {
+      "code": "pqk001",
+      "content": "# Resmi kaynak özeti pqk001\n\nmerkez bankası bülteni cari açık hakkında bir metin yayımladı.\n\nÖzet pqk001: metin 40 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk001.md",
+      "i": 1,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk001",
+      "rule": true
+     },
+     {
+      "code": "pqk002",
+      "content": "# Collector note pqk002\n\nSource: exchange notice. Topic: earnings season.\n\nCollection pqk002 gathered 18 data points on the earnings season; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk002.md",
+      "i": 2,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk002",
+      "rule": true
+     },
+     {
+      "code": "pqk003",
+      "content": "# Official source summary pqk003\n\nThe ministry statement published a text on the earnings season.\n\nSummary pqk003: the text has 38 items; the first one leaves the outlook on the earnings season unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk003.md",
+      "i": 3,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk003",
+      "rule": true
+     },
+     {
+      "code": "pqk004",
+      "content": "# Toplayıcı notu pqk004\n\nKaynak: merkez bankası bülteni. Konu: tahvil getirisi.\n\npqk004 kodlu derlemede tahvil getirisi için 38 veri noktası toplandı; değerler merkez bankası bülteni kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk004.md",
+      "i": 4,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk004",
+      "rule": true
+     },
+     {
+      "code": "pqk005",
+      "content": "# Resmi kaynak özeti pqk005\n\nmerkez bankası bülteni kur hareketi hakkında bir metin yayımladı.\n\nÖzet pqk005: metin 14 madde içeriyor; ilk madde kur hareketi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk005.md",
+      "i": 5,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk005",
+      "rule": true
+     },
+     {
+      "code": "pqk006",
+      "content": "# Collector note pqk006\n\nSource: exchange notice. Topic: credit growth.\n\nCollection pqk006 gathered 40 data points on the credit growth; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk006.md",
+      "i": 6,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk006",
+      "rule": true
+     },
+     {
+      "code": "pqk007",
+      "content": "# Official source summary pqk007\n\nThe ministry statement published a text on the industrial output.\n\nSummary pqk007: the text has 23 items; the first one leaves the outlook on the industrial output unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk007.md",
+      "i": 7,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk007",
+      "rule": true
+     },
+     {
+      "code": "pqk008",
+      "content": "# Toplayıcı notu pqk008\n\nKaynak: istatistik kurumu. Konu: bilanço dönemi.\n\npqk008 kodlu derlemede bilanço dönemi için 20 veri noktası toplandı; değerler istatistik kurumu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk008.md",
+      "i": 8,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk008",
+      "rule": true
+     },
+     {
+      "code": "pqk009",
+      "content": "# Resmi kaynak özeti pqk009\n\nborsa duyurusu bilanço dönemi hakkında bir metin yayımladı.\n\nÖzet pqk009: metin 20 madde içeriyor; ilk madde bilanço dönemi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk009.md",
+      "i": 9,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk009",
+      "rule": true
+     },
+     {
+      "code": "pqk010",
+      "content": "# Collector note pqk010\n\nSource: statistics office. Topic: earnings season.\n\nCollection pqk010 gathered 10 data points on the earnings season; the values were copied as published by the statistics office.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk010.md",
+      "i": 10,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk010",
+      "rule": true
+     },
+     {
+      "code": "pqk011",
+      "content": "# Official source summary pqk011\n\nThe central bank bulletin published a text on the bond yield.\n\nSummary pqk011: the text has 14 items; the first one leaves the outlook on the bond yield unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk011.md",
+      "i": 11,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk011",
+      "rule": true
+     },
+     {
+      "code": "pqk012",
+      "content": "# Toplayıcı notu pqk012\n\nKaynak: borsa duyurusu. Konu: bilanço dönemi.\n\npqk012 kodlu derlemede bilanço dönemi için 32 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk012.md",
+      "i": 12,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk012",
+      "rule": true
+     },
+     {
+      "code": "pqk013",
+      "content": "# Resmi kaynak özeti pqk013\n\nborsa duyurusu kredi büyümesi hakkında bir metin yayımladı.\n\nÖzet pqk013: metin 4 madde içeriyor; ilk madde kredi büyümesi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk013.md",
+      "i": 13,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk013",
+      "rule": true
+     },
+     {
+      "code": "pqk014",
+      "content": "# Collector note pqk014\n\nSource: statistics office. Topic: earnings season.\n\nCollection pqk014 gathered 23 data points on the earnings season; the values were copied as published by the statistics office.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk014.md",
+      "i": 14,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk014",
+      "rule": true
+     },
+     {
+      "code": "pqk015",
+      "content": "# Official source summary pqk015\n\nThe central bank bulletin published a text on the rate decision.\n\nSummary pqk015: the text has 20 items; the first one leaves the outlook on the rate decision unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk015.md",
+      "i": 15,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk015",
+      "rule": true
+     },
+     {
+      "code": "pqk016",
+      "content": "# Toplayıcı notu pqk016\n\nKaynak: bakanlık açıklaması. Konu: kur hareketi.\n\npqk016 kodlu derlemede kur hareketi için 12 veri noktası toplandı; değerler bakanlık açıklaması kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk016.md",
+      "i": 16,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk016",
+      "rule": true
+     },
+     {
+      "code": "pqk017",
+      "content": "# Resmi kaynak özeti pqk017\n\nbakanlık açıklaması cari açık hakkında bir metin yayımladı.\n\nÖzet pqk017: metin 25 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk017.md",
+      "i": 17,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk017",
+      "rule": true
+     },
+     {
+      "code": "pqk018",
+      "content": "# Collector note pqk018\n\nSource: exchange notice. Topic: credit growth.\n\nCollection pqk018 gathered 16 data points on the credit growth; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk018.md",
+      "i": 18,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk018",
+      "rule": true
+     },
+     {
+      "code": "pqk019",
+      "content": "# Official source summary pqk019\n\nThe exchange notice published a text on the bond yield.\n\nSummary pqk019: the text has 30 items; the first one leaves the outlook on the bond yield unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk019.md",
+      "i": 19,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk019",
+      "rule": true
+     },
+     {
+      "code": "pqk020",
+      "content": "# Toplayıcı notu pqk020\n\nKaynak: bakanlık açıklaması. Konu: sanayi üretimi.\n\npqk020 kodlu derlemede sanayi üretimi için 12 veri noktası toplandı; değerler bakanlık açıklaması kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk020.md",
+      "i": 20,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk020",
+      "rule": true
+     },
+     {
+      "code": "pqk021",
+      "content": "# Resmi kaynak özeti pqk021\n\nistatistik kurumu cari açık hakkında bir metin yayımladı.\n\nÖzet pqk021: metin 13 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk021.md",
+      "i": 21,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk021",
+      "rule": true
+     },
+     {
+      "code": "pqk022",
+      "content": "# Collector note pqk022\n\nSource: exchange notice. Topic: inflation print.\n\nCollection pqk022 gathered 34 data points on the inflation print; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk022.md",
+      "i": 22,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk022",
+      "rule": true
+     },
+     {
+      "code": "pqk023",
+      "content": "# Official source summary pqk023\n\nThe statistics office published a text on the currency move.\n\nSummary pqk023: the text has 24 items; the first one leaves the outlook on the currency move unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk023.md",
+      "i": 23,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk023",
+      "rule": true
+     },
+     {
+      "code": "pqk024",
+      "content": "# Toplayıcı notu pqk024\n\nKaynak: borsa duyurusu. Konu: cari açık.\n\npqk024 kodlu derlemede cari açık için 14 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk024.md",
+      "i": 24,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk024",
+      "rule": true
+     },
+     {
+      "code": "pqk025",
+      "content": "# Resmi kaynak özeti pqk025\n\nbakanlık açıklaması tahvil getirisi hakkında bir metin yayımladı.\n\nÖzet pqk025: metin 8 madde içeriyor; ilk madde tahvil getirisi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk025.md",
+      "i": 25,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk025",
+      "rule": true
+     },
+     {
+      "code": "pqk026",
+      "content": "# Collector note pqk026\n\nSource: exchange notice. Topic: currency move.\n\nCollection pqk026 gathered 30 data points on the currency move; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk026.md",
+      "i": 26,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk026",
+      "rule": true
+     },
+     {
+      "code": "pqk027",
+      "content": "# Official source summary pqk027\n\nThe exchange notice published a text on the rate decision.\n\nSummary pqk027: the text has 37 items; the first one leaves the outlook on the rate decision unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk027.md",
+      "i": 27,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk027",
+      "rule": true
+     },
+     {
+      "code": "pqk028",
+      "content": "# Toplayıcı notu pqk028\n\nKaynak: borsa duyurusu. Konu: kur hareketi.\n\npqk028 kodlu derlemede kur hareketi için 33 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk028.md",
+      "i": 28,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk028",
+      "rule": true
+     },
+     {
+      "code": "pqk029",
+      "content": "# Resmi kaynak özeti pqk029\n\nmerkez bankası bülteni cari açık hakkında bir metin yayımladı.\n\nÖzet pqk029: metin 34 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk029.md",
+      "i": 29,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk029",
+      "rule": true
+     },
+     {
+      "code": "pqk030",
+      "content": "# Collector note pqk030\n\nSource: exchange notice. Topic: current account.\n\nCollection pqk030 gathered 16 data points on the current account; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk030.md",
+      "i": 30,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk030",
+      "rule": true
+     },
+     {
+      "code": "pqk031",
+      "content": "# Official source summary pqk031\n\nThe exchange notice published a text on the bond yield.\n\nSummary pqk031: the text has 40 items; the first one leaves the outlook on the bond yield unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk031.md",
+      "i": 31,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk031",
+      "rule": true
+     },
+     {
+      "code": "pqk032",
+      "content": "# Toplayıcı notu pqk032\n\nKaynak: istatistik kurumu. Konu: sanayi üretimi.\n\npqk032 kodlu derlemede sanayi üretimi için 5 veri noktası toplandı; değerler istatistik kurumu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk032.md",
+      "i": 32,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk032",
+      "rule": true
+     },
+     {
+      "code": "pqk033",
+      "content": "# Resmi kaynak özeti pqk033\n\nborsa duyurusu tahvil getirisi hakkında bir metin yayımladı.\n\nÖzet pqk033: metin 14 madde içeriyor; ilk madde tahvil getirisi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk033.md",
+      "i": 33,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk033",
+      "rule": true
+     },
+     {
+      "code": "pqk034",
+      "content": "# Collector note pqk034\n\nSource: exchange notice. Topic: credit growth.\n\nCollection pqk034 gathered 12 data points on the credit growth; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk034.md",
+      "i": 34,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk034",
+      "rule": true
+     },
+     {
+      "code": "pqk035",
+      "content": "# Official source summary pqk035\n\nThe statistics office published a text on the industrial output.\n\nSummary pqk035: the text has 15 items; the first one leaves the outlook on the industrial output unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk035.md",
+      "i": 35,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk035",
+      "rule": true
+     },
+     {
+      "code": "pqk036",
+      "content": "# Toplayıcı notu pqk036\n\nKaynak: bakanlık açıklaması. Konu: tahvil getirisi.\n\npqk036 kodlu derlemede tahvil getirisi için 19 veri noktası toplandı; değerler bakanlık açıklaması kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk036.md",
+      "i": 36,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk036",
+      "rule": true
+     },
+     {
+      "code": "pqk037",
+      "content": "# Resmi kaynak özeti pqk037\n\nmerkez bankası bülteni kur hareketi hakkında bir metin yayımladı.\n\nÖzet pqk037: metin 18 madde içeriyor; ilk madde kur hareketi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk037.md",
+      "i": 37,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk037",
+      "rule": true
+     },
+     {
+      "code": "pqk038",
+      "content": "# Collector note pqk038\n\nSource: exchange notice. Topic: bond yield.\n\nCollection pqk038 gathered 24 data points on the bond yield; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk038.md",
+      "i": 38,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk038",
+      "rule": true
+     },
+     {
+      "code": "pqk039",
+      "content": "# Official source summary pqk039\n\nThe exchange notice published a text on the current account.\n\nSummary pqk039: the text has 28 items; the first one leaves the outlook on the current account unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk039.md",
+      "i": 39,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk039",
+      "rule": true
+     },
+     {
+      "code": "pqk040",
+      "content": "# Toplayıcı notu pqk040\n\nKaynak: istatistik kurumu. Konu: kur hareketi.\n\npqk040 kodlu derlemede kur hareketi için 17 veri noktası toplandı; değerler istatistik kurumu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk040.md",
+      "i": 40,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk040",
+      "rule": true
+     },
+     {
+      "code": "pqk041",
+      "content": "# Resmi kaynak özeti pqk041\n\nborsa duyurusu kur hareketi hakkında bir metin yayımladı.\n\nÖzet pqk041: metin 4 madde içeriyor; ilk madde kur hareketi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk041.md",
+      "i": 41,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk041",
+      "rule": true
+     },
+     {
+      "code": "pqk042",
+      "content": "# Collector note pqk042\n\nSource: central bank bulletin. Topic: current account.\n\nCollection pqk042 gathered 14 data points on the current account; the values were copied as published by the central bank bulletin.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk042.md",
+      "i": 42,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk042",
+      "rule": true
+     },
+     {
+      "code": "pqk043",
+      "content": "# Official source summary pqk043\n\nThe statistics office published a text on the inflation print.\n\nSummary pqk043: the text has 19 items; the first one leaves the outlook on the inflation print unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk043.md",
+      "i": 43,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk043",
+      "rule": true
+     },
+     {
+      "code": "pqk044",
+      "content": "# Toplayıcı notu pqk044\n\nKaynak: borsa duyurusu. Konu: cari açık.\n\npqk044 kodlu derlemede cari açık için 6 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk044.md",
+      "i": 44,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk044",
+      "rule": true
+     },
+     {
+      "code": "pqk045",
+      "content": "# Resmi kaynak özeti pqk045\n\nmerkez bankası bülteni cari açık hakkında bir metin yayımladı.\n\nÖzet pqk045: metin 30 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk045.md",
+      "i": 45,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk045",
+      "rule": true
+     },
+     {
+      "code": "pqk046",
+      "content": "# Collector note pqk046\n\nSource: statistics office. Topic: bond yield.\n\nCollection pqk046 gathered 29 data points on the bond yield; the values were copied as published by the statistics office.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk046.md",
+      "i": 46,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk046",
+      "rule": true
+     },
+     {
+      "code": "pqk047",
+      "content": "# Official source summary pqk047\n\nThe exchange notice published a text on the rate decision.\n\nSummary pqk047: the text has 11 items; the first one leaves the outlook on the rate decision unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk047.md",
+      "i": 47,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk047",
+      "rule": true
+     },
+     {
+      "code": "pqk048",
+      "content": "# Toplayıcı notu pqk048\n\nKaynak: istatistik kurumu. Konu: kredi büyümesi.\n\npqk048 kodlu derlemede kredi büyümesi için 15 veri noktası toplandı; değerler istatistik kurumu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk048.md",
+      "i": 48,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk048",
+      "rule": true
+     },
+     {
+      "code": "pqk049",
+      "content": "# Resmi kaynak özeti pqk049\n\nistatistik kurumu bilanço dönemi hakkında bir metin yayımladı.\n\nÖzet pqk049: metin 16 madde içeriyor; ilk madde bilanço dönemi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk049.md",
+      "i": 49,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk049",
+      "rule": true
+     },
+     {
+      "code": "pqy050",
+      "content": "# Commentary pqy050\n\nThis is a language model's reading of the rate decision and is not approved.\n\nCommentary pqy050: going by the ministry statement, the rate decision may stay volatile for 36 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy050.md",
+      "i": 50,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy050",
+      "rule": false
+     },
+     {
+      "code": "pqy051",
+      "content": "# Brief pqy051\n\n- Topic: current account\n- Basis: central bank bulletin\n- Note pqy051: summarised under 4 headings.\n",
+      "doc_path": "yorum/brif/pqy051.md",
+      "i": 51,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy051",
+      "rule": false
+     },
+     {
+      "code": "pqy052",
+      "content": "# Yorum pqy052\n\nBu yorum bir dil modelinin kur hareketi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy052: istatistik kurumu verisine göre kur hareketi önümüzdeki 11 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy052.md",
+      "i": 52,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy052",
+      "rule": false
+     },
+     {
+      "code": "pqy053",
+      "content": "# Brif pqy053\n\n- Konu: cari açık\n- Dayanak: bakanlık açıklaması\n- Not pqy053: 40 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy053.md",
+      "i": 53,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy053",
+      "rule": false
+     },
+     {
+      "code": "pqy054",
+      "content": "# Commentary pqy054\n\nThis is a language model's reading of the current account and is not approved.\n\nCommentary pqy054: going by the statistics office, the current account may stay volatile for 19 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy054.md",
+      "i": 54,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy054",
+      "rule": false
+     },
+     {
+      "code": "pqy055",
+      "content": "# Brief pqy055\n\n- Topic: bond yield\n- Basis: central bank bulletin\n- Note pqy055: summarised under 31 headings.\n",
+      "doc_path": "yorum/brif/pqy055.md",
+      "i": 55,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy055",
+      "rule": false
+     },
+     {
+      "code": "pqy056",
+      "content": "# Yorum pqy056\n\nBu yorum bir dil modelinin kur hareketi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy056: bakanlık açıklaması verisine göre kur hareketi önümüzdeki 39 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy056.md",
+      "i": 56,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy056",
+      "rule": false
+     },
+     {
+      "code": "pqy057",
+      "content": "# Brif pqy057\n\n- Konu: tahvil getirisi\n- Dayanak: borsa duyurusu\n- Not pqy057: 4 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy057.md",
+      "i": 57,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy057",
+      "rule": false
+     },
+     {
+      "code": "pqy058",
+      "content": "# Commentary pqy058\n\nThis is a language model's reading of the credit growth and is not approved.\n\nCommentary pqy058: going by the ministry statement, the credit growth may stay volatile for 31 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy058.md",
+      "i": 58,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy058",
+      "rule": false
+     },
+     {
+      "code": "pqy059",
+      "content": "# Brief pqy059\n\n- Topic: credit growth\n- Basis: exchange notice\n- Note pqy059: summarised under 9 headings.\n",
+      "doc_path": "yorum/brif/pqy059.md",
+      "i": 59,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy059",
+      "rule": false
+     },
+     {
+      "code": "pqy060",
+      "content": "# Yorum pqy060\n\nBu yorum bir dil modelinin enflasyon verisi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy060: borsa duyurusu verisine göre enflasyon verisi önümüzdeki 21 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy060.md",
+      "i": 60,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy060",
+      "rule": false
+     },
+     {
+      "code": "pqy061",
+      "content": "# Brif pqy061\n\n- Konu: sanayi üretimi\n- Dayanak: borsa duyurusu\n- Not pqy061: 30 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy061.md",
+      "i": 61,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy061",
+      "rule": false
+     },
+     {
+      "code": "pqy062",
+      "content": "# Commentary pqy062\n\nThis is a language model's reading of the inflation print and is not approved.\n\nCommentary pqy062: going by the statistics office, the inflation print may stay volatile for 33 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy062.md",
+      "i": 62,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy062",
+      "rule": false
+     },
+     {
+      "code": "pqy063",
+      "content": "# Brief pqy063\n\n- Topic: industrial output\n- Basis: ministry statement\n- Note pqy063: summarised under 36 headings.\n",
+      "doc_path": "yorum/brif/pqy063.md",
+      "i": 63,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy063",
+      "rule": false
+     },
+     {
+      "code": "pqy064",
+      "content": "# Yorum pqy064\n\nBu yorum bir dil modelinin sanayi üretimi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy064: merkez bankası bülteni verisine göre sanayi üretimi önümüzdeki 30 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy064.md",
+      "i": 64,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy064",
+      "rule": false
+     },
+     {
+      "code": "pqy065",
+      "content": "# Brif pqy065\n\n- Konu: sanayi üretimi\n- Dayanak: borsa duyurusu\n- Not pqy065: 37 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy065.md",
+      "i": 65,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy065",
+      "rule": false
+     },
+     {
+      "code": "pqy066",
+      "content": "# Commentary pqy066\n\nThis is a language model's reading of the credit growth and is not approved.\n\nCommentary pqy066: going by the ministry statement, the credit growth may stay volatile for 21 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy066.md",
+      "i": 66,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy066",
+      "rule": false
+     },
+     {
+      "code": "pqy067",
+      "content": "# Brief pqy067\n\n- Topic: bond yield\n- Basis: exchange notice\n- Note pqy067: summarised under 7 headings.\n",
+      "doc_path": "yorum/brif/pqy067.md",
+      "i": 67,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy067",
+      "rule": false
+     },
+     {
+      "code": "pqy068",
+      "content": "# Yorum pqy068\n\nBu yorum bir dil modelinin tahvil getirisi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy068: borsa duyurusu verisine göre tahvil getirisi önümüzdeki 31 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy068.md",
+      "i": 68,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy068",
+      "rule": false
+     },
+     {
+      "code": "pqy069",
+      "content": "# Brif pqy069\n\n- Konu: kredi büyümesi\n- Dayanak: bakanlık açıklaması\n- Not pqy069: 26 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy069.md",
+      "i": 69,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy069",
+      "rule": false
+     },
+     {
+      "code": "pqy070",
+      "content": "# Commentary pqy070\n\nThis is a language model's reading of the rate decision and is not approved.\n\nCommentary pqy070: going by the exchange notice, the rate decision may stay volatile for 9 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy070.md",
+      "i": 70,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy070",
+      "rule": false
+     },
+     {
+      "code": "pqy071",
+      "content": "# Brief pqy071\n\n- Topic: industrial output\n- Basis: ministry statement\n- Note pqy071: summarised under 11 headings.\n",
+      "doc_path": "yorum/brif/pqy071.md",
+      "i": 71,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy071",
+      "rule": false
+     },
+     {
+      "code": "pqy072",
+      "content": "# Yorum pqy072\n\nBu yorum bir dil modelinin tahvil getirisi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy072: merkez bankası bülteni verisine göre tahvil getirisi önümüzdeki 7 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy072.md",
+      "i": 72,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy072",
+      "rule": false
+     },
+     {
+      "code": "pqy073",
+      "content": "# Brif pqy073\n\n- Konu: enflasyon verisi\n- Dayanak: istatistik kurumu\n- Not pqy073: 32 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy073.md",
+      "i": 73,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy073",
+      "rule": false
+     },
+     {
+      "code": "pqy074",
+      "content": "# Commentary pqy074\n\nThis is a language model's reading of the currency move and is not approved.\n\nCommentary pqy074: going by the central bank bulletin, the currency move may stay volatile for 40 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy074.md",
+      "i": 74,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy074",
+      "rule": false
+     },
+     {
+      "code": "pqy075",
+      "content": "# Brief pqy075\n\n- Topic: bond yield\n- Basis: exchange notice\n- Note pqy075: summarised under 37 headings.\n",
+      "doc_path": "yorum/brif/pqy075.md",
+      "i": 75,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy075",
+      "rule": false
+     },
+     {
+      "code": "pqy076",
+      "content": "# Yorum pqy076\n\nBu yorum bir dil modelinin bilanço dönemi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy076: borsa duyurusu verisine göre bilanço dönemi önümüzdeki 11 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy076.md",
+      "i": 76,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy076",
+      "rule": false
+     },
+     {
+      "code": "pqy077",
+      "content": "# Brif pqy077\n\n- Konu: bilanço dönemi\n- Dayanak: bakanlık açıklaması\n- Not pqy077: 21 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy077.md",
+      "i": 77,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy077",
+      "rule": false
+     },
+     {
+      "code": "pqy078",
+      "content": "# Commentary pqy078\n\nThis is a language model's reading of the current account and is not approved.\n\nCommentary pqy078: going by the statistics office, the current account may stay volatile for 40 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy078.md",
+      "i": 78,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy078",
+      "rule": false
+     },
+     {
+      "code": "pqy079",
+      "content": "# Brief pqy079\n\n- Topic: industrial output\n- Basis: central bank bulletin\n- Note pqy079: summarised under 32 headings.\n",
+      "doc_path": "yorum/brif/pqy079.md",
+      "i": 79,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy079",
+      "rule": false
+     },
+     {
+      "code": "pqy080",
+      "content": "# Yorum pqy080\n\nBu yorum bir dil modelinin sanayi üretimi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy080: merkez bankası bülteni verisine göre sanayi üretimi önümüzdeki 17 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy080.md",
+      "i": 80,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy080",
+      "rule": false
+     },
+     {
+      "code": "pqy081",
+      "content": "# Brif pqy081\n\n- Konu: bilanço dönemi\n- Dayanak: bakanlık açıklaması\n- Not pqy081: 24 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy081.md",
+      "i": 81,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy081",
+      "rule": false
+     },
+     {
+      "code": "pqy082",
+      "content": "# Commentary pqy082\n\nThis is a language model's reading of the current account and is not approved.\n\nCommentary pqy082: going by the statistics office, the current account may stay volatile for 15 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy082.md",
+      "i": 82,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy082",
+      "rule": false
+     },
+     {
+      "code": "pqy083",
+      "content": "# Brief pqy083\n\n- Topic: currency move\n- Basis: ministry statement\n- Note pqy083: summarised under 38 headings.\n",
+      "doc_path": "yorum/brif/pqy083.md",
+      "i": 83,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy083",
+      "rule": false
+     },
+     {
+      "code": "pqy084",
+      "content": "# Yorum pqy084\n\nBu yorum bir dil modelinin kur hareketi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy084: merkez bankası bülteni verisine göre kur hareketi önümüzdeki 37 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy084.md",
+      "i": 84,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy084",
+      "rule": false
+     },
+     {
+      "code": "pqy085",
+      "content": "# Brif pqy085\n\n- Konu: kredi büyümesi\n- Dayanak: merkez bankası bülteni\n- Not pqy085: 27 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy085.md",
+      "i": 85,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy085",
+      "rule": false
+     },
+     {
+      "code": "pqy086",
+      "content": "# Commentary pqy086\n\nThis is a language model's reading of the rate decision and is not approved.\n\nCommentary pqy086: going by the central bank bulletin, the rate decision may stay volatile for 7 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy086.md",
+      "i": 86,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy086",
+      "rule": false
+     },
+     {
+      "code": "pqy087",
+      "content": "# Brief pqy087\n\n- Topic: current account\n- Basis: exchange notice\n- Note pqy087: summarised under 34 headings.\n",
+      "doc_path": "yorum/brif/pqy087.md",
+      "i": 87,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy087",
+      "rule": false
+     },
+     {
+      "code": "pqy088",
+      "content": "# Yorum pqy088\n\nBu yorum bir dil modelinin sanayi üretimi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy088: istatistik kurumu verisine göre sanayi üretimi önümüzdeki 12 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy088.md",
+      "i": 88,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy088",
+      "rule": false
+     },
+     {
+      "code": "pqy089",
+      "content": "# Brif pqy089\n\n- Konu: kur hareketi\n- Dayanak: merkez bankası bülteni\n- Not pqy089: 27 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy089.md",
+      "i": 89,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy089",
+      "rule": false
+     },
+     {
+      "code": "pqy090",
+      "content": "# Commentary pqy090\n\nThis is a language model's reading of the current account and is not approved.\n\nCommentary pqy090: going by the exchange notice, the current account may stay volatile for 18 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy090.md",
+      "i": 90,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy090",
+      "rule": false
+     },
+     {
+      "code": "pqy091",
+      "content": "# Brief pqy091\n\n- Topic: credit growth\n- Basis: ministry statement\n- Note pqy091: summarised under 33 headings.\n",
+      "doc_path": "yorum/brif/pqy091.md",
+      "i": 91,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy091",
+      "rule": false
+     },
+     {
+      "code": "pqy092",
+      "content": "# Yorum pqy092\n\nBu yorum bir dil modelinin enflasyon verisi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy092: merkez bankası bülteni verisine göre enflasyon verisi önümüzdeki 13 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy092.md",
+      "i": 92,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy092",
+      "rule": false
+     },
+     {
+      "code": "pqy093",
+      "content": "# Brif pqy093\n\n- Konu: faiz kararı\n- Dayanak: istatistik kurumu\n- Not pqy093: 27 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy093.md",
+      "i": 93,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy093",
+      "rule": false
+     },
+     {
+      "code": "pqy094",
+      "content": "# Commentary pqy094\n\nThis is a language model's reading of the bond yield and is not approved.\n\nCommentary pqy094: going by the statistics office, the bond yield may stay volatile for 30 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy094.md",
+      "i": 94,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy094",
+      "rule": false
+     },
+     {
+      "code": "pqy095",
+      "content": "# Brief pqy095\n\n- Topic: currency move\n- Basis: statistics office\n- Note pqy095: summarised under 4 headings.\n",
+      "doc_path": "yorum/brif/pqy095.md",
+      "i": 95,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy095",
+      "rule": false
+     },
+     {
+      "code": "pqy096",
+      "content": "# Yorum pqy096\n\nBu yorum bir dil modelinin kredi büyümesi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy096: bakanlık açıklaması verisine göre kredi büyümesi önümüzdeki 3 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy096.md",
+      "i": 96,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy096",
+      "rule": false
+     },
+     {
+      "code": "pqy097",
+      "content": "# Brif pqy097\n\n- Konu: bilanço dönemi\n- Dayanak: borsa duyurusu\n- Not pqy097: 33 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy097.md",
+      "i": 97,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy097",
+      "rule": false
+     },
+     {
+      "code": "pqy098",
+      "content": "# Commentary pqy098\n\nThis is a language model's reading of the bond yield and is not approved.\n\nCommentary pqy098: going by the statistics office, the bond yield may stay volatile for 8 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy098.md",
+      "i": 98,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy098",
+      "rule": false
+     },
+     {
+      "code": "pqy099",
+      "content": "# Brief pqy099\n\n- Topic: industrial output\n- Basis: exchange notice\n- Note pqy099: summarised under 16 headings.\n",
+      "doc_path": "yorum/brif/pqy099.md",
+      "i": 99,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy099",
+      "rule": false
+     }
+    ],
+    "queries": [
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk024.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk024.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk024.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q01",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk024",
+      "targets": [
+       "toplayici/toplayici-notu/pqk024.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk026.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk026.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk026.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q02",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk026",
+      "targets": [
+       "toplayici/toplayici-notu/pqk026.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk032.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk032.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk032.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q03",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK032",
+      "targets": [
+       "toplayici/toplayici-notu/pqk032.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q04",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk047",
+      "targets": [
+       "toplayici/resmi-ozet/pqk047.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk035.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk035.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk035.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk035.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q05",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk035",
+      "targets": [
+       "toplayici/resmi-ozet/pqk035.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q06",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK034",
+      "targets": [
+       "toplayici/toplayici-notu/pqk034.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk033.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk033.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk033.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk033.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q07",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk033",
+      "targets": [
+       "toplayici/resmi-ozet/pqk033.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q08",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk043",
+      "targets": [
+       "toplayici/resmi-ozet/pqk043.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk015.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk015.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk015.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk015.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q09",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK015",
+      "targets": [
+       "toplayici/resmi-ozet/pqk015.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk044.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk044.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk044.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk044.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q10",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk044",
+      "targets": [
+       "toplayici/toplayici-notu/pqk044.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk029.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk029.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk029.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk029.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q11",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk029",
+      "targets": [
+       "toplayici/resmi-ozet/pqk029.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk017.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk017.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk017.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk017.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q12",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK017",
+      "targets": [
+       "toplayici/resmi-ozet/pqk017.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk001.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk001.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk001.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk001.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q13",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk001",
+      "targets": [
+       "toplayici/resmi-ozet/pqk001.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk042.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk042.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk042.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk042.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q14",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk042",
+      "targets": [
+       "toplayici/toplayici-notu/pqk042.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk038.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk038.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk038.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk038.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q15",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK038",
+      "targets": [
+       "toplayici/toplayici-notu/pqk038.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk007.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk007.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk007.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk007.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q16",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk007",
+      "targets": [
+       "toplayici/resmi-ozet/pqk007.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q17",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy050",
+      "targets": [
+       "yorum/llm-yorumu/pqy050.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy059.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy059.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy059.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q18",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY059",
+      "targets": [
+       "yorum/brif/pqy059.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy066.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/llm-yorumu/pqy066.md"
+        ],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy066.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q19",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy066",
+      "targets": [
+       "yorum/llm-yorumu/pqy066.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy073.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy073.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy073.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q20",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy073",
+      "targets": [
+       "yorum/brif/pqy073.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy077.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy077.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy077.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q21",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY077",
+      "targets": [
+       "yorum/brif/pqy077.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy080.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/llm-yorumu/pqy080.md"
+        ],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy080.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q22",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy080",
+      "targets": [
+       "yorum/llm-yorumu/pqy080.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy083.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy083.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy083.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q23",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy083",
+      "targets": [
+       "yorum/brif/pqy083.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy087.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy087.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy087.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q24",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY087",
+      "targets": [
+       "yorum/brif/pqy087.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy058.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy058.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q25",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy058",
+      "targets": [
+       "yorum/llm-yorumu/pqy058.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy094.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy094.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q26",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy094",
+      "targets": [
+       "yorum/llm-yorumu/pqy094.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy076.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy076.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q27",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY076",
+      "targets": [
+       "yorum/llm-yorumu/pqy076.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy091.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy091.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q28",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy091",
+      "targets": [
+       "yorum/brif/pqy091.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy086.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy086.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q29",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy086",
+      "targets": [
+       "yorum/llm-yorumu/pqy086.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy067.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy067.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q30",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY067",
+      "targets": [
+       "yorum/brif/pqy067.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy097.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy097.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q31",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy097",
+      "targets": [
+       "yorum/brif/pqy097.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy055.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy055.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q32",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy055",
+      "targets": [
+       "yorum/brif/pqy055.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd000.md"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd000.md"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q33",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQD000",
+      "targets": [
+       "ajan-dogrudan/pqd000.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd001.md"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd001.md"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q34",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqd001",
+      "targets": [
+       "ajan-dogrudan/pqd001.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd002.md"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd002.md"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q35",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqd002",
+      "targets": [
+       "ajan-dogrudan/pqd002.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd003.md"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd003.md"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q36",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQD003",
+      "targets": [
+       "ajan-dogrudan/pqd003.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "b2:057b276c2b64a3c5a7604c7d013302f0"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "b2:057b276c2b64a3c5a7604c7d013302f0"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q37",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqd014",
+      "targets": [
+       "b2:057b276c2b64a3c5a7604c7d013302f0"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "b2:54df7a5904d56291fe2d54ab0d6f0708"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "b2:54df7a5904d56291fe2d54ab0d6f0708"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q38",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqd015",
+      "targets": [
+       "b2:54df7a5904d56291fe2d54ab0d6f0708"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q39",
+      "lang": "tr",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqk047 özet faiz kararı",
+      "targets": [
+       "toplayici/resmi-ozet/pqk047.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q40",
+      "lang": "en",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqk034 summary of the rate decision",
+      "targets": [
+       "toplayici/toplayici-notu/pqk034.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q41",
+      "lang": "mix",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqy050 resmi kaynak official summary",
+      "targets": [
+       "yorum/llm-yorumu/pqy050.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy094.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy094.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q42",
+      "lang": "tr",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqy094 yorum enflasyon",
+      "targets": [
+       "yorum/llm-yorumu/pqy094.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy091.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy091.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q43",
+      "lang": "en",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqy091 commentary on the bond yield",
+      "targets": [
+       "yorum/brif/pqy091.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q44",
+      "lang": "mix",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqk043 brif brief kur",
+      "targets": [
+       "toplayici/resmi-ozet/pqk043.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       }
+      },
+      "id": "q45",
+      "lang": "mix",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "zqxv kelebekyok",
+      "targets": []
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       }
+      },
+      "id": "q46",
+      "lang": "mix",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "wqyk notfoundword",
+      "targets": []
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       }
+      },
+      "id": "q47",
+      "lang": "mix",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqz999",
+      "targets": []
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       }
+      },
+      "id": "q48",
+      "lang": "mix",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "qqjx ışıkyok",
+      "targets": []
+     }
+    ]
+   },
+   "qorbit": {
+    "demote_docs": [
+     "toplayici/toplayici-notu/pqk024.md",
+     "toplayici/toplayici-notu/pqk026.md",
+     "toplayici/toplayici-notu/pqk032.md"
+    ],
+    "direct": [
+     {
+      "code": "pqd000",
+      "content": "# Doğrudan not pqd000\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: tahvil getirisi, bakanlık açıklaması.\n\nKayıt pqd000: 18 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd000.md",
+      "j": 0,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd001",
+      "content": "# Direct note pqd001\n\nThe agent wrote this file directly, bypassing the server: rate decision, statistics office.\n\nRecord pqd001: 20 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd001.md",
+      "j": 1,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd002",
+      "content": "# Doğrudan not pqd002\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: bilanço dönemi, borsa duyurusu.\n\nKayıt pqd002: 23 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd002.md",
+      "j": 2,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd003",
+      "content": "# Direct note pqd003\n\nThe agent wrote this file directly, bypassing the server: currency move, central bank bulletin.\n\nRecord pqd003: 7 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd003.md",
+      "j": 3,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd004",
+      "content": "# Doğrudan not pqd004\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: sanayi üretimi, merkez bankası bülteni.\n\nKayıt pqd004: 19 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd004.md",
+      "j": 4,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd005",
+      "content": "# Direct note pqd005\n\nThe agent wrote this file directly, bypassing the server: credit growth, exchange notice.\n\nRecord pqd005: 36 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd005.md",
+      "j": 5,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd006",
+      "content": "# Doğrudan not pqd006\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: faiz kararı, bakanlık açıklaması.\n\nKayıt pqd006: 22 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd006.md",
+      "j": 6,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd007",
+      "content": "# Direct note pqd007\n\nThe agent wrote this file directly, bypassing the server: bond yield, ministry statement.\n\nRecord pqd007: 21 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd007.md",
+      "j": 7,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd008",
+      "content": "# Doğrudan not pqd008\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: enflasyon verisi, bakanlık açıklaması.\n\nKayıt pqd008: 27 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd008.md",
+      "j": 8,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd009",
+      "content": "# Direct note pqd009\n\nThe agent wrote this file directly, bypassing the server: current account, ministry statement.\n\nRecord pqd009: 29 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd009.md",
+      "j": 9,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd010",
+      "content": "# Doğrudan not pqd010\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: faiz kararı, bakanlık açıklaması.\n\nKayıt pqd010: 35 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd010.md",
+      "j": 10,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd011",
+      "content": "# Direct note pqd011\n\nThe agent wrote this file directly, bypassing the server: bond yield, central bank bulletin.\n\nRecord pqd011: 27 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd011.md",
+      "j": 11,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd012",
+      "content": "# Doğrudan not pqd012\n\nAjan bu dosyayı sunucuyu atlayarak doğrudan yazdı: cari açık, istatistik kurumu.\n\nKayıt pqd012: 17 satır.\n",
+      "doc_path": "ajan-dogrudan/pqd012.md",
+      "j": 12,
+      "lang": "tr",
+      "op": "create"
+     },
+     {
+      "code": "pqd013",
+      "content": "# Direct note pqd013\n\nThe agent wrote this file directly, bypassing the server: earnings season, statistics office.\n\nRecord pqd013: 29 lines.\n",
+      "doc_path": "ajan-dogrudan/pqd013.md",
+      "j": 13,
+      "lang": "en",
+      "op": "create"
+     },
+     {
+      "code": "pqd014",
+      "content": "\n## Ajan notu pqd014\n\nAjan bu bölümü dosyaya doğrudan ekledi: kur hareketi (borsa duyurusu), 11 gözlem.\n",
+      "doc_path_b2": "cb983bea3ee95a222464742df93c46ad",
+      "j": 14,
+      "lang": "tr",
+      "op": "append"
+     },
+     {
+      "code": "pqd015",
+      "content": "\n## Agent note pqd015\n\nThe agent appended this section to the file directly: credit growth (ministry statement), 17 observations.\n",
+      "doc_path_b2": "834450f31fd6997a3086ec32e53b0126",
+      "j": 15,
+      "lang": "en",
+      "op": "append"
+     },
+     {
+      "code": "pqd016",
+      "content": "\n## Ajan notu pqd016\n\nAjan bu bölümü dosyaya doğrudan ekledi: kredi büyümesi (borsa duyurusu), 19 gözlem.\n",
+      "doc_path_b2": "45988633ee0c38758be36396dc5e3597",
+      "j": 16,
+      "lang": "tr",
+      "op": "append"
+     },
+     {
+      "code": "pqd017",
+      "content": "\n## Agent note pqd017\n\nThe agent appended this section to the file directly: inflation print (central bank bulletin), 31 observations.\n",
+      "doc_path_b2": "055d126021e83507ce24662a428d2a1f",
+      "j": 17,
+      "lang": "en",
+      "op": "append"
+     },
+     {
+      "code": "pqd018",
+      "content": "\n## Ajan notu pqd018\n\nAjan bu bölümü dosyaya doğrudan ekledi: kredi büyümesi (istatistik kurumu), 6 gözlem.\n",
+      "doc_path_b2": "a51301ef421994c40fa962651a8c965a",
+      "j": 18,
+      "lang": "tr",
+      "op": "append"
+     },
+     {
+      "code": "pqd019",
+      "content": "\n## Agent note pqd019\n\nThe agent appended this section to the file directly: credit growth (ministry statement), 26 observations.\n",
+      "doc_path_b2": "e9a921f4cf4fabadf19d0246d4afa972",
+      "j": 19,
+      "lang": "en",
+      "op": "append"
+     }
+    ],
+    "promote_docs": [
+     "yorum/brif/pqy059.md",
+     "yorum/brif/pqy073.md",
+     "yorum/brif/pqy077.md",
+     "yorum/brif/pqy083.md",
+     "yorum/brif/pqy087.md",
+     "yorum/brif/pqy093.md",
+     "yorum/llm-yorumu/pqy050.md",
+     "yorum/llm-yorumu/pqy066.md",
+     "yorum/llm-yorumu/pqy080.md",
+     "yorum/llm-yorumu/pqy088.md",
+     "yorum/llm-yorumu/pqy090.md",
+     "yorum/llm-yorumu/pqy096.md"
+    ],
+    "propose": [
+     {
+      "code": "pqk000",
+      "content": "# Toplayıcı notu pqk000\n\nKaynak: borsa duyurusu. Konu: bilanço dönemi.\n\npqk000 kodlu derlemede bilanço dönemi için 37 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk000.md",
+      "i": 0,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk000",
+      "rule": true
+     },
+     {
+      "code": "pqk001",
+      "content": "# Resmi kaynak özeti pqk001\n\nmerkez bankası bülteni cari açık hakkında bir metin yayımladı.\n\nÖzet pqk001: metin 40 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk001.md",
+      "i": 1,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk001",
+      "rule": true
+     },
+     {
+      "code": "pqk002",
+      "content": "# Collector note pqk002\n\nSource: exchange notice. Topic: earnings season.\n\nCollection pqk002 gathered 18 data points on the earnings season; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk002.md",
+      "i": 2,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk002",
+      "rule": true
+     },
+     {
+      "code": "pqk003",
+      "content": "# Official source summary pqk003\n\nThe ministry statement published a text on the earnings season.\n\nSummary pqk003: the text has 38 items; the first one leaves the outlook on the earnings season unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk003.md",
+      "i": 3,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk003",
+      "rule": true
+     },
+     {
+      "code": "pqk004",
+      "content": "# Toplayıcı notu pqk004\n\nKaynak: merkez bankası bülteni. Konu: tahvil getirisi.\n\npqk004 kodlu derlemede tahvil getirisi için 38 veri noktası toplandı; değerler merkez bankası bülteni kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk004.md",
+      "i": 4,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk004",
+      "rule": true
+     },
+     {
+      "code": "pqk005",
+      "content": "# Resmi kaynak özeti pqk005\n\nmerkez bankası bülteni kur hareketi hakkında bir metin yayımladı.\n\nÖzet pqk005: metin 14 madde içeriyor; ilk madde kur hareketi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk005.md",
+      "i": 5,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk005",
+      "rule": true
+     },
+     {
+      "code": "pqk006",
+      "content": "# Collector note pqk006\n\nSource: exchange notice. Topic: credit growth.\n\nCollection pqk006 gathered 40 data points on the credit growth; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk006.md",
+      "i": 6,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk006",
+      "rule": true
+     },
+     {
+      "code": "pqk007",
+      "content": "# Official source summary pqk007\n\nThe ministry statement published a text on the industrial output.\n\nSummary pqk007: the text has 23 items; the first one leaves the outlook on the industrial output unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk007.md",
+      "i": 7,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk007",
+      "rule": true
+     },
+     {
+      "code": "pqk008",
+      "content": "# Toplayıcı notu pqk008\n\nKaynak: istatistik kurumu. Konu: bilanço dönemi.\n\npqk008 kodlu derlemede bilanço dönemi için 20 veri noktası toplandı; değerler istatistik kurumu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk008.md",
+      "i": 8,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk008",
+      "rule": true
+     },
+     {
+      "code": "pqk009",
+      "content": "# Resmi kaynak özeti pqk009\n\nborsa duyurusu bilanço dönemi hakkında bir metin yayımladı.\n\nÖzet pqk009: metin 20 madde içeriyor; ilk madde bilanço dönemi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk009.md",
+      "i": 9,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk009",
+      "rule": true
+     },
+     {
+      "code": "pqk010",
+      "content": "# Collector note pqk010\n\nSource: statistics office. Topic: earnings season.\n\nCollection pqk010 gathered 10 data points on the earnings season; the values were copied as published by the statistics office.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk010.md",
+      "i": 10,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk010",
+      "rule": true
+     },
+     {
+      "code": "pqk011",
+      "content": "# Official source summary pqk011\n\nThe central bank bulletin published a text on the bond yield.\n\nSummary pqk011: the text has 14 items; the first one leaves the outlook on the bond yield unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk011.md",
+      "i": 11,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk011",
+      "rule": true
+     },
+     {
+      "code": "pqk012",
+      "content": "# Toplayıcı notu pqk012\n\nKaynak: borsa duyurusu. Konu: bilanço dönemi.\n\npqk012 kodlu derlemede bilanço dönemi için 32 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk012.md",
+      "i": 12,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk012",
+      "rule": true
+     },
+     {
+      "code": "pqk013",
+      "content": "# Resmi kaynak özeti pqk013\n\nborsa duyurusu kredi büyümesi hakkında bir metin yayımladı.\n\nÖzet pqk013: metin 4 madde içeriyor; ilk madde kredi büyümesi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk013.md",
+      "i": 13,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk013",
+      "rule": true
+     },
+     {
+      "code": "pqk014",
+      "content": "# Collector note pqk014\n\nSource: statistics office. Topic: earnings season.\n\nCollection pqk014 gathered 23 data points on the earnings season; the values were copied as published by the statistics office.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk014.md",
+      "i": 14,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk014",
+      "rule": true
+     },
+     {
+      "code": "pqk015",
+      "content": "# Official source summary pqk015\n\nThe central bank bulletin published a text on the rate decision.\n\nSummary pqk015: the text has 20 items; the first one leaves the outlook on the rate decision unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk015.md",
+      "i": 15,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk015",
+      "rule": true
+     },
+     {
+      "code": "pqk016",
+      "content": "# Toplayıcı notu pqk016\n\nKaynak: bakanlık açıklaması. Konu: kur hareketi.\n\npqk016 kodlu derlemede kur hareketi için 12 veri noktası toplandı; değerler bakanlık açıklaması kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk016.md",
+      "i": 16,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk016",
+      "rule": true
+     },
+     {
+      "code": "pqk017",
+      "content": "# Resmi kaynak özeti pqk017\n\nbakanlık açıklaması cari açık hakkında bir metin yayımladı.\n\nÖzet pqk017: metin 25 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk017.md",
+      "i": 17,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk017",
+      "rule": true
+     },
+     {
+      "code": "pqk018",
+      "content": "# Collector note pqk018\n\nSource: exchange notice. Topic: credit growth.\n\nCollection pqk018 gathered 16 data points on the credit growth; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk018.md",
+      "i": 18,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk018",
+      "rule": true
+     },
+     {
+      "code": "pqk019",
+      "content": "# Official source summary pqk019\n\nThe exchange notice published a text on the bond yield.\n\nSummary pqk019: the text has 30 items; the first one leaves the outlook on the bond yield unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk019.md",
+      "i": 19,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk019",
+      "rule": true
+     },
+     {
+      "code": "pqk020",
+      "content": "# Toplayıcı notu pqk020\n\nKaynak: bakanlık açıklaması. Konu: sanayi üretimi.\n\npqk020 kodlu derlemede sanayi üretimi için 12 veri noktası toplandı; değerler bakanlık açıklaması kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk020.md",
+      "i": 20,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk020",
+      "rule": true
+     },
+     {
+      "code": "pqk021",
+      "content": "# Resmi kaynak özeti pqk021\n\nistatistik kurumu cari açık hakkında bir metin yayımladı.\n\nÖzet pqk021: metin 13 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk021.md",
+      "i": 21,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk021",
+      "rule": true
+     },
+     {
+      "code": "pqk022",
+      "content": "# Collector note pqk022\n\nSource: exchange notice. Topic: inflation print.\n\nCollection pqk022 gathered 34 data points on the inflation print; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk022.md",
+      "i": 22,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk022",
+      "rule": true
+     },
+     {
+      "code": "pqk023",
+      "content": "# Official source summary pqk023\n\nThe statistics office published a text on the currency move.\n\nSummary pqk023: the text has 24 items; the first one leaves the outlook on the currency move unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk023.md",
+      "i": 23,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk023",
+      "rule": true
+     },
+     {
+      "code": "pqk024",
+      "content": "# Toplayıcı notu pqk024\n\nKaynak: borsa duyurusu. Konu: cari açık.\n\npqk024 kodlu derlemede cari açık için 14 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk024.md",
+      "i": 24,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk024",
+      "rule": true
+     },
+     {
+      "code": "pqk025",
+      "content": "# Resmi kaynak özeti pqk025\n\nbakanlık açıklaması tahvil getirisi hakkında bir metin yayımladı.\n\nÖzet pqk025: metin 8 madde içeriyor; ilk madde tahvil getirisi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk025.md",
+      "i": 25,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk025",
+      "rule": true
+     },
+     {
+      "code": "pqk026",
+      "content": "# Collector note pqk026\n\nSource: exchange notice. Topic: currency move.\n\nCollection pqk026 gathered 30 data points on the currency move; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk026.md",
+      "i": 26,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk026",
+      "rule": true
+     },
+     {
+      "code": "pqk027",
+      "content": "# Official source summary pqk027\n\nThe exchange notice published a text on the rate decision.\n\nSummary pqk027: the text has 37 items; the first one leaves the outlook on the rate decision unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk027.md",
+      "i": 27,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk027",
+      "rule": true
+     },
+     {
+      "code": "pqk028",
+      "content": "# Toplayıcı notu pqk028\n\nKaynak: borsa duyurusu. Konu: kur hareketi.\n\npqk028 kodlu derlemede kur hareketi için 33 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk028.md",
+      "i": 28,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk028",
+      "rule": true
+     },
+     {
+      "code": "pqk029",
+      "content": "# Resmi kaynak özeti pqk029\n\nmerkez bankası bülteni cari açık hakkında bir metin yayımladı.\n\nÖzet pqk029: metin 34 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk029.md",
+      "i": 29,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk029",
+      "rule": true
+     },
+     {
+      "code": "pqk030",
+      "content": "# Collector note pqk030\n\nSource: exchange notice. Topic: current account.\n\nCollection pqk030 gathered 16 data points on the current account; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk030.md",
+      "i": 30,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk030",
+      "rule": true
+     },
+     {
+      "code": "pqk031",
+      "content": "# Official source summary pqk031\n\nThe exchange notice published a text on the bond yield.\n\nSummary pqk031: the text has 40 items; the first one leaves the outlook on the bond yield unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk031.md",
+      "i": 31,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk031",
+      "rule": true
+     },
+     {
+      "code": "pqk032",
+      "content": "# Toplayıcı notu pqk032\n\nKaynak: istatistik kurumu. Konu: sanayi üretimi.\n\npqk032 kodlu derlemede sanayi üretimi için 5 veri noktası toplandı; değerler istatistik kurumu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk032.md",
+      "i": 32,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk032",
+      "rule": true
+     },
+     {
+      "code": "pqk033",
+      "content": "# Resmi kaynak özeti pqk033\n\nborsa duyurusu tahvil getirisi hakkında bir metin yayımladı.\n\nÖzet pqk033: metin 14 madde içeriyor; ilk madde tahvil getirisi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk033.md",
+      "i": 33,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk033",
+      "rule": true
+     },
+     {
+      "code": "pqk034",
+      "content": "# Collector note pqk034\n\nSource: exchange notice. Topic: credit growth.\n\nCollection pqk034 gathered 12 data points on the credit growth; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk034.md",
+      "i": 34,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk034",
+      "rule": true
+     },
+     {
+      "code": "pqk035",
+      "content": "# Official source summary pqk035\n\nThe statistics office published a text on the industrial output.\n\nSummary pqk035: the text has 15 items; the first one leaves the outlook on the industrial output unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk035.md",
+      "i": 35,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk035",
+      "rule": true
+     },
+     {
+      "code": "pqk036",
+      "content": "# Toplayıcı notu pqk036\n\nKaynak: bakanlık açıklaması. Konu: tahvil getirisi.\n\npqk036 kodlu derlemede tahvil getirisi için 19 veri noktası toplandı; değerler bakanlık açıklaması kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk036.md",
+      "i": 36,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk036",
+      "rule": true
+     },
+     {
+      "code": "pqk037",
+      "content": "# Resmi kaynak özeti pqk037\n\nmerkez bankası bülteni kur hareketi hakkında bir metin yayımladı.\n\nÖzet pqk037: metin 18 madde içeriyor; ilk madde kur hareketi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk037.md",
+      "i": 37,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk037",
+      "rule": true
+     },
+     {
+      "code": "pqk038",
+      "content": "# Collector note pqk038\n\nSource: exchange notice. Topic: bond yield.\n\nCollection pqk038 gathered 24 data points on the bond yield; the values were copied as published by the exchange notice.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk038.md",
+      "i": 38,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk038",
+      "rule": true
+     },
+     {
+      "code": "pqk039",
+      "content": "# Official source summary pqk039\n\nThe exchange notice published a text on the current account.\n\nSummary pqk039: the text has 28 items; the first one leaves the outlook on the current account unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk039.md",
+      "i": 39,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk039",
+      "rule": true
+     },
+     {
+      "code": "pqk040",
+      "content": "# Toplayıcı notu pqk040\n\nKaynak: istatistik kurumu. Konu: kur hareketi.\n\npqk040 kodlu derlemede kur hareketi için 17 veri noktası toplandı; değerler istatistik kurumu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk040.md",
+      "i": 40,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk040",
+      "rule": true
+     },
+     {
+      "code": "pqk041",
+      "content": "# Resmi kaynak özeti pqk041\n\nborsa duyurusu kur hareketi hakkında bir metin yayımladı.\n\nÖzet pqk041: metin 4 madde içeriyor; ilk madde kur hareketi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk041.md",
+      "i": 41,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk041",
+      "rule": true
+     },
+     {
+      "code": "pqk042",
+      "content": "# Collector note pqk042\n\nSource: central bank bulletin. Topic: current account.\n\nCollection pqk042 gathered 14 data points on the current account; the values were copied as published by the central bank bulletin.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk042.md",
+      "i": 42,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk042",
+      "rule": true
+     },
+     {
+      "code": "pqk043",
+      "content": "# Official source summary pqk043\n\nThe statistics office published a text on the inflation print.\n\nSummary pqk043: the text has 19 items; the first one leaves the outlook on the inflation print unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk043.md",
+      "i": 43,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk043",
+      "rule": true
+     },
+     {
+      "code": "pqk044",
+      "content": "# Toplayıcı notu pqk044\n\nKaynak: borsa duyurusu. Konu: cari açık.\n\npqk044 kodlu derlemede cari açık için 6 veri noktası toplandı; değerler borsa duyurusu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk044.md",
+      "i": 44,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk044",
+      "rule": true
+     },
+     {
+      "code": "pqk045",
+      "content": "# Resmi kaynak özeti pqk045\n\nmerkez bankası bülteni cari açık hakkında bir metin yayımladı.\n\nÖzet pqk045: metin 30 madde içeriyor; ilk madde cari açık ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk045.md",
+      "i": 45,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk045",
+      "rule": true
+     },
+     {
+      "code": "pqk046",
+      "content": "# Collector note pqk046\n\nSource: statistics office. Topic: bond yield.\n\nCollection pqk046 gathered 29 data points on the bond yield; the values were copied as published by the statistics office.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk046.md",
+      "i": 46,
+      "kind": "toplayici-notu",
+      "lang": "en",
+      "reason": "p2q toplayici-notu pqk046",
+      "rule": true
+     },
+     {
+      "code": "pqk047",
+      "content": "# Official source summary pqk047\n\nThe exchange notice published a text on the rate decision.\n\nSummary pqk047: the text has 11 items; the first one leaves the outlook on the rate decision unchanged.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk047.md",
+      "i": 47,
+      "kind": "resmi-ozet",
+      "lang": "en",
+      "reason": "p2q resmi-ozet pqk047",
+      "rule": true
+     },
+     {
+      "code": "pqk048",
+      "content": "# Toplayıcı notu pqk048\n\nKaynak: istatistik kurumu. Konu: kredi büyümesi.\n\npqk048 kodlu derlemede kredi büyümesi için 15 veri noktası toplandı; değerler istatistik kurumu kaynağından olduğu gibi aktarıldı.\n",
+      "doc_path": "toplayici/toplayici-notu/pqk048.md",
+      "i": 48,
+      "kind": "toplayici-notu",
+      "lang": "tr",
+      "reason": "p2q toplayici-notu pqk048",
+      "rule": true
+     },
+     {
+      "code": "pqk049",
+      "content": "# Resmi kaynak özeti pqk049\n\nistatistik kurumu bilanço dönemi hakkında bir metin yayımladı.\n\nÖzet pqk049: metin 16 madde içeriyor; ilk madde bilanço dönemi ile ilgili beklentiyi değiştirmiyor.\n",
+      "doc_path": "toplayici/resmi-ozet/pqk049.md",
+      "i": 49,
+      "kind": "resmi-ozet",
+      "lang": "tr",
+      "reason": "p2q resmi-ozet pqk049",
+      "rule": true
+     },
+     {
+      "code": "pqy050",
+      "content": "# Commentary pqy050\n\nThis is a language model's reading of the rate decision and is not approved.\n\nCommentary pqy050: going by the ministry statement, the rate decision may stay volatile for 36 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy050.md",
+      "i": 50,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy050",
+      "rule": false
+     },
+     {
+      "code": "pqy051",
+      "content": "# Brief pqy051\n\n- Topic: current account\n- Basis: central bank bulletin\n- Note pqy051: summarised under 4 headings.\n",
+      "doc_path": "yorum/brif/pqy051.md",
+      "i": 51,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy051",
+      "rule": false
+     },
+     {
+      "code": "pqy052",
+      "content": "# Yorum pqy052\n\nBu yorum bir dil modelinin kur hareketi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy052: istatistik kurumu verisine göre kur hareketi önümüzdeki 11 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy052.md",
+      "i": 52,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy052",
+      "rule": false
+     },
+     {
+      "code": "pqy053",
+      "content": "# Brif pqy053\n\n- Konu: cari açık\n- Dayanak: bakanlık açıklaması\n- Not pqy053: 40 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy053.md",
+      "i": 53,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy053",
+      "rule": false
+     },
+     {
+      "code": "pqy054",
+      "content": "# Commentary pqy054\n\nThis is a language model's reading of the current account and is not approved.\n\nCommentary pqy054: going by the statistics office, the current account may stay volatile for 19 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy054.md",
+      "i": 54,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy054",
+      "rule": false
+     },
+     {
+      "code": "pqy055",
+      "content": "# Brief pqy055\n\n- Topic: bond yield\n- Basis: central bank bulletin\n- Note pqy055: summarised under 31 headings.\n",
+      "doc_path": "yorum/brif/pqy055.md",
+      "i": 55,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy055",
+      "rule": false
+     },
+     {
+      "code": "pqy056",
+      "content": "# Yorum pqy056\n\nBu yorum bir dil modelinin kur hareketi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy056: bakanlık açıklaması verisine göre kur hareketi önümüzdeki 39 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy056.md",
+      "i": 56,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy056",
+      "rule": false
+     },
+     {
+      "code": "pqy057",
+      "content": "# Brif pqy057\n\n- Konu: tahvil getirisi\n- Dayanak: borsa duyurusu\n- Not pqy057: 4 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy057.md",
+      "i": 57,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy057",
+      "rule": false
+     },
+     {
+      "code": "pqy058",
+      "content": "# Commentary pqy058\n\nThis is a language model's reading of the credit growth and is not approved.\n\nCommentary pqy058: going by the ministry statement, the credit growth may stay volatile for 31 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy058.md",
+      "i": 58,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy058",
+      "rule": false
+     },
+     {
+      "code": "pqy059",
+      "content": "# Brief pqy059\n\n- Topic: credit growth\n- Basis: exchange notice\n- Note pqy059: summarised under 9 headings.\n",
+      "doc_path": "yorum/brif/pqy059.md",
+      "i": 59,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy059",
+      "rule": false
+     },
+     {
+      "code": "pqy060",
+      "content": "# Yorum pqy060\n\nBu yorum bir dil modelinin enflasyon verisi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy060: borsa duyurusu verisine göre enflasyon verisi önümüzdeki 21 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy060.md",
+      "i": 60,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy060",
+      "rule": false
+     },
+     {
+      "code": "pqy061",
+      "content": "# Brif pqy061\n\n- Konu: sanayi üretimi\n- Dayanak: borsa duyurusu\n- Not pqy061: 30 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy061.md",
+      "i": 61,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy061",
+      "rule": false
+     },
+     {
+      "code": "pqy062",
+      "content": "# Commentary pqy062\n\nThis is a language model's reading of the inflation print and is not approved.\n\nCommentary pqy062: going by the statistics office, the inflation print may stay volatile for 33 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy062.md",
+      "i": 62,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy062",
+      "rule": false
+     },
+     {
+      "code": "pqy063",
+      "content": "# Brief pqy063\n\n- Topic: industrial output\n- Basis: ministry statement\n- Note pqy063: summarised under 36 headings.\n",
+      "doc_path": "yorum/brif/pqy063.md",
+      "i": 63,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy063",
+      "rule": false
+     },
+     {
+      "code": "pqy064",
+      "content": "# Yorum pqy064\n\nBu yorum bir dil modelinin sanayi üretimi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy064: merkez bankası bülteni verisine göre sanayi üretimi önümüzdeki 30 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy064.md",
+      "i": 64,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy064",
+      "rule": false
+     },
+     {
+      "code": "pqy065",
+      "content": "# Brif pqy065\n\n- Konu: sanayi üretimi\n- Dayanak: borsa duyurusu\n- Not pqy065: 37 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy065.md",
+      "i": 65,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy065",
+      "rule": false
+     },
+     {
+      "code": "pqy066",
+      "content": "# Commentary pqy066\n\nThis is a language model's reading of the credit growth and is not approved.\n\nCommentary pqy066: going by the ministry statement, the credit growth may stay volatile for 21 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy066.md",
+      "i": 66,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy066",
+      "rule": false
+     },
+     {
+      "code": "pqy067",
+      "content": "# Brief pqy067\n\n- Topic: bond yield\n- Basis: exchange notice\n- Note pqy067: summarised under 7 headings.\n",
+      "doc_path": "yorum/brif/pqy067.md",
+      "i": 67,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy067",
+      "rule": false
+     },
+     {
+      "code": "pqy068",
+      "content": "# Yorum pqy068\n\nBu yorum bir dil modelinin tahvil getirisi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy068: borsa duyurusu verisine göre tahvil getirisi önümüzdeki 31 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy068.md",
+      "i": 68,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy068",
+      "rule": false
+     },
+     {
+      "code": "pqy069",
+      "content": "# Brif pqy069\n\n- Konu: kredi büyümesi\n- Dayanak: bakanlık açıklaması\n- Not pqy069: 26 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy069.md",
+      "i": 69,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy069",
+      "rule": false
+     },
+     {
+      "code": "pqy070",
+      "content": "# Commentary pqy070\n\nThis is a language model's reading of the rate decision and is not approved.\n\nCommentary pqy070: going by the exchange notice, the rate decision may stay volatile for 9 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy070.md",
+      "i": 70,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy070",
+      "rule": false
+     },
+     {
+      "code": "pqy071",
+      "content": "# Brief pqy071\n\n- Topic: industrial output\n- Basis: ministry statement\n- Note pqy071: summarised under 11 headings.\n",
+      "doc_path": "yorum/brif/pqy071.md",
+      "i": 71,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy071",
+      "rule": false
+     },
+     {
+      "code": "pqy072",
+      "content": "# Yorum pqy072\n\nBu yorum bir dil modelinin tahvil getirisi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy072: merkez bankası bülteni verisine göre tahvil getirisi önümüzdeki 7 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy072.md",
+      "i": 72,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy072",
+      "rule": false
+     },
+     {
+      "code": "pqy073",
+      "content": "# Brif pqy073\n\n- Konu: enflasyon verisi\n- Dayanak: istatistik kurumu\n- Not pqy073: 32 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy073.md",
+      "i": 73,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy073",
+      "rule": false
+     },
+     {
+      "code": "pqy074",
+      "content": "# Commentary pqy074\n\nThis is a language model's reading of the currency move and is not approved.\n\nCommentary pqy074: going by the central bank bulletin, the currency move may stay volatile for 40 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy074.md",
+      "i": 74,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy074",
+      "rule": false
+     },
+     {
+      "code": "pqy075",
+      "content": "# Brief pqy075\n\n- Topic: bond yield\n- Basis: exchange notice\n- Note pqy075: summarised under 37 headings.\n",
+      "doc_path": "yorum/brif/pqy075.md",
+      "i": 75,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy075",
+      "rule": false
+     },
+     {
+      "code": "pqy076",
+      "content": "# Yorum pqy076\n\nBu yorum bir dil modelinin bilanço dönemi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy076: borsa duyurusu verisine göre bilanço dönemi önümüzdeki 11 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy076.md",
+      "i": 76,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy076",
+      "rule": false
+     },
+     {
+      "code": "pqy077",
+      "content": "# Brif pqy077\n\n- Konu: bilanço dönemi\n- Dayanak: bakanlık açıklaması\n- Not pqy077: 21 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy077.md",
+      "i": 77,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy077",
+      "rule": false
+     },
+     {
+      "code": "pqy078",
+      "content": "# Commentary pqy078\n\nThis is a language model's reading of the current account and is not approved.\n\nCommentary pqy078: going by the statistics office, the current account may stay volatile for 40 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy078.md",
+      "i": 78,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy078",
+      "rule": false
+     },
+     {
+      "code": "pqy079",
+      "content": "# Brief pqy079\n\n- Topic: industrial output\n- Basis: central bank bulletin\n- Note pqy079: summarised under 32 headings.\n",
+      "doc_path": "yorum/brif/pqy079.md",
+      "i": 79,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy079",
+      "rule": false
+     },
+     {
+      "code": "pqy080",
+      "content": "# Yorum pqy080\n\nBu yorum bir dil modelinin sanayi üretimi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy080: merkez bankası bülteni verisine göre sanayi üretimi önümüzdeki 17 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy080.md",
+      "i": 80,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy080",
+      "rule": false
+     },
+     {
+      "code": "pqy081",
+      "content": "# Brif pqy081\n\n- Konu: bilanço dönemi\n- Dayanak: bakanlık açıklaması\n- Not pqy081: 24 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy081.md",
+      "i": 81,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy081",
+      "rule": false
+     },
+     {
+      "code": "pqy082",
+      "content": "# Commentary pqy082\n\nThis is a language model's reading of the current account and is not approved.\n\nCommentary pqy082: going by the statistics office, the current account may stay volatile for 15 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy082.md",
+      "i": 82,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy082",
+      "rule": false
+     },
+     {
+      "code": "pqy083",
+      "content": "# Brief pqy083\n\n- Topic: currency move\n- Basis: ministry statement\n- Note pqy083: summarised under 38 headings.\n",
+      "doc_path": "yorum/brif/pqy083.md",
+      "i": 83,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy083",
+      "rule": false
+     },
+     {
+      "code": "pqy084",
+      "content": "# Yorum pqy084\n\nBu yorum bir dil modelinin kur hareketi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy084: merkez bankası bülteni verisine göre kur hareketi önümüzdeki 37 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy084.md",
+      "i": 84,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy084",
+      "rule": false
+     },
+     {
+      "code": "pqy085",
+      "content": "# Brif pqy085\n\n- Konu: kredi büyümesi\n- Dayanak: merkez bankası bülteni\n- Not pqy085: 27 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy085.md",
+      "i": 85,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy085",
+      "rule": false
+     },
+     {
+      "code": "pqy086",
+      "content": "# Commentary pqy086\n\nThis is a language model's reading of the rate decision and is not approved.\n\nCommentary pqy086: going by the central bank bulletin, the rate decision may stay volatile for 7 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy086.md",
+      "i": 86,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy086",
+      "rule": false
+     },
+     {
+      "code": "pqy087",
+      "content": "# Brief pqy087\n\n- Topic: current account\n- Basis: exchange notice\n- Note pqy087: summarised under 34 headings.\n",
+      "doc_path": "yorum/brif/pqy087.md",
+      "i": 87,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy087",
+      "rule": false
+     },
+     {
+      "code": "pqy088",
+      "content": "# Yorum pqy088\n\nBu yorum bir dil modelinin sanayi üretimi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy088: istatistik kurumu verisine göre sanayi üretimi önümüzdeki 12 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy088.md",
+      "i": 88,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy088",
+      "rule": false
+     },
+     {
+      "code": "pqy089",
+      "content": "# Brif pqy089\n\n- Konu: kur hareketi\n- Dayanak: merkez bankası bülteni\n- Not pqy089: 27 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy089.md",
+      "i": 89,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy089",
+      "rule": false
+     },
+     {
+      "code": "pqy090",
+      "content": "# Commentary pqy090\n\nThis is a language model's reading of the current account and is not approved.\n\nCommentary pqy090: going by the exchange notice, the current account may stay volatile for 18 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy090.md",
+      "i": 90,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy090",
+      "rule": false
+     },
+     {
+      "code": "pqy091",
+      "content": "# Brief pqy091\n\n- Topic: credit growth\n- Basis: ministry statement\n- Note pqy091: summarised under 33 headings.\n",
+      "doc_path": "yorum/brif/pqy091.md",
+      "i": 91,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy091",
+      "rule": false
+     },
+     {
+      "code": "pqy092",
+      "content": "# Yorum pqy092\n\nBu yorum bir dil modelinin enflasyon verisi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy092: merkez bankası bülteni verisine göre enflasyon verisi önümüzdeki 13 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy092.md",
+      "i": 92,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy092",
+      "rule": false
+     },
+     {
+      "code": "pqy093",
+      "content": "# Brif pqy093\n\n- Konu: faiz kararı\n- Dayanak: istatistik kurumu\n- Not pqy093: 27 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy093.md",
+      "i": 93,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy093",
+      "rule": false
+     },
+     {
+      "code": "pqy094",
+      "content": "# Commentary pqy094\n\nThis is a language model's reading of the bond yield and is not approved.\n\nCommentary pqy094: going by the statistics office, the bond yield may stay volatile for 30 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy094.md",
+      "i": 94,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy094",
+      "rule": false
+     },
+     {
+      "code": "pqy095",
+      "content": "# Brief pqy095\n\n- Topic: currency move\n- Basis: statistics office\n- Note pqy095: summarised under 4 headings.\n",
+      "doc_path": "yorum/brif/pqy095.md",
+      "i": 95,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy095",
+      "rule": false
+     },
+     {
+      "code": "pqy096",
+      "content": "# Yorum pqy096\n\nBu yorum bir dil modelinin kredi büyümesi üzerine değerlendirmesidir ve onaylanmamıştır.\n\nYorum pqy096: bakanlık açıklaması verisine göre kredi büyümesi önümüzdeki 3 haftada dalgalı kalabilir.\n",
+      "doc_path": "yorum/llm-yorumu/pqy096.md",
+      "i": 96,
+      "kind": "llm-yorumu",
+      "lang": "tr",
+      "reason": "p2q llm-yorumu pqy096",
+      "rule": false
+     },
+     {
+      "code": "pqy097",
+      "content": "# Brif pqy097\n\n- Konu: bilanço dönemi\n- Dayanak: borsa duyurusu\n- Not pqy097: 33 başlıkta özetlendi.\n",
+      "doc_path": "yorum/brif/pqy097.md",
+      "i": 97,
+      "kind": "brif",
+      "lang": "tr",
+      "reason": "p2q brif pqy097",
+      "rule": false
+     },
+     {
+      "code": "pqy098",
+      "content": "# Commentary pqy098\n\nThis is a language model's reading of the bond yield and is not approved.\n\nCommentary pqy098: going by the statistics office, the bond yield may stay volatile for 8 weeks.\n",
+      "doc_path": "yorum/llm-yorumu/pqy098.md",
+      "i": 98,
+      "kind": "llm-yorumu",
+      "lang": "en",
+      "reason": "p2q llm-yorumu pqy098",
+      "rule": false
+     },
+     {
+      "code": "pqy099",
+      "content": "# Brief pqy099\n\n- Topic: industrial output\n- Basis: exchange notice\n- Note pqy099: summarised under 16 headings.\n",
+      "doc_path": "yorum/brif/pqy099.md",
+      "i": 99,
+      "kind": "brif",
+      "lang": "en",
+      "reason": "p2q brif pqy099",
+      "rule": false
+     }
+    ],
+    "queries": [
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk024.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk024.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk024.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q01",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk024",
+      "targets": [
+       "toplayici/toplayici-notu/pqk024.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk026.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk026.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk026.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q02",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk026",
+      "targets": [
+       "toplayici/toplayici-notu/pqk026.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk032.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk032.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk032.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q03",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK032",
+      "targets": [
+       "toplayici/toplayici-notu/pqk032.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q04",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk047",
+      "targets": [
+       "toplayici/resmi-ozet/pqk047.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk035.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk035.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk035.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk035.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q05",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk035",
+      "targets": [
+       "toplayici/resmi-ozet/pqk035.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q06",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK034",
+      "targets": [
+       "toplayici/toplayici-notu/pqk034.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk033.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk033.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk033.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk033.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q07",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk033",
+      "targets": [
+       "toplayici/resmi-ozet/pqk033.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q08",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk043",
+      "targets": [
+       "toplayici/resmi-ozet/pqk043.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk015.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk015.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk015.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk015.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q09",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK015",
+      "targets": [
+       "toplayici/resmi-ozet/pqk015.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk044.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk044.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk044.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk044.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q10",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk044",
+      "targets": [
+       "toplayici/toplayici-notu/pqk044.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk029.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk029.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk029.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk029.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q11",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk029",
+      "targets": [
+       "toplayici/resmi-ozet/pqk029.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk017.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk017.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk017.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk017.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q12",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK017",
+      "targets": [
+       "toplayici/resmi-ozet/pqk017.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk001.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk001.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk001.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk001.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q13",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk001",
+      "targets": [
+       "toplayici/resmi-ozet/pqk001.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk042.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk042.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk042.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk042.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q14",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk042",
+      "targets": [
+       "toplayici/toplayici-notu/pqk042.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk038.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk038.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk038.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk038.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q15",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQK038",
+      "targets": [
+       "toplayici/toplayici-notu/pqk038.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk007.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk007.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk007.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk007.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q16",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqk007",
+      "targets": [
+       "toplayici/resmi-ozet/pqk007.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q17",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy050",
+      "targets": [
+       "yorum/llm-yorumu/pqy050.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy059.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy059.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy059.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q18",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY059",
+      "targets": [
+       "yorum/brif/pqy059.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy066.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/llm-yorumu/pqy066.md"
+        ],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy066.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q19",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy066",
+      "targets": [
+       "yorum/llm-yorumu/pqy066.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy073.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy073.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy073.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q20",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy073",
+      "targets": [
+       "yorum/brif/pqy073.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy077.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy077.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy077.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q21",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY077",
+      "targets": [
+       "yorum/brif/pqy077.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy080.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/llm-yorumu/pqy080.md"
+        ],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy080.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q22",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy080",
+      "targets": [
+       "yorum/llm-yorumu/pqy080.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy083.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy083.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy083.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q23",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy083",
+      "targets": [
+       "yorum/brif/pqy083.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy087.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/brif/pqy087.md"
+        ],
+        "include_proposal": [
+         "yorum/brif/pqy087.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q24",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY087",
+      "targets": [
+       "yorum/brif/pqy087.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy058.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy058.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q25",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy058",
+      "targets": [
+       "yorum/llm-yorumu/pqy058.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy094.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy094.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q26",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy094",
+      "targets": [
+       "yorum/llm-yorumu/pqy094.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy076.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy076.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q27",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY076",
+      "targets": [
+       "yorum/llm-yorumu/pqy076.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy091.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy091.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q28",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy091",
+      "targets": [
+       "yorum/brif/pqy091.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy086.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy086.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q29",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy086",
+      "targets": [
+       "yorum/llm-yorumu/pqy086.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy067.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy067.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q30",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQY067",
+      "targets": [
+       "yorum/brif/pqy067.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy097.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy097.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q31",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy097",
+      "targets": [
+       "yorum/brif/pqy097.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy055.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy055.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q32",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqy055",
+      "targets": [
+       "yorum/brif/pqy055.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd000.md"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd000.md"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q33",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQD000",
+      "targets": [
+       "ajan-dogrudan/pqd000.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd001.md"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd001.md"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q34",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqd001",
+      "targets": [
+       "ajan-dogrudan/pqd001.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd002.md"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd002.md"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q35",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqd002",
+      "targets": [
+       "ajan-dogrudan/pqd002.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd003.md"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "ajan-dogrudan/pqd003.md"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q36",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "PQD003",
+      "targets": [
+       "ajan-dogrudan/pqd003.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "b2:cb983bea3ee95a222464742df93c46ad"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "b2:cb983bea3ee95a222464742df93c46ad"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q37",
+      "lang": "tr",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqd014",
+      "targets": [
+       "b2:cb983bea3ee95a222464742df93c46ad"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "b2:834450f31fd6997a3086ec32e53b0126"
+        ],
+        "layer": "unverified"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "b2:834450f31fd6997a3086ec32e53b0126"
+        ],
+        "layer": "unverified"
+       }
+      },
+      "id": "q38",
+      "lang": "en",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqd015",
+      "targets": [
+       "b2:834450f31fd6997a3086ec32e53b0126"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk047.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q39",
+      "lang": "tr",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqk047 özet faiz kararı",
+      "targets": [
+       "toplayici/resmi-ozet/pqk047.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "include_proposal": [
+         "toplayici/toplayici-notu/pqk034.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q40",
+      "lang": "en",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqk034 summary of the rate decision",
+      "targets": [
+       "toplayici/toplayici-notu/pqk034.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy050.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q41",
+      "lang": "mix",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqy050 resmi kaynak official summary",
+      "targets": [
+       "yorum/llm-yorumu/pqy050.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy094.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/llm-yorumu/pqy094.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q42",
+      "lang": "tr",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqy094 yorum enflasyon",
+      "targets": [
+       "yorum/llm-yorumu/pqy094.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy091.md"
+        ],
+        "layer": "proposal"
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [
+         "yorum/brif/pqy091.md"
+        ],
+        "layer": "proposal"
+       }
+      },
+      "id": "q43",
+      "lang": "en",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqy091 commentary on the bond yield",
+      "targets": [
+       "yorum/brif/pqy091.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "layer": "canonical"
+       },
+       "son": {
+        "default": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "include_proposal": [
+         "toplayici/resmi-ozet/pqk043.md"
+        ],
+        "layer": "canonical"
+       }
+      },
+      "id": "q44",
+      "lang": "mix",
+      "match": "contains",
+      "mode": "hybrid",
+      "query": "pqk043 brif brief kur",
+      "targets": [
+       "toplayici/resmi-ozet/pqk043.md"
+      ]
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       }
+      },
+      "id": "q45",
+      "lang": "mix",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "zqxv kelebekyok",
+      "targets": []
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       }
+      },
+      "id": "q46",
+      "lang": "mix",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "wqyk notfoundword",
+      "targets": []
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       }
+      },
+      "id": "q47",
+      "lang": "mix",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "pqz999",
+      "targets": []
+     },
+     {
+      "expect": {
+       "ajan-yazdi": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       },
+       "son": {
+        "default": [],
+        "include_proposal": [],
+        "layer": null
+       }
+      },
+      "id": "q48",
+      "lang": "mix",
+      "match": "exact",
+      "mode": "lexical",
+      "query": "qqjx ışıkyok",
+      "targets": []
+     }
+    ]
+   }
+  },
+  "steps": [
+   {
+    "action": "copy",
+    "expect": "fresh copy of the snapshot; corpus_summary equals the registered one",
+    "id": "H01"
+   },
+   {
+    "action": "ingest_dir",
+    "expect": "`rootmark ingest-dir <vault> <vault>` exit 0; ingested files = corpus files",
+    "id": "H02"
+   },
+   {
+    "action": "recipe",
+    "expect": "the corpus's recipe written to .rootmark/policy.toml; `rootmark policy lint` exit 0, 1 rule",
+    "id": "H03"
+   },
+   {
+    "action": "index_build",
+    "expect": "`rootmark index build` exit 0; `rootmark index status` names no unindexed document",
+    "id": "H04"
+   },
+   {
+    "action": "serve",
+    "expect": "`rootmark serve --mcp stdio --http 127.0.0.1:0 --watch`; HTTP status: attestation.unattested unverified, human_id pilot, index ok",
+    "id": "H05"
+   },
+   {
+    "action": "checkpoint",
+    "expect": "HTTP checkpoint `baslangic`",
+    "id": "H06"
+   },
+   {
+    "action": "propose",
+    "expect": "100 MCP propose (client toplayici/1.0): every call ok; blame: rule docs every block canonical, yorum docs every block proposal",
+    "id": "H07"
+   },
+   {
+    "action": "searchable",
+    "expect": "after each rule propose a lexical search of its code finds it canonical (latency recorded)",
+    "id": "H08"
+   },
+   {
+    "action": "direct",
+    "expect": "20 direct file writes (14 new, 6 appends); after the watcher: every new block unverified, canonical from these writes 0",
+    "id": "H09"
+   },
+   {
+    "action": "checkpoint",
+    "expect": "HTTP checkpoint `ajan-yazdi`; the phase's query results recorded",
+    "id": "H10"
+   },
+   {
+    "action": "queries",
+    "expect": "phase ajan-yazdi: every query's expected sets; default hits never proposal/unverified",
+    "id": "H11"
+   },
+   {
+    "action": "promote",
+    "expect": "HTTP promote of every lineage of the 12 promote_docs: all promoted",
+    "id": "H12"
+   },
+   {
+    "action": "demote",
+    "expect": "HTTP demote of every lineage of the 3 demote_docs: all demoted",
+    "id": "H13"
+   },
+   {
+    "action": "checkpoint",
+    "expect": "HTTP checkpoint `insan-onayladi`",
+    "id": "H14"
+   },
+   {
+    "action": "queries",
+    "expect": "phase son: every query's expected sets; default hits never proposal/unverified",
+    "id": "H15"
+   },
+   {
+    "action": "blame",
+    "expect": "blame of every synthetic document: layers as expected at phase son",
+    "id": "H16"
+   },
+   {
+    "action": "trace",
+    "expect": "5 brief searches over MCP; `trace` lists each, returned blocks = the search's hits",
+    "id": "H17"
+   },
+   {
+    "action": "checkpoint_return",
+    "expect": "search and blame `at: ajan-yazdi` now = what was recorded at H10/H11",
+    "id": "H18"
+   },
+   {
+    "action": "status",
+    "expect": "status over HTTP and over MCP: same index, policy, attestation, last_checkpoint",
+    "id": "H19"
+   },
+   {
+    "action": "prune_dry_run",
+    "expect": "HTTP prune {dry_run: true}: ok; events_hash and every .rootmark file unchanged",
+    "id": "H20"
+   },
+   {
+    "action": "sigterm",
+    "expect": "SIGTERM: serve exits 0 within 60 s; reopened serve: status ok, events_hash and a query result unchanged",
+    "id": "H21"
+   },
+   {
+    "action": "final",
+    "expect": "serve stopped, `rootmark index compact`; events_hash, index files, query results recorded (blake2b)",
+    "id": "H22"
+   },
+   {
+    "action": "observe",
+    "expect": "observe.py read-only (before/after blake2b equal); its counts = the driver's",
+    "id": "H23"
+   }
+  ],
+  "trace_queries": [
+   {
+    "id": "t1",
+    "lang": "tr",
+    "query": "brif faiz kararı"
+   },
+   {
+    "id": "t2",
+    "lang": "en",
+    "query": "brief on the inflation print"
+   },
+   {
+    "id": "t3",
+    "lang": "tr",
+    "query": "resmi kaynak özeti tahvil getirisi"
+   },
+   {
+    "id": "t4",
+    "lang": "en",
+    "query": "official source summary of the current account"
+   },
+   {
+    "id": "t5",
+    "lang": "mix",
+    "query": "toplayıcı notu kredi büyümesi credit growth"
+   }
+  ]
+ },
+ "measures": {
+  "determinism": [
+   "events_hash",
+   "index files blake2b (vectors, manifest)",
+   "query results blake2b",
+   "rankings (doc ids and order)",
+   "lexical scores: named last-ULP differences only"
+  ],
+  "disk": [
+   ".rootmark/ bytes at the end"
+  ],
+  "index": [
+   "index build wall time (s)",
+   "chunks",
+   "chunks/s",
+   "index bytes"
+  ],
+  "ingest": [
+   "ingest-dir wall time (s)",
+   "events",
+   "documents"
+  ],
+  "install": [
+   "install.sh wall time (s)",
+   "binary blake2b = archive's",
+   "conformance passed/total"
+  ],
+  "memory": [
+   "peak RSS of rootmark serve (KiB; ps sampling every 0.2 s)"
+  ],
+  "propose": [
+   "MCP propose latency p50/p95 (ms)",
+   "propose → searchable latency p50/p95 (ms)"
+  ],
+  "search": [
+   "latency p50/p95 over the registered queries (ms, HTTP, client side)"
+  ],
+  "watcher": [
+   "direct write → ingested (blame shows it) p50/p95 (ms)",
+   "Obsidian save → layer recorded p50/p95 (ms)"
+  ]
+ },
+ "obsidian": {
+  "agent_client": "yardimci/1.0",
+  "edits": [
+   {
+    "code": "pqo001",
+    "content": "# Pilot notu pqo001\n\nBu not pilotta Obsidian'da yazıldı: tahvil getirisi.\n\nPilot pqo001: 31 satırlık bir deneme.\n",
+    "doc_path": "pilot/yeni-1.md",
+    "e": 1,
+    "op": "create"
+   },
+   {
+    "code": "pqo002",
+    "content": "# Pilot notu pqo002\n\nBu not pilotta Obsidian'da yazıldı: sanayi üretimi.\n\nPilot pqo002: 32 satırlık bir deneme.\n",
+    "doc_path": "pilot/yeni-2.md",
+    "e": 2,
+    "op": "create"
+   },
+   {
+    "code": "pqo003",
+    "content": "# Pilot notu pqo003\n\nBu not pilotta Obsidian'da yazıldı: bilanço dönemi.\n\nPilot pqo003: 21 satırlık bir deneme.\n",
+    "doc_path": "pilot/yeni-3.md",
+    "e": 3,
+    "op": "create"
+   },
+   {
+    "code": "pqo004",
+    "content": "# Pilot notu pqo004\n\nBu not pilotta Obsidian'da yazıldı: tahvil getirisi.\n\nPilot pqo004: 19 satırlık bir deneme.\n",
+    "doc_path": "pilot/yeni-4.md",
+    "e": 4,
+    "op": "create"
+   },
+   {
+    "code": "pqo005",
+    "content": "# Pilot notu pqo005\n\nBu not pilotta Obsidian'da yazıldı: kredi büyümesi.\n\nPilot pqo005: 32 satırlık bir deneme.\n",
+    "doc_path": "pilot/yeni-5.md",
+    "e": 5,
+    "op": "create"
+   },
+   {
+    "code": "pqo006",
+    "content": "# Pilot notu pqo006\n\nBu not pilotta Obsidian'da yazıldı: sanayi üretimi.\n\nPilot pqo006: 11 satırlık bir deneme.\n",
+    "doc_path": "pilot/yeni-6.md",
+    "e": 6,
+    "op": "create"
+   },
+   {
+    "code": "pqo007",
+    "content": "# Pilot notu pqo007\n\nBu not pilotta Obsidian'da yazıldı: sanayi üretimi.\n\nPilot pqo007: 13 satırlık bir deneme.\n",
+    "doc_path": "pilot/yeni-7.md",
+    "e": 7,
+    "op": "create"
+   },
+   {
+    "code": "pqo008",
+    "content": "# Pilot notu pqo008\n\nBu not pilotta Obsidian'da yazıldı: enflasyon verisi.\n\nPilot pqo008: 30 satırlık bir deneme.\n",
+    "doc_path": "pilot/yeni-8.md",
+    "e": 8,
+    "op": "create"
+   },
+   {
+    "code": "pqo009",
+    "content": "\n\nPilot ekleme pqo009: Obsidian'da kur hareketi üzerine 39 sözcük eklendi.\n",
+    "doc_path_b2": "d6b4a7971cf912f717976e39ee72a968",
+    "e": 9,
+    "op": "append"
+   },
+   {
+    "code": "pqo010",
+    "content": "\n\nPilot ekleme pqo010: Obsidian'da enflasyon verisi üzerine 35 sözcük eklendi.\n",
+    "doc_path_b2": "349d9c4297802cb9b732cfb856a1744b",
+    "e": 10,
+    "op": "append"
+   },
+   {
+    "code": "pqo011",
+    "content": "\n\nPilot ekleme pqo011: Obsidian'da cari açık üzerine 21 sözcük eklendi.\n",
+    "doc_path_b2": "d612c4d548bba2a9f404e8a7b3e3d964",
+    "e": 11,
+    "op": "append"
+   },
+   {
+    "code": "pqo012",
+    "content": "\n\nPilot ekleme pqo012: Obsidian'da enflasyon verisi üzerine 4 sözcük eklendi.\n",
+    "doc_path_b2": "232b1562dc912cfa377d91b3cc3f4d2d",
+    "e": 12,
+    "op": "append"
+   },
+   {
+    "code": "pqo013",
+    "content": "\n\nPilot ekleme pqo013: Obsidian'da bilanço dönemi üzerine 26 sözcük eklendi.\n",
+    "doc_path_b2": "40f187778d5c788fe606707777241afa",
+    "e": 13,
+    "op": "append"
+   },
+   {
+    "code": "pqo014",
+    "content": "\n\nPilot ekleme pqo014: Obsidian'da bilanço dönemi üzerine 34 sözcük eklendi.\n",
+    "doc_path_b2": "7d387c30a130258bb149530511728531",
+    "e": 14,
+    "op": "append"
+   },
+   {
+    "code": "pqo015",
+    "content": "\n\nPilot ekleme pqo015: Obsidian'da enflasyon verisi üzerine 29 sözcük eklendi.\n",
+    "doc_path_b2": "16e22c8b943712a3d87e37168e37d844",
+    "e": 15,
+    "op": "append"
+   },
+   {
+    "code": "pqo016",
+    "content": "\n\nPilot ekleme pqo016: Obsidian'da sanayi üretimi üzerine 29 sözcük eklendi.\n",
+    "doc_path_b2": "389dcb231ed731216f19bb4b68111d3c",
+    "e": 16,
+    "op": "append"
+   },
+   {
+    "code": "pqo017",
+    "content": "# Pilot notu pqo017\n\nBu not pilotta Obsidian'da yazıldı ve sonra değiştirildi: tahvil getirisi.\n\nPilot pqo017: 7 satırlık ikinci sürüm.\n",
+    "doc_path": "pilot/yeni-1.md",
+    "e": 17,
+    "op": "replace"
+   },
+   {
+    "code": "pqo018",
+    "content": "# Pilot notu pqo018\n\nBu not pilotta Obsidian'da yazıldı ve sonra değiştirildi: faiz kararı.\n\nPilot pqo018: 3 satırlık ikinci sürüm.\n",
+    "doc_path": "pilot/yeni-2.md",
+    "e": 18,
+    "op": "replace"
+   },
+   {
+    "doc_path": "pilot/yeni-7.md",
+    "e": 19,
+    "op": "delete"
+   },
+   {
+    "doc_path": "pilot/yeni-8.md",
+    "e": 20,
+    "op": "delete"
+   },
+   {
+    "doc_path_b2": "9dabd1ec406919a8482a724cac7457f0",
+    "e": 21,
+    "op": "delete"
+   },
+   {
+    "doc_path_b2": "1479e79afbb7ad1de638b9c59c8e6191",
+    "e": 22,
+    "op": "delete"
+   }
+  ],
+  "expect": {
+   "attested_edit_layer": "canonical",
+   "md_written_by_rootmark": 0,
+   "panics": 0,
+   "proposal_final_layers": {
+    "ajan/oneri-1.md": "proposal",
+    "ajan/oneri-2.md": "proposal",
+    "ajan/oneri-3.md": "canonical",
+    "ajan/oneri-4.md": "canonical"
+   }
+  },
+  "layer_ops": [
+   {
+    "doc_path": "ajan/oneri-1.md",
+    "op": "promote"
+   },
+   {
+    "doc_path": "ajan/oneri-2.md",
+    "op": "promote"
+   },
+   {
+    "doc_path": "ajan/oneri-3.md",
+    "op": "promote"
+   },
+   {
+    "doc_path": "ajan/oneri-4.md",
+    "op": "promote"
+   },
+   {
+    "doc_path": "ajan/oneri-1.md",
+    "op": "demote"
+   },
+   {
+    "doc_path": "ajan/oneri-2.md",
+    "op": "demote"
+   }
+  ],
+  "proposals": [
+   {
+    "code": "pqo019",
+    "content": "# Ajan önerisi pqo019\n\nAjan tahvil getirisi için bir öneri yazdı (istatistik kurumu).\n\nÖneri pqo019: 3 madde.\n",
+    "doc_path": "ajan/oneri-1.md",
+    "reason": "p2q obsidian pqo019"
+   },
+   {
+    "code": "pqo020",
+    "content": "# Ajan önerisi pqo020\n\nAjan tahvil getirisi için bir öneri yazdı (bakanlık açıklaması).\n\nÖneri pqo020: 37 madde.\n",
+    "doc_path": "ajan/oneri-2.md",
+    "reason": "p2q obsidian pqo020"
+   },
+   {
+    "code": "pqo021",
+    "content": "# Ajan önerisi pqo021\n\nAjan sanayi üretimi için bir öneri yazdı (istatistik kurumu).\n\nÖneri pqo021: 3 madde.\n",
+    "doc_path": "ajan/oneri-3.md",
+    "reason": "p2q obsidian pqo021"
+   },
+   {
+    "code": "pqo022",
+    "content": "# Ajan önerisi pqo022\n\nAjan tahvil getirisi için bir öneri yazdı (merkez bankası bülteni).\n\nÖneri pqo022: 4 madde.\n",
+    "doc_path": "ajan/oneri-4.md",
+    "reason": "p2q obsidian pqo022"
+   }
+  ],
+  "queries": [
+   {
+    "expect_default": [],
+    "id": "o01",
+    "mode": "lexical",
+    "query": "pqo001"
+   },
+   {
+    "expect_default": [],
+    "id": "o02",
+    "mode": "lexical",
+    "query": "pqo002"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-3.md"
+    ],
+    "id": "o03",
+    "mode": "lexical",
+    "query": "pqo003"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-4.md"
+    ],
+    "id": "o04",
+    "mode": "lexical",
+    "query": "pqo004"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-5.md"
+    ],
+    "id": "o05",
+    "mode": "lexical",
+    "query": "pqo005"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-6.md"
+    ],
+    "id": "o06",
+    "mode": "lexical",
+    "query": "pqo006"
+   },
+   {
+    "expect_default": [],
+    "id": "o07",
+    "mode": "lexical",
+    "query": "pqo007"
+   },
+   {
+    "expect_default": [],
+    "id": "o08",
+    "mode": "lexical",
+    "query": "pqo008"
+   },
+   {
+    "expect_default": [
+     "b2:d6b4a7971cf912f717976e39ee72a968"
+    ],
+    "id": "o09",
+    "mode": "lexical",
+    "query": "pqo009"
+   },
+   {
+    "expect_default": [
+     "b2:349d9c4297802cb9b732cfb856a1744b"
+    ],
+    "id": "o10",
+    "mode": "lexical",
+    "query": "pqo010"
+   },
+   {
+    "expect_default": [
+     "b2:d612c4d548bba2a9f404e8a7b3e3d964"
+    ],
+    "id": "o11",
+    "mode": "lexical",
+    "query": "pqo011"
+   },
+   {
+    "expect_default": [
+     "b2:232b1562dc912cfa377d91b3cc3f4d2d"
+    ],
+    "id": "o12",
+    "mode": "lexical",
+    "query": "pqo012"
+   },
+   {
+    "expect_default": [
+     "b2:40f187778d5c788fe606707777241afa"
+    ],
+    "id": "o13",
+    "mode": "lexical",
+    "query": "pqo013"
+   },
+   {
+    "expect_default": [
+     "b2:7d387c30a130258bb149530511728531"
+    ],
+    "id": "o14",
+    "mode": "lexical",
+    "query": "pqo014"
+   },
+   {
+    "expect_default": [
+     "b2:16e22c8b943712a3d87e37168e37d844"
+    ],
+    "id": "o15",
+    "mode": "lexical",
+    "query": "pqo015"
+   },
+   {
+    "expect_default": [
+     "b2:389dcb231ed731216f19bb4b68111d3c"
+    ],
+    "id": "o16",
+    "mode": "lexical",
+    "query": "pqo016"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-1.md"
+    ],
+    "id": "o17",
+    "mode": "lexical",
+    "query": "pqo017"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-2.md"
+    ],
+    "id": "o18",
+    "mode": "lexical",
+    "query": "pqo018"
+   },
+   {
+    "expect_default": [],
+    "id": "o19",
+    "mode": "lexical",
+    "query": "pqo019"
+   },
+   {
+    "expect_default": [],
+    "id": "o20",
+    "mode": "lexical",
+    "query": "pqo020"
+   },
+   {
+    "expect_default": [
+     "ajan/oneri-3.md"
+    ],
+    "id": "o21",
+    "mode": "lexical",
+    "query": "pqo021"
+   },
+   {
+    "expect_default": [
+     "ajan/oneri-4.md"
+    ],
+    "id": "o22",
+    "mode": "lexical",
+    "query": "pqo022"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-3.md"
+    ],
+    "id": "o23",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo003 pilot notu"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-4.md"
+    ],
+    "id": "o24",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo004 pilot note in Obsidian"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-5.md"
+    ],
+    "id": "o25",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo005 deneme ekleme added"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-6.md"
+    ],
+    "id": "o26",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo006 pilot notu"
+   },
+   {
+    "expect_default": [
+     "b2:d6b4a7971cf912f717976e39ee72a968"
+    ],
+    "id": "o27",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo009 pilot note in Obsidian"
+   },
+   {
+    "expect_default": [
+     "b2:349d9c4297802cb9b732cfb856a1744b"
+    ],
+    "id": "o28",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo010 deneme ekleme added"
+   },
+   {
+    "expect_default": [
+     "b2:d612c4d548bba2a9f404e8a7b3e3d964"
+    ],
+    "id": "o29",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo011 pilot notu"
+   },
+   {
+    "expect_default": [
+     "b2:232b1562dc912cfa377d91b3cc3f4d2d"
+    ],
+    "id": "o30",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo012 pilot note in Obsidian"
+   },
+   {
+    "expect_default": [
+     "b2:40f187778d5c788fe606707777241afa"
+    ],
+    "id": "o31",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo013 deneme ekleme added"
+   },
+   {
+    "expect_default": [
+     "b2:7d387c30a130258bb149530511728531"
+    ],
+    "id": "o32",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo014 pilot notu"
+   },
+   {
+    "expect_default": [
+     "b2:16e22c8b943712a3d87e37168e37d844"
+    ],
+    "id": "o33",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo015 pilot note in Obsidian"
+   },
+   {
+    "expect_default": [
+     "b2:389dcb231ed731216f19bb4b68111d3c"
+    ],
+    "id": "o34",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo016 deneme ekleme added"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-1.md"
+    ],
+    "id": "o35",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo017 pilot notu"
+   },
+   {
+    "expect_default": [
+     "pilot/yeni-2.md"
+    ],
+    "id": "o36",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo018 pilot note in Obsidian"
+   },
+   {
+    "expect_default": [
+     "ajan/oneri-3.md"
+    ],
+    "id": "o37",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo021 deneme ekleme added"
+   },
+   {
+    "expect_default": [
+     "ajan/oneri-4.md"
+    ],
+    "id": "o38",
+    "match": "contains",
+    "mode": "hybrid",
+    "query": "pqo022 pilot notu"
+   },
+   {
+    "expect_default": [],
+    "id": "o39",
+    "mode": "lexical",
+    "query": "zqxv kelebekyok"
+   },
+   {
+    "expect_default": [],
+    "id": "o40",
+    "mode": "lexical",
+    "query": "wqyk notfoundword"
+   },
+   {
+    "expect_default": [],
+    "id": "o41",
+    "mode": "lexical",
+    "query": "pqz999"
+   },
+   {
+    "expect_default": [],
+    "id": "o42",
+    "mode": "lexical",
+    "query": "qqjx ışıkyok"
+   }
+  ],
+  "renames": [
+   {
+    "doc_path_b2": "a34c5f8e785699a5f80f242ea7e7302e",
+    "new_name": "pilot-adlandirma-1",
+    "r": 1
+   },
+   {
+    "doc_path_b2": "29d3bd365a8cf39fe46132d5a8552c9f",
+    "new_name": "pilot-adlandirma-2",
+    "r": 2
+   }
+  ]
+ },
+ "obsidian_steps": [
+  {
+   "action": "copy",
+   "expect": "fresh copy of the Obsidian snapshot; summary equals the registered one",
+   "id": "O01"
+  },
+  {
+   "action": "ingest_dir",
+   "expect": "`rootmark ingest-dir` exit 0 (time)",
+   "id": "O02"
+  },
+  {
+   "action": "recipe",
+   "expect": "recipe `obsidian` (http_port 27357, unverified, identity pilot); policy lint exit 0",
+   "id": "O03"
+  },
+  {
+   "action": "serve",
+   "expect": "`rootmark serve --mcp stdio --http 127.0.0.1 --watch --attest-log <outside the vault>`",
+   "id": "O04"
+  },
+  {
+   "action": "plugin",
+   "expect": "Obsidian (own --user-data-dir, CDP); plugin installed from the 0.3.0 zip by GUIDE's manual steps; status bar `rootmark 0.3.0 · human:pilot`",
+   "id": "O05"
+  },
+  {
+   "action": "edits",
+   "expect": "the 22 edits through Obsidian's editor API; each recorded with its blocks' layers after the watcher (expected canonical)",
+   "id": "O06"
+  },
+  {
+   "action": "renames",
+   "expect": "2 renames with link update (Obsidian's fileManager); layers of the renamed note and of the notes whose links changed",
+   "id": "O07"
+  },
+  {
+   "action": "agent_proposals",
+   "expect": "4 MCP proposals by yardimci/1.0 (proposal)",
+   "id": "O08"
+  },
+  {
+   "action": "layer_ops",
+   "expect": "4 promotes and 2 demotes from Obsidian (the plugin's commands); final layers as registered",
+   "id": "O09"
+  },
+  {
+   "action": "queries",
+   "expect": "the registered lexical queries over HTTP: default hits = expect_default, never proposal/unverified",
+   "id": "O10"
+  },
+  {
+   "action": "blame",
+   "expect": "blame of every touched document",
+   "id": "O11"
+  },
+  {
+   "action": "md_bytes",
+   "expect": "every md byte equals what Obsidian (or the copy, or the agent's propose) wrote: rootmark's md writes 0",
+   "id": "O12"
+  },
+  {
+   "action": "stop",
+   "expect": "SIGTERM: serve exits 0; no panic in its stderr; attest log summarised (refusals with reasons)",
+   "id": "O13"
+  },
+  {
+   "action": "observe",
+   "expect": "observe.py read-only; its counts = the driver's",
+   "id": "O14"
+  }
+ ],
+ "recipes": {
+  "default": "[promotion]\npolicy = \"human_only\"\nversion = \"p2q-1\"\n\n[[promotion.rules]]\nid = \"toplayici\"\nactor = \"agent:toplayici\"\npath_prefix = \"toplayici/\"\nto = \"canonical\"\n\n[edit]\npolicy = \"append_only\"\n\n[version_trigger]\nidle_ms = 30000\nmin_sim_change = 0.2\n\n[journal]\nretention_hours = 168\n\n[server]\ntoken_rotate_days = 30\nmax_propose_bytes = 1048576\n\n[index]\ncompact_every_s = 300\n\n[identity]\nhuman_id = \"pilot\"\n\n[attestation]\nunattested = \"unverified\"\n",
+  "obsidian": "[promotion]\npolicy = \"human_only\"\nversion = \"p2q-1\"\n\n[[promotion.rules]]\nid = \"toplayici\"\nactor = \"agent:toplayici\"\npath_prefix = \"toplayici/\"\nto = \"canonical\"\n\n[edit]\npolicy = \"append_only\"\n\n[version_trigger]\nidle_ms = 30000\nmin_sim_change = 0.2\n\n[journal]\nretention_hours = 168\n\n[server]\ntoken_rotate_days = 30\nmax_propose_bytes = 1048576\nhttp_port = 27357\n\n[index]\ncompact_every_s = 300\ntokenizer = \"uni_fold_tr\"\nembedder = \"multilingual-minilm-l12-v2\"\n\n[identity]\nhuman_id = \"pilot\"\n\n[attestation]\nunattested = \"unverified\"\n",
+  "tr": "[promotion]\npolicy = \"human_only\"\nversion = \"p2q-1\"\n\n[[promotion.rules]]\nid = \"toplayici\"\nactor = \"agent:toplayici\"\npath_prefix = \"toplayici/\"\nto = \"canonical\"\n\n[edit]\npolicy = \"append_only\"\n\n[version_trigger]\nidle_ms = 30000\nmin_sim_change = 0.2\n\n[journal]\nretention_hours = 168\n\n[server]\ntoken_rotate_days = 30\nmax_propose_bytes = 1048576\n\n[index]\ncompact_every_s = 300\ntokenizer = \"uni_fold_tr\"\nembedder = \"multilingual-minilm-l12-v2\"\n\n[identity]\nhuman_id = \"pilot\"\n\n[attestation]\nunattested = \"unverified\"\n"
+ },
+ "registered": "P2-Q/Q0 (before Q2's first measurement; GOAL Q-1)",
+ "seed": 20261103,
+ "version": "p2q-scenario/1"
+}
