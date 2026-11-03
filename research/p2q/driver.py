@@ -25,6 +25,7 @@ import json
 import os
 import platform
 import re
+import shutil
 import signal
 import subprocess
 import sys
@@ -49,10 +50,16 @@ def cpu_model() -> str:
         m = re.search(r"^model name\s*:\s*(.+)$", ci.read_text(), re.MULTILINE)
         if m:
             return m.group(1).strip()
-    r = subprocess.run(
-        ["sysctl", "-n", "machdep.cpu.brand_string"], capture_output=True, text=True, check=False
-    )
-    return r.stdout.strip() or platform.processor()
+    if shutil.which("sysctl"):
+        r = subprocess.run(
+            ["sysctl", "-n", "machdep.cpu.brand_string"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if r.stdout.strip():
+            return r.stdout.strip()
+    return platform.processor() or platform.machine() or "unknown"
 
 
 def pct(xs: list[float], p: float) -> float | None:
