@@ -40,7 +40,7 @@ Her tur `docs/rounds/<id>/` altında dört dosya ile tanımlanır:
 - Eşikler ve çıkış kriterleri tur başladıktan sonra değişmez.
 
 ## 5. Bağımsız doğrulama
-- Ayrı oturum, temiz klon, ana çalışma dizinine okuma dahil erişim yok.
+- Ayrı oturum, temiz klon, ana çalışma dizinine okuma dahil erişim yok. Temiz klonda önce `make setup` ve `make models` (çok dilli testler için `make models-multilingual`, `clients/obsidian` için `npm ci`); yoksa `make lint`'in `check-client-types` adımı ve `make conformance` ortam yüzünden kalır (K-P2V2.2, P2-V.2 doğrulaması Ö3).
 - Çift koşturma, kasıtlı bozma testleri, izlenebilirlik, karar kuralının bağımsız türetimi.
 - **Tam çifti CI'dan alır (P2-V, K-P2V.1).** Doğrulayıcı kademe 2'yi kendi tetiklemesiyle başlatır (`gh workflow run verify.yml --ref main -f sha=<doğrulanan commit>`), iki zincirin yapıtını (`tier2-A`, `tier2-B`: bütün RUN dizini, günlük, `host.json`, sınıflandırıcı çıktısı) indirir ve D sınıfının karşılaştırmasını dondurulmuş karşılaştırıcıya dayanmadan **kendi betiğiyle** yeniden yapar; karşılaştırma dışı listenin envanterle birebir aynı olduğunu ve desen içermediğini denetler. `make verify FAST=1`'i ve `make verify-mac`'i yerelde bir kez koşar; aynı tam çifti yerelde yeniden koşmaz.
 - Çıktı: `reports/rounds/<id>/VERIFICATION.md`; hüküm "güvenilir / şu koşullarla / değil" + en fazla 3 öneri. Geliştirme turlarında VERIFY "dar kapsam"dır: yalnız kararı belirleyen kriterler, 2–3 saat; hipotez turlarında tam kapsam (K-P2.3). Öneriler bir sonraki turun `GOAL.md`'sinde ele alınır ya da `DECISIONS.md`'de reddedilme gerekçesiyle kapatılır.
