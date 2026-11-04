@@ -1,0 +1,35 @@
+{
+ "cpu": "AMD EPYC 9V74 80-Core Processor",
+ "direct_write_to_ingested_ms": {
+  "n": 19,
+  "p50": 217.428,
+  "p95": 225.83
+ },
+ "documents": 399,
+ "embedder_id": "minilm-l6-v2/e73168f9+fixed1",
+ "index_build_s": 458.99,
+ "index_chunks_per_s": 13.209,
+ "index_embedded": 6063,
+ "index_records": 6063,
+ "ingest_s": 2.489,
+ "platform": "Linux x86_64",
+ "propose_ms": {
+  "n": 100,
+  "p50": 300.073,
+  "p95": 324.197
+ },
+ "propose_to_searchable_ms": {
+  "n": 50,
+  "p50": 477.959,
+  "p95": 547.111
+ },
+ "python": "3.14.4",
+ "rootmark_dir_bytes": 47624899,
+ "search_ms": {
+  "n": 192,
+  "p50": 343.741,
+  "p95": 358.634
+ },
+ "serve_peak_rss_kib": 830200,
+ "serve_start_s": 0.302
+}
