@@ -1,0 +1,33 @@
+{
+ "content_pieces": {
+  "corpora": [
+   {
+    "checked": 110,
+    "documents": 111,
+    "generic": 0,
+    "pieces": 110
+   },
+   {
+    "checked": 640,
+    "documents": 658,
+    "generic": 0,
+    "pieces": 640
+   }
+  ],
+  "found": 0,
+  "pass": true,
+  "piece_bytes": 32,
+  "seed": 20261103,
+  "targets": {
+   "git:HEAD": 0,
+   "paths": 0
+  }
+ },
+ "note": "targets: the repository at HEAD (git grep; FINAL.md is the PR body), reports/rounds/P2-Q (CI artefacts are downloaded there), docs/",
+ "portable": {
+  "files": 82,
+  "findings": 0,
+  "mode": "pair + all records",
+  "pass": true
+ }
+}
