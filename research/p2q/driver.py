@@ -515,6 +515,9 @@ class Driver:
             unverified=unver,
         )
         self.driver_counts["direct_blocks"] = len(new_blocks)
+        # the writes the watcher took in (a write it missed is H09's failure,
+        # not an observation; CI 41801236926, PQ-22)
+        self.driver_counts["direct_ingested"] = len(self.h["direct"]) - len(wfail)
         # H10, H11
         c = srv.http("checkpoint", {"name": cps[1]})
         lat = []
@@ -800,8 +803,8 @@ class Driver:
                 obs.get("traces", {}).get("by_consumer"),
             ),
             (
-                "unverified observations (direct writes)",
-                len(self.h["direct"]),
+                "unverified observations (direct writes the watcher took in)",
+                dc["direct_ingested"],
                 obs.get("attest", {}).get("observations", {}).get("unverified", 0),
             ),
         ]
