@@ -1,0 +1,6 @@
+{
+ "note": "wall times of the round's runs, from the runner scripts' own lines (docs/rounds/P2-Q/progress/Q2.md, Q3.md); docker = QEMU-emulated linux/amd64 (Rosetta off): information",
+ "mac": {"dnotes/run1": 511, "dnotes/run2": 513, "qorbit/run1": 222, "qorbit/run2": 221, "install_guide_blocks": 32},
+ "docker": {"dnotes": 32772, "qorbit": 13879},
+ "unit": "s"
+}

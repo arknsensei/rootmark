@@ -23,3 +23,14 @@ Q2'de: yayımlanmış `v0.3.0` ile bütün bloklar (`--mode release`), düzeltil
 - `gh attestation verify` TTY olmayan çıktıda hiçbir şey yazmaz; çıkış 0 doğrulamadır (koşucu ERR tuzağıyla denetler).
 - `fetch_model.sh` kurulu kullanıcıya "run `make models` for the blake3 manifest check" der — kurulumda olmayan bir depo komutu (PQ-17, UX).
 - Sahneler için kurulum ayrı bir önekte kılavuzun kurulum bloklarıyla (`--only 1.1#1,1.1#2,1.2#1`; 3/3 `ok`, 32 s), çünkü tam koşu §1.4'le kaldırarak biter.
+
+## Kılavuz ↔ sahneler (gözden geçirici N-?: eşleme)
+| Sahne adımı | Kılavuz bölümü | Nasıl |
+|---|---|---|
+| kurulum (Mac, Docker, CI) | §1.1, §1.2, §1.3 | blokların kendisi (`guide_run --only`) |
+| H02 `ingest-dir`, H03 tarif + `policy lint`, H04 `index build` | §2.1, §2.2, §2.3 | aynı komutlar; tarif `scenario.json`'un ön-kayıtlı tarifi (§2.2'nin biçimi) |
+| H05 `serve --mcp stdio --http … --watch` | §3, §4.2 | aynı bayraklar; port `127.0.0.1:0` (sahnenin kendi portu) ve `--attest-log` (§7) |
+| ajan (MCP `propose`), insan (HTTP `promote`/`demote`/`search`/`blame`/`trace`/`checkpoint`/`prune`) | §4, §6 | aynı araçlar ve gövdeler (sürücünün HTTP istemcisi, §3'ün `rmk`'si yerine) |
+| O05 eklenti | §5.1 | kabuk bloğu yazıldığı gibi; Obsidian içindeki iki tıklama Obsidian API'siyle (PQ-23) |
+| `observe.py` | §7 | aynı betik ve bayraklar |
+BRAT yolu (§5.3) koşulmadı (PQ-23).
