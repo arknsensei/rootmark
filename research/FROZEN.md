@@ -458,6 +458,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `research/p2v2/reread.py` | `P2-V.2/Y2:` | Y2/Y3'ün yeniden okuma sürücüsü (verify.yml'nin karşılaştırma komutları) |
 | `research/p2v2/before_after.py` | `P2-V.2/Y2:` | önce/sonra bayt karşılaştırıcısı (V2-5) |
 | `.github/workflows/verify.yml` | `P2-V.2/Y5:` | yeniden dondurma P2-V.2/F6: başlık yorumundaki envanter yolu (yorum dışı satırlar aynı) |
+| `scripts/release_check.sh` | `P2-Q.1/R4:` | yeniden dondurma P2-Q.1/F1: R16 `### Hüküm` başlıklı raporun hükmünü de okur (P2-Q doğrulaması) |
 <!-- /frozen-table -->
 
 ## Notlar
