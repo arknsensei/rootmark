@@ -13,6 +13,166 @@
  },
  "note": "no thresholds (GOAL P2-Q); docker = emulated linux/amd64 on the Mac: information",
  "runs": {
+  "ci/41801236926/dnotes": {
+   "cpu": "AMD EPYC 9V74 80-Core Processor",
+   "direct_write_to_ingested_ms": {
+    "n": 19,
+    "p50": 242.985,
+    "p95": 413.721
+   },
+   "env": "ci",
+   "index_build_s": 465.203,
+   "index_chunks_per_s": 13.033,
+   "index_embedded": 6063,
+   "ingest_s": 2.491,
+   "platform": "Linux x86_64",
+   "propose_ms": {
+    "n": 100,
+    "p50": 307.071,
+    "p95": 475.135
+   },
+   "propose_to_searchable_ms": {
+    "n": 50,
+    "p50": 515.016,
+    "p95": 663.993
+   },
+   "record": "reports/rounds/P2-Q/ci/41801236926/dnotes/numbers.json",
+   "rootmark_dir_bytes": 47624899,
+   "search_ms": {
+    "n": 192,
+    "p50": 359.145,
+    "p95": 388.799
+   },
+   "serve_peak_rss_kib": 840576
+  },
+  "ci/41803469014/dnotes": {
+   "cpu": "AMD EPYC 7763 64-Core Processor",
+   "direct_write_to_ingested_ms": {
+    "n": 19,
+    "p50": 241.555,
+    "p95": 247.454
+   },
+   "env": "ci",
+   "index_build_s": 554.036,
+   "index_chunks_per_s": 10.943,
+   "index_embedded": 6063,
+   "ingest_s": 2.55,
+   "platform": "Linux x86_64",
+   "propose_ms": {
+    "n": 100,
+    "p50": 332.398,
+    "p95": 365.116
+   },
+   "propose_to_searchable_ms": {
+    "n": 50,
+    "p50": 545.636,
+    "p95": 566.023
+   },
+   "record": "reports/rounds/P2-Q/ci/41803469014/dnotes/numbers.json",
+   "rootmark_dir_bytes": 47624899,
+   "search_ms": {
+    "n": 192,
+    "p50": 389.752,
+    "p95": 401.527
+   },
+   "serve_peak_rss_kib": 830652
+  },
+  "ci/41809290667/dnotes": {
+   "cpu": "AMD EPYC 9V74 80-Core Processor",
+   "direct_write_to_ingested_ms": {
+    "n": 19,
+    "p50": 217.428,
+    "p95": 225.83
+   },
+   "env": "ci",
+   "index_build_s": 458.99,
+   "index_chunks_per_s": 13.209,
+   "index_embedded": 6063,
+   "ingest_s": 2.489,
+   "platform": "Linux x86_64",
+   "propose_ms": {
+    "n": 100,
+    "p50": 300.073,
+    "p95": 324.197
+   },
+   "propose_to_searchable_ms": {
+    "n": 50,
+    "p50": 477.959,
+    "p95": 547.111
+   },
+   "record": "reports/rounds/P2-Q/ci/41809290667/dnotes/numbers.json",
+   "rootmark_dir_bytes": 47624899,
+   "search_ms": {
+    "n": 192,
+    "p50": 343.741,
+    "p95": 358.634
+   },
+   "serve_peak_rss_kib": 830200
+  },
+  "docker/dnotes": {
+   "cpu": "x86_64",
+   "direct_write_to_ingested_ms": {
+    "n": 20,
+    "p50": 2449.093,
+    "p95": 2849.323
+   },
+   "env": "docker",
+   "index_build_s": 27148.369,
+   "index_chunks_per_s": 0.223,
+   "index_embedded": 6063,
+   "ingest_s": 6.695,
+   "platform": "Linux x86_64",
+   "propose_ms": {
+    "n": 100,
+    "p50": 3374.25,
+    "p95": 4398.859
+   },
+   "propose_to_searchable_ms": {
+    "n": 50,
+    "p50": 3024.228,
+    "p95": 3168.816
+   },
+   "record": "reports/rounds/P2-Q/docker/dnotes/numbers.json",
+   "rootmark_dir_bytes": 47631419,
+   "search_ms": {
+    "n": 192,
+    "p50": 2174.464,
+    "p95": 2760.336
+   },
+   "serve_peak_rss_kib": 898768
+  },
+  "docker/qorbit": {
+   "cpu": "x86_64",
+   "direct_write_to_ingested_ms": {
+    "n": 20,
+    "p50": 2618.817,
+    "p95": 3038.409
+   },
+   "env": "docker",
+   "index_build_s": 10990.725,
+   "index_chunks_per_s": 0.17,
+   "index_embedded": 1868,
+   "ingest_s": 1.583,
+   "platform": "Linux x86_64",
+   "propose_ms": {
+    "n": 100,
+    "p50": 3195.082,
+    "p95": 3572.838
+   },
+   "propose_to_searchable_ms": {
+    "n": 50,
+    "p50": 648.29,
+    "p95": 714.223
+   },
+   "record": "reports/rounds/P2-Q/docker/qorbit/numbers.json",
+   "rootmark_dir_bytes": 13429258,
+   "search_ms": {
+    "n": 192,
+    "p50": 500.972,
+    "p95": 1069.854
+   },
+   "serve_peak_rss_kib": 1291096
+  },
   "mac/dnotes/run1": {
    "cpu": "Apple M4 Max",
    "direct_write_to_ingested_ms": {

@@ -1,0 +1,197 @@
+[
+ {
+  "id": "H01",
+  "pass": true,
+  "summary": {
+   "bytes": 1565500,
+   "files": 111,
+   "summary_b2": "f7bcd2c3709a6abef45e2483f1efea08"
+  }
+ },
+ {
+  "documents": 111,
+  "events_hash": "73f536ad781452d07d380f9bbdeb15ec",
+  "id": "H02",
+  "pass": true,
+  "rc": 0
+ },
+ {
+  "id": "H03",
+  "pass": true,
+  "rc": 0,
+  "rules": [
+   "toplayici"
+  ]
+ },
+ {
+  "embedder_id": "multilingual-minilm-l12-v2/ca55a866+fixed1",
+  "id": "H04",
+  "pass": true,
+  "records": 1868,
+  "stale_docs": 0
+ },
+ {
+  "embedder": "multilingual-minilm-l12-v2/ca55a866+fixed1",
+  "id": "H05",
+  "index": "ok",
+  "mdk_version": "0.3.0",
+  "pass": true,
+  "spec_version": "2.0.3"
+ },
+ {
+  "checkpoint_id": "977702c0e93d703574fd8b3d5a3353a1",
+  "id": "H06",
+  "pass": true
+ },
+ {
+  "calls": 100,
+  "failures": [],
+  "id": "H07",
+  "layer_failures": [],
+  "lineages_promoted_by_rule": 150,
+  "pass": true
+ },
+ {
+  "found": 50,
+  "id": "H08",
+  "of": 50,
+  "pass": true
+ },
+ {
+  "canonical": 0,
+  "id": "H09",
+  "new_blocks": 54,
+  "not_ingested": [],
+  "pass": true,
+  "unverified": 54,
+  "writes": 20
+ },
+ {
+  "checkpoint_id": "4a66cd202e7e4ff65bd3833bf99d8b3f",
+  "id": "H10",
+  "pass": true
+ },
+ {
+  "default_leaks": 0,
+  "failures": [
+   "q43@ajan-yazdi: target yorum/brif/pqy091.md missing with include_proposal"
+  ],
+  "id": "H11",
+  "n_failures": 1,
+  "pass": false
+ },
+ {
+  "failures": [],
+  "id": "H12",
+  "pass": true,
+  "promotes": 42
+ },
+ {
+  "demotes": 9,
+  "failures": [],
+  "id": "H13",
+  "pass": true
+ },
+ {
+  "checkpoint_id": "f725d98a9d7991dbb759b6cf8675a291",
+  "id": "H14",
+  "pass": true
+ },
+ {
+  "default_leaks": 0,
+  "failures": [
+   "q41@son: target yorum/llm-yorumu/pqy050.md in default hits: False, expected True",
+   "q41@son: target yorum/llm-yorumu/pqy050.md missing with include_proposal",
+   "q43@son: target yorum/brif/pqy091.md missing with include_proposal"
+  ],
+  "id": "H15",
+  "n_failures": 3,
+  "pass": false
+ },
+ {
+  "id": "H16",
+  "n_wrong": 0,
+  "pass": true,
+  "wrong": []
+ },
+ {
+  "id": "H17",
+  "pass": true,
+  "traces": [
+   {
+    "equal": true,
+    "hit_lineages": 39,
+    "id": "t1",
+    "trace": 1,
+    "trace_lineages": 39
+   },
+   {
+    "equal": true,
+    "hit_lineages": 30,
+    "id": "t2",
+    "trace": 1,
+    "trace_lineages": 30
+   },
+   {
+    "equal": true,
+    "hit_lineages": 28,
+    "id": "t3",
+    "trace": 1,
+    "trace_lineages": 28
+   },
+   {
+    "equal": true,
+    "hit_lineages": 31,
+    "id": "t4",
+    "trace": 1,
+    "trace_lineages": 31
+   },
+   {
+    "equal": true,
+    "hit_lineages": 31,
+    "id": "t5",
+    "trace": 1,
+    "trace_lineages": 31
+   }
+  ],
+  "traces_before": 242
+ },
+ {
+  "blame_diffs": [],
+  "id": "H18",
+  "pass": true,
+  "query_diffs": []
+ },
+ {
+  "differing": [],
+  "id": "H19",
+  "pass": true
+ },
+ {
+  "changed_files": 0,
+  "events_hash": "750330d1b011d740c47a08bc1f34efc8",
+  "id": "H20",
+  "pass": true
+ },
+ {
+  "events_hash": "750330d1b011d740c47a08bc1f34efc8",
+  "id": "H21",
+  "pass": false,
+  "sigterm_rc": "timeout",
+  "sigterm_s": 60.206
+ },
+ {
+  "compact_rc": 0,
+  "events_hash": "750330d1b011d740c47a08bc1f34efc8",
+  "id": "H22",
+  "pass": true,
+  "stop_rc": 0
+ },
+ {
+  "compared": 8,
+  "id": "H23",
+  "pass": true,
+  "read_only": true,
+  "unequal": []
+ }
+]
