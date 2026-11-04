@@ -1,0 +1,22 @@
+{
+ "events_hash": "b398d83f2f1e2b9462aee62079bbd2ff",
+ "index_files": {
+  "lexical/.managed.json": "191653e2e001ffeb62b4f50cd7b7aa37",
+  "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.fast": "b4010e051591eb556026319c52805f59",
+  "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.fieldnorm": "964d34439c7c5b09d00aafdea064dd04",
+  "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.idx": "4a4b550427058ccfe849235cd19c7e00",
+  "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.pos": "84bb23d8b209a966bafcbd58847725ff",
+  "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.store": "08c2ee320c1cbf6ff91e8ee06413406b",
+  "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.term": "02ec5f7ba1038d4b0e852a361c48c11d",
+  "lexical/meta.json": "08ce4f9ebdebb8679f24b9efca5b93fb",
+  "manifest.json": "e84843954ac5004c4dc05f1ceeb35b2b",
+  "records.jsonl": "117ffcce3679478fe063ff5f2bbcd076",
+  "snapshots.jsonl": "8f6fa0d25c48bcd2af8e0fc129b22155",
+  "vectors/embedders.jsonl": "ae4b85ac4d5fc1edc436e9f093f09b71",
+  "vectors/vectors.f32": "6ad873ff17c895be88363f516bfd2027"
+ },
+ "manifest": "e84843954ac5004c4dc05f1ceeb35b2b",
+ "query_results_b2": "2c8213eba714f10b348549f5373d37d087ada3bde22b1051a94eee2d08dfa9eb",
+ "rankings_b2": "987f20b8fe7d1a93215bb85a6870c8403cd8f961f034c256811f992723e97604",
+ "vectors": "6ad873ff17c895be88363f516bfd2027"
+}
