@@ -4,6 +4,10 @@
 # Dependabot security updates are enabled in the repository settings (GH-0
 # G3); a security fix younger than 14 days needs an entry with a decision in
 # scripts/dep_age_exceptions.txt.
+# GH-1 (K-GH1.1): the VS Code client is listed too (P2-B added it after
+# GH-0), and each ecosystem's security updates come as one grouped pull
+# request instead of one per package (`groups`, `applies-to:
+# security-updates`); the 14-day rule still decides when one is merged.
 version: 2
 updates:
   - package-ecosystem: cargo
@@ -11,18 +15,43 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 0
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
   - package-ecosystem: npm
     directory: /clients/obsidian
     schedule:
       interval: weekly
     open-pull-requests-limit: 0
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /clients/vscode
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
   - package-ecosystem: uv
     directory: /research
     schedule:
       interval: weekly
     open-pull-requests-limit: 0
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
     open-pull-requests-limit: 0
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
