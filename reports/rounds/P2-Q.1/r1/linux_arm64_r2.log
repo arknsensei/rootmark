@@ -1,0 +1,16 @@
+     Running tests/watch_newdir.rs (target/release/deps/watch_newdir-d2b953e5136a06eb)
+test n6_directory_moved_into_the_vault_is_ingested ... ok
+test n5_hidden_directories_are_not_ingested ... ok
+test n1_to_n4_files_of_new_directories_are_ingested_once ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.94s
+     Running tests/watch_remove.rs (target/release/deps/watch_remove-5fd55183bfb6be30)
+test d8_held_removal_is_ingested_at_stop ... ok
+test d3_unattested_move ... ok
+test d1_deleted_note_is_closed ... ok
+test d2_unattested_deletion_under_unverified ... ok
+test d6_d7_directories_removed_and_moved ... ok
+test d4_attested_rename_is_not_processed_twice ... ok
+test d5_delete_and_recreate ... ok
+test d10_rename_back_after_the_removal ... ok
+test d9_same_steps_same_log ... ok
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 41.25s

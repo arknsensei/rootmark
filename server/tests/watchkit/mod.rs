@@ -1,6 +1,6 @@
 //! Shared helpers of the P2-Q.1 watcher tests (`watch_newdir.rs`,
 //! `watch_remove.rs`): a vault served with `rootmark serve --http
-//! 127.0.0.1:0 --watch` under a chosen `[attestation]` policy, its event log
+//! 127.0.0.1:<port> --watch` under a chosen `[attestation]` policy, its event log
 //! read as JSON lines, HTTP calls with the token, and waits with a deadline
 //! (a deadline passed is a failure; no latency is measured).
 
@@ -38,23 +38,43 @@ pub struct Served {
 /// attestation window.
 pub fn serve(vault: &Path, unattested: &str, window_s: f64) -> Served {
     std::fs::create_dir_all(vault.join(".rootmark")).unwrap();
+    // a free port, written as `[server] http_port` so that `rootmark
+    // attest` finds the running server
+    let port = std::net::TcpListener::bind("127.0.0.1:0")
+        .unwrap()
+        .local_addr()
+        .unwrap()
+        .port();
+    let recipe = rootmarkserver::config::base_recipe().replacen(
+        "[server]\n",
+        &format!("[server]\nhttp_port = {port}\n"),
+        1,
+    );
+    assert!(recipe.contains("http_port"));
     std::fs::write(
         vault.join(".rootmark/policy.toml"),
-        rootmarkserver::config::base_recipe()
+        recipe
             + &format!(
-                "\n[attestation]\nunattested = \"{unattested}\"\nwindow_s = {window_s:.1}\n"
+                "\n[identity]\nhuman_id = \"tester\"\n\n[attestation]\nunattested = \"{unattested}\"\nwindow_s = {window_s:.1}\n"
             ),
     )
     .unwrap();
     let vs = vault.to_str().unwrap();
     let mut child = Command::new(rootmark())
-        .args(["serve", "--vault", vs, "--http", "127.0.0.1:0", "--watch"])
+        .args([
+            "serve",
+            "--vault",
+            vs,
+            "--http",
+            &format!("127.0.0.1:{port}"),
+            "--watch",
+        ])
         .stderr(Stdio::piped())
         .spawn()
         .unwrap();
     let mut err = BufReader::new(child.stderr.take().unwrap());
     let mut head = String::new();
-    let mut port = 0u16;
+    let mut bound = 0u16;
     loop {
         let mut l = String::new();
         assert!(err.read_line(&mut l).unwrap() > 0, "server exited: {head}");
@@ -63,13 +83,13 @@ pub fn serve(vault: &Path, unattested: &str, window_s: f64) -> Served {
             .trim()
             .strip_prefix("rootmark serve: http listening on 127.0.0.1:")
         {
-            port = p.parse().unwrap();
+            bound = p.parse().unwrap();
         }
         if l.contains("rootmark serve: watching") {
             break;
         }
     }
-    assert!(port > 0, "{head}");
+    assert_eq!(bound, port, "{head}");
     let rest = std::thread::spawn(move || {
         let mut s = String::new();
         let _ = err.read_to_string(&mut s);
@@ -125,6 +145,9 @@ impl Served {
     /// The live blocks of `doc` (`blame`).
     pub fn blame(&self, doc: &str) -> Vec<Value> {
         let (st, v) = self.http("POST", "/v1/blame", &json!({"doc_path": doc}));
+        if st == 404 && v["error"]["code"] == "not_found" {
+            return Vec::new(); // not ingested yet
+        }
         assert_eq!(st, 200, "{v}");
         v["blocks"].as_array().cloned().unwrap_or_default()
     }

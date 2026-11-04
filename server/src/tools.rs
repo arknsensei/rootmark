@@ -954,6 +954,67 @@ impl Kernel {
         })
     }
 
+    /// A document whose file the watcher saw removed (P2-Q.1, PQ-18;
+    /// `docs/rounds/P2-Q.1/progress/DESIGN.md` §1–§2): when nothing is at
+    /// its path, the document's observed content is empty — an external
+    /// change (spec §7.1) whose plan deletes every live lineage (§5 step 7:
+    /// `BlockDeleted`, with the actor and source of §7/§7.1) and commits a
+    /// snapshot without blocks. `None` when something is at the path again
+    /// (the caller ingests it as a change) or the log holds no live block of
+    /// the document (nothing to delete: no event). Runs in the writer queue.
+    pub fn watch_removed(&self, doc: &str, source: &str) -> Result<Option<store::WatchReport>> {
+        self.ticket().run(|| {
+            let path = crate::paths::doc_file(&self.vault, doc)?;
+            if std::fs::symlink_metadata(&path).is_ok() {
+                return Ok(None);
+            }
+            let mut v = Vault::open(&self.vault)?;
+            if v.doc_state(doc).is_none_or(|s| s.live.is_empty()) {
+                return Ok(None);
+            }
+            let e = self.embedder()?;
+            let mut s = Store::open(&v, e.as_ref())?;
+            let (policy, _) = self.policy()?;
+            let (_, r) = self.ingest_external(
+                &mut v,
+                Some((&mut s, e.as_ref())),
+                &policy,
+                doc,
+                b"",
+                source,
+            )?;
+            Ok(Some(r.expect("a store was given")))
+        })
+    }
+
+    /// The documents with live blocks under the vault directory `dir`
+    /// (`dir/…`; the watcher's rule: no hidden component), in byte order —
+    /// what a directory removed or moved out of the vault held (P2-Q.1).
+    pub fn watched_docs_under(&self, dir: &str) -> Result<Vec<String>> {
+        self.ticket().run(|| {
+            let v = Vault::open(&self.vault)?;
+            let pre = format!("{dir}/");
+            let mut out: Vec<String> = v
+                .doc_paths()
+                .into_iter()
+                .filter(|d| d.starts_with(&pre))
+                .filter(|d| !d.split('/').any(|c| c.starts_with('.')))
+                .filter(|d| v.doc_state(d).is_some_and(|s| !s.live.is_empty()))
+                .collect();
+            out.sort_by(|a, b| a.as_bytes().cmp(b.as_bytes()));
+            Ok(out)
+        })
+    }
+
+    /// The attestation window of the vault's policy (`[attestation]
+    /// window_s`): how long the watcher holds a removal back (P2-Q.1 DESIGN
+    /// §2.4).
+    pub fn attestation_window(&self) -> Result<std::time::Duration> {
+        Ok(std::time::Duration::from_millis(
+            self.policy()?.0.attestation.window_ms,
+        ))
+    }
+
     /// Ingests an external change of `doc` (`external_plan`) and commits it
     /// (with `store`: the hot tier too). A partial match (P2-0.1 T2) is two
     /// commits: the attested bytes as an attested change, the line

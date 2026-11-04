@@ -11,8 +11,12 @@
 //! - `--http 127.0.0.1:PORT`: the HTTP API (`crate::http`), token in
 //!   `.rootmark/server.token`;
 //! - `--watch`: Markdown files changed under the vault (outside
-//!   `.rootmark/`) are ingested as human content and indexed into the hot
-//!   tier (`Kernel::watch_doc`);
+//!   `.rootmark/` and hidden directories) are ingested as external changes
+//!   and indexed into the hot tier (`Kernel::watch_doc`); a new directory's
+//!   files are read (P2-Q.1, PQ-22); a removed file, or the documents of a
+//!   directory removed or moved out, are ingested as documents without
+//!   blocks after the attestation window (`Kernel::watch_removed`; P2-Q.1,
+//!   PQ-18);
 //! - always: the hot tier is compacted every `[index] compact_every_s`.
 //!
 //! SIGTERM or SIGINT (or the end of the MCP stream) stops the service: the
@@ -123,6 +127,9 @@ enum Target {
     /// are read (PQ-22: inotify watches a new directory only after its
     /// creation is read, so a file written into it before is never named)
     Scan(String),
+    /// a path gone from the vault that is no Markdown document: a directory
+    /// removed or moved out (PQ-18); the documents the log holds under it
+    Gone(String),
 }
 
 /// The targets an event names: none for access events, `.rootmark/` writes,
@@ -149,11 +156,14 @@ fn targets_of(ev: notify::Result<notify::Event>, root: &Path) -> Vec<Target> {
         let Some(rel) = watched_rel(root, &c) else {
             continue;
         };
-        let dir = std::fs::symlink_metadata(&c).is_ok_and(|m| m.is_dir());
+        let meta = std::fs::symlink_metadata(&c);
+        let dir = meta.as_ref().is_ok_and(|m| m.is_dir());
         if dir && arrives {
             out.push(Target::Scan(rel));
         } else if rel.ends_with(".md") {
             out.push(Target::Doc(rel));
+        } else if meta.is_err() {
+            out.push(Target::Gone(rel));
         }
     }
     out
@@ -194,79 +204,189 @@ fn scan_dir(root: &Path, rel: &str) -> Vec<String> {
     out
 }
 
-/// The watcher thread: batches the events that name a document or a new
-/// directory (50 ms of quiet, at most 250 ms; other events are dropped and
-/// never extend a batch), reads each new directory's Markdown files, then
-/// ingests each changed document once, in byte order (a document named
-/// twice — by a directory's scan and by its own event — is ingested once;
-/// an unchanged one writes nothing). Returns the watcher (dropping it stops
-/// the events, which ends the thread).
-fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
+/// What the watcher thread receives: the file events, and the service's
+/// stop (which ends the thread after the removals it holds are ingested).
+enum Msg {
+    Event(notify::Result<notify::Event>),
+    Stop,
+}
+
+/// The running watcher: dropping `watcher` stops the events; `stop` ends
+/// the thread once its pending work is done.
+struct Watching {
+    watcher: notify::RecommendedWatcher,
+    tx: std::sync::mpsc::Sender<Msg>,
+    thread: std::thread::JoinHandle<()>,
+}
+
+impl Watching {
+    /// Ingests what is pending (a batch, held removals) and ends the
+    /// thread, then stops the events.
+    fn stop(self) {
+        let _ = self.tx.send(Msg::Stop);
+        if self.thread.join().is_err() {
+            log("watch: the watcher thread panicked");
+        }
+        drop(self.watcher);
+    }
+}
+
+/// Ingests one document whose path held a file in the batch (or at the end
+/// of its removal's hold): a change, or nothing when unchanged.
+fn ingest_doc(kernel: &Kernel, d: &str) {
+    match kernel.watch_doc(d, "rootmark-serve-watch") {
+        Ok(r) if r.events == 0 && r.embedded == 0 => {}
+        Ok(r) => log(format!(
+            "watch: {d} ingested ({} events, {} chunks embedded, snapshot {})",
+            r.events, r.embedded, r.snapshot_id
+        )),
+        Err(e) => log(format!("watch: {d}: error: {e:#}")),
+    }
+}
+
+/// A held removal whose time came (or the service stops): nothing at the
+/// path → the document's removal (`Kernel::watch_removed`); a file there
+/// again → a change.
+fn ingest_removal(kernel: &Kernel, root: &Path, d: &str) {
+    match kernel.watch_removed(d, "rootmark-serve-watch") {
+        Ok(Some(r)) => log(format!(
+            "watch: {d} removed: ingested ({} events, snapshot {})",
+            r.events, r.snapshot_id
+        )),
+        Ok(None) => {
+            if root.join(d).is_file() {
+                ingest_doc(kernel, d);
+            } else if std::fs::symlink_metadata(root.join(d)).is_ok() {
+                log(format!("watch: {d} is not a file; not ingested"));
+            }
+        }
+        Err(e) => log(format!("watch: {d}: removal: error: {e:#}")),
+    }
+}
+
+/// The watcher thread: batches the events that name a target (50 ms of
+/// quiet, at most 250 ms; other events are dropped and never extend a
+/// batch), reads each new directory's Markdown files (PQ-22), then ingests
+/// each changed document once, in byte order (a document named twice — by
+/// a directory's scan and by its own event — is ingested once; an
+/// unchanged one writes nothing). A document whose path holds nothing, and
+/// each document the log holds under a directory gone, is a removal (PQ-18):
+/// held for the attestation window plus 500 ms, so that a rename's
+/// attestation, on time or late, is decided against the old path's head
+/// before its removal is ingested (spec §7.1 "Rename"; P2-Q.1 DESIGN
+/// §2.4), then ingested in byte order; the service's stop ingests the held
+/// removals at once.
+fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
     use notify::{RecursiveMode, Watcher};
+    use std::collections::{BTreeMap, BTreeSet};
+    use std::sync::mpsc::RecvTimeoutError;
+    use std::time::Instant;
     let root = std::fs::canonicalize(kernel.vault())?;
-    let (tx, rx) = std::sync::mpsc::channel::<notify::Result<notify::Event>>();
-    let mut w = notify::recommended_watcher(tx).context("start the file watcher")?;
+    let hold = kernel.attestation_window()? + Duration::from_millis(500);
+    let (tx, rx) = std::sync::mpsc::channel::<Msg>();
+    let events = tx.clone();
+    let mut w = notify::recommended_watcher(move |ev| {
+        let _ = events.send(Msg::Event(ev));
+    })
+    .context("start the file watcher")?;
     w.watch(&root, RecursiveMode::Recursive)
         .with_context(|| format!("watch {}", root.display()))?;
-    std::thread::spawn(move || {
-        while let Ok(first) = rx.recv() {
-            let mut targets: std::collections::BTreeSet<Target> =
-                targets_of(first, &root).into_iter().collect();
-            if targets.is_empty() {
-                continue; // the server's own writes under .rootmark/ etc.
+    let thread = std::thread::spawn(move || {
+        // held removals: document → when it is ingested
+        let mut held: BTreeMap<String, Instant> = BTreeMap::new();
+        let mut stopping = false;
+        while !stopping {
+            let first = match held.values().min() {
+                None => Some(rx.recv().unwrap_or(Msg::Stop)),
+                Some(due) => match rx.recv_timeout(due.saturating_duration_since(Instant::now())) {
+                    Ok(m) => Some(m),
+                    Err(RecvTimeoutError::Timeout) => None,
+                    Err(RecvTimeoutError::Disconnected) => Some(Msg::Stop),
+                },
+            };
+            let mut targets: BTreeSet<Target> = BTreeSet::new();
+            match first {
+                None => {}
+                Some(Msg::Stop) => stopping = true,
+                Some(Msg::Event(ev)) => targets.extend(targets_of(ev, &root)),
             }
-            // gather the rest of the batch: until 50 ms pass without an
-            // event naming a target, and at most 250 ms in all, so a
-            // stream of unrelated events (searches writing traces) can
-            // never hold a change back
-            let start = std::time::Instant::now();
-            let mut last = start;
-            loop {
-                let quiet = Duration::from_millis(50).saturating_sub(last.elapsed());
-                let left = Duration::from_millis(250).saturating_sub(start.elapsed());
-                let wait = quiet.min(left);
-                if wait.is_zero() {
-                    break;
-                }
-                match rx.recv_timeout(wait) {
-                    Ok(ev) => {
-                        let t = targets_of(ev, &root);
-                        if !t.is_empty() {
-                            last = std::time::Instant::now();
-                            targets.extend(t);
-                        }
+            if !targets.is_empty() {
+                // gather the rest of the batch: until 50 ms pass without
+                // an event naming a target, and at most 250 ms in all, so a
+                // stream of unrelated events (searches writing traces) can
+                // never hold a change back
+                let start = Instant::now();
+                let mut last = start;
+                loop {
+                    let quiet = Duration::from_millis(50).saturating_sub(last.elapsed());
+                    let left = Duration::from_millis(250).saturating_sub(start.elapsed());
+                    let wait = quiet.min(left);
+                    if wait.is_zero() {
+                        break;
                     }
-                    Err(_) => break,
+                    match rx.recv_timeout(wait) {
+                        Ok(Msg::Event(ev)) => {
+                            let t = targets_of(ev, &root);
+                            if !t.is_empty() {
+                                last = Instant::now();
+                                targets.extend(t);
+                            }
+                        }
+                        Ok(Msg::Stop) | Err(RecvTimeoutError::Disconnected) => {
+                            stopping = true;
+                            break;
+                        }
+                        Err(RecvTimeoutError::Timeout) => break,
+                    }
                 }
             }
-            let mut docs = std::collections::BTreeSet::new();
+            let mut docs = BTreeSet::new();
+            let mut gone = BTreeSet::new();
             for t in targets {
                 match t {
                     Target::Doc(d) => {
                         docs.insert(d);
                     }
                     Target::Scan(d) => docs.extend(scan_dir(&root, &d)),
+                    Target::Gone(d) => match kernel.watched_docs_under(&d) {
+                        Ok(v) => gone.extend(v),
+                        Err(e) => log(format!("watch: {d}/: removal: error: {e:#}")),
+                    },
                 }
             }
+            let due = Instant::now() + hold;
             for d in docs {
-                if !root.join(&d).is_file() {
-                    log(format!(
-                        "watch: {d} removed or not a file; removals are not ingested"
-                    ));
-                    continue;
+                let p = root.join(&d);
+                if p.is_file() {
+                    ingest_doc(&kernel, &d);
+                } else if std::fs::symlink_metadata(&p).is_err() {
+                    held.insert(d, due);
+                } else {
+                    log(format!("watch: {d} is not a file; not ingested"));
                 }
-                match kernel.watch_doc(&d, "rootmark-serve-watch") {
-                    Ok(r) if r.events == 0 && r.embedded == 0 => {}
-                    Ok(r) => log(format!(
-                        "watch: {d} ingested ({} events, {} chunks embedded, snapshot {})",
-                        r.events, r.embedded, r.snapshot_id
-                    )),
-                    Err(e) => log(format!("watch: {d}: error: {e:#}")),
-                }
+            }
+            for d in gone {
+                held.entry(d).or_insert(due);
+            }
+            // the removals whose hold is over (all of them when stopping),
+            // in byte order
+            let now = Instant::now();
+            let ripe: Vec<String> = held
+                .iter()
+                .filter(|(_, t)| stopping || **t <= now)
+                .map(|(d, _)| d.clone())
+                .collect();
+            for d in ripe {
+                held.remove(&d);
+                ingest_removal(&kernel, &root, &d);
             }
         }
     });
-    Ok(w)
+    Ok(Watching {
+        watcher: w,
+        tx,
+        thread,
+    })
 }
 
 async fn compact(kernel: &Arc<Kernel>, why: &str) -> Result<()> {
@@ -454,7 +574,12 @@ pub fn run(o: ServeOptions) -> Result<()> {
         };
         log(format!("stopping ({why})"));
         let _ = stop_tx.send(true);
-        drop(watcher);
+        if let Some(w) = watcher {
+            // a batch in hand and the held removals are ingested first
+            tokio::task::spawn_blocking(move || w.stop())
+                .await
+                .context("watcher stop")?;
+        }
         if let Some(t) = http_task {
             t.await.context("http task")?.context("http server")?;
         }
