@@ -1,10 +1,6 @@
 # P2-Q — İnsan adımı bekleniyor
 
-**Durum (2026-11-04): Q0–Q3 tamam, Q4'te; turun PR'ı #47 açık (kademe 1 CI koşuyor).**
-
-**Açık istek 1 — insan adımı (Q-10, READY'den önce): context-mode kancasının kapatılması.** Kullanıcı 2026-11-04'te seçti: "Kancayı kapatacağım". Gözden geçirici alt-ajan çağrısı auto modda denetlenemiyor, çünkü context-mode eklentisinin `Agent` için PreToolUse kancası girdiye kendi bloğunu ekliyor (dört denemede aynı; ajan yeniden denemiyor). **Beklenen:** kullanıcının context-mode eklentisini (ya da yalnız o kancayı) devre dışı bırakıp oturumu yeniden başlatması — ya da auto moddan çıkıp çağrıyı onaylaması — ve bunu ajana bildirmesi. Ardından ajan tek turluk gözden geçiriciyi koşar (`Q4.review.md`), bulguları işler, `READY.md`'yi yazar.
-
-**Açık istek 2 — karar K-P2Q-T2 (tur sonrası):** Q-6 ve Q-8 kaldı; hedef tur seçimi (a) yama turu P2-Q.1 (PQ-22 + PQ-18) [öneri], (b) hepsi P2-C, (c) PQ-22 yama, PQ-18 P2-C. READY'yi bloke etmez (karar kuralı: tur kaldı + karar talebi).
+**Durum (2026-11-04): tur bitti — READY yazıldı (`READY.md`); PR #47 açık, CI `41845930633` yeşil.** Bekleyen insan adımları: PR #47'nin birleşmesi; ardından P2-Q'nün bağımsız doğrulaması (`docs/rounds/P2-Q/VERIFY.md`) ve P2-Q.1'in açılışı (K-P2Q.4). Gözden geçirici ve K-P2Q-T2 istekleri kapandı.
 
 ---
 Önceki kayıt:
