@@ -39,21 +39,21 @@ The full contract (every tool, field and error code) is [docs/CLIENT_CONTRACT.md
 
 ## Install
 
-Release 0.3.0 targets macOS on Apple silicon (`aarch64-apple-darwin`) and Linux x86_64 (`x86_64-unknown-linux-gnu`, glibc 2.38+); a Windows x86_64 archive is built and checked in CI for information. Step by step, with checks and outputs: [docs/GUIDE.md §1](docs/GUIDE.md#1-install).
+Release 0.3.1 targets macOS on Apple silicon (`aarch64-apple-darwin`) and Linux x86_64 (`x86_64-unknown-linux-gnu`, glibc 2.38+); a Windows x86_64 archive is built and checked in CI for information. Step by step, with checks and outputs: [docs/GUIDE.md §1](docs/GUIDE.md#1-install).
 
 ```sh
-VER=0.3.0
+VER=0.3.1
 curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/install.sh"
 curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/SHA256SUMS"
 grep ' install.sh$' SHA256SUMS | shasum -a 256 -c      # Linux: sha256sum -c
 bash install.sh --version "$VER"                       # needs curl, tar, shasum/sha256sum, jq
 export PATH="$HOME/.local/bin:$PATH" ROOTMARK_MODELS="$HOME/.local/share/rootmark/models"
-rootmark --version            # rootmark 0.3.0
+rootmark --version            # rootmark 0.3.1
 rootmark --spec-version       # 2.0.3
 rootmark conformance >/dev/null   # rootmark conformance: level 3, 39/39 (spec 2.0.3)
 ```
 
-Other ways: the release archives (`rootmark-0.3.0-<target>.tar.gz`, checked against `SHA256SUMS`; provenance with `gh attestation verify <file> -R arknsensei/rootmark`); `cargo binstall rootmark-server` once the crate is published; a Homebrew formula draft in [`packaging/homebrew/rootmark.rb.in`](packaging/homebrew/rootmark.rb.in) (no tap yet); from source with Rust 1.92.0: `cargo build --release -p rootmark-server --bin rootmark`, then `make models`.
+Other ways: the release archives (`rootmark-0.3.1-<target>.tar.gz`, checked against `SHA256SUMS`; provenance with `gh attestation verify <file> -R arknsensei/rootmark`); `cargo binstall rootmark-server` once the crate is published; a Homebrew formula draft in [`packaging/homebrew/rootmark.rb.in`](packaging/homebrew/rootmark.rb.in) (no tap yet); from source with Rust 1.92.0: `cargo build --release -p rootmark-server --bin rootmark`, then `make models`.
 
 **Turkish and mixed-language vaults:** `[index] tokenizer = "uni_fold_tr"` and `embedder = "multilingual-minilm-l12-v2"` in the vault's `.rootmark/policy.toml`, with the multilingual model fetched as in [GUIDE §1.2](docs/GUIDE.md#12-turkish-and-mixed-language-vaults-the-multilingual-model) (on P2-L's Turkish set: hybrid nDCG@10 0.8801 against 0.8029 with the defaults).
 
@@ -61,7 +61,7 @@ Other ways: the release archives (`rootmark-0.3.0-<target>.tar.gz`, checked agai
 
 ### Obsidian
 
-The Obsidian plugin (status bar, blame gutter, proposals with Promote, search, checkpoints, traces; it attests your saves) is not in the community store. Install it from the release's `rootmark-0.3.0.zip` into `<vault>/.obsidian/plugins/rootmark/` and enable it under *Settings → Community plugins*, or with [BRAT](https://github.com/TfTHacker/obsidian42-brat) (`arknsensei/rootmark`): [GUIDE §5](docs/GUIDE.md#5-the-obsidian-plugin). It connects to a running `rootmark serve` on the recipe's `[server] http_port` as `[identity] human_id`; the status bar says `rootmark 0.3.0 · human:<you>`.
+The Obsidian plugin (status bar, blame gutter, proposals with Promote, search, checkpoints, traces; it attests your saves) is not in the community store. Install it from the release's `rootmark-0.3.1.zip` into `<vault>/.obsidian/plugins/rootmark/` and enable it under *Settings → Community plugins*, or with [BRAT](https://github.com/TfTHacker/obsidian42-brat) (`arknsensei/rootmark`): [GUIDE §5](docs/GUIDE.md#5-the-obsidian-plugin). It connects to a running `rootmark serve` on the recipe's `[server] http_port` as `[identity] human_id`; the status bar says `rootmark 0.3.1 · human:<you>`.
 
 ## Specification
 
