@@ -1,10 +1,10 @@
 # P2-Q — İnsan adımı bekleniyor
 
-**Durum (2026-11-04): Q1 tamam (`v0.3.0` yayımlı), Q2 tamam, Q3 sürüyor (Docker D-NOTES aşaması emülasyonda H14'te).**
+**Durum (2026-11-04): Q0–Q3 tamam, Q4'te; turun PR'ı #47 açık (kademe 1 CI koşuyor).**
 
-**Açık istek 1 — zorunlu (Q3 (b) CI işi ve turun PR'ı bunu bekler): `p2-q/round`'un zorla itilmesi.** Yayım birleşince tur dalı yeni `main`'in (`0528ee8`) üstüne yeniden temellendirildi; yerel dalda Q1–Q3'ün commit'leri var, uzak dal hâlâ `f43dd05`. Ajanın zorla itmesi bu oturumda reddedildi. Beklenen: `git push --force-with-lease=p2-q/round:f43dd05 origin p2-q/round` (ya da bu itmeye izin).
+**Açık istek 1 — Q4'ün gözden geçiricisi (Q-10, READY'den önce):** gözden geçirici alt-ajan çağrısı auto mod tarafından denetlenemiyor ("a hook changed this call's input": context-mode eklentisinin alt-ajan kancası girdiyi değiştiriyor), iki denemede de; ajan yeniden denemiyor. **Beklenen:** o kancayı kapatmak ya da çağrıyı elle onaylamak (auto moddan çıkarak); sonra ajan tek turluk gözden geçiriciyi koşar (`Q4.review.md`).
 
-**Açık istek 2 — isteğe bağlı (süre): Docker'da Rosetta.** Docker Desktop'ta `UseVirtualizationFrameworkRosetta: false`: `linux/amd64` QEMU ile emüle ediliyor, bu iş yükünde ~90× yavaş (D-NOTES indeks kurulumu 27 148 s; Mac'te 297 s). Rosetta açılırsa Docker aşaması yeniden ve çok daha hızlı koşulur; açılmazsa mevcut koşu sürer (qorbit aşaması saatler daha).
+**Açık istek 2 — karar K-P2Q-T2 (tur sonrası):** Q-6 ve Q-8 kaldı; hedef tur seçimi (a) yama turu P2-Q.1 (PQ-22 + PQ-18) [öneri], (b) hepsi P2-C, (c) PQ-22 yama, PQ-18 P2-C. READY'yi bloke etmez (karar kuralı: tur kaldı + karar talebi).
 
 ---
 Önceki kayıt:
