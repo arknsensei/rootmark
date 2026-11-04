@@ -16,3 +16,8 @@
 | `rootmark migrate --rename-store <vault>` | yeni bir vault'ta çıkış 1, `migration rename_store does not apply to vault` — beklenen: README onu yalnız "a vault from before the project's rename" için söyler | |
 
 Eskimiş iddiaların düzeltilmesi: `rootmark status` (CLI'da yok) → "the HTTP/MCP `status`"; sürüm 0.2.0 → 0.3.0; spec rozeti 2.0.0 → 2.0.3, `--spec-version` 2.0.2 → 2.0.3; Obsidian bölümü BRAT'tan elle kuruluma ve kılavuza; Türkçe vault'ta `make models-multilingual` (depo komutu, kurulu kullanıcıda yok) → kılavuz §1.2; "Running rootmark" bağlantısı üstte.
+
+## Q2: yayımlanmış `v0.3.0` ile (README'nin `sh` blokları yazıldığı gibi; `guide_run --guide README.md --only 0#2,0#1`)
+- `0#2` (kurulum): `install.sh: OK` (`SHA256SUMS`), `rootmark 0.3.0`, `2.0.3`, `rootmark conformance: level 3, 39/39 (spec 2.0.3)` — `ok`.
+- `0#1` (sahne): `ingest-dir vault vault` (çıkış 0), `serve --vault vault --mcp stdio --http 127.0.0.1:0 --watch` (varsayılan tarif yazıldı, indeks kuruldu, `http listening`, MCP akışı kapanınca `stopped`) — `ok`.
+Kalan README komutları (`gh attestation verify`, from source, `migrate`) kılavuz koşusunda (R1) ya da Q1'de aday ve aynı kaynakla denetlendi; `cargo binstall` crate yayımlanmadığı için koşulmadı (README "once the crate is published" der).
