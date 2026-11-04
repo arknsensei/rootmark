@@ -26,6 +26,7 @@ Her test kendi vault'unda gerçek `rootmark serve --watch` (ve gerektiğinde `--
 | D7a | dizin `mv/` (2 not) vault dışına `rename` | iki notun her soyu `BlockDeleted` |
 | D7b | dizin `mw/` (2 not) vault içinde `mw2/`'ye `rename` | eski yollar `BlockDeleted`, yeni yollar `BlockCreated` |
 | D8 | not sil ve hemen SIGTERM | süreç 0 ile çıkar; günlükte notun `BlockDeleted`'ı var (bekleyen kaldırma durdurmada işlendi) |
+| D10 | `unverified` politika, §7.1 (2.0.3) geri-adlandırma (DESIGN §1.1): kendine bağlantılı insan notu `a.md` (tasdikli, `canonical`); `a.md → b.md` + kendi bağlantısı güncellenir, `attest b.md --renamed-from a.md`; `a.md`'nin kaldırılması alınana kadar beklenir; `b.md → a.md` + bağlantı geri, `attest a.md --renamed-from b.md` | iki tasdik de kabul; `a.md`'nin blokları `canonical`; `b.md` `blame` boş, her soyu bir kez `BlockDeleted`; `a.md`'nin ilk soyları bir kez `BlockDeleted` (ilk kaldırma) |
 | D9 | D1 + D3 + D6 dizisi iki taze vault'ta aynı adımlarla | iki `events.jsonl` bayt eşit (determinizm) |
 
 Geriye uyum (Q1-5) mevcut testlerle: `make conformance` 39/39; eski sürümlerin vault'ları (`gh0_migrate`, `p2a_migrate`, `p2v1_migrate`, `p1e1_status`) değişmeden geçer.
