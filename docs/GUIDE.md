@@ -544,6 +544,6 @@ Such a service and an agent-started server must not serve the same vault at the 
 - **Deletions are not ingested:** the watcher does not take a removed file into the log; a note deleted in an editor — and the old path of a renamed note — keeps its blocks live and searchable (P2-Q PQ-18). Until fixed, `blame` of the old path still shows them.
 - **Linux: a file written into a brand-new folder may be missed** by `serve --watch` until it changes again (P2-Q PQ-22). Create the folder first, or touch the file again.
 - **SIGTERM with `--mcp stdio`:** the server logs `stopping` but exits only when the MCP client closes the stream (P2-Q PQ-14); a stand-alone `serve --http … --watch` stops on SIGTERM.
-- **Hidden folders are skipped:** `ingest-dir` and the watcher ignore directories whose name starts with `.` (P2-Q PQ-13).
+- **Hidden folders are skipped:** `ingest-dir` ignores directories whose name starts with `.` (P2-Q PQ-13); notes there are not ingested.
 - **The multilingual model's manifest is not in the release archive** (§1.2 fetches it from the tag).
 - **The agent's name is self-declared** (promotion rules, §2.2): any process that starts the agent's client can use its name.
