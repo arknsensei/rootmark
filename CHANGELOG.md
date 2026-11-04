@@ -49,13 +49,12 @@ use, collecting data for an evaluation, troubleshooting).
   --dry-run` (or `POST /v1/prune {"dry_run": true}`) first; the fix is
   planned for P2-C.
 - Measured by the P2-Q pilot (reports/rounds/P2-Q/FINDINGS.md): on Linux, `serve --watch`
-  can miss the first file written into a newly created directory (it is not
-  ingested until it changes again; PQ-22); the watcher does not ingest
+  can miss the first file written into a newly created directory (PQ-22); the watcher does not ingest
   removals, so a deleted note — and the old path of a renamed one — stays live
   and searchable (PQ-18); with `--mcp stdio`, SIGTERM logs `stopping` but the
   process exits only when the MCP stream closes (PQ-14); `ingest-dir` skips
-  hidden directories (`.github/`, …; PQ-13). Fixes are planned (P2-Q.1 or
-  P2-C).
+  hidden directories (`.github/`, …; PQ-13). PQ-22 and PQ-18 are fixed in
+  0.3.1 (P2-Q.1), the others in P2-C.
 - The release archive carries only the default model's manifest: the
   multilingual model of a Turkish vault is fetched with the manifest from the
   release tag (docs/GUIDE.md "Turkish and mixed-language vaults").

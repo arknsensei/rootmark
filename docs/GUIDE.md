@@ -542,7 +542,7 @@ Such a service and an agent-started server must not serve the same vault at the 
 - **Pruning and shared chunks:** a live `canonical` block that shares a search chunk with a block a prune rule made inactive is not returned by search after that prune (it is still read by `blame`, `read_block` and at earlier checkpoints; nothing is deleted). Look at `prune` with `dry_run` first. To be fixed (P2-C).
 - **No lock on a vault:** two servers on the same vault both write its log; run one (§3).
 - **Deletions are not ingested:** the watcher does not take a removed file into the log; a note deleted in an editor — and the old path of a renamed note — keeps its blocks live and searchable (P2-Q PQ-18). Until fixed, `blame` of the old path still shows them.
-- **Linux: a file written into a brand-new folder may be missed** by `serve --watch` until it changes again (P2-Q PQ-22). Create the folder first, or touch the file again.
+- **Linux: a file written into a brand-new folder may be missed** by `serve --watch` (P2-Q PQ-22): its blocks are not in the log. Check it with `blame` after writing; a fix is planned (P2-Q.1).
 - **SIGTERM with `--mcp stdio`:** the server logs `stopping` but exits only when the MCP client closes the stream (P2-Q PQ-14); a stand-alone `serve --http … --watch` stops on SIGTERM.
 - **Hidden folders are skipped:** `ingest-dir` ignores directories whose name starts with `.` (P2-Q PQ-13); notes there are not ingested.
 - **The multilingual model's manifest is not in the release archive** (§1.2 fetches it from the tag).
