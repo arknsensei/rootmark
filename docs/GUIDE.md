@@ -281,6 +281,29 @@ which writes `.mcp.json`:
 
 Use absolute paths (the client does not read your shell profile). A project-scoped server waits for your approval: `claude mcp list` says `⏸ Pending approval (run claude to approve)` until you start `claude` in that directory and accept the `rootmark` server (once). In a session, `/mcp` lists rootmark's tools: `status`, `search`, `read_block`, `history`, `blame`, `propose`, `promote` (always `denied` for an agent), `checkpoint`, `checkpoints`, `events`, `trace`. Tell the agent to write with `propose` (a new file: `mode: "create"`; adding to a file: `mode: "append"` with content that starts with its own heading, e.g. `## Proposal: …`) and to answer from `search`.
 
+#### Keep the agent out of `.rootmark/` and the vault's files
+
+`propose` is the agent's governed path; nothing stops a desktop agent that runs as you from also reading `.rootmark/server.token` and writing the vault's files directly. A process that reads the token can call the HTTP API as you — it is in the human channel (THREAT_MODEL) and can promote its own writes; a direct file write is ingested by the watcher (as the human's under `unattested = "canonical"`, `unverified` under `"unverified"`). Close both for Claude Code with its permission rules **and** its sandbox — the rules stop the Read/Edit/Write tools and the file commands Claude Code recognizes (`cat`, `>`), the sandbox stops every other process a Bash command starts (`python3 -c 'open(…)'`):
+
+```json
+{
+  "permissions": {
+    "deny": ["Read(//Users/ada/notes/.rootmark/**)", "Edit(//Users/ada/notes/**)"]
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "denyRead": ["/Users/ada/notes/.rootmark"],
+      "denyWrite": ["/Users/ada/notes"]
+    }
+  }
+}
+```
+
+Put it in `~/.claude/settings.json` (or your organisation's managed settings, which a project cannot loosen), with your vault's absolute path: a permission rule writes it with two leading slashes (`//Users/…`), a sandbox path with one. `allowUnsandboxedCommands: false` keeps the agent from retrying a refused command outside the sandbox; `failIfUnavailable: true` refuses to start rather than run unsandboxed. MCP servers run outside the sandbox, so `rootmark serve --mcp stdio` still reads its token and writes the vault. Checked with Claude Code 2.1.318 on macOS (P2-Q.1, `docs/rounds/P2-Q.1/progress/R3_agent_isolation.md`): with these settings a session refused all five attempts — the Read tool on the token, `cat`, `python3 open()`, `echo > note.md`, the Write tool — while the same session without them did all five. Without such a boundary, treat the agent as able to act as you. Other agents need the equivalent of their own (a separate OS user is the strongest).
+
 ### 4.2 Any other MCP client
 
 Any client that starts a stdio server works the same way: command `rootmark`, arguments `serve --vault <absolute vault path> --mcp stdio --http 127.0.0.1 --watch`, environment `ROOTMARK_MODELS=<models dir>`. The protocol version is `2025-06-18`; one JSON-RPC message per line.
@@ -319,9 +342,12 @@ zip OK
 main.js		manifest.json	styles.css
 ```
 
-(On Linux use `sha256sum` for `shasum -a 256`.) Then in Obsidian, with the vault open:
+(On Linux use `sha256sum` for `shasum -a 256`.) Then open the vault in Obsidian. The first time a vault that has a plugin folder is opened, Obsidian asks **"Do you trust the author of this vault?"** with two buttons:
 
-1. **Settings → Community plugins → Turn on community plugins** (once per vault; Obsidian calls the default "Restricted mode").
+- **Trust author and enable plugins** — community plugins are turned on for this vault; go on with step 2.
+- **Browse vault in Restricted Mode** — plugins stay off; go on with step 1.
+
+1. **Settings → Community plugins → Exit Restricted mode** (once per vault; older Obsidian versions call the button "Turn on community plugins").
 2. Under **Installed plugins** press the reload icon if **rootmark** is not listed, then switch **rootmark** on.
 3. Make sure the server runs (§3, or the agent's server of §4) and the recipe has `[server] http_port` and `[identity] human_id`. The status bar shows
 
@@ -541,8 +567,8 @@ Such a service and an agent-started server must not serve the same vault at the 
 
 - **Pruning and shared chunks:** a live `canonical` block that shares a search chunk with a block a prune rule made inactive is not returned by search after that prune (it is still read by `blame`, `read_block` and at earlier checkpoints; nothing is deleted). Look at `prune` with `dry_run` first. To be fixed (P2-C).
 - **No lock on a vault:** two servers on the same vault both write its log; run one (§3).
-- **Deletions are not ingested:** the watcher does not take a removed file into the log; a note deleted in an editor — and the old path of a renamed note — keeps its blocks live and searchable (P2-Q PQ-18). Until fixed, `blame` of the old path still shows them.
-- **Linux: a file written into a brand-new folder may be missed** by `serve --watch` (P2-Q PQ-22): its blocks are not in the log. Check it with `blame` after writing; a fix is planned (P2-Q.1).
+- **Removals are taken a little late, on purpose:** the watcher takes a deleted or moved-away note into the log (its blocks get `BlockDeleted` and leave search; fixed in 0.3.1, P2-Q PQ-18) about `window_s` + 0.5 s after it sees it (2.5 s by default), so that Obsidian's attested rename is still checked against the old path. A note deleted and written again within that time counts as changed, not removed. With `unattested = "unverified"`, a process that deletes a note's file without the plugin removes its `canonical` blocks too — recorded with the actor `unattested_fs`, and still read at earlier checkpoints (§6.6); keep such processes away from the vault's files (§4.1).
+- **Claude Code 2.1.318 lists no rootmark tools:** the server connects, but the client's newer request metadata is refused by the MCP library 0.3.x is built with (`Failed to fetch tools: request _meta is missing …` in `claude --debug mcp`; P2-Q.1 PQ1-1). A client that negotiates with `initialize` and sends no such metadata gets the tools (checked by hand); a fix is pending a decision (K-P2Q1-T1).
 - **SIGTERM with `--mcp stdio`:** the server logs `stopping` but exits only when the MCP client closes the stream (P2-Q PQ-14); a stand-alone `serve --http … --watch` stops on SIGTERM.
 - **Hidden folders are skipped:** `ingest-dir` ignores directories whose name starts with `.` (P2-Q PQ-13); notes there are not ingested.
 - **The multilingual model's manifest is not in the release archive** (§1.2 fetches it from the tag).
