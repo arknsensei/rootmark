@@ -1,0 +1,27 @@
+{
+ "mode": "release",
+ "blocks": [
+  {
+   "id": "1.3#2",
+   "section": "1.3",
+   "first_command": "apt-get update && apt-get install -y --no-install-recommends curl ca-certificates jq",
+   "commands": 9,
+   "status": "ok",
+   "err_lines": [],
+   "fails": 0
+  },
+  {
+   "id": "1.2#1",
+   "section": "1.2",
+   "first_command": "curl -fsSL -o \"$ROOTMARK_MODELS/MANIFEST.multilingual-minilm-l12-v2.json\" \\",
+   "commands": 2,
+   "status": "ok",
+   "err_lines": [],
+   "fails": 0
+  }
+ ],
+ "ok": 2,
+ "failed": [],
+ "skipped": [],
+ "not_run": []
+}
