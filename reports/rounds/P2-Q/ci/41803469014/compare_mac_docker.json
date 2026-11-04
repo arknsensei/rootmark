@@ -1,0 +1,54 @@
+{
+ "all_byte_equal": false,
+ "all_rankings_equal": false,
+ "base": "run1",
+ "pairs": [
+  {
+   "byte_equal": false,
+   "events_hash": false,
+   "index_files_differing": [
+    "lexical/.managed.json",
+    "lexical/5e613d71d3d5a0168da09fcfd61912a4.fast",
+    "lexical/5e613d71d3d5a0168da09fcfd61912a4.fieldnorm",
+    "lexical/5e613d71d3d5a0168da09fcfd61912a4.idx",
+    "lexical/5e613d71d3d5a0168da09fcfd61912a4.pos",
+    "lexical/5e613d71d3d5a0168da09fcfd61912a4.store",
+    "lexical/5e613d71d3d5a0168da09fcfd61912a4.term",
+    "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.fast",
+    "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.fieldnorm",
+    "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.idx",
+    "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.pos",
+    "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.store",
+    "lexical/7f19ec5abe173ebbe9bcc828fb1bfc04.term",
+    "lexical/meta.json",
+    "manifest.json",
+    "records.jsonl",
+    "snapshots.jsonl",
+    "vectors/embedders.jsonl",
+    "vectors/vectors.f32"
+   ],
+   "manifest": false,
+   "max_ulp": 0,
+   "other": "dnotes",
+   "rankings_differing": [
+    "ajan-yazdi/q33/include_proposal",
+    "son/q33/include_proposal"
+   ],
+   "rankings_equal": false,
+   "scores_differing": [],
+   "vectors": false
+  },
+  {
+   "byte_equal": true,
+   "events_hash": true,
+   "index_files_differing": [],
+   "manifest": true,
+   "max_ulp": 0,
+   "other": "dnotes",
+   "rankings_differing": [],
+   "rankings_equal": true,
+   "scores_differing": [],
+   "vectors": true
+  }
+ ]
+}
