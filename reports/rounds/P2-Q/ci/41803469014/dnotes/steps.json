@@ -1,0 +1,220 @@
+[
+ {
+  "id": "H01",
+  "pass": true,
+  "summary": {
+   "bytes": 4926763,
+   "files": 400,
+   "summary_b2": "99282c64eec75fc90625fe7ba1eefd61"
+  }
+ },
+ {
+  "documents": 399,
+  "events_hash": "35ba798a639429d33f3ce07005058e85",
+  "id": "H02",
+  "pass": false,
+  "rc": 0
+ },
+ {
+  "id": "H03",
+  "pass": true,
+  "rc": 0,
+  "rules": [
+   "toplayici"
+  ]
+ },
+ {
+  "embedder_id": "minilm-l6-v2/e73168f9+fixed1",
+  "id": "H04",
+  "pass": true,
+  "records": 6063,
+  "stale_docs": 0
+ },
+ {
+  "embedder": "minilm-l6-v2/e73168f9+fixed1",
+  "id": "H05",
+  "index": "ok",
+  "mdk_version": "0.3.0",
+  "pass": true,
+  "spec_version": "2.0.3"
+ },
+ {
+  "checkpoint_id": "03eae0ce5c4566cf80ff3c818eb78b5e",
+  "id": "H06",
+  "pass": true
+ },
+ {
+  "calls": 100,
+  "failures": [],
+  "id": "H07",
+  "layer_failures": [],
+  "lineages_promoted_by_rule": 150,
+  "pass": true
+ },
+ {
+  "found": 50,
+  "id": "H08",
+  "of": 50,
+  "pass": true
+ },
+ {
+  "canonical": 0,
+  "id": "H09",
+  "new_blocks": 51,
+  "not_ingested": [
+   0
+  ],
+  "pass": false,
+  "unverified": 51,
+  "writes": 20
+ },
+ {
+  "checkpoint_id": "02e341c3b966a933b8d873abbee46a50",
+  "id": "H10",
+  "pass": true
+ },
+ {
+  "default_leaks": 0,
+  "failures": [
+   "q33@ajan-yazdi: include_proposal docs [] != ['ajan-dogrudan/pqd000.md']",
+   "q39@ajan-yazdi: target toplayici/resmi-ozet/pqk047.md in default hits: False, expected True",
+   "q39@ajan-yazdi: target toplayici/resmi-ozet/pqk047.md missing with include_proposal",
+   "q42@ajan-yazdi: target yorum/llm-yorumu/pqy094.md missing with include_proposal"
+  ],
+  "id": "H11",
+  "n_failures": 4,
+  "pass": false
+ },
+ {
+  "failures": [],
+  "id": "H12",
+  "pass": true,
+  "promotes": 42
+ },
+ {
+  "demotes": 9,
+  "failures": [],
+  "id": "H13",
+  "pass": true
+ },
+ {
+  "checkpoint_id": "2bc814201c9a093f31633f860db2d68f",
+  "id": "H14",
+  "pass": true
+ },
+ {
+  "default_leaks": 0,
+  "failures": [
+   "q33@son: include_proposal docs [] != ['ajan-dogrudan/pqd000.md']",
+   "q39@son: target toplayici/resmi-ozet/pqk047.md in default hits: False, expected True",
+   "q39@son: target toplayici/resmi-ozet/pqk047.md missing with include_proposal",
+   "q41@son: target yorum/llm-yorumu/pqy050.md in default hits: False, expected True",
+   "q41@son: target yorum/llm-yorumu/pqy050.md missing with include_proposal",
+   "q42@son: target yorum/llm-yorumu/pqy094.md missing with include_proposal",
+   "q44@son: target toplayici/resmi-ozet/pqk043.md in default hits: False, expected True",
+   "q44@son: target toplayici/resmi-ozet/pqk043.md missing with include_proposal"
+  ],
+  "id": "H15",
+  "n_failures": 8,
+  "pass": false
+ },
+ {
+  "id": "H16",
+  "n_wrong": 1,
+  "pass": false,
+  "wrong": [
+   {
+    "doc": "ajan-dogrudan/pqd000.md",
+    "got": [],
+    "want": "unverified"
+   }
+  ]
+ },
+ {
+  "id": "H17",
+  "pass": true,
+  "traces": [
+   {
+    "equal": true,
+    "hit_lineages": 37,
+    "id": "t1",
+    "trace": 1,
+    "trace_lineages": 37
+   },
+   {
+    "equal": true,
+    "hit_lineages": 37,
+    "id": "t2",
+    "trace": 1,
+    "trace_lineages": 37
+   },
+   {
+    "equal": true,
+    "hit_lineages": 30,
+    "id": "t3",
+    "trace": 1,
+    "trace_lineages": 30
+   },
+   {
+    "equal": true,
+    "hit_lineages": 30,
+    "id": "t4",
+    "trace": 1,
+    "trace_lineages": 30
+   },
+   {
+    "equal": true,
+    "hit_lineages": 31,
+    "id": "t5",
+    "trace": 1,
+    "trace_lineages": 31
+   }
+  ],
+  "traces_before": 242
+ },
+ {
+  "blame_diffs": [],
+  "id": "H18",
+  "pass": true,
+  "query_diffs": []
+ },
+ {
+  "differing": [],
+  "id": "H19",
+  "pass": true
+ },
+ {
+  "changed_files": 0,
+  "events_hash": "b398d83f2f1e2b9462aee62079bbd2ff",
+  "id": "H20",
+  "pass": true
+ },
+ {
+  "events_hash": "b398d83f2f1e2b9462aee62079bbd2ff",
+  "id": "H21",
+  "pass": false,
+  "sigterm_rc": "timeout",
+  "sigterm_s": 60.233
+ },
+ {
+  "compact_rc": 0,
+  "events_hash": "b398d83f2f1e2b9462aee62079bbd2ff",
+  "id": "H22",
+  "pass": true,
+  "stop_rc": 0
+ },
+ {
+  "compared": 8,
+  "id": "H23",
+  "pass": false,
+  "read_only": true,
+  "unequal": [
+   {
+    "driver": 20,
+    "equal": false,
+    "observe": 19,
+    "what": "unverified observations (direct writes)"
+   }
+  ]
+ }
+]
