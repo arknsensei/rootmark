@@ -1,0 +1,25 @@
+test n6_directory_moved_into_the_vault_is_ingested has been running for over 60 seconds
+test n6_directory_moved_into_the_vault_is_ingested ... FAILED
+test n1_to_n4_files_of_new_directories_are_ingested_once ... FAILED
+
+failures:
+
+---- n6_directory_moved_into_the_vault_is_ingested stdout ----
+
+thread 'n6_directory_moved_into_the_vault_is_ingested' (5008) panicked at server/tests/watchkit/mod.rs:217:9:
+timed out: both moved notes ingested
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- n1_to_n4_files_of_new_directories_are_ingested_once stdout ----
+
+thread 'n1_to_n4_files_of_new_directories_are_ingested_once' (5006) panicked at server/tests/watchkit/mod.rs:217:9:
+timed out: every new document ingested
+
+
+failures:
+    n1_to_n4_files_of_new_directories_are_ingested_once
+    n6_directory_moved_into_the_vault_is_ingested
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 60.32s
+
+error: test failed, to rerun pass `-p rootmark-server --test watch_newdir`

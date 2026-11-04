@@ -73,11 +73,33 @@ fn write_default_policy(vault: &Path) -> Result<()> {
     Ok(())
 }
 
-/// Vault-relative `/` path of a changed file, if it is a Markdown document
-/// of the vault: a `.md` file none of whose path components is hidden
-/// (starts with `.`, so `.rootmark/`, `.obsidian/`, `.x.md` are skipped) —
-/// the rule of `rootmarkcore::files::markdown_files`, which `ingest-dir` uses.
-fn watched_doc(root: &Path, p: &Path) -> Option<String> {
+/// `p` with symbolic links resolved where it exists: the longest existing
+/// ancestor is canonicalized and the rest appended, so a removed path
+/// reads like the existing ones (macOS reports /private/var/… for /var/…).
+fn canon(p: &Path) -> PathBuf {
+    if let Ok(c) = std::fs::canonicalize(p) {
+        return c;
+    }
+    let mut rest = Vec::new();
+    let mut cur = p;
+    while let (Some(parent), Some(name)) = (cur.parent(), cur.file_name()) {
+        rest.push(name.to_os_string());
+        if let Ok(mut c) = std::fs::canonicalize(parent) {
+            for n in rest.iter().rev() {
+                c.push(n);
+            }
+            return c;
+        }
+        cur = parent;
+    }
+    p.to_path_buf()
+}
+
+/// Vault-relative `/` path of `p` under `root` if none of its components is
+/// hidden (starts with `.`, so `.rootmark/`, `.obsidian/`, `.x.md` are
+/// skipped) — the rule of `rootmarkcore::files::markdown_files`, which
+/// `ingest-dir` uses. The root itself is no path.
+fn watched_rel(root: &Path, p: &Path) -> Option<String> {
     let rel = p.strip_prefix(root).ok()?;
     let mut parts = Vec::new();
     for c in rel.components() {
@@ -86,17 +108,99 @@ fn watched_doc(root: &Path, p: &Path) -> Option<String> {
             _ => return None,
         }
     }
-    if parts.iter().any(|c| c.starts_with('.')) {
+    if parts.is_empty() || parts.iter().any(|c| c.starts_with('.')) {
         return None;
     }
-    let doc = parts.join("/");
-    doc.ends_with(".md").then_some(doc)
+    Some(parts.join("/"))
 }
 
-/// The watcher thread: batches the events that name a document (50 ms of
-/// quiet, at most 250 ms; other events are dropped and never extend a
-/// batch), then ingests each changed document once, in byte order. Returns the watcher (dropping it stops the
-/// events, which ends the thread).
+/// What an event path asks of the watcher (P2-Q.1 DESIGN §2–§3).
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+enum Target {
+    /// a Markdown document of the vault (whether its file is there or not)
+    Doc(String),
+    /// a directory created in or moved into the vault: its Markdown files
+    /// are read (PQ-22: inotify watches a new directory only after its
+    /// creation is read, so a file written into it before is never named)
+    Scan(String),
+}
+
+/// The targets an event names: none for access events, `.rootmark/` writes,
+/// hidden or non-Markdown paths.
+fn targets_of(ev: notify::Result<notify::Event>, root: &Path) -> Vec<Target> {
+    use notify::event::{EventKind, ModifyKind};
+    let ev = match ev {
+        Ok(ev) => ev,
+        Err(e) => {
+            log(format!("watch: error: {e}"));
+            return Vec::new();
+        }
+    };
+    if matches!(ev.kind, EventKind::Access(_)) {
+        return Vec::new();
+    }
+    let arrives = matches!(
+        ev.kind,
+        EventKind::Create(_) | EventKind::Modify(ModifyKind::Name(_))
+    );
+    let mut out = Vec::new();
+    for p in ev.paths {
+        let c = canon(&p);
+        let Some(rel) = watched_rel(root, &c) else {
+            continue;
+        };
+        let dir = std::fs::symlink_metadata(&c).is_ok_and(|m| m.is_dir());
+        if dir && arrives {
+            out.push(Target::Scan(rel));
+        } else if rel.ends_with(".md") {
+            out.push(Target::Doc(rel));
+        }
+    }
+    out
+}
+
+/// The Markdown documents under the vault directory `rel`, by the rule of
+/// `watched_rel` (hidden components skipped); symbolic links are not
+/// followed (a note says so). A directory gone meanwhile has none.
+fn scan_dir(root: &Path, rel: &str) -> Vec<String> {
+    let mut out = Vec::new();
+    let mut stack = vec![rel.to_string()];
+    while let Some(d) = stack.pop() {
+        let entries = match std::fs::read_dir(root.join(&d)) {
+            Ok(e) => e,
+            Err(e) => {
+                log(format!("watch: {d}/: not read ({e})"));
+                continue;
+            }
+        };
+        for e in entries.flatten() {
+            let Some(name) = e.file_name().to_str().map(str::to_string) else {
+                continue;
+            };
+            if name.starts_with('.') {
+                continue;
+            }
+            let r = format!("{d}/{name}");
+            match e.file_type() {
+                Ok(t) if t.is_symlink() => {
+                    log(format!("watch: {r}: a symbolic link, not followed"))
+                }
+                Ok(t) if t.is_dir() => stack.push(r),
+                Ok(t) if t.is_file() && name.ends_with(".md") => out.push(r),
+                _ => {}
+            }
+        }
+    }
+    out
+}
+
+/// The watcher thread: batches the events that name a document or a new
+/// directory (50 ms of quiet, at most 250 ms; other events are dropped and
+/// never extend a batch), reads each new directory's Markdown files, then
+/// ingests each changed document once, in byte order (a document named
+/// twice — by a directory's scan and by its own event — is ingested once;
+/// an unchanged one writes nothing). Returns the watcher (dropping it stops
+/// the events, which ends the thread).
 fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
     use notify::{RecursiveMode, Watcher};
     let root = std::fs::canonicalize(kernel.vault())?;
@@ -104,32 +208,15 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
     let mut w = notify::recommended_watcher(tx).context("start the file watcher")?;
     w.watch(&root, RecursiveMode::Recursive)
         .with_context(|| format!("watch {}", root.display()))?;
-    // the documents an event names (none for `.rootmark/` writes, hidden
-    // or non-Markdown paths, and access events)
-    let docs_of = move |ev: notify::Result<notify::Event>, root: &Path| -> Vec<String> {
-        match ev {
-            Ok(ev) if !matches!(ev.kind, notify::EventKind::Access(_)) => ev
-                .paths
-                .into_iter()
-                // macOS reports /private/var/… for /var/…
-                .filter_map(|p| watched_doc(root, &std::fs::canonicalize(&p).unwrap_or(p)))
-                .collect(),
-            Ok(_) => Vec::new(),
-            Err(e) => {
-                log(format!("watch: error: {e}"));
-                Vec::new()
-            }
-        }
-    };
     std::thread::spawn(move || {
         while let Ok(first) = rx.recv() {
-            let mut docs: std::collections::BTreeSet<String> =
-                docs_of(first, &root).into_iter().collect();
-            if docs.is_empty() {
+            let mut targets: std::collections::BTreeSet<Target> =
+                targets_of(first, &root).into_iter().collect();
+            if targets.is_empty() {
                 continue; // the server's own writes under .rootmark/ etc.
             }
             // gather the rest of the batch: until 50 ms pass without an
-            // event naming a document, and at most 250 ms in all, so a
+            // event naming a target, and at most 250 ms in all, so a
             // stream of unrelated events (searches writing traces) can
             // never hold a change back
             let start = std::time::Instant::now();
@@ -143,13 +230,22 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<notify::RecommendedWatcher> {
                 }
                 match rx.recv_timeout(wait) {
                     Ok(ev) => {
-                        let d = docs_of(ev, &root);
-                        if !d.is_empty() {
+                        let t = targets_of(ev, &root);
+                        if !t.is_empty() {
                             last = std::time::Instant::now();
-                            docs.extend(d);
+                            targets.extend(t);
                         }
                     }
                     Err(_) => break,
+                }
+            }
+            let mut docs = std::collections::BTreeSet::new();
+            for t in targets {
+                match t {
+                    Target::Doc(d) => {
+                        docs.insert(d);
+                    }
+                    Target::Scan(d) => docs.extend(scan_dir(&root, &d)),
                 }
             }
             for d in docs {
