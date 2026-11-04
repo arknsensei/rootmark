@@ -1,5 +1,15 @@
 # P2-Q — İnsan adımı bekleniyor
 
+**Durum (2026-11-04): Q1 tamam (`v0.3.0` yayımlı), Q2 tamam, Q3 sürüyor (Docker D-NOTES aşaması emülasyonda H14'te).**
+
+**Açık istek 1 — zorunlu (Q3 (b) CI işi ve turun PR'ı bunu bekler): `p2-q/round`'un zorla itilmesi.** Yayım birleşince tur dalı yeni `main`'in (`0528ee8`) üstüne yeniden temellendirildi; yerel dalda Q1–Q3'ün commit'leri var, uzak dal hâlâ `f43dd05`. Ajanın zorla itmesi bu oturumda reddedildi. Beklenen: `git push --force-with-lease=p2-q/round:f43dd05 origin p2-q/round` (ya da bu itmeye izin).
+
+**Açık istek 2 — isteğe bağlı (süre): Docker'da Rosetta.** Docker Desktop'ta `UseVirtualizationFrameworkRosetta: false`: `linux/amd64` QEMU ile emüle ediliyor, bu iş yükünde ~90× yavaş (D-NOTES indeks kurulumu 27 148 s; Mac'te 297 s). Rosetta açılırsa Docker aşaması yeniden ve çok daha hızlı koşulur; açılmazsa mevcut koşu sürer (qorbit aşaması saatler daha).
+
+---
+Önceki kayıt:
+
+
 **Durum (2026-11-03 21:12Z): yayım insan adımları tamamlandı — `v0.3.0` yayımlı (PR #46 `0528ee8`, `release.yml` `41717748927`). Açık kalan tek istek: yeniden temellendirilmiş `p2-q/round`'un uzağa zorla itilmesi (aşağıda). Önceki durum: K-P2Q-T1 kararlaştırıldı — (a), kullanıcı bu oturumda; kayıt K-P2Q.2. Ek karar K-P2Q.3 (Türkçe sorguların ek ön-kaydı). `fseventsd` kullanıcı tarafından yeniden başlatıldı (e2e yeniden denenir).** Sıradaki insan adımları yayımındır (aşağıda); ajan yayım dalını hazırlayıp PR'ı taslaktan çıkarınca burası güncellenir.
 
 **Dosya olay servisi — giderildi:** `fseventsd` yeniden başladı (yeni süreç, 2026-11-03 23:22; CPU ~%0). Paketin gerçek Obsidian e2e'si yeniden koşuldu: **11/11** (E1-9, E-3 doğru; sözleşme dışı istek 0/57); `release_check.sh` **21/21**.
