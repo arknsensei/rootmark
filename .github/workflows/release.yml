@@ -25,6 +25,12 @@ name: release
 on:
   workflow_dispatch:
 
+# least privilege (P2-Q.1/R3, CodeQL actions/missing-workflow-permissions):
+# the build jobs only read the repository; `record` raises its own
+# permissions for the provenance attestation
+permissions:
+  contents: read
+
 jobs:
   binary:
     name: rootmark ${{ matrix.target }}

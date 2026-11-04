@@ -4,6 +4,47 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
+## 0.3.1 — unreleased (P2-Q.1: the watcher's removals and new folders)
+
+A patch of `rootmark serve --watch` (round P2-Q.1; two product bugs the P2-Q
+pilot measured, reports/rounds/P2-Q/FINDINGS.md). No event kind, field,
+format or spec version changes: vaults written by 0.3.0 open as they are
+(`events_hash` unchanged, no migration).
+
+### Fixes
+- **Deletions and moves are ingested (PQ-18).** A Markdown file removed
+  from the vault (deleted, or moved out of it), and every note of a folder
+  removed or moved out, is taken into the log as the document without
+  blocks: each of its live blocks gets a `BlockDeleted` (spec §5) with the
+  actor and source of the watcher's other changes (`unattested_fs` under
+  `unattested = "unverified"` when nobody attested it, spec §7.1), so it
+  leaves search and `blame`. A move inside the vault is the old path's
+  removal and the new path's ingest. The removal is taken after the
+  attestation window plus 0.5 s (`[attestation] window_s`, 2 s by default),
+  so that a client's attested rename — Obsidian's — is still checked against
+  the old path; the renamed note is ingested once, its old path closed once.
+  A file deleted and written again within that time is a change, not a
+  removal. Pending removals are taken before the server stops.
+- **Linux: files in a new folder are not missed (PQ-22).** A folder created
+  in (or moved into) the vault is read when the watcher sees it, so a file
+  written into it before inotify watched the folder is ingested; a file read
+  twice is ingested once.
+
+### Documentation
+- docs/GUIDE.md §5.1: Obsidian's "Do you trust the author of this vault?"
+  window and the current button name "Exit Restricted mode" (P2-Q
+  verification VF-1, PQ-24); §4.1: keeping a desktop agent out of
+  `.rootmark/` and the vault's files (P2-Q verification, recommendation 2).
+
+### Known issues
+- With `--mcp stdio`, SIGTERM logs `stopping` but the process exits only
+  when the MCP stream closes (PQ-14); `ingest-dir` skips hidden directories
+  (PQ-13); a hybrid "contains" query can rank its target below the first 10
+  (PQ-15). Planned for P2-C.
+- The pruning and shared-chunk issue of 0.3.0 (below) is unchanged.
+- The release archive carries only the default model's manifest (as in
+  0.3.0).
+
 ## 0.3.0 — 2026-11-03 (phase 2, blocks 1 and 2: Turkish vaults, promotion rules, contract v2, retention, CPU-independent embeddings)
 
 Rounds P2-L (after 0.2.0's release), P2-P, P2-B, P2-R and P2-V.1. Spec
