@@ -108,7 +108,8 @@ if [ -n "$vrep" ] && [ -f "$vrep" ]; then
   verdict="$(grep -oE '^\*\*Hüküm: [^*]+\*\*' "$vrep" | tail -1 | sed -E 's/^\*\*Hüküm: //; s/\.?\*\*$//' || true)"
 fi
 # (P2-L/F1; 0.2.0) the verdict of a report under a `## Hüküm` heading (its
-# first bold line), and a verdict "Şu koşullarla güvenilir" whose
+# first bold line; P2-Q.1/F1: also `### Hüküm`, as P2-Q's report has it),
+# and a verdict "Şu koşullarla güvenilir" whose
 # conditions a decision closed: step 1 names each report with the decision
 # — "`reports/rounds/<r>/VERIFICATION.md` (koşulu K-… kapattı)" — and that
 # decision's entry in docs/DECISIONS.md cites the report. Every report step
@@ -116,7 +117,7 @@ fi
 verdict_of() { # verdict_of <report> → its verdict, either form
   local v
   v="$(grep -oE '^\*\*Hüküm: [^*]+\*\*' "$1" | tail -1 | sed -E 's/^\*\*Hüküm: //; s/\.?\*\*$//' || true)"
-  [ -n "$v" ] || v="$(sed -n '/^## Hüküm/,/^## /p' "$1" | grep -oE '^\*\*[^*]+\*\*' | head -1 | sed -E 's/^\*\*//; s/\.?\*\*$//' || true)"
+  [ -n "$v" ] || v="$(sed -n '/^###* Hüküm/,/^## /p' "$1" | grep -oE '^\*\*[^*]+\*\*' | head -1 | sed -E 's/^\*\*//; s/\.?\*\*$//' || true)"
   printf '%s' "$v"
 }
 grep -oE 'reports/rounds/[^/` ]+/VERIFICATION\.md`?( \(koşulu K-[A-Za-z0-9.-]+ kapattı\))?' <<<"$step1" >"$tmp/r16" || true
