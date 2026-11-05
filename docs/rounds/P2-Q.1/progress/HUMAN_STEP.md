@@ -1,6 +1,6 @@
 # P2-Q.1 — İnsan adımı bekleniyor
 
-**Durum (2026-11-05): R0–R3 TAMAMLANDI; R4'ün (a)–(c)'si yapıldı, (d) (pilotun 0.3.1 ile yeniden ölçümü) yayımlanmış 0.3.1'i bekliyor.** Yayım PR'ı **#51** (`release/0.3.1` → `main`, "rootmark 0.3.1") açık; yerel paket `release_check` **21/21** (`f5002de`; R15 gerçek Obsidian 11/11). Ayrıntı: `R4.md`.
+**Durum (2026-11-05): R0–R3 TAMAMLANDI; R4'ün (a)–(c)'si yapıldı, (d) (pilotun 0.3.1 ile yeniden ölçümü) yayımlanmış 0.3.1'i bekliyor.** Yayım PR'ı **#51** (`release/0.3.1` → `main`, "rootmark 0.3.1") açık; yerel paket `release_check` **21/21** (`f5002de`; R15 gerçek Obsidian 11/11). Ayrıntı: `R4.md`. Kademe 2'nin düzeltilmiş commit'teki koşusu `41944358184` yeşil (D farkı 0, sayılan FAIL 0, portable 0); PR #51'in CI'ında `make test` macOS ve `ubuntu-latest`'te yeşil (yeni izleyici testleri Linux x86_64'te de).
 
 ## Şimdi beklenen — yayımın insan adımları (sırasıyla; `docs/RELEASE.md` "İnsan adımları")
 1. PR #51'in CI'ı yeşil olunca birleşmesi (ajan PR birleştirmez).
