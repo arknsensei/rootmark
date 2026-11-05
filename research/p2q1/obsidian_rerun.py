@@ -5,6 +5,7 @@ nothing else differs. Arguments are the scene's own.
 
     P2Q_PATH_KEY_FILE=<key> python -m p2q1.obsidian_rerun --snapshot … --work … --out … --guide … --guide-home … --rootmark …
 """
+
 from __future__ import annotations
 
 from pathlib import Path
