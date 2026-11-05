@@ -1,0 +1,66 @@
+[
+ {
+  "driver": 150,
+  "equal": true,
+  "observe": 150,
+  "what": "promotions by rule (lineages)"
+ },
+ {
+  "driver": 42,
+  "equal": true,
+  "observe": 42,
+  "what": "promotions by the human (lineages)"
+ },
+ {
+  "driver": 9,
+  "equal": true,
+  "observe": 9,
+  "what": "demotions by the human (lineages)"
+ },
+ {
+  "driver": {
+   "canonical": 28277,
+   "proposal": 142,
+   "unverified": 54
+  },
+  "equal": true,
+  "observe": {
+   "canonical": 28277,
+   "proposal": 142,
+   "unverified": 54
+  },
+  "what": "live lineages per layer"
+ },
+ {
+  "driver": 3,
+  "equal": true,
+  "observe": 3,
+  "what": "named checkpoints"
+ },
+ {
+  "driver": 345,
+  "equal": true,
+  "observe": 345,
+  "what": "traces (searches made)"
+ },
+ {
+  "driver": {
+   "pilot-h08": 50,
+   "pilot-queries": 290,
+   "toplayici/1.0": 5
+  },
+  "equal": true,
+  "observe": {
+   "pilot-h08": 50,
+   "pilot-queries": 290,
+   "toplayici/1.0": 5
+  },
+  "what": "traces per consumer"
+ },
+ {
+  "driver": 20,
+  "equal": true,
+  "observe": 20,
+  "what": "unverified observations (direct writes the watcher took in)"
+ }
+]
