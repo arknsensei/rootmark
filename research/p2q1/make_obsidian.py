@@ -12,6 +12,7 @@ Written before the scene runs (registration).
 
     P2Q_PATH_KEY_FILE=<key> python -m p2q1.make_obsidian --obsidian <snapshot> [--check]
 """
+
 from __future__ import annotations
 
 import argparse
