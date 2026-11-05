@@ -1,0 +1,15 @@
+{
+  "run_id": "41927841456",
+  "chains_run": "41927841456",
+  "tools_commit": "5dc015ced1d9eb019343a67c6ed1757b0717bc2f",
+  "commit_a": "5dc015ced1d9eb019343a67c6ed1757b0717bc2f",
+  "commit_b": "5dc015ced1d9eb019343a67c6ed1757b0717bc2f",
+  "started": "2026-11-04T22:44:09Z",
+  "chains_wall_s": 6408,
+  "compare_s": 221,
+  "wall_s": 6728,
+  "cpu_model_a": "AMD EPYC 9V45 96-Core Processor",
+  "cpu_model_b": "AMD EPYC 9V45 96-Core Processor",
+  "same_processor": true,
+  "pass": false
+}
