@@ -5,6 +5,7 @@ only `k2:` refs (synthetic paths in the clear) and counts.
 
     P2Q_PATH_KEY_FILE=<key> python -m p2q1.old_paths --vault <work>/vault --snapshot <snapshot> --rootmark <bin> --out <json>
 """
+
 from __future__ import annotations
 
 import argparse
@@ -38,7 +39,9 @@ def main(argv=None) -> int:
     olds += [("rename", by_ref[r["doc_ref"]]) for r in o["renames"]]
     rows = []
     for kind, p in olds:
-        r = subprocess.run([a.rootmark, "blame", str(a.vault), p], capture_output=True, text=True)
+        r = subprocess.run(
+            [a.rootmark, "blame", str(a.vault), p], check=False, capture_output=True, text=True
+        )
         live = len(json.loads(r.stdout)["blocks"]) if r.returncode == 0 else None
         rows.append(
             {
