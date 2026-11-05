@@ -1,31 +1,34 @@
-# P2-Q.1 — Rapor (TASLAK: tur insan adımında bekliyor)
+# P2-Q.1 — Rapor: izleyici yaması ve 0.3.1
 
-**Durum (2026-11-05):** bu bir ara rapordur, R5'te tamamlanır. Tur, 0.3.1'in yayımının insan adımlarını bekliyor (`docs/rounds/P2-Q.1/progress/HUMAN_STEP.md`: PR #51'in birleşmesi, `release.yml`, `v0.3.1` etiketi, GitHub sürümü). Yayıma bağlı ölçümler (R4 (d): D-NOTES Mac/Docker/CI ve Obsidian sahnesi O06/O10/O14 yayımlanmış 0.3.1 ile; Q1-8'in `release.yml` ve yayım kısmı) ve R5 (gözden geçirici, kapılar, READY, turun PR'ı) yapılmadı. **READY yazılmadı; doğrulama için hazır değil.** Karar kuralının dalı R5'te türetilir.
+`ROUND_START` = `2a0e3a9`; dal `p2-q.1/round` (birleşmiş `main` `e74e1f8`'in üstünde; yeniden temellendirme öncesi kimlikler `backup/p2-q.1-round-pre-rebase`, eşleme `R4.md`). Yayım: `release/0.3.1` → PR #51 (`e74e1f8`), `release.yml` `41994456323`, `v0.3.1` yayımlı. Gözden geçirici (tek tur): **KABUL** (`docs/rounds/P2-Q.1/progress/R5.review.md`).
 
-`ROUND_START` = `2a0e3a9`; dal `p2-q.1/round` (son itilen commit bu dosyanın commit'i); yayım dalı `release/0.3.1` (`f5002de`, PR #51).
+## Özet
+- **PQ-22 kapandı.** İzleyici yeni oluşturulan ya da vault'a taşınan dizini tarar. Linux'ta aynı test `ROUND_START` ağacında kaldı (hata yeniden üretildi), düzeltmeyle geçti; pilotun D-NOTES senaryosu yayımlanmış 0.3.1 ile iki CI koşusunda H09'un 20 yazımının hepsini aldı ve **Mac ↔ Docker ↔ CI₁ ↔ CI₂ bayt eşit** (P2-Q'nün 0.3.0 Mac kaydıyla da).
+- **PQ-18 kapandı.** Kaldırılan md dosyası spec'in mevcut biçimiyle bloksuz belge olarak alınır (§5 adım 7 `BlockDeleted`, aktör/kaynak §7, tasdiksiz `unattested_fs` §7.1); tasdikli yeniden adlandırma çift işlenmez (kaldırma tasdik penceresinden sonra). Obsidian sahnesinde (yeni ön-kayıt, K-P2Q1.3) silinen 4 ve taşınan 2 notun eski yollarında **canlı blok 0**, silinenler aramada **0** (P2-Q'de 47 + 107 blok canlıydı).
+- **Karar kuralının dalı: Q1-4 kaldı → tur kaldı, karar talebi (K-P2Q1-T3).** Kademe 2'nin tek ön-kayıtlı tetiklemesinde sayılan FAIL 1 ve adsız fark — nedeni turun kendi `release.yml` değişikliği (ürün değil), düzeltildi; ikinci tetikleme temiz. Öteki kriterler geçti.
+- GOAL dışı: **PQ1-1** (güncel Claude Code rootmark'ın MCP araçlarını listeleyemiyor → K-P2Q1.2: P2-Q.2, 0.3.2), **PQ1-4** (kaldırma beklemesi yük altında kısa kalabilir; gözden geçirici B1), PQ1-2, PQ1-3, PQ1-5.
 
-## Ne yapıldı
-- **PQ-22 (Linux'ta yeni dizin):** izleyici yeni oluşturulan ya da vault'a taşınan dizini tarar (`serve.rs`). `watch_newdir` N1–N6 (N1–N3 20'şer tekrar, 240 belge her biri tam bir kez): macOS 3/3; Linux (Docker arm64, inotify) **`ROUND_START` ağacında kaldı** (PQ-22 yeniden üretildi), R1'de 3/3; PR #51'in CI'ında `make test` macOS ve `ubuntu-latest`'te yeşil.
-- **PQ-18 (silme ve taşıma):** kaldırılan md dosyası bloksuz belge olarak alınır — spec §5 adım 7 (`BlockDeleted`), aktör/kaynak §7, tasdiksiz `unattested_fs` §7.1; kaldırma `W + 500 ms` bekletilir ki tasdikli yeniden adlandırma eski yolun başına karşı denetlensin (çift işlem yok); durdurmada bekleyenler alınır (`serve.rs`, `tools.rs` izleme alımı). `watch_remove` D1–D10 macOS 9/9, Linux 9/9; `make test-rust` temiz. Tasarım: `docs/rounds/P2-Q.1/progress/DESIGN.md` (koddan önce, §1.1 geri-adlandırma eki dahil).
-- **Belgeler:** kılavuz §5.1 VF-1 (PQ-24), PQ-25/26; §4.1 masaüstü ajan ayrımı (izin kuralları + sandbox) — sınandı: kurallı başsız Claude Code oturumu 5/5 reddedildi, kuralsız 5/5 yaptı (`R3_agent_isolation.md`); CHANGELOG 0.3.1; Known issues.
-- **Güvenlik:** `release.yml` en az yetki; CodeQL harness uyarıları gerekçeyle "test kodu" (GitHub'da kapatma insan adımı); `minimatch` 14 gün kuralıyla gerekçeli açık (`R3_security.md`).
-- **Kademe 2:** `41927841456` (`5dc015c`) D farkı 0, portable 0, **sayılan FAIL 1** (E1-5 `workflow_r13`: R3'ün `release.yml` değişikliği, R0'da adsız); düzeltme `29ea0b0`; `41944358184` (`110d243`) D farkı 0, sayılan FAIL 0, portable 0.
-- **Mac kümesi** (`5dc015c`, 3 tekrar): Z kümeleri 3/3; O: 0.3c/0.3d/0.3e/E1-3/E1-9/tamper 3/3, C1-8 1/1; E-7 tarihsel eşit; **E1-4 kayıt farklı** (R1, R13: R3'ün CHANGELOG/`release.yml`'si, `29ea0b0` ile giderildi; yayım paketinde R1, R13 ok); `reported_only` 0.3b 0.247–0.250 (0.3.0 izleyicisiyle aynı harness 0.238 → PQ1-2, bu turun değişikliğinden değil).
-- **0.3.1 yayım paketi:** `release_check` 21/21 (R15 gerçek Obsidian 11/11; R16 dondurma istisnası F1 ile); PR #51.
-- **D-NOTES aday denemesi** (yerel paket, hükme girmez): Mac ve Docker 19/23, H09 20/20, Mac ↔ Docker ↔ P2-Q 0.3.0 Mac bayt eşit.
+## Kriterler
+| Kod | Sonuç | Kanıt |
+|---|---|---|
+| Q1-1 | **geçti** | `DESIGN.md` + `TESTS.md` R1'in ilk kod commit'inden önce (`6b33042` R0, `a1dbf61` §1.1 eki; ilk kod `9e2336e`); olay biçiminin her satırı spec bölümüne atıflı (DESIGN §1: §5 adım 7, §7 Provenance, §7.1 External change / Window / Rename / unattested; §1.1: 2.0.3 geri-adlandırma maddesi); spec'in tanımlamadığı durum bulunmadı, uydurma 0 (gözden geçirici başlık 1) |
+| Q1-2 | **geçti** | testler: `watch_newdir` N1–N6 (N1–N3 ≥ 20 tekrar) macOS ve Linux (Docker arm64; `ROUND_START`'ta kaldı, R1'de 3/3: `r1/`), PR #51'in CI'ında `ubuntu-latest` ve `macos-14` `make test` yeşil (`41944803289`); pilot D-NOTES yayımlanmış 0.3.1 ile Mac, Docker, CI `41996549106` (EPYC 7763) ve `41996563930` (Xeon 6973P-C): H09 20/20 her birinde; `events_hash` `173c13df79d2d98dbff1df45453e193c`, vektör dosyaları, indeks manifest'i, sıralamalar beşinde bayt eşit (`pilot/compare.json`, en büyük ULP 0). **Okuma notu:** "CI'da H09 dahil bütün adımları" — 23 adımın 19'u geçti; kalan H02, H11, H15, H21 P2-Q'deki kalışların aynısı (PQ-13/15/14), GOAL'ün "Yapılmayacaklar"ına göre P2-C'nin kriterleri; bu tur onları değiştirmez. "Bütün adımları koştu (H09 dahil)" okunuşuyla geçti; "bütün adımlar geçti" okunuşu bu turun kapsamında karşılanamaz (doğrulayıcının dikkatine) |
+| Q1-3 | **geçti** | testler `watch_remove` D1–D10 macOS 9/9, Linux 9/9, CI'da yeşil (silme → aramada yok, `blame` boş, `BlockDeleted` her soy bir kez; tasdiksiz taşıma; tasdikli yeniden adlandırma zamanında ve geç — çift işlem 0; silip yeniden yaratma; dizin silme/taşıma; durdurmada bekleyenler; determinizm; §7.1 geri-adlandırma); Obsidian sahnesi (K-P2Q1.3: P2-Q'nün anahtarı kayıptı, yeni anahtar ve aynı adım tanımlarının yeni seçimi sahneden önce ön-kayıtlı `b356de6`) yayımlanmış 0.3.1 ile: O06 geçti, O14 geçti, O10'da silinenlerin sorguları o07/o08 0 sonuç (kalan o29–o32 hibrit "contains", PQ-15); `p2q1/old_paths.py`: 6 eski yolda canlı blok **0** (`pilot/obsidian/old_paths.json`) |
+| Q1-4 | **kaldı** (kuralla) | tek tetikleme `41927841456`: zincir çıkışları 0, D farkı 0, `portable` bulgu 0, **sayılan FAIL 1** (E1-5 `workflow_r13`, R0'da adsız) — R3'ün `release.yml` `permissions`'ı; düzeltme `c5d2daa`; bilgi: `41944358184` sayılan FAIL 0, D farkı 0, portable 0. Mac kümesi bir kez, kayıtlı (`mac_set/`): Z kümeleri 3/3; O: 0.3c/0.3d/0.3e/E1-3/E1-9/tamper 3/3, C1-8 1/1, E-7 tarihsel eşit, **E1-4 kayıt farklı** (R1, R13 — aynı neden); `reported_only` 0.3b 0.247/0.247/0.250 (0.3.0 izleyicisiyle 0.238; PQ1-2, fazlası PQ1-4 olabilir). R0'da adı geçen D kaydı `tamper_p2_0_2.json` önce/sonra bayt eşit |
+| Q1-5 | **geçti** | `git diff 2a0e3a9..HEAD -- core index bindings spec clients/*/src`: yalnız üç `Cargo.toml` sürüm satırı; `server/` farkı `serve.rs`, `tools.rs` (izleme alımı: `watch_removed`, `watched_docs_under`, `attestation_window`) ve yeni testler; dondurulmuş dosyada değişiklik yalnız F1 (`release_check.sh`, `FREEZE_EXCEPTIONS.md`, gözden geçirici onayı); `make conformance` 39/39; eski vault'lar göçsüz (yeni olay/alan/biçim yok; `gh0_migrate`, `p2a_migrate`, `p2v1_migrate`, `p1e1_status` testleri geçiyor) |
+| Q1-6 | **geçti** | kılavuz §5.1 VF-1 (PQ-24), PQ-25, PQ-26; §4.1 ajan ayrımı (izin kuralları + sandbox) yazılı ve sınandı — kurallı oturum 5/5 red, kuralsız 5/5 (`R3_agent_isolation.md`, betik ve kurallar `r3_probe/`); CHANGELOG `## 0.3.1`, Known issues güncel |
+| Q1-7 | **geçti** | `release.yml` `permissions: contents: read` → CodeQL #1 `fixed`; #2–#4 gerekçeyle "used in tests" (`R3_security.md`; kapatma insan onayıyla, K-P2Q1.2); açık CodeQL 0; Dependabot #80/#81 (`minimatch`, geliştirme, 14 gün kuralı 2026-11-10) yazılı gerekçeyle açık |
+| Q1-8 | **geçti** | yerel paket `release_check` R1–R20 + R4a **21/21** (`f5002de`; R15 gerçek Obsidian 11/11; `release/`); `release.yml` `41994456323` zorunlu iki hedef `ok`; `v0.3.1` yayımlı (insan, 12 dosya) |
+| Q1-9 | geçti (PR CI'ı ile kesinleşir) | `make test` 0, `make lint` 0 (bir `ruff` bulgusu düzeltildikten sonra), `make conformance` 39/39, `check_frozen` OK, `check_deps` 0, `check_dep_age` ve `make verify FAST=1`: `R5.md`; turun PR'ında kademe 1: `READY.md`; gözden geçirici KABUL |
 
-## Kriterlerin şimdiki durumu (R5'te kesinleşir)
-| Kod | Durum |
-|---|---|
-| Q1-1 | DESIGN/TESTS R1'in kodundan önce commit'li (`4168bd3`, `2153791`); olay biçimi atıflı; spec'in tanımlamadığı durum yok → geçti beklenir |
-| Q1-2 | test yarısı: macOS + Linux (Docker arm64; CI `ubuntu-latest` PR #51'de) yeşil; **yayım yarısı bekliyor** (D-NOTES CI iki koşu, Mac ↔ Docker ↔ CI 0.3.1 ile) |
-| Q1-3 | test yarısı: macOS + Linux yeşil; **yayım yarısı bekliyor** (Obsidian O06/O10/O14) |
-| Q1-4 | ilk tetikleme `41927841456`'da sayılan FAIL 1 ve adsız fark (turun kendi `release.yml` değişikliği) → GOAL "bir tetikleme" lafzıyla **kaldı**; düzeltmeden sonra `41944358184` temiz. Karar talebi R5'te. Mac kümesi kayıtlı; E1-4 farkı adıyla |
-| Q1-5 | ürün farkı yalnız `server/src/serve.rs`, `server/src/tools.rs` ve yeni testler; dondurulmuş değişiklik yalnız F1 (`release_check.sh`); conformance 39/39 (yayım paketi R5) — R5'te `git diff` ile kesinleşir |
-| Q1-6 | VF-1 (PQ-24), PQ-25/26, §4.1 sınandı, CHANGELOG ve Known issues → geçti beklenir |
-| Q1-7 | `release.yml` en az yetki; harness uyarıları gerekçeli (kapatma insan adımı); Dependabot gerekçeli → R5 |
-| Q1-8 | yerel R1–R20 21/21; **`release.yml` ve `v0.3.1` insan adımı bekliyor** |
-| Q1-9 | R5'te (kapılar, kademe 1, gözden geçirici) |
+## Karar kuralı
+GOAL'ün dalları sırayla: Q1-1 geçti (park yok); Q1-2 ve Q1-3 geçti → PQ-22 ve PQ-18 kapandı, 0.3.1 iki düzeltmeyle yayımlandı; **Q1-4 kaldı** (adsız fark, sayılan FAIL) → "tur kaldı; karar talebi (değişen kaydın adı ve sınıfı için; yeni ad kararla)" → **K-P2Q1-T3** (seçenekler orada; öneri (a): kalış kayıtlı kalır, ikinci tetikleme ve doğrulayıcının VR3 tetiklemesi bilgi/teyit). Q1-5..Q1-9 geçti. Hepsi-geçti dalı (P2-Q doğrulamasının koşulu (1) kapandı; sıradaki D-0) bu yüzden kendiliğinden işlemez; sıra K-P2Q1.2 ile P2-Q.2 → D-0.
 
-## GOAL dışı bulgular
-PQ1-1 (Claude Code 2.1.318 rootmark'ın MCP araçlarını listeleyemiyor; karar talebi K-P2Q1-T1), PQ1-2 (0.3b bu Mac'te 0.24; 0.3.0'da da) — `reports/rounds/P2-Q.1/FINDINGS.md`.
+## Kararlar
+K-P2Q1.1 (açılış), K-P2Q1.2 (K-P2Q1-T1 (a): P2-Q.2, 0.3.2; CodeQL kapatması), K-P2Q1.3 (K-P2Q1-T2 (a): Obsidian sahnesi yeni anahtarla yeni ön-kayıt); açık: K-P2Q1-T3 (Q1-4).
+
+## Bulgular
+`reports/rounds/P2-Q.1/FINDINGS.md`: PQ1-1 (Claude Code MCP araç listesi; P2-Q.2), PQ1-2 (0.3b 0.24 bu Mac'te; 0.3.0'da da), PQ1-3 (P2-Q sahnesinin sabit sürüm dizgisi), PQ1-4 (kaldırma beklemesi alımdan önce hesaplanıyor; P2-Q.2/P2-C), PQ1-5 (izleyicide küçükler). P2-Q'nün bulguları: PQ-22 ve PQ-18 **kapandı**, PQ-24..26 eklendi (`reports/rounds/P2-Q/FINDINGS.md`).
+
+## Koşu kimlikleri
+Kademe 2 `41927841456`, `41944358184`; Mac kümesi RUN `20261104T224719Z-5dc015c`; yayım `41994456323`; pilot CI `41996549106`, `41996563930`; PR #51 CI `41944803289`; turun PR'ı: `READY.md`.
