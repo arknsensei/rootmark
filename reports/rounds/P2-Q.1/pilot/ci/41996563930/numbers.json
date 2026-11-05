@@ -1,0 +1,35 @@
+{
+ "cpu": "Intel(R) Xeon(R) 6973P-C",
+ "direct_write_to_ingested_ms": {
+  "n": 20,
+  "p50": 230.319,
+  "p95": 238.05
+ },
+ "documents": 399,
+ "embedder_id": "minilm-l6-v2/e73168f9+fixed1",
+ "index_build_s": 637.969,
+ "index_chunks_per_s": 9.504,
+ "index_embedded": 6063,
+ "index_records": 6063,
+ "ingest_s": 1.679,
+ "platform": "Linux x86_64",
+ "propose_ms": {
+  "n": 100,
+  "p50": 232.778,
+  "p95": 352.674
+ },
+ "propose_to_searchable_ms": {
+  "n": 50,
+  "p50": 494.847,
+  "p95": 539.438
+ },
+ "python": "3.14.4",
+ "rootmark_dir_bytes": 47631419,
+ "search_ms": {
+  "n": 192,
+  "p50": 337.018,
+  "p95": 368.148
+ },
+ "serve_peak_rss_kib": 677592,
+ "serve_start_s": 0.233
+}

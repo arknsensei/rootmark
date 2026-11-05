@@ -1,0 +1,247 @@
+[
+ {
+  "id": "O01",
+  "pass": true,
+  "summary": {
+   "bytes": 4513708,
+   "files": 658,
+   "summary_b2": "b0b17dfc45a5a966c0a1beea9ede7000"
+  }
+ },
+ {
+  "id": "O02",
+  "pass": true,
+  "rc": 0
+ },
+ {
+  "id": "O03",
+  "pass": true,
+  "rc": 0
+ },
+ {
+  "id": "O04",
+  "index": "ok",
+  "pass": true,
+  "port": 27357
+ },
+ {
+  "guide_block": {
+   "failed": [],
+   "mode": "release",
+   "not_run": [],
+   "ok": 1,
+   "skipped": []
+  },
+  "id": "O05",
+  "pass": false,
+  "status_bar": "rootmark 0.3.1 · human:pilot"
+ },
+ {
+  "canonical_blocks": 38,
+  "edits": 22,
+  "false_unverified_blocks": 0,
+  "id": "O06",
+  "not_ingested": [],
+  "pass": true
+ },
+ {
+  "id": "O07",
+  "pass": true,
+  "renames": [
+   {
+    "docs_changed": 5,
+    "ingested": true,
+    "layers": {
+     "k2:006e6d36cdb8587d3bb0899af1f4020b": {
+      "unverified": 1
+     },
+     "k2:15c0b9782f40e9905f12b3a8ff78230b": {
+      "unverified": 1
+     },
+     "k2:fc287bac70f00a93263e945f773ffce0": {
+      "unverified": 1
+     },
+     "renamed": {
+      "canonical": 47
+     }
+    },
+    "ms": 1869.9,
+    "r": 1
+   },
+   {
+    "docs_changed": 3,
+    "ingested": true,
+    "layers": {
+     "k2:215b0dfbac0f67b08742d33410213ee2": {
+      "unverified": 1
+     },
+     "renamed": {
+      "canonical": 107
+     }
+    },
+    "ms": 1950.3,
+    "r": 2
+   }
+  ]
+ },
+ {
+  "id": "O08",
+  "pass": true,
+  "proposals": 4
+ },
+ {
+  "final_layers": {
+   "ajan/oneri-1.md": [
+    "proposal"
+   ],
+   "ajan/oneri-2.md": [
+    "proposal"
+   ],
+   "ajan/oneri-3.md": [
+    "canonical"
+   ],
+   "ajan/oneri-4.md": [
+    "canonical"
+   ]
+  },
+  "id": "O09",
+  "ops": [
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-1.md",
+    "op": "promote",
+    "via": "plugin"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-2.md",
+    "op": "promote",
+    "via": "plugin"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-3.md",
+    "op": "promote",
+    "via": "plugin"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-4.md",
+    "op": "promote",
+    "via": "plugin"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-1.md",
+    "op": "demote",
+    "plugin_demote_disabled": null,
+    "via": "http"
+   },
+   {
+    "blocks": 3,
+    "doc": "ajan/oneri-2.md",
+    "op": "demote",
+    "plugin_demote_disabled": null,
+    "via": "http"
+   }
+  ],
+  "pass": true
+ },
+ {
+  "failures": [
+   "o29: target k2:69e0480b0d3fbdb7124bc7eae5e3171e not among the hits",
+   "o30: target k2:53b6b113b6cd5bf1b68508d777e19f9d not among the hits",
+   "o31: target k2:2185191fd8eccd9b2f1869425f0e5da8 not among the hits",
+   "o32: target k2:4bc5a0bf08282c84e56ed7867897e9dd not among the hits"
+  ],
+  "id": "O10",
+  "n_failures": 4,
+  "pass": false
+ },
+ {
+  "documents": 18,
+  "id": "O11",
+  "pass": true
+ },
+ {
+  "id": "O12",
+  "md_changes_not_by_obsidian_or_agent": 0,
+  "operations": 24,
+  "outside_target": [],
+  "pass": true
+ },
+ {
+  "attest": {
+   "attest": {
+    "link_update:refused": 8,
+    "plain:accepted": 18,
+    "rename:accepted": 2
+   },
+   "observe": {
+    "attested": 20,
+    "unverified": 10
+   },
+   "refused": [
+    {
+     "code": "denied",
+     "doc": "k2:fc287bac70f00a93263e945f773ffce0",
+     "kind": "link_update",
+     "reason": "attest: k2:fc287bac70f00a93263e945f773ffce0 is not a link update of k2:fc287bac70f00a93263e945f773ffce0 for k2:11807403b11b2f33d2782cd64ede2fab: block 50: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:fc287bac70f00a93263e945f773ffce0",
+     "kind": "link_update",
+     "reason": "attest: k2:fc287bac70f00a93263e945f773ffce0 is not a link update of k2:fc287bac70f00a93263e945f773ffce0 for k2:11807403b11b2f33d2782cd64ede2fab: block 50: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:006e6d36cdb8587d3bb0899af1f4020b",
+     "kind": "link_update",
+     "reason": "attest: k2:006e6d36cdb8587d3bb0899af1f4020b is not a link update of k2:006e6d36cdb8587d3bb0899af1f4020b for k2:11807403b11b2f33d2782cd64ede2fab: block 114: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:006e6d36cdb8587d3bb0899af1f4020b",
+     "kind": "link_update",
+     "reason": "attest: k2:006e6d36cdb8587d3bb0899af1f4020b is not a link update of k2:006e6d36cdb8587d3bb0899af1f4020b for k2:11807403b11b2f33d2782cd64ede2fab: block 114: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:15c0b9782f40e9905f12b3a8ff78230b",
+     "kind": "link_update",
+     "reason": "attest: k2:15c0b9782f40e9905f12b3a8ff78230b is not a link update of k2:15c0b9782f40e9905f12b3a8ff78230b for k2:11807403b11b2f33d2782cd64ede2fab: block 54: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:15c0b9782f40e9905f12b3a8ff78230b",
+     "kind": "link_update",
+     "reason": "attest: k2:15c0b9782f40e9905f12b3a8ff78230b is not a link update of k2:15c0b9782f40e9905f12b3a8ff78230b for k2:11807403b11b2f33d2782cd64ede2fab: block 54: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:215b0dfbac0f67b08742d33410213ee2",
+     "kind": "link_update",
+     "reason": "attest: k2:215b0dfbac0f67b08742d33410213ee2 is not a link update of k2:215b0dfbac0f67b08742d33410213ee2 for k2:5fa1c6610dd7940601b72b369aeed013: block 3: the text differs outside link targets"
+    },
+    {
+     "code": "denied",
+     "doc": "k2:215b0dfbac0f67b08742d33410213ee2",
+     "kind": "link_update",
+     "reason": "attest: k2:215b0dfbac0f67b08742d33410213ee2 is not a link update of k2:215b0dfbac0f67b08742d33410213ee2 for k2:5fa1c6610dd7940601b72b369aeed013: block 3: the text differs outside link targets"
+    }
+   ]
+  },
+  "attest_bar": "attested 20 · unattested 4",
+  "id": "O13",
+  "panics": 0,
+  "pass": false,
+  "sigterm_rc": "timeout"
+ },
+ {
+  "id": "O14",
+  "pass": true,
+  "read_only": true,
+  "unequal": []
+ }
+]

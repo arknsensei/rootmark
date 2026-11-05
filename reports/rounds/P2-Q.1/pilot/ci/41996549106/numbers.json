@@ -1,0 +1,35 @@
+{
+ "cpu": "AMD EPYC 7763 64-Core Processor",
+ "direct_write_to_ingested_ms": {
+  "n": 20,
+  "p50": 242.172,
+  "p95": 246.518
+ },
+ "documents": 399,
+ "embedder_id": "minilm-l6-v2/e73168f9+fixed1",
+ "index_build_s": 550.135,
+ "index_chunks_per_s": 11.021,
+ "index_embedded": 6063,
+ "index_records": 6063,
+ "ingest_s": 2.542,
+ "platform": "Linux x86_64",
+ "propose_ms": {
+  "n": 100,
+  "p50": 332.943,
+  "p95": 363.78
+ },
+ "propose_to_searchable_ms": {
+  "n": 50,
+  "p50": 542.658,
+  "p95": 564.425
+ },
+ "python": "3.14.4",
+ "rootmark_dir_bytes": 47631419,
+ "search_ms": {
+  "n": 192,
+  "p50": 389.877,
+  "p95": 401.491
+ },
+ "serve_peak_rss_kib": 840812,
+ "serve_start_s": 0.334
+}
