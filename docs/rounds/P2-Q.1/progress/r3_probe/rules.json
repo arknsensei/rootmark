@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "deny": ["Read(/<vault>/.rootmark/**)", "Edit(/<vault>/**)"]
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "denyRead": ["<vault>/.rootmark"],
+      "denyWrite": ["<vault>"]
+    }
+  }
+}
