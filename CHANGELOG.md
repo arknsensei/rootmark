@@ -4,7 +4,7 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
-## 0.3.1 — unreleased (P2-Q.1: the watcher's removals and new folders)
+## Unreleased — 0.3.1 (P2-Q.1: the watcher's removals and new folders)
 
 A patch of `rootmark serve --watch` (round P2-Q.1; two product bugs the P2-Q
 pilot measured, reports/rounds/P2-Q/FINDINGS.md). No event kind, field,
