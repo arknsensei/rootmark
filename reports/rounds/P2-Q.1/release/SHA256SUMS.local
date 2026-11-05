@@ -1,0 +1,6 @@
+776cd0bec7ffff0f21ffbdcac933e839ee36515bd2cdeb366a9194dd5cfbdb17  bin/rootmark-0.3.1-aarch64-apple-darwin.tar.gz
+fa45aff3edcc60b195d87d78b7c4fafca5af7fd78e0107eecf348765418c9bcc  bin/rootmark-0.3.1-x86_64-unknown-linux-gnu.tar.gz
+5583f3ca76829d498e469790891bab4455fb5d92a434dc2c21c75172cbde9fd7  homebrew/rootmark.rb
+e7c2f77c58a8a8214f3199970b9afa3ca456c685e41c7b4870133a90d299d53b  obsidian/rootmark-0.3.1.zip
+216c8c55915b9a11b4b86f331c4df9b3f5d0818a41091d067d4b519907824731  spec-2.0.3/conformance.json
+07cea9fe0bd02599a6e081f417a3bd5f3ac206430581b9cbe107c32142bfcc2f  wheel/rootmark_bindings-0.3.1-cp311-abi3-macosx_11_0_arm64.whl
