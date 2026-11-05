@@ -1,0 +1,370 @@
+{
+ "edits": [
+  {
+   "doc": "pilot/yeni-1.md",
+   "e": 1,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 1187.9,
+   "op": "create"
+  },
+  {
+   "doc": "pilot/yeni-2.md",
+   "e": 2,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 259.8,
+   "op": "create"
+  },
+  {
+   "doc": "pilot/yeni-3.md",
+   "e": 3,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 256.4,
+   "op": "create"
+  },
+  {
+   "doc": "pilot/yeni-4.md",
+   "e": 4,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 254.8,
+   "op": "create"
+  },
+  {
+   "doc": "pilot/yeni-5.md",
+   "e": 5,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 257.5,
+   "op": "create"
+  },
+  {
+   "doc": "pilot/yeni-6.md",
+   "e": 6,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 252.9,
+   "op": "create"
+  },
+  {
+   "doc": "pilot/yeni-7.md",
+   "e": 7,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 254.6,
+   "op": "create"
+  },
+  {
+   "doc": "pilot/yeni-8.md",
+   "e": 8,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 256.4,
+   "op": "create"
+  },
+  {
+   "doc": "k2:82adebbbe941feb14bd2258617ab99eb",
+   "e": 9,
+   "ingested": true,
+   "layers": {
+    "canonical": 1
+   },
+   "ms": 295.7,
+   "op": "append"
+  },
+  {
+   "doc": "k2:eaa5555b56bd4b1a2d528bfaf5537e0d",
+   "e": 10,
+   "ingested": true,
+   "layers": {
+    "canonical": 1
+   },
+   "ms": 318.8,
+   "op": "append"
+  },
+  {
+   "doc": "k2:69e0480b0d3fbdb7124bc7eae5e3171e",
+   "e": 11,
+   "ingested": true,
+   "layers": {
+    "canonical": 1
+   },
+   "ms": 330.9,
+   "op": "append"
+  },
+  {
+   "doc": "k2:53b6b113b6cd5bf1b68508d777e19f9d",
+   "e": 12,
+   "ingested": true,
+   "layers": {
+    "canonical": 1
+   },
+   "ms": 321.1,
+   "op": "append"
+  },
+  {
+   "doc": "k2:2185191fd8eccd9b2f1869425f0e5da8",
+   "e": 13,
+   "ingested": true,
+   "layers": {
+    "canonical": 1
+   },
+   "ms": 317.8,
+   "op": "append"
+  },
+  {
+   "doc": "k2:4bc5a0bf08282c84e56ed7867897e9dd",
+   "e": 14,
+   "ingested": true,
+   "layers": {
+    "canonical": 1
+   },
+   "ms": 312.5,
+   "op": "append"
+  },
+  {
+   "doc": "k2:d75c9a1b4445939257869e473f0fd210",
+   "e": 15,
+   "ingested": true,
+   "layers": {
+    "canonical": 1
+   },
+   "ms": 282.0,
+   "op": "append"
+  },
+  {
+   "doc": "k2:33f29d3b798b885eb072adafe751502b",
+   "e": 16,
+   "ingested": true,
+   "layers": {
+    "canonical": 1
+   },
+   "ms": 269.7,
+   "op": "append"
+  },
+  {
+   "doc": "pilot/yeni-1.md",
+   "e": 17,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 265.1,
+   "op": "replace"
+  },
+  {
+   "doc": "pilot/yeni-2.md",
+   "e": 18,
+   "ingested": true,
+   "layers": {
+    "canonical": 3
+   },
+   "ms": 267.3,
+   "op": "replace"
+  },
+  {
+   "doc": "pilot/yeni-7.md",
+   "e": 19,
+   "ingested": true,
+   "ms": 2734.6,
+   "op": "delete"
+  },
+  {
+   "doc": "pilot/yeni-8.md",
+   "e": 20,
+   "ingested": true,
+   "ms": 2745.1,
+   "op": "delete"
+  },
+  {
+   "doc": "k2:c4afb5e934f0f5069147868379ef1b07",
+   "e": 21,
+   "ingested": true,
+   "ms": 2751.1,
+   "op": "delete"
+  },
+  {
+   "doc": "k2:e3d753c98b7ca034598613caec829cad",
+   "e": 22,
+   "ingested": true,
+   "ms": 2742.5,
+   "op": "delete"
+  }
+ ],
+ "md_operations": [
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 1"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 2"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 3"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 4"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 5"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 6"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 7"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 8"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 9"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 10"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 11"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 12"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 13"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 14"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 15"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 16"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 17"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 18"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 19"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 20"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 21"
+  },
+  {
+   "changed": 1,
+   "only_target": true,
+   "op": "edit 22"
+  },
+  {
+   "changed": 5,
+   "only_target": true,
+   "op": "rename 1"
+  },
+  {
+   "changed": 3,
+   "only_target": true,
+   "op": "rename 2"
+  }
+ ],
+ "renames": [
+  {
+   "docs_changed": 5,
+   "ingested": true,
+   "layers": {
+    "k2:006e6d36cdb8587d3bb0899af1f4020b": {
+     "unverified": 1
+    },
+    "k2:15c0b9782f40e9905f12b3a8ff78230b": {
+     "unverified": 1
+    },
+    "k2:fc287bac70f00a93263e945f773ffce0": {
+     "unverified": 1
+    },
+    "renamed": {
+     "canonical": 47
+    }
+   },
+   "ms": 1869.9,
+   "r": 1
+  },
+  {
+   "docs_changed": 3,
+   "ingested": true,
+   "layers": {
+    "k2:215b0dfbac0f67b08742d33410213ee2": {
+     "unverified": 1
+    },
+    "renamed": {
+     "canonical": 107
+    }
+   },
+   "ms": 1950.3,
+   "r": 2
+  }
+ ]
+}

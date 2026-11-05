@@ -1,0 +1,61 @@
+{
+ "attest": {
+  "link_update:refused": 8,
+  "plain:accepted": 18,
+  "rename:accepted": 2
+ },
+ "observe": {
+  "attested": 20,
+  "unverified": 10
+ },
+ "refused": [
+  {
+   "code": "denied",
+   "doc": "k2:fc287bac70f00a93263e945f773ffce0",
+   "kind": "link_update",
+   "reason": "attest: k2:fc287bac70f00a93263e945f773ffce0 is not a link update of k2:fc287bac70f00a93263e945f773ffce0 for k2:11807403b11b2f33d2782cd64ede2fab: block 50: the text differs outside link targets"
+  },
+  {
+   "code": "denied",
+   "doc": "k2:fc287bac70f00a93263e945f773ffce0",
+   "kind": "link_update",
+   "reason": "attest: k2:fc287bac70f00a93263e945f773ffce0 is not a link update of k2:fc287bac70f00a93263e945f773ffce0 for k2:11807403b11b2f33d2782cd64ede2fab: block 50: the text differs outside link targets"
+  },
+  {
+   "code": "denied",
+   "doc": "k2:006e6d36cdb8587d3bb0899af1f4020b",
+   "kind": "link_update",
+   "reason": "attest: k2:006e6d36cdb8587d3bb0899af1f4020b is not a link update of k2:006e6d36cdb8587d3bb0899af1f4020b for k2:11807403b11b2f33d2782cd64ede2fab: block 114: the text differs outside link targets"
+  },
+  {
+   "code": "denied",
+   "doc": "k2:006e6d36cdb8587d3bb0899af1f4020b",
+   "kind": "link_update",
+   "reason": "attest: k2:006e6d36cdb8587d3bb0899af1f4020b is not a link update of k2:006e6d36cdb8587d3bb0899af1f4020b for k2:11807403b11b2f33d2782cd64ede2fab: block 114: the text differs outside link targets"
+  },
+  {
+   "code": "denied",
+   "doc": "k2:15c0b9782f40e9905f12b3a8ff78230b",
+   "kind": "link_update",
+   "reason": "attest: k2:15c0b9782f40e9905f12b3a8ff78230b is not a link update of k2:15c0b9782f40e9905f12b3a8ff78230b for k2:11807403b11b2f33d2782cd64ede2fab: block 54: the text differs outside link targets"
+  },
+  {
+   "code": "denied",
+   "doc": "k2:15c0b9782f40e9905f12b3a8ff78230b",
+   "kind": "link_update",
+   "reason": "attest: k2:15c0b9782f40e9905f12b3a8ff78230b is not a link update of k2:15c0b9782f40e9905f12b3a8ff78230b for k2:11807403b11b2f33d2782cd64ede2fab: block 54: the text differs outside link targets"
+  },
+  {
+   "code": "denied",
+   "doc": "k2:215b0dfbac0f67b08742d33410213ee2",
+   "kind": "link_update",
+   "reason": "attest: k2:215b0dfbac0f67b08742d33410213ee2 is not a link update of k2:215b0dfbac0f67b08742d33410213ee2 for k2:5fa1c6610dd7940601b72b369aeed013: block 3: the text differs outside link targets"
+  },
+  {
+   "code": "denied",
+   "doc": "k2:215b0dfbac0f67b08742d33410213ee2",
+   "kind": "link_update",
+   "reason": "attest: k2:215b0dfbac0f67b08742d33410213ee2 is not a link update of k2:215b0dfbac0f67b08742d33410213ee2 for k2:5fa1c6610dd7940601b72b369aeed013: block 3: the text differs outside link targets"
+  }
+ ]
+}

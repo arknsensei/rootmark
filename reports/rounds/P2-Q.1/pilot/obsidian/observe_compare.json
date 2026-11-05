@@ -1,0 +1,28 @@
+[
+ {
+  "driver": 12,
+  "equal": true,
+  "observe": 12,
+  "what": "promotions by the human (lineages)"
+ },
+ {
+  "driver": 6,
+  "equal": true,
+  "observe": 6,
+  "what": "demotions by the human (lineages)"
+ },
+ {
+  "driver": {
+   "canonical": 43209,
+   "proposal": 6,
+   "unverified": 4
+  },
+  "equal": true,
+  "observe": {
+   "canonical": 43209,
+   "proposal": 6,
+   "unverified": 4
+  },
+  "what": "live lineages per layer"
+ }
+]

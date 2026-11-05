@@ -1,0 +1,48 @@
+{
+ "all_blamed": true,
+ "live_blocks_total": 0,
+ "rows": [
+  {
+   "blame_exit": 0,
+   "file_present": false,
+   "kind": "delete",
+   "live_blocks": 0,
+   "old_path": "pilot/yeni-7.md"
+  },
+  {
+   "blame_exit": 0,
+   "file_present": false,
+   "kind": "delete",
+   "live_blocks": 0,
+   "old_path": "pilot/yeni-8.md"
+  },
+  {
+   "blame_exit": 0,
+   "file_present": false,
+   "kind": "delete",
+   "live_blocks": 0,
+   "old_path": "k2:c4afb5e934f0f5069147868379ef1b07"
+  },
+  {
+   "blame_exit": 0,
+   "file_present": false,
+   "kind": "delete",
+   "live_blocks": 0,
+   "old_path": "k2:e3d753c98b7ca034598613caec829cad"
+  },
+  {
+   "blame_exit": 0,
+   "file_present": false,
+   "kind": "rename",
+   "live_blocks": 0,
+   "old_path": "k2:8532108c8ca9fb85bd5816a6fd355f6e"
+  },
+  {
+   "blame_exit": 0,
+   "file_present": false,
+   "kind": "rename",
+   "live_blocks": 0,
+   "old_path": "k2:6298d36ebda3a6ac5fb0a108faadffce"
+  }
+ ]
+}

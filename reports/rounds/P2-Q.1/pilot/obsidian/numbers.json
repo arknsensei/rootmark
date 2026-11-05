@@ -1,0 +1,17 @@
+{
+ "index_build_s": 558.481,
+ "index_embedded": 12329,
+ "ingest_s": 8.662,
+ "obsidian_save_to_layer_ms": {
+  "n": 22,
+  "p50": 282.03,
+  "p95": 2745.148
+ },
+ "rootmark_dir_bytes": 70198279,
+ "search_ms": {
+  "n": 42,
+  "p50": 370.151,
+  "p95": 383.722
+ },
+ "serve_peak_rss_kib": 1948208
+}

@@ -1,0 +1,18 @@
+{
+ "mode": "release",
+ "blocks": [
+  {
+   "id": "5.1#1",
+   "section": "5.1",
+   "first_command": "VER=0.3.1",
+   "commands": 10,
+   "status": "ok",
+   "err_lines": [],
+   "fails": 0
+  }
+ ],
+ "ok": 1,
+ "failed": [],
+ "skipped": [],
+ "not_run": []
+}
