@@ -1,5 +1,10 @@
 # P2-Q.1 — İnsan adımı
 
+**Durum (2026-11-05): tur bitti — READY yazıldı, PR #52 açık, CI 42005556608 yeşil.** Bekleyen: PR #52'nin birleşmesi (ajan birleştirmez), K-P2Q1-T3 (Q1-4) kararı, sonra bağımsız doğrulama (`VERIFY.md`) ve P2-Q.2'nin açılışı (K-P2Q1.2).
+
+---
+Önceki kayıt:
+
 **Durum (2026-11-05, öğleden sonra): yayımın insan adımları tamamlandı.** PR #51 birleşti (`e74e1f8`), `release.yml` `41994456323` başarılı (`release.json`: zorunlu `aarch64-apple-darwin` ve `x86_64-unknown-linux-gnu` `ok`, Windows da `ok`), `v0.3.1` `e74e1f8`'de etiketli, GitHub sürümü 12 dosyayla yayımlı. CodeQL açık uyarısı 0. Ajan R4 (d)'yi koşuyor (CI `pilot.yml` iki koşu, Docker, Mac, Obsidian sahnesi), sonra R5.
 
 ## Açık istekler (R5'ten önce)
