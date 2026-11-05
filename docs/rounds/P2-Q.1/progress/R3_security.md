@@ -23,3 +23,7 @@ for n in 2 3 4; do gh api -X PATCH repos/arknsensei/rootmark/code-scanning/alert
 | 81 | `minimatch` (aynı) | `clients/vscode/package-lock.json` | orta | aynı gerekçe (VS Code istemci iskeleti, yayımlanmaz). |
 
 Yayımlanan Rust ikilisinde (`Cargo.lock`) uyarı yok.
+
+## Son durum (2026-11-05, R4 sonrası)
+- CodeQL: açık uyarı **0** (`gh api …/code-scanning/alerts?state=open` → 0). #1 `fixed` (PR #51, `release.yml` `permissions`); #2, #3, #4 `dismissed` — "used in tests" (yukarıdaki gerekçe; kapatma insan onayıyla orkestratör oturumunda yapıldı, K-P2Q1.2).
+- Dependabot: #80, #81 (`minimatch`) gerekçeli açık (yukarıda; 2026-11-10'dan sonra).
