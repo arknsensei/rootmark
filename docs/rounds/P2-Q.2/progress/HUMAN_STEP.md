@@ -1,12 +1,12 @@
 # P2-Q.2 — İnsan adımı bekleniyor
 
-**Durum (2026-11-08, 23:10Z): PR #55 birleşti (rebase; `main` `7081416`), CI'ı yeşil (kademe 1 dahil).** Bekleyenler, sırasıyla:
-1. **Tur dalının zorla itilmesi.** Ajan `p2-q.2/round`'u yerelde birleşmiş `main`'in üstüne yeniden temellendirdi. `d6eb311`'in ağacı `7299ea3`'ünkiyle aynı; R4'ün dört kayıt commit'i ve bu güncelleme `7081416`'nın üstünde. Ajanın zorla itmesi otomatik modda reddedildi. Komut (ana dizinde; uzak dal şu an `be358b7`):
+**Durum (2026-11-09): PR #55 birleşti (rebase; `main` `7081416`). İlk `release.yml` koşusu (42532598520, orkestratör tetikledi) zorunlu `aarch64-apple-darwin` işinde açılamadı ("macos-14-arm64-us-default is not supported"; imaj 2026-11-02'de emekli). Etiket ve sürüm yok.** Düzeltme PR **#56** (`p2-q.2/release-macos-15` → `main`): önce DESIGN §6 eki (`b5a573b`), sonra `release.yml`'de tek satır `macos-14` → `macos-15`; R13/R20 ok. Bekleyenler, sırasıyla:
+1. **PR #56'nın birleşmesi** (ajan birleştirmez).
+2. **Tur dalının zorla itilmesi.** Ajan `p2-q.2/round`'u #56 birleşince birleşmiş `main`'in üstüne yerelde yeniden temellendirir ve sha'yı buraya yazar. Ajanın zorla itmesi otomatik modda reddedildi. Komut (uzak dal şu an `be358b7`):
    `git push --force-with-lease=p2-q.2/round:be358b7 origin p2-q.2/round`
-   (Yeniden temellendirmeden önceki uç yerelde `backup/p2-q.2-round-pre-rebase` dalında saklı.)
-2. `gh workflow run release.yml --ref main` → `release-json`'da `aarch64-apple-darwin` ve `x86_64-unknown-linux-gnu` `ok`.
-3. `git tag -a v0.3.2 -m "rootmark 0.3.2" 7081416 && git push origin v0.3.2`.
-4. GitHub sürümü `v0.3.2` (aşağıdaki 4. maddenin dosyalarıyla).
+   Önceki uç yerelde `backup/p2-q.2-round-pre-rebase` dalında saklı.
+3. `gh workflow run release.yml --ref main` (#56'dan sonra) → `release-json`'da `aarch64-apple-darwin` ve `x86_64-unknown-linux-gnu` `ok`.
+4. `v0.3.2` etiketi **#56'nın birleşmiş `main` commit'inde** (`7081416`'da değil) ve itme; GitHub sürümü (aşağıdaki dosyalarla).
 
 ---
 Önceki kayıt:
