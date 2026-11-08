@@ -88,5 +88,18 @@ Kademe 2'nin hükmü A↔B'dir (aynı commit'in iki zinciri). Aşağıdakiler **
 5. **İzleyici (PQ1-4) ve MCP (PQ1-1) için değişmez beklenenler:** kademe 2'nin D kayıtları — `p1d/inspector` (Inspector 2.9.0'ın `tools_list.json`'ı ve çağrıları: araç listesi aynı), `p2_0_2/tamper_p2_0_2.json` (izleyici altında üç yeniden adlandırma; pencere içinde geldikleri ve yük olmadığı için sonuçlar aynı), öteki MCP ve izleyici kayıtları. Mac kümesi: `Z-D10`, `Z-DA` değişmez beklenir; O kümelerinin yeniden adlandırma oturumları (0.3b/0.3b-yük/0.3c/0.3d/0.3e, `p2_0_3_checks.json`; D-B4) **değerleri** değişebilir (PQ1-4 düzeltmesi eski yolların kaldırılmasını yük altında geciktirir: `reported_only` 0.3b'nin yanlış `unverified` oranı düşebilir) — değerler adıyla raporlanır; hüküm P2-V.2 okumasıyla (deterministik O kriterleri geçmeli, `reported_only` hükme girmez).
 6. **Kademe 1 (FAST):** yalnız sürüm dizgileri (1).
 
+## 6 eki (R4, 2026-11-09; değişiklikten önce, K-P2Q1.4) — `release.yml`'nin macOS koşucusu
+§6.4 "değişiklik planlanmadı" demişti. PR #55 birleştikten sonra `release.yml`'nin ilk koşusu (42532598520, `7081416`; orkestratör tetikledi) zorunlu hedef `aarch64-apple-darwin`'de durdu: iş açılamadan iptal oldu ("The configuration 'macos-14-arm64-us-default' is not supported"). Linux ve Windows başarılı; `assemble` zorunlu hedef eksik olduğu için FAIL verdi. Etiket ve sürüm oluşturulmadı. GitHub `macos-14` imajını 2026-11-02'de emekliye ayırdı. `ci.yml` P2-V.1'de `macos-15`'e geçmişti (P2-V.1 ASSUMPTIONS E2-1: "`release.yml` (yayım) değişmedi; yayım bu turun kapsamında değil"); 0.3.1'in yayımı (2026-11-05) bu yüzden hâlâ eski imajda koştu. Bu yayımda artık koşamıyor.
+
+**Adıyla değişiklik (tek satır):** `.github/workflows/release.yml` matrisinin `aarch64-apple-darwin` satırında `os: macos-14` → `os: macos-15`. Aynı platform (arm64, Apple silicon); `ci.yml`'nin macOS işlerinin koştuğu imaj. Hedef, `required: true`, `archive`, iş adı (`rootmark aarch64-apple-darwin`), adımlar ve `on:` bloğu aynen kalır.
+
+**Etkisi (önceden):**
+- `release_check` R13'ün deseni (`- { target: aarch64-apple-darwin, .*required: true }`, `on:` bloğu yalnız `workflow_dispatch:`) değişmeden geçer. Değişiklikten sonra yerelde sınanır.
+- Kademe 2'nin E1-5 kaydı `workflow_r13` R13'ün `ok` değerini okur (`research/eval/run_p1e1_checks.py`), aynı kalır. Dondurulmuş araçların hiçbiri `release.yml`'nin satırlarını başka yerden okumaz (`grep`: yalnız açıklama satırlarında anılır).
+- R20 (eylemler sabit) ve `check_dep_age`: `uses:` değişmez.
+- Bu değişiklik **kademe 2'nin tek tetiklemesinden (42515401135, `d6eb311`) sonradır**. O koşunun kayıtları `release.yml`'nin bu satırını okumaz (R13 deseni aynı). Turun ikinci bir kademe 2 tetiklemesi yapılmaz (GOAL: bir tetikleme). Değişiklik yayım iş akışının kendi koşusuyla sınanır: `release.yml` yeniden koşar ve `aarch64-apple-darwin` `ok` olmalı (`release.json`, 39/39).
+
+Değişiklik `main`'e küçük bir PR'la girer (`p2-q.2/release-macos-15`; birleştirmeyi kullanıcı yapar). Sonra `release.yml` yeniden koşar ve etiket birleşmiş commit'e atılır.
+
 ## 7. Determinizm ve geriye uyum
 Yeni olay türü, alan, biçim ya da sürüm yok; eski günlükler aynen okunur, göç gerekmez; `make conformance` 39/39 beklenir. MCP araç listesi ve şemaları 0.3.1'inkiyle bayt eşit (Q2-3; `mcp_compat.rs` sabit dosyaya karşı denetler). D-NOTES senaryosu (`p2q.driver`, MCP `2025-06-18`) 0.3.2 ile 0.3.1'in kayıtlarıyla bayt eşit beklenir (`events_hash` `173c13df79d2d98dbff1df45453e193c`, vektörler, manifest).
