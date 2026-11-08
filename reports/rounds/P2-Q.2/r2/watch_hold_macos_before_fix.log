@@ -1,0 +1,31 @@
+
+running 5 tests
+test h3_deletion_under_load_is_taken ... ok
+test h1_late_attested_rename_under_load_20_times ... FAILED
+test h5_same_steps_same_log ... FAILED
+test h2_on_time_attested_rename_under_load ... ok
+test h4_write_stream_does_not_starve_a_removal ... ok
+
+failures:
+
+---- h1_late_attested_rename_under_load_20_times stdout ----
+
+thread 'h1_late_attested_rename_under_load_20_times' (213210483) panicked at server/tests/watch_hold.rs:246:5:
+h00.md → h00-r.md: late rename attestation refused: error: attest: HTTP 403 denied: attest: h00-r.md is not a rename of the content of h00.md: 3 blocks against 0 in h00.md
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- h5_same_steps_same_log stdout ----
+
+thread 'h5_same_steps_same_log' (213210487) panicked at server/tests/watch_hold.rs:246:5:
+same.md → same-r.md: late rename attestation refused: error: attest: HTTP 403 denied: attest: same-r.md is not a rename of the content of same.md: 3 blocks against 0 in same.md
+
+
+
+failures:
+    h1_late_attested_rename_under_load_20_times
+    h5_same_steps_same_log
+
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.43s
+
+error: test failed, to rerun pass `-p rootmark-server --test watch_hold`

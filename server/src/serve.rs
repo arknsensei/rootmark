@@ -204,6 +204,29 @@ fn scan_dir(root: &Path, rel: &str) -> Vec<String> {
     out
 }
 
+/// Test setting (P2-Q.2, PQ1-4; `server/tests/watch_hold.rs`): when set,
+/// the watcher waits this many milliseconds before each ingest of a
+/// document whose file is there, standing in for a long wait in the writer
+/// queue (load): the change is observed after the wait, as it is after a
+/// queue wait. Not a user setting; unset or empty, nothing changes.
+const INGEST_DELAY_VAR: &str = "ROOTMARK_WATCH_TEST_INGEST_DELAY_MS";
+
+/// The test setting `INGEST_DELAY_VAR`; a value that is not a number of
+/// milliseconds is an error (never ignored).
+fn ingest_delay() -> Result<Option<Duration>> {
+    match std::env::var(INGEST_DELAY_VAR) {
+        Err(std::env::VarError::NotPresent) => Ok(None),
+        Err(e) => bail!("{INGEST_DELAY_VAR}: {e}"),
+        Ok(s) if s.trim().is_empty() => Ok(None),
+        Ok(s) => {
+            let ms: u64 = s.trim().parse().with_context(|| {
+                format!("{INGEST_DELAY_VAR}={s:?} is not a number of milliseconds")
+            })?;
+            Ok(Some(Duration::from_millis(ms)))
+        }
+    }
+}
+
 /// What the watcher thread receives: the file events, and the service's
 /// stop (which ends the thread after the removals it holds are ingested).
 enum Msg {
@@ -283,6 +306,13 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
     use std::time::Instant;
     let root = std::fs::canonicalize(kernel.vault())?;
     let hold = kernel.attestation_window()? + Duration::from_millis(500);
+    let delay = ingest_delay()?;
+    if let Some(d) = delay {
+        log(format!(
+            "watch: test setting {INGEST_DELAY_VAR}={}: each ingest waits that long (stands in for load; not a user setting)",
+            d.as_millis()
+        ));
+    }
     let (tx, rx) = std::sync::mpsc::channel::<Msg>();
     let events = tx.clone();
     let mut w = notify::recommended_watcher(move |ev| {
@@ -358,6 +388,9 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
             for d in docs {
                 let p = root.join(&d);
                 if p.is_file() {
+                    if let Some(w) = delay {
+                        std::thread::sleep(w);
+                    }
                     ingest_doc(&kernel, &d);
                 } else if std::fs::symlink_metadata(&p).is_err() {
                     held.insert(d, due);
