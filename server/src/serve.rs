@@ -227,6 +227,14 @@ fn ingest_delay() -> Result<Option<Duration>> {
     }
 }
 
+/// A held removal (P2-Q.2 DESIGN §4.3): when it is ingested (`due`), and
+/// its first due time (`first`), after which a batch no longer pushes it.
+#[derive(Debug, Clone, Copy)]
+struct Held {
+    due: std::time::Instant,
+    first: std::time::Instant,
+}
+
 /// What the watcher thread receives: the file events, and the service's
 /// stop (which ends the thread after the removals it holds are ingested).
 enum Msg {
@@ -294,11 +302,18 @@ fn ingest_removal(kernel: &Kernel, root: &Path, d: &str) {
 /// a directory's scan and by its own event — is ingested once; an
 /// unchanged one writes nothing). A document whose path holds nothing, and
 /// each document the log holds under a directory gone, is a removal (PQ-18):
-/// held for the attestation window plus 500 ms, so that a rename's
+/// held for the attestation window plus 500 ms **from the end of its
+/// batch's ingest** (P2-Q.2, PQ1-4: the late-attestation window of a
+/// rename's new path starts when the new path is observed, inside that
+/// ingest, after any wait in the writer queue), and a later batch that
+/// ingests documents and began before the removal's first due time pushes
+/// it to that batch's end plus the hold (the new path may come in the next
+/// batch) — bounded: batches that begin later do not, so a stream of writes
+/// never holds a removal back for ever (P2-Q.2 DESIGN §4). So a rename's
 /// attestation, on time or late, is decided against the old path's head
-/// before its removal is ingested (spec §7.1 "Rename"; P2-Q.1 DESIGN
-/// §2.4), then ingested in byte order; the service's stop ingests the held
-/// removals at once.
+/// before its removal is ingested (spec §7.1 "Rename"; P2-Q.1 DESIGN §2.4),
+/// then the removals are ingested in byte order; the service's stop ingests
+/// the held removals at once.
 fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
     use notify::{RecursiveMode, Watcher};
     use std::collections::{BTreeMap, BTreeSet};
@@ -323,10 +338,10 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
         .with_context(|| format!("watch {}", root.display()))?;
     let thread = std::thread::spawn(move || {
         // held removals: document → when it is ingested
-        let mut held: BTreeMap<String, Instant> = BTreeMap::new();
+        let mut held: BTreeMap<String, Held> = BTreeMap::new();
         let mut stopping = false;
         while !stopping {
-            let first = match held.values().min() {
+            let first = match held.values().map(|h| h.due).min() {
                 None => Some(rx.recv().unwrap_or(Msg::Stop)),
                 Some(due) => match rx.recv_timeout(due.saturating_duration_since(Instant::now())) {
                     Ok(m) => Some(m),
@@ -334,6 +349,8 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
                     Err(RecvTimeoutError::Disconnected) => Some(Msg::Stop),
                 },
             };
+            // when this batch began (its first event arrived)
+            let began = Instant::now();
             let mut targets: BTreeSet<Target> = BTreeSet::new();
             match first {
                 None => {}
@@ -384,7 +401,8 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
                     },
                 }
             }
-            let due = Instant::now() + hold;
+            let mut removed = Vec::new();
+            let mut ingested = false;
             for d in docs {
                 let p = root.join(&d);
                 if p.is_file() {
@@ -392,21 +410,34 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
                         std::thread::sleep(w);
                     }
                     ingest_doc(&kernel, &d);
+                    ingested = true;
                 } else if std::fs::symlink_metadata(&p).is_err() {
-                    held.insert(d, due);
+                    removed.push(d);
                 } else {
                     log(format!("watch: {d} is not a file; not ingested"));
                 }
             }
+            // the holds start after this batch's ingest (PQ1-4)
+            let due = Instant::now() + hold;
+            if ingested {
+                for h in held.values_mut() {
+                    if began <= h.first {
+                        h.due = h.due.max(due);
+                    }
+                }
+            }
+            for d in removed {
+                held.insert(d, Held { due, first: due });
+            }
             for d in gone {
-                held.entry(d).or_insert(due);
+                held.entry(d).or_insert(Held { due, first: due });
             }
             // the removals whose hold is over (all of them when stopping),
             // in byte order
             let now = Instant::now();
             let ripe: Vec<String> = held
                 .iter()
-                .filter(|(_, t)| stopping || **t <= now)
+                .filter(|(_, h)| stopping || h.due <= now)
                 .map(|(d, _)| d.clone())
                 .collect();
             for d in ripe {
