@@ -1,0 +1,46 @@
+
+running 10 tests
+test m9_incomplete_discover_then_initialize ... FAILED
+test m8_claude_code_recorded_sequence ... FAILED
+test m7_inline_attempt_then_initialize ... FAILED
+test m10_same_session_same_log ... FAILED
+test m4_complete_meta_naming_2025_11_25 ... ok
+test m5_unrelated_meta ... ok
+test m1_2025_06_18_without_meta ... ok
+test m3_2026_07_28_asked_negotiates_2025_11_25 ... ok
+test m6_request_naming_2026_07_28_is_refused_session_stays ... ok
+test m2_2025_11_25_without_meta ... ok
+
+failures:
+
+---- m9_incomplete_discover_then_initialize stdout ----
+
+thread 'm9_incomplete_discover_then_initialize' (213117355) panicked at server/tests/mcp_compat.rs:104:37:
+no answer to request 1: channel is empty and sending half is closed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- m8_claude_code_recorded_sequence stdout ----
+
+thread 'm8_claude_code_recorded_sequence' (213117354) panicked at server/tests/mcp_compat.rs:175:5:
+tools/list: {"error":{"code":-32602,"message":"request _meta is missing or has malformed required fields: io.modelcontextprotocol/protocolVersion, io.modelcontextprotocol/clientCapabilities"},"id":2,"jsonrpc":"2.0"}
+
+---- m7_inline_attempt_then_initialize stdout ----
+
+thread 'm7_inline_attempt_then_initialize' (213117353) panicked at server/tests/mcp_compat.rs:175:5:
+tools/list: {"error":{"code":-32602,"message":"request _meta is missing or has malformed required fields: io.modelcontextprotocol/protocolVersion, io.modelcontextprotocol/clientCapabilities"},"id":2,"jsonrpc":"2.0"}
+
+---- m10_same_session_same_log stdout ----
+
+thread 'm10_same_session_same_log' (213117346) panicked at server/tests/mcp_compat.rs:175:5:
+tools/list: {"error":{"code":-32602,"message":"request _meta is missing or has malformed required fields: io.modelcontextprotocol/protocolVersion, io.modelcontextprotocol/clientCapabilities"},"id":2,"jsonrpc":"2.0"}
+
+
+failures:
+    m10_same_session_same_log
+    m7_inline_attempt_then_initialize
+    m8_claude_code_recorded_sequence
+    m9_incomplete_discover_then_initialize
+
+test result: FAILED. 6 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.04s
+
+error: test failed, to rerun pass `-p rootmark-server --test mcp_compat`

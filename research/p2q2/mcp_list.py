@@ -7,7 +7,7 @@ JSON (the server's bytes re-serialized with sorted keys, so two servers'
 lists compare byte for byte). Python standard library only.
 
     python3 mcp_list.py --rootmark <bin> --vault <vault> --out <file>
-        [--protocol 2025-06-18]
+        [--protocol 2025-06-18] [--raw <file>]
 """
 
 from __future__ import annotations
@@ -25,6 +25,7 @@ def main(argv=None) -> int:
     ap.add_argument("--vault", required=True)
     ap.add_argument("--out", required=True, type=Path)
     ap.add_argument("--protocol", default="2025-06-18")
+    ap.add_argument("--raw", type=Path, help="also write the response line as the server sent it")
     a = ap.parse_args(argv)
     p = subprocess.Popen(
         [a.rootmark, "serve", "--vault", a.vault, "--mcp", "stdio"],
@@ -38,10 +39,13 @@ def main(argv=None) -> int:
         p.stdin.write(json.dumps(m) + "\n")
         p.stdin.flush()
 
+    raw = {}
+
     def answer(i: int) -> dict:
         for line in p.stdout:
             m = json.loads(line)
             if m.get("id") == i:
+                raw[i] = line
                 return m
         raise SystemExit(f"no answer to request {i}")
 
@@ -70,6 +74,8 @@ def main(argv=None) -> int:
     a.out.write_text(
         json.dumps(r["result"], sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8"
     )
+    if a.raw:
+        a.raw.write_text(raw[2], encoding="utf-8")
     print(f"{len(r['result']['tools'])} tools, negotiated {init['result'].get('protocolVersion')}")
     return 0
 
