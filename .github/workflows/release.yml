@@ -40,7 +40,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { target: aarch64-apple-darwin, os: macos-14, archive: tar.gz, required: true }
+          # macos-15: GitHub retired the macos-14 image on 2026-11-02 (same arm64
+          # platform; ci.yml since P2-V.1, ASSUMPTIONS E2-1; P2-Q.2 DESIGN §6 eki)
+          - { target: aarch64-apple-darwin, os: macos-15, archive: tar.gz, required: true }
           - { target: x86_64-unknown-linux-gnu, os: ubuntu-24.04, archive: tar.gz, required: true }
           - { target: x86_64-pc-windows-msvc, os: windows-latest, archive: zip, required: false }
     defaults:
