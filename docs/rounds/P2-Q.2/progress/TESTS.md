@@ -51,3 +51,10 @@ Yeniden üretim (kanıt): R2'nin ilk commit'i yalnız test yapılandırmasını 
 
 ## Değişmeden geçmesi gerekenler
 `mcp_schemas.rs`, `contract.rs`, `p1d1_server.rs`, `p1d1_criteria.rs` (MCP), `watch_remove.rs` (D1–D10), `watch_newdir.rs` (N1–N6), `serve_watch.rs`; `make conformance` 39/39; `scripts/mcp_inspector.sh` (Inspector 2.9.0: araç listesi ve 11 çağrı).
+
+## R2 eki (R2'nin kodundan önce; H1–H2'nin kurulumu)
+R2'nin testini yazarken görüldü (kod yazılmadan): gecikme (`ROOTMARK_WATCH_TEST_INGEST_DELAY_MS` = 3000) pencereden (`window_s = 1.0`, `W` = 1 s) uzun olduğundan, dosya işleminden **önce ya da hemen sonra** kaydedilen bir tasdik, izleyici dosyayı 3 s sonra gözlediğinde artık `W`'nin dışındadır ve eşleşmez (spec §7.1 Window; `core/src/attest.rs` `Window::observe`: tasdik en çok `W` önce kaydedilmiş olmalı). Bu PQ1-4 değil, pencerenin tanımıdır; testin kurulumu buna göre:
+- **H1'in insan notu** `canonical`'a geç tasdikle getirilir: not yazılır, izleyici onu tasdiksiz alınca (`blame` 3 blok, `unverified`) `rootmark attest hNN.md` → `LayerChanged` (`late_attestation`), `canonical`. Ölçülen adım (geç tasdikli yeniden adlandırma) aynen.
+- **H2** (zamanında tasdik) `window_s = 5.0` ile koşar (hold 5.5 s > gecikme 3 s): tasdik yeniden adlandırmadan hemen sonra kaydedilir ve gözlem (3 s sonra) pencere içindedir. Beklenen aynen (`attest` başarılı, yeni yol `canonical`, eski yol bir kez `BlockDeleted`, yeni yolun alımından sonra). Bu vaka eski kodda da geçer (gerileme denetimi); ayırt edici vaka H1'dir.
+- **H3, H5** da H1'in kurulumuyla (geç tasdikli insan notu). H4 değişmez (gecikmesiz).
+- **H4'ün sınırı** "2 × hold + 1.5 s" → **"2 × hold + 3 s"** (6 s) ve yazım akışı **15 s** sürer (kaldırma akış sürerken alınmalı): DESIGN §4.3 (2)'nin üst sınırı `orig` + bir toplu işin süresi + `hold`'dur; bir toplu işin süresi gömmeyle CI koşucularında 1 s'yi aşabilir (P2-V.1'den beri gömme yavaş, PQ1-2). Ölçülen şey aynen: akış kaldırmayı süresiz bekletmez.
