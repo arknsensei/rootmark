@@ -1,0 +1,15 @@
+
+running 10 tests
+test m6_request_naming_2026_07_28_is_refused_session_stays ... ok
+test m4_complete_meta_naming_2025_11_25 ... ok
+test m3_2026_07_28_asked_negotiates_2025_11_25 ... ok
+test m5_unrelated_meta ... ok
+test m8_claude_code_recorded_sequence ... ok
+test m1_2025_06_18_without_meta ... ok
+test m9_incomplete_discover_then_initialize ... ok
+test m2_2025_11_25_without_meta ... ok
+test m7_inline_attempt_then_initialize ... ok
+test m10_same_session_same_log ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.45s
+
