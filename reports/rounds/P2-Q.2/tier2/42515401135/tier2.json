@@ -1,0 +1,15 @@
+{
+  "run_id": "42515401135",
+  "chains_run": "42515401135",
+  "tools_commit": "d6eb3111bf16e92e3271eef65add17425cc033a7",
+  "commit_a": "d6eb3111bf16e92e3271eef65add17425cc033a7",
+  "commit_b": "d6eb3111bf16e92e3271eef65add17425cc033a7",
+  "started": "2026-11-08T19:30:43Z",
+  "chains_wall_s": 9307,
+  "compare_s": 115,
+  "wall_s": 9571,
+  "cpu_model_a": "AMD EPYC 9V74 80-Core Processor",
+  "cpu_model_b": "AMD EPYC 9V74 80-Core Processor",
+  "same_processor": true,
+  "pass": true
+}
