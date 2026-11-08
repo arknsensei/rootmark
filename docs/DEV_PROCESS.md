@@ -21,6 +21,7 @@ Her tur `docs/rounds/<id>/` altında dört dosya ile tanımlanır:
 - Dal ve PR (K-P2.1): `main` korumalıdır (PR + CI, doğrusal geçmiş). Tur tek bir dalda (`<tur-id>/round`) ilerler; görev başına commit dalda, her görev sonunda dal uzağa itilir; tur sonunda READY.md ile tek PR açılır. PR'ı orkestratör birleştirir; doğrulayıcı birleşmiş `main`'i klonlar, VERIFICATION.md ayrı PR ile girer. Bir tur yalnız birleşmiş `main`'den açılır; `ROUND_START` bir `main` commit'ini ya da etiketi gösterir (rebase birleştirmesi dal commit'lerini yeniden yazar, K-P2.2).
 - Park kuralı: yalnız durma koşulunda; bağımlılar işaretlenir; park yerinden devam.
 - Soru sorulmaz; varsayım etiketli (`[spec] [arch] [-]`) olarak `ASSUMPTIONS.md`'ye yazılır. Spesifikasyonla çelişen varsayım yapılmaz; çelişki görülürse görev park edilir ve `DECISIONS.md`'ye karar talebi yazılır.
+- **Ön-kayıt anahtarları kalıcı yerde (K-P2Q1.5 ek kuralı; P2-Q.2).** Kişisel içerikli bir ön-kaydın anahtarı (ör. kişisel yolların `k2:` anahtarı) `~/.config/rootmark-lab/` altında, `600` kipinde tutulur ve o dizinin `README.txt`'sine bir satırla yazılır (dosya adı, tur, amaç; değer yazılmaz). Scratchpad'de, geçici dizinde ya da depoda tutulmaz: P2-Q'nün anahtarı scratchpad temizliğinde kayboldu (K-P2Q1-T2). Anahtarın değeri hiçbir kayda, günlüğe ya da commit'e girmez.
 
 ## 3. Kalite kapıları (her tur, her commit)
 - `cargo test`, `cargo clippy -D warnings`, `cargo fmt --check`; Python için `pytest`, `ruff`; TypeScript için `tsc`, `eslint`, `vitest`.

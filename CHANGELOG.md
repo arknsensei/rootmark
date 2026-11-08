@@ -4,6 +4,54 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
+## Unreleased — 0.3.2 (P2-Q.2: current Claude Code over MCP; the removal hold)
+
+A patch of the MCP server and of `rootmark serve --watch` (round P2-Q.2;
+two product bugs found in P2-Q.1, reports/rounds/P2-Q.1/FINDINGS.md PQ1-1
+and PQ1-4). The MCP tools — names, input schemas, answers — are unchanged
+(`tools/list` is byte for byte 0.3.1's); no event kind, field, format or
+spec version changes: vaults written by 0.3.1 open as they are
+(`events_hash` unchanged, no migration).
+
+### Fixes
+- **Current Claude Code lists rootmark's tools again (PQ1-1).** Claude
+  Code 2.1.318 and later first send a `server/discover` request naming the
+  2026-07-28 protocol; the MCP library 0.3.0 and 0.3.1 were built with
+  (`rmcp` 3.5.0) then held the whole session to that protocol's per-request
+  metadata, and refused the client's `tools/list` once it had fallen back to
+  `initialize` 2025-11-25 (`Failed to fetch tools: request _meta is missing
+  or has malformed required fields …`). Built with `rmcp` 3.6.0, where a
+  discovery request no longer selects the session's lifecycle. The server
+  still offers the protocol versions up to 2025-11-25 (a request naming
+  2026-07-28 gets the explicit error `-32022`); clients that send
+  `initialize` and no request metadata work as before. Checked with real
+  Claude Code 2.1.319, headless: 11 tools, `search`, `propose`.
+- **The removal hold starts after the batch's ingest (PQ1-4).** The watcher
+  computed when to take a removed note's removal before it had taken in the
+  rest of the batch; when that ingest was slow (a busy server) the removal
+  could be taken before a rename's late attestation, which was then refused
+  and left the renamed note `unverified` (only with `unattested =
+  "unverified"`). The hold (`window_s` + 0.5 s) now starts after the batch's
+  ingest, and a batch that ingests notes and began during the hold extends
+  it once (never indefinitely).
+
+### Documentation
+- docs/GUIDE.md §4.1: checking the Claude Code connection headless
+  (`claude -p`), reading the server's error from the debug log; "Known
+  issues": the Claude Code item removed; an attested rename's old path is
+  closed with `unattested_fs` under `"unverified"` (P2-Q.1 verification,
+  recommendation 3a); Claude Code's SIGKILL at the end of a session (PQ2-1).
+
+### Known issues
+- Claude Code kills its session's server about half a second after SIGTERM;
+  a `--watch` server still stopping then skips its final compaction and the
+  removals it holds (PQ2-1). With `--mcp stdio`, SIGTERM alone does not stop
+  the server (PQ-14). Planned for P2-C.
+- As in 0.3.1: `ingest-dir` skips hidden directories (PQ-13); a hybrid
+  "contains" query can rank its target below the first 10 (PQ-15); the
+  pruning and shared-chunk issue of 0.3.0; the release archive carries only
+  the default model's manifest.
+
 ## 0.3.1 — 2026-11-05 (P2-Q.1: the watcher's removals and new folders)
 
 A patch of `rootmark serve --watch` (round P2-Q.1; two product bugs the P2-Q
