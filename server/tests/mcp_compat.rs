@@ -35,8 +35,7 @@ fn fixture(name: &str) -> PathBuf {
 
 /// mini_vault copied and ingested into a fresh directory.
 fn vault(name: &str) -> PathBuf {
-    let root =
-        std::env::temp_dir().join(format!("rootmark-p2q2c-{}-{name}", std::process::id()));
+    let root = std::env::temp_dir().join(format!("rootmark-p2q2c-{}-{name}", std::process::id()));
     let _ = std::fs::remove_dir_all(&root);
     let v = root.join("vault");
     std::fs::create_dir_all(&v).unwrap();
@@ -182,12 +181,19 @@ fn works(mut c: Mcp, v: &Path, m: Option<Value>, raw: bool, name: &str, version:
         .iter()
         .map(|t| t["name"].as_str().unwrap())
         .collect();
-    let specs: Vec<&str> = rootmarkserver::tools::specs().iter().map(|s| s.name).collect();
+    let specs: Vec<&str> = rootmarkserver::tools::specs()
+        .iter()
+        .map(|s| s.name)
+        .collect();
     assert_eq!(names.len(), 11);
     assert_eq!(names, specs, "M11: the server's tools, in order");
     if raw {
         let want_raw = std::fs::read_to_string(fixture("tools_list_0.3.1.raw.jsonl")).unwrap();
-        assert_eq!(format!("{line}\n"), want_raw, "tools/list bytes differ from 0.3.1's");
+        assert_eq!(
+            format!("{line}\n"),
+            want_raw,
+            "tools/list bytes differ from 0.3.1's"
+        );
     }
     let (_, r) = c.request(
         json!(3),
@@ -199,7 +205,10 @@ fn works(mut c: Mcp, v: &Path, m: Option<Value>, raw: bool, name: &str, version:
     );
     assert!(r.get("error").is_none(), "search: {r}");
     assert_ne!(r["result"]["isError"], true, "search: {r}");
-    assert!(r["result"]["structuredContent"]["hits"].is_array(), "search: {r}");
+    assert!(
+        r["result"]["structuredContent"]["hits"].is_array(),
+        "search: {r}"
+    );
     let (_, r) = c.request(
         json!(4),
         "tools/call",
@@ -238,7 +247,10 @@ fn works(mut c: Mcp, v: &Path, m: Option<Value>, raw: bool, name: &str, version:
 fn m1_2025_06_18_without_meta() {
     let v = vault("m1");
     let mut c = Mcp::start(&v);
-    assert_eq!(c.init("2025-06-18", "generic", "1.0", json!({})), "2025-06-18");
+    assert_eq!(
+        c.init("2025-06-18", "generic", "1.0", json!({})),
+        "2025-06-18"
+    );
     works(c, &v, None, true, "generic", "1.0", "agent/m1.md");
 }
 
@@ -247,7 +259,10 @@ fn m1_2025_06_18_without_meta() {
 fn m2_2025_11_25_without_meta() {
     let v = vault("m2");
     let mut c = Mcp::start(&v);
-    assert_eq!(c.init("2025-11-25", "generic", "1.0", json!({})), "2025-11-25");
+    assert_eq!(
+        c.init("2025-11-25", "generic", "1.0", json!({})),
+        "2025-11-25"
+    );
     works(c, &v, None, true, "generic", "1.0", "agent/m2.md");
 }
 
@@ -256,7 +271,10 @@ fn m2_2025_11_25_without_meta() {
 fn m3_2026_07_28_asked_negotiates_2025_11_25() {
     let v = vault("m3");
     let mut c = Mcp::start(&v);
-    assert_eq!(c.init("2026-07-28", "generic", "1.0", json!({})), "2025-11-25");
+    assert_eq!(
+        c.init("2026-07-28", "generic", "1.0", json!({})),
+        "2025-11-25"
+    );
     works(c, &v, None, true, "generic", "1.0", "agent/m3.md");
 }
 
@@ -265,7 +283,10 @@ fn m3_2026_07_28_asked_negotiates_2025_11_25() {
 fn m4_complete_meta_naming_2025_11_25() {
     let v = vault("m4");
     let mut c = Mcp::start(&v);
-    assert_eq!(c.init("2025-11-25", "generic", "1.0", json!({})), "2025-11-25");
+    assert_eq!(
+        c.init("2025-11-25", "generic", "1.0", json!({})),
+        "2025-11-25"
+    );
     let m = meta("2025-11-25", "generic", "1.0", json!({}));
     works(c, &v, Some(m), false, "generic", "1.0", "agent/m4.md");
 }
@@ -275,7 +296,10 @@ fn m4_complete_meta_naming_2025_11_25() {
 fn m5_unrelated_meta() {
     let v = vault("m5");
     let mut c = Mcp::start(&v);
-    assert_eq!(c.init("2025-06-18", "generic", "1.0", json!({})), "2025-06-18");
+    assert_eq!(
+        c.init("2025-06-18", "generic", "1.0", json!({})),
+        "2025-06-18"
+    );
     works(
         c,
         &v,
@@ -294,7 +318,10 @@ fn m5_unrelated_meta() {
 fn m6_request_naming_2026_07_28_is_refused_session_stays() {
     let v = vault("m6");
     let mut c = Mcp::start(&v);
-    assert_eq!(c.init("2025-11-25", "generic", "1.0", json!({})), "2025-11-25");
+    assert_eq!(
+        c.init("2025-11-25", "generic", "1.0", json!({})),
+        "2025-11-25"
+    );
     let (_, r) = c.request(
         json!(9),
         "tools/list",
@@ -316,7 +343,10 @@ fn m7_inline_attempt_then_initialize() {
         Some(json!({"_meta": meta("2026-07-28", "generic", "1.0", json!({}))})),
     );
     assert_eq!(error_code(&r), Some(-32022), "{r}");
-    assert_eq!(c.init("2025-11-25", "generic", "1.0", json!({})), "2025-11-25");
+    assert_eq!(
+        c.init("2025-11-25", "generic", "1.0", json!({})),
+        "2025-11-25"
+    );
     works(c, &v, None, true, "generic", "1.0", "agent/m7.md");
 }
 
@@ -362,7 +392,10 @@ fn m9_incomplete_discover_then_initialize() {
         Some(json!({"_meta": {PV: "2026-07-28"}})),
     );
     assert_eq!(error_code(&r), Some(-32602), "server/discover: {r}");
-    assert_eq!(c.init("2025-11-25", "claude-code", "2.1.319", json!({})), "2025-11-25");
+    assert_eq!(
+        c.init("2025-11-25", "claude-code", "2.1.319", json!({})),
+        "2025-11-25"
+    );
     works(c, &v, None, true, "claude-code", "2.1.319", "agent/m9.md");
 }
 
