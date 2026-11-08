@@ -4,7 +4,7 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
-## Unreleased — 0.3.2 (P2-Q.2: current Claude Code over MCP; the removal hold)
+## 0.3.2 — 2026-11-08 (P2-Q.2: current Claude Code over MCP; the removal hold)
 
 A patch of the MCP server and of `rootmark serve --watch` (round P2-Q.2;
 two product bugs found in P2-Q.1, reports/rounds/P2-Q.1/FINDINGS.md PQ1-1
