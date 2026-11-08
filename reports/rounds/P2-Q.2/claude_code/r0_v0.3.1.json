@@ -1,0 +1,142 @@
+{
+  "label": "r0_v0.3.1",
+  "claude_code_version": "2.1.319 (Claude Code)",
+  "rootmark_version": "rootmark 0.3.1",
+  "command": "claude -p <PROMPT> --mcp-config <work>/mcp.json --strict-mcp-config --allowedTools mcp__rootmark__search,mcp__rootmark__propose,mcp__rootmark__status --output-format json --debug-file <work>/debug.log",
+  "server_command": "python3 research/p2q2/mcp_tap.py --log <work>/requests.jsonl -- <rootmark> serve --vault <vault> --mcp stdio",
+  "exit": 0,
+  "requests": [
+    {
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "str",
+      "jsonrpc": "2.0",
+      "meta_clientCapabilities_keys": [
+        "elicitation",
+        "extensions",
+        "roots"
+      ],
+      "meta_clientInfo": {
+        "name": "claude-code",
+        "version": "2.1.319"
+      },
+      "meta_keys": [
+        "io.modelcontextprotocol/clientCapabilities",
+        "io.modelcontextprotocol/clientInfo",
+        "io.modelcontextprotocol/protocolVersion"
+      ],
+      "meta_protocolVersion": "2026-07-28",
+      "method": "server/discover",
+      "params_keys": [
+        "_meta"
+      ]
+    },
+    {
+      "dir": "s2c",
+      "error": {
+        "code": -32022,
+        "message": "Unsupported protocol version"
+      },
+      "has_id": true,
+      "id_type": "str",
+      "jsonrpc": "2.0"
+    },
+    {
+      "capabilities_keys": [
+        "elicitation",
+        "roots"
+      ],
+      "clientInfo": {
+        "name": "claude-code",
+        "version": "2.1.319"
+      },
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "method": "initialize",
+      "params_keys": [
+        "capabilities",
+        "clientInfo",
+        "protocolVersion"
+      ],
+      "protocolVersion": "2025-11-25"
+    },
+    {
+      "dir": "s2c",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "result_keys": [
+        "capabilities",
+        "instructions",
+        "protocolVersion",
+        "serverInfo"
+      ],
+      "result_protocolVersion": "2025-11-25"
+    },
+    {
+      "dir": "c2s",
+      "has_id": false,
+      "jsonrpc": "2.0",
+      "method": "notifications/initialized"
+    },
+    {
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "method": "tools/list"
+    },
+    {
+      "dir": "s2c",
+      "error": {
+        "code": -32602,
+        "message": "request _meta is missing or has malformed required fields: io.modelcontextprotocol/protocolVersion, io.modelcontextprotocol/clientCapabilities"
+      },
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0"
+    }
+  ],
+  "methods_sent": {
+    "server/discover": 1,
+    "initialize": 1,
+    "notifications/initialized": 1,
+    "tools/list": 1
+  },
+  "tools_listed": null,
+  "tools_listed_count": 0,
+  "tools_match_0_3_1": false,
+  "tool_calls": [],
+  "server_errors": [
+    {
+      "code": -32022,
+      "message": "Unsupported protocol version"
+    },
+    {
+      "code": -32602,
+      "message": "request _meta is missing or has malformed required fields: io.modelcontextprotocol/protocolVersion, io.modelcontextprotocol/clientCapabilities"
+    }
+  ],
+  "debug_rootmark_lines": [
+    "MCP server \"rootmark\": Starting connection with timeout of 30000ms",
+    "MCP server \"rootmark\" Server stderr: rootmark serve: no policy.toml: wrote the default recipe (promotion human_only) to <path>",
+    "MCP server \"rootmark\": Successfully connected (transport: stdio) in 172ms",
+    "MCP server \"rootmark\": Connection established with capabilities: {\"hasTools\":true,\"hasPrompts\":false,\"hasResources\":false,\"hasResourceSubscribe\":false,\"serverVersion\":{\"name\":\"rootmark\",\"version\":\"0.3.1\"},\"protocolEra\":\"legacy\",\"negotiatedProtocolVersion\":\"2025-11-25\"}",
+    "MCP server \"rootmark\" Failed to fetch tools: request _meta is missing or has malformed required fields: io.modelcontextprotocol/protocolVersion, io.modelcontextprotocol/clientCapabilities",
+    "MCP server \"rootmark\": Sending SIGINT to MCP server process",
+    "MCP server \"rootmark\": SIGINT failed, sending SIGTERM to MCP server process",
+    "MCP server \"rootmark\": MCP server process exited cleanly",
+    "MCP server \"rootmark\": STDIO connection closed after 8s (cleanly)",
+    "MCP server \"rootmark\": Cleared connection cache for reconnection"
+  ],
+  "answer_steps": [
+    "1. FAILED: the rootmark server sent its instructions (\"rootmark 0.3.1 (spec 2.0.3) … over the Markdown vault …/r0/v031\"), but it gives me 0 tools. None are in my tool list, and searching the deferred tools for \"rootmark\" and \"+mcp__rootmark\" returned \"No matching deferred tools found\".",
+    "2. FAILED: there is no rootmark `search` tool to call (\"No matching deferred tools found\").",
+    "3. FAILED: there is no rootmark `propose` tool to call (\"No matching deferred tools found\")."
+  ],
+  "new_events": [],
+  "agent_events": 0,
+  "probe_file_written": false
+}

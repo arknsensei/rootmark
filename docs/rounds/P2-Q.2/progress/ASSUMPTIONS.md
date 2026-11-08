@@ -1,0 +1,5 @@
+# P2-Q.2 — Varsayımlar
+
+- **A1 [arch] (R0):** PQ1-4'ün testi için yükün yerine geçen gecikme, `server/src/serve.rs`'te bir ortam değişkeniyle verilir (`ROOTMARK_WATCH_TEST_INGEST_DELAY_MS`); GOAL "yalnız test yapılandırmasıyla; ürün varsayılanı değişmez" der. Değişken yoksa davranış bugünküdür; verildiğinde stderr'e yazılır (sessiz değil) ve geçersiz değer servisi durdurur. Kullanıcı ayarı değildir: CHANGELOG ve kılavuzda yer almaz. Gerekçe: gerçek yükle (eşzamanlı büyük `propose`) gecikme makineye ve gömme hızına bağlıdır, ≥ 20 tekrarlı bir test için belirlenimli değildir.
+- **A2 [-] (R0):** Q2-3'ün "`tools/list` çıktısı bayt eşit" ölçümü, `tools/list` sonucunun sıralı anahtarlarla yeniden yazılmış JSON'u üzerindedir (`research/p2q2/mcp_list.py`); ayrıca ham satır baytları da karşılaştırılır ve farklıysa nedeniyle (alan sırası) yazılır.
+- **A3 [-] (R0):** Gerçek Claude Code sınamasında sunucu `--mcp stdio` ile (kılavuzun `--http --watch` bayrakları olmadan) başlatılır: sınanan, MCP araç listesi ve `propose`'tur; HTTP ve izleyici bu yolu değiştirmez. Kılavuz §4.1'in tam komutu (bayraklarıyla) R3'te ayrıca sınanır.

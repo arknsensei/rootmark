@@ -1,0 +1,99 @@
+{
+  "what": "P2-Q.2/R0: message shapes between Claude Code 2.1.319 and rootmark 0.3.1 (serve --mcp stdio), recorded by research/p2q2/mcp_tap.py; no content, no host values",
+  "claude_code_version": "2.1.319",
+  "rootmark_version": "0.3.1",
+  "messages": [
+    {
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "str",
+      "jsonrpc": "2.0",
+      "meta_clientCapabilities_keys": [
+        "elicitation",
+        "extensions",
+        "roots"
+      ],
+      "meta_clientInfo": {
+        "name": "claude-code",
+        "version": "2.1.319"
+      },
+      "meta_keys": [
+        "io.modelcontextprotocol/clientCapabilities",
+        "io.modelcontextprotocol/clientInfo",
+        "io.modelcontextprotocol/protocolVersion"
+      ],
+      "meta_protocolVersion": "2026-07-28",
+      "method": "server/discover",
+      "params_keys": [
+        "_meta"
+      ]
+    },
+    {
+      "dir": "s2c",
+      "error": {
+        "code": -32022,
+        "message": "Unsupported protocol version"
+      },
+      "has_id": true,
+      "id_type": "str",
+      "jsonrpc": "2.0"
+    },
+    {
+      "capabilities_keys": [
+        "elicitation",
+        "roots"
+      ],
+      "clientInfo": {
+        "name": "claude-code",
+        "version": "2.1.319"
+      },
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "method": "initialize",
+      "params_keys": [
+        "capabilities",
+        "clientInfo",
+        "protocolVersion"
+      ],
+      "protocolVersion": "2025-11-25"
+    },
+    {
+      "dir": "s2c",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "result_keys": [
+        "capabilities",
+        "instructions",
+        "protocolVersion",
+        "serverInfo"
+      ],
+      "result_protocolVersion": "2025-11-25"
+    },
+    {
+      "dir": "c2s",
+      "has_id": false,
+      "jsonrpc": "2.0",
+      "method": "notifications/initialized"
+    },
+    {
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "method": "tools/list"
+    },
+    {
+      "dir": "s2c",
+      "error": {
+        "code": -32602,
+        "message": "request _meta is missing or has malformed required fields: io.modelcontextprotocol/protocolVersion, io.modelcontextprotocol/clientCapabilities"
+      },
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0"
+    }
+  ]
+}
