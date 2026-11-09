@@ -1,0 +1,67 @@
+{
+ "all_byte_equal": true,
+ "all_rankings_equal": true,
+ "base": "mac",
+ "pairs": [
+  {
+   "byte_equal": true,
+   "events_hash": true,
+   "index_files_differing": [],
+   "manifest": true,
+   "max_ulp": 0,
+   "other": "docker",
+   "rankings_differing": [],
+   "rankings_equal": true,
+   "scores_differing": [],
+   "vectors": true
+  },
+  {
+   "byte_equal": true,
+   "events_hash": true,
+   "index_files_differing": [],
+   "manifest": true,
+   "max_ulp": 0,
+   "other": "42575714093",
+   "rankings_differing": [],
+   "rankings_equal": true,
+   "scores_differing": [],
+   "vectors": true
+  },
+  {
+   "byte_equal": true,
+   "events_hash": true,
+   "index_files_differing": [],
+   "manifest": true,
+   "max_ulp": 0,
+   "other": "p2q1_mac_0.3.1",
+   "rankings_differing": [],
+   "rankings_equal": true,
+   "scores_differing": [],
+   "vectors": true
+  },
+  {
+   "byte_equal": true,
+   "events_hash": true,
+   "index_files_differing": [],
+   "manifest": true,
+   "max_ulp": 0,
+   "other": "p2q1_docker_0.3.1",
+   "rankings_differing": [],
+   "rankings_equal": true,
+   "scores_differing": [],
+   "vectors": true
+  },
+  {
+   "byte_equal": true,
+   "events_hash": true,
+   "index_files_differing": [],
+   "manifest": true,
+   "max_ulp": 0,
+   "other": "p2q1_ci_41996549106",
+   "rankings_differing": [],
+   "rankings_equal": true,
+   "scores_differing": [],
+   "vectors": true
+  }
+ ]
+}
