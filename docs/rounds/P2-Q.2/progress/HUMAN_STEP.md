@@ -1,5 +1,20 @@
 # P2-Q.2 — İnsan adımı bekleniyor
 
+**Durum (2026-11-09, 07:40Z): 0.3.2 yayımlandı ve R4 TAMAMLANDI.**
+- Yayım: `release.yml` 42574633881 başarılı; `v0.3.2` `c544a9e`'de; GitHub sürümü 12 dosya.
+- R4 (d):
+  - gerçek Claude Code 11/11 (yayımlanmış 0.3.2);
+  - D-NOTES Mac, Docker ve CI (42575714093) 19/23; bu üçü ve 0.3.1 kayıtları bayt eşit.
+
+Bekleyenler:
+1. **Tur dalının zorla itilmesi (kullanıcı).** Yerel `p2-q.2/round` `c544a9e`'nin üstünde ve R4'ün bütün kayıtlarını taşıyor. Uzak dal hâlâ `be358b7` (#55'ten önceki taban). Ajanın zorla itmesi otomatik modda reddediliyor. Komut:
+   `git push --force-with-lease=p2-q.2/round:be358b7 origin p2-q.2/round`
+   İtmeden sonra ajan normal itmeyle devam eder.
+2. **Zaman:** R3 (e) (`minimatch` 11.0.1 `overrides`) 2026-11-10T22:26Z'den önce commit'lenemez (`check_dep_age` ≥ 14 gün; ASSUMPTIONS A4). R5 (kapılar, FINDINGS, gözden geçirici, FINAL, READY, turun PR'ı) R3 TAMAMLANDI olunca başlar (DEV_PROCESS §2). Ajan bu saatte devam eder.
+
+---
+Önceki durum:
+
 **Durum (2026-11-09): PR #55 birleşti (rebase; `main` `7081416`). İlk `release.yml` koşusu (42532598520, orkestratör tetikledi) zorunlu `aarch64-apple-darwin` işinde açılamadı ("macos-14-arm64-us-default is not supported"; imaj 2026-11-02'de emekli). Etiket ve sürüm yok.** Düzeltme PR **#56** (`p2-q.2/release-macos-15` → `main`): önce DESIGN §6 eki (`b5a573b`), sonra `release.yml`'de tek satır `macos-14` → `macos-15`; R13/R20 ok. Bekleyenler, sırasıyla:
 1. ~~PR #56'nın birleşmesi~~ — **yapıldı:** `main` `c544a9e` (2026-11-09).
 2. **Tur dalının zorla itilmesi.** Ajan `p2-q.2/round`'u yerelde `c544a9e`'nin üstüne yeniden temellendirdi (R4'ün kayıt commit'leri ve bu güncelleme; ağaç `main`'den yalnız `docs/rounds/P2-Q.2/progress/` ve `reports/rounds/P2-Q.2/` ile ayrılır). Ajanın zorla itmesi otomatik modda reddedildi. Komut (uzak dal şu an `be358b7`):
