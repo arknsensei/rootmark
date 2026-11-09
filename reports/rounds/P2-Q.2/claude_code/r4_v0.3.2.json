@@ -1,0 +1,264 @@
+{
+  "label": "r4_v0.3.2",
+  "claude_code_version": "2.1.319 (Claude Code)",
+  "rootmark_version": "rootmark 0.3.2",
+  "command": "claude -p <PROMPT> --mcp-config <work>/mcp.json --strict-mcp-config --allowedTools mcp__rootmark__search,mcp__rootmark__propose,mcp__rootmark__status --output-format json --debug-file <work>/debug.log",
+  "server_command": "python3 research/p2q2/mcp_tap.py --log <work>/requests.jsonl -- <rootmark> serve --vault <vault> --mcp stdio",
+  "exit": 0,
+  "requests": [
+    {
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "str",
+      "jsonrpc": "2.0",
+      "meta_clientCapabilities_keys": [
+        "elicitation",
+        "extensions",
+        "roots"
+      ],
+      "meta_clientInfo": {
+        "name": "claude-code",
+        "version": "2.1.319"
+      },
+      "meta_keys": [
+        "io.modelcontextprotocol/clientCapabilities",
+        "io.modelcontextprotocol/clientInfo",
+        "io.modelcontextprotocol/protocolVersion"
+      ],
+      "meta_protocolVersion": "2026-07-28",
+      "method": "server/discover",
+      "params_keys": [
+        "_meta"
+      ]
+    },
+    {
+      "dir": "s2c",
+      "error": {
+        "code": -32022,
+        "message": "Unsupported protocol version"
+      },
+      "has_id": true,
+      "id_type": "str",
+      "jsonrpc": "2.0"
+    },
+    {
+      "capabilities_keys": [
+        "elicitation",
+        "roots"
+      ],
+      "clientInfo": {
+        "name": "claude-code",
+        "version": "2.1.319"
+      },
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "method": "initialize",
+      "params_keys": [
+        "capabilities",
+        "clientInfo",
+        "protocolVersion"
+      ],
+      "protocolVersion": "2025-11-25"
+    },
+    {
+      "dir": "s2c",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "result_keys": [
+        "capabilities",
+        "instructions",
+        "protocolVersion",
+        "serverInfo"
+      ],
+      "result_protocolVersion": "2025-11-25"
+    },
+    {
+      "dir": "c2s",
+      "has_id": false,
+      "jsonrpc": "2.0",
+      "method": "notifications/initialized"
+    },
+    {
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "method": "tools/list"
+    },
+    {
+      "dir": "s2c",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "result_keys": [
+        "tools"
+      ],
+      "tools": [
+        "blame",
+        "checkpoint",
+        "checkpoints",
+        "events",
+        "history",
+        "promote",
+        "propose",
+        "read_block",
+        "search",
+        "status",
+        "trace"
+      ]
+    },
+    {
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "meta_keys": [
+        "claudecode/toolUseId",
+        "progressToken"
+      ],
+      "method": "tools/call",
+      "params_keys": [
+        "_meta",
+        "arguments",
+        "name"
+      ],
+      "tool": "search"
+    },
+    {
+      "dir": "s2c",
+      "has_id": true,
+      "id_type": "int",
+      "isError": false,
+      "jsonrpc": "2.0",
+      "result_keys": [
+        "content",
+        "isError",
+        "structuredContent"
+      ]
+    },
+    {
+      "dir": "c2s",
+      "has_id": true,
+      "id_type": "int",
+      "jsonrpc": "2.0",
+      "meta_keys": [
+        "claudecode/toolUseId",
+        "progressToken"
+      ],
+      "method": "tools/call",
+      "params_keys": [
+        "_meta",
+        "arguments",
+        "name"
+      ],
+      "tool": "propose"
+    },
+    {
+      "dir": "s2c",
+      "has_id": true,
+      "id_type": "int",
+      "isError": false,
+      "jsonrpc": "2.0",
+      "result_keys": [
+        "content",
+        "isError",
+        "structuredContent"
+      ]
+    }
+  ],
+  "methods_sent": {
+    "server/discover": 1,
+    "initialize": 1,
+    "notifications/initialized": 1,
+    "tools/list": 1,
+    "tools/call": 2
+  },
+  "tools_listed": [
+    "blame",
+    "checkpoint",
+    "checkpoints",
+    "events",
+    "history",
+    "promote",
+    "propose",
+    "read_block",
+    "search",
+    "status",
+    "trace"
+  ],
+  "tools_listed_count": 11,
+  "tools_match_0_3_1": true,
+  "tool_calls": [
+    "search",
+    "propose"
+  ],
+  "server_errors": [
+    {
+      "code": -32022,
+      "message": "Unsupported protocol version"
+    }
+  ],
+  "debug_rootmark_lines": [
+    "MCP server \"rootmark\": Starting connection with timeout of 30000ms",
+    "MCP server \"rootmark\" Server stderr: rootmark serve: no policy.toml: wrote the default recipe (promotion human_only) to <path>",
+    "MCP server \"rootmark\": Successfully connected (transport: stdio) in 163ms",
+    "MCP server \"rootmark\": Connection established with capabilities: {\"hasTools\":true,\"hasPrompts\":false,\"hasResources\":false,\"hasResourceSubscribe\":false,\"serverVersion\":{\"name\":\"rootmark\",\"version\":\"0.3.2\"},\"protocolEra\":\"legacy\",\"negotiatedProtocolVersion\":\"2025-11-25\"}",
+    "MCP server \"rootmark\": Calling MCP tool: search",
+    "MCP server \"rootmark\": Tool 'search' completed successfully in 365ms",
+    "MCP server \"rootmark\": Calling MCP tool: propose",
+    "MCP server \"rootmark\": Tool 'propose' completed successfully in 168ms",
+    "MCP server \"rootmark\": Sending SIGINT to MCP server process",
+    "MCP server \"rootmark\": SIGINT failed, sending SIGTERM to MCP server process",
+    "MCP server \"rootmark\": MCP server process exited cleanly",
+    "MCP server \"rootmark\": STDIO connection closed after 11s (cleanly)",
+    "MCP server \"rootmark\": Cleared connection cache for reconnection"
+  ],
+  "answer_steps": [
+    "1. SUCCEEDED: rootmark offers 11 tools: blame, checkpoint, checkpoints, events, history, promote, propose, read_block, search, status, trace.",
+    "2. SUCCEEDED: `search` returned 3 hits.",
+    "3. SUCCEEDED: `propose` created `agent-probe/claude-code.md` with 2 blocks, both in the proposal layer."
+  ],
+  "new_events": [
+    {
+      "kind": "CheckpointCreated",
+      "doc": "",
+      "actor": null,
+      "layer": null,
+      "source": null,
+      "author_kind": null
+    },
+    {
+      "kind": "BlockCreated",
+      "doc": "agent-probe/claude-code.md",
+      "actor": null,
+      "layer": null,
+      "source": "claude-code/2.1.319",
+      "author_kind": "Agent"
+    },
+    {
+      "kind": "BlockCreated",
+      "doc": "agent-probe/claude-code.md",
+      "actor": null,
+      "layer": null,
+      "source": "claude-code/2.1.319",
+      "author_kind": "Agent"
+    },
+    {
+      "kind": "SnapshotCommitted",
+      "doc": "agent-probe/claude-code.md",
+      "actor": null,
+      "layer": null,
+      "source": null,
+      "author_kind": null
+    }
+  ],
+  "agent_events": 2,
+  "probe_file_written": true,
+  "probe_layers": [
+    "proposal",
+    "proposal"
+  ]
+}
