@@ -7,9 +7,7 @@
   - D-NOTES Mac, Docker ve CI (42575714093) 19/23; bu üçü ve 0.3.1 kayıtları bayt eşit.
 
 Bekleyenler:
-1. **Tur dalının zorla itilmesi (kullanıcı).** Yerel `p2-q.2/round` `c544a9e`'nin üstünde ve R4'ün bütün kayıtlarını taşıyor. Uzak dal hâlâ `be358b7` (#55'ten önceki taban). Ajanın zorla itmesi otomatik modda reddediliyor. Komut:
-   `git push --force-with-lease=p2-q.2/round:be358b7 origin p2-q.2/round`
-   İtmeden sonra ajan normal itmeyle devam eder.
+1. ~~Tur dalının zorla itilmesi (kullanıcı)~~ — **yapıldı** (2026-11-09): uzak `p2-q.2/round` = `61601dc`, yerel ile eşit; ajan normal itmeyle devam ediyor.
 2. **Zaman:** R3 (e) (`minimatch` 11.0.1 `overrides`) 2026-11-10T22:26Z'den önce commit'lenemez (`check_dep_age` ≥ 14 gün; ASSUMPTIONS A4). R5 (kapılar, FINDINGS, gözden geçirici, FINAL, READY, turun PR'ı) R3 TAMAMLANDI olunca başlar (DEV_PROCESS §2). Ajan bu saatte devam eder.
 
 ---
