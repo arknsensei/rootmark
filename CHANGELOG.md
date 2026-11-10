@@ -32,8 +32,9 @@ spec version changes: vaults written by 0.3.1 open as they are
   could be taken before a rename's late attestation, which was then refused
   and left the renamed note `unverified` (only with `unattested =
   "unverified"`). The hold (`window_s` + 0.5 s) now starts after the batch's
-  ingest, and a batch that ingests notes and began during the hold extends
-  it once (never indefinitely).
+  ingest; a batch that ingests notes and began before the removal's first
+  due time extends it to that batch's end plus the hold, a batch that began
+  later does not (so it is never held indefinitely).
 
 ### Documentation
 - docs/GUIDE.md §4.1: checking the Claude Code connection headless

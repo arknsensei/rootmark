@@ -1,0 +1,11 @@
+{
+  "commit": "701a595dab66d529c7a5e1cb0bdf50f1927ba9b5",
+  "host": "macOS arm64 (local)",
+  "make_test": {"exit": 0, "cargo": {"passed": 450, "failed": 0, "ignored": 3}, "pytest": {"passed": 316, "failed": 0}, "vitest": {"obsidian": "164/164", "vscode": "12/12"}, "known_skips": ["e1_1_real_old_index_status_and_reads", "e14_stale_index_answers_index_stale_or_is_rebuilt"]},
+  "make_lint": {"exit": 0, "check_frozen": "OK", "check_compare_fields": "OK", "gen_client_types": "up to date"},
+  "make_conformance": {"exit": 0, "result": "level 3, 39/39"},
+  "make_verify_fast": {"exit": 0, "run": "20261110T225334Z-701a595", "fast_chain_s": 1279, "pair": "equal (18550 fields)"},
+  "check_frozen": 0,
+  "check_deps": 0,
+  "check_dep_age": 0
+}
