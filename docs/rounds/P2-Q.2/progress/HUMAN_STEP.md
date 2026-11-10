@@ -1,5 +1,9 @@
 # P2-Q.2 — İnsan adımı bekleniyor
 
+**Durum (2026-11-10, 23:58Z): tur bitti — READY.md "doğrulama için hazır", PR #57 açık (CI 42921725577 yeşil).** R3 (e) minimatch 2026-11-10T22:26Z'den sonra yapıldı (`701a595`), R5 TAMAMLANDI. Bekleyen tek insan adımı PR #57'nin incelenmesi ve birleşmesi; sonra doğrulama ve temizlik.
+
+---
+
 **Durum (2026-11-09, 07:40Z): 0.3.2 yayımlandı ve R4 TAMAMLANDI.**
 - Yayım: `release.yml` 42574633881 başarılı; `v0.3.2` `c544a9e`'de; GitHub sürümü 12 dosya.
 - R4 (d):
