@@ -9,5 +9,8 @@
 
 `rmcp` 3.6.0'ın yükseltmesi yeni bir Dependabot uyarısı açmadı (Rust tarafında açık uyarı yok).
 
-## Son durum
-R3 (e)'den sonra güncellenir.
+## Son durum (2026-11-10T22:4xZ, R3 (e))
+- `clients/obsidian/package.json` ve `clients/vscode/package.json` `overrides`: `"minimatch": "11.0.1"` (yayım 2026-10-27T22:26:03Z; commit 14 gün sonra). `npm install` → iki kilitte `minimatch` 10.2.6 → 11.0.1.
+- 11.0.1 yeni bir dolaylı bağımlılık getirir: `@isaacs/nonrecursive-glob-match` `^1.0.1`. `npm`'in seçtiği 1.1.0 2026-11-05'te yayımlandı (5 gün; 14 gün kuralının ruhuna aykırı — `check_dep_age` yalnız doğrudan bağımlılıkları denetler). Bu yüzden o da `overrides` ile **1.0.1**'e sabitlendi (yayım 2026-10-27T04:24Z, ≥ 14 gün; `^1.0.1`'i karşılar). `brace-expansion` 5.0.12 (2026-09-14) değişmedi.
+- Kapılar: `make lint-ts` temiz, `make test-ts` 164/164 + 12/12, `npm audit` iki istemcide 0, `scripts/check_dep_age.sh` exit 0, eklenti derlemesi (`npm run build`) exit 0. Ürün kodu ve `clients/*/src` değişmedi.
+- Dependabot #80/#81 varsayılan dalı (`main`) tarar; turun PR'ı birleşince kapanmaları beklenir (birleşme insan adımı). CodeQL açık uyarı 0.
