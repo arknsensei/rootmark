@@ -1,0 +1,97 @@
+{
+ "summary": "D-0/R5 PQ2-1 (DESIGN \u00a74) and supplement (offline changes)",
+ "platforms": {
+  "macos": {
+   "machine": "arm64",
+   "rootmark_version": "rootmark 0.3.2",
+   "spec_version": "2.0.3",
+   "pq2_1_counts": {
+    "delete/kill": {
+     "persistent": 10
+    },
+    "delete/term": {
+     "control_taken": 10
+    },
+    "move/kill": {
+     "persistent": 10
+    },
+    "move/term": {
+     "control_taken": 10
+    }
+   },
+   "kill_after_op_s_range": [
+    0.501,
+    0.514
+   ],
+   "removal_taken_before_kill": 0,
+   "ingest_dir_server_down_closed": 0,
+   "ingest_dir_server_down_runs": 2,
+   "ingest_dir_events_hash": [
+    "70e455980d03a6ed9d013cd9a7db60dd",
+    "edb9fdf6fbb3862d837117dfc859dd96"
+   ],
+   "stopgap_rewrite_then_delete_closed": 2,
+   "stopgap_runs": 2,
+   "offline_changes": {
+    "taken_at_restart": {
+     "edit": 0,
+     "delete": 0,
+     "add": 0
+    },
+    "taken_by_ingest_dir": {
+     "edit": 3,
+     "delete": 0,
+     "add": 3
+    }
+   },
+   "offline_reps": 3
+  },
+  "linux": {
+   "machine": "x86_64",
+   "rootmark_version": "rootmark 0.3.2",
+   "spec_version": "2.0.3",
+   "pq2_1_counts": {
+    "delete/kill": {
+     "persistent": 10
+    },
+    "delete/term": {
+     "control_taken": 10
+    },
+    "move/kill": {
+     "persistent": 10
+    },
+    "move/term": {
+     "control_taken": 10
+    }
+   },
+   "kill_after_op_s_range": [
+    0.501,
+    0.511
+   ],
+   "removal_taken_before_kill": 0,
+   "ingest_dir_server_down_closed": 0,
+   "ingest_dir_server_down_runs": 2,
+   "ingest_dir_events_hash": [
+    "70e455980d03a6ed9d013cd9a7db60dd",
+    "edb9fdf6fbb3862d837117dfc859dd96"
+   ],
+   "stopgap_rewrite_then_delete_closed": 2,
+   "stopgap_runs": 2,
+   "offline_changes": {
+    "taken_at_restart": {
+     "edit": 0,
+     "delete": 0,
+     "add": 0
+    },
+    "taken_by_ingest_dir": {
+     "edit": 3,
+     "delete": 0,
+     "add": 3
+    }
+   },
+   "offline_reps": 3
+  }
+ },
+ "verdict": "persistent",
+ "ingest_dir_events_hash_mac_eq_linux": true
+}
