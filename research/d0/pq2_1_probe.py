@@ -12,6 +12,7 @@ binary is run as it is, on a synthetic vault (no personal content).
 The record holds counts, versions, commands and times only: no note
 content, no absolute path, no host name.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -29,27 +30,33 @@ import urllib.request
 from pathlib import Path
 
 NOTES = 20
-KILL_AFTER_S = 0.5      # < window_s + 0.5 s = 2.5 s (default recipe)
-TERM_AFTER_S = 5.0      # > 2.5 s: the control's removal is due before SIGTERM
-SETTLE_S = 10.0         # after the restart is ready (hold x 4)
+KILL_AFTER_S = 0.5  # < window_s + 0.5 s = 2.5 s (default recipe)
+TERM_AFTER_S = 5.0  # > 2.5 s: the control's removal is due before SIGTERM
+SETTLE_S = 10.0  # after the restart is ready (hold x 4)
 TARGET = "n00.md"
 MOVED = "sub/n00-moved.md"
-TOKEN = "zqprobe00"     # the target note's unique word
+TOKEN = "zqprobe00"  # the target note's unique word
 
 
 def make_vault(v: Path):
     (v / "sub").mkdir(parents=True)
     for i in range(NOTES):
-        body = (f"# Note {i:02d}\n\nThis synthetic note carries the word zqprobe{i:02d} once.\n\n"
-                f"A second paragraph about topic {i % 5} and item {i}.\n")
+        body = (
+            f"# Note {i:02d}\n\nThis synthetic note carries the word zqprobe{i:02d} once.\n\n"
+            f"A second paragraph about topic {i % 5} and item {i}.\n"
+        )
         (v / f"n{i:02d}.md").write_text(body, encoding="utf-8")
-    (v / "sub" / "keep.md").write_text("# Keep\n\nA note that keeps the sub directory.\n", encoding="utf-8")
+    (v / "sub" / "keep.md").write_text(
+        "# Keep\n\nA note that keeps the sub directory.\n", encoding="utf-8"
+    )
 
 
 def run(cmd, **kw):
-    p = subprocess.run(cmd, capture_output=True, text=True, **kw)
+    p = subprocess.run(cmd, check=False, capture_output=True, text=True, **kw)
     if p.returncode != 0:
-        raise SystemExit(f"command failed ({p.returncode}): {' '.join(map(str, cmd[:3]))} …: {p.stderr[-400:]}")
+        raise SystemExit(
+            f"command failed ({p.returncode}): {' '.join(map(str, cmd[:3]))} …: {p.stderr[-400:]}"
+        )
     return p.stdout
 
 
@@ -64,17 +71,28 @@ def free_port() -> int:
 class Server:
     def __init__(self, rm, vault: Path, port: int, log: Path):
         self.vault, self.port = vault, port
-        self.logf = open(log, "ab")
-        self.p = subprocess.Popen([rm, "serve", "--vault", str(vault), "--http", f"127.0.0.1:{port}", "--watch"],
-                                  stdout=subprocess.DEVNULL, stderr=self.logf)
+        self.logf = open(log, "ab")  # noqa: SIM115 (closed in stop())
+        self.p = subprocess.Popen(
+            [rm, "serve", "--vault", str(vault), "--http", f"127.0.0.1:{port}", "--watch"],
+            stdout=subprocess.DEVNULL,
+            stderr=self.logf,
+        )
         self.log = log
 
     def call(self, tool, body=None):
         tok = (self.vault / ".rootmark" / "server.token").read_text().strip()
         url = f"http://127.0.0.1:{self.port}/v1/{tool}"
         data = json.dumps(body).encode() if body is not None else None
-        req = urllib.request.Request(url, data=data, method="POST" if data else "GET", headers={
-            "Authorization": f"Bearer {tok}", "X-Consumer": "d0-probe", "Content-Type": "application/json"})
+        req = urllib.request.Request(
+            url,
+            data=data,
+            method="POST" if data else "GET",
+            headers={
+                "Authorization": f"Bearer {tok}",
+                "X-Consumer": "d0-probe",
+                "Content-Type": "application/json",
+            },
+        )
         with urllib.request.urlopen(req, timeout=60) as f:
             return json.loads(f.read())
 
@@ -87,8 +105,9 @@ class Server:
                 try:
                     self.call("status")
                     return time.monotonic() - t0
-                except Exception:
-                    pass
+                except OSError:  # not answering yet (URLError is an OSError)
+                    time.sleep(0.05)
+                    continue
             time.sleep(0.05)
         raise SystemExit("server not ready in time")
 
@@ -109,7 +128,9 @@ def events(v: Path):
 
 
 def deleted_for(v: Path, path: str) -> int:
-    return sum(1 for e in events(v) if e.get("kind") == "BlockDeleted" and e.get("doc_path") == path)
+    return sum(
+        1 for e in events(v) if e.get("kind") == "BlockDeleted" and e.get("doc_path") == path
+    )
 
 
 def hits_for(srv: Server, path: str) -> int:
@@ -160,7 +181,10 @@ def one(rm, base: Path, work: Path, op: str, stop: str, rep: int):
         time.sleep(3.0)
         (v / TARGET).unlink()
         time.sleep(SETTLE_S)
-        workaround = {"deleted_after": deleted_for(v, TARGET), "search_hits_after": hits_for(srv2, TARGET)}
+        workaround = {
+            "deleted_after": deleted_for(v, TARGET),
+            "search_hits_after": hits_for(srv2, TARGET),
+        }
     log_sha = hashlib.sha256((v / ".rootmark" / "events.jsonl").read_bytes()).hexdigest()
     n_events = len(events(v))
     rc2 = srv2.stop(signal.SIGTERM)
@@ -168,12 +192,15 @@ def one(rm, base: Path, work: Path, op: str, stop: str, rep: int):
     reingest = None
     if rep == 0 and stop == "kill":
         out = json.loads(run([rm, "ingest-dir", str(v), str(v)]))
-        reingest = {"deleted_after_reingest": deleted_for(v, TARGET), "events_hash": out.get("events_hash")}
+        reingest = {
+            "deleted_after_reingest": deleted_for(v, TARGET),
+            "events_hash": out.get("events_hash"),
+        }
     if stop == "term":
         # control: the removal is due before SIGTERM and must be taken then
         cls = "control_taken" if del_before_stop > 0 and hits_after == 0 else "control_failed"
     elif del_before_stop > 0:
-        cls = "other"         # the removal was taken before the kill: not a probe of PQ2-1
+        cls = "other"  # the removal was taken before the kill: not a probe of PQ2-1
     elif del_after_restart > 0 and hits_after == 0:
         cls = "recovered"
     elif del_after_restart == 0 and hits_after > 0:
@@ -181,14 +208,24 @@ def one(rm, base: Path, work: Path, op: str, stop: str, rep: int):
     else:
         cls = "other"
     rec = {
-        "op": op, "stop": stop, "rep": rep, "class": cls,
-        "stop_after_op_s": round(stop_at, 3), "exit_code_stop": rc1, "exit_code_final": rc2,
+        "op": op,
+        "stop": stop,
+        "rep": rep,
+        "class": cls,
+        "stop_after_op_s": round(stop_at, 3),
+        "exit_code_stop": rc1,
+        "exit_code_final": rc2,
         "ready_s": [round(ready1, 3), round(ready2, 3)],
-        "target_blocks_deleted": {"before_op": del0, "before_stop": del_before_stop,
-                                  "after_stop": del_after_stop, "after_restart_settle": del_after_restart},
+        "target_blocks_deleted": {
+            "before_op": del0,
+            "before_stop": del_before_stop,
+            "after_stop": del_after_stop,
+            "after_restart_settle": del_after_restart,
+        },
         "search_hits_target": {"before_op": hits0, "after_restart_settle": hits_after},
         "search_hits_moved_path": moved_hits,
-        "events_jsonl_sha256": log_sha, "events_count": n_events,
+        "events_jsonl_sha256": log_sha,
+        "events_count": n_events,
         "workaround_rewrite_then_delete": workaround,
         "status_index_state": (status.get("index") or {}).get("state"),
         "reingest_with_server_down": reingest,
@@ -223,7 +260,9 @@ def main():
             for stop in ("kill", "term"):
                 r = one(rm, base, work, op, stop, rep)
                 runs.append(r)
-                print(f"{a.platform} rep {rep} {op}/{stop}: {r['class']}", file=sys.stderr, flush=True)
+                print(
+                    f"{a.platform} rep {rep} {op}/{stop}: {r['class']}", file=sys.stderr, flush=True
+                )
     counts = {}
     for r in runs:
         k = f"{r['op']}/{r['stop']}"
@@ -231,23 +270,39 @@ def main():
         counts[k][r["class"]] = counts[k].get(r["class"], 0) + 1
     doc = {
         "probe": "D-0/R5 PQ2-1 (docs/rounds/D-0/progress/DESIGN.md §4)",
-        "platform": a.platform, "machine": platform.machine(), "system": platform.system(),
+        "platform": a.platform,
+        "machine": platform.machine(),
+        "system": platform.system(),
         "rootmark_version": run([rm, "--version"]).strip(),
         "spec_version": run([rm, "--spec-version"]).strip(),
-        "vault": {"notes": NOTES + 1, "synthetic": True, "base_events_hash": ing.get("events_hash"),
-                  "embedder_id": idx.get("embedder_id")},
-        "parameters": {"kill_after_op_s": KILL_AFTER_S, "term_after_op_s": TERM_AFTER_S,
-                       "settle_after_restart_s": SETTLE_S, "hold_default_s": 2.5, "reps": a.reps,
-                       "target": TARGET, "moved_to": MOVED},
-        "commands": ["rootmark ingest-dir V V", "rootmark index build V",
-                     "rootmark serve --vault V --http 127.0.0.1:PORT --watch",
-                     "op: unlink n00.md | rename n00.md -> sub/n00-moved.md",
-                     "kill: SIGKILL 0.5 s after op | term: SIGTERM 5 s after op",
-                     "rootmark serve --vault V --http 127.0.0.1:PORT --watch (restart), settle 10 s",
-                     "observe: BlockDeleted for n00.md in events.jsonl; POST /v1/search {query: zqprobe00}",
-                     "rep 0 of each kill case: SIGTERM, then rootmark ingest-dir V V (server down)"],
+        "vault": {
+            "notes": NOTES + 1,
+            "synthetic": True,
+            "base_events_hash": ing.get("events_hash"),
+            "embedder_id": idx.get("embedder_id"),
+        },
+        "parameters": {
+            "kill_after_op_s": KILL_AFTER_S,
+            "term_after_op_s": TERM_AFTER_S,
+            "settle_after_restart_s": SETTLE_S,
+            "hold_default_s": 2.5,
+            "reps": a.reps,
+            "target": TARGET,
+            "moved_to": MOVED,
+        },
+        "commands": [
+            "rootmark ingest-dir V V",
+            "rootmark index build V",
+            "rootmark serve --vault V --http 127.0.0.1:PORT --watch",
+            "op: unlink n00.md | rename n00.md -> sub/n00-moved.md",
+            "kill: SIGKILL 0.5 s after op | term: SIGTERM 5 s after op",
+            "rootmark serve --vault V --http 127.0.0.1:PORT --watch (restart), settle 10 s",
+            "observe: BlockDeleted for n00.md in events.jsonl; POST /v1/search {query: zqprobe00}",
+            "rep 0 of each kill case: SIGTERM, then rootmark ingest-dir V V (server down)",
+        ],
         "duration_s": round(time.time() - t0, 1),
-        "counts": counts, "runs": runs,
+        "counts": counts,
+        "runs": runs,
     }
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     Path(a.out).write_text(json.dumps(doc, indent=1) + "\n", encoding="utf-8")

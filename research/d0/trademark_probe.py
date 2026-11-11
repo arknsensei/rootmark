@@ -10,6 +10,7 @@ whether the query word occurs in the body are recorded — no body text.
 
     python3 -I research/d0/trademark_probe.py --out reports/rounds/D-0/trademark_probe.json
 """
+
 from __future__ import annotations
 
 import argparse
@@ -24,15 +25,27 @@ UA = "rootmark-d0-trademark-probe/1 (read-only)"
 Q = "rootmark"
 SOURCES = [
     ("TÜRKPATENT", "https://www.turkpatent.gov.tr/arastirma-yap?form=trademark"),
-    ("EUIPO TMview", f"https://www.tmdn.org/tmview/#/tmview/results?page=1&pageSize=30&criteria=C&basicSearch={Q}"),
-    ("EUIPO TMview (API, GET)", f"https://www.tmdn.org/tmview/api/search/results?basicSearch={Q}&page=1&pageSize=30"),
-    ("USPTO Trademark Search", f"https://tmsearch.uspto.gov/search/search-results?query={Q}&section=default"),
-    ("WIPO Global Brand Database", f"https://branddb.wipo.int/en/quicksearch/brand?by=brandName&v={Q}"),
+    (
+        "EUIPO TMview",
+        f"https://www.tmdn.org/tmview/#/tmview/results?page=1&pageSize=30&criteria=C&basicSearch={Q}",
+    ),
+    (
+        "EUIPO TMview (API, GET)",
+        f"https://www.tmdn.org/tmview/api/search/results?basicSearch={Q}&page=1&pageSize=30",
+    ),
+    (
+        "USPTO Trademark Search",
+        f"https://tmsearch.uspto.gov/search/search-results?query={Q}&section=default",
+    ),
+    (
+        "WIPO Global Brand Database",
+        f"https://branddb.wipo.int/en/quicksearch/brand?by=brandName&v={Q}",
+    ),
 ]
 
 
 def now():
-    return dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return dt.datetime.now(dt.UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def fetch(url):
@@ -43,7 +56,7 @@ def fetch(url):
             return at, f.status, f.headers.get("Content-Type"), f.read(), None
     except urllib.error.HTTPError as e:
         return at, e.code, e.headers.get("Content-Type"), e.read(), None
-    except Exception as e:
+    except (OSError, ValueError) as e:  # URLError is an OSError
         return at, None, None, None, type(e).__name__
 
 
@@ -61,17 +74,41 @@ def main():
             try:
                 json.loads(body)
                 machine = True
-            except Exception:
+            except ValueError:
                 machine = False
-        rows.append({"source": src, "url": url, "queried_at": at, "http_status": code, "error": err,
-                     "content_type": ctype, "bytes": len(body) if body else None,
-                     "body_sha256": hashlib.sha256(body).hexdigest() if body else None,
-                     "query_word_in_body": hit, "machine_readable_result": bool(machine),
-                     "verdict": "agent_result" if machine else "human_step (no machine-readable result for a GET)"})
-    doc = {"probe": "D-0/R2 trademark sources, GET only", "query": Q, "user_agent": UA, "rows": rows}
+        rows.append(
+            {
+                "source": src,
+                "url": url,
+                "queried_at": at,
+                "http_status": code,
+                "error": err,
+                "content_type": ctype,
+                "bytes": len(body) if body else None,
+                "body_sha256": hashlib.sha256(body).hexdigest() if body else None,
+                "query_word_in_body": hit,
+                "machine_readable_result": bool(machine),
+                "verdict": "agent_result"
+                if machine
+                else "human_step (no machine-readable result for a GET)",
+            }
+        )
+    doc = {
+        "probe": "D-0/R2 trademark sources, GET only",
+        "query": Q,
+        "user_agent": UA,
+        "rows": rows,
+    }
     Path(a.out).write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     for r in rows:
-        print(r["source"], r["http_status"] or r["error"], r["content_type"], r["bytes"], r["query_word_in_body"], r["verdict"])
+        print(
+            r["source"],
+            r["http_status"] or r["error"],
+            r["content_type"],
+            r["bytes"],
+            r["query_word_in_body"],
+            r["verdict"],
+        )
 
 
 if __name__ == "__main__":
