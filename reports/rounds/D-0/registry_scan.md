@@ -1,6 +1,6 @@
 # D-0 — Kayıt defteri taraması (okunur tablo)
 
-Kaynak: `registry_scan.json` (betik `research/d0/registry_scan.py` @ `7306155`; koşu 2026-11-11T20:19:48Z → 2026-11-11T20:22:54Z UTC). Her hücrenin URL'si, zamanı, yanıt kodu ve gövde sağlaması JSON'dadır. Bu tablo JSON'dan üretilir; elle düzenlenmez.
+Kaynak: `registry_scan.json` (betik `research/d0/registry_scan.py` @ `d90bd16`; koşu 2026-11-11T20:47:24Z → 2026-11-11T20:50:37Z UTC). Her hücrenin URL'si, zamanı, yanıt kodu ve gövde sağlaması JSON'dadır. Bu tablo JSON'dan üretilir; elle düzenlenmez.
 
 Hücre: 216/216; eksik 0; kanıtsız 0; dolu 5, boş 207, erişilemedi 4.
 
@@ -13,7 +13,7 @@ Hücre: 216/216; eksik 0; kanıtsız 0; dolu 5, boş 207, erişilemedi 4.
 | `testpypi` | boş | boş | boş | boş | boş | boş | boş | boş | boş |
 | `npm_pkg` | boş | boş | boş | boş | boş | boş | boş | boş | boş |
 | `npm_org` | boş | boş | boş | boş | boş | boş | boş | boş | boş |
-| `npm_user` | boş | boş | boş | boş | erişilemedi | erişilemedi | erişilemedi | boş | erişilemedi |
+| `npm_user` | boş | boş | erişilemedi | erişilemedi | erişilemedi | boş | boş | erişilemedi | boş |
 | `dockerhub` | boş | boş (geçersiz ad) | boş (geçersiz ad) | boş (geçersiz ad) | boş (geçersiz ad) | boş (geçersiz ad) | boş | boş | boş |
 | `ghcr` | dolu | boş | boş | boş | boş | boş | boş | boş | boş |
 | `github` | dolu | boş | boş | boş | boş | boş | boş | boş | boş |
@@ -37,19 +37,19 @@ Hücre: 216/216; eksik 0; kanıtsız 0; dolu 5, boş 207, erişilemedi 4.
 
 | ad | sütun | UTC | kod | özet | not |
 |---|---|---|---|---|---|
-| `rootmark` | `pypi` | 2026-11-11T20:19:49Z | 200 | {"canonical_name": "rootmark", "summary": "Rootmark SDK -- agent instrumentation", "latest_version": "0.1.5", "first_upload": "2026-08-17", "last_upload": "2026-10-24", "release_count": 7, "project_urls": ["https://github.com/IvanAdactic/rootmark", "https:/… |  |
-| `rootmark` | `ghcr` | 2026-11-11T20:19:52Z | 401 | {"public_image_rootmark": false, "token_status": 403, "namespace_owner": {"login": "RootMark", "type": "User", "created": "2018-03-08", "public_repos": 0}, "namespace_owner_from": "github row"} | namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark |
-| `rootmark` | `github` | 2026-11-11T20:19:51Z | 200 | {"login": "RootMark", "type": "User", "created": "2018-03-08", "public_repos": 0} |  |
-| `rootmark` | `dom_ai` | 2026-11-11T20:19:55Z | 200 | {"registered": "2026-11-10", "expires": "2028-11-10", "registrar": "GoDaddy.com, LLC", "status": ["client delete prohibited", "client renew prohibited", "client transfer prohibited", "client update prohibited", "add period"]} |  |
-| `rootmark` | `dom_com` | 2026-11-11T20:19:55Z | 200 | {"registered": "2004-03-24", "expires": "2027-03-24", "registrar": "Squarespace Domains LLC", "status": ["client delete prohibited", "client transfer prohibited"]} |  |
-| `rootmark-server` | `npm_user` | 2026-11-11T20:21:04Z | 403 | {} | www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md |
-| `rootmark-ai` | `npm_user` | 2026-11-11T20:21:33Z | 403 | {} | www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md |
-| `getrootmark` | `npm_user` | 2026-11-11T20:22:02Z | 403 | {} | www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md |
-| `rootmarkhq` | `npm_user` | 2026-11-11T20:22:39Z | 403 | {} | www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md |
+| `rootmark` | `pypi` | 2026-11-11T20:47:25Z | 200 | {"canonical_name": "rootmark", "summary": "Rootmark SDK -- agent instrumentation", "latest_version": "0.1.5", "first_upload": "2026-08-17", "last_upload": "2026-10-24", "release_count": 7, "project_urls": ["https://github.com/IvanAdactic/rootmark", "https:/… |  |
+| `rootmark` | `ghcr` | 2026-11-11T20:47:35Z | 401 | {"public_image_rootmark": false, "token_status": 403, "namespace_owner": {"login": "RootMark", "type": "User", "created": "2018-03-08", "public_repos": 0}, "namespace_owner_from": "github row"} | namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark |
+| `rootmark` | `github` | 2026-11-11T20:47:35Z | 200 | {"login": "RootMark", "type": "User", "created": "2018-03-08", "public_repos": 0} |  |
+| `rootmark` | `dom_ai` | 2026-11-11T20:47:38Z | 200 | {"registered": "2026-11-10", "expires": "2028-11-10", "registrar": "GoDaddy.com, LLC", "status": ["client delete prohibited", "client renew prohibited", "client transfer prohibited", "client update prohibited", "add period"]} |  |
+| `rootmark` | `dom_com` | 2026-11-11T20:47:38Z | 200 | {"registered": "2004-03-24", "expires": "2027-03-24", "registrar": "Squarespace Domains LLC", "status": ["client delete prohibited", "client transfer prohibited"]} |  |
+| `rootmark-core` | `npm_user` | 2026-11-11T20:48:17Z | 403 | {} | www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md |
+| `rootmark-index` | `npm_user` | 2026-11-11T20:48:46Z | 403 | {} | www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md |
+| `rootmark-server` | `npm_user` | 2026-11-11T20:49:16Z | 403 | {} | www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md |
+| `rhizomark` | `npm_user` | 2026-11-11T20:50:08Z | 403 | {} | www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md |
 
 ## Yakın alan: GitHub'da adında `rootmark` geçen depolar
 
-`https://api.github.com/search/repositories?q=rootmark+in:name&sort=stars&per_page=30` · 2026-11-11T20:22:55Z · 200 · toplam 10
+`https://api.github.com/search/repositories?q=rootmark+in:name&sort=stars&per_page=30` · 2026-11-11T20:50:38Z · 200 · toplam 10
 
 | depo | tanıtım (ilk 120) | oluşturma | son itme | yıldız |
 |---|---|---|---|---|
@@ -68,6 +68,6 @@ Hücre: 216/216; eksik 0; kanıtsız 0; dolu 5, boş 207, erişilemedi 4.
 
 | URL | UTC | kod / hata | yönlenme |
 |---|---|---|---|
-| https://rootmark.com/ | 2026-11-11T20:22:56Z | 200 | https://www.rootmark.com/ |
-| https://rootmark.dev/ | 2026-11-11T20:23:08Z | URLError |  |
-| https://rootmark.ai/ | 2026-11-11T20:23:29Z | 503 |  |
+| https://rootmark.com/ | 2026-11-11T20:50:38Z | 200 | https://www.rootmark.com/ |
+| https://rootmark.dev/ | 2026-11-11T20:50:50Z | URLError |  |
+| https://rootmark.ai/ | 2026-11-11T20:51:11Z | 503 |  |
