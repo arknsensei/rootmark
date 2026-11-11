@@ -174,6 +174,8 @@ def one(rm, base: Path, work: Path, op: str, stop: str, rep: int):
     hits_after = hits_for(srv2, TARGET)
     moved_hits = hits_for(srv2, MOVED) if op == "move" else None
     status = srv2.call("status")
+    log_sha = hashlib.sha256((v / ".rootmark" / "events.jsonl").read_bytes()).hexdigest()
+    n_events = len(events(v))
     workaround = None
     if rep == 0 and stop == "kill" and hits_after > 0:
         # a stop-gap a user could apply: write the old path again, then remove it under the watcher
@@ -185,12 +187,10 @@ def one(rm, base: Path, work: Path, op: str, stop: str, rep: int):
             "deleted_after": deleted_for(v, TARGET),
             "search_hits_after": hits_for(srv2, TARGET),
         }
-    log_sha = hashlib.sha256((v / ".rootmark" / "events.jsonl").read_bytes()).hexdigest()
-    n_events = len(events(v))
     rc2 = srv2.stop(signal.SIGTERM)
     # recovery path (one per op x stop, rep 0): a re-ingest with the server down
     reingest = None
-    if rep == 0 and stop == "kill":
+    if rep == 1 and stop == "kill":  # rep 1: no stop-gap before it (rep 0 tries one)
         out = json.loads(run([rm, "ingest-dir", str(v), str(v)]))
         reingest = {
             "deleted_after_reingest": deleted_for(v, TARGET),
@@ -298,7 +298,8 @@ def main():
             "kill: SIGKILL 0.5 s after op | term: SIGTERM 5 s after op",
             "rootmark serve --vault V --http 127.0.0.1:PORT --watch (restart), settle 10 s",
             "observe: BlockDeleted for n00.md in events.jsonl; POST /v1/search {query: zqprobe00}",
-            "rep 0 of each kill case: SIGTERM, then rootmark ingest-dir V V (server down)",
+            "rep 0 of each kill case: rewrite n00.md, 3 s, delete it, settle 10 s (stop-gap)",
+            "rep 1 of each kill case: SIGTERM, then rootmark ingest-dir V V (server down)",
         ],
         "duration_s": round(time.time() - t0, 1),
         "counts": counts,
