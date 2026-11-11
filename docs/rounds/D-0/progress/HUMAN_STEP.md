@@ -1,5 +1,7 @@
 # D-0 — İnsan adımları
 
+> **Durum (R7, 2026-11-11): tur H2'de bekliyor.** R0–R6 tamamlandı, R7'nin kapıları temiz ve gözden geçirici KABUL verdi. Kalan tek şey D0-3: aşağıdaki **H2**'nin dört marka sorgusu. Sonuçlar `docs/rounds/D-0/progress/R2_trademark_human.md`'ye yazılınca ajan `trademark.md`'yi doldurur, `FINAL.md`'yi kapatır, READY'yi yazar ve PR'ı açar. H1 (npm kullanıcı sayfaları) isteğe bağlıdır; beklenmez.
+
 Ajan bu adımları yapmaz (GOAL İlkeler: tarayıcı isteyen sorgular, hesaplar). Sonuçlar belirtilen dosyaya yazılır; ajan okuyup raporlara işler. Hiçbir adımda parola, token ya da kişisel e-posta adresi yazılmaz.
 
 ## H1 — npm kullanıcı adları (R1; `npm_user` sütununun 4 erişilemeyen hücresi)
