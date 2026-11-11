@@ -1,0 +1,3134 @@
+{
+ "scan": "D-0/R1 registry scan (docs/rounds/D-0/progress/DESIGN.md §1)",
+ "script": "research/d0/registry_scan.py",
+ "script_commit": "730615591b50bab8524ecca7771883047619e4be",
+ "started_at": "2026-11-11T20:19:48Z",
+ "finished_at": "2026-11-11T20:22:54Z",
+ "python": "3.13.5",
+ "user_agent": "rootmark-d0-registry-scan/1 (read-only)",
+ "method": "GET only (one request function); whois port 43 for TLDs without RDAP",
+ "names": [
+  "rootmark",
+  "rootmark-bindings",
+  "rootmark-core",
+  "rootmark-index",
+  "rootmark-server",
+  "rootmark-ai",
+  "getrootmark",
+  "rhizomark",
+  "rootmarkhq"
+ ],
+ "columns": [
+  "crates.io",
+  "pypi",
+  "testpypi",
+  "npm_pkg",
+  "npm_org",
+  "npm_user",
+  "dockerhub",
+  "ghcr",
+  "github",
+  "brew_formula",
+  "brew_cask",
+  "brew_tap",
+  "obsidian_id",
+  "obsidian_name",
+  "vscode_publisher",
+  "vscode_ext",
+  "openvsx_ns",
+  "openvsx_ext",
+  "dom_ai",
+  "dom_com",
+  "dom_dev",
+  "dom_io",
+  "dom_app",
+  "dom_org"
+ ],
+ "cells_expected": 216,
+ "cells": 216,
+ "missing_cells": [],
+ "unevidenced_rows": [],
+ "counts": {
+  "taken": 5,
+  "free": 207,
+  "unreachable": 4
+ },
+ "rows": [
+  {
+   "name": "rootmark",
+   "registry": "crates.io",
+   "url": "https://crates.io/api/v1/crates/rootmark",
+   "queried_at": "2026-11-11T20:19:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "5a95b160ffb9b8880fb6e64c56ec930c5339bb0b085e4222163163ab31ebc8dc",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "pypi",
+   "url": "https://pypi.org/pypi/rootmark/json",
+   "queried_at": "2026-11-11T20:19:49Z",
+   "http_status": 200,
+   "state": "taken",
+   "summary": {
+    "canonical_name": "rootmark",
+    "summary": "Rootmark SDK -- agent instrumentation",
+    "latest_version": "0.1.5",
+    "first_upload": "2026-08-17",
+    "last_upload": "2026-10-24",
+    "release_count": 7,
+    "project_urls": [
+     "https://github.com/IvanAdactic/rootmark",
+     "https://rootmark.dev",
+     "https://rootmark.dev/docs/"
+    ]
+   },
+   "body_sha256": "41d3aae22d240550f98eae9f1c21d2421068e6ac4e18408a7573da1c839c15fc",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "testpypi",
+   "url": "https://test.pypi.org/pypi/rootmark/json",
+   "queried_at": "2026-11-11T20:19:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "npm_pkg",
+   "url": "https://registry.npmjs.org/rootmark",
+   "queried_at": "2026-11-11T20:19:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "npm_org",
+   "url": "https://registry.npmjs.org/-/org/rootmark/package",
+   "queried_at": "2026-11-11T20:19:50Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b4007018e183e22c41c007931425c2fb7536d42266b6bebc384c61723d0480e4",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "npm_user",
+   "url": "https://www.npmjs.com/~rootmark",
+   "queried_at": "2026-11-11T20:19:50Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "75e263905034ca97fda7daeba5dba2ea29009737298e71abec3a87c49b6c479d",
+   "note": null,
+   "weak_evidence": {
+    "url": "https://registry.npmjs.org/-/v1/search?text=maintainer:rootmark&size=1",
+    "queried_at": "2026-11-11T20:19:50Z",
+    "http_status": 200,
+    "packages_maintained": 0,
+    "body_sha256": "26ff920b938ee7351dfd1feff8986d21980b5b0f84645a5421a629411524911f"
+   }
+  },
+  {
+   "name": "rootmark",
+   "registry": "dockerhub",
+   "url": "https://hub.docker.com/v2/users/rootmark/",
+   "queried_at": "2026-11-11T20:19:51Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "ee6d58f85426b8e6e417bcdb2f0e3a130457a9333b3a2836ec7f172e925dfd07",
+   "note": null,
+   "invalid_name": false
+  },
+  {
+   "name": "rootmark",
+   "registry": "ghcr",
+   "url": "https://ghcr.io/v2/rootmark/rootmark/tags/list",
+   "queried_at": "2026-11-11T20:19:52Z",
+   "http_status": 401,
+   "state": "taken",
+   "summary": {
+    "public_image_rootmark": false,
+    "token_status": 403,
+    "namespace_owner": {
+     "login": "RootMark",
+     "type": "User",
+     "created": "2018-03-08",
+     "public_repos": 0
+    },
+    "namespace_owner_from": "github row"
+   },
+   "body_sha256": "89a052af62c612d0e05d2596f03edba77d7d904c4478b387a5dc6305821fe0a1",
+   "note": "namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark"
+  },
+  {
+   "name": "rootmark",
+   "registry": "github",
+   "url": "https://api.github.com/users/rootmark",
+   "queried_at": "2026-11-11T20:19:51Z",
+   "http_status": 200,
+   "state": "taken",
+   "summary": {
+    "login": "RootMark",
+    "type": "User",
+    "created": "2018-03-08",
+    "public_repos": 0
+   },
+   "body_sha256": "bdf4ba614a22a683aa4a673b1cc6c66b946ee885e935ce09bfeebb2dc8f6c853",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "brew_formula",
+   "url": "https://formulae.brew.sh/api/formula/rootmark.json",
+   "queried_at": "2026-11-11T20:19:52Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "brew_cask",
+   "url": "https://formulae.brew.sh/api/cask/rootmark.json",
+   "queried_at": "2026-11-11T20:19:52Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "brew_tap",
+   "url": "https://api.github.com/repos/rootmark/homebrew-tap ; https://api.github.com/repos/rootmark/homebrew-rootmark",
+   "queried_at": "2026-11-11T20:19:53Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "homebrew-tap": "free",
+    "homebrew-rootmark": "free"
+   },
+   "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+   "note": "tap = GitHub repo <owner>/homebrew-<tap>; owner account: github row",
+   "second": {
+    "url": "https://api.github.com/repos/rootmark/homebrew-rootmark",
+    "queried_at": "2026-11-11T20:19:53Z",
+    "http_status": 404,
+    "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9"
+   }
+  },
+  {
+   "name": "rootmark",
+   "registry": "obsidian_id",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "id equality (exact) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark",
+   "registry": "obsidian_name",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "name equality (case-insensitive) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark",
+   "registry": "vscode_publisher",
+   "url": "https://marketplace.visualstudio.com/publishers/rootmark",
+   "queried_at": "2026-11-11T20:19:54Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "bda386b91247f3c636e816dec425308e5fe31c186cc44608b7254714499e4fdb",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "vscode_ext",
+   "url": "https://marketplace.visualstudio.com/items?itemName=rootmark.rootmark",
+   "queried_at": "2026-11-11T20:19:54Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark.rootmark"
+   },
+   "body_sha256": "8f67954990c12ede6906b19e4856a0298cb9412268269098967f01fcc3c4f3e0",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "openvsx_ns",
+   "url": "https://open-vsx.org/api/rootmark",
+   "queried_at": "2026-11-11T20:19:54Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "57655fe1953d8bf95d0ec5484e6d08b9cf1ae282bdfd6bfc79a28f2a2fc5e42f",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "openvsx_ext",
+   "url": "https://open-vsx.org/api/rootmark/rootmark",
+   "queried_at": "2026-11-11T20:19:54Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark.rootmark"
+   },
+   "body_sha256": "474212dd6db5ca75690ee4ba81c06d2ff61cc9c71a91a337b5e283d3cbdb210b",
+   "note": null
+  },
+  {
+   "name": "rootmark",
+   "registry": "dom_ai",
+   "url": "https://rdap.identitydigital.services/rdap/domain/rootmark.ai",
+   "queried_at": "2026-11-11T20:19:55Z",
+   "http_status": 200,
+   "state": "taken",
+   "summary": {
+    "registered": "2026-11-10",
+    "expires": "2028-11-10",
+    "registrar": "GoDaddy.com, LLC",
+    "status": [
+     "client delete prohibited",
+     "client renew prohibited",
+     "client transfer prohibited",
+     "client update prohibited",
+     "add period"
+    ]
+   },
+   "body_sha256": "1666c5cb5a640b044b9c18e8a0d04158b6764761d26fc8c6b48952a853238bf5",
+   "note": null,
+   "domain": "rootmark.ai"
+  },
+  {
+   "name": "rootmark",
+   "registry": "dom_com",
+   "url": "https://rdap.verisign.com/com/v1/domain/rootmark.com",
+   "queried_at": "2026-11-11T20:19:55Z",
+   "http_status": 200,
+   "state": "taken",
+   "summary": {
+    "registered": "2004-03-24",
+    "expires": "2027-03-24",
+    "registrar": "Squarespace Domains LLC",
+    "status": [
+     "client delete prohibited",
+     "client transfer prohibited"
+    ]
+   },
+   "body_sha256": "72c1930dccd0d8a4fa341e36e3c401e264d0cf9d3d0d5e8a3f80194d66e96cbe",
+   "note": null,
+   "domain": "rootmark.com"
+  },
+  {
+   "name": "rootmark",
+   "registry": "dom_dev",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark.dev",
+   "queried_at": "2026-11-11T20:19:56Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "59b270c28b60b3f248ea38f3452a943019a1fb31360ef7cf218464926acb5bf7",
+   "note": null,
+   "domain": "rootmark.dev"
+  },
+  {
+   "name": "rootmark",
+   "registry": "dom_io",
+   "url": "whois:whois.nic.io rootmark.io",
+   "queried_at": "2026-11-11T20:19:56Z",
+   "http_status": null,
+   "whois_status": "not_found",
+   "state": "free",
+   "summary": {},
+   "body_sha256": "1e677438942e2bc36859b515a10e879769b31e2ad402a33a5bb7eef71d1a1608",
+   "note": "no RDAP service for this TLD in IANA's bootstrap; whois (port 43, read-only)",
+   "domain": "rootmark.io"
+  },
+  {
+   "name": "rootmark",
+   "registry": "dom_app",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark.app",
+   "queried_at": "2026-11-11T20:19:56Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "8667694eb18e3cea58a7fea623c259f1dfc5e59c20d4c060445dd024f051acc1",
+   "note": null,
+   "domain": "rootmark.app"
+  },
+  {
+   "name": "rootmark",
+   "registry": "dom_org",
+   "url": "https://rdap.publicinterestregistry.org/rdap/domain/rootmark.org",
+   "queried_at": "2026-11-11T20:19:57Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "acc7b74f42cbe1def48284fb4e5ff2ea702c15ab198570fbec124cda992a110d",
+   "note": null,
+   "domain": "rootmark.org"
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "crates.io",
+   "url": "https://crates.io/api/v1/crates/rootmark-bindings",
+   "queried_at": "2026-11-11T20:19:57Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "f28acbcadab675f38b59447980cf564af77bdde673614ca75bbc421cad0ce9d7",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "pypi",
+   "url": "https://pypi.org/pypi/rootmark-bindings/json",
+   "queried_at": "2026-11-11T20:19:57Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "testpypi",
+   "url": "https://test.pypi.org/pypi/rootmark-bindings/json",
+   "queried_at": "2026-11-11T20:19:58Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "npm_pkg",
+   "url": "https://registry.npmjs.org/rootmark-bindings",
+   "queried_at": "2026-11-11T20:19:58Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f",
+   "note": null,
+   "punct_variant": {
+    "name": "rootmarkbindings",
+    "url": "https://registry.npmjs.org/rootmarkbindings",
+    "queried_at": "2026-11-11T20:19:59Z",
+    "http_status": 404,
+    "state": "free",
+    "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f"
+   }
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "npm_org",
+   "url": "https://registry.npmjs.org/-/org/rootmark-bindings/package",
+   "queried_at": "2026-11-11T20:19:59Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b4007018e183e22c41c007931425c2fb7536d42266b6bebc384c61723d0480e4",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "npm_user",
+   "url": "https://www.npmjs.com/~rootmark-bindings",
+   "queried_at": "2026-11-11T20:20:11Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3f4be4095359bd92a7cf37fe390e19dd3a859718828010f3cb28117f3edeffca",
+   "note": null,
+   "weak_evidence": {
+    "url": "https://registry.npmjs.org/-/v1/search?text=maintainer:rootmark-bindings&size=1",
+    "queried_at": "2026-11-11T20:20:12Z",
+    "http_status": 200,
+    "packages_maintained": 0,
+    "body_sha256": "2378d98330949a98f633e49e55c2789c05b9a452f2210adbed28010240bbbf3d"
+   }
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "dockerhub",
+   "url": "https://hub.docker.com/v2/users/rootmark-bindings/",
+   "queried_at": "2026-11-11T20:20:12Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "d52c0e9e1515aecde1d01a69f28ee123fc257e6241689bd444f40bd175b3bb0f",
+   "note": "invalid_name: Docker ID is 4-30 of [a-z0-9]",
+   "invalid_name": true
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "ghcr",
+   "url": "https://ghcr.io/v2/rootmark-bindings/rootmark/tags/list",
+   "queried_at": "2026-11-11T20:20:14Z",
+   "http_status": 401,
+   "state": "free",
+   "summary": {
+    "public_image_rootmark": false,
+    "token_status": 403,
+    "namespace_owner": null,
+    "namespace_owner_from": "github row"
+   },
+   "body_sha256": "89a052af62c612d0e05d2596f03edba77d7d904c4478b387a5dc6305821fe0a1",
+   "note": "namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark"
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "github",
+   "url": "https://api.github.com/users/rootmark-bindings",
+   "queried_at": "2026-11-11T20:20:13Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3a32eab6ffbfd1cf2684b1a409bf40db46e46c5eaff44de656e499df05d92730",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "brew_formula",
+   "url": "https://formulae.brew.sh/api/formula/rootmark-bindings.json",
+   "queried_at": "2026-11-11T20:20:14Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "brew_cask",
+   "url": "https://formulae.brew.sh/api/cask/rootmark-bindings.json",
+   "queried_at": "2026-11-11T20:20:14Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "brew_tap",
+   "url": "https://api.github.com/repos/rootmark-bindings/homebrew-tap ; https://api.github.com/repos/rootmark-bindings/homebrew-rootmark",
+   "queried_at": "2026-11-11T20:20:14Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "homebrew-tap": "free",
+    "homebrew-rootmark": "free"
+   },
+   "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+   "note": "tap = GitHub repo <owner>/homebrew-<tap>; owner account: github row",
+   "second": {
+    "url": "https://api.github.com/repos/rootmark-bindings/homebrew-rootmark",
+    "queried_at": "2026-11-11T20:20:15Z",
+    "http_status": 404,
+    "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9"
+   }
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "obsidian_id",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "id equality (exact) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "obsidian_name",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "name equality (case-insensitive) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "vscode_publisher",
+   "url": "https://marketplace.visualstudio.com/publishers/rootmark-bindings",
+   "queried_at": "2026-11-11T20:20:15Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "913523b1b33f15a06a22a9a481f872c13155da6fad530761f6877c06bb79b90f",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "vscode_ext",
+   "url": "https://marketplace.visualstudio.com/items?itemName=rootmark-bindings.rootmark",
+   "queried_at": "2026-11-11T20:20:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-bindings.rootmark"
+   },
+   "body_sha256": "b4e15bd3191d60b517efd3a1b619ddd188daf9cf3ce49a4d72403ceba4461808",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "openvsx_ns",
+   "url": "https://open-vsx.org/api/rootmark-bindings",
+   "queried_at": "2026-11-11T20:20:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "554e96952367b6777e973c26475b9a33892d995d952308a9ef32486d60a70ad1",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "openvsx_ext",
+   "url": "https://open-vsx.org/api/rootmark-bindings/rootmark",
+   "queried_at": "2026-11-11T20:20:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-bindings.rootmark"
+   },
+   "body_sha256": "bda73dbc048b3134e8ca45cad2b2a5efbf4d962392c852dd4c57d0bfd47f8871",
+   "note": null
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "dom_ai",
+   "url": "https://rdap.identitydigital.services/rdap/domain/rootmark-bindings.ai",
+   "queried_at": "2026-11-11T20:20:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "6edb7787168fe52ba62a95441a950e2bf61dd60ec93c4643db562834276d4d10",
+   "note": null,
+   "domain": "rootmark-bindings.ai"
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "dom_com",
+   "url": "https://rdap.verisign.com/com/v1/domain/rootmark-bindings.com",
+   "queried_at": "2026-11-11T20:20:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "note": null,
+   "domain": "rootmark-bindings.com"
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "dom_dev",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-bindings.dev",
+   "queried_at": "2026-11-11T20:20:17Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "ef47d6af3a7f01d57162147e92ded34dc7b227ef3bc94e3ef15803fd575ed999",
+   "note": null,
+   "domain": "rootmark-bindings.dev"
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "dom_io",
+   "url": "whois:whois.nic.io rootmark-bindings.io",
+   "queried_at": "2026-11-11T20:20:17Z",
+   "http_status": null,
+   "whois_status": "not_found",
+   "state": "free",
+   "summary": {},
+   "body_sha256": "f7f8fd7d365707f5f315fd5b32a7076834adc14b4786213d3983260e79be9b3d",
+   "note": "no RDAP service for this TLD in IANA's bootstrap; whois (port 43, read-only)",
+   "domain": "rootmark-bindings.io"
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "dom_app",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-bindings.app",
+   "queried_at": "2026-11-11T20:20:17Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "d7389cb3e06439751a10f4c71842e7b5b11b7cff3be89adc78bf1d77d531ec6f",
+   "note": null,
+   "domain": "rootmark-bindings.app"
+  },
+  {
+   "name": "rootmark-bindings",
+   "registry": "dom_org",
+   "url": "https://rdap.publicinterestregistry.org/rdap/domain/rootmark-bindings.org",
+   "queried_at": "2026-11-11T20:20:18Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "f9aff9e99c619619f6eab51d71ba28f11c37658376bf2b195c41a0f0532153eb",
+   "note": null,
+   "domain": "rootmark-bindings.org"
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "crates.io",
+   "url": "https://crates.io/api/v1/crates/rootmark-core",
+   "queried_at": "2026-11-11T20:20:18Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "0ff3ddf53bfc8bd8645bc3e2ee2390aefb03abe5eb9dbdf9eda38d22669c7862",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "pypi",
+   "url": "https://pypi.org/pypi/rootmark-core/json",
+   "queried_at": "2026-11-11T20:20:18Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "testpypi",
+   "url": "https://test.pypi.org/pypi/rootmark-core/json",
+   "queried_at": "2026-11-11T20:20:19Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "npm_pkg",
+   "url": "https://registry.npmjs.org/rootmark-core",
+   "queried_at": "2026-11-11T20:20:19Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f",
+   "note": null,
+   "punct_variant": {
+    "name": "rootmarkcore",
+    "url": "https://registry.npmjs.org/rootmarkcore",
+    "queried_at": "2026-11-11T20:20:20Z",
+    "http_status": 404,
+    "state": "free",
+    "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f"
+   }
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "npm_org",
+   "url": "https://registry.npmjs.org/-/org/rootmark-core/package",
+   "queried_at": "2026-11-11T20:20:20Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b4007018e183e22c41c007931425c2fb7536d42266b6bebc384c61723d0480e4",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "npm_user",
+   "url": "https://www.npmjs.com/~rootmark-core",
+   "queried_at": "2026-11-11T20:20:22Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "a507329d3a7de8b227e83155187eb146887f2fbc6159bb7330fa146e500648f6",
+   "note": null,
+   "weak_evidence": {
+    "url": "https://registry.npmjs.org/-/v1/search?text=maintainer:rootmark-core&size=1",
+    "queried_at": "2026-11-11T20:20:23Z",
+    "http_status": 200,
+    "packages_maintained": 0,
+    "body_sha256": "23f19714c39286cfe290bbc5809ef10b670fce8f7f5a36b691b61e9c1ed357c9"
+   }
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "dockerhub",
+   "url": "https://hub.docker.com/v2/users/rootmark-core/",
+   "queried_at": "2026-11-11T20:20:23Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "7895ccf48b3a6373243ffaedb942ad6dae1cfbbf6b6c016914e9126a3f829a64",
+   "note": "invalid_name: Docker ID is 4-30 of [a-z0-9]",
+   "invalid_name": true
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "ghcr",
+   "url": "https://ghcr.io/v2/rootmark-core/rootmark/tags/list",
+   "queried_at": "2026-11-11T20:20:24Z",
+   "http_status": 401,
+   "state": "free",
+   "summary": {
+    "public_image_rootmark": false,
+    "token_status": 403,
+    "namespace_owner": null,
+    "namespace_owner_from": "github row"
+   },
+   "body_sha256": "89a052af62c612d0e05d2596f03edba77d7d904c4478b387a5dc6305821fe0a1",
+   "note": "namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark"
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "github",
+   "url": "https://api.github.com/users/rootmark-core",
+   "queried_at": "2026-11-11T20:20:23Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3a32eab6ffbfd1cf2684b1a409bf40db46e46c5eaff44de656e499df05d92730",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "brew_formula",
+   "url": "https://formulae.brew.sh/api/formula/rootmark-core.json",
+   "queried_at": "2026-11-11T20:20:24Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "brew_cask",
+   "url": "https://formulae.brew.sh/api/cask/rootmark-core.json",
+   "queried_at": "2026-11-11T20:20:24Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "brew_tap",
+   "url": "https://api.github.com/repos/rootmark-core/homebrew-tap ; https://api.github.com/repos/rootmark-core/homebrew-rootmark",
+   "queried_at": "2026-11-11T20:20:25Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "homebrew-tap": "free",
+    "homebrew-rootmark": "free"
+   },
+   "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+   "note": "tap = GitHub repo <owner>/homebrew-<tap>; owner account: github row",
+   "second": {
+    "url": "https://api.github.com/repos/rootmark-core/homebrew-rootmark",
+    "queried_at": "2026-11-11T20:20:25Z",
+    "http_status": 404,
+    "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9"
+   }
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "obsidian_id",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "id equality (exact) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "obsidian_name",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "name equality (case-insensitive) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "vscode_publisher",
+   "url": "https://marketplace.visualstudio.com/publishers/rootmark-core",
+   "queried_at": "2026-11-11T20:20:26Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "666daa43dd00abf4fa62d48e850a854678dd863c90a97cafb1d84bd8513a219d",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "vscode_ext",
+   "url": "https://marketplace.visualstudio.com/items?itemName=rootmark-core.rootmark",
+   "queried_at": "2026-11-11T20:20:26Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-core.rootmark"
+   },
+   "body_sha256": "1c680ac7104fdbea98e3b71295611e66bb15396bd6d0f745299ca0988975836e",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "openvsx_ns",
+   "url": "https://open-vsx.org/api/rootmark-core",
+   "queried_at": "2026-11-11T20:20:26Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "46d3ad20ee302c93aaaf902f99fdf9baaad06480f6a2dde9aaa5d680120376c2",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "openvsx_ext",
+   "url": "https://open-vsx.org/api/rootmark-core/rootmark",
+   "queried_at": "2026-11-11T20:20:26Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-core.rootmark"
+   },
+   "body_sha256": "4417973cc328e2a3cd45d9a2c47243ac680205e288c7e11e9450467f8b52b062",
+   "note": null
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "dom_ai",
+   "url": "https://rdap.identitydigital.services/rdap/domain/rootmark-core.ai",
+   "queried_at": "2026-11-11T20:20:27Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "07e0ab878e21cb936a5e878554f02deae5b4a28b67014f1d411e750617fe58a3",
+   "note": null,
+   "domain": "rootmark-core.ai"
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "dom_com",
+   "url": "https://rdap.verisign.com/com/v1/domain/rootmark-core.com",
+   "queried_at": "2026-11-11T20:20:27Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "note": null,
+   "domain": "rootmark-core.com"
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "dom_dev",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-core.dev",
+   "queried_at": "2026-11-11T20:20:27Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "49e32cf91c6f9391f1fedeb4bb5da1ec3ac3d5fc6a9af8c6983e43324316d4f4",
+   "note": null,
+   "domain": "rootmark-core.dev"
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "dom_io",
+   "url": "whois:whois.nic.io rootmark-core.io",
+   "queried_at": "2026-11-11T20:20:27Z",
+   "http_status": null,
+   "whois_status": "not_found",
+   "state": "free",
+   "summary": {},
+   "body_sha256": "db3e141f201fcb339d6b0f4e466edcd67e7b76423ec24163dfaa8bca4e76d8d4",
+   "note": "no RDAP service for this TLD in IANA's bootstrap; whois (port 43, read-only)",
+   "domain": "rootmark-core.io"
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "dom_app",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-core.app",
+   "queried_at": "2026-11-11T20:20:28Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "d94d6d2586e1b4ec38ce03098f3374dc0c3efbf057cdbbeb59b619008aa7a6ed",
+   "note": null,
+   "domain": "rootmark-core.app"
+  },
+  {
+   "name": "rootmark-core",
+   "registry": "dom_org",
+   "url": "https://rdap.publicinterestregistry.org/rdap/domain/rootmark-core.org",
+   "queried_at": "2026-11-11T20:20:28Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "30ebfe6669952631ac080c74034a2c64bbeb2e197ea43478385924a0343309cc",
+   "note": null,
+   "domain": "rootmark-core.org"
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "crates.io",
+   "url": "https://crates.io/api/v1/crates/rootmark-index",
+   "queried_at": "2026-11-11T20:20:29Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "55dd36cdf39931a94771b60bd7581025af5778de5b05608bc7066200a5da3fc5",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "pypi",
+   "url": "https://pypi.org/pypi/rootmark-index/json",
+   "queried_at": "2026-11-11T20:20:29Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "testpypi",
+   "url": "https://test.pypi.org/pypi/rootmark-index/json",
+   "queried_at": "2026-11-11T20:20:29Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "npm_pkg",
+   "url": "https://registry.npmjs.org/rootmark-index",
+   "queried_at": "2026-11-11T20:20:30Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f",
+   "note": null,
+   "punct_variant": {
+    "name": "rootmarkindex",
+    "url": "https://registry.npmjs.org/rootmarkindex",
+    "queried_at": "2026-11-11T20:20:30Z",
+    "http_status": 404,
+    "state": "free",
+    "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f"
+   }
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "npm_org",
+   "url": "https://registry.npmjs.org/-/org/rootmark-index/package",
+   "queried_at": "2026-11-11T20:20:30Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b4007018e183e22c41c007931425c2fb7536d42266b6bebc384c61723d0480e4",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "npm_user",
+   "url": "https://www.npmjs.com/~rootmark-index",
+   "queried_at": "2026-11-11T20:20:43Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c9ef9b777496972edf49bb41b8a24c7095f3336745832812d2c6862bf2dc71c5",
+   "note": null,
+   "weak_evidence": {
+    "url": "https://registry.npmjs.org/-/v1/search?text=maintainer:rootmark-index&size=1",
+    "queried_at": "2026-11-11T20:20:43Z",
+    "http_status": 200,
+    "packages_maintained": 0,
+    "body_sha256": "83e9ed44a7851f7f2848ab61bd7eb0b36ef441f02132a5c8690ab04f5a084706"
+   }
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "dockerhub",
+   "url": "https://hub.docker.com/v2/users/rootmark-index/",
+   "queried_at": "2026-11-11T20:20:44Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "337af0f7a12fae4f46dcdad8fe75ff480d76fff64d5c3e60e5eef3e601b268ec",
+   "note": "invalid_name: Docker ID is 4-30 of [a-z0-9]",
+   "invalid_name": true
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "ghcr",
+   "url": "https://ghcr.io/v2/rootmark-index/rootmark/tags/list",
+   "queried_at": "2026-11-11T20:20:44Z",
+   "http_status": 401,
+   "state": "free",
+   "summary": {
+    "public_image_rootmark": false,
+    "token_status": 403,
+    "namespace_owner": null,
+    "namespace_owner_from": "github row"
+   },
+   "body_sha256": "89a052af62c612d0e05d2596f03edba77d7d904c4478b387a5dc6305821fe0a1",
+   "note": "namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark"
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "github",
+   "url": "https://api.github.com/users/rootmark-index",
+   "queried_at": "2026-11-11T20:20:44Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3a32eab6ffbfd1cf2684b1a409bf40db46e46c5eaff44de656e499df05d92730",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "brew_formula",
+   "url": "https://formulae.brew.sh/api/formula/rootmark-index.json",
+   "queried_at": "2026-11-11T20:20:45Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "brew_cask",
+   "url": "https://formulae.brew.sh/api/cask/rootmark-index.json",
+   "queried_at": "2026-11-11T20:20:45Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "brew_tap",
+   "url": "https://api.github.com/repos/rootmark-index/homebrew-tap ; https://api.github.com/repos/rootmark-index/homebrew-rootmark",
+   "queried_at": "2026-11-11T20:20:45Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "homebrew-tap": "free",
+    "homebrew-rootmark": "free"
+   },
+   "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+   "note": "tap = GitHub repo <owner>/homebrew-<tap>; owner account: github row",
+   "second": {
+    "url": "https://api.github.com/repos/rootmark-index/homebrew-rootmark",
+    "queried_at": "2026-11-11T20:20:46Z",
+    "http_status": 404,
+    "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9"
+   }
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "obsidian_id",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "id equality (exact) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "obsidian_name",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "name equality (case-insensitive) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "vscode_publisher",
+   "url": "https://marketplace.visualstudio.com/publishers/rootmark-index",
+   "queried_at": "2026-11-11T20:20:46Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "76ade5f0bdd5e43e84fd1fb9968f3453e1414bdf31cbd8bc70bfe7b80d98e7a6",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "vscode_ext",
+   "url": "https://marketplace.visualstudio.com/items?itemName=rootmark-index.rootmark",
+   "queried_at": "2026-11-11T20:20:47Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-index.rootmark"
+   },
+   "body_sha256": "16d03253d64368e2b90e0e3700362301e281dfa07d32c256429f81cfe263829f",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "openvsx_ns",
+   "url": "https://open-vsx.org/api/rootmark-index",
+   "queried_at": "2026-11-11T20:20:47Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c593e3e8607693abfd3f39fe62d41fa7199f0b1a3febfb16d2397cade9c9e591",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "openvsx_ext",
+   "url": "https://open-vsx.org/api/rootmark-index/rootmark",
+   "queried_at": "2026-11-11T20:20:47Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-index.rootmark"
+   },
+   "body_sha256": "1bd25a49e7794648f6ee76ff0445068f6f69dde4a9166b2912f749eb3451e5c9",
+   "note": null
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "dom_ai",
+   "url": "https://rdap.identitydigital.services/rdap/domain/rootmark-index.ai",
+   "queried_at": "2026-11-11T20:20:48Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "0ceaa77002275772590f308efae8d34f55fb568ac45f517119966083f3d997b6",
+   "note": null,
+   "domain": "rootmark-index.ai"
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "dom_com",
+   "url": "https://rdap.verisign.com/com/v1/domain/rootmark-index.com",
+   "queried_at": "2026-11-11T20:20:48Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "note": null,
+   "domain": "rootmark-index.com"
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "dom_dev",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-index.dev",
+   "queried_at": "2026-11-11T20:20:48Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "7fc794501923840aec6b57482f4baabdfd77c5e42c8c3bd3159fe0b1c1d294d7",
+   "note": null,
+   "domain": "rootmark-index.dev"
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "dom_io",
+   "url": "whois:whois.nic.io rootmark-index.io",
+   "queried_at": "2026-11-11T20:20:48Z",
+   "http_status": null,
+   "whois_status": "not_found",
+   "state": "free",
+   "summary": {},
+   "body_sha256": "2a13d0b295d117264f475055dc5f4316f60cbbdf5248428a7c1d3fe8a0a2b5b0",
+   "note": "no RDAP service for this TLD in IANA's bootstrap; whois (port 43, read-only)",
+   "domain": "rootmark-index.io"
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "dom_app",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-index.app",
+   "queried_at": "2026-11-11T20:20:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "78544c8c17307ef11719f0da1e7412bf1785220857ae46222f29b2994d06aa37",
+   "note": null,
+   "domain": "rootmark-index.app"
+  },
+  {
+   "name": "rootmark-index",
+   "registry": "dom_org",
+   "url": "https://rdap.publicinterestregistry.org/rdap/domain/rootmark-index.org",
+   "queried_at": "2026-11-11T20:20:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "0cd3e118edb0571b9fb30596219e8ea096d34d89405bd45467f33a968618fb26",
+   "note": null,
+   "domain": "rootmark-index.org"
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "crates.io",
+   "url": "https://crates.io/api/v1/crates/rootmark-server",
+   "queried_at": "2026-11-11T20:20:50Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "499d19827501138b633eedfcebb878a7ee12ef397f6c985dc99f82987ceffe21",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "pypi",
+   "url": "https://pypi.org/pypi/rootmark-server/json",
+   "queried_at": "2026-11-11T20:20:50Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "testpypi",
+   "url": "https://test.pypi.org/pypi/rootmark-server/json",
+   "queried_at": "2026-11-11T20:20:50Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "npm_pkg",
+   "url": "https://registry.npmjs.org/rootmark-server",
+   "queried_at": "2026-11-11T20:20:51Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f",
+   "note": null,
+   "punct_variant": {
+    "name": "rootmarkserver",
+    "url": "https://registry.npmjs.org/rootmarkserver",
+    "queried_at": "2026-11-11T20:20:51Z",
+    "http_status": 404,
+    "state": "free",
+    "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f"
+   }
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "npm_org",
+   "url": "https://registry.npmjs.org/-/org/rootmark-server/package",
+   "queried_at": "2026-11-11T20:20:51Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b4007018e183e22c41c007931425c2fb7536d42266b6bebc384c61723d0480e4",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "npm_user",
+   "url": "https://www.npmjs.com/~rootmark-server",
+   "queried_at": "2026-11-11T20:21:04Z",
+   "http_status": 403,
+   "state": "unreachable",
+   "summary": {},
+   "body_sha256": "7d162319181beaf1a4892fd577438d2dce2a56b04c02eb82bc47bee348a0fa5a",
+   "note": "www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md",
+   "weak_evidence": {
+    "url": "https://registry.npmjs.org/-/v1/search?text=maintainer:rootmark-server&size=1",
+    "queried_at": "2026-11-11T20:21:12Z",
+    "http_status": 200,
+    "packages_maintained": 0,
+    "body_sha256": "c47be0dae694e6caaf5a98d6bfa2e0210b7a7664a6e5eb014cd9cf65930af5cb"
+   }
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "dockerhub",
+   "url": "https://hub.docker.com/v2/users/rootmark-server/",
+   "queried_at": "2026-11-11T20:21:13Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "1e02f2a0a2a46defeaf284806573a275ffb9294344052b0132db818571043da6",
+   "note": "invalid_name: Docker ID is 4-30 of [a-z0-9]",
+   "invalid_name": true
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "ghcr",
+   "url": "https://ghcr.io/v2/rootmark-server/rootmark/tags/list",
+   "queried_at": "2026-11-11T20:21:13Z",
+   "http_status": 401,
+   "state": "free",
+   "summary": {
+    "public_image_rootmark": false,
+    "token_status": 403,
+    "namespace_owner": null,
+    "namespace_owner_from": "github row"
+   },
+   "body_sha256": "89a052af62c612d0e05d2596f03edba77d7d904c4478b387a5dc6305821fe0a1",
+   "note": "namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark"
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "github",
+   "url": "https://api.github.com/users/rootmark-server",
+   "queried_at": "2026-11-11T20:21:13Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3a32eab6ffbfd1cf2684b1a409bf40db46e46c5eaff44de656e499df05d92730",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "brew_formula",
+   "url": "https://formulae.brew.sh/api/formula/rootmark-server.json",
+   "queried_at": "2026-11-11T20:21:14Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "brew_cask",
+   "url": "https://formulae.brew.sh/api/cask/rootmark-server.json",
+   "queried_at": "2026-11-11T20:21:14Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "brew_tap",
+   "url": "https://api.github.com/repos/rootmark-server/homebrew-tap ; https://api.github.com/repos/rootmark-server/homebrew-rootmark",
+   "queried_at": "2026-11-11T20:21:14Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "homebrew-tap": "free",
+    "homebrew-rootmark": "free"
+   },
+   "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+   "note": "tap = GitHub repo <owner>/homebrew-<tap>; owner account: github row",
+   "second": {
+    "url": "https://api.github.com/repos/rootmark-server/homebrew-rootmark",
+    "queried_at": "2026-11-11T20:21:15Z",
+    "http_status": 404,
+    "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9"
+   }
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "obsidian_id",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "id equality (exact) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "obsidian_name",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "name equality (case-insensitive) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "vscode_publisher",
+   "url": "https://marketplace.visualstudio.com/publishers/rootmark-server",
+   "queried_at": "2026-11-11T20:21:15Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c19fcbcc5fc01669e10c8b44ed1e39a2d8e8978d5be12751238097d6910f0b79",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "vscode_ext",
+   "url": "https://marketplace.visualstudio.com/items?itemName=rootmark-server.rootmark",
+   "queried_at": "2026-11-11T20:21:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-server.rootmark"
+   },
+   "body_sha256": "a5bcfab5558759fe3dd781fec2d929ce2789ec13ca6ab2bd2470458ed0ac2278",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "openvsx_ns",
+   "url": "https://open-vsx.org/api/rootmark-server",
+   "queried_at": "2026-11-11T20:21:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "7c0b045f146ca0921e17378a4f1d9472375337459e591ba9335c089f04ccdbf4",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "openvsx_ext",
+   "url": "https://open-vsx.org/api/rootmark-server/rootmark",
+   "queried_at": "2026-11-11T20:21:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-server.rootmark"
+   },
+   "body_sha256": "609fad9f561c137254d5ff3b7ce052e66f5af5a512f242bbe1701a1c5033f383",
+   "note": null
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "dom_ai",
+   "url": "https://rdap.identitydigital.services/rdap/domain/rootmark-server.ai",
+   "queried_at": "2026-11-11T20:21:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "dfbab33e17168adf2218c750a0fd7b896173d65e3559e25cb4a9395294bd8b98",
+   "note": null,
+   "domain": "rootmark-server.ai"
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "dom_com",
+   "url": "https://rdap.verisign.com/com/v1/domain/rootmark-server.com",
+   "queried_at": "2026-11-11T20:21:17Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "note": null,
+   "domain": "rootmark-server.com"
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "dom_dev",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-server.dev",
+   "queried_at": "2026-11-11T20:21:17Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "08d6e8b287592835f979c1f8604a58f7dae90aa6b2ba255a783c87a9fefde678",
+   "note": null,
+   "domain": "rootmark-server.dev"
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "dom_io",
+   "url": "whois:whois.nic.io rootmark-server.io",
+   "queried_at": "2026-11-11T20:21:17Z",
+   "http_status": null,
+   "whois_status": "not_found",
+   "state": "free",
+   "summary": {},
+   "body_sha256": "32cc2050e33539375fa659bc75b22a65458136ea2766fbd2555af4522114a80a",
+   "note": "no RDAP service for this TLD in IANA's bootstrap; whois (port 43, read-only)",
+   "domain": "rootmark-server.io"
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "dom_app",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-server.app",
+   "queried_at": "2026-11-11T20:21:18Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b57fb396d76ddb45830ab173d73dbfb9a3f8e83a46833b8187bb7971b62e95f0",
+   "note": null,
+   "domain": "rootmark-server.app"
+  },
+  {
+   "name": "rootmark-server",
+   "registry": "dom_org",
+   "url": "https://rdap.publicinterestregistry.org/rdap/domain/rootmark-server.org",
+   "queried_at": "2026-11-11T20:21:18Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "d7283b32d26e9be4810063c4d47da4114ce72d22c04ed41349faa4a15241e188",
+   "note": null,
+   "domain": "rootmark-server.org"
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "crates.io",
+   "url": "https://crates.io/api/v1/crates/rootmark-ai",
+   "queried_at": "2026-11-11T20:21:19Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "7528b4bfa4812437df624fd03a961f8d0147b6b57d352305b57fe1746e81a1c9",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "pypi",
+   "url": "https://pypi.org/pypi/rootmark-ai/json",
+   "queried_at": "2026-11-11T20:21:19Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "testpypi",
+   "url": "https://test.pypi.org/pypi/rootmark-ai/json",
+   "queried_at": "2026-11-11T20:21:20Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "npm_pkg",
+   "url": "https://registry.npmjs.org/rootmark-ai",
+   "queried_at": "2026-11-11T20:21:20Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f",
+   "note": null,
+   "punct_variant": {
+    "name": "rootmarkai",
+    "url": "https://registry.npmjs.org/rootmarkai",
+    "queried_at": "2026-11-11T20:21:20Z",
+    "http_status": 404,
+    "state": "free",
+    "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f"
+   }
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "npm_org",
+   "url": "https://registry.npmjs.org/-/org/rootmark-ai/package",
+   "queried_at": "2026-11-11T20:21:21Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b4007018e183e22c41c007931425c2fb7536d42266b6bebc384c61723d0480e4",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "npm_user",
+   "url": "https://www.npmjs.com/~rootmark-ai",
+   "queried_at": "2026-11-11T20:21:33Z",
+   "http_status": 403,
+   "state": "unreachable",
+   "summary": {},
+   "body_sha256": "28e5aa981394d85643886fc77112655480a2ec64d1ce84519210f79dcee1ad18",
+   "note": "www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md",
+   "weak_evidence": {
+    "url": "https://registry.npmjs.org/-/v1/search?text=maintainer:rootmark-ai&size=1",
+    "queried_at": "2026-11-11T20:21:42Z",
+    "http_status": 200,
+    "packages_maintained": 0,
+    "body_sha256": "01f0e67b60b7a42c8d3904f4e64d066eb0134b9723fce5847344802339962a93"
+   }
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "dockerhub",
+   "url": "https://hub.docker.com/v2/users/rootmark-ai/",
+   "queried_at": "2026-11-11T20:21:42Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "e2389aa431003246ba203764639fe101c590c2389847663a626d798dd9ebfb9d",
+   "note": "invalid_name: Docker ID is 4-30 of [a-z0-9]",
+   "invalid_name": true
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "ghcr",
+   "url": "https://ghcr.io/v2/rootmark-ai/rootmark/tags/list",
+   "queried_at": "2026-11-11T20:21:43Z",
+   "http_status": 401,
+   "state": "free",
+   "summary": {
+    "public_image_rootmark": false,
+    "token_status": 403,
+    "namespace_owner": null,
+    "namespace_owner_from": "github row"
+   },
+   "body_sha256": "89a052af62c612d0e05d2596f03edba77d7d904c4478b387a5dc6305821fe0a1",
+   "note": "namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark"
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "github",
+   "url": "https://api.github.com/users/rootmark-ai",
+   "queried_at": "2026-11-11T20:21:43Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3a32eab6ffbfd1cf2684b1a409bf40db46e46c5eaff44de656e499df05d92730",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "brew_formula",
+   "url": "https://formulae.brew.sh/api/formula/rootmark-ai.json",
+   "queried_at": "2026-11-11T20:21:44Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "brew_cask",
+   "url": "https://formulae.brew.sh/api/cask/rootmark-ai.json",
+   "queried_at": "2026-11-11T20:21:44Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "brew_tap",
+   "url": "https://api.github.com/repos/rootmark-ai/homebrew-tap ; https://api.github.com/repos/rootmark-ai/homebrew-rootmark",
+   "queried_at": "2026-11-11T20:21:44Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "homebrew-tap": "free",
+    "homebrew-rootmark": "free"
+   },
+   "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+   "note": "tap = GitHub repo <owner>/homebrew-<tap>; owner account: github row",
+   "second": {
+    "url": "https://api.github.com/repos/rootmark-ai/homebrew-rootmark",
+    "queried_at": "2026-11-11T20:21:45Z",
+    "http_status": 404,
+    "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9"
+   }
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "obsidian_id",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "id equality (exact) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "obsidian_name",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "name equality (case-insensitive) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "vscode_publisher",
+   "url": "https://marketplace.visualstudio.com/publishers/rootmark-ai",
+   "queried_at": "2026-11-11T20:21:45Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "f9bb297d45623b07daa5b27a4a02a547a77000ce6f8dac391c99efc4496a60e2",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "vscode_ext",
+   "url": "https://marketplace.visualstudio.com/items?itemName=rootmark-ai.rootmark",
+   "queried_at": "2026-11-11T20:21:46Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-ai.rootmark"
+   },
+   "body_sha256": "d6b4b338812d666fff146aab1701233efc372a222e575c084db672f2399d9579",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "openvsx_ns",
+   "url": "https://open-vsx.org/api/rootmark-ai",
+   "queried_at": "2026-11-11T20:21:46Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c4ddfb65d0e1ae61637539619420c8828fe6016340e00973cf9b976a2afcd2b1",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "openvsx_ext",
+   "url": "https://open-vsx.org/api/rootmark-ai/rootmark",
+   "queried_at": "2026-11-11T20:21:46Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmark-ai.rootmark"
+   },
+   "body_sha256": "dc21db7119eee19f869c1ffc1fef764dea77ea4f1f0a48b7d75e42f7a83a5b6d",
+   "note": null
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "dom_ai",
+   "url": "https://rdap.identitydigital.services/rdap/domain/rootmark-ai.ai",
+   "queried_at": "2026-11-11T20:21:46Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "f37e8ea322232422eab000a4d2f99ee066fbe5a865643532f2c74ebf3f47e8fc",
+   "note": null,
+   "domain": "rootmark-ai.ai"
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "dom_com",
+   "url": "https://rdap.verisign.com/com/v1/domain/rootmark-ai.com",
+   "queried_at": "2026-11-11T20:21:47Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "note": null,
+   "domain": "rootmark-ai.com"
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "dom_dev",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-ai.dev",
+   "queried_at": "2026-11-11T20:21:47Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b66649ec65da3e486e552b52631d32abed3b70c6bc5e2b637aaa0d265577efa7",
+   "note": null,
+   "domain": "rootmark-ai.dev"
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "dom_io",
+   "url": "whois:whois.nic.io rootmark-ai.io",
+   "queried_at": "2026-11-11T20:21:47Z",
+   "http_status": null,
+   "whois_status": "not_found",
+   "state": "free",
+   "summary": {},
+   "body_sha256": "6003fd581b5150f98f46b3912792ba711aadcdc52490ad2971f3acfb16135830",
+   "note": "no RDAP service for this TLD in IANA's bootstrap; whois (port 43, read-only)",
+   "domain": "rootmark-ai.io"
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "dom_app",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmark-ai.app",
+   "queried_at": "2026-11-11T20:21:48Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "cf527f064472d0c2d8761bbaa14329ee9b7f2534416224017c2f4442090a03ee",
+   "note": null,
+   "domain": "rootmark-ai.app"
+  },
+  {
+   "name": "rootmark-ai",
+   "registry": "dom_org",
+   "url": "https://rdap.publicinterestregistry.org/rdap/domain/rootmark-ai.org",
+   "queried_at": "2026-11-11T20:21:48Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "ea3ef3208e282a4640b91ddfe4e191b72b4312653c3fa12155a62ad881998a34",
+   "note": null,
+   "domain": "rootmark-ai.org"
+  },
+  {
+   "name": "getrootmark",
+   "registry": "crates.io",
+   "url": "https://crates.io/api/v1/crates/getrootmark",
+   "queried_at": "2026-11-11T20:21:48Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "1f5910b33cb5aa1af2db881546795d4155f8081e25ddafa69714ea669689a783",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "pypi",
+   "url": "https://pypi.org/pypi/getrootmark/json",
+   "queried_at": "2026-11-11T20:21:48Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "testpypi",
+   "url": "https://test.pypi.org/pypi/getrootmark/json",
+   "queried_at": "2026-11-11T20:21:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "npm_pkg",
+   "url": "https://registry.npmjs.org/getrootmark",
+   "queried_at": "2026-11-11T20:21:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "npm_org",
+   "url": "https://registry.npmjs.org/-/org/getrootmark/package",
+   "queried_at": "2026-11-11T20:21:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b4007018e183e22c41c007931425c2fb7536d42266b6bebc384c61723d0480e4",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "npm_user",
+   "url": "https://www.npmjs.com/~getrootmark",
+   "queried_at": "2026-11-11T20:22:02Z",
+   "http_status": 403,
+   "state": "unreachable",
+   "summary": {},
+   "body_sha256": "e781d61b8e475dfe29999c2979ce41937ece36fbebe9babbf7cab19e3e816dcb",
+   "note": "www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md",
+   "weak_evidence": {
+    "url": "https://registry.npmjs.org/-/v1/search?text=maintainer:getrootmark&size=1",
+    "queried_at": "2026-11-11T20:22:10Z",
+    "http_status": 200,
+    "packages_maintained": 0,
+    "body_sha256": "01260ddd0aa039415de2911ae2fd2d6ef0d87d90ccb81acad1db9b56ff480e78"
+   }
+  },
+  {
+   "name": "getrootmark",
+   "registry": "dockerhub",
+   "url": "https://hub.docker.com/v2/users/getrootmark/",
+   "queried_at": "2026-11-11T20:22:10Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "76d08cdf4f9e92476ac46793fc21d4f1fa3e3bcbe066fb0a91ccca64971980e1",
+   "note": null,
+   "invalid_name": false
+  },
+  {
+   "name": "getrootmark",
+   "registry": "ghcr",
+   "url": "https://ghcr.io/v2/getrootmark/rootmark/tags/list",
+   "queried_at": "2026-11-11T20:22:11Z",
+   "http_status": 401,
+   "state": "free",
+   "summary": {
+    "public_image_rootmark": false,
+    "token_status": 403,
+    "namespace_owner": null,
+    "namespace_owner_from": "github row"
+   },
+   "body_sha256": "89a052af62c612d0e05d2596f03edba77d7d904c4478b387a5dc6305821fe0a1",
+   "note": "namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark"
+  },
+  {
+   "name": "getrootmark",
+   "registry": "github",
+   "url": "https://api.github.com/users/getrootmark",
+   "queried_at": "2026-11-11T20:22:11Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3a32eab6ffbfd1cf2684b1a409bf40db46e46c5eaff44de656e499df05d92730",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "brew_formula",
+   "url": "https://formulae.brew.sh/api/formula/getrootmark.json",
+   "queried_at": "2026-11-11T20:22:12Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "brew_cask",
+   "url": "https://formulae.brew.sh/api/cask/getrootmark.json",
+   "queried_at": "2026-11-11T20:22:12Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "brew_tap",
+   "url": "https://api.github.com/repos/getrootmark/homebrew-tap ; https://api.github.com/repos/getrootmark/homebrew-rootmark",
+   "queried_at": "2026-11-11T20:22:12Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "homebrew-tap": "free",
+    "homebrew-rootmark": "free"
+   },
+   "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+   "note": "tap = GitHub repo <owner>/homebrew-<tap>; owner account: github row",
+   "second": {
+    "url": "https://api.github.com/repos/getrootmark/homebrew-rootmark",
+    "queried_at": "2026-11-11T20:22:13Z",
+    "http_status": 404,
+    "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9"
+   }
+  },
+  {
+   "name": "getrootmark",
+   "registry": "obsidian_id",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "id equality (exact) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "getrootmark",
+   "registry": "obsidian_name",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "name equality (case-insensitive) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "getrootmark",
+   "registry": "vscode_publisher",
+   "url": "https://marketplace.visualstudio.com/publishers/getrootmark",
+   "queried_at": "2026-11-11T20:22:13Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "43555d58283894a492308c4515071e6e8f4ce05ef132cbfd77f4bb9b3b8c1fba",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "vscode_ext",
+   "url": "https://marketplace.visualstudio.com/items?itemName=getrootmark.rootmark",
+   "queried_at": "2026-11-11T20:22:14Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "getrootmark.rootmark"
+   },
+   "body_sha256": "f36e7df6ed6c61e9ebabca983bf4ab11ef9d3f523a0fccfc98406b6ebb98ab13",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "openvsx_ns",
+   "url": "https://open-vsx.org/api/getrootmark",
+   "queried_at": "2026-11-11T20:22:14Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "8c1dfc4cbb32b2466a87f7dba3b0c2d3a54538bb412f720f2410cba2cc8e86c3",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "openvsx_ext",
+   "url": "https://open-vsx.org/api/getrootmark/rootmark",
+   "queried_at": "2026-11-11T20:22:14Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "getrootmark.rootmark"
+   },
+   "body_sha256": "16e36e4b049c3c6022323d397ded1c77a8e42f67781b6b65309b4671b8f3603a",
+   "note": null
+  },
+  {
+   "name": "getrootmark",
+   "registry": "dom_ai",
+   "url": "https://rdap.identitydigital.services/rdap/domain/getrootmark.ai",
+   "queried_at": "2026-11-11T20:22:15Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c76f1e075506aebaec394dca4f552553a3bc293e66be4b261ab36aa8eb538cf8",
+   "note": null,
+   "domain": "getrootmark.ai"
+  },
+  {
+   "name": "getrootmark",
+   "registry": "dom_com",
+   "url": "https://rdap.verisign.com/com/v1/domain/getrootmark.com",
+   "queried_at": "2026-11-11T20:22:15Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "note": null,
+   "domain": "getrootmark.com"
+  },
+  {
+   "name": "getrootmark",
+   "registry": "dom_dev",
+   "url": "https://pubapi.registry.google/rdap/domain/getrootmark.dev",
+   "queried_at": "2026-11-11T20:22:15Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b171d67629bb9bb328bdf09302378f3e41f585455766d65c0823aa33fc52e1dc",
+   "note": null,
+   "domain": "getrootmark.dev"
+  },
+  {
+   "name": "getrootmark",
+   "registry": "dom_io",
+   "url": "whois:whois.nic.io getrootmark.io",
+   "queried_at": "2026-11-11T20:22:15Z",
+   "http_status": null,
+   "whois_status": "not_found",
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b112b44e1c8ef980d95ed60c2f1ec3a1459336932c85b46422e013ac63005ce1",
+   "note": "no RDAP service for this TLD in IANA's bootstrap; whois (port 43, read-only)",
+   "domain": "getrootmark.io"
+  },
+  {
+   "name": "getrootmark",
+   "registry": "dom_app",
+   "url": "https://pubapi.registry.google/rdap/domain/getrootmark.app",
+   "queried_at": "2026-11-11T20:22:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3dd30cc380a87e0b9861c45066bf99f78e0d4152b449819ba3d0300f99a0f9ae",
+   "note": null,
+   "domain": "getrootmark.app"
+  },
+  {
+   "name": "getrootmark",
+   "registry": "dom_org",
+   "url": "https://rdap.publicinterestregistry.org/rdap/domain/getrootmark.org",
+   "queried_at": "2026-11-11T20:22:16Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "12cba4426f1ae342d8a8eeb53f37268d6f71a8e8793745d3ec3c2c643a547cb3",
+   "note": null,
+   "domain": "getrootmark.org"
+  },
+  {
+   "name": "rhizomark",
+   "registry": "crates.io",
+   "url": "https://crates.io/api/v1/crates/rhizomark",
+   "queried_at": "2026-11-11T20:22:17Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "8fe81abdce1d7d5aacc97899a21f58f70f8b56ae5503e67cb070cc5dd995ebea",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "pypi",
+   "url": "https://pypi.org/pypi/rhizomark/json",
+   "queried_at": "2026-11-11T20:22:17Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "testpypi",
+   "url": "https://test.pypi.org/pypi/rhizomark/json",
+   "queried_at": "2026-11-11T20:22:18Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "npm_pkg",
+   "url": "https://registry.npmjs.org/rhizomark",
+   "queried_at": "2026-11-11T20:22:18Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "npm_org",
+   "url": "https://registry.npmjs.org/-/org/rhizomark/package",
+   "queried_at": "2026-11-11T20:22:18Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b4007018e183e22c41c007931425c2fb7536d42266b6bebc384c61723d0480e4",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "npm_user",
+   "url": "https://www.npmjs.com/~rhizomark",
+   "queried_at": "2026-11-11T20:22:19Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "69ec95eb8bb190b895cd5ecbd695028a08cb4b67cfaf93b76469038431031d45",
+   "note": null,
+   "weak_evidence": {
+    "url": "https://registry.npmjs.org/-/v1/search?text=maintainer:rhizomark&size=1",
+    "queried_at": "2026-11-11T20:22:19Z",
+    "http_status": 200,
+    "packages_maintained": 0,
+    "body_sha256": "8677a13e9d598bf6859a006fdbfaada1a635e672c535811f7a473a1673d29281"
+   }
+  },
+  {
+   "name": "rhizomark",
+   "registry": "dockerhub",
+   "url": "https://hub.docker.com/v2/users/rhizomark/",
+   "queried_at": "2026-11-11T20:22:19Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "851dd9e63c5eb06b91d6c4d111fa13b9371b5ac0cb2bf4d02c398e2ca2bad75d",
+   "note": null,
+   "invalid_name": false
+  },
+  {
+   "name": "rhizomark",
+   "registry": "ghcr",
+   "url": "https://ghcr.io/v2/rhizomark/rootmark/tags/list",
+   "queried_at": "2026-11-11T20:22:20Z",
+   "http_status": 401,
+   "state": "free",
+   "summary": {
+    "public_image_rootmark": false,
+    "token_status": 403,
+    "namespace_owner": null,
+    "namespace_owner_from": "github row"
+   },
+   "body_sha256": "89a052af62c612d0e05d2596f03edba77d7d904c4478b387a5dc6305821fe0a1",
+   "note": "namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark"
+  },
+  {
+   "name": "rhizomark",
+   "registry": "github",
+   "url": "https://api.github.com/users/rhizomark",
+   "queried_at": "2026-11-11T20:22:20Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3a32eab6ffbfd1cf2684b1a409bf40db46e46c5eaff44de656e499df05d92730",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "brew_formula",
+   "url": "https://formulae.brew.sh/api/formula/rhizomark.json",
+   "queried_at": "2026-11-11T20:22:20Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "brew_cask",
+   "url": "https://formulae.brew.sh/api/cask/rhizomark.json",
+   "queried_at": "2026-11-11T20:22:20Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "brew_tap",
+   "url": "https://api.github.com/repos/rhizomark/homebrew-tap ; https://api.github.com/repos/rhizomark/homebrew-rootmark",
+   "queried_at": "2026-11-11T20:22:21Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "homebrew-tap": "free",
+    "homebrew-rootmark": "free"
+   },
+   "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+   "note": "tap = GitHub repo <owner>/homebrew-<tap>; owner account: github row",
+   "second": {
+    "url": "https://api.github.com/repos/rhizomark/homebrew-rootmark",
+    "queried_at": "2026-11-11T20:22:21Z",
+    "http_status": 404,
+    "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9"
+   }
+  },
+  {
+   "name": "rhizomark",
+   "registry": "obsidian_id",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "id equality (exact) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rhizomark",
+   "registry": "obsidian_name",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "name equality (case-insensitive) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rhizomark",
+   "registry": "vscode_publisher",
+   "url": "https://marketplace.visualstudio.com/publishers/rhizomark",
+   "queried_at": "2026-11-11T20:22:22Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "6874b79b803954f5931c0015f98cf9b66cff227d71da1efa0566cca7c085faef",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "vscode_ext",
+   "url": "https://marketplace.visualstudio.com/items?itemName=rhizomark.rootmark",
+   "queried_at": "2026-11-11T20:22:22Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rhizomark.rootmark"
+   },
+   "body_sha256": "6e83a8c25338cedcc335e9f021610a2f3ae366809518a0c3441b630fdc850960",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "openvsx_ns",
+   "url": "https://open-vsx.org/api/rhizomark",
+   "queried_at": "2026-11-11T20:22:22Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3f3dc274110e7ce864cae1c195ea4e3eb015444380ff02fe8ec8bb7f09edcdcd",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "openvsx_ext",
+   "url": "https://open-vsx.org/api/rhizomark/rootmark",
+   "queried_at": "2026-11-11T20:22:22Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rhizomark.rootmark"
+   },
+   "body_sha256": "680bcd6ba66c9cec0c7439a72f180e1dec5d78d7f4713a6c9fc663787feba2b6",
+   "note": null
+  },
+  {
+   "name": "rhizomark",
+   "registry": "dom_ai",
+   "url": "https://rdap.identitydigital.services/rdap/domain/rhizomark.ai",
+   "queried_at": "2026-11-11T20:22:23Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "41cc9ea8d395a138013b4598c5b6aafeeaa920174adf71a741342e8161aaf8c9",
+   "note": null,
+   "domain": "rhizomark.ai"
+  },
+  {
+   "name": "rhizomark",
+   "registry": "dom_com",
+   "url": "https://rdap.verisign.com/com/v1/domain/rhizomark.com",
+   "queried_at": "2026-11-11T20:22:23Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "note": null,
+   "domain": "rhizomark.com"
+  },
+  {
+   "name": "rhizomark",
+   "registry": "dom_dev",
+   "url": "https://pubapi.registry.google/rdap/domain/rhizomark.dev",
+   "queried_at": "2026-11-11T20:22:23Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "d4e9b4c3b13ac30211d15055d408855867440f51458bfe79c466d3faa8698d8c",
+   "note": null,
+   "domain": "rhizomark.dev"
+  },
+  {
+   "name": "rhizomark",
+   "registry": "dom_io",
+   "url": "whois:whois.nic.io rhizomark.io",
+   "queried_at": "2026-11-11T20:22:23Z",
+   "http_status": null,
+   "whois_status": "not_found",
+   "state": "free",
+   "summary": {},
+   "body_sha256": "a43f2ddc094ea667fe486c5c19026ca7fd03672c0f1325248e7d04f0c095d043",
+   "note": "no RDAP service for this TLD in IANA's bootstrap; whois (port 43, read-only)",
+   "domain": "rhizomark.io"
+  },
+  {
+   "name": "rhizomark",
+   "registry": "dom_app",
+   "url": "https://pubapi.registry.google/rdap/domain/rhizomark.app",
+   "queried_at": "2026-11-11T20:22:24Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "fe44af0690be842e1b2b350f99c2a1317e831b8b6bc8f55141d95ea56c799687",
+   "note": null,
+   "domain": "rhizomark.app"
+  },
+  {
+   "name": "rhizomark",
+   "registry": "dom_org",
+   "url": "https://rdap.publicinterestregistry.org/rdap/domain/rhizomark.org",
+   "queried_at": "2026-11-11T20:22:24Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "eadeb17bc08b1ed69ccc5c95bdaf29cbb96167e6b590a95739387a4dcba50e3f",
+   "note": null,
+   "domain": "rhizomark.org"
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "crates.io",
+   "url": "https://crates.io/api/v1/crates/rootmarkhq",
+   "queried_at": "2026-11-11T20:22:25Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "32878360b61edc684d4b9d4497d7c0ee2a8bce7ba9e7ee4d45f96841bd3d5dea",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "pypi",
+   "url": "https://pypi.org/pypi/rootmarkhq/json",
+   "queried_at": "2026-11-11T20:22:25Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "testpypi",
+   "url": "https://test.pypi.org/pypi/rootmarkhq/json",
+   "queried_at": "2026-11-11T20:22:26Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b82014934f66beeb9e05a37f65357c4b50db0349d25d68d818ed0319dd4feb40",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "npm_pkg",
+   "url": "https://registry.npmjs.org/rootmarkhq",
+   "queried_at": "2026-11-11T20:22:26Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "c8d3eae160a892e32837db3dcae515e843e5383fef52b8141940c8bcf8b6d59f",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "npm_org",
+   "url": "https://registry.npmjs.org/-/org/rootmarkhq/package",
+   "queried_at": "2026-11-11T20:22:26Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b4007018e183e22c41c007931425c2fb7536d42266b6bebc384c61723d0480e4",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "npm_user",
+   "url": "https://www.npmjs.com/~rootmarkhq",
+   "queried_at": "2026-11-11T20:22:39Z",
+   "http_status": 403,
+   "state": "unreachable",
+   "summary": {},
+   "body_sha256": "574e67fa7c8a3048ddd30c8ae28ab4adb586d2f5ae65760ec4821f411c7ce1de",
+   "note": "www.npmjs.com answered 403 (browser check; also for control names in R0); user existence has no public API -> HUMAN_STEP.md",
+   "weak_evidence": {
+    "url": "https://registry.npmjs.org/-/v1/search?text=maintainer:rootmarkhq&size=1",
+    "queried_at": "2026-11-11T20:22:48Z",
+    "http_status": 200,
+    "packages_maintained": 0,
+    "body_sha256": "6068853a298221da874a66549fb2501ffbfc6e68681c426bee8aeeaf28152754"
+   }
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "dockerhub",
+   "url": "https://hub.docker.com/v2/users/rootmarkhq/",
+   "queried_at": "2026-11-11T20:22:48Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "8cd613f3e5a20056f365666dd62074e5e2043451616e5d48a81f3ae87619eae9",
+   "note": null,
+   "invalid_name": false
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "ghcr",
+   "url": "https://ghcr.io/v2/rootmarkhq/rootmark/tags/list",
+   "queried_at": "2026-11-11T20:22:49Z",
+   "http_status": 401,
+   "state": "free",
+   "summary": {
+    "public_image_rootmark": false,
+    "token_status": 403,
+    "namespace_owner": null,
+    "namespace_owner_from": "github row"
+   },
+   "body_sha256": "89a052af62c612d0e05d2596f03edba77d7d904c4478b387a5dc6305821fe0a1",
+   "note": "namespace belongs to the GitHub account of the same name; no public image <ns>/rootmark"
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "github",
+   "url": "https://api.github.com/users/rootmarkhq",
+   "queried_at": "2026-11-11T20:22:48Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "3a32eab6ffbfd1cf2684b1a409bf40db46e46c5eaff44de656e499df05d92730",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "brew_formula",
+   "url": "https://formulae.brew.sh/api/formula/rootmarkhq.json",
+   "queried_at": "2026-11-11T20:22:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "brew_cask",
+   "url": "https://formulae.brew.sh/api/cask/rootmarkhq.json",
+   "queried_at": "2026-11-11T20:22:49Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "brew_tap",
+   "url": "https://api.github.com/repos/rootmarkhq/homebrew-tap ; https://api.github.com/repos/rootmarkhq/homebrew-rootmark",
+   "queried_at": "2026-11-11T20:22:50Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "homebrew-tap": "free",
+    "homebrew-rootmark": "free"
+   },
+   "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9",
+   "note": "tap = GitHub repo <owner>/homebrew-<tap>; owner account: github row",
+   "second": {
+    "url": "https://api.github.com/repos/rootmarkhq/homebrew-rootmark",
+    "queried_at": "2026-11-11T20:22:50Z",
+    "http_status": 404,
+    "body_sha256": "4f50e254a719a6b1b06b529bdaa08980e4acf0878aad0090cba7771f6ebdf0b9"
+   }
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "obsidian_id",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "id equality (exact) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "obsidian_name",
+   "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins.json",
+   "queried_at": "2026-11-11T20:22:54Z",
+   "http_status": 200,
+   "state": "free",
+   "summary": {
+    "matches": [],
+    "removed_matches": [],
+    "plugins_listed": 10253,
+    "removed_listed": 175,
+    "removed_file": {
+     "url": "https://raw.githubusercontent.com/obsidianmd/obsidian-releases/master/community-plugins-removed.json",
+     "queried_at": "2026-11-11T20:22:54Z",
+     "http_status": 200,
+     "body_sha256": "9fc7c1d55a07d71ab009d4260b7c33bea9d1f3742c15378ebae42621cbf20b47"
+    }
+   },
+   "body_sha256": "4e3113696c14d36a2002b06244881425b9378930fdbfc03a576a0b830e79334e",
+   "note": "name equality (case-insensitive) in community-plugins.json and -removed.json"
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "vscode_publisher",
+   "url": "https://marketplace.visualstudio.com/publishers/rootmarkhq",
+   "queried_at": "2026-11-11T20:22:50Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "cd87b9440edb4f3e60f51c63d8244f7c72d53bc8f2e7e11547ca41d2237cde84",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "vscode_ext",
+   "url": "https://marketplace.visualstudio.com/items?itemName=rootmarkhq.rootmark",
+   "queried_at": "2026-11-11T20:22:51Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmarkhq.rootmark"
+   },
+   "body_sha256": "23596b1f76e78b5be15bcc17997432b8dd89a9124e25b15b0914141972af344d",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "openvsx_ns",
+   "url": "https://open-vsx.org/api/rootmarkhq",
+   "queried_at": "2026-11-11T20:22:51Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "1d3474d1a31528a34efed4a7407eb57260db50216f2fb06600673b0e2911b167",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "openvsx_ext",
+   "url": "https://open-vsx.org/api/rootmarkhq/rootmark",
+   "queried_at": "2026-11-11T20:22:51Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {
+    "extension_id": "rootmarkhq.rootmark"
+   },
+   "body_sha256": "634de2671373b8050619c501df60c5b7a4dba39288002924581b4b8fae4a2554",
+   "note": null
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "dom_ai",
+   "url": "https://rdap.identitydigital.services/rdap/domain/rootmarkhq.ai",
+   "queried_at": "2026-11-11T20:22:52Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "4f455ffb7d582639e385e1174441b682c0514354afe8570c81af9d2fd6c9c6e9",
+   "note": null,
+   "domain": "rootmarkhq.ai"
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "dom_com",
+   "url": "https://rdap.verisign.com/com/v1/domain/rootmarkhq.com",
+   "queried_at": "2026-11-11T20:22:52Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "note": null,
+   "domain": "rootmarkhq.com"
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "dom_dev",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmarkhq.dev",
+   "queried_at": "2026-11-11T20:22:52Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "222d791a7fef02f8813815c15af7cfce3622e9dcedaf39d0727dff18e99e7ba3",
+   "note": null,
+   "domain": "rootmarkhq.dev"
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "dom_io",
+   "url": "whois:whois.nic.io rootmarkhq.io",
+   "queried_at": "2026-11-11T20:22:52Z",
+   "http_status": null,
+   "whois_status": "not_found",
+   "state": "free",
+   "summary": {},
+   "body_sha256": "087a27dc7cdca0e4f17f0ed3926f8341fe9969d666e85ef8874475273023a6a4",
+   "note": "no RDAP service for this TLD in IANA's bootstrap; whois (port 43, read-only)",
+   "domain": "rootmarkhq.io"
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "dom_app",
+   "url": "https://pubapi.registry.google/rdap/domain/rootmarkhq.app",
+   "queried_at": "2026-11-11T20:22:53Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "136647a3660029a52d31878b921a1ee1ba3d45d880b57ca812750d11f1f326da",
+   "note": null,
+   "domain": "rootmarkhq.app"
+  },
+  {
+   "name": "rootmarkhq",
+   "registry": "dom_org",
+   "url": "https://rdap.publicinterestregistry.org/rdap/domain/rootmarkhq.org",
+   "queried_at": "2026-11-11T20:22:53Z",
+   "http_status": 404,
+   "state": "free",
+   "summary": {},
+   "body_sha256": "b83e4ea04721911c80ad294d8a5f5d53c5e08078f83e74e55660fc510f0cbaec",
+   "note": null,
+   "domain": "rootmarkhq.org"
+  }
+ ],
+ "near_field": {
+  "github_repos_named_rootmark": {
+   "url": "https://api.github.com/search/repositories?q=rootmark+in:name&sort=stars&per_page=30",
+   "queried_at": "2026-11-11T20:22:55Z",
+   "http_status": 200,
+   "body_sha256": "bfc2af46ecce328574d32377edddad9b535efb5c60be7c265f8bb81285b1ca59",
+   "total_count": 10,
+   "repos": [
+    {
+     "full_name": "arknsensei/rootmark",
+     "description": "Block-level lineage, provenance and a deterministic derived index for Markdown written by people and agents",
+     "created": "2026-10-17",
+     "pushed": "2026-11-11",
+     "stars": 1,
+     "archived": false,
+     "fork": false
+    },
+    {
+     "full_name": "rootmarkjoy/rootmarkjoy",
+     "description": "",
+     "created": "2022-12-02",
+     "pushed": "2024-01-25",
+     "stars": 1,
+     "archived": false,
+     "fork": false
+    },
+    {
+     "full_name": "bmosoane/rootmark",
+     "description": "",
+     "created": "2026-10-21",
+     "pushed": "2026-10-21",
+     "stars": 0,
+     "archived": false,
+     "fork": false
+    },
+    {
+     "full_name": "Sketchify-Dev/rootmark",
+     "description": "Verifiable data and query middleware for the Portaldot V3 chain. One query across EVM and ink! events, every result carr",
+     "created": "2026-10-27",
+     "pushed": "2026-11-08",
+     "stars": 0,
+     "archived": false,
+     "fork": false
+    },
+    {
+     "full_name": "bpstr/rootmark",
+     "description": "Rootmark turns Markdown repositories into static websites.",
+     "created": "2026-09-06",
+     "pushed": "2026-09-07",
+     "stars": 0,
+     "archived": false,
+     "fork": false
+    },
+    {
+     "full_name": "northgardtracker/rootmark",
+     "description": "X-ray for AGENTS.md and coding-agent instruction drift.",
+     "created": "2026-06-21",
+     "pushed": "2026-06-23",
+     "stars": 0,
+     "archived": false,
+     "fork": false
+    },
+    {
+     "full_name": "kgreen1200/rootmark",
+     "description": "",
+     "created": "2026-11-08",
+     "pushed": "2026-11-08",
+     "stars": 0,
+     "archived": false,
+     "fork": false
+    },
+    {
+     "full_name": "002sofianjeri-debug/RootMarket",
+     "description": "",
+     "created": "2026-07-07",
+     "pushed": "2026-07-09",
+     "stars": 0,
+     "archived": false,
+     "fork": false
+    },
+    {
+     "full_name": "rootmarkexe/rootmarkexe",
+     "description": "",
+     "created": "2025-09-11",
+     "pushed": "2026-11-09",
+     "stars": 0,
+     "archived": false,
+     "fork": false
+    },
+    {
+     "full_name": "002sofianjeri-debug/RootMarket-Backend",
+     "description": "",
+     "created": "2026-07-07",
+     "pushed": "2026-07-07",
+     "stars": 0,
+     "archived": false,
+     "fork": false
+    }
+   ]
+  },
+  "websites": [
+   {
+    "url": "https://rootmark.com/",
+    "queried_at": "2026-11-11T20:22:56Z",
+    "http_status": 200,
+    "error": null,
+    "final_url": "https://www.rootmark.com/"
+   },
+   {
+    "url": "https://rootmark.dev/",
+    "queried_at": "2026-11-11T20:23:08Z",
+    "http_status": null,
+    "error": "URLError",
+    "final_url": null
+   },
+   {
+    "url": "https://rootmark.ai/",
+    "queried_at": "2026-11-11T20:23:29Z",
+    "http_status": 503,
+    "error": null,
+    "final_url": null
+   }
+  ]
+ }
+}
