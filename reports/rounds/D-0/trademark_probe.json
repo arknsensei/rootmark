@@ -1,0 +1,72 @@
+{
+ "probe": "D-0/R2 trademark sources, GET only",
+ "query": "rootmark",
+ "user_agent": "rootmark-d0-trademark-probe/1 (read-only)",
+ "rows": [
+  {
+   "source": "TÜRKPATENT",
+   "url": "https://www.turkpatent.gov.tr/arastirma-yap?form=trademark",
+   "queried_at": "2026-11-11T20:27:38Z",
+   "http_status": 200,
+   "error": null,
+   "content_type": "text/html; charset=utf-8",
+   "bytes": 133696,
+   "body_sha256": "15f1d509f890357a5d5c018318411927fe94416f3857b531598678310d5636e1",
+   "query_word_in_body": false,
+   "machine_readable_result": false,
+   "verdict": "human_step (no machine-readable result for a GET)"
+  },
+  {
+   "source": "EUIPO TMview",
+   "url": "https://www.tmdn.org/tmview/#/tmview/results?page=1&pageSize=30&criteria=C&basicSearch=rootmark",
+   "queried_at": "2026-11-11T20:27:39Z",
+   "http_status": 200,
+   "error": null,
+   "content_type": "text/html",
+   "bytes": 531,
+   "body_sha256": "84baa2fd95e8dcca66e0fcc79f6dd29c29fd4d79adf14b4d177aca4216298c44",
+   "query_word_in_body": false,
+   "machine_readable_result": false,
+   "verdict": "human_step (no machine-readable result for a GET)"
+  },
+  {
+   "source": "EUIPO TMview (API, GET)",
+   "url": "https://www.tmdn.org/tmview/api/search/results?basicSearch=rootmark&page=1&pageSize=30",
+   "queried_at": "2026-11-11T20:27:39Z",
+   "http_status": 200,
+   "error": null,
+   "content_type": "text/html",
+   "bytes": 244,
+   "body_sha256": "30100889d7b5881dff44a06f8216136b336429adbc4993c36e5dd8bdc7959018",
+   "query_word_in_body": false,
+   "machine_readable_result": false,
+   "verdict": "human_step (no machine-readable result for a GET)"
+  },
+  {
+   "source": "USPTO Trademark Search",
+   "url": "https://tmsearch.uspto.gov/search/search-results?query=rootmark&section=default",
+   "queried_at": "2026-11-11T20:27:39Z",
+   "http_status": 200,
+   "error": null,
+   "content_type": "text/html",
+   "bytes": 125603,
+   "body_sha256": "1b50fe39523553c0a6c994e9a25a2c4e6e98feee6d16aa4923883acc080a4c79",
+   "query_word_in_body": false,
+   "machine_readable_result": false,
+   "verdict": "human_step (no machine-readable result for a GET)"
+  },
+  {
+   "source": "WIPO Global Brand Database",
+   "url": "https://branddb.wipo.int/en/quicksearch/brand?by=brandName&v=rootmark",
+   "queried_at": "2026-11-11T20:27:39Z",
+   "http_status": 200,
+   "error": null,
+   "content_type": null,
+   "bytes": 1717,
+   "body_sha256": "e2dcdee82af85a8136e9e22c594c4626c559c76fdebfa598eed497ca88cf6afe",
+   "query_word_in_body": false,
+   "machine_readable_result": false,
+   "verdict": "human_step (no machine-readable result for a GET)"
+  }
+ ]
+}
