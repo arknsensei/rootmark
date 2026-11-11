@@ -1,0 +1,32 @@
+{
+ "rows": [
+  {
+   "manifest": "MANIFEST.json",
+   "name": "minilm-l6-v2",
+   "source": "sentence-transformers/all-MiniLM-L6-v2",
+   "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+   "url": "https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/revision/1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+   "queried_at": "2026-11-11T20:34:09Z",
+   "http_status": 200,
+   "body_sha256": "86a0e5a8d479ff95b97cb43418297b147a6e89325e78cd1211bb6fff348848a1",
+   "license": "apache-2.0",
+   "base_model": [
+    "nreimers/MiniLM-L6-H384-uncased"
+   ],
+   "pinned_files_bytes": 90871704
+  },
+  {
+   "manifest": "MANIFEST.multilingual-minilm-l12-v2.json",
+   "name": "multilingual-minilm-l12-v2",
+   "source": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+   "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+   "url": "https://huggingface.co/api/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/revision/e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+   "queried_at": "2026-11-11T20:34:09Z",
+   "http_status": 200,
+   "body_sha256": "d8f5c107d7cade2b53713ef7f7e73e6ca0d2612d5b942bfd85f4e5fd6fad99ac",
+   "license": "apache-2.0",
+   "base_model": null,
+   "pinned_files_bytes": 479383371
+  }
+ ]
+}

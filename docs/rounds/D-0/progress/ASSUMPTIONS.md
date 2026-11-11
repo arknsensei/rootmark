@@ -1,3 +1,5 @@
 # D-0 — Varsayımlar
 
 - **A1 [-] (R0):** Yedek adlar (`rhizomark`, `rootmarkhq`) R1'in bulgusundan önce, DESIGN §1.1'de gerekçeyle seçildi; R1 aynı koşuda tarar. GOAL "R1'in bulgusuna göre en çok iki yedek" der: seçim önce yapıldı ki tarama tek koşuda ve yöntemle aynı olsun; bulgu başka bir yedek gerektirirse DESIGN'a ek ve burada gerekçe (toplam ≤ 2).
+- **A2 [-] (R3):** GOAL'ün sızıntı kuralı "giden kümede `.rootmark/` yok" lafzen uygulandı: `server/tests/fixtures/index_ort/vault/.rootmark/` (sentetik eski indeks, kişisel içerik değil) aynen gitmez, K dönüşümüyle `dot-rootmark/`'a konur ve test (`p2v1_migrate.rs`, M) geçici kopyada adı geri verir. Alternatif — fixture'ı gerekçeli istisna olarak aynen göndermek — karar listesinde (D0-K14) yazılı; lafzi kural varken istisna seçilmedi.
+- **A3 [-] (R3):** Ürün testlerinin okuduğu `research/data/` alt kümesi (474 dosya) "kalan" değil "dönüşen (K)" sayıldı: ürün yolu `testdata/…`, baytlar aynen. Giden kümede `research/` öneki 0 kuralı ürün yollarına uygulanır. Gerekçe: göç ve `events_hash` uyumluluk testleri ürünün sözüdür; bu veri olmadan 8 test dosyası ürün deposunda düşer.

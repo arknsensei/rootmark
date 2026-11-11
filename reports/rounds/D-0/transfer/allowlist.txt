@@ -1,0 +1,43 @@
+# D-0/R3 — goes to the product repository as it is (byte-equal at the lab tag).
+# Pattern language: docs/rounds/D-0/progress/DESIGN.md §3 (dir/ = prefix; else
+# fnmatch or exact path; the longest matching pattern of the three lists wins).
+
+# runtime code (Rust)
+core/
+index/
+server/
+bindings/
+Cargo.toml
+Cargo.lock
+rust-toolchain.toml
+.cargo/config.toml
+
+# clients (TypeScript)
+clients/
+
+# specification, conformance suite and fixtures
+spec/
+
+# models: pinned manifests only (model files are fetched, never in the repo)
+models/MANIFEST.json
+models/MANIFEST.multilingual-minilm-l12-v2.json
+
+# licence and community files (English)
+LICENSE
+NOTICE
+CODE_OF_CONDUCT.md
+.gitattributes
+.gitignore
+.github/ISSUE_TEMPLATE/bug.md
+
+# build, release and product checks (no lab path in them)
+scripts/fetch_model.sh
+scripts/linux_cross_build.sh
+scripts/release_target.sh
+scripts/conformance_equiv.sh
+scripts/gen_client_types.sh
+scripts/client_checks.sh
+scripts/mcp_e2e.sh
+scripts/http_e2e.sh
+scripts/mcp_inspector.sh
+scripts/dep_age_exceptions.txt

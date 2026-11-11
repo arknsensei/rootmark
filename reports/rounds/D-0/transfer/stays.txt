@@ -1,0 +1,61 @@
+# D-0/R3 — stays in the lab repository (never copied to the product).
+
+# rounds, records, research, archive
+research/
+reports/
+docs/rounds/
+docs/archive/
+
+# Turkish process documents and lab-only directions
+NORTH_STAR.md
+docs/DECISIONS.md
+docs/DEV_PROCESS.md
+docs/ROADMAP.md
+docs/HANDOFF.md
+docs/PACKAGES.md
+docs/RELEASE.md
+docs/ARCHITECTURE.md
+docs/SPEC_EDITS_CRITERION.md
+docs/SECURITY.md
+docs/HEADLESS_CHANNEL.md
+research/CLAUDE.md
+
+# frozen measurement, verification chain, deliberate-corruption tests
+scripts/verify.sh
+scripts/verify_mac.sh
+scripts/check_frozen.sh
+scripts/check_compare_fields.sh
+scripts/check_records_portable.sh
+scripts/test_*.sh
+scripts/embed_cpu.sh
+scripts/keychain_probe.sh
+scripts/release_check.sh
+scripts/release_local.sh
+scripts/governance_scenario.sh
+scripts/p2b_client_checks.sh
+scripts/plugin_e2e_real.sh
+
+# fixture and old-vault generators that need prototype / old binaries
+scripts/gen_fixtures.sh
+scripts/gen_fixtures_c2.sh
+scripts/gen_fixtures_c3.sh
+scripts/fixture-gen/
+scripts/gen_old_index.sh
+scripts/gen_p2_0_old_vaults.sh
+scripts/gen_p2_0_1_old_vaults.sh
+scripts/gen_p2_0_2_old_vaults.sh
+scripts/gen_v3final_mixed.sh
+scripts/v3final-mixed-gen/
+scripts/check_v3_compat.sh
+
+# hypothesis-round harnesses of the Obsidian client (real Obsidian, D-NOTES)
+clients/obsidian/e2e/p2_0/
+clients/obsidian/e2e/p2_0_1/
+clients/obsidian/e2e/p2_0_2/
+clients/obsidian/e2e/p2_b/
+
+# lab-only workflows and templates
+.github/workflows/verify.yml
+.github/workflows/pilot.yml
+.github/ISSUE_TEMPLATE/hypothesis.md
+.github/ISSUE_TEMPLATE/decision-request.md
