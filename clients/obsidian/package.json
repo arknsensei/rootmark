@@ -1,6 +1,6 @@
 {
   "name": "rootmark-obsidian",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "description": "Obsidian client of rootmark serve: blame, proposals, promote, search, checkpoints, traces over the HTTP contract (docs/CLIENT_CONTRACT.md)",
   "license": "Apache-2.0",
