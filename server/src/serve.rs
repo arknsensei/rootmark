@@ -16,7 +16,11 @@
 //!   files are read (P2-Q.1, PQ-22); a removed file, or the documents of a
 //!   directory removed or moved out, are ingested as documents without
 //!   blocks after the attestation window (`Kernel::watch_removed`; P2-Q.1,
-//!   PQ-18);
+//!   PQ-18); at the start, once the watcher is registered, the vault is
+//!   reconciled with the log as the watcher's first batch: every file
+//!   whose bytes the log does not hold is ingested as an external change,
+//!   every document whose file is gone is held as a removal, an unchanged
+//!   vault writes nothing (P2-Q.3, D0F-5, D0F-1; its DESIGN §2);
 //! - always: the hot tier is compacted every `[index] compact_every_s`.
 //!
 //! SIGTERM or SIGINT (or the end of the MCP stream) stops the service: the
@@ -204,6 +208,33 @@ fn scan_dir(root: &Path, rel: &str) -> Vec<String> {
     out
 }
 
+/// The vault's Markdown files by the watcher's rule (`scan_dir` from the
+/// root: hidden components skipped, symbolic links not followed), in byte
+/// order — what the start's reconciliation compares with the log (P2-Q.3
+/// DESIGN §2.2). A root that cannot be read is an error.
+fn vault_files(root: &Path) -> Result<Vec<String>> {
+    let mut out = Vec::new();
+    let entries =
+        std::fs::read_dir(root).with_context(|| format!("watch: read {}", root.display()))?;
+    for e in entries {
+        let e = e.with_context(|| format!("watch: read {}", root.display()))?;
+        let Some(name) = e.file_name().to_str().map(str::to_string) else {
+            continue;
+        };
+        if name.starts_with('.') {
+            continue;
+        }
+        match e.file_type() {
+            Ok(t) if t.is_symlink() => log(format!("watch: {name}: a symbolic link, not followed")),
+            Ok(t) if t.is_dir() => out.extend(scan_dir(root, &name)),
+            Ok(t) if t.is_file() && name.ends_with(".md") => out.push(name),
+            _ => {}
+        }
+    }
+    out.sort_by(|a, b| a.as_bytes().cmp(b.as_bytes()));
+    Ok(out)
+}
+
 /// Test setting (P2-Q.2, PQ1-4; `server/tests/watch_hold.rs`): when set,
 /// the watcher waits this many milliseconds before each ingest of a
 /// document whose file is there, standing in for a long wait in the writer
@@ -313,7 +344,13 @@ fn ingest_removal(kernel: &Kernel, root: &Path, d: &str) {
 /// attestation, on time or late, is decided against the old path's head
 /// before its removal is ingested (spec §7.1 "Rename"; P2-Q.1 DESIGN §2.4),
 /// then the removals are ingested in byte order; the service's stop ingests
-/// the held removals at once.
+/// the held removals at once. Before the first event the thread reconciles
+/// the vault with the log (`Kernel::reconcile_files`, P2-Q.3): the files
+/// listed once the watcher is registered, changed ones ingested in byte
+/// order, documents whose file is gone held as removals — so a change made
+/// while the server was down, or a removal lost to a SIGKILL, is taken
+/// now; one taken both ways (an event of a change made just before the
+/// start) is ingested once, the second ingest finding nothing changed.
 fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
     use notify::{RecursiveMode, Watcher};
     use std::collections::{BTreeMap, BTreeSet};
@@ -336,10 +373,38 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
     .context("start the file watcher")?;
     w.watch(&root, RecursiveMode::Recursive)
         .with_context(|| format!("watch {}", root.display()))?;
+    // listed after the watcher is registered: a change made from now on is
+    // an event too (P2-Q.3 DESIGN §2.7)
+    let files = vault_files(&root)?;
     let thread = std::thread::spawn(move || {
         // held removals: document → when it is ingested
         let mut held: BTreeMap<String, Held> = BTreeMap::new();
         let mut stopping = false;
+        // the start's reconciliation (P2-Q.3, D0F-5, D0F-1): the watcher's
+        // first batch names every file of the vault and every document of
+        // the log — changes in byte order now, removals held as a batch's
+        // are; the events that came meanwhile wait in the channel
+        let t0 = Instant::now();
+        match kernel.reconcile_files(&files, "rootmark-serve-watch") {
+            Ok(r) => {
+                for n in &r.notes {
+                    log(format!("watch: {n}"));
+                }
+                let due = Instant::now() + hold;
+                for d in &r.missing {
+                    held.insert(d.clone(), Held { due, first: due });
+                }
+                log(format!(
+                    "watch: start: reconciled {} files with the log ({} changed, {} removals held, {} errors) in {} ms",
+                    files.len(),
+                    r.changed,
+                    r.missing.len(),
+                    r.errors,
+                    t0.elapsed().as_millis()
+                ));
+            }
+            Err(e) => log(format!("watch: start: reconciliation: error: {e:#}")),
+        }
         while !stopping {
             let first = match held.values().map(|h| h.due).min() {
                 None => Some(rx.recv().unwrap_or(Msg::Stop)),

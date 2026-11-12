@@ -1,0 +1,31 @@
+{
+ "probe": "P2-Q.3 P1/P2: the start's reconciliation on a D-NOTES copy",
+ "platform": "macos",
+ "machine": "arm64",
+ "rootmark_version": "rootmark 0.3.2",
+ "documents": 399,
+ "ingest_dir_s": 6.004,
+ "serve_first_start_with_index_build_s": 342.326,
+ "P1_unchanged": {
+  "files": 399,
+  "changed": 0,
+  "removals_held": 0,
+  "errors": 0,
+  "reconcile_ms": 1078,
+  "start_to_line_s": 1.257,
+  "sigterm_rc": 0
+ },
+ "P1_events_hash_equal": true,
+ "P1_threshold_s": 10.0,
+ "P1_pass": true,
+ "P2_one_edit": {
+  "files": 399,
+  "changed": 1,
+  "removals_held": 0,
+  "errors": 0,
+  "reconcile_ms": 1286,
+  "start_to_line_s": 1.464,
+  "sigterm_rc": 0
+ },
+ "P2_events_hash_changed": true
+}
