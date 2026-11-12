@@ -4,6 +4,48 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
+## Unreleased — 0.3.3 (P2-Q.3: changes made while the server was down or killed)
+
+A patch of `rootmark serve --watch` and `rootmark ingest-dir` (round P2-Q.3;
+two product bugs found in D-0, reports/rounds/D-0/FINDINGS.md D0F-1 and
+D0F-5). No event kind, field, format, endpoint, MCP tool or spec version
+changes: `tools/list` is byte for byte 0.3.2's, vaults written by 0.3.2
+open as they are (`events_hash` unchanged, no migration).
+
+### Fixes
+- **`serve --watch` takes the changes made while it was not running
+  (D0F-5).** At its start, once the file watcher is registered, the server
+  reconciles the vault with the event log, as the watcher's first batch:
+  each Markdown file (the watcher's rule: hidden paths skipped, symbolic
+  links not followed) whose bytes the log does not hold is ingested as an
+  external change, in byte-wise path order; each document whose file is
+  gone is held and then removed like a removal the watcher saw. The rule is
+  spec §7.1's external change, as for any change the watcher sees: no
+  attestation can vouch for a save made while the server was down, so under
+  `unattested = "unverified"` the change is `unverified` (actor
+  `unattested_fs`), under the default `canonical` it is the vault's human's.
+  An unchanged vault writes nothing (the log stays byte for byte the same).
+  A summary line: `watch: start: reconciled <n> files with the log (<c>
+  changed, <r> removals held, <e> errors) in <ms> ms`.
+- **A removal pending when the server is SIGKILLed is no longer lost
+  (P2-Q.2 PQ2-1, D0F-1).** The watcher holds a deleted or moved-away
+  note's removal for `window_s` + 0.5 s; a server killed in that time (as
+  Claude Code's SIGINT → SIGTERM → SIGKILL may do at the end of a session)
+  left the note's blocks live for good. The next start now finds the file
+  gone and closes the note.
+- **`ingest-dir` takes deletions (D0F-5).** After ingesting the folder's
+  files, `rootmark ingest-dir <vault> <folder>`, with the folder being the
+  vault or inside it, closes each document under that folder whose file is
+  gone (spec §7.1's external change, source `rootmark-ingest-dir`); a
+  document outside the folder, or any document when the folder is outside
+  the vault, is never touched. Its JSON output is unchanged in shape.
+
+### Process
+- `scripts/check_deps.sh`: the endpoint membership test that gave a false
+  "not an endpoint" three times on macOS CI is checked again without a pipe;
+  a disagreement is reported with the pipeline's exit statuses
+  (P2-Q.3/R3; the cause is not found yet).
+
 ## 0.3.2 — 2026-11-08 (P2-Q.2: current Claude Code over MCP; the removal hold)
 
 A patch of the MCP server and of `rootmark serve --watch` (round P2-Q.2;
