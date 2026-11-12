@@ -1,0 +1,203 @@
+{
+ "probe": "D-0/R5 supplement: changes made while the server is down",
+ "platform": "linux",
+ "machine": "x86_64",
+ "rootmark_version": "rootmark 0.3.2",
+ "parameters": {
+  "gap_before_restart_s": 5.0,
+  "settle_s": 10.0,
+  "reps": 3
+ },
+ "commands": [
+  "rootmark ingest-dir V V; rootmark index build V",
+  "rootmark serve --vault V --http 127.0.0.1:PORT --watch; SIGTERM",
+  "offline: edit n1.md, delete n2.md, add n9.md; wait 5 s",
+  "rootmark serve \u2026 --watch (restart), settle 10 s, SIGTERM",
+  "rootmark ingest-dir V V (server down)"
+ ],
+ "summary_of_reps": {
+  "taken_at_restart": {
+   "edit": 0,
+   "delete": 0,
+   "add": 0
+  },
+  "taken_by_ingest_dir": {
+   "edit": 3,
+   "delete": 0,
+   "add": 3
+  }
+ },
+ "runs": [
+  {
+   "rep": 0,
+   "taken_at_restart": {
+    "edit": false,
+    "delete": false,
+    "add": false
+   },
+   "taken_by_ingest_dir": {
+    "edit": true,
+    "delete": false,
+    "add": true
+   },
+   "counts": {
+    "before": {
+     "n1.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n2.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n9.md": {
+      "events": 0,
+      "deleted": 0
+     }
+    },
+    "at_restart": {
+     "n1.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n2.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n9.md": {
+      "events": 0,
+      "deleted": 0
+     }
+    },
+    "after_ingest_dir": {
+     "n1.md": {
+      "events": 5,
+      "deleted": 0
+     },
+     "n2.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n9.md": {
+      "events": 3,
+      "deleted": 0
+     }
+    }
+   }
+  },
+  {
+   "rep": 1,
+   "taken_at_restart": {
+    "edit": false,
+    "delete": false,
+    "add": false
+   },
+   "taken_by_ingest_dir": {
+    "edit": true,
+    "delete": false,
+    "add": true
+   },
+   "counts": {
+    "before": {
+     "n1.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n2.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n9.md": {
+      "events": 0,
+      "deleted": 0
+     }
+    },
+    "at_restart": {
+     "n1.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n2.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n9.md": {
+      "events": 0,
+      "deleted": 0
+     }
+    },
+    "after_ingest_dir": {
+     "n1.md": {
+      "events": 5,
+      "deleted": 0
+     },
+     "n2.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n9.md": {
+      "events": 3,
+      "deleted": 0
+     }
+    }
+   }
+  },
+  {
+   "rep": 2,
+   "taken_at_restart": {
+    "edit": false,
+    "delete": false,
+    "add": false
+   },
+   "taken_by_ingest_dir": {
+    "edit": true,
+    "delete": false,
+    "add": true
+   },
+   "counts": {
+    "before": {
+     "n1.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n2.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n9.md": {
+      "events": 0,
+      "deleted": 0
+     }
+    },
+    "at_restart": {
+     "n1.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n2.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n9.md": {
+      "events": 0,
+      "deleted": 0
+     }
+    },
+    "after_ingest_dir": {
+     "n1.md": {
+      "events": 5,
+      "deleted": 0
+     },
+     "n2.md": {
+      "events": 3,
+      "deleted": 0
+     },
+     "n9.md": {
+      "events": 3,
+      "deleted": 0
+     }
+    }
+   }
+  }
+ ]
+}
