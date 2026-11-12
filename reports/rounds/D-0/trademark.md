@@ -19,7 +19,12 @@
 
 | kaynak | sorgulayan | arayüz | UTC | `rootmark` | `root mark` | `rootmarks` | `rhizomark` | Nice 9/42'de eşleşme |
 |---|---|---|---|---|---|---|---|---|
-| TÜRKPATENT | insan (HUMAN_STEP H2) | Marka Araştırma | bekliyor | bekliyor | bekliyor | bekliyor | bekliyor | bekliyor |
-| EUIPO TMview | insan (HUMAN_STEP H2) | tmdn.org/tmview | bekliyor | bekliyor | bekliyor | bekliyor | bekliyor | bekliyor |
-| USPTO | insan (HUMAN_STEP H2) | tmsearch.uspto.gov | bekliyor | bekliyor | bekliyor | bekliyor | bekliyor | bekliyor |
-| WIPO Global Brand Database | insan (HUMAN_STEP H2) | branddb.wipo.int | bekliyor | bekliyor | bekliyor | bekliyor | bekliyor | bekliyor |
+| TÜRKPATENT | insan (HUMAN_STEP H2) | Marka Araştırma | — | ertelendi | ertelendi | ertelendi | ertelendi | ertelendi |
+| EUIPO TMview | insan (HUMAN_STEP H2) | tmdn.org/tmview | — | ertelendi | ertelendi | ertelendi | ertelendi | ertelendi |
+| USPTO | insan (HUMAN_STEP H2) | tmsearch.uspto.gov | — | ertelendi | ertelendi | ertelendi | ertelendi | ertelendi |
+| WIPO Global Brand Database | insan (HUMAN_STEP H2) | branddb.wipo.int | — | ertelendi | ertelendi | ertelendi | ertelendi | ertelendi |
+
+**Durum (2026-11-12): H2 ertelendi.** Ürün sahibi marka taramasını en sona (geliştirmelerden de sonra) bıraktı; sorguları kendisi yapacak (`docs/rounds/D-0/progress/R2_trademark_human.md`). Bu turda dört kaynağın kanıtlı satırı **yok** → D0-3 karar kuralına göre **kaldı (ertelendi)**. İsim kararları (REPORT §7: D0-K1, K2, K3, K15) tarama tamamlanana kadar açık.
+
+## Doğrulanmamış risk (satır değildir)
+Ürün sahibinin gözlemi: uluslararası kayıtlarda Nice **35** ve **42**'de **"RootMark Inc"** adlı bir şirkete ait bir kayıt görünüyor. Kaynak, sorgu zamanı, durum (başvuru / tescil / geçersiz), ülke ve numara yazılı değil; **doğrulanmadı**. Doğrulanırsa ve kayıt etkinse Nice 42 (yazılım hizmetleri) bu ürünün sınıfıyla örtüşür: K1'in (a) seçeneği için ciddi bir engel olabilir ve (b) `rhizomark` ya da (c) yeniden değerlendirilir. Tarama yapılırken bu kayıt ilk bakılacak satırdır (kaynak, durum, ülke, numara, sınıflar, sahip). Bu not hukuki görüş değildir.
