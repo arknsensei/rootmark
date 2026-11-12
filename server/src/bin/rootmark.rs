@@ -425,6 +425,24 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
         Cmd::IngestDir { vault, dir } => {
             let mut v = Vault::open(&vault)?;
             let out = v.ingest_dir(&dir, m)?;
+            drop(v);
+            // P2-Q.3/R2 (D0F-5): a document under `dir` whose file is gone
+            // is removed (spec §7.1's external change); only when `dir` is
+            // the vault or inside it, and never outside `dir`
+            let root = std::fs::canonicalize(&vault)
+                .with_context(|| format!("vault {}", vault.display()))?;
+            let d = std::fs::canonicalize(&dir).with_context(|| format!("{}", dir.display()))?;
+            if d.starts_with(&root) {
+                let prefix = rel_slash(&d, &root)?;
+                let k = rootmarkserver::tools::Kernel::open_with(&vault, matcher)?;
+                for (doc, n) in k.remove_missing_under(&prefix, "rootmark-ingest-dir")? {
+                    eprintln!(
+                        "rootmark ingest-dir: {doc}: no file under {}; removed ({n} events)",
+                        dir.display()
+                    );
+                }
+            }
+            let v = Vault::open(&vault)?;
             json!({"ingested": out, "events_hash": v.events_hash()?})
         }
         Cmd::Replay { vault, doc, loc } => {
