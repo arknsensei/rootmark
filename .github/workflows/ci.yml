@@ -23,6 +23,40 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # K-D0.3: a pull request that touches only round and decision documents
+  # (every changed path is a `.md` under docs/rounds/ or reports/rounds/ outside
+  # a `runs/` directory, or docs/DECISIONS.md, docs/ROADMAP.md) skips the
+  # build jobs; a job skipped by its `if` reports success, so the ruleset's
+  # required checks pass. Push to main and workflow_dispatch always run
+  # everything (the safety net after every merge). No third-party action:
+  # the list is git's own diff of the pull request.
+  changes:
+    name: changed paths
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.c.outputs.code }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0
+      - id: c
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT" != pull_request ]; then echo "code=true" >>"$GITHUB_OUTPUT"; echo "$EVENT: full run"; exit 0; fi
+          files="$(git diff --name-only "$BASE...$HEAD")"
+          printf '%s\n' "$files"
+          other="$(printf '%s\n' "$files" | grep -v -E '^((docs|reports)/rounds/.*\.md|docs/DECISIONS\.md|docs/ROADMAP\.md)$' || true)"
+          runs="$(printf '%s\n' "$files" | grep -E '/runs/' || true)"
+          if [ -z "$files" ] || [ -n "$other" ] || [ -n "$runs" ]; then
+            echo "code=true" >>"$GITHUB_OUTPUT"; echo "code or other paths changed: full run"
+          else
+            echo "code=false" >>"$GITHUB_OUTPUT"; echo "round/decision documents only: build jobs skipped (K-D0.3)"
+          fi
+
   deps:
     name: dependency direction and age
     runs-on: ubuntu-latest
@@ -43,6 +77,8 @@ jobs:
     # job runs on macos-15, the same arm64 platform (P2-V.1, ASSUMPTIONS E2-1;
     # renaming the check is a ruleset change, a human step)
     name: test + lint + conformance (macos-14)
+    needs: changes
+    if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}   # fail-safe: no answer from 'changes' = full run
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v7.0.1
@@ -72,6 +108,8 @@ jobs:
 
   test-linux:
     name: test + lint + conformance (ubuntu-latest)
+    needs: changes
+    if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}   # fail-safe: no answer from 'changes' = full run
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
@@ -107,6 +145,8 @@ jobs:
   # commit's own); the records carry no host value (`eval.portable --fast`).
   fast:
     name: fast chain ${{ matrix.side }} (tier 1)
+    needs: changes
+    if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}   # fail-safe: no answer from 'changes' = full run
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -212,6 +252,8 @@ jobs:
   # models are recorded with the verdict.
   embed-cpu:
     name: embed cpu ${{ matrix.label }} (tier 1, E2)
+    needs: changes
+    if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}   # fail-safe: no answer from 'changes' = full run
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     strategy:
