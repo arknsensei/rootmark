@@ -105,6 +105,7 @@ test-tamper:
 # Deliberate reverse dependency in a scratch copy must make check_deps.sh fail
 test-check-deps:
 	bash scripts/test_check_deps.sh
+	bash scripts/test_check_deps_membership.sh
 
 # Levels 1, 2 and 3 (spec/CONFORMANCE.md): spec/fixtures/C1-*, C2-* against
 # the current core (frozen core/tests/conformance.rs writes
