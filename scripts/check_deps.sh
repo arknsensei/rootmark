@@ -107,7 +107,22 @@ $hits"
         --exclude-dir=node_modules --exclude=main.js "/v1/[A-Za-z0-9_]+" clients 2>/dev/null | sed 's#^/v1/##' | sort -u || true)"
     for u in $used; do
       if ! echo "$endpoints" | grep -qx "$u"; then
-        violation "clients/ names /v1/$u, not an endpoint of docs/CLIENT_CONTRACT.md"
+        # P2-Q.3/R3: on macOS CI this test said "not an endpoint" three
+        # times for a listed endpoint (attest_session, demote ×2), with no
+        # other message (progress/R3_check_deps.md). The answer is checked
+        # again without a pipe or a process; a disagreement is reported
+        # with the pipeline's exit statuses and is not a violation.
+        st="${PIPESTATUS[*]}"
+        case $'\n'"$endpoints"$'\n' in
+          *$'\n'"$u"$'\n'*)
+            echo "check_deps: NOTE: the pipeline 'echo | grep -qx $u' failed (exit statuses: $st) although $u is an endpoint of docs/CLIENT_CONTRACT.md; not a violation (P2-Q.3/R3: report this line)" >&2
+            ;;
+          *)
+            violation "clients/ names /v1/$u, not an endpoint of docs/CLIENT_CONTRACT.md"
+            echo "check_deps: diagnosis: pipeline exit statuses: $st; endpoints read from docs/CLIENT_CONTRACT.md §2 ($(echo "$endpoints" | wc -l | tr -d ' ') lines): $(echo "$endpoints" | tr '\n' ' ')" >&2
+            echo "check_deps: diagnosis: files naming /v1/$u: $(grep -RlE --include='*.ts' --include='*.tsx' --include='*.js' --include='*.mjs' --exclude-dir=node_modules --exclude=main.js "/v1/$u([^A-Za-z0-9_]|$)" clients 2>/dev/null | tr '\n' ' ' || true)" >&2
+            ;;
+        esac
       fi
     done
   fi
