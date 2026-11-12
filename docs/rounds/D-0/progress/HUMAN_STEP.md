@@ -1,6 +1,8 @@
 # D-0 — İnsan adımları
 
-> **Durum (R7, 2026-11-11): tur H2'de bekliyor.** R0–R6 tamamlandı, R7'nin kapıları temiz ve gözden geçirici KABUL verdi. Kalan tek şey D0-3: aşağıdaki **H2**'nin dört marka sorgusu. Sonuçlar `docs/rounds/D-0/progress/R2_trademark_human.md`'ye yazılınca ajan `trademark.md`'yi doldurur, `FINAL.md`'yi kapatır, READY'yi yazar ve PR'ı açar. H1 (npm kullanıcı sayfaları) isteğe bağlıdır; beklenmez.
+> **Durum (2026-11-12): bekleme bitti.** Ürün sahibi **H2'yi erteledi** (marka taraması en sona, geliştirmelerden sonra; `R2_trademark_human.md`) → D0-3 bu turda **kaldı (ertelendi)**; **H1 beklenmedi**. Tur kapandı (READY, PR). H1 ve H2 aşağıda açık insan adımı olarak duruyor; H2 yapıldığında isim kararları (REPORT §7: D0-K1, K2, K3, K15) verilebilir. İlk bakılacak satır: ürün sahibinin doğrulanmamış gözlemi "RootMark Inc" (Nice 35/42).
+>
+> Önceki durum (R7, 2026-11-11): tur H2'de bekliyordu.
 
 Ajan bu adımları yapmaz (GOAL İlkeler: tarayıcı isteyen sorgular, hesaplar). Sonuçlar belirtilen dosyaya yazılır; ajan okuyup raporlara işler. Hiçbir adımda parola, token ya da kişisel e-posta adresi yazılmaz.
 
