@@ -1,0 +1,16 @@
+{"case":"c1_canonical","extra":[{"sigkill_sent":false,"taken_at_stop":true},{"sigkill_sent":false,"taken_at_stop":true}],"passed":2,"platform":"macos","ran":2}
+{"case":"c1_unverified","extra":[{"sigkill_sent":false,"taken_at_stop":true},{"sigkill_sent":false,"taken_at_stop":true}],"passed":2,"platform":"macos","ran":2}
+{"case":"g2","extra":[{},{}],"passed":2,"platform":"macos","ran":2}
+{"case":"d1","extra":[{"failed":"assertion `left == right` failed\n  left: []\n right: [\"n1.md\"]"},{"failed":"assertion `left == right` failed\n  left: []\n right: [\"n1.md\"]"}],"passed":0,"platform":"macos","ran":2}
+{"case":"b1","extra":[{},{}],"passed":2,"platform":"macos","ran":2}
+{"case":"e1","extra":[{},{}],"passed":2,"platform":"macos","ran":2}
+{"case":"a1_canonical","extra":[{"failed":"timed out: n0.md's removal ingested"},{"failed":"timed out: n0.md's removal ingested"}],"passed":0,"platform":"macos","ran":2}
+{"case":"a1_unverified","extra":[{"failed":"timed out: n0.md's removal ingested"},{"failed":"timed out: n0.md's removal ingested"}],"passed":0,"platform":"macos","ran":2}
+{"case":"a2_unverified","extra":[{"failed":"timed out: n0.md's removal ingested"},{"failed":"timed out: n0.md's removal ingested"}],"passed":0,"platform":"macos","ran":2}
+{"case":"a2_canonical","extra":[{"failed":"timed out: n0.md's removal ingested"},{"failed":"timed out: n0.md's removal ingested"}],"passed":0,"platform":"macos","ran":2}
+{"case":"d4","extra":[{"failed":"timed out: n2.md's removal ingested"},{"failed":"timed out: n2.md's removal ingested"}],"passed":0,"platform":"macos","ran":2}
+{"case":"d3","extra":[{"failed":"timed out: new.md ingested"},{"failed":"timed out: new.md ingested"}],"passed":0,"platform":"macos","ran":2}
+{"case":"g1","extra":[{"failed":"timed out: n3.md's removal ingested"},{"failed":"timed out: n3.md's removal ingested"}],"passed":0,"platform":"macos","ran":2}
+{"case":"f2_canonical","extra":[{"failed":"timed out: n2.md's removal ingested"},{"failed":"timed out: n2.md's removal ingested"}],"passed":0,"platform":"macos","ran":2}
+{"case":"d2","extra":[{"failed":"timed out: n2.md's removal ingested"},{"failed":"timed out: n2.md's removal ingested"}],"passed":0,"platform":"macos","ran":2}
+{"case":"f1_unverified","extra":[{"failed":"timed out: n2.md's removal ingested"},{"failed":"timed out: n2.md's removal ingested"}],"passed":0,"platform":"macos","ran":2}

@@ -359,6 +359,19 @@ pub fn is_http_only(name: &str) -> bool {
     HTTP_ONLY.contains(&name)
 }
 
+/// What `Kernel::reconcile_files` did (P2-Q.3).
+#[derive(Debug, Default)]
+pub struct Reconciled {
+    /// documents whose change was ingested
+    pub changed: usize,
+    /// documents with live blocks whose path holds nothing, in byte order
+    pub missing: Vec<String>,
+    /// documents not ingested because of an error (each has a note)
+    pub errors: usize,
+    /// one line per document ingested or not ingested, in order
+    pub notes: Vec<String>,
+}
+
 /// What `Kernel::compact` did.
 #[derive(Debug)]
 pub enum Compacted {
@@ -1006,6 +1019,129 @@ impl Kernel {
         })
     }
 
+    /// The start's reconciliation of `serve --watch` (P2-Q.3, D0F-5 and
+    /// D0F-1; `docs/rounds/P2-Q.3/progress/DESIGN.md` §2): `files`, the
+    /// vault's Markdown files by the watcher's rule in byte order, are each
+    /// ingested as the watcher ingests a changed document (`ingest_external`,
+    /// spec §7.1's external change; an unchanged one writes nothing), in one
+    /// writer ticket on one open log; the store and the embedder are opened
+    /// at the first changed document only. Returned: the documents with
+    /// live blocks whose path holds nothing (byte order; the caller holds
+    /// them as removals, as the watcher does), the count of changed ones,
+    /// and a note per document not ingested (an error never stops the rest,
+    /// as in the watcher; the caller reports each).
+    pub fn reconcile_files(&self, files: &[String], source: &str) -> Result<Reconciled> {
+        self.ticket().run(|| {
+            let mut out = Reconciled::default();
+            let mut v = Vault::open(&self.vault)?;
+            let (policy, _) = self.policy()?;
+            let actor = self.watch_actor()?;
+            let mut store: Option<(Store, Arc<OnnxMiniLm>)> = None;
+            for doc in files {
+                let bytes = match crate::paths::doc_file(&self.vault, doc)
+                    .and_then(|p| Ok(std::fs::read(&p)?))
+                {
+                    Ok(b) => b,
+                    // gone since it was listed: a removal (below)
+                    Err(e)
+                        if e.downcast_ref::<std::io::Error>()
+                            .is_some_and(|e| e.kind() == std::io::ErrorKind::NotFound) =>
+                    {
+                        continue
+                    }
+                    Err(e) => {
+                        out.notes.push(format!("{doc}: error: {e:#}"));
+                        out.errors += 1;
+                        continue;
+                    }
+                };
+                let unchanged = std::str::from_utf8(&bytes)
+                    .with_context(|| format!("{doc} is not UTF-8"))
+                    .and_then(|t| self.probe_plan(&v, doc, t, source, &actor))
+                    .map(|p| p.events.is_empty());
+                match unchanged {
+                    Ok(true) => continue,
+                    Ok(false) => {}
+                    Err(e) => {
+                        out.notes.push(format!("{doc}: error: {e:#}"));
+                        out.errors += 1;
+                        continue;
+                    }
+                }
+                let r = (|| {
+                    if store.is_none() {
+                        let e = self.embedder()?;
+                        store = Some((Store::open(&v, e.as_ref())?, e));
+                    }
+                    let (s, e) = store.as_mut().expect("opened above");
+                    self.ingest_external(
+                        &mut v,
+                        Some((s, e.as_ref())),
+                        &policy,
+                        doc,
+                        &bytes,
+                        source,
+                    )
+                })();
+                match r {
+                    Ok((n, Some(r))) if n > 0 => {
+                        out.changed += 1;
+                        out.notes.push(format!(
+                            "{doc} ingested ({} events, {} chunks embedded, snapshot {})",
+                            r.events, r.embedded, r.snapshot_id
+                        ));
+                    }
+                    Ok(_) => {}
+                    Err(e) => {
+                        out.notes.push(format!("{doc}: error: {e:#}"));
+                        out.errors += 1;
+                        // a failed ingest may leave the open log or store
+                        // behind the files: read them again
+                        v = Vault::open(&self.vault)?;
+                        store = None;
+                    }
+                }
+            }
+            let mut docs: Vec<String> = v
+                .doc_paths()
+                .into_iter()
+                .filter(|d| !d.split('/').any(|c| c.starts_with('.')))
+                .filter(|d| v.doc_state(d).is_some_and(|s| !s.live.is_empty()))
+                .filter(|d| {
+                    crate::paths::doc_file(&self.vault, d)
+                        .is_ok_and(|p| std::fs::symlink_metadata(p).is_err())
+                })
+                .collect();
+            docs.sort_by(|a, b| a.as_bytes().cmp(b.as_bytes()));
+            out.missing = docs;
+            Ok(out)
+        })
+    }
+
+    /// The plan of `text` as the vault's human's change of `doc` (spec §7):
+    /// without events, the document is unchanged (`external_plan`,
+    /// `reconcile_files`).
+    fn probe_plan(
+        &self,
+        v: &Vault,
+        doc: &str,
+        text: &str,
+        source: &str,
+        actor: &Actor,
+    ) -> Result<rootmarkcore::IngestPlan> {
+        v.plan_ingest(
+            doc,
+            text,
+            Provenance {
+                author_kind: AuthorKind::Human,
+                source: source.to_string(),
+            },
+            self.matcher_for(v),
+            None,
+            Some(actor),
+        )
+    }
+
     /// The attestation window of the vault's policy (`[attestation]
     /// window_s`): how long the watcher holds a removal back (P2-Q.1 DESIGN
     /// §2.4).
@@ -1113,17 +1249,7 @@ impl Kernel {
         let hash = rootmarkcore::attest::content_hash(bytes);
         let m = self.matcher_for(v);
         // an unchanged document is no change: nothing to decide
-        let probe = v.plan_ingest(
-            doc,
-            &text,
-            Provenance {
-                author_kind: AuthorKind::Human,
-                source: source.to_string(),
-            },
-            m,
-            None,
-            Some(&self.watch_actor()?),
-        )?;
+        let probe = self.probe_plan(v, doc, &text, source, &self.watch_actor()?)?;
         if probe.events.is_empty() {
             return Ok((probe, External::nothing(doc, &hash)));
         }
