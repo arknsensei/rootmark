@@ -1118,6 +1118,45 @@ impl Kernel {
         })
     }
 
+    /// `rootmark ingest-dir`'s removals (P2-Q.3/R2, D0F-5; DESIGN §4): each
+    /// document with live blocks under the vault directory `prefix` (`""`:
+    /// the whole vault; no hidden component) whose path holds nothing is
+    /// ingested as a removal — an external change with no content (spec
+    /// §7.1, `ingest_external`: the vault's policy, no attestation, no hold,
+    /// no index) — in byte order. Documents outside `prefix` are never
+    /// touched. Returns each removed document and its number of events.
+    pub fn remove_missing_under(&self, prefix: &str, source: &str) -> Result<Vec<(String, usize)>> {
+        self.ticket().run(|| {
+            let mut v = Vault::open(&self.vault)?;
+            let (policy, _) = self.policy()?;
+            let pre = if prefix.is_empty() {
+                String::new()
+            } else {
+                format!("{prefix}/")
+            };
+            let mut docs: Vec<String> = v
+                .doc_paths()
+                .into_iter()
+                .filter(|d| d.starts_with(&pre))
+                .filter(|d| !d.split('/').any(|c| c.starts_with('.')))
+                .filter(|d| v.doc_state(d).is_some_and(|s| !s.live.is_empty()))
+                .filter(|d| {
+                    crate::paths::doc_file(&self.vault, d)
+                        .is_ok_and(|p| std::fs::symlink_metadata(p).is_err())
+                })
+                .collect();
+            docs.sort_by(|a, b| a.as_bytes().cmp(b.as_bytes()));
+            let mut out = Vec::new();
+            for d in docs {
+                let (n, _) = self
+                    .ingest_external(&mut v, None, &policy, &d, b"", source)
+                    .with_context(|| format!("{d}: removal"))?;
+                out.push((d, n));
+            }
+            Ok(out)
+        })
+    }
+
     /// The plan of `text` as the vault's human's change of `doc` (spec §7):
     /// without events, the document is unchanged (`external_plan`,
     /// `reconcile_files`).
