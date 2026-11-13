@@ -1,0 +1,15 @@
+{
+  "run_id": "43485696909",
+  "chains_run": "43485696909",
+  "tools_commit": "b65ef1d22e21540ae412891dc1275e8bc412b055",
+  "commit_a": "b65ef1d22e21540ae412891dc1275e8bc412b055",
+  "commit_b": "b65ef1d22e21540ae412891dc1275e8bc412b055",
+  "started": "2026-11-13T18:45:25Z",
+  "chains_wall_s": 10167,
+  "compare_s": 122,
+  "wall_s": 10430,
+  "cpu_model_a": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+  "cpu_model_b": "AMD EPYC 9V74 80-Core Processor",
+  "same_processor": false,
+  "pass": false
+}
