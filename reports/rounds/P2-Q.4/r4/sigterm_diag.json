@@ -1,0 +1,16 @@
+{
+  "what": "serve_watch.rs sigterm_is_never_lost_during_timer_compaction (frozen D-10 recorder), copied unchanged except one eprintln of each trial's server log; P2-Q.4 PQ4-6",
+  "tier2_43485696909": {"A": {"cpu": "Intel Xeon Platinum 8370C", "trials_not_exited_15s": 7}, "B": {"cpu": "AMD EPYC 9V74", "trials_not_exited_15s": 1}},
+  "earlier_tier2_chains": {"runs": [42515401135, 41927841456, 41944358184, 43319749692, 42982215036, 41292205176, 41239746833, 41239754895], "chains": 16, "trials_not_exited_15s": 0},
+  "pr69_ci_43511347182_make_test": {"ubuntu-latest": "ok", "macos-14": "ok"},
+  "local": [
+    {"tree": "0.3.4 (2c784b6 + PQ4-4)", "where": "macOS arm64, 16 busy loops", "trials": 10, "exited": 10},
+    {"tree": "0.3.4", "where": "Linux aarch64 Docker, --cpus 4, cargo test load, overlayfs", "trials": 30, "exited": 30},
+    {"tree": "0.3.4", "where": "Linux aarch64 Docker, --cpus 0.6, overlayfs", "trials": 10, "exited": 10},
+    {"tree": "0.3.4", "where": "Linux aarch64 Docker, --cpus 2, ext4, --test-threads=1 (the chain's way)", "trials": 40, "exited": 40, "reconcile_ms": {"min": 14, "median": 345, "max": 423}, "stop_s": {"median": 0.082, "max": 0.105}},
+    {"tree": "0.3.3 (v0.3.3)", "where": "same as the line above", "trials": 30, "exited": 30, "reconcile_ms": {"min": 14, "median": 338, "max": 421}, "stop_s": {"median": 0.083, "max": 0.127}},
+    {"tree": "0.3.4", "where": "Linux x86_64 under emulation (Rosetta), ext4, --test-threads=1", "trials": 30, "exited": 0, "log": "only `watching`: the start reconciliation does not end within 16 s"},
+    {"tree": "0.3.3 (v0.3.3)", "where": "same as the line above", "trials": 30, "exited": 0}
+  ],
+  "reading": "0.3.3 and 0.3.4 behave the same on the same machine (pass, reconcile and stop times) and fail the same on a slow one; the stop waits for the watcher thread, which runs the start reconciliation (P2-Q.3) in the writer queue first; on a slow runner a trial that runs out its 15 s is SIGKILLed while the editor keeps writing, and the next start's reconciliation is longer (the cascade of chain A)."
+}

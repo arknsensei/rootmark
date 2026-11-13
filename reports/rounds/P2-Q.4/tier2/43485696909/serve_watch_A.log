@@ -1,0 +1,22 @@
+
+running 2 tests
+. 1/2
+sigterm_is_never_lost_during_timer_compaction --- FAILED
+
+failures:
+
+---- sigterm_is_never_lost_during_timer_compaction stdout ----
+
+thread 'sigterm_is_never_lost_during_timer_compaction' (52830) panicked at server/tests/serve_watch.rs:404:5:
+assertion `left == right` failed: {"pass":false,"timer_compactions":5,"trials":[{"compacted_on_shutdown":true,"exit_0":true,"exited":true,"timer_compactions":1,"trial":0},{"compacted_on_shutdown":true,"exit_0":true,"exited":true,"timer_compactions":1,"trial":1},{"compacted_on_shutdown":true,"exit_0":true,"exited":true,"timer_compactions":1,"trial":2},{"compacted_on_shutdown":false,"exit_0":false,"exited":false,"timer_compactions":1,"trial":3},{"compacted_on_shutdown":false,"exit_0":false,"exited":false,"timer_compactions":1,"trial":4},{"compacted_on_shutdown":false,"exit_0":false,"exited":false,"timer_compactions":0,"trial":5},{"compacted_on_shutdown":false,"exit_0":false,"exited":false,"timer_compactions":0,"trial":6},{"compacted_on_shutdown":false,"exit_0":false,"exited":false,"timer_compactions":0,"trial":7},{"compacted_on_shutdown":false,"exit_0":false,"exited":false,"timer_compactions":0,"trial":8},{"compacted_on_shutdown":false,"exit_0":false,"exited":false,"timer_compactions":0,"trial":9}]}
+  left: Bool(false)
+ right: true
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sigterm_is_never_lost_during_timer_compaction
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 159.22s
+
+[1m[91merror[0m: test failed, to rerun pass `-p rootmark-server --test serve_watch`

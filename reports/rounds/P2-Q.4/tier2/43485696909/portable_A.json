@@ -1,0 +1,18 @@
+{
+ "files": 1153,
+ "findings": [],
+ "hosts": 2,
+ "missing": null,
+ "mode": "pair + all records",
+ "pass": true,
+ "run": "run",
+ "skipped_by_name": [
+  {
+   "field": "fixtures_root",
+   "file": "conformance.json",
+   "id": "H5",
+   "value_kind": "str",
+   "why": "kriterin ölçtüğü host değeri (envanter `host_fields`, K-P2V1.2 T4)"
+  }
+ ]
+}

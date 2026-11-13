@@ -1,0 +1,123 @@
+{
+ "classifier": "eval.historical_p2r",
+ "classifier_counted": 16,
+ "counted": [],
+ "counted_fails": 0,
+ "derived_criteria": [
+  {
+   "criterion": "p1e1_checks.json:tamper·det",
+   "field": "pass",
+   "file": "p1e1/tamper_p1e1.json",
+   "reading": "historical",
+   "record_equal": true,
+   "value": false
+  }
+ ],
+ "historical": [
+  {
+   "blake2b": "9aa33c4f192b044001bc53456076c874a6c26344be9e77613545bab41848014e8725b8f9f49e8b703565def78b9ea05f05c54021576fca82e86c96c8be9f2dad",
+   "class": "tarihsel",
+   "criterion": "p1e1_checks.json:tamper·det",
+   "decision": "K-P2V1.2 (K-P2V1-T3 (c): (a) şimdi, (b) P2-C)",
+   "differs": [],
+   "failing_cases": [
+    "p1e-final server (string index, status 500 on an unreadable manifest)",
+    "fixture regenerated with the p1d-final mdk"
+   ],
+   "pass": false,
+   "record_equal": true,
+   "reference": "reports/rounds/P2-V.2/ci/41239746833/tier2-A/run/p1e1/tamper_p1e1.json",
+   "until": "P2-C"
+  }
+ ],
+ "mode": "fails",
+ "pass": true,
+ "reference_run": "reports/rounds/P2-B/runs/20261025T211044Z-cad7663",
+ "run": "run",
+ "set_aside": [
+  {
+   "class": "O",
+   "criterion": "p1c1_checks.json:C1-8",
+   "mac_set": "O-C18"
+  },
+  {
+   "class": "türev",
+   "criterion": "p1d1_checks.json:D1-12",
+   "differences": 18064,
+   "full_list": true,
+   "why": "every difference of its full list is set aside by name (a Z/O field, an E1 field or a set-aside criterion's named field)"
+  },
+  {
+   "class": "Z",
+   "criterion": "p1d_checks.json:D-10",
+   "mac_set": "Z-D10"
+  },
+  {
+   "class": "türev",
+   "criterion": "p1d_checks.json:D-9",
+   "differences": 18056,
+   "full_list": true,
+   "why": "every difference of its full list is set aside by name (a Z/O field, an E1 field or a set-aside criterion's named field)"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-3",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-4",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:E1-9",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e1_checks.json:tamper",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "O",
+   "criterion": "p1e_checks.json:E-7",
+   "mac_set": "O-REL"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_2_checks.json:H-P2-0.2d",
+   "mac_set": "Z-DC"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3b",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3b-yük",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3c",
+   "mac_set": "O-DB4"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3d",
+   "mac_set": "O-DC′"
+  },
+  {
+   "class": "O",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3e",
+   "mac_set": "O-DA′"
+  },
+  {
+   "class": "Z",
+   "criterion": "p2_0_3_checks.json:logs_vs_p2a",
+   "mac_set": "Z-DA"
+  }
+ ]
+}
