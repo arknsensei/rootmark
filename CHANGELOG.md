@@ -4,6 +4,56 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
+## Unreleased — 0.3.4 (P2-Q.4: a removal lost to a kill, the index kept whole)
+
+A patch of `rootmark serve` and the index install (round P2-Q.4; findings
+PQ3-9, PQ3-7, PQ3-6 of reports/rounds/P2-Q.3/FINDINGS.md and the P2-Q.3
+closing, docs/DECISIONS.md K-P2Q3.2). No event kind, field, format,
+endpoint, MCP tool or spec version changes: `tools/list` is byte for byte
+0.3.3's, vaults and indexes written by 0.3.3 open as they are (no
+migration); an index is built to the same bytes.
+
+### Fixes
+- **A removal pending when the server is killed is no longer lost when
+  the kill also cut an index write short (PQ3-9).** A SIGKILL that lands
+  while the watcher writes a change to the index (between the event log
+  and the hot tier, or between the hot tier's four files) left an index
+  that did not match the log; the next start took it as current, the held
+  removal of a moved note failed with `hot tier invalid` and was not tried
+  again, and searches could answer 500 (`snapshot … is not indexed`). At
+  every start `rootmark serve` now checks the index as a whole against the
+  log — its files open and line up, every document's head is in it — and
+  rebuilds an incomplete one under `[index] auto_rebuild` (the default),
+  with a line `index incomplete (<why>; an interrupted write): rebuilt …`;
+  with `auto_rebuild = false` the line says so and the index is left. An
+  unreadable manifest is still never rebuilt over (K-E1.2).
+- **An index build or compaction killed half-way no longer leaves a
+  half-removed index (PQ3-7).** The install of a new index moves the
+  previous one aside (`.rootmark/index.old/`) and renames the new one in —
+  two atomic renames — then removes the previous one; the next start puts
+  back the previous index if the new one is not in, removes what is left
+  over otherwise, and the check above rebuilds an older rootmark's
+  half-removed index. Claude Code's end-of-session stop (SIGINT, SIGTERM,
+  SIGKILL ~0.5 s later) could land in the closing compaction.
+- **Only a path that is not there is a removal (PQ3-6).** A note whose
+  path cannot be read (`EACCES`: a folder whose permission was removed) was
+  taken as deleted by the watcher, the start's reconciliation and
+  `ingest-dir`; it now keeps its blocks and a line says `<note>: not read
+  (…); not taken as a removal`.
+
+### Tests
+- New tests reproduce each kill point deterministically: the hot tier cut
+  at each append after a real SIGKILL (`server/tests/hot_tear_restart.rs`)
+  and the install aborted at each step with the test-only setting
+  `ROOTMARK_TEST_ABORT_AT` (`server/tests/index_install_kill.rs`); the
+  restarted server answers searches with a clean build's results and
+  leaves a clean build's bytes. `chmod 000` folders
+  (`server/tests/watch_noaccess.rs`); the client's forced SIGKILL on every
+  platform with the test-only setting `ROOTMARK_WATCH_TEST_STOP_DELAY_MS`
+  (`server/tests/watch_restart_forced.rs`). The restart test harnesses let
+  the server bind port 0 and read its port (PQ3-8). Test settings are not
+  user settings; unset, nothing changes.
+
 ## 0.3.3 — 2026-11-13 (P2-Q.3: changes made while the server was down or killed)
 
 A patch of `rootmark serve --watch` and `rootmark ingest-dir` (round P2-Q.3;
