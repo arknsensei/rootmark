@@ -1,4 +1,4 @@
-# Running rootmark — a guide (0.3.3)
+# Running rootmark — a guide (0.3.4)
 
 This guide takes you from nothing to a vault that people and agents write together, with every block's origin recorded: install, prepare a vault, run the server, connect an agent, install the Obsidian plugin, daily use, collecting data for an evaluation, upgrading, headless use on Linux, and troubleshooting. Every command block is meant to be copied and run as it stands; the outputs shown come from a real run of 0.3.0 (0.3.1 to 0.3.4 change only the watcher, `ingest-dir`, the index check at the server's start and the MCP library: §2.1, §3, §4.1, §10 and "Known issues").
 
@@ -25,7 +25,7 @@ Release targets: macOS on Apple silicon (`aarch64-apple-darwin`) and Linux x86_6
 Download the installer and the checksums of the release, check them, then run the installer. It downloads the archive for your platform, checks its SHA-256 against `SHA256SUMS`, installs `~/.local/bin/rootmark` and fetches the embedder model into `~/.local/share/rootmark/models` (each file checked against the pinned manifest):
 
 ```sh
-VER=0.3.3
+VER=0.3.4
 mkdir -p ~/rootmark-install && cd ~/rootmark-install
 curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/install.sh"
 curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/SHA256SUMS"
@@ -47,7 +47,7 @@ rootmark conformance >/dev/null
 ```
 
 ```text
-rootmark 0.3.3
+rootmark 0.3.4
 2.0.3
 rootmark conformance: level 3, 39/39 (spec 2.0.3)
 ```
@@ -62,7 +62,7 @@ The defaults (an ASCII lexical tokenizer and an English embedder) suit English n
 
 ```sh
 curl -fsSL -o "$ROOTMARK_MODELS/MANIFEST.multilingual-minilm-l12-v2.json" \
-  "https://raw.githubusercontent.com/arknsensei/rootmark/v0.3.3/models/MANIFEST.multilingual-minilm-l12-v2.json"
+  "https://raw.githubusercontent.com/arknsensei/rootmark/v0.3.4/models/MANIFEST.multilingual-minilm-l12-v2.json"
 bash "$ROOTMARK_MODELS/fetch_model.sh" "$(dirname "$ROOTMARK_MODELS")" MANIFEST.multilingual-minilm-l12-v2.json
 ```
 
@@ -80,7 +80,7 @@ and inside the container:
 
 ```sh
 apt-get update && apt-get install -y --no-install-recommends curl ca-certificates jq
-VER=0.3.3
+VER=0.3.4
 mkdir -p ~/rootmark-install && cd ~/rootmark-install
 curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/install.sh"
 curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/SHA256SUMS"
@@ -245,7 +245,7 @@ rmk status | jq '{mdk_version, spec_version, index: .index.state, unattested: .a
 
 ```json
 {
-  "mdk_version": "0.3.3",
+  "mdk_version": "0.3.4",
   "spec_version": "2.0.3",
   "index": "ok",
   "unattested": "unverified",
@@ -343,7 +343,7 @@ The plugin shows rootmark inside Obsidian: the status bar, a blame gutter, propo
 Download the plugin package and its checksum list (`SHA256SUMS.local` lists the files built with the release, among them the plugin zip), check it, and unpack it into the vault's plugin folder under the plugin's id, `rootmark`:
 
 ```sh
-VER=0.3.3
+VER=0.3.4
 cd ~/rootmark-install
 curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/rootmark-$VER.zip"
 curl -fsSLO "https://github.com/arknsensei/rootmark/releases/download/v$VER/SHA256SUMS.local"
@@ -370,7 +370,7 @@ main.js		manifest.json	styles.css
 3. Make sure the server runs (§3, or the agent's server of §4) and the recipe has `[server] http_port` and `[identity] human_id`. The status bar shows
 
    ```text
-   rootmark 0.3.3 · human:ada
+   rootmark 0.3.4 · human:ada
    ```
 
    and, after your first saves, `attested 3 · unattested 0`. `rootmark: offline` means no server answered on the recipe's port: start it and run the command **rootmark: Reconnect to rootmark serve** (Ctrl/Cmd-P).
@@ -514,7 +514,7 @@ To judge how rootmark serves you over weeks, keep its records and summarise them
 
 ```sh
 mkdir -p "$HOME/rootmark-logs" && cd "$HOME/rootmark-logs"
-curl -fsSLO https://raw.githubusercontent.com/arknsensei/rootmark/v0.3.3/research/p2q/observe.py
+curl -fsSLO https://raw.githubusercontent.com/arknsensei/rootmark/v0.3.4/research/p2q/observe.py
 rmk status > status.json
 python3 observe.py --vault "$VAULT" --status status.json --out "observe-$(date +%F).json"
 jq '{events: .events.total, layers: .layers.lineages, promotions: .promotions.lineages_by_actor}' "observe-$(date +%F).json"
