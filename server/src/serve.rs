@@ -293,7 +293,7 @@ enum Msg {
 /// The running watcher: dropping `watcher` stops the events; `stop` ends
 /// the thread once its pending work is done.
 struct Watching {
-    watcher: notify::RecommendedWatcher,
+    watcher: Arc<std::sync::Mutex<notify::RecommendedWatcher>>,
     tx: std::sync::mpsc::Sender<Msg>,
     thread: std::thread::JoinHandle<()>,
 }
@@ -341,6 +341,62 @@ fn ingest_removal(kernel: &Kernel, root: &Path, d: &str) {
         }
         Err(e) => log(format!("watch: {d}: removal: error: {e:#}")),
     }
+}
+
+/// A watch registration refused for want of permission (`EACCES`).
+fn permission_denied(e: &notify::Error) -> bool {
+    matches!(&e.kind, notify::ErrorKind::Io(io) if io.kind() == std::io::ErrorKind::PermissionDenied)
+}
+
+/// Watches the vault directory `rel` and each directory under it (hidden
+/// components skipped, symbolic links not followed) one by one, without
+/// recursion: a directory that cannot be read is not watched and a note
+/// says so (P2-Q.4, PQ3-6; inotify refuses a recursive watch when one
+/// directory under it cannot be read). The root itself must be watched.
+fn watch_readable(
+    w: &std::sync::Mutex<notify::RecommendedWatcher>,
+    root: &Path,
+    rel: &str,
+) -> Result<()> {
+    use notify::{RecursiveMode, Watcher};
+    let mut stack = vec![rel.to_string()];
+    while let Some(d) = stack.pop() {
+        let p = if d.is_empty() {
+            root.to_path_buf()
+        } else {
+            root.join(&d)
+        };
+        if let Err(e) = w
+            .lock()
+            .expect("watcher lock")
+            .watch(&p, RecursiveMode::NonRecursive)
+        {
+            if d.is_empty() || !permission_denied(&e) {
+                return Err(e).with_context(|| format!("watch {}", p.display()));
+            }
+            log(format!("watch: {d}/: not read ({e}); not watched"));
+            continue;
+        }
+        let Ok(entries) = std::fs::read_dir(&p) else {
+            continue;
+        };
+        for e in entries.flatten() {
+            let Some(name) = e.file_name().to_str().map(str::to_string) else {
+                continue;
+            };
+            if name.starts_with('.') {
+                continue;
+            }
+            if e.file_type().is_ok_and(|t| t.is_dir()) {
+                stack.push(if d.is_empty() {
+                    name
+                } else {
+                    format!("{d}/{name}")
+                });
+            }
+        }
+    }
+    Ok(())
 }
 
 /// The watcher thread: batches the events that name a target (50 ms of
@@ -391,15 +447,35 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
     }
     let (tx, rx) = std::sync::mpsc::channel::<Msg>();
     let events = tx.clone();
-    let mut w = notify::recommended_watcher(move |ev| {
+    let w = notify::recommended_watcher(move |ev| {
         let _ = events.send(Msg::Event(ev));
     })
     .context("start the file watcher")?;
-    w.watch(&root, RecursiveMode::Recursive)
-        .with_context(|| format!("watch {}", root.display()))?;
+    let w = Arc::new(std::sync::Mutex::new(w));
+    // one recursive watch of the root; where the platform adds a watch per
+    // directory (inotify) and a directory cannot be read, the readable
+    // directories are watched one by one instead (P2-Q.4, PQ3-6)
+    // (the lock is released before `watch_readable` takes it again)
+    let first = w
+        .lock()
+        .expect("watcher lock")
+        .watch(&root, RecursiveMode::Recursive);
+    let one_by_one = match first {
+        Ok(()) => false,
+        Err(e) if permission_denied(&e) => {
+            log(format!(
+                "watch: {}: a folder cannot be read ({e}); the readable folders are watched one by one (a folder made readable later is watched after a restart)",
+                root.display()
+            ));
+            watch_readable(&w, &root, "")?;
+            true
+        }
+        Err(e) => return Err(e).with_context(|| format!("watch {}", root.display())),
+    };
     // listed after the watcher is registered: a change made from now on is
     // an event too (P2-Q.3 DESIGN §2.7)
     let files = vault_files(&root)?;
+    let w2 = w.clone();
     let thread = std::thread::spawn(move || {
         // held removals: document → when it is ingested
         let mut held: BTreeMap<String, Held> = BTreeMap::new();
@@ -483,7 +559,14 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
                     Target::Doc(d) => {
                         docs.insert(d);
                     }
-                    Target::Scan(d) => docs.extend(scan_dir(&root, &d)),
+                    Target::Scan(d) => {
+                        if one_by_one {
+                            if let Err(e) = watch_readable(&w2, &root, &d) {
+                                log(format!("watch: {d}/: {e:#}"));
+                            }
+                        }
+                        docs.extend(scan_dir(&root, &d))
+                    }
                     Target::Gone(d) => match kernel.watched_docs_under(&d) {
                         Ok(v) => gone.extend(v),
                         Err(e) => log(format!("watch: {d}/: removal: error: {e:#}")),

@@ -97,3 +97,6 @@ Karşılaştırma tabanı: kademe 2'de P2-Q.3'ün tetiklemesi `43319749692`; Mac
 
 ## 8. Ön-kayıtlı testler
 `progress/TESTS.md`.
+
+## Ek (R3, koddan sonra; Linux bulgusu PQ4-3)
+Son ağacın (`a0f5125`) Linux koşusunda (kök olmayan kullanıcı) N1 20/20 kaldı: kilitli bir alt dizin varken `serve --watch` hiç başlamadı (`error: watch <vault>: Permission denied`). Neden: `notify`'ın inotify arka ucu özyineli kayıtta her alt dizine ayrı izleyici ekler ve birinde `EACCES` alınca bütün kaydı düşürür (macOS FSEvents kökü tek izler, etkilenmez). 0.3.3'te de aynıdır (kayıt yolu değişmedi); sessiz değil, ama N1'in iki platformdaki beklentisini (başlangıç, not satırı, bloklar canlı) karşılamaz. Düzeltme (`server/src/serve.rs`, §4'ün kapsamı): özyineli kayıt yalnız izin hatasıyla düşerse kökten başlayarak okunabilen her dizin özyinesiz kaydedilir (`watch_readable`), okunamayan dizin için `watch: <dir>/: not read (…); not watched` notu yazılır, başlangıçta bir satır durumu söyler; bu kipte toplu işin yeni dizinleri (`Target::Scan`) de kaydedilir; sonradan okunur olan dizin bir sonraki başlangıçta izlenir. Normal yol (tek özyineli kayıt) aynen kalır; kök okunamıyorsa başlangıç yine hata verir. Kayıt: `reports/rounds/P2-Q.4/r3/final_a0f5125_{linux,macos}.jsonl`.
