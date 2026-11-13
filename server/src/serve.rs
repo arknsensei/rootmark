@@ -613,8 +613,19 @@ pub fn run(o: ServeOptions) -> Result<()> {
             o.vault.display()
         ));
     }
-    match kernel.start_index(cfg.auto_rebuild)? {
+    let (notes, at_start) = kernel.start_index(cfg.auto_rebuild)?;
+    for n in notes {
+        log(format!("index: {n}"));
+    }
+    match at_start {
         IndexAtStart::Current => {}
+        IndexAtStart::Repaired(why, r) => log(format!(
+            "index incomplete ({why}; an interrupted write): rebuilt ({} records, {} snapshots, {})",
+            r.records, r.snapshots, r.embedder_id
+        )),
+        IndexAtStart::Incomplete(why) => log(format!(
+            "index incomplete ({why}); [index] auto_rebuild = false: rebuild it with `rootmark index build`"
+        )),
         IndexAtStart::Built(r) => log(format!(
             "no index: built one ({} records, {} snapshots, {})",
             r.records, r.snapshots, r.embedder_id

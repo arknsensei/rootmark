@@ -145,28 +145,38 @@ pub struct Served {
     reader: Option<std::thread::JoinHandle<()>>,
 }
 
-fn free_port() -> u16 {
-    std::net::TcpListener::bind("127.0.0.1:0")
-        .unwrap()
-        .local_addr()
-        .unwrap()
-        .port()
+/// The port of the server's `http listening on 127.0.0.1:<port>` line
+/// (P2-Q.4, PQ3-8: the server binds port 0 itself, so no port is chosen
+/// and released before it binds — the race of a free-port probe).
+fn port_of(log: &str) -> Option<u16> {
+    log.lines()
+        .find_map(|l| {
+            l.trim()
+                .strip_prefix("rootmark serve: http listening on 127.0.0.1:")
+        })
+        .and_then(|p| p.parse().ok())
 }
 
-/// `rootmark serve --vault <v> --http 127.0.0.1:<port> --watch`; returns
-/// once it listens, says "watching" and (unless `legacy()`) has written
-/// its reconciliation summary.
+/// `rootmark serve --vault <v> --http 127.0.0.1:0 --watch`; returns once it
+/// listens (its port read from stderr), says "watching" and (unless
+/// `legacy()`) has written its reconciliation summary.
 pub fn serve(vault: &Path) -> Served {
-    let port = free_port();
+    serve_env(vault, &[])
+}
+
+/// `serve` with `env` set for the server process only (P2-Q.4: a test
+/// setting such as `ROOTMARK_WATCH_TEST_STOP_DELAY_MS`).
+pub fn serve_env(vault: &Path, env: &[(&str, &str)]) -> Served {
     let mut child = Command::new(rootmark())
         .args([
             "serve",
             "--vault",
             vault.to_str().unwrap(),
             "--http",
-            &format!("127.0.0.1:{port}"),
+            "127.0.0.1:0",
             "--watch",
         ])
+        .envs(env.iter().copied())
         .stdin(Stdio::null())
         .stdout(Stdio::null())
         .stderr(Stdio::piped())
@@ -187,7 +197,7 @@ pub fn serve(vault: &Path) -> Served {
     });
     let mut sv = Served {
         vault: vault.to_path_buf(),
-        port,
+        port: 0,
         token: String::new(),
         child,
         err,
@@ -198,7 +208,9 @@ pub fn serve(vault: &Path) -> Served {
         if let Some(st) = sv.child.try_wait().unwrap() {
             panic!("serve exited ({st}): {}", sv.log());
         }
-        if sv.log().contains("rootmark serve: watching") {
+        let log = sv.log();
+        if log.contains("rootmark serve: watching") {
+            sv.port = port_of(&log).unwrap_or_else(|| panic!("no port in: {log}"));
             break;
         }
         assert!(t0.elapsed() < LIMIT, "serve did not start: {}", sv.log());

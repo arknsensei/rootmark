@@ -441,6 +441,55 @@ fn install(vault: &Vault, tmp: &Path) -> Result<()> {
     Ok(())
 }
 
+/// The embedder a check opens the index with: the manifest's own id and
+/// dimension; it embeds nothing (`incomplete` loads no model).
+struct ManifestEmbedder {
+    id: String,
+    dim: usize,
+}
+
+impl Embedder for ManifestEmbedder {
+    fn id(&self) -> &str {
+        &self.id
+    }
+    fn dim(&self) -> usize {
+        self.dim
+    }
+    fn embed(&self, _: &[&str]) -> Result<Vec<Vec<f32>>> {
+        bail!("the index check embeds nothing")
+    }
+    fn embedded_count(&self) -> u64 {
+        0
+    }
+}
+
+/// Why the index of `vault` — its manifest of this format and lexical
+/// record (`staleness` is `None`) — does not hold what the log holds (P2-Q.4,
+/// PQ3-9 and PQ3-7; DESIGN §2): its files do not open (cold files that do
+/// not match the manifest, a hot tier whose files do not line up — a write
+/// killed part-way), or the head of a document is not in it (the log took
+/// a change the index did not: a write killed between the two, or an
+/// ingest made without the index). `None`: the index is complete. Reads,
+/// never writes; loads no model.
+pub fn incomplete(vault: &Vault) -> Result<Option<String>> {
+    let m = manifest_of(&index_dir(vault), Some(&LexicalParams::of_vault(vault)?))?;
+    let e = ManifestEmbedder {
+        id: m.embedder_id.clone(),
+        dim: m.dim,
+    };
+    let s = match Store::open(vault, &e) {
+        Ok(s) => s,
+        Err(e) => return Ok(Some(format!("{e:#}"))),
+    };
+    let st = s.status(vault)?;
+    Ok(st.stale_docs.first().map(|first| {
+        format!(
+            "the heads of {} documents are not in the index (first: {first})",
+            st.stale_docs.len()
+        )
+    }))
+}
+
 /// Rebuilds `<vault>/.rootmark/index/` from the vault (the hot tier is
 /// dropped: every head and checkpoint snapshot is in the new cold index).
 pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
