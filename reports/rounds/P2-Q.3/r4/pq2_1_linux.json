@@ -1,0 +1,637 @@
+{
+ "probe": "D-0/R5 PQ2-1 (docs/rounds/D-0/progress/DESIGN.md \u00a74)",
+ "platform": "linux",
+ "machine": "x86_64",
+ "system": "Linux",
+ "rootmark_version": "rootmark 0.3.3",
+ "spec_version": "2.0.3",
+ "vault": {
+  "notes": 21,
+  "synthetic": true,
+  "base_events_hash": "cedc79d002b68aae06a646c4f1cc0358",
+  "embedder_id": "minilm-l6-v2/e73168f9+fixed1"
+ },
+ "parameters": {
+  "kill_after_op_s": 0.5,
+  "term_after_op_s": 5.0,
+  "settle_after_restart_s": 10.0,
+  "hold_default_s": 2.5,
+  "reps": 5,
+  "target": "n00.md",
+  "moved_to": "sub/n00-moved.md"
+ },
+ "commands": [
+  "rootmark ingest-dir V V",
+  "rootmark index build V",
+  "rootmark serve --vault V --http 127.0.0.1:PORT --watch",
+  "op: unlink n00.md | rename n00.md -> sub/n00-moved.md",
+  "kill: SIGKILL 0.5 s after op | term: SIGTERM 5 s after op",
+  "rootmark serve --vault V --http 127.0.0.1:PORT --watch (restart), settle 10 s",
+  "observe: BlockDeleted for n00.md in events.jsonl; POST /v1/search {query: zqprobe00}",
+  "rep 0 of each kill case: rewrite n00.md, 3 s, delete it, settle 10 s (stop-gap)",
+  "rep 1 of each kill case: SIGTERM, then rootmark ingest-dir V V (server down)"
+ ],
+ "duration_s": 275.3,
+ "counts": {
+  "delete/kill": {
+   "recovered": 5
+  },
+  "delete/term": {
+   "control_taken": 5
+  },
+  "move/kill": {
+   "recovered": 5
+  },
+  "move/term": {
+   "control_taken": 5
+  }
+ },
+ "runs": [
+  {
+   "op": "delete",
+   "stop": "kill",
+   "rep": 0,
+   "class": "recovered",
+   "stop_after_op_s": 0.502,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.192,
+    0.178
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "delete",
+   "stop": "term",
+   "rep": 0,
+   "class": "control_taken",
+   "stop_after_op_s": 5.001,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.172,
+    0.177
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "move",
+   "stop": "kill",
+   "rep": 0,
+   "class": "recovered",
+   "stop_after_op_s": 0.501,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.174,
+    0.229
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "move",
+   "stop": "term",
+   "rep": 0,
+   "class": "control_taken",
+   "stop_after_op_s": 5.002,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.174,
+    0.177
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "delete",
+   "stop": "kill",
+   "rep": 1,
+   "class": "recovered",
+   "stop_after_op_s": 0.502,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.175,
+    0.173
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": {
+    "deleted_after_reingest": 3,
+    "events_hash": "3649866a23c2529f437140d14d67bde7"
+   }
+  },
+  {
+   "op": "delete",
+   "stop": "term",
+   "rep": 1,
+   "class": "control_taken",
+   "stop_after_op_s": 5.001,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.178,
+    0.206
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "move",
+   "stop": "kill",
+   "rep": 1,
+   "class": "recovered",
+   "stop_after_op_s": 0.501,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.176,
+    0.178
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": {
+    "deleted_after_reingest": 3,
+    "events_hash": "30da3172da8831861f07c520afc02c51"
+   }
+  },
+  {
+   "op": "move",
+   "stop": "term",
+   "rep": 1,
+   "class": "control_taken",
+   "stop_after_op_s": 5.003,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.175,
+    0.174
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "delete",
+   "stop": "kill",
+   "rep": 2,
+   "class": "recovered",
+   "stop_after_op_s": 0.501,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.173,
+    0.178
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "delete",
+   "stop": "term",
+   "rep": 2,
+   "class": "control_taken",
+   "stop_after_op_s": 5.005,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.173,
+    0.174
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "move",
+   "stop": "kill",
+   "rep": 2,
+   "class": "recovered",
+   "stop_after_op_s": 0.501,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.174,
+    0.176
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "move",
+   "stop": "term",
+   "rep": 2,
+   "class": "control_taken",
+   "stop_after_op_s": 5.002,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.173,
+    0.178
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "delete",
+   "stop": "kill",
+   "rep": 3,
+   "class": "recovered",
+   "stop_after_op_s": 0.502,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.175,
+    0.175
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "delete",
+   "stop": "term",
+   "rep": 3,
+   "class": "control_taken",
+   "stop_after_op_s": 5.003,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.173,
+    0.178
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "move",
+   "stop": "kill",
+   "rep": 3,
+   "class": "recovered",
+   "stop_after_op_s": 0.501,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.191,
+    0.18
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "move",
+   "stop": "term",
+   "rep": 3,
+   "class": "control_taken",
+   "stop_after_op_s": 5.002,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.172,
+    0.181
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "delete",
+   "stop": "kill",
+   "rep": 4,
+   "class": "recovered",
+   "stop_after_op_s": 0.503,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.172,
+    0.178
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "delete",
+   "stop": "term",
+   "rep": 4,
+   "class": "control_taken",
+   "stop_after_op_s": 5.003,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.173,
+    0.175
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": null,
+   "events_jsonl_sha256": "39e6e693fd76348ce6624fb54bbd96bd56b50b1f81e4816f50b0c3a8b72422c3",
+   "events_count": 89,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "move",
+   "stop": "kill",
+   "rep": 4,
+   "class": "recovered",
+   "stop_after_op_s": 0.503,
+   "exit_code_stop": -9,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.177,
+    0.18
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 0,
+    "after_stop": 0,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  },
+  {
+   "op": "move",
+   "stop": "term",
+   "rep": 4,
+   "class": "control_taken",
+   "stop_after_op_s": 5.003,
+   "exit_code_stop": 0,
+   "exit_code_final": 0,
+   "ready_s": [
+    0.176,
+    0.176
+   ],
+   "target_blocks_deleted": {
+    "before_op": 0,
+    "before_stop": 3,
+    "after_stop": 3,
+    "after_restart_settle": 3
+   },
+   "search_hits_target": {
+    "before_op": 1,
+    "after_restart_settle": 0
+   },
+   "search_hits_moved_path": 1,
+   "events_jsonl_sha256": "9a3ad6e8399575c7828e05d4c2ba534d9da41f850570c8f6e7e85df739bccfe5",
+   "events_count": 93,
+   "workaround_rewrite_then_delete": null,
+   "status_index_state": "ok",
+   "reingest_with_server_down": null
+  }
+ ]
+}

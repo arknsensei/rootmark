@@ -1,0 +1,193 @@
+{
+ "attest": {
+  "accepted_unmatched": 0,
+  "attestations": {},
+  "observations": {
+   "unverified": 20
+  },
+  "refusal_classes": {}
+ },
+ "checkpoints": {
+  "created": 53,
+  "named": 3
+ },
+ "demotions": {
+  "lineages_by_actor": {
+   "human": 9
+  }
+ },
+ "events": {
+  "by_kind": {
+   "BlockCreated": 28473,
+   "CheckpointCreated": 53,
+   "Demoted": 9,
+   "Promoted": 192,
+   "SnapshotCommitted": 519
+  },
+  "total": 29246
+ },
+ "head_seq": 29246,
+ "layers": {
+  "lineages": {
+   "canonical": 28277,
+   "proposal": 142,
+   "unverified": 54
+  },
+  "unverified_at_each_checkpoint": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   54,
+   54
+  ]
+ },
+ "promotions": {
+  "late_attestation_raises": 0,
+  "lineages_by_actor": {
+   "human": 42,
+   "policy": 150
+  },
+  "lineages_by_rule": {
+   "toplayici": 150
+  }
+ },
+ "ratios": {
+  "promoted_human_per_agent_write_event": 0.1292,
+  "unverified_share_of_live": 0.0019
+ },
+ "since_seq": 0,
+ "status": {
+  "attestation": {
+   "pending": 0,
+   "stage": 1,
+   "unattested": "unverified",
+   "unmatched": 0
+  },
+  "embedder": "minilm-l6-v2/e73168f9+fixed1",
+  "index_state": "ok",
+  "last_checkpoint_named": true,
+  "mdk_version": "0.3.3",
+  "migrations_recommended": 0,
+  "migrations_required": 0,
+  "promotion": "human_only",
+  "promotion_rules": 1,
+  "spec_version": "2.0.3"
+ },
+ "traces": {
+  "by_consumer": {
+   "pilot-h08": 50,
+   "pilot-queries": 290,
+   "toplayici/1.0": 5
+  },
+  "distinct_blocks": 416,
+  "most_relied_on": [
+   {
+    "count": 27,
+    "lineage_b2": "4e7e277c88633b76ffa4f6c6777950a9"
+   },
+   {
+    "count": 27,
+    "lineage_b2": "5532422200314c7aaaf41a71d6d54553"
+   },
+   {
+    "count": 27,
+    "lineage_b2": "d9e976932a5e1872b782b3169a3a7e55"
+   },
+   {
+    "count": 21,
+    "lineage_b2": "3d5138db5d771ed56fff49e4a8886312"
+   },
+   {
+    "count": 21,
+    "lineage_b2": "a9b84cc7682dd9a18b821ebcbcd37767"
+   },
+   {
+    "count": 21,
+    "lineage_b2": "f3576ad449dcaf472b5b93fbe1bcfde6"
+   },
+   {
+    "count": 20,
+    "lineage_b2": "0413720ac048ffebbec1bdf232e9edb1"
+   },
+   {
+    "count": 20,
+    "lineage_b2": "09657608640b13d914a56a4222c0241a"
+   },
+   {
+    "count": 20,
+    "lineage_b2": "178d98f7cd6d89b29114d57dc73bf0b7"
+   },
+   {
+    "count": 20,
+    "lineage_b2": "2bd01d4b61340066f0b2ca87b17d424b"
+   }
+  ],
+  "reads": 0,
+  "returned_blocks": 2735,
+  "searches": 345,
+  "total": 345
+ },
+ "version": "p2q-observe/1",
+ "writes": {
+  "agent_events_by_client": {
+   "toplayici": 325
+  },
+  "documents_touched": 503,
+  "events_by_writer": {
+   "agent": 325,
+   "human": 28094,
+   "unattested_fs": 54
+  },
+  "lineages": {
+   "created": 28473
+  }
+ }
+}

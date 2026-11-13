@@ -1,0 +1,56 @@
+{
+ "probe": "P2-Q.3 R4 (f) R3: SIGINT, SIGTERM, ~0.5 s, SIGKILL after a deletion",
+ "platform": "linux",
+ "machine": "x86_64",
+ "rootmark_version": "rootmark 0.3.3",
+ "reps": 5,
+ "closed": 5,
+ "sigkill_sent": 0,
+ "runs": [
+  {
+   "rep": 0,
+   "hits_before": 1,
+   "sigkill_sent": false,
+   "taken_at_stop": true,
+   "block_deleted_after_restart": 3,
+   "search_hits_after_restart": 0,
+   "closed": true
+  },
+  {
+   "rep": 1,
+   "hits_before": 1,
+   "sigkill_sent": false,
+   "taken_at_stop": true,
+   "block_deleted_after_restart": 3,
+   "search_hits_after_restart": 0,
+   "closed": true
+  },
+  {
+   "rep": 2,
+   "hits_before": 1,
+   "sigkill_sent": false,
+   "taken_at_stop": true,
+   "block_deleted_after_restart": 3,
+   "search_hits_after_restart": 0,
+   "closed": true
+  },
+  {
+   "rep": 3,
+   "hits_before": 1,
+   "sigkill_sent": false,
+   "taken_at_stop": true,
+   "block_deleted_after_restart": 3,
+   "search_hits_after_restart": 0,
+   "closed": true
+  },
+  {
+   "rep": 4,
+   "hits_before": 1,
+   "sigkill_sent": false,
+   "taken_at_stop": true,
+   "block_deleted_after_restart": 3,
+   "search_hits_after_restart": 0,
+   "closed": true
+  }
+ ]
+}

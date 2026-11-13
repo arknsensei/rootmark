@@ -1,0 +1,35 @@
+{
+ "cpu": "VirtualApple @ 2.50GHz",
+ "direct_write_to_ingested_ms": {
+  "n": 20,
+  "p50": 281.379,
+  "p95": 290.183
+ },
+ "documents": 399,
+ "embedder_id": "minilm-l6-v2/e73168f9+fixed1",
+ "index_build_s": 1192.743,
+ "index_chunks_per_s": 5.083,
+ "index_embedded": 6063,
+ "index_records": 6063,
+ "ingest_s": 2.462,
+ "platform": "Linux x86_64",
+ "propose_ms": {
+  "n": 100,
+  "p50": 360.362,
+  "p95": 436.031
+ },
+ "propose_to_searchable_ms": {
+  "n": 50,
+  "p50": 510.359,
+  "p95": 539.064
+ },
+ "python": "3.13.5",
+ "rootmark_dir_bytes": 47631419,
+ "search_ms": {
+  "n": 192,
+  "p50": 364.909,
+  "p95": 385.571
+ },
+ "serve_peak_rss_kib": 699288,
+ "serve_start_s": 0.417
+}

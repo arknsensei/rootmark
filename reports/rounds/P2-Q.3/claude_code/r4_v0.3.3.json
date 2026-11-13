@@ -1,0 +1,58 @@
+{
+ "probe": "P2-Q.3 R4 (f): a note deleted at the end of a real Claude Code session",
+ "claude_code_version": "2.1.323 (Claude Code)",
+ "rootmark_version": "rootmark 0.3.3",
+ "recipe": {
+  "unattested": "canonical",
+  "window_s": 10.0
+ },
+ "session_1": {
+  "exit": 0,
+  "seconds": 10.6,
+  "answer_lines": [
+   "DONE"
+  ],
+  "server_stopping": [
+   "SIGINT"
+  ],
+  "server_stopped_line": false,
+  "server_took_probe_removal": true,
+  "reconciled": {
+   "files": 400,
+   "changed": 0,
+   "removals_held": 0,
+   "errors": 0
+  }
+ },
+ "probe_file_deleted_by_session_1": true,
+ "probe_block_deleted_events": {
+  "before": 0,
+  "after_session_1": 2,
+  "after_session_2": 2
+ },
+ "removal_taken_at": "session 1's stop",
+ "session_2": {
+  "exit": 0,
+  "seconds": 8.6,
+  "answer_lines": [
+   "react_tr/src/content/learn/extracting-state-logic-into-a-reducer.md",
+   "terminal/NOTICE.md",
+   "terminal/doc/specs/#12570 - Show Hide operations on GetConsoleWindow via PTY.md",
+   "react_tr/src/content/learn/extracting-state-logic-into-a-reducer.md",
+   "rfcs/text/2920-inline-const.md"
+  ],
+  "server_stopping": [
+   "SIGINT"
+  ],
+  "server_stopped_line": true,
+  "server_took_probe_removal": false,
+  "reconciled": {
+   "files": 399,
+   "changed": 0,
+   "removals_held": 0,
+   "errors": 0
+  }
+ },
+ "search_returned_probe": false,
+ "pass": true
+}
