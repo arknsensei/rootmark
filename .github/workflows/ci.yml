@@ -27,9 +27,12 @@ jobs:
   # (every changed path is a `.md` under docs/rounds/ or reports/rounds/ outside
   # a `runs/` directory, or docs/DECISIONS.md, docs/ROADMAP.md) skips the
   # build jobs; a job skipped by its `if` reports success, so the ruleset's
-  # required checks pass. Push to main and workflow_dispatch always run
-  # everything (the safety net after every merge). No third-party action:
-  # the list is git's own diff of the pull request.
+  # required checks pass. A push to main is read the same way over the
+  # pushed range (before..after; K-P2Q3.4): a merge of documents only skips
+  # the build jobs, any other merge runs everything. An unknown range (new
+  # branch, a `before` that is not an ancestor of `after`) and
+  # workflow_dispatch always run everything; the weekly tier 2 (verify.yml)
+  # is unchanged. No third-party action: the list is git's own diff.
   changes:
     name: changed paths
     runs-on: ubuntu-latest
@@ -42,15 +45,27 @@ jobs:
       - id: c
         env:
           EVENT: ${{ github.event_name }}
-          BASE: ${{ github.event.pull_request.base.sha }}
-          HEAD: ${{ github.event.pull_request.head.sha }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_AFTER: ${{ github.sha }}
         run: |
           set -euo pipefail
-          if [ "$EVENT" != pull_request ]; then echo "code=true" >>"$GITHUB_OUTPUT"; echo "$EVENT: full run"; exit 0; fi
+          full() { echo "code=true" >>"$GITHUB_OUTPUT"; echo "$1: full run"; exit 0; }
+          case "$EVENT" in
+            pull_request) BASE="$PR_BASE"; HEAD="$PR_HEAD"; range="$BASE...$HEAD" ;;
+            push)
+              BASE="$PUSH_BEFORE"; HEAD="$PUSH_AFTER"
+              case "$BASE" in *[!0]*) ;; *) full "push without a previous commit" ;; esac
+              git cat-file -e "$BASE^{commit}" 2>/dev/null || full "push: before $BASE not fetched"
+              git merge-base --is-ancestor "$BASE" "$HEAD" || full "push: before is not an ancestor (force push)"
+              range="$BASE..$HEAD" ;;
+            *) full "$EVENT" ;;
+          esac
           # no rename/copy detection (both sides of every change are listed);
           # unquoted paths (an odd one stays quoted, so it does not match);
           # any mode other than a regular file (symlink, executable, submodule) = code
-          raw="$(git -c core.quotePath=off diff --raw --no-renames "$BASE...$HEAD")"
+          raw="$(git -c core.quotePath=off diff --raw --no-renames "$range")"
           printf '%s\n' "$raw"
           files="$(printf '%s\n' "$raw" | cut -f2-)"
           badmode="$(printf '%s\n' "$raw" | awk 'NF && (($1 != ":100644" && $1 != ":000000") || ($2 != "100644" && $2 != "000000"))')"
