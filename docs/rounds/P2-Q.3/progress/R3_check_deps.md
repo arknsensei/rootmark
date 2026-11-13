@@ -18,6 +18,8 @@
 | H5 | `grep`/`echo` bir hata ile çıktı (EINTR, kaynak yok) | Bash ve grep bu durumlarda stderr'e yazar; günlükte satır yok | Olası değil |
 | H6 | `check_deps` yük altında (aynı işte `make test`'ten hemen sonra) | Yerelde 16 meşgul döngü altında `check_deps` 20/20 geçti | Yeniden üretilmedi |
 
+**Depoda emsal:** `scripts/release_check.sh`'in başlığı aynı sınıfı anar — R7'nin `unzip | grep -q` boru hattı `pipefail` altında SIGPIPE ile rastgele kalıyordu (P1-E doğrulaması V7, P1-E.1 E1-4); orada çözüm listeyi önce yakalayıp sonra aramaktı ("No pipeline ends in an early-exiting reader under pipefail"). `check_deps.sh` §3b bu kuralın dışında kalmıştı. Orada yazan taraf çok yazımlıydı (`unzip`); burada 126 baytlık tek `write` beklenir, bu yüzden H1 sınıfı olası ama koşulu gözlenmedi.
+
 **Kök neden bulunamadı.** Kanıt (tek uç, ileti yok, yalnız macOS) en çok H1 sınıfıyla (üyelik boru hattının bir ucunun sinyalle ölmesi) uyumlu, ama yerel bash'lerde bu yolun koşulu (birden çok `write`) gözlenmedi.
 
 ## Yapılan (güçlendirme ve tanı)
