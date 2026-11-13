@@ -923,13 +923,15 @@ impl Kernel {
     /// `rootmark serve`'s start: `ensure_index`, and an index of another format
     /// is rebuilt when `auto_rebuild` (`[index] auto_rebuild`, K-E0.3); see
     /// `IndexAtStart`. A stale index left in place makes searches answer
-    /// `index_stale`. A current index is checked against the log as a whole
-    /// (`store::incomplete`) and rebuilt when it does not hold what the log
-    /// holds (P2-Q.4, PQ3-9; DESIGN §2); the notes are returned.
+    /// `index_stale`. First, what an install killed part-way left is put
+    /// right (`store::recover_install`; its note is returned); a current
+    /// index is then checked against the log as a whole (`store::incomplete`)
+    /// and rebuilt when it does not hold what the log holds (P2-Q.4, PQ3-9
+    /// and PQ3-7; DESIGN §2–§3).
     pub fn start_index(&self, auto_rebuild: bool) -> Result<(Vec<String>, IndexAtStart)> {
         self.ticket().run(|| {
             let v = Vault::open(&self.vault)?;
-            let notes: Vec<String> = Vec::new();
+            let notes = store::recover_install(&v)?;
             let missing = !store::index_dir(&v).join("manifest.json").exists();
             let stale = match missing {
                 true => None,
