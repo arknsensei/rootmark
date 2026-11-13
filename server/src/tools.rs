@@ -1204,7 +1204,11 @@ impl Kernel {
         let mut missing = Vec::new();
         let mut notes = Vec::new();
         for d in docs {
-            let p = crate::paths::doc_file(&self.vault, &d)?;
+            // a path `doc_file` refuses (a symbolic link on the way, outside
+            // the vault) is never a removal, as in 0.3.3
+            let Ok(p) = crate::paths::doc_file(&self.vault, &d) else {
+                continue;
+            };
             match std::fs::symlink_metadata(&p) {
                 Ok(_) => {}
                 Err(e) if e.kind() == std::io::ErrorKind::NotFound => missing.push(d),
