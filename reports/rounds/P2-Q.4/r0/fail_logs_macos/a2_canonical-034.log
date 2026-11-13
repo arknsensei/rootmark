@@ -1,0 +1,71 @@
+hot_after_kill={"embedders":1,"exists":true,"records":1,"snapshots":-1,"vectors_bytes":1536}
+--- first server ---
+rootmark serve: token Created (<tmp>/rootmark-p2q3-<pid>-a2_canonical/v34/.rootmark/server.token)
+rootmark serve: http listening on 127.0.0.1:<port>
+rootmark serve: watching <tmp>/rootmark-p2q3-<pid>-a2_canonical/v34
+rootmark serve: diag: t=0ms reconcile begin files=["n0.md", "n1.md", "n2.md", "n3.md", "n4.md", "sub/k.md"]
+rootmark serve: diag: t=4ms raw Create(File) ["server.token.tmp"]
+rootmark serve: diag: t=4ms raw Modify(Name(Any)) ["server.token.tmp"]
+rootmark serve: diag: t=4ms raw Modify(Name(Any)) ["server.token"]
+rootmark serve: diag: t=4ms raw Modify(Data(Content)) ["server.token"]
+rootmark serve: diag: t=17ms reconcile end changed=0 missing=[]
+rootmark serve: watch: start: reconciled 6 files with the log (0 changed, 0 removals held, 0 errors) in 17 ms
+rootmark serve: diag: t=17ms batch targets={} stopping=false
+rootmark serve: diag: t=17ms batch targets={} stopping=false
+rootmark serve: diag: t=17ms batch targets={} stopping=false
+rootmark serve: diag: t=17ms batch targets={} stopping=false
+rootmark serve: diag: t=161ms raw Create(Folder) ["checkpoints"]
+rootmark serve: diag: t=161ms raw Create(File) ["4554c44fc3efeacb46690149b957953f.json.tmp"]
+rootmark serve: diag: t=161ms raw Modify(Name(Any)) ["4554c44fc3efeacb46690149b957953f.json.tmp"]
+rootmark serve: diag: t=161ms raw Modify(Data(Content)) ["4554c44fc3efeacb46690149b957953f.json.tmp"]
+rootmark serve: diag: t=161ms raw Modify(Name(Any)) ["4554c44fc3efeacb46690149b957953f.json"]
+rootmark serve: diag: t=161ms batch targets={} stopping=false
+rootmark serve: diag: t=161ms batch targets={} stopping=false
+rootmark serve: diag: t=162ms batch targets={} stopping=false
+rootmark serve: diag: t=162ms batch targets={} stopping=false
+rootmark serve: diag: t=162ms batch targets={} stopping=false
+rootmark serve: diag: t=194ms raw Create(File) ["events.jsonl"]
+rootmark serve: diag: t=194ms raw Modify(Data(Content)) ["events.jsonl"]
+rootmark serve: diag: t=194ms raw Create(File) ["traces.jsonl"]
+rootmark serve: diag: t=194ms batch targets={} stopping=false
+rootmark serve: diag: t=194ms batch targets={} stopping=false
+rootmark serve: diag: t=194ms batch targets={} stopping=false
+rootmark serve: diag: t=206ms raw Create(File) ["traces.jsonl"]
+rootmark serve: diag: t=206ms raw Modify(Data(Content)) ["traces.jsonl"]
+rootmark serve: diag: t=206ms raw Create(File) ["n0.md"]
+rootmark serve: diag: t=206ms raw Modify(Name(Any)) ["n0.md"]
+rootmark serve: diag: t=206ms raw Modify(Name(Any)) ["moved.md"]
+rootmark serve: diag: t=206ms batch targets={} stopping=false
+rootmark serve: diag: t=206ms batch targets={} stopping=false
+rootmark serve: diag: t=258ms batch targets={Doc("n0.md"), Doc("sub/moved.md")} stopping=false
+rootmark serve: diag: t=258ms ingest attempt sub/moved.md
+rootmark serve: diag: t=311ms raw Create(Folder) ["3909dbe2d4804d6e602dc5548affb5fd"]
+rootmark serve: diag: t=311ms raw Create(File) [".eaeb7a1cae0b329e541b1da6597b5475.tmp"]
+rootmark serve: diag: t=311ms raw Modify(Name(Any)) [".eaeb7a1cae0b329e541b1da6597b5475.tmp"]
+rootmark serve: diag: t=311ms raw Modify(Data(Content)) [".eaeb7a1cae0b329e541b1da6597b5475.tmp"]
+rootmark serve: diag: t=311ms raw Modify(Name(Any)) ["eaeb7a1cae0b329e541b1da6597b5475.json"]
+rootmark serve: diag: t=354ms raw Create(File) ["events.jsonl"]
+rootmark serve: diag: t=354ms raw Modify(Data(Content)) ["events.jsonl"]
+rootmark serve: diag: t=472ms raw Create(Folder) ["hot"]
+rootmark serve: diag: t=472ms raw Create(File) ["base.json"]
+rootmark serve: diag: t=472ms raw Modify(Data(Content)) ["base.json"]
+rootmark serve: diag: t=472ms raw Create(File) ["records.jsonl"]
+rootmark serve: diag: t=495ms raw Create(File) ["records.jsonl"]
+rootmark serve: diag: t=495ms raw Modify(Data(Content)) ["records.jsonl"]
+rootmark serve: diag: t=495ms raw Create(File) ["embedders.jsonl"]
+
+--- second server ---
+rootmark serve: token Kept (<tmp>/rootmark-p2q3-<pid>-a2_canonical/v34/.rootmark/server.token)
+rootmark serve: http listening on 127.0.0.1:<port>
+rootmark serve: watching <tmp>/rootmark-p2q3-<pid>-a2_canonical/v34
+rootmark serve: diag: t=0ms reconcile begin files=["n1.md", "n2.md", "n3.md", "n4.md", "sub/k.md", "sub/moved.md"]
+rootmark serve: diag: t=1ms reconcile end changed=0 missing=["n0.md"]
+rootmark serve: watch: start: reconciled 6 files with the log (0 changed, 1 removals held, 0 errors) in 1 ms
+rootmark serve: diag: t=5ms raw Create(File) ["vectors.f32"]
+rootmark serve: diag: t=5ms raw Modify(Data(Content)) ["vectors.f32"]
+rootmark serve: diag: t=5ms batch targets={} stopping=false
+rootmark serve: diag: t=5ms batch targets={} stopping=false
+rootmark serve: diag: t=1501ms batch targets={} stopping=false
+rootmark serve: diag: t=1501ms ripe ["n0.md"]
+rootmark serve: diag: t=1501ms removal attempt n0.md
+rootmark serve: watch: n0.md: removal: error: hot tier invalid (rebuild with `rootmark index build`): read <tmp>/rootmark-p2q3-<pid>-a2_canonical/v34/.rootmark/index/hot/snapshots.jsonl: No such file or directory (os error 2)

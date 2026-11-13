@@ -1,0 +1,222 @@
+diff --git a/index/src/store.rs b/index/src/store.rs
+index 6e3f5a2a..aa3265d2 100644
+--- a/index/src/store.rs
++++ b/index/src/store.rs
+@@ -870,9 +870,15 @@ impl Store {
+             jsonl(std::slice::from_ref(&entry))?,
+         );
+         self.poisoned = true;
++        // P2-Q.4/R0 diagnostic build only: ROOTMARK_DIAG_ABORT_HOT=<k> aborts after the k-th append
++        let abort_at: Option<u32> = std::env::var("ROOTMARK_DIAG_ABORT_HOT").ok().and_then(|s| s.parse().ok());
++        let ab = |k: u32| if abort_at == Some(k) && !doc_path.starts_with("n") { eprintln!("rootmark diag: abort after hot append {k} ({doc_path})"); std::process::abort() };
+         append(&h.join("records.jsonl"), &rb)?;
++        ab(1);
+         append(&h.join("embedders.jsonl"), &eb)?;
++        ab(2);
+         append(&h.join("vectors.f32"), &vb)?;
++        ab(3);
+         append(&h.join("snapshots.jsonl"), &sb)?;
+         self.poisoned = false;
+         report.embedded = owned.len();
+diff --git a/server/src/serve.rs b/server/src/serve.rs
+index 70c1b517..9bb1c8d3 100644
+--- a/server/src/serve.rs
++++ b/server/src/serve.rs
+@@ -52,6 +52,18 @@ fn log(msg: impl AsRef<str>) {
+     eprintln!("rootmark serve: {}", msg.as_ref());
+ }
+ 
++// P2-Q.4/R0 diagnostic build only (not product): ROOTMARK_DIAG_EVENTS=1
++static DIAG_T0: std::sync::OnceLock<std::time::Instant> = std::sync::OnceLock::new();
++fn diag_on() -> bool {
++    std::env::var("ROOTMARK_DIAG_EVENTS").is_ok_and(|s| s == "1")
++}
++fn diag(msg: impl AsRef<str>) {
++    if diag_on() {
++        let t = DIAG_T0.get_or_init(std::time::Instant::now).elapsed().as_millis();
++        eprintln!("rootmark serve: diag: t={t}ms {}", msg.as_ref());
++    }
++}
++
+ /// The vault's policy and server settings. Without `policy.toml` the
+ /// default recipe is used and returned for writing (`true`); nothing is
+ /// written here, so a start that fails later leaves the vault untouched.
+@@ -296,6 +308,7 @@ impl Watching {
+ /// Ingests one document whose path held a file in the batch (or at the end
+ /// of its removal's hold): a change, or nothing when unchanged.
+ fn ingest_doc(kernel: &Kernel, d: &str) {
++    diag(format!("ingest attempt {d}"));
+     match kernel.watch_doc(d, "rootmark-serve-watch") {
+         Ok(r) if r.events == 0 && r.embedded == 0 => {}
+         Ok(r) => log(format!(
+@@ -310,6 +323,7 @@ fn ingest_doc(kernel: &Kernel, d: &str) {
+ /// path → the document's removal (`Kernel::watch_removed`); a file there
+ /// again → a change.
+ fn ingest_removal(kernel: &Kernel, root: &Path, d: &str) {
++    diag(format!("removal attempt {d}"));
+     match kernel.watch_removed(d, "rootmark-serve-watch") {
+         Ok(Some(r)) => log(format!(
+             "watch: {d} removed: ingested ({} events, snapshot {})",
+@@ -367,7 +381,11 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
+     }
+     let (tx, rx) = std::sync::mpsc::channel::<Msg>();
+     let events = tx.clone();
+-    let mut w = notify::recommended_watcher(move |ev| {
++    let mut w = notify::recommended_watcher(move |ev: notify::Result<notify::Event>| {
++        match &ev {
++            Ok(e) => diag(format!("raw {:?} {:?}", e.kind, e.paths.iter().map(|p| p.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default()).collect::<Vec<_>>())),
++            Err(e) => diag(format!("raw error {e}")),
++        }
+         let _ = events.send(Msg::Event(ev));
+     })
+     .context("start the file watcher")?;
+@@ -385,6 +403,7 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
+         // the log — changes in byte order now, removals held as a batch's
+         // are; the events that came meanwhile wait in the channel
+         let t0 = Instant::now();
++        diag(format!("reconcile begin files={files:?}"));
+         match kernel.reconcile_files(&files, "rootmark-serve-watch") {
+             Ok(r) => {
+                 for n in &r.notes {
+@@ -394,6 +413,7 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
+                 for d in &r.missing {
+                     held.insert(d.clone(), Held { due, first: due });
+                 }
++                diag(format!("reconcile end changed={} missing={:?}", r.changed, r.missing));
+                 log(format!(
+                     "watch: start: reconciled {} files with the log ({} changed, {} removals held, {} errors) in {} ms",
+                     files.len(),
+@@ -452,6 +472,7 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
+                     }
+                 }
+             }
++            diag(format!("batch targets={targets:?} stopping={stopping}"));
+             let mut docs = BTreeSet::new();
+             let mut gone = BTreeSet::new();
+             for t in targets {
+@@ -505,6 +526,7 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
+                 .filter(|(_, h)| stopping || h.due <= now)
+                 .map(|(d, _)| d.clone())
+                 .collect();
++            if !ripe.is_empty() { diag(format!("ripe {ripe:?}")); }
+             for d in ripe {
+                 held.remove(&d);
+                 ingest_removal(&kernel, &root, &d);
+diff --git a/server/tests/restartkit/mod.rs b/server/tests/restartkit/mod.rs
+index c21919b5..2749db07 100644
+--- a/server/tests/restartkit/mod.rs
++++ b/server/tests/restartkit/mod.rs
+@@ -157,8 +157,22 @@ fn free_port() -> u16 {
+ /// once it listens, says "watching" and (unless `legacy()`) has written
+ /// its reconciliation summary.
+ pub fn serve(vault: &Path) -> Served {
++    serve_env(vault, &[])
++}
++
++/// P2-Q.4/R0 diagnostic: the hot tier's alignment (lines/records per file).
++pub fn hot_state(vault: &Path) -> Value {
++    let h = vault.join(".rootmark/index/hot");
++    let lines = |f: &str| std::fs::read_to_string(h.join(f)).map(|t| t.lines().count() as i64).unwrap_or(-1);
++    let vb = std::fs::metadata(h.join("vectors.f32")).map(|m| m.len() as i64).unwrap_or(-1);
++    json!({"exists": h.exists(), "records": lines("records.jsonl"), "embedders": lines("embedders.jsonl"),
++           "vectors_bytes": vb, "snapshots": lines("snapshots.jsonl")})
++}
++
++pub fn serve_env(vault: &Path, env: &[(&str, &str)]) -> Served {
+     let port = free_port();
+     let mut child = Command::new(rootmark())
++        .envs(env.iter().copied())
+         .args([
+             "serve",
+             "--vault",
+diff --git a/server/tests/watch_restart.rs b/server/tests/watch_restart.rs
+index a8741903..063005ff 100644
+--- a/server/tests/watch_restart.rs
++++ b/server/tests/watch_restart.rs
+@@ -86,29 +86,57 @@ fn wait_closed(v: &Path, doc: &str, lin: &[String]) {
+ /// A1/A2: a removal held when the server is SIGKILLed is taken at the next
+ /// start.
+ fn sigkill_case(case: &str, policy: &str, mv: bool) {
++    sigkill_case_env(case, policy, mv, &[]);
++}
++
++fn diag_dump(case: &str, i: usize, text: &str) {
++    if let Ok(d) = std::env::var("ROOTMARK_DIAG_DIR") {
++        std::fs::create_dir_all(&d).unwrap();
++        std::fs::write(Path::new(&d).join(format!("{case}-{i:03}.log")), text).unwrap();
++    }
++}
++
++fn sigkill_case_env(case: &str, policy: &str, mv: bool, env1: &[(&str, &str)]) {
+     let b = Base::new(case, policy);
+     repeat(case, |i| {
+         let v = b.vault(i);
+         let lin = lineages(&events(&v), "n0.md");
+         assert_eq!(lin.len(), 3);
+-        let sv = serve(&v);
++        let sv = serve_env(&v, env1);
+         assert_eq!(sv.hits("zqr0"), vec!["n0.md".to_string()]);
+         if mv {
+             std::fs::rename(v.join("n0.md"), v.join("sub/moved.md")).unwrap();
+         } else {
+             std::fs::remove_file(v.join("n0.md")).unwrap();
+         }
+-        std::thread::sleep(Duration::from_millis(300));
++        if env1.is_empty() {
++            std::thread::sleep(Duration::from_millis(300));
++        } else {
++            // the injected abort ends the first server
++            wait_for(LIMIT, "the injected abort", || !sv.log().is_empty() && sv.log().contains("diag: abort"));
++            std::thread::sleep(Duration::from_millis(200));
++        }
+         // the hold (1.5 s) is not over: the removal is not taken yet
+         assert!(
+             deleted(&events(&v), "n0.md").is_empty(),
+             "removal taken before the kill (not a reproduction)"
+         );
+-        sv.kill();
++        let log1 = if env1.is_empty() { sv.kill() } else { let (_, _, l) = sv.wait(); l };
++        let hot = hot_state(&v);
+         assert!(deleted(&events(&v), "n0.md").is_empty());
+         let sv = serve(&v);
+         let s = sv.reconciled();
+-        wait_closed(&v, "n0.md", &lin);
++        let t0 = std::time::Instant::now();
++        let mut ok = false;
++        while t0.elapsed() < LIMIT {
++            let d = deleted(&events(&v), "n0.md");
++            if lin.iter().all(|l| d.contains(l)) { ok = true; break; }
++            std::thread::sleep(Duration::from_millis(25));
++        }
++        if !ok {
++            diag_dump(case, i, &format!("hot_after_kill={hot}\n--- first server ---\n{log1}\n--- second server ---\n{}", sv.log()));
++            panic!("timed out: n0.md's removal ingested; hot_after_kill={hot}");
++        }
+         settle(&v, Duration::from_millis(600));
+         assert_closed(&v, "n0.md", &lin, policy);
+         assert!(sv.blame("n0.md").is_empty());
+@@ -122,10 +150,23 @@ fn sigkill_case(case: &str, policy: &str, mv: bool) {
+         sv.stop();
+         assert_log_matches_disk(&v);
+         std::fs::remove_dir_all(&v).unwrap();
+-        json!({"summary": format!("{s:?}")})
++        json!({"summary": format!("{s:?}"), "hot_after_kill": hot})
+     });
+ }
+ 
++#[test]
++fn diag_a2_abort_hot_1() {
++    sigkill_case_env("diag_abort1", "canonical", true, &[("ROOTMARK_DIAG_ABORT_HOT", "1")]);
++}
++#[test]
++fn diag_a2_abort_hot_2() {
++    sigkill_case_env("diag_abort2", "canonical", true, &[("ROOTMARK_DIAG_ABORT_HOT", "2")]);
++}
++#[test]
++fn diag_a2_abort_hot_3() {
++    sigkill_case_env("diag_abort3", "canonical", true, &[("ROOTMARK_DIAG_ABORT_HOT", "3")]);
++}
++
+ #[test]
+ fn a1_sigkill_delete_canonical() {
+     sigkill_case("a1_canonical", "canonical", false);
