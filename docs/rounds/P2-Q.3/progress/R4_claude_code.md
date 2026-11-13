@@ -1,0 +1,9 @@
+# R4 (f) — Gerçek Claude Code oturum sonu sınaması (TESTS R4)
+
+- Ortam: Claude Code **2.1.323**, başsız (`claude -p … --mcp-config <dosya> --strict-mcp-config --allowedTools …`); rootmark **0.3.3** kılavuz §1.1 ile kurulmuş (yayımlanmış `install.sh`, `SHA256SUMS` denetimi, sağlama ve köken tasdiki); sunucu oturumun MCP sunucusu olarak `rootmark serve --vault <v> --mcp stdio --watch` (stderr oturum dizinine).
+- Vault: D-NOTES kopyası (399 not, açık korpus) + sentetik bir not (`zz-probe/session-end.md`, sözcük `zqsessionend`); `ingest-dir` ve dizin önceden; tarif varsayılan (`canonical`) + `window_s = 10.0` (kaldırma beklemesi 10,5 s: oturum biterken kaldırmanın beklemede olması için).
+- Oturum 1: `status`, sonra son eylem olarak `rm zz-probe/session-end.md`, yanıt `DONE` (10,6 s). Sunucu: uzlaştırma 400 dosya, 0 değişiklik; durdurma `SIGINT` ile başladı; `watch: zz-probe/session-end.md removed` (durdurma bekleyen kaldırmayı hemen aldı); **`stopped` satırı yok** — süreç kapanış sıkıştırması bitmeden öldürüldü (Claude Code'un SIGTERM → ~0,5 s → SIGKILL'i).
+- Oturum 2: `search "zqsessionend"` → 5 isabet, hiçbiri sınama notu değil; sunucu başlangıcında uzlaştırma 399 dosya, 0 değişiklik, 0 kaldırma (kaldırma zaten günlükte); `stopped` satırı var.
+- Günlük: sınama notunun `BlockDeleted` olayları 0 → oturum 1'den sonra 2 → oturum 2'den sonra 2.
+- **Sonuç: geçti** — oturumun son saniyesinde silinen not bir sonraki oturumda aranmıyor. Kaldırma bu koşuda oturum 1'in durdurmasında alındı (SIGINT'in ilk işi); SIGKILL'in kaldırmadan önce geldiği yol (PQ2-1'in kalıcı kaybı) R1'in A1/A2/C1 testleri (macOS'ta C1'de 1 tekrar) ve yayımlanmış 0.3.3 ile `pq2_1_probe` (`recovered` 10/10 her platform) ile sınandı.
+- Kayıt `reports/rounds/P2-Q.3/claude_code/r4_v0.3.3.json` (sürümler, sayılar, oturumların yanıt satırları — yalnız açık korpusun yolları; host değeri yok). Betik `research/p2q3/claude_session_end.py`.
