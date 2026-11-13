@@ -359,6 +359,15 @@ pub fn is_http_only(name: &str) -> bool {
     HTTP_ONLY.contains(&name)
 }
 
+/// `Kernel::remove_missing_under`'s result (P2-Q.4): each document removed
+/// and its number of events, in byte order; a note per document whose
+/// path could not be read (not removed).
+#[derive(Debug, Default)]
+pub struct RemovedUnder {
+    pub removed: Vec<(String, usize)>,
+    pub notes: Vec<String>,
+}
+
 /// What `Kernel::reconcile_files` did (P2-Q.3).
 #[derive(Debug, Default)]
 pub struct Reconciled {
@@ -1003,8 +1012,12 @@ impl Kernel {
     pub fn watch_removed(&self, doc: &str, source: &str) -> Result<Option<store::WatchReport>> {
         self.ticket().run(|| {
             let path = crate::paths::doc_file(&self.vault, doc)?;
-            if std::fs::symlink_metadata(&path).is_ok() {
-                return Ok(None);
+            match std::fs::symlink_metadata(&path) {
+                Ok(_) => return Ok(None),
+                // only a path that is not there is a removal (P2-Q.4,
+                // PQ3-6); one that cannot be read keeps its blocks
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+                Err(e) => bail!("{doc}: not read ({e}); not taken as a removal"),
             }
             let mut v = Vault::open(&self.vault)?;
             if v.doc_state(doc).is_none_or(|s| s.live.is_empty()) {
@@ -1127,16 +1140,17 @@ impl Kernel {
                     }
                 }
             }
-            let mut docs: Vec<String> = v
+            let live: Vec<String> = v
                 .doc_paths()
                 .into_iter()
                 .filter(|d| !d.split('/').any(|c| c.starts_with('.')))
                 .filter(|d| v.doc_state(d).is_some_and(|s| !s.live.is_empty()))
-                .filter(|d| {
-                    crate::paths::doc_file(&self.vault, d)
-                        .is_ok_and(|p| std::fs::symlink_metadata(p).is_err())
-                })
                 .collect();
+            let (mut docs, notes) = self.missing_files(live)?;
+            for n in notes {
+                out.notes.push(n);
+                out.errors += 1;
+            }
             docs.sort_by(|a, b| a.as_bytes().cmp(b.as_bytes()));
             out.missing = docs;
             Ok(out)
@@ -1150,7 +1164,7 @@ impl Kernel {
     /// §7.1, `ingest_external`: the vault's policy, no attestation, no hold,
     /// no index) — in byte order. Documents outside `prefix` are never
     /// touched. Returns each removed document and its number of events.
-    pub fn remove_missing_under(&self, prefix: &str, source: &str) -> Result<Vec<(String, usize)>> {
+    pub fn remove_missing_under(&self, prefix: &str, source: &str) -> Result<RemovedUnder> {
         self.ticket().run(|| {
             let mut v = Vault::open(&self.vault)?;
             let (policy, _) = self.policy()?;
@@ -1159,27 +1173,45 @@ impl Kernel {
             } else {
                 format!("{prefix}/")
             };
-            let mut docs: Vec<String> = v
+            let live: Vec<String> = v
                 .doc_paths()
                 .into_iter()
                 .filter(|d| d.starts_with(&pre))
                 .filter(|d| !d.split('/').any(|c| c.starts_with('.')))
                 .filter(|d| v.doc_state(d).is_some_and(|s| !s.live.is_empty()))
-                .filter(|d| {
-                    crate::paths::doc_file(&self.vault, d)
-                        .is_ok_and(|p| std::fs::symlink_metadata(p).is_err())
-                })
                 .collect();
+            let (mut docs, notes) = self.missing_files(live)?;
             docs.sort_by(|a, b| a.as_bytes().cmp(b.as_bytes()));
-            let mut out = Vec::new();
+            let mut out = RemovedUnder {
+                removed: Vec::new(),
+                notes,
+            };
             for d in docs {
                 let (n, _) = self
                     .ingest_external(&mut v, None, &policy, &d, b"", source)
                     .with_context(|| format!("{d}: removal"))?;
-                out.push((d, n));
+                out.removed.push((d, n));
             }
             Ok(out)
         })
+    }
+
+    /// Of the documents `docs`, those whose path holds nothing — only a
+    /// path that is not there (`NotFound`) is a removal (P2-Q.4, PQ3-6) —
+    /// and a note for each path that cannot be read (`EACCES`, …): such a
+    /// document keeps its blocks.
+    fn missing_files(&self, docs: Vec<String>) -> Result<(Vec<String>, Vec<String>)> {
+        let mut missing = Vec::new();
+        let mut notes = Vec::new();
+        for d in docs {
+            let p = crate::paths::doc_file(&self.vault, &d)?;
+            match std::fs::symlink_metadata(&p) {
+                Ok(_) => {}
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => missing.push(d),
+                Err(e) => notes.push(format!("{d}: not read ({e}); not taken as a removal")),
+            }
+        }
+        Ok((missing, notes))
     }
 
     /// The plan of `text` as the vault's human's change of `doc` (spec §7):

@@ -435,7 +435,11 @@ fn run(cmd: Cmd, matcher: Option<MatcherVersion>) -> Result<Value> {
             if d.starts_with(&root) {
                 let prefix = rel_slash(&d, &root)?;
                 let k = rootmarkserver::tools::Kernel::open_with(&vault, matcher)?;
-                for (doc, n) in k.remove_missing_under(&prefix, "rootmark-ingest-dir")? {
+                let r = k.remove_missing_under(&prefix, "rootmark-ingest-dir")?;
+                for n in &r.notes {
+                    eprintln!("rootmark ingest-dir: {n}");
+                }
+                for (doc, n) in r.removed {
                     eprintln!(
                         "rootmark ingest-dir: {doc}: no file under {}; removed ({n} events)",
                         dir.display()

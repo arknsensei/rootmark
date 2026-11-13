@@ -166,8 +166,16 @@ fn targets_of(ev: notify::Result<notify::Event>, root: &Path) -> Vec<Target> {
             out.push(Target::Scan(rel));
         } else if rel.ends_with(".md") {
             out.push(Target::Doc(rel));
-        } else if meta.is_err() {
-            out.push(Target::Gone(rel));
+        } else if let Err(e) = meta {
+            // only a path that is not there is gone (P2-Q.4, PQ3-6): a path
+            // that cannot be read (EACCES) is no removal
+            if e.kind() == std::io::ErrorKind::NotFound {
+                out.push(Target::Gone(rel));
+            } else {
+                log(format!(
+                    "watch: {rel}/: not read ({e}); not taken as a removal"
+                ));
+            }
         }
     }
     out
@@ -242,17 +250,26 @@ fn vault_files(root: &Path) -> Result<Vec<String>> {
 /// queue wait. Not a user setting; unset or empty, nothing changes.
 const INGEST_DELAY_VAR: &str = "ROOTMARK_WATCH_TEST_INGEST_DELAY_MS";
 
-/// The test setting `INGEST_DELAY_VAR`; a value that is not a number of
-/// milliseconds is an error (never ignored).
-fn ingest_delay() -> Result<Option<Duration>> {
-    match std::env::var(INGEST_DELAY_VAR) {
+/// Test setting (P2-Q.4, PQ3-4; `server/tests/watch_restart_forced.rs`):
+/// when set, the watcher, told to stop, waits this many milliseconds before
+/// it ingests the removals it holds, standing in for a stop slowed by load
+/// — so that a client's SIGKILL a moment after its SIGTERM lands in the
+/// stop on every platform. Not a user setting; unset or empty, nothing
+/// changes.
+const STOP_DELAY_VAR: &str = "ROOTMARK_WATCH_TEST_STOP_DELAY_MS";
+
+/// A test setting of milliseconds (`INGEST_DELAY_VAR`, `STOP_DELAY_VAR`); a
+/// value that is not a number of milliseconds is an error (never ignored).
+fn ms_setting(var: &str) -> Result<Option<Duration>> {
+    match std::env::var(var) {
         Err(std::env::VarError::NotPresent) => Ok(None),
-        Err(e) => bail!("{INGEST_DELAY_VAR}: {e}"),
+        Err(e) => bail!("{var}: {e}"),
         Ok(s) if s.trim().is_empty() => Ok(None),
         Ok(s) => {
-            let ms: u64 = s.trim().parse().with_context(|| {
-                format!("{INGEST_DELAY_VAR}={s:?} is not a number of milliseconds")
-            })?;
+            let ms: u64 = s
+                .trim()
+                .parse()
+                .with_context(|| format!("{var}={s:?} is not a number of milliseconds"))?;
             Ok(Some(Duration::from_millis(ms)))
         }
     }
@@ -358,10 +375,17 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
     use std::time::Instant;
     let root = std::fs::canonicalize(kernel.vault())?;
     let hold = kernel.attestation_window()? + Duration::from_millis(500);
-    let delay = ingest_delay()?;
+    let delay = ms_setting(INGEST_DELAY_VAR)?;
     if let Some(d) = delay {
         log(format!(
             "watch: test setting {INGEST_DELAY_VAR}={}: each ingest waits that long (stands in for load; not a user setting)",
+            d.as_millis()
+        ));
+    }
+    let stop_delay = ms_setting(STOP_DELAY_VAR)?;
+    if let Some(d) = stop_delay {
+        log(format!(
+            "watch: test setting {STOP_DELAY_VAR}={}: the stop waits that long before it ingests the held removals (stands in for load; not a user setting)",
             d.as_millis()
         ));
     }
@@ -476,10 +500,16 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
                     }
                     ingest_doc(&kernel, &d);
                     ingested = true;
-                } else if std::fs::symlink_metadata(&p).is_err() {
-                    removed.push(d);
                 } else {
-                    log(format!("watch: {d} is not a file; not ingested"));
+                    match std::fs::symlink_metadata(&p) {
+                        // only a path that is not there is a removal
+                        // (P2-Q.4, PQ3-6)
+                        Err(e) if e.kind() == std::io::ErrorKind::NotFound => removed.push(d),
+                        Err(e) => log(format!(
+                            "watch: {d}: not read ({e}); not taken as a removal"
+                        )),
+                        Ok(_) => log(format!("watch: {d} is not a file; not ingested")),
+                    }
                 }
             }
             // the holds start after this batch's ingest (PQ1-4)
@@ -496,6 +526,9 @@ fn start_watcher(kernel: Arc<Kernel>) -> Result<Watching> {
             }
             for d in gone {
                 held.entry(d).or_insert(Held { due, first: due });
+            }
+            if let (true, Some(w)) = (stopping, stop_delay) {
+                std::thread::sleep(w);
             }
             // the removals whose hold is over (all of them when stopping),
             // in byte order
