@@ -1,0 +1,3 @@
+{"case":"n4","extra":[{"exit_ok":false,"stderr_first":"error: read_dir <vault>/sub: Permission denied (os error 13)"},{"exit_ok":false,"stderr_first":"error: read_dir <vault>/sub: Permission denied (os error 13)"}],"passed":2,"platform":"macos","ran":2}
+{"case":"n1_n3","extra":[{"failed":"N1: sub/k.md was closed"},{"failed":"N1: sub/k.md was closed"}],"passed":0,"platform":"macos","ran":2}
+{"case":"n2","extra":[{},{}],"passed":2,"platform":"macos","ran":2}
