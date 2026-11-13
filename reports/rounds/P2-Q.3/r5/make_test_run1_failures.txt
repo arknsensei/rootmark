@@ -1,0 +1,31 @@
+# P2-Q.3/R5 make test, run 1 (HEAD 765f89d, macOS arm64): failing excerpt; host paths replaced by <tmp>
+996:test result: FAILED. 14 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 197.36s
+---- c1_client_sequence_canonical stdout ----
+
+thread 'c1_client_sequence_canonical' (242612813) panicked at server/tests/restartkit/mod.rs:199:13:
+serve exited (exit status: 1): rootmark serve: token Created (<tmp>)
+error: bind 127.0.0.1:49466: Address already in use (os error 48)
+
+
+thread 'c1_client_sequence_canonical' (242612813) panicked at server/tests/restartkit/mod.rs:571:5:
+c1_canonical: 19/20 passed; first failure rep 8: serve exited (exit status: 1): rootmark serve: token Created (<tmp>)
+error: bind 127.0.0.1:49466: Address already in use (os error 48)
+
+
+---- c1_client_sequence_unverified stdout ----
+
+thread 'c1_client_sequence_unverified' (242612814) panicked at server/tests/restartkit/mod.rs:346:9:
+assertion `left == right` failed: {"error":{"code":"internal","message":"Failed to open file for read: 'FileDoesNotExist(\"<tmp>\")': Files does not exist: \"<tmp>\""}}
+  left: 500
+ right: 200
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'c1_client_sequence_unverified' (242612814) panicked at server/tests/restartkit/mod.rs:571:5:
+c1_unverified: 19/20 passed; first failure rep 4: assertion `left == right` failed: {"error":{"code":"internal","message":"Failed to open file for read: 'FileDoesNotExist(\"<tmp>\")': Files does not exist: \"<tmp>\""}}
+  left: 500
+ right: 200
+
+
+failures:
+    c1_client_sequence_canonical
+    c1_client_sequence_unverified

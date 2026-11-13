@@ -124,7 +124,7 @@ rootmark ingest-dir "$VAULT" "$VAULT" | jq '{events_hash, documents: (.ingested 
 
 `events_hash` is the blake3 of the event log: the same files give the same hash on every machine.
 
-Run it again, with the server stopped, after you changed notes: edited and new notes are taken in, and since 0.3.3 a note whose file is gone (deleted or moved) has its blocks closed (`BlockDeleted`; stderr says `rootmark ingest-dir: <note>: no file under <folder>; removed (<n> events)`). Only notes under the folder you name are closed, so give the vault itself as the folder; a folder outside the vault closes nothing. A running `serve --watch` does this by itself at its start (§3).
+Run it again, with the server stopped, after you changed notes: edited and new notes are taken in, and since 0.3.3 a note whose file is gone (deleted or moved) has its blocks closed (`BlockDeleted`; stderr says `rootmark ingest-dir: <note>: no file under <folder>; removed (<n> events)`). Only notes under the folder you name are closed, so give the vault itself as the folder; a folder outside the vault closes nothing. A running `serve --watch` does this by itself at its start (§3). Note that a document's name in the log is its path relative to the folder you gave `ingest-dir`: notes taken in from a folder outside the vault, or from a subfolder given as the folder, have names that are not paths of the vault, and the next `serve --watch` start finds no file under those names and closes them (P2-Q.3 PQ3-3). Give the vault itself.
 
 ### 2.2 The recipe: `.rootmark/policy.toml`
 
