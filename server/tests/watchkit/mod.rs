@@ -38,37 +38,28 @@ pub struct Served {
 /// attestation window.
 pub fn serve(vault: &Path, unattested: &str, window_s: f64) -> Served {
     std::fs::create_dir_all(vault.join(".rootmark")).unwrap();
-    // a free port, written as `[server] http_port` so that `rootmark
-    // attest` finds the running server
-    let port = std::net::TcpListener::bind("127.0.0.1:0")
-        .unwrap()
-        .local_addr()
-        .unwrap()
-        .port();
-    let recipe = rootmarkserver::config::base_recipe().replacen(
-        "[server]\n",
-        &format!("[server]\nhttp_port = {port}\n"),
-        1,
-    );
-    assert!(recipe.contains("http_port"));
-    std::fs::write(
-        vault.join(".rootmark/policy.toml"),
-        recipe
-            + &format!(
-                "\n[identity]\nhuman_id = \"tester\"\n\n[attestation]\nunattested = \"{unattested}\"\nwindow_s = {window_s:.1}\n"
-            ),
-    )
-    .unwrap();
+    let recipe = |port: Option<u16>| {
+        let base = rootmarkserver::config::base_recipe();
+        let base = match port {
+            // `[server] http_port`, so that `rootmark attest` finds the
+            // running server
+            Some(p) => {
+                let r = base.replacen("[server]\n", &format!("[server]\nhttp_port = {p}\n"), 1);
+                assert!(r.contains("http_port"));
+                r
+            }
+            None => base,
+        };
+        base + &format!(
+            "\n[identity]\nhuman_id = \"tester\"\n\n[attestation]\nunattested = \"{unattested}\"\nwindow_s = {window_s:.1}\n"
+        )
+    };
+    std::fs::write(vault.join(".rootmark/policy.toml"), recipe(None)).unwrap();
     let vs = vault.to_str().unwrap();
+    // P2-Q.4 (PQ3-8, PQ2-3): the server binds port 0 itself and says which
+    // port it bound; no port is chosen and released before it binds
     let mut child = Command::new(rootmark())
-        .args([
-            "serve",
-            "--vault",
-            vs,
-            "--http",
-            &format!("127.0.0.1:{port}"),
-            "--watch",
-        ])
+        .args(["serve", "--vault", vs, "--http", "127.0.0.1:0", "--watch"])
         .stderr(Stdio::piped())
         .spawn()
         .unwrap();
@@ -89,7 +80,11 @@ pub fn serve(vault: &Path, unattested: &str, window_s: f64) -> Served {
             break;
         }
     }
-    assert_eq!(bound, port, "{head}");
+    assert_ne!(bound, 0, "{head}");
+    let port = bound;
+    // the bound port into the recipe, before any step of the test (the
+    // watcher skips `.rootmark/`; the server reads only `[server]` at start)
+    std::fs::write(vault.join(".rootmark/policy.toml"), recipe(Some(port))).unwrap();
     let rest = std::thread::spawn(move || {
         let mut s = String::new();
         let _ = err.read_to_string(&mut s);

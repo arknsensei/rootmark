@@ -398,6 +398,13 @@ pub enum IndexAtStart {
     /// rebuilt over (damage, not staleness); the index's tools answer
     /// `index_stale` until `rootmark index build` (K-E1.2)
     Damaged(String),
+    /// its manifest is current but the index does not hold what the log
+    /// holds (the reason; `store::incomplete`: a write killed part-way, or
+    /// an ingest made without the index): rebuilt (`[index] auto_rebuild`;
+    /// P2-Q.4, PQ3-9 and PQ3-7)
+    Repaired(String, store::BuildReport),
+    /// incomplete (the reason) and `auto_rebuild = false`: left as it is
+    Incomplete(String),
 }
 
 /// The served vault and its writer queue.
@@ -916,10 +923,13 @@ impl Kernel {
     /// `rootmark serve`'s start: `ensure_index`, and an index of another format
     /// is rebuilt when `auto_rebuild` (`[index] auto_rebuild`, K-E0.3); see
     /// `IndexAtStart`. A stale index left in place makes searches answer
-    /// `index_stale`.
-    pub fn start_index(&self, auto_rebuild: bool) -> Result<IndexAtStart> {
+    /// `index_stale`. A current index is checked against the log as a whole
+    /// (`store::incomplete`) and rebuilt when it does not hold what the log
+    /// holds (P2-Q.4, PQ3-9; DESIGN §2); the notes are returned.
+    pub fn start_index(&self, auto_rebuild: bool) -> Result<(Vec<String>, IndexAtStart)> {
         self.ticket().run(|| {
             let v = Vault::open(&self.vault)?;
+            let notes: Vec<String> = Vec::new();
             let missing = !store::index_dir(&v).join("manifest.json").exists();
             let stale = match missing {
                 true => None,
@@ -927,20 +937,33 @@ impl Kernel {
                 // before (P1-D.1), nothing is rebuilt over it, and the
                 // index's tools answer `index_stale` (K-E1.2)
                 false => match store::staleness(&v) {
-                    Ok(None) => return Ok(IndexAtStart::Current),
+                    Ok(None) => {
+                        let Some(why) = store::incomplete(&v)? else {
+                            return Ok((notes, IndexAtStart::Current));
+                        };
+                        if !auto_rebuild {
+                            return Ok((notes, IndexAtStart::Incomplete(why)));
+                        }
+                        let e = self.embedder()?;
+                        let r = store::build(&v, e.as_ref())?;
+                        return Ok((notes, IndexAtStart::Repaired(why, r)));
+                    }
                     Ok(Some(s)) => Some(s),
-                    Err(e) => return Ok(IndexAtStart::Damaged(format!("{e:#}"))),
+                    Err(e) => return Ok((notes, IndexAtStart::Damaged(format!("{e:#}")))),
                 },
             };
             if let (Some(s), false) = (&stale, auto_rebuild) {
-                return Ok(IndexAtStart::Stale(s.0.clone()));
+                return Ok((notes, IndexAtStart::Stale(s.0.clone())));
             }
             let e = self.embedder()?;
             let r = store::build(&v, e.as_ref())?;
-            Ok(match stale {
-                None => IndexAtStart::Built(r),
-                Some(s) => IndexAtStart::Rebuilt(s.0, r),
-            })
+            Ok((
+                notes,
+                match stale {
+                    None => IndexAtStart::Built(r),
+                    Some(s) => IndexAtStart::Rebuilt(s.0, r),
+                },
+            ))
         })
     }
 
