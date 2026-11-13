@@ -431,14 +431,107 @@ fn write_cold(
     write_pretty(&tmp.join("manifest.json"), &manifest)
 }
 
-/// Replaces `<vault>/.rootmark/index/` (hot tier included) by `tmp`.
-fn install(vault: &Vault, tmp: &Path) -> Result<()> {
-    let dir = index_dir(vault);
-    if dir.exists() {
-        fs::remove_dir_all(&dir)?;
+/// `<vault>/.rootmark/index.old/`: the previous index while `install`
+/// swaps a new one in (P2-Q.4, PQ3-7); none once an install is over.
+pub const OLD_DIR: &str = "index.old";
+
+/// `<vault>/.rootmark/index.build/`: a new index while it is written
+/// (`build`, `compact`); none once an install is over.
+pub const BUILD_DIR: &str = "index.build";
+
+/// The test setting that ends the process at a named step of `install`
+/// (P2-Q.4, PQ3-7; `docs/rounds/P2-Q.4/progress/DESIGN.md` §3.3): a SIGKILL
+/// at that step, made deterministic. Not a user setting; unset or empty,
+/// nothing changes. A value that names no step is an error.
+pub const TEST_ABORT_VAR: &str = "ROOTMARK_TEST_ABORT_AT";
+
+/// The steps of `install` that `TEST_ABORT_VAR` can name: before the
+/// previous index is moved aside, between that move and the new index's
+/// rename, after the rename (before the previous index is removed).
+const ABORT_STEPS: [&str; 3] = [
+    "install:before_swap",
+    "install:swapped",
+    "install:installed",
+];
+
+fn test_abort_at() -> Result<Option<String>> {
+    match std::env::var(TEST_ABORT_VAR) {
+        Err(std::env::VarError::NotPresent) => Ok(None),
+        Err(e) => bail!("{TEST_ABORT_VAR}: {e}"),
+        Ok(s) if s.trim().is_empty() => Ok(None),
+        Ok(s) if ABORT_STEPS.contains(&s.trim()) => Ok(Some(s.trim().to_string())),
+        Ok(s) => bail!(
+            "{TEST_ABORT_VAR}={s:?} names no step of the index install ({})",
+            ABORT_STEPS.join(", ")
+        ),
     }
+}
+
+fn abort_if(at: &Option<String>, step: &str) {
+    if at.as_deref() == Some(step) {
+        eprintln!("rootmark: test setting {TEST_ABORT_VAR}={step}: aborting (not a user setting)");
+        std::process::abort();
+    }
+}
+
+/// Replaces `<vault>/.rootmark/index/` (hot tier included) by `tmp`, the
+/// complete new index (P2-Q.4, PQ3-7): the previous index is renamed aside
+/// (`OLD_DIR`), the new one renamed in, then the previous one removed — two
+/// renames, each atomic, so a process killed at any step leaves a complete
+/// index at `index/` or at `index.old/` (`recover_install` puts it back);
+/// never a half-removed one.
+fn install(vault: &Vault, tmp: &Path) -> Result<()> {
+    let at = test_abort_at()?;
+    let dir = index_dir(vault);
+    let old = vault.store_dir().join(OLD_DIR);
+    if fs::symlink_metadata(&old).is_ok() {
+        // the cleanup of an install killed before it ended
+        fs::remove_dir_all(&old)?;
+    }
+    abort_if(&at, "install:before_swap");
+    if fs::symlink_metadata(&dir).is_ok() {
+        fs::rename(&dir, &old)?;
+    }
+    abort_if(&at, "install:swapped");
     fs::rename(tmp, &dir)?;
+    abort_if(&at, "install:installed");
+    if fs::symlink_metadata(&old).is_ok() {
+        fs::remove_dir_all(&old)?;
+    }
     Ok(())
+}
+
+/// What an `install` (or the build before it) killed before it ended left
+/// (P2-Q.4, PQ3-7; DESIGN §3.2), put right before the index is read: no
+/// `index/` but an `index.old/` — the previous index, moved aside — is
+/// renamed back; an `index.old/` beside an `index/` — the new index is in —
+/// is removed; an `index.build/` — a new index not installed — is removed.
+/// One note for each; none when there is nothing to do.
+pub fn recover_install(vault: &Vault) -> Result<Vec<String>> {
+    let dir = index_dir(vault);
+    let old = vault.store_dir().join(OLD_DIR);
+    let build = vault.store_dir().join(BUILD_DIR);
+    let mut notes = Vec::new();
+    if fs::symlink_metadata(&old).is_ok() {
+        if fs::symlink_metadata(&dir).is_ok() {
+            fs::remove_dir_all(&old)?;
+            notes.push(format!(
+                "removed the previous index left at .rootmark/{OLD_DIR} by an interrupted install"
+            ));
+        } else {
+            fs::rename(&old, &dir)?;
+            notes.push(format!(
+                "an interrupted install left the previous index at .rootmark/{OLD_DIR}: restored"
+            ));
+        }
+    }
+    if fs::symlink_metadata(&build).is_ok() {
+        fs::remove_dir_all(&build)?;
+        notes.push(format!(
+            "removed an index build left unfinished at .rootmark/{BUILD_DIR}"
+        ));
+    }
+    Ok(notes)
 }
 
 /// The embedder a check opens the index with: the manifest's own id and
@@ -510,7 +603,7 @@ pub fn build(vault: &Vault, embedder: &dyn Embedder) -> Result<BuildReport> {
         .iter()
         .map(|r| have.remove(&r.record_id).context("vector"))
         .collect::<Result<_>>()?;
-    let tmp = vault.store_dir().join("index.build");
+    let tmp = vault.store_dir().join(BUILD_DIR);
     write_cold(
         &tmp,
         &records,
@@ -983,7 +1076,7 @@ pub fn compact(vault: &Vault, embedder: &dyn Embedder) -> Result<CompactReport> 
                 .collect(),
         })
         .collect();
-    let tmp = vault.store_dir().join("index.build");
+    let tmp = vault.store_dir().join(BUILD_DIR);
     write_cold(
         &tmp,
         &records,
