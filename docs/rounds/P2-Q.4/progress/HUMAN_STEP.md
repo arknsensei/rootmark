@@ -1,4 +1,41 @@
-# P2-Q.4 — İnsan adımı 2 (2026-11-14): K-P2Q4-T1'in kararı ve 0.3.4'ün yayımı
+# P2-Q.4 — İnsan adımı 3 (2026-11-14): tur dalının itilmesi ve 0.3.4'ün yayımının kalanı
+
+**Adım 2 yapıldı:** K-P2Q4-T1 → (a) (K-P2Q4.2: Q4-7 lafzen kaldı → tur kaldı; yayım sürer; PQ4-6 ve PQ4-5 sonraki tura). #69 rebase ile birleşti: `main` = `81a923d` (ağacı #69'un ucu `05a4c57` ile eşit); `release/0.3.4` uzakta silindi.
+
+## 3a. Tur dalının zorla itilmesi
+Tur dalı yerelde `origin/main` (`81a923d`) üstüne yeniden temellendirildi (`800c7e0`'dan sonraki dört commit; çakışma yok). Eklediği fark yalnız `73b0af9`'un 15 sürüm dosyası (`git diff backup/p2-q.4-round-pre-rebase2 p2-q.4/round --stat`); `server/` ve `index/` `main`'le aynı. Önceki uç yerelde `backup/p2-q.4-round-pre-rebase2` (`a1b71fc`). Depo kökünde:
+```
+git push --force-with-lease=p2-q.4/round:a1b71fc origin p2-q.4/round
+```
+
+## 3b. `release.yml` (`docs/RELEASE.md` adım 3)
+```
+gh workflow run release.yml --ref main
+gh run list --workflow release.yml --limit 1        # koşu kimliği <id>; headSha 81a923d olmalı
+gh run watch <id>
+mkdir -p rel034 && gh run download <id> -n release-json -D rel034/json && gh run download <id> -n release-files -D rel034/files
+```
+Beklenen: `rel034/json/release.json`'da `aarch64-apple-darwin` ve `x86_64-unknown-linux-gnu` `ok` (`--version` 0.3.4, `--spec-version` 2.0.3, `rootmark conformance` 39/39); `(cd rel034/files && shasum -a 256 -c SHA256SUMS)` geçer; her arşiv için `gh attestation verify rel034/files/<arşiv> -R arknsensei/rootmark` "Verification succeeded". Windows işi bilgi (K-E1.1).
+
+## 3c. Etiket (`docs/RELEASE.md` adım 4)
+```
+git tag -a v0.3.4 81a923d -m "rootmark 0.3.4"
+git push origin v0.3.4
+```
+
+## 3d. GitHub release ve varlıklar (`docs/RELEASE.md` adım 4)
+Yerel varlıklar hazır (`05a4c57`'de kurulan paket; ağacı `81a923d` ile eşit, `release_check` 21/21, `shasum -c` 6/6): `/private/tmp/claude-501/-Users-arkns-Works-mdkernel/2e400508-7484-44d9-b907-96feef3d7e6c/scratchpad/rel034_local/` — tekerlek, `rootmark-0.3.4.zip`, `SHA256SUMS.local`, eklentinin `main.js`, `manifest.json`, `styles.css`. Sürüm notu `CHANGELOG.md`'nin `## 0.3.4` bölümü: `/private/tmp/claude-501/-Users-arkns-Works-mdkernel/2e400508-7484-44d9-b907-96feef3d7e6c/scratchpad/rel034_notes.md`.
+```
+gh release create v0.3.4 --title "rootmark 0.3.4" --notes-file /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2e400508-7484-44d9-b907-96feef3d7e6c/scratchpad/rel034_notes.md \
+  rel034/files/* /private/tmp/claude-501/-Users-arkns-Works-mdkernel/2e400508-7484-44d9-b907-96feef3d7e6c/scratchpad/rel034_local/*
+```
+(5. adım — Homebrew tap'i — isteğe bağlı.)
+
+**Sonra ajan sürer:** yayımlanmış 0.3.4 ile P1/P2 durumları (macOS + Docker), ≥ 3 gerçek Claude Code oturum sonu sınaması (P3), D-NOTES Mac ↔ Docker ↔ CI (`pilot.yml`) ↔ 0.3.3 (P4); R4'ün kapanışı; R5 (kalite kapıları, gözden geçirici, FINAL — karar kuralı lafzen: Q4-7 kaldı → tur kaldı —, READY, tek PR). Yapıldığını oturuma bildirmeniz yeter.
+
+---
+
+# (Geçmiş) İnsan adımı 2 (2026-11-14): K-P2Q4-T1'in kararı ve 0.3.4'ün yayımı
 
 **Adım 1 yapıldı** (zorla itmeler; `origin/p2-q.4/round`, `origin/release/0.3.4` yeniden temellendirilmiş uçlarda). Aşağıda yalnız adım 2 beklenir.
 
