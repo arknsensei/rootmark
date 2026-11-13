@@ -1,0 +1,2283 @@
+{
+ "criteria": [
+  "p1c1_checks.json:C1-8",
+  "p1d_checks.json:D-10",
+  "p1e1_checks.json:E1-3",
+  "p1e1_checks.json:E1-4",
+  "p1e1_checks.json:E1-9",
+  "p1e1_checks.json:tamper",
+  "p1e_checks.json:E-7",
+  "p2_0_2_checks.json:H-P2-0.2a",
+  "p2_0_2_checks.json:H-P2-0.2a′",
+  "p2_0_2_checks.json:H-P2-0.2d",
+  "p2_0_2_checks.json:H-P2-0.2f",
+  "p2_0_2_checks.json:H-P2-0.2i",
+  "p2_0_3_checks.json:H-P2-0.3a",
+  "p2_0_3_checks.json:H-P2-0.3a′",
+  "p2_0_3_checks.json:H-P2-0.3b",
+  "p2_0_3_checks.json:H-P2-0.3b-yük",
+  "p2_0_3_checks.json:H-P2-0.3b′",
+  "p2_0_3_checks.json:H-P2-0.3c",
+  "p2_0_3_checks.json:H-P2-0.3d",
+  "p2_0_3_checks.json:H-P2-0.3e",
+  "p2_0_3_checks.json:H-P2-0.3f",
+  "p2_0_3_checks.json:H-P2-0.3i",
+  "p2_0_3_checks.json:logs_vs_p2a"
+ ],
+ "elapsed_s": 6553,
+ "historical": {
+  "p1e1_checks.json:E1-4": true,
+  "p1e_checks.json:E-7": true,
+  "p2_0_3_checks.json:H-P2-0.3b": true
+ },
+ "in_verdict": [
+  "p1c1_checks.json:C1-8",
+  "p1e1_checks.json:E1-3",
+  "p1e1_checks.json:E1-4",
+  "p1e1_checks.json:E1-9",
+  "p1e_checks.json:E-7"
+ ],
+ "no_threshold": [
+  "p2_0_2_checks.json:H-P2-0.2i",
+  "p2_0_3_checks.json:H-P2-0.3b′",
+  "p2_0_3_checks.json:H-P2-0.3i",
+  "p2_0_3_checks.json:logs_vs_p2a"
+ ],
+ "pass": true,
+ "reading": "P2-V.2 mac_reading (K-P2V.3 T2 (b)+(c), K-P2V1.2 T5)",
+ "rep_elapsed_s": [
+  3190,
+  1681,
+  1679
+ ],
+ "rep_runs": [
+  "20261113T191923Z-789c400",
+  "20261113T201234Z-789c400",
+  "20261113T204036Z-789c400"
+ ],
+ "reported_only": [
+  {
+   "carry": "P2-C",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3b-yük",
+   "in_verdict": false,
+   "passed": "0/3",
+   "source": "docs/rounds/P2-0.3/GOAL.md:20",
+   "threshold": "≤ 0.02 (yüklü çift; Mac kümesi yüksüz koşar, değer bu eşikle raporlanır)"
+  },
+  {
+   "carry": "P2-C",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3c",
+   "in_verdict": false,
+   "passed": "3/3",
+   "source": "docs/rounds/P2-0.3/GOAL.md:22",
+   "threshold": "p95 < 500 ms"
+  },
+  {
+   "carry": "P2-C",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3d",
+   "in_verdict": false,
+   "passed": "3/3",
+   "source": "docs/rounds/P2-0.3/GOAL.md:23",
+   "threshold": "D-C ≥ 0.99; D-C′ ≥ 0.95 ve ajan canonical = 0"
+  },
+  {
+   "carry": "P2-C",
+   "criterion": "p2_0_3_checks.json:H-P2-0.3e",
+   "in_verdict": false,
+   "passed": "3/3",
+   "source": "docs/rounds/P2-0.3/GOAL.md:24",
+   "threshold": "ajan canonical = 0; sahte 10/10"
+  },
+  {
+   "carry": "P2-C",
+   "criterion": "p1e1_checks.json:tamper",
+   "in_verdict": false,
+   "passed": "3/3",
+   "source": "research/eval/run_p1e1_checks.py (`tamper`)",
+   "threshold": "gerçek Obsidian kasıtlı vakaları reddedilir, kontroller geçer (e2e yarısı; `tamper_p1e1.json` kademe 2'de)"
+  }
+ ],
+ "reps": 3,
+ "sets": [
+  {
+   "class": "Z",
+   "criteria": [
+    {
+     "criterion": "p1d_checks.json:D-10",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P1-D/GOAL.md:48",
+     "threshold": "p95 < 1000 ms, katman doğru (SIGTERM'de kayıp yok)",
+     "values": [
+      {
+       "layers_canonical_human": true,
+       "measured": {
+        "edits": 20,
+        "max_ms": 170.526125,
+        "p95_ms": 170.33016700000002
+       },
+       "pass": true,
+       "sigterm_compacts": true,
+       "sigterm_never_lost": true,
+       "threshold_p95_ms": 1000
+      },
+      {
+       "layers_canonical_human": true,
+       "measured": {
+        "edits": 20,
+        "max_ms": 174.0595,
+        "p95_ms": 169.33599999999998
+       },
+       "pass": true,
+       "sigterm_compacts": true,
+       "sigterm_never_lost": true,
+       "threshold_p95_ms": 1000
+      },
+      {
+       "layers_canonical_human": true,
+       "measured": {
+        "edits": 20,
+        "max_ms": 688.639208,
+        "p95_ms": 170.137166
+       },
+       "pass": true,
+       "sigterm_compacts": true,
+       "sigterm_never_lost": true,
+       "threshold_p95_ms": 1000
+      }
+     ]
+    }
+   ],
+   "id": "Z-D10",
+   "pass": null,
+   "pass_3of3": true
+  },
+  {
+   "class": "Z",
+   "criteria": [
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2a",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.2/GOAL.md:31",
+     "threshold": "= 0 (canonical sızıntısı)",
+     "values": [
+      {
+       "d_a": {
+        "canonical_leak": 0,
+        "new_blocks": 525,
+        "scenarios": 200
+       },
+       "d_a2": {
+        "by_path": {
+         "atomic_rename": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cat": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cp_rsync": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "git_apply": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "python": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "sed": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         }
+        },
+        "canonical_leak": 0,
+        "new_blocks": 210,
+        "scenarios": 120
+       },
+       "pass": true,
+       "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+      },
+      {
+       "d_a": {
+        "canonical_leak": 0,
+        "new_blocks": 525,
+        "scenarios": 200
+       },
+       "d_a2": {
+        "by_path": {
+         "atomic_rename": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cat": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cp_rsync": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "git_apply": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "python": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "sed": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         }
+        },
+        "canonical_leak": 0,
+        "new_blocks": 210,
+        "scenarios": 120
+       },
+       "pass": true,
+       "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+      },
+      {
+       "d_a": {
+        "canonical_leak": 0,
+        "new_blocks": 525,
+        "scenarios": 200
+       },
+       "d_a2": {
+        "by_path": {
+         "atomic_rename": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cat": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cp_rsync": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "git_apply": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "python": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "sed": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         }
+        },
+        "canonical_leak": 0,
+        "new_blocks": 210,
+        "scenarios": 120
+       },
+       "pass": true,
+       "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2a′",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.2/GOAL.md:32",
+     "threshold": "200/200",
+     "values": [
+      {
+       "canonical_changed": 52,
+       "pass": true,
+       "scenarios": "200/200",
+       "source": "p2_0_2/d_a.json"
+      },
+      {
+       "canonical_changed": 52,
+       "pass": true,
+       "scenarios": "200/200",
+       "source": "p2_0_2/d_a.json"
+      },
+      {
+       "canonical_changed": 52,
+       "pass": true,
+       "scenarios": "200/200",
+       "source": "p2_0_2/d_a.json"
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3a",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:17",
+     "threshold": "= 0",
+     "values": [
+      {
+       "d_a": {
+        "canonical_leak": 0,
+        "new_blocks": 525,
+        "scenarios": 200
+       },
+       "d_a2": {
+        "by_path": {
+         "atomic_rename": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cat": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cp_rsync": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "git_apply": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "python": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "sed": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         }
+        },
+        "canonical_leak": 0,
+        "new_blocks": 210,
+        "scenarios": 120
+       },
+       "pass": true,
+       "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+      },
+      {
+       "d_a": {
+        "canonical_leak": 0,
+        "new_blocks": 525,
+        "scenarios": 200
+       },
+       "d_a2": {
+        "by_path": {
+         "atomic_rename": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cat": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cp_rsync": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "git_apply": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "python": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "sed": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         }
+        },
+        "canonical_leak": 0,
+        "new_blocks": 210,
+        "scenarios": 120
+       },
+       "pass": true,
+       "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+      },
+      {
+       "d_a": {
+        "canonical_leak": 0,
+        "new_blocks": 525,
+        "scenarios": 200
+       },
+       "d_a2": {
+        "by_path": {
+         "atomic_rename": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cat": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "cp_rsync": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "git_apply": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "python": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         },
+         "sed": {
+          "canonical_leak": 0,
+          "new_blocks": 35,
+          "scenarios": 20
+         }
+        },
+        "canonical_leak": 0,
+        "new_blocks": 210,
+        "scenarios": 120
+       },
+       "pass": true,
+       "source": "p2_0_2/d_a.json, p2_0_2/d_a2.json"
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3a′",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:18",
+     "threshold": "200/200",
+     "values": [
+      {
+       "canonical_changed": 52,
+       "pass": true,
+       "scenarios": "200/200",
+       "source": "p2_0_2/d_a.json"
+      },
+      {
+       "canonical_changed": 52,
+       "pass": true,
+       "scenarios": "200/200",
+       "source": "p2_0_2/d_a.json"
+      },
+      {
+       "canonical_changed": 52,
+       "pass": true,
+       "scenarios": "200/200",
+       "source": "p2_0_2/d_a.json"
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2i",
+     "equal_across_reps": false,
+     "eşik yok": "eşiği iki zincirin günlüklerinin bayt eşitliği; tekrarlar arası eşitlik raporlanır",
+     "in_verdict": false,
+     "pass": null,
+     "threshold": null,
+     "values": [
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "ac4cb19ff356860e556d62ec2e0a5abd",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "679dcbe8bb715d9b91f14827a82dae07",
+        "d_c/attestations.jsonl": "768213cc89bbe2ce8dcb882696b484f8",
+        "d_c/events.jsonl": "01bc1eee5373f844dc5263d4377d57e0"
+       },
+       "pass": null
+      },
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "30918b4153c0ad6467c9b6ef728f0450",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "679dcbe8bb715d9b91f14827a82dae07",
+        "d_c/attestations.jsonl": "768213cc89bbe2ce8dcb882696b484f8",
+        "d_c/events.jsonl": "01bc1eee5373f844dc5263d4377d57e0"
+       },
+       "pass": null
+      },
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "32ddb118332f27cc5c242f6ce86ba12f",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "679dcbe8bb715d9b91f14827a82dae07",
+        "d_c/attestations.jsonl": "768213cc89bbe2ce8dcb882696b484f8",
+        "d_c/events.jsonl": "01bc1eee5373f844dc5263d4377d57e0"
+       },
+       "pass": null
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3i",
+     "equal_across_reps": false,
+     "eşik yok": "H-P2-0.2i gibi",
+     "in_verdict": false,
+     "pass": null,
+     "threshold": null,
+     "values": [
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "ac4cb19ff356860e556d62ec2e0a5abd",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "679dcbe8bb715d9b91f14827a82dae07",
+        "d_c/attestations.jsonl": "768213cc89bbe2ce8dcb882696b484f8",
+        "d_c/events.jsonl": "01bc1eee5373f844dc5263d4377d57e0"
+       },
+       "pass": null
+      },
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "30918b4153c0ad6467c9b6ef728f0450",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "679dcbe8bb715d9b91f14827a82dae07",
+        "d_c/attestations.jsonl": "768213cc89bbe2ce8dcb882696b484f8",
+        "d_c/events.jsonl": "01bc1eee5373f844dc5263d4377d57e0"
+       },
+       "pass": null
+      },
+      {
+       "logs": {
+        "d_a/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a/events.jsonl": "32ddb118332f27cc5c242f6ce86ba12f",
+        "d_a2/attestations.jsonl": "af1349b9f5f9a1a6a0404dea36dcc949",
+        "d_a2/events.jsonl": "679dcbe8bb715d9b91f14827a82dae07",
+        "d_c/attestations.jsonl": "768213cc89bbe2ce8dcb882696b484f8",
+        "d_c/events.jsonl": "01bc1eee5373f844dc5263d4377d57e0"
+       },
+       "pass": null
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:logs_vs_p2a",
+     "equal_across_reps": false,
+     "eşik yok": "D-A, D-A2, D-C günlüklerinin P2-A resmi RUN'ına bayt eşitliği; GOAL eşiği değil, kaydedicinin denetimi",
+     "in_verdict": false,
+     "pass": null,
+     "threshold": null,
+     "values": [
+      {
+       "decided_by": [
+        "logs›d_a/events.jsonl›equal"
+       ],
+       "logs": {
+        "d_a/attestations.jsonl": {
+         "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+         "equal": true
+        },
+        "d_a/events.jsonl": {
+         "blake3": "ac4cb19ff356860e556d62ec2e0a5abd",
+         "equal": false
+        },
+        "d_a2/attestations.jsonl": {
+         "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+         "equal": true
+        },
+        "d_a2/events.jsonl": {
+         "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+         "equal": true
+        },
+        "d_c/attestations.jsonl": {
+         "blake3": "768213cc89bbe2ce8dcb882696b484f8",
+         "equal": true
+        },
+        "d_c/events.jsonl": {
+         "blake3": "01bc1eee5373f844dc5263d4377d57e0",
+         "equal": true
+        }
+       },
+       "pass": false,
+       "reference_run": "reports/rounds/P2-A/runs/20261020T230453Z-1a775d3"
+      },
+      {
+       "decided_by": [
+        "logs›d_a/events.jsonl›equal"
+       ],
+       "logs": {
+        "d_a/attestations.jsonl": {
+         "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+         "equal": true
+        },
+        "d_a/events.jsonl": {
+         "blake3": "30918b4153c0ad6467c9b6ef728f0450",
+         "equal": false
+        },
+        "d_a2/attestations.jsonl": {
+         "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+         "equal": true
+        },
+        "d_a2/events.jsonl": {
+         "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+         "equal": true
+        },
+        "d_c/attestations.jsonl": {
+         "blake3": "768213cc89bbe2ce8dcb882696b484f8",
+         "equal": true
+        },
+        "d_c/events.jsonl": {
+         "blake3": "01bc1eee5373f844dc5263d4377d57e0",
+         "equal": true
+        }
+       },
+       "pass": false,
+       "reference_run": "reports/rounds/P2-A/runs/20261020T230453Z-1a775d3"
+      },
+      {
+       "decided_by": [
+        "logs›d_a/events.jsonl›equal"
+       ],
+       "logs": {
+        "d_a/attestations.jsonl": {
+         "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+         "equal": true
+        },
+        "d_a/events.jsonl": {
+         "blake3": "32ddb118332f27cc5c242f6ce86ba12f",
+         "equal": false
+        },
+        "d_a2/attestations.jsonl": {
+         "blake3": "af1349b9f5f9a1a6a0404dea36dcc949",
+         "equal": true
+        },
+        "d_a2/events.jsonl": {
+         "blake3": "679dcbe8bb715d9b91f14827a82dae07",
+         "equal": true
+        },
+        "d_c/attestations.jsonl": {
+         "blake3": "768213cc89bbe2ce8dcb882696b484f8",
+         "equal": true
+        },
+        "d_c/events.jsonl": {
+         "blake3": "01bc1eee5373f844dc5263d4377d57e0",
+         "equal": true
+        }
+       },
+       "pass": false,
+       "reference_run": "reports/rounds/P2-A/runs/20261020T230453Z-1a775d3"
+      }
+     ]
+    }
+   ],
+   "id": "Z-DA",
+   "pass": null,
+   "pass_3of3": true
+  },
+  {
+   "class": "Z",
+   "criteria": [
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2d",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.2/GOAL.md:36",
+     "threshold": "D-C ≥ 0.99 (D-C′ yarısı H-P2-0.3d)",
+     "values": [
+      {
+       "d_c": {
+        "accuracy": 1.0,
+        "agent_canonical": 0,
+        "blocks": 340,
+        "by_mode": {
+         "apart": {
+          "blocks": 298,
+          "right": 298
+         },
+         "collide": {
+          "blocks": 14,
+          "right": 14
+         },
+         "same_doc_after": {
+          "blocks": 28,
+          "right": 28
+         }
+        },
+        "partial_lines": 7,
+        "pass": true,
+        "right": 340,
+        "ticks": 160
+       },
+       "half": "D-C (≥ 0.99); D-C′ (real Obsidian) is H-P2-0.3d",
+       "pass": true
+      },
+      {
+       "d_c": {
+        "accuracy": 1.0,
+        "agent_canonical": 0,
+        "blocks": 340,
+        "by_mode": {
+         "apart": {
+          "blocks": 298,
+          "right": 298
+         },
+         "collide": {
+          "blocks": 14,
+          "right": 14
+         },
+         "same_doc_after": {
+          "blocks": 28,
+          "right": 28
+         }
+        },
+        "partial_lines": 7,
+        "pass": true,
+        "right": 340,
+        "ticks": 160
+       },
+       "half": "D-C (≥ 0.99); D-C′ (real Obsidian) is H-P2-0.3d",
+       "pass": true
+      },
+      {
+       "d_c": {
+        "accuracy": 1.0,
+        "agent_canonical": 0,
+        "blocks": 340,
+        "by_mode": {
+         "apart": {
+          "blocks": 298,
+          "right": 298
+         },
+         "collide": {
+          "blocks": 14,
+          "right": 14
+         },
+         "same_doc_after": {
+          "blocks": 28,
+          "right": 28
+         }
+        },
+        "partial_lines": 7,
+        "pass": true,
+        "right": 340,
+        "ticks": 160
+       },
+       "half": "D-C (≥ 0.99); D-C′ (real Obsidian) is H-P2-0.3d",
+       "pass": true
+      }
+     ]
+    }
+   ],
+   "id": "Z-DC",
+   "pass": null,
+   "pass_3of3": true
+  },
+  {
+   "class": "Z",
+   "criteria": [
+    {
+     "criterion": "p2_0_2_checks.json:H-P2-0.2f",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.2/GOAL.md:38",
+     "threshold": "≤ 0.01; p95 < 500 ms",
+     "values": [
+      {
+       "by_kind": {
+        "append": {
+         "new_blocks": 20,
+         "sessions": 20,
+         "unverified_after_window": 0
+        },
+        "atomic": {
+         "new_blocks": 50,
+         "sessions": 50,
+         "unverified_after_window": 0
+        },
+        "inplace": {
+         "new_blocks": 30,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "mv": {
+         "new_blocks": 459,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "rapid": {
+         "new_blocks": 71,
+         "sessions": 20,
+         "unverified_after_window": 0
+        }
+       },
+       "false_unverified_rate": 0.0,
+       "latency_p95_ms": 219.5,
+       "latency_unsettled": 0,
+       "new_blocks": 630,
+       "pass": true,
+       "sessions": 150,
+       "source": "p2_0_2/d_b2.json",
+       "unverified_after_window": 0
+      },
+      {
+       "by_kind": {
+        "append": {
+         "new_blocks": 20,
+         "sessions": 20,
+         "unverified_after_window": 0
+        },
+        "atomic": {
+         "new_blocks": 50,
+         "sessions": 50,
+         "unverified_after_window": 0
+        },
+        "inplace": {
+         "new_blocks": 30,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "mv": {
+         "new_blocks": 459,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "rapid": {
+         "new_blocks": 71,
+         "sessions": 20,
+         "unverified_after_window": 0
+        }
+       },
+       "false_unverified_rate": 0.0,
+       "latency_p95_ms": 219.9,
+       "latency_unsettled": 0,
+       "new_blocks": 630,
+       "pass": true,
+       "sessions": 150,
+       "source": "p2_0_2/d_b2.json",
+       "unverified_after_window": 0
+      },
+      {
+       "by_kind": {
+        "append": {
+         "new_blocks": 20,
+         "sessions": 20,
+         "unverified_after_window": 0
+        },
+        "atomic": {
+         "new_blocks": 50,
+         "sessions": 50,
+         "unverified_after_window": 0
+        },
+        "inplace": {
+         "new_blocks": 30,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "mv": {
+         "new_blocks": 459,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "rapid": {
+         "new_blocks": 71,
+         "sessions": 20,
+         "unverified_after_window": 0
+        }
+       },
+       "false_unverified_rate": 0.0,
+       "latency_p95_ms": 227.7,
+       "latency_unsettled": 0,
+       "new_blocks": 630,
+       "pass": true,
+       "sessions": 150,
+       "source": "p2_0_2/d_b2.json",
+       "unverified_after_window": 0
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3f",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:25",
+     "threshold": "≤ 0.01; p95 < 500 ms",
+     "values": [
+      {
+       "by_kind": {
+        "append": {
+         "new_blocks": 20,
+         "sessions": 20,
+         "unverified_after_window": 0
+        },
+        "atomic": {
+         "new_blocks": 50,
+         "sessions": 50,
+         "unverified_after_window": 0
+        },
+        "inplace": {
+         "new_blocks": 30,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "mv": {
+         "new_blocks": 459,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "rapid": {
+         "new_blocks": 71,
+         "sessions": 20,
+         "unverified_after_window": 0
+        }
+       },
+       "false_unverified_rate": 0.0,
+       "latency_p95_ms": 219.5,
+       "latency_unsettled": 0,
+       "new_blocks": 630,
+       "pass": true,
+       "sessions": 150,
+       "source": "p2_0_2/d_b2.json",
+       "unverified_after_window": 0
+      },
+      {
+       "by_kind": {
+        "append": {
+         "new_blocks": 20,
+         "sessions": 20,
+         "unverified_after_window": 0
+        },
+        "atomic": {
+         "new_blocks": 50,
+         "sessions": 50,
+         "unverified_after_window": 0
+        },
+        "inplace": {
+         "new_blocks": 30,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "mv": {
+         "new_blocks": 459,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "rapid": {
+         "new_blocks": 71,
+         "sessions": 20,
+         "unverified_after_window": 0
+        }
+       },
+       "false_unverified_rate": 0.0,
+       "latency_p95_ms": 219.9,
+       "latency_unsettled": 0,
+       "new_blocks": 630,
+       "pass": true,
+       "sessions": 150,
+       "source": "p2_0_2/d_b2.json",
+       "unverified_after_window": 0
+      },
+      {
+       "by_kind": {
+        "append": {
+         "new_blocks": 20,
+         "sessions": 20,
+         "unverified_after_window": 0
+        },
+        "atomic": {
+         "new_blocks": 50,
+         "sessions": 50,
+         "unverified_after_window": 0
+        },
+        "inplace": {
+         "new_blocks": 30,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "mv": {
+         "new_blocks": 459,
+         "sessions": 30,
+         "unverified_after_window": 0
+        },
+        "rapid": {
+         "new_blocks": 71,
+         "sessions": 20,
+         "unverified_after_window": 0
+        }
+       },
+       "false_unverified_rate": 0.0,
+       "latency_p95_ms": 227.7,
+       "latency_unsettled": 0,
+       "new_blocks": 630,
+       "pass": true,
+       "sessions": 150,
+       "source": "p2_0_2/d_b2.json",
+       "unverified_after_window": 0
+      }
+     ]
+    }
+   ],
+   "id": "Z-DB2",
+   "pass": null,
+   "pass_3of3": true
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3b",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "reading": "kalış korunuyor (`pass` false, referansla aynı); değeri raporlanır (gerçek Obsidian, yarışa bağlı: kayıt baytları tekrar eşit olamaz)",
+     "record_equal": true,
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:19",
+     "tarihsel": [
+      "K-P2-03.1"
+     ],
+     "threshold": "≤ 0.01",
+     "values": [
+      {
+       "by_kind": {
+        "char": {
+         "new_blocks": 22,
+         "saves": 22,
+         "unverified": 0
+        },
+        "focus": {
+         "new_blocks": 21,
+         "saves": 21,
+         "unverified": 0
+        },
+        "move_folder": {
+         "new_blocks": 350,
+         "saves": 15,
+         "unverified": 83
+        },
+        "multi": {
+         "new_blocks": 56,
+         "saves": 56,
+         "unverified": 0
+        },
+        "paragraph": {
+         "new_blocks": 22,
+         "saves": 22,
+         "unverified": 0
+        },
+        "paste": {
+         "new_blocks": 270,
+         "saves": 21,
+         "unverified": 0
+        },
+        "rapid": {
+         "new_blocks": 77,
+         "saves": 22,
+         "unverified": 0
+        },
+        "rename": {
+         "new_blocks": 1038,
+         "saves": 173,
+         "unverified": 418
+        },
+        "rename_again": {
+         "new_blocks": 372,
+         "saves": 61,
+         "unverified": 48
+        }
+       },
+       "coverage": {
+        "link_counts": {
+         "embed": 7,
+         "md_label": 7,
+         "md_name": 8,
+         "md_path": 4,
+         "self_md": 2,
+         "self_wiki": 2,
+         "self_wiki_heading": 2,
+         "wiki": 8,
+         "wiki_alias": 7,
+         "wiki_heading": 8
+        },
+        "ok": true,
+        "rename_facts": {
+         "in_folder": 39,
+         "incoming_md": 45,
+         "renames": 70,
+         "self_link": 35,
+         "self_link_by_kind": {
+          "move_folder": 10,
+          "rename": 17,
+          "rename_again": 8
+         }
+        },
+        "seed": 2671050228,
+        "session_kinds": {
+         "char": 22,
+         "focus": 21,
+         "move_folder": 15,
+         "multi": 22,
+         "paragraph": 22,
+         "paste": 21,
+         "rapid": 22,
+         "rename": 40,
+         "rename_again": 15
+        },
+        "zero": []
+       },
+       "decided_by": [
+        "link_settings›useMarkdownLinks"
+       ],
+       "false_unverified_rate": 0.24640933572710952,
+       "link_settings": {
+        "alwaysUpdateLinks": true,
+        "newLinkFormat": "shortest",
+        "useMarkdownLinks": false
+       },
+       "new_blocks": 2228,
+       "pass": false,
+       "saves": 413,
+       "seed": 2671050228,
+       "sessions": 200,
+       "set": "D-B test-4",
+       "side_notes": 179,
+       "source": "p2_0_3/d_b.json",
+       "unverified_after_window": 549
+      },
+      {
+       "by_kind": {
+        "char": {
+         "new_blocks": 22,
+         "saves": 22,
+         "unverified": 0
+        },
+        "focus": {
+         "new_blocks": 21,
+         "saves": 21,
+         "unverified": 0
+        },
+        "move_folder": {
+         "new_blocks": 350,
+         "saves": 15,
+         "unverified": 83
+        },
+        "multi": {
+         "new_blocks": 56,
+         "saves": 56,
+         "unverified": 1
+        },
+        "paragraph": {
+         "new_blocks": 22,
+         "saves": 22,
+         "unverified": 0
+        },
+        "paste": {
+         "new_blocks": 270,
+         "saves": 21,
+         "unverified": 0
+        },
+        "rapid": {
+         "new_blocks": 77,
+         "saves": 22,
+         "unverified": 0
+        },
+        "rename": {
+         "new_blocks": 1038,
+         "saves": 173,
+         "unverified": 418
+        },
+        "rename_again": {
+         "new_blocks": 372,
+         "saves": 61,
+         "unverified": 48
+        }
+       },
+       "coverage": {
+        "link_counts": {
+         "embed": 7,
+         "md_label": 7,
+         "md_name": 8,
+         "md_path": 4,
+         "self_md": 2,
+         "self_wiki": 2,
+         "self_wiki_heading": 2,
+         "wiki": 8,
+         "wiki_alias": 7,
+         "wiki_heading": 8
+        },
+        "ok": true,
+        "rename_facts": {
+         "in_folder": 39,
+         "incoming_md": 45,
+         "renames": 70,
+         "self_link": 35,
+         "self_link_by_kind": {
+          "move_folder": 10,
+          "rename": 17,
+          "rename_again": 8
+         }
+        },
+        "seed": 2671050228,
+        "session_kinds": {
+         "char": 22,
+         "focus": 21,
+         "move_folder": 15,
+         "multi": 22,
+         "paragraph": 22,
+         "paste": 21,
+         "rapid": 22,
+         "rename": 40,
+         "rename_again": 15
+        },
+        "zero": []
+       },
+       "decided_by": [
+        "link_settings›useMarkdownLinks"
+       ],
+       "false_unverified_rate": 0.24685816876122083,
+       "link_settings": {
+        "alwaysUpdateLinks": true,
+        "newLinkFormat": "shortest",
+        "useMarkdownLinks": false
+       },
+       "new_blocks": 2228,
+       "pass": false,
+       "saves": 413,
+       "seed": 2671050228,
+       "sessions": 200,
+       "set": "D-B test-4",
+       "side_notes": 179,
+       "source": "p2_0_3/d_b.json",
+       "unverified_after_window": 550
+      },
+      {
+       "by_kind": {
+        "char": {
+         "new_blocks": 22,
+         "saves": 22,
+         "unverified": 0
+        },
+        "focus": {
+         "new_blocks": 21,
+         "saves": 21,
+         "unverified": 0
+        },
+        "move_folder": {
+         "new_blocks": 350,
+         "saves": 15,
+         "unverified": 83
+        },
+        "multi": {
+         "new_blocks": 56,
+         "saves": 56,
+         "unverified": 0
+        },
+        "paragraph": {
+         "new_blocks": 22,
+         "saves": 22,
+         "unverified": 0
+        },
+        "paste": {
+         "new_blocks": 270,
+         "saves": 21,
+         "unverified": 0
+        },
+        "rapid": {
+         "new_blocks": 77,
+         "saves": 22,
+         "unverified": 0
+        },
+        "rename": {
+         "new_blocks": 1038,
+         "saves": 173,
+         "unverified": 419
+        },
+        "rename_again": {
+         "new_blocks": 372,
+         "saves": 61,
+         "unverified": 48
+        }
+       },
+       "coverage": {
+        "link_counts": {
+         "embed": 7,
+         "md_label": 7,
+         "md_name": 8,
+         "md_path": 4,
+         "self_md": 2,
+         "self_wiki": 2,
+         "self_wiki_heading": 2,
+         "wiki": 8,
+         "wiki_alias": 7,
+         "wiki_heading": 8
+        },
+        "ok": true,
+        "rename_facts": {
+         "in_folder": 39,
+         "incoming_md": 45,
+         "renames": 70,
+         "self_link": 35,
+         "self_link_by_kind": {
+          "move_folder": 10,
+          "rename": 17,
+          "rename_again": 8
+         }
+        },
+        "seed": 2671050228,
+        "session_kinds": {
+         "char": 22,
+         "focus": 21,
+         "move_folder": 15,
+         "multi": 22,
+         "paragraph": 22,
+         "paste": 21,
+         "rapid": 22,
+         "rename": 40,
+         "rename_again": 15
+        },
+        "zero": []
+       },
+       "decided_by": [
+        "link_settings›useMarkdownLinks"
+       ],
+       "false_unverified_rate": 0.24685816876122083,
+       "link_settings": {
+        "alwaysUpdateLinks": true,
+        "newLinkFormat": "shortest",
+        "useMarkdownLinks": false
+       },
+       "new_blocks": 2228,
+       "pass": false,
+       "saves": 413,
+       "seed": 2671050228,
+       "sessions": 200,
+       "set": "D-B test-4",
+       "side_notes": 179,
+       "source": "p2_0_3/d_b.json",
+       "unverified_after_window": 550
+      }
+     ],
+     "why": "kalış korunuyor (K-P2-03.1: pass false); değeri raporlanır"
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3b-yük",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": false,
+     "passed": "0/3",
+     "reported_only": {
+      "carry": "P2-C",
+      "decision": "K-P2V1.2 (K-P2V1-T5 (a), şart 1)"
+     },
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:20",
+     "threshold": "≤ 0.02 (yüklü çift; Mac kümesi yüksüz koşar, değer bu eşikle raporlanır)",
+     "values": [
+      {
+       "decided_by": [],
+       "false_unverified_rate": 0.24640933572710952,
+       "pass": false,
+       "source": "p2_0_3/d_b.json",
+       "threshold": 0.02
+      },
+      {
+       "decided_by": [],
+       "false_unverified_rate": 0.24685816876122083,
+       "pass": false,
+       "source": "p2_0_3/d_b.json",
+       "threshold": 0.02
+      },
+      {
+       "decided_by": [],
+       "false_unverified_rate": 0.24685816876122083,
+       "pass": false,
+       "source": "p2_0_3/d_b.json",
+       "threshold": 0.02
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3b′",
+     "equal_across_reps": null,
+     "eşik yok": "GOAL: raporlanır (bilgi)",
+     "in_verdict": false,
+     "pass": null,
+     "threshold": null,
+     "values": [
+      {
+       "by_class": {
+        "embed": {
+         "blocks": 35,
+         "unverified": 13
+        },
+        "md_label": {
+         "blocks": 26,
+         "unverified": 7
+        },
+        "md_name": {
+         "blocks": 44,
+         "unverified": 14
+        },
+        "none": {
+         "blocks": 1541,
+         "unverified": 479
+        },
+        "self": {
+         "blocks": 35,
+         "unverified": 8
+        },
+        "wiki": {
+         "blocks": 42,
+         "unverified": 20
+        },
+        "wiki_alias": {
+         "blocks": 24,
+         "unverified": 5
+        },
+        "wiki_heading": {
+         "blocks": 50,
+         "unverified": 11
+        }
+       },
+       "by_kind": {
+        "move_folder": {
+         "blocks": 350,
+         "records": 15,
+         "unverified": 83
+        },
+        "rename": {
+         "blocks": 1038,
+         "records": 173,
+         "unverified": 418
+        },
+        "rename_again": {
+         "blocks": 372,
+         "records": 61,
+         "unverified": 48
+        }
+       },
+       "false_unverified_rate": 0.3119318181818182,
+       "new_blocks": 1760,
+       "pass": null,
+       "records": 249,
+       "sessions": 70,
+       "source": "p2_0_3/d_b.json (renames)",
+       "unverified_after_window": 549
+      },
+      {
+       "by_class": {
+        "embed": {
+         "blocks": 35,
+         "unverified": 13
+        },
+        "md_label": {
+         "blocks": 26,
+         "unverified": 7
+        },
+        "md_name": {
+         "blocks": 44,
+         "unverified": 13
+        },
+        "none": {
+         "blocks": 1541,
+         "unverified": 479
+        },
+        "self": {
+         "blocks": 35,
+         "unverified": 8
+        },
+        "wiki": {
+         "blocks": 42,
+         "unverified": 20
+        },
+        "wiki_alias": {
+         "blocks": 24,
+         "unverified": 5
+        },
+        "wiki_heading": {
+         "blocks": 50,
+         "unverified": 12
+        }
+       },
+       "by_kind": {
+        "move_folder": {
+         "blocks": 350,
+         "records": 15,
+         "unverified": 83
+        },
+        "rename": {
+         "blocks": 1038,
+         "records": 173,
+         "unverified": 418
+        },
+        "rename_again": {
+         "blocks": 372,
+         "records": 61,
+         "unverified": 48
+        }
+       },
+       "false_unverified_rate": 0.3119318181818182,
+       "new_blocks": 1760,
+       "pass": null,
+       "records": 249,
+       "sessions": 70,
+       "source": "p2_0_3/d_b.json (renames)",
+       "unverified_after_window": 549
+      },
+      {
+       "by_class": {
+        "embed": {
+         "blocks": 35,
+         "unverified": 13
+        },
+        "md_label": {
+         "blocks": 26,
+         "unverified": 7
+        },
+        "md_name": {
+         "blocks": 44,
+         "unverified": 14
+        },
+        "none": {
+         "blocks": 1541,
+         "unverified": 479
+        },
+        "self": {
+         "blocks": 35,
+         "unverified": 8
+        },
+        "wiki": {
+         "blocks": 42,
+         "unverified": 20
+        },
+        "wiki_alias": {
+         "blocks": 24,
+         "unverified": 5
+        },
+        "wiki_heading": {
+         "blocks": 50,
+         "unverified": 12
+        }
+       },
+       "by_kind": {
+        "move_folder": {
+         "blocks": 350,
+         "records": 15,
+         "unverified": 83
+        },
+        "rename": {
+         "blocks": 1038,
+         "records": 173,
+         "unverified": 419
+        },
+        "rename_again": {
+         "blocks": 372,
+         "records": 61,
+         "unverified": 48
+        }
+       },
+       "false_unverified_rate": 0.3125,
+       "new_blocks": 1760,
+       "pass": null,
+       "records": 249,
+       "sessions": 70,
+       "source": "p2_0_3/d_b.json (renames)",
+       "unverified_after_window": 550
+      }
+     ]
+    },
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3c",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "reported_only": {
+      "carry": "P2-C",
+      "decision": "K-P2V1.2 (K-P2V1-T5 (a), şart 1)"
+     },
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:22",
+     "threshold": "p95 < 500 ms",
+     "values": [
+      {
+       "latency_measured": 164,
+       "latency_p95_ms": 443,
+       "latency_p95_over_window": false,
+       "latency_unsettled": 0,
+       "no_write": 249,
+       "pass": true,
+       "source": "p2_0_3/d_b.json"
+      },
+      {
+       "latency_measured": 164,
+       "latency_p95_ms": 454,
+       "latency_p95_over_window": false,
+       "latency_unsettled": 1,
+       "no_write": 249,
+       "pass": true,
+       "source": "p2_0_3/d_b.json"
+      },
+      {
+       "latency_measured": 164,
+       "latency_p95_ms": 449,
+       "latency_p95_over_window": false,
+       "latency_unsettled": 0,
+       "no_write": 249,
+       "pass": true,
+       "source": "p2_0_3/d_b.json"
+      }
+     ]
+    }
+   ],
+   "id": "O-DB4",
+   "pass": null,
+   "pass_3of3": false
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3d",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "reported_only": {
+      "carry": "P2-C",
+      "decision": "K-P2V1.2 (K-P2V1-T5 (a), şart 1)"
+     },
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:23",
+     "threshold": "D-C ≥ 0.99; D-C′ ≥ 0.95 ve ajan canonical = 0",
+     "values": [
+      {
+       "d_c": {
+        "accuracy": 1.0,
+        "agent_canonical": 0,
+        "blocks": 340,
+        "by_mode": {
+         "apart": {
+          "blocks": 298,
+          "right": 298
+         },
+         "collide": {
+          "blocks": 14,
+          "right": 14
+         },
+         "same_doc_after": {
+          "blocks": 28,
+          "right": 28
+         }
+        },
+        "partial_lines": 7,
+        "pass": true,
+        "right": 340,
+        "ticks": 160
+       },
+       "d_c_prime": {
+        "agent_canonical": 0,
+        "by_delay": {
+         "0": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         },
+         "100": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         },
+         "20": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         },
+         "50": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         }
+        },
+        "human_accuracy": 1,
+        "human_blocks": 40,
+        "human_canonical": 40,
+        "pass": true,
+        "ticks": 40
+       },
+       "pass": true,
+       "source": "p2_0_2/d_c.json, p2_0_3/d_c_prime.json"
+      },
+      {
+       "d_c": {
+        "accuracy": 1.0,
+        "agent_canonical": 0,
+        "blocks": 340,
+        "by_mode": {
+         "apart": {
+          "blocks": 298,
+          "right": 298
+         },
+         "collide": {
+          "blocks": 14,
+          "right": 14
+         },
+         "same_doc_after": {
+          "blocks": 28,
+          "right": 28
+         }
+        },
+        "partial_lines": 7,
+        "pass": true,
+        "right": 340,
+        "ticks": 160
+       },
+       "d_c_prime": {
+        "agent_canonical": 0,
+        "by_delay": {
+         "0": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         },
+         "100": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         },
+         "20": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         },
+         "50": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         }
+        },
+        "human_accuracy": 1,
+        "human_blocks": 40,
+        "human_canonical": 40,
+        "pass": true,
+        "ticks": 40
+       },
+       "pass": true,
+       "source": "p2_0_2/d_c.json, p2_0_3/d_c_prime.json"
+      },
+      {
+       "d_c": {
+        "accuracy": 1.0,
+        "agent_canonical": 0,
+        "blocks": 340,
+        "by_mode": {
+         "apart": {
+          "blocks": 298,
+          "right": 298
+         },
+         "collide": {
+          "blocks": 14,
+          "right": 14
+         },
+         "same_doc_after": {
+          "blocks": 28,
+          "right": 28
+         }
+        },
+        "partial_lines": 7,
+        "pass": true,
+        "right": 340,
+        "ticks": 160
+       },
+       "d_c_prime": {
+        "agent_canonical": 0,
+        "by_delay": {
+         "0": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         },
+         "100": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         },
+         "20": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         },
+         "50": {
+          "agent_canonical": 0,
+          "human_blocks": 10,
+          "human_canonical": 10,
+          "ticks": 10
+         }
+        },
+        "human_accuracy": 1,
+        "human_blocks": 40,
+        "human_canonical": 40,
+        "pass": true,
+        "ticks": 40
+       },
+       "pass": true,
+       "source": "p2_0_2/d_c.json, p2_0_3/d_c_prime.json"
+      }
+     ]
+    }
+   ],
+   "id": "O-DC′",
+   "pass": null,
+   "pass_3of3": true
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p2_0_3_checks.json:H-P2-0.3e",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "reported_only": {
+      "carry": "P2-C",
+      "decision": "K-P2V1.2 (K-P2V1-T5 (a), şart 1)"
+     },
+     "runs": 3,
+     "source": "docs/rounds/P2-0.3/GOAL.md:24",
+     "threshold": "ajan canonical = 0; sahte 10/10",
+     "values": [
+      {
+       "agent_blocks": 50,
+       "agent_canonical": 0,
+       "by_kind": {
+        "carry": {
+         "agent_canonical": 0,
+         "scenarios": 10
+        },
+        "in_agent_block": {
+         "agent_canonical": 0,
+         "scenarios": 25
+        },
+        "in_human_block": {
+         "agent_canonical": 0,
+         "scenarios": 15
+        },
+        "unobserved": {
+         "agent_canonical": 0,
+         "scenarios": 10
+        }
+       },
+       "carry_agent_blocks": 10,
+       "carry_agent_canonical": 0,
+       "carry_human_canonical_after": 39,
+       "carry_human_canonical_before": 47,
+       "carry_scenarios": 10,
+       "fakes": 10,
+       "fakes_denied": 10,
+       "link_settings": {
+        "alwaysUpdateLinks": true,
+        "newLinkFormat": "shortest",
+        "useMarkdownLinks": false
+       },
+       "links_rewritten": 45,
+       "pass": true,
+       "scenarios": 50,
+       "source": "p2_0_3/d_a_prime.json"
+      },
+      {
+       "agent_blocks": 50,
+       "agent_canonical": 0,
+       "by_kind": {
+        "carry": {
+         "agent_canonical": 0,
+         "scenarios": 10
+        },
+        "in_agent_block": {
+         "agent_canonical": 0,
+         "scenarios": 25
+        },
+        "in_human_block": {
+         "agent_canonical": 0,
+         "scenarios": 15
+        },
+        "unobserved": {
+         "agent_canonical": 0,
+         "scenarios": 10
+        }
+       },
+       "carry_agent_blocks": 10,
+       "carry_agent_canonical": 0,
+       "carry_human_canonical_after": 27,
+       "carry_human_canonical_before": 35,
+       "carry_scenarios": 10,
+       "fakes": 10,
+       "fakes_denied": 10,
+       "link_settings": {
+        "alwaysUpdateLinks": true,
+        "newLinkFormat": "shortest",
+        "useMarkdownLinks": false
+       },
+       "links_rewritten": 45,
+       "pass": true,
+       "scenarios": 50,
+       "source": "p2_0_3/d_a_prime.json"
+      },
+      {
+       "agent_blocks": 50,
+       "agent_canonical": 0,
+       "by_kind": {
+        "carry": {
+         "agent_canonical": 0,
+         "scenarios": 10
+        },
+        "in_agent_block": {
+         "agent_canonical": 0,
+         "scenarios": 25
+        },
+        "in_human_block": {
+         "agent_canonical": 0,
+         "scenarios": 15
+        },
+        "unobserved": {
+         "agent_canonical": 0,
+         "scenarios": 10
+        }
+       },
+       "carry_agent_blocks": 10,
+       "carry_agent_canonical": 0,
+       "carry_human_canonical_after": 39,
+       "carry_human_canonical_before": 46,
+       "carry_scenarios": 10,
+       "fakes": 10,
+       "fakes_denied": 10,
+       "link_settings": {
+        "alwaysUpdateLinks": true,
+        "newLinkFormat": "shortest",
+        "useMarkdownLinks": false
+       },
+       "links_rewritten": 45,
+       "pass": true,
+       "scenarios": 50,
+       "source": "p2_0_3/d_a_prime.json"
+      }
+     ]
+    }
+   ],
+   "id": "O-DA′",
+   "pass": null,
+   "pass_3of3": true
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p1e_checks.json:E-7",
+     "in_verdict": true,
+     "pass": null,
+     "pass_3of3": null,
+     "passed": "0/1",
+     "reading": "kayıt eşitliği: hedef başına sonuç referansla aynı (2/4)",
+     "record_equal": true,
+     "runs": 1,
+     "source": "docs/rounds/P1-E/GOAL.md:36",
+     "tarihsel": [
+      "K-E5-T",
+      "K-E1.1"
+     ],
+     "threshold": "4/4 (yayım paketi; K-E5-T ile ertelendi: kayıtlı 2/4)",
+     "values": [
+      {
+       "chain_local_target": {
+        "conformance": {
+         "exit": 0,
+         "level_claimed": 3,
+         "passed": 39,
+         "total": 39
+        },
+        "pass": true,
+        "spec_version": "2.0.3",
+        "target": "aarch64-apple-darwin",
+        "version": "rootmark 0.3.3"
+       },
+       "decided_by": [],
+       "four_targets": "2/4 (docs/rounds/P1-E/progress/E5_release.json)",
+       "pass": false
+      }
+     ],
+     "why": "yerel hedef (aarch64-apple-darwin) geçti ve dört hedefin kaydı 2/4 (K-E5-T)"
+    },
+    {
+     "criterion": "p1e1_checks.json:E1-3",
+     "in_verdict": true,
+     "pass": true,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P1-E.1/GOAL.md:16",
+     "threshold": "11/11",
+     "values": [
+      {
+       "e3_md_changes_only_at_propose": true,
+       "e4_outside_contract": 0,
+       "e4_requests": 57,
+       "failed": [],
+       "pass": true,
+       "steps": "11/11"
+      },
+      {
+       "e3_md_changes_only_at_propose": true,
+       "e4_outside_contract": 0,
+       "e4_requests": 57,
+       "failed": [],
+       "pass": true,
+       "steps": "11/11"
+      },
+      {
+       "e3_md_changes_only_at_propose": true,
+       "e4_outside_contract": 0,
+       "e4_requests": 57,
+       "failed": [],
+       "pass": true,
+       "steps": "11/11"
+      }
+     ]
+    },
+    {
+     "criterion": "p1e1_checks.json:E1-4",
+     "in_verdict": true,
+     "pass": null,
+     "pass_3of3": null,
+     "passed": "0/1",
+     "reading": "kayıt eşitliği: kontrol listesinin maddelerinin `ok`'u, tarihsel maddeler (R4, R15, R17) dışında geçer; tarihsel maddeler referansla aynı",
+     "record_equal": true,
+     "runs": 1,
+     "source": "docs/rounds/P1-E.1/GOAL.md:17",
+     "tarihsel": [
+      "K-E1.4"
+     ],
+     "threshold": "geçer (kontrol listesinin bütün maddeleri)",
+     "values": [
+      {
+       "decided_by": [],
+       "every_item_scripted": true,
+       "failed": [
+        "R4"
+       ],
+       "pass": false,
+       "release_check": "20/21"
+      }
+     ],
+     "why": "kontrol listesinin kalan maddeleri yalnız tarihsel maddeler (R4, R15, R17)"
+    },
+    {
+     "criterion": "p1e1_checks.json:E1-9",
+     "in_verdict": true,
+     "pass": true,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "runs": 3,
+     "source": "docs/rounds/P1-E.1/GOAL.md:22",
+     "threshold": "1/1 (e2e adımı; sözleşme yarısı kademe 2'de)",
+     "values": [
+      {
+       "connection_step": {
+        "notice_shown": true,
+        "search_after_rebuild": {
+         "error": null,
+         "hits": 5
+        },
+        "search_before_rebuild": {
+         "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+         "hits": 0
+        },
+        "status_bar": "rootmark 0.3.3 · human:editor · index stale",
+        "status_bar_after_rebuild": "rootmark 0.3.3 · human:editor",
+        "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+       },
+       "half": "e2e step (the contract check is tier 2's)",
+       "pass": true
+      },
+      {
+       "connection_step": {
+        "notice_shown": true,
+        "search_after_rebuild": {
+         "error": null,
+         "hits": 5
+        },
+        "search_before_rebuild": {
+         "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+         "hits": 0
+        },
+        "status_bar": "rootmark 0.3.3 · human:editor · index stale",
+        "status_bar_after_rebuild": "rootmark 0.3.3 · human:editor",
+        "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+       },
+       "half": "e2e step (the contract check is tier 2's)",
+       "pass": true
+      },
+      {
+       "connection_step": {
+        "notice_shown": true,
+        "search_after_rebuild": {
+         "error": null,
+         "hits": 5
+        },
+        "search_before_rebuild": {
+         "error": "migration_required: index format \"mdkernel-index/2\" (an older rootmark's) needs migration to \"mdkernel-index/3\" — run `rootmark migrate <vault>` (it keeps a rollback record)",
+         "hits": 0
+        },
+        "status_bar": "rootmark 0.3.3 · human:editor · index stale",
+        "status_bar_after_rebuild": "rootmark 0.3.3 · human:editor",
+        "tooltip": "index stale: format mdkernel-index/2, this rootmark expects mdkernel-index/3; search is unavailable (migration_required or index_stale) until then; blame, history, checkpoints and traces work; migrate: run `rootmark migrate <vault>` (see `--dry-run`), or rebuild: run `rootmark index build <vault>`, or set [index] auto_rebuild = true in .rootmark/policy.toml and restart `rootmark serve`"
+       },
+       "half": "e2e step (the contract check is tier 2's)",
+       "pass": true
+      }
+     ]
+    },
+    {
+     "criterion": "p1e1_checks.json:tamper",
+     "in_verdict": false,
+     "pass": null,
+     "pass_3of3": true,
+     "passed": "3/3",
+     "reported_only": {
+      "carry": "P2-C",
+      "decision": "K-P2V1.2 (K-P2V1-T5 (a), şart 1)"
+     },
+     "runs": 3,
+     "source": "research/eval/run_p1e1_checks.py (`tamper`)",
+     "threshold": "gerçek Obsidian kasıtlı vakaları reddedilir, kontroller geçer (e2e yarısı; `tamper_p1e1.json` kademe 2'de)",
+     "values": [
+      {
+       "controls": "1/1",
+       "half": "tamper_p1e1_e2e (the real Obsidian); tamper_p1e1.json is deterministic, tier 2",
+       "pass": true,
+       "real_cases_run": true,
+       "rejected": "1/1"
+      },
+      {
+       "controls": "1/1",
+       "half": "tamper_p1e1_e2e (the real Obsidian); tamper_p1e1.json is deterministic, tier 2",
+       "pass": true,
+       "real_cases_run": true,
+       "rejected": "1/1"
+      },
+      {
+       "controls": "1/1",
+       "half": "tamper_p1e1_e2e (the real Obsidian); tamper_p1e1.json is deterministic, tier 2",
+       "pass": true,
+       "real_cases_run": true,
+       "rejected": "1/1"
+      }
+     ]
+    }
+   ],
+   "id": "O-REL",
+   "pass": true,
+   "pass_3of3": true
+  },
+  {
+   "class": "O",
+   "criteria": [
+    {
+     "criterion": "p1c1_checks.json:C1-8",
+     "in_verdict": true,
+     "pass": true,
+     "pass_3of3": null,
+     "passed": "1/1",
+     "runs": 1,
+     "source": "docs/rounds/P1-C.1/GOAL.md:22",
+     "threshold": "fark 0 (karar dışlamalarıyla)",
+     "values": [
+      {
+       "differing_outside_e1": [],
+       "n_differing": 6014,
+       "n_e1": 6014,
+       "n_fields": 99053,
+       "pass": true,
+       "reading": "farklar yalnız E1 alanlarında (envanter `e1_fields`)",
+       "recorder_pass": false,
+       "reference_run": "20261015T014417Z-9aa326b"
+      }
+     ]
+    }
+   ],
+   "id": "O-C18",
+   "pass": true,
+   "pass_3of3": true
+  }
+ ],
+ "setup_s": 161,
+ "single_run": [
+  "p1c1_checks.json:C1-8",
+  "p1e1_checks.json:E1-4",
+  "p1e_checks.json:E-7"
+ ],
+ "total_s": 6714
+}
