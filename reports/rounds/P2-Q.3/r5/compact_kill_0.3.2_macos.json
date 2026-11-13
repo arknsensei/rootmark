@@ -1,0 +1,189 @@
+{
+ "probe": "P2-Q.3 PQ3-7: SIGKILL during the shutdown compaction",
+ "rootmark_version": "rootmark 0.3.2",
+ "reps": 36,
+ "sigkill_sent": 15,
+ "search_not_200_after_restart": 0,
+ "runs": [
+  {
+   "delay_ms": 0,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 50,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 100,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 150,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 200,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 250,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 300,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 350,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 400,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 0,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 50,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 100,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 150,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 200,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 250,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 300,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 350,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 400,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 0,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 50,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 100,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 150,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 200,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 250,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 300,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 350,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 400,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 0,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 50,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 100,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 150,
+   "sigkill_sent": true,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 200,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 250,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 300,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 350,
+   "sigkill_sent": false,
+   "search_status": 200
+  },
+  {
+   "delay_ms": 400,
+   "sigkill_sent": false,
+   "search_status": 200
+  }
+ ]
+}

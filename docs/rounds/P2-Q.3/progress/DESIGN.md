@@ -83,3 +83,6 @@ Karşılaştırma tabanı: kademe 2'de P2-Q.2'nin tetiklemesi `42515401135` ve d
 
 ## 9. Ön-kayıtlı testler
 `progress/TESTS.md`.
+
+## Ek (R5, gözden geçiricinin B2'si; koddan sonra, davranış değişmedi)
+§4'ün "vault dışı kök kaldırma yapmaz; bugünkü davranışı aynen korur" cümlesi yalnız `ingest-dir`'in kendisi için doğrudur. Çekirdeğin alımı `doc_path`'i `dir`'e göre yazdığından vault dışındaki bir dizinden ya da alt dizin kökünden alınmış dokümanların adları vault'un yolları değildir; sonraki `serve --watch` başlangıcı (§2.3 adım 2) bu adlarda dosya bulamaz ve onları kaldırma olarak alır (alt dizin durumunda dosyalar ayrıca vault'a göreli adlarıyla yeni doküman olarak alınır). Spec'in `doc_path`'i vault'a görelidir (§1); sonuç bu tanımla tutarlıdır, ama önceden yazılmamıştı. Kılavuz §2.1'e ve FINDINGS PQ3-3'e yazıldı. Zincirdeki bu desen (`scripts/check_v3_compat.sh`, `scripts/embed_cpu.sh`) `serve --watch` başlatmaz; kademe 2'de etkisi yok (bayt farkı 0).
