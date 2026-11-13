@@ -4,7 +4,7 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
-## Unreleased — 0.3.4 (P2-Q.4: a removal lost to a kill, the index kept whole)
+## 0.3.4 — 2026-11-13 (P2-Q.4: a removal lost to a kill, the index kept whole)
 
 A patch of `rootmark serve` and the index install (round P2-Q.4; findings
 PQ3-9, PQ3-7, PQ3-6 of reports/rounds/P2-Q.3/FINDINGS.md and the P2-Q.3
