@@ -9,3 +9,4 @@
 - Koşu kimlikleri: kademe 2 `43485696909`; Mac kümesi `20261113T191922Z-789c400`; yayım PR'ı #69 CI `43511347182`; `release.yml` `43527847034`; `pilot.yml` `43574022026`.
 - Bu READY commit'inden (ve sonraki her commit'ten) sonraki CI koşuları okunur; kalış olursa FINDINGS ve FINAL'e yazılır.
 - Bekleyen insan adımı: PR #70'in birleştirilmesi ve K-P2Q4-T2'nin kararı.
+- READY'den sonraki commit'ler (yalnız kayıt ve `.md`): `d4c208f` (READY) ve `922f467` (K-P2Q4.3 kaydı). Bunların eski süzgeçle başlayan tam koşuları (`43589573688`, `43591011246`) iptal edildi; ürün ağacı `85ac4d1` ile aynı. K-P2Q4.3'ün süzgeci `main`'e PR #71 ile girdi (`d7ed1eb`). Bu commit'in CI'ı yeni süzgeçle okunur.
