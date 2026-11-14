@@ -236,3 +236,44 @@ def test_tag_must_be_the_commit(lab, tmp_path):
     sh(lab, "tag", "v9.9.9", "HEAD~1")
     with pytest.raises(B.TransferError):
         B.build(lab, "HEAD", tmp_path / "A", "v9.9.9")
+
+
+def _product_checkout(lab: Path, tmp_path: Path) -> tuple[Path, str]:
+    r = run(lab, tmp_path / "P")
+    prod = tmp_path / "product"
+    import shutil
+
+    shutil.copytree(tmp_path / "P" / "tree", prod)
+    sh(prod, "init", "-q", "-b", "main")
+    commit(prod, "rootmark 0.0.1")
+    return prod, r["lab_commit"]
+
+
+def test_verify_accepts_the_transferred_product(lab, tmp_path):
+    from transfer import cli
+
+    prod, lab_commit = _product_checkout(lab, tmp_path)
+    args = [
+        "verify",
+        "--product",
+        str(prod),
+        "--lab-commit",
+        lab_commit,
+        "--out",
+        str(tmp_path / "V"),
+    ]
+    assert cli.main([*args, "--repo", str(lab)]) == 0
+
+
+def test_verify_rejects_a_changed_m_file_and_a_wrong_expected_tree(lab, tmp_path, capsys):
+    from transfer import cli
+
+    prod, lab_commit = _product_checkout(lab, tmp_path)
+    base = ["verify", "--product", str(prod), "--lab-commit", lab_commit, "--repo", str(lab)]
+    assert cli.main([*base, "--out", str(tmp_path / "V0"), "--expect-tree", "0" * 40]) == 1
+    # an M output edited by hand in the product, TRANSFER.json left alone
+    (prod / "core/Cargo.toml").write_text('repository = "https://example.org/evil"\n')
+    commit(prod, "hand edit")
+    assert cli.main([*base, "--out", str(tmp_path / "V1")]) == 1
+    out = capsys.readouterr().out
+    assert "core/Cargo.toml: bytes differ from the rebuilt tree" in out
