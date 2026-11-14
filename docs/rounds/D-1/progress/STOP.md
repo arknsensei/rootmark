@@ -13,3 +13,4 @@
 - **Gözlem:** `v0.4.0`'dan iki yerel koşu + CI benzetimi: ağaç aynı (623553b9…), sızıntı 0, ama sınıflandırılmamış 1 (`scripts/release_gate_claude.sh`, K-D1.2'nin eklediği) → `ok: false`; `transfer.yml` ürün deposuna yazmadan kalırdı.
 - **Karar talebi:** `docs/DECISIONS.md` K-D1-T2 (a, b, c; ajanın önerisi a).
 - **Park edilen:** 3a ve sonrası. Bağımsız iş: düzeltme dalı `release/0.4.0-fix` ve yerel tam kapılar (PR karar gelince).
+- **Kapanış (2026-11-15):** K-D1.3 (kullanıcı kararı, seçenek a): düzeltme PR'ı (`release/0.4.0-fix`) ve laboratuvar `v0.4.0` etiketinin yeniden atılması; sıra HUMAN_STEP adım 2′. R6 PARK'tan çıktı.

@@ -26,6 +26,19 @@ Bitince bu dosyada her satırın "Durum"unu siz değiştirmeyin; ajan (ya da ork
 | 2b | Laboratuvar `release.yml`'ini birleşmiş `main`'de tetikleyin (laboratuvarın kendi doğrulaması; GitHub sürümü **yayımlanmaz**). | koşu yeşil | `gh run list -R arknsensei/rootmark -w release -L 1` | ✔ koşu 43633859618 (9bca7de) yeşil: aarch64-apple-darwin, x86_64-unknown-linux-gnu, windows; dist/release.json + SHA256SUMS + provenance |
 | 2c | Birleşmiş `main` commit'ine etiket: `git tag -a v0.4.0 -m "rootmark 0.4.0" <sha> && git push origin v0.4.0` | etiket var | `git ls-remote --tags origin v0.4.0` | ✔ açıklamalı etiket 35cad04 → 9bca7de (`main` CI 43633765218 yeşil). **3a PARK:** etiket kendi listeleriyle aktarılamıyor (K-D1-T2) |
 
+## Adım 2′ — Düzeltme ve etiketin yeniden atılması (K-D1.3; 3a'dan önce)
+`v0.4.0` (35cad04 → 9bca7de) kendi listeleriyle aktarılamıyor (sınıflandırılmamış 1: `scripts/release_gate_claude.sh`; D1F-14). Karar K-D1.3 (a). Ajan `release/0.4.0-fix`'i iter ve PR'ı açar; geri kalan dışa yazan adımlar insanındır.
+
+| # | Adım | Beklenen sonuç | Ajanın sınaması | Durum |
+|---|---|---|---|---|
+| 2′a | Düzeltme PR'ını (`release/0.4.0-fix` → `main`) CI yeşil olunca **rebase** ile birleştirin. | `main`'de `stays.txt` satırı ve sınıflandırma testi | `git show origin/main:research/transfer/lists/stays.txt \| grep release_gate_claude` | PR **#74** açık (114633b7; yerel make test 0, lint 0, conformance 39/39 — `reports/rounds/D-1/r6/local_gates_fix.json`); CI ve birleştirme insanın |
+| 2′b | `main` push CI'ı yeşil. | koşu yeşil | `gh run list -R arknsensei/rootmark -b main -L 3` | bekliyor |
+| 2′c | Laboratuvar `release.yml`'ini yeni `main` commit'inde yeniden tetikleyin (2b'nin tekrarı: etiketin göstereceği commit doğrulanmış olsun). | koşu yeşil, `headSha` = yeni `main` | `gh run list -R arknsensei/rootmark -w release -L 1 --json headSha,conclusion` | bekliyor |
+| 2′d | Eski laboratuvar etiketini silin ve yeni commit'e atın: `git fetch origin && git push origin :refs/tags/v0.4.0 && git tag -d v0.4.0 && git tag -a v0.4.0 -m "rootmark 0.4.0" <yeni main sha> && git push origin v0.4.0` (eski etiket yalnız laboratuvardaydı; ürüne ya da bir GitHub sürümüne gitmedi). | `v0.4.0^{commit}` = yeni `main` | `git ls-remote --tags origin 'v0.4.0*'` | bekliyor |
+| 2′e | (ajan) Yeni etiketten yerel ikili koşu + CI benzetimi: aynı ağaç kimliği, `ok: true`; kimlik orkestratöre ve `reports/rounds/D-1/r6/`'ya. Bu kimlik 3a'nın özetindekiyle karşılaştırılır. | kimlik ve `ok: true` | `transfer_local_v0.4.0_retag.json` | bekliyor |
+
+Ardından adım 3 (3a: `tag = v0.4.0`, `bootstrap = true`).
+
 ## Adım 3 — Aktarım ve ürün yayımı (adım 1 ve 2 bittikten sonra)
 | # | Adım | Beklenen sonuç | Ajanın sınaması |
 |---|---|---|---|
