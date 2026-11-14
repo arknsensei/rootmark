@@ -1,0 +1,4687 @@
+{
+  "min_age_days": 14,
+  "declared": 514,
+  "dependencies": [
+    {
+      "ecosystem": "cargo",
+      "name": "anyhow",
+      "version": "1.0.104",
+      "declared": "core/Cargo.toml:11",
+      "published": "2026-07-18T20:59:37.656167Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "blake3",
+      "version": "1.8.7",
+      "declared": "core/Cargo.toml:12",
+      "published": "2026-08-20T09:09:56.903547Z",
+      "age_days_at_adoption": 54,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "pathfinding",
+      "version": "4.16.0",
+      "declared": "core/Cargo.toml:13",
+      "published": "2026-09-07T14:02:33.128724Z",
+      "age_days_at_adoption": 36,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "pulldown-cmark",
+      "version": "0.13.4",
+      "declared": "core/Cargo.toml:14",
+      "published": "2026-05-20T08:48:23.621050Z",
+      "age_days_at_adoption": 146,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "regex",
+      "version": "1.13.1",
+      "declared": "core/Cargo.toml:15",
+      "published": "2026-07-15T20:19:35.162139Z",
+      "age_days_at_adoption": 90,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde",
+      "version": "1.0.229",
+      "declared": "core/Cargo.toml:16",
+      "published": "2026-07-18T23:05:13.266456Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde_json",
+      "version": "1.0.154",
+      "declared": "core/Cargo.toml:17",
+      "published": "2026-10-11T15:31:46.076577Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "strsim",
+      "version": "0.11.1",
+      "declared": "core/Cargo.toml:18",
+      "published": "2024-04-02T22:18:09.406790Z",
+      "age_days_at_adoption": 923,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "tiktoken-rs",
+      "version": "0.12.1",
+      "declared": "core/Cargo.toml:19",
+      "published": "2026-09-24T17:15:08.043219Z",
+      "age_days_at_adoption": 19,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "toml",
+      "version": "0.8.23",
+      "declared": "core/Cargo.toml:20",
+      "published": "2025-06-06T15:03:09.398690Z",
+      "age_days_at_adoption": 494,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "unicode-normalization",
+      "version": "0.1.25",
+      "declared": "core/Cargo.toml:21",
+      "published": "2025-10-30T16:06:38.929447Z",
+      "age_days_at_adoption": 348,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "blake3",
+      "version": "1.8.7",
+      "declared": "core/Cargo.toml:24",
+      "published": "2026-08-20T09:09:56.903547Z",
+      "age_days_at_adoption": 54,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "regex",
+      "version": "1.13.1",
+      "declared": "core/Cargo.toml:25",
+      "published": "2026-07-15T20:19:35.162139Z",
+      "age_days_at_adoption": 90,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "anyhow",
+      "version": "1.0.104",
+      "declared": "index/Cargo.toml:16",
+      "published": "2026-07-18T20:59:37.656167Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "blake3",
+      "version": "1.8.7",
+      "declared": "index/Cargo.toml:18",
+      "published": "2026-08-20T09:09:56.903547Z",
+      "age_days_at_adoption": 55,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "clap",
+      "version": "4.6.7",
+      "declared": "index/Cargo.toml:19",
+      "published": "2026-09-14T18:40:28.474794Z",
+      "age_days_at_adoption": 30,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde",
+      "version": "1.0.229",
+      "declared": "index/Cargo.toml:20",
+      "published": "2026-07-18T23:05:13.266456Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde_json",
+      "version": "1.0.154",
+      "declared": "index/Cargo.toml:21",
+      "published": "2026-10-11T15:31:46.076577Z",
+      "age_days_at_adoption": 3,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "tantivy",
+      "version": "0.26.2",
+      "declared": "index/Cargo.toml:22",
+      "published": "2026-09-08T15:17:06.487018Z",
+      "age_days_at_adoption": 36,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "unicode-normalization",
+      "version": "0.1.25",
+      "declared": "index/Cargo.toml:23",
+      "published": "2025-10-30T16:06:38.929447Z",
+      "age_days_at_adoption": 359,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "toml",
+      "version": "0.8.23",
+      "declared": "index/Cargo.toml:24",
+      "published": "2025-06-06T15:03:09.398690Z",
+      "age_days_at_adoption": 505,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "tokenizers",
+      "version": "0.23.2",
+      "declared": "index/Cargo.toml:25",
+      "published": "2026-09-03T08:49:28.624173Z",
+      "age_days_at_adoption": 41,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "anyhow",
+      "version": "1.0.104",
+      "declared": "server/Cargo.toml:30",
+      "published": "2026-07-18T20:59:37.656167Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "blake3",
+      "version": "1.8.7",
+      "declared": "server/Cargo.toml:31",
+      "published": "2026-08-20T09:09:56.903547Z",
+      "age_days_at_adoption": 57,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "axum",
+      "version": "0.8.9",
+      "declared": "server/Cargo.toml:34",
+      "published": "2026-04-14T07:55:20.258398Z",
+      "age_days_at_adoption": 184,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "clap",
+      "version": "4.6.7",
+      "declared": "server/Cargo.toml:35",
+      "published": "2026-09-14T18:40:28.474794Z",
+      "age_days_at_adoption": 30,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "notify",
+      "version": "8.2.0",
+      "declared": "server/Cargo.toml:36",
+      "published": "2025-08-03T14:54:41.092775Z",
+      "age_days_at_adoption": 437,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "rmcp",
+      "version": "3.6.0",
+      "declared": "server/Cargo.toml:37",
+      "published": "2026-10-20T05:53:35.033529Z",
+      "age_days_at_adoption": 19,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "getrandom",
+      "version": "0.3.4",
+      "declared": "server/Cargo.toml:38",
+      "published": "2025-10-14T17:47:36.464125Z",
+      "age_days_at_adoption": 365,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "hmac-sha256",
+      "version": "1.1.15",
+      "declared": "server/Cargo.toml:40",
+      "published": "2026-09-25T08:58:21.825161Z",
+      "age_days_at_adoption": 24,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "schemars",
+      "version": "1.2.1",
+      "declared": "server/Cargo.toml:41",
+      "published": "2026-02-01T16:34:40.510710Z",
+      "age_days_at_adoption": 255,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde",
+      "version": "1.0.229",
+      "declared": "server/Cargo.toml:42",
+      "published": "2026-07-18T23:05:13.266456Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde_json",
+      "version": "1.0.154",
+      "declared": "server/Cargo.toml:43",
+      "published": "2026-10-11T15:31:46.076577Z",
+      "age_days_at_adoption": 3,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "toml",
+      "version": "0.8.23",
+      "declared": "server/Cargo.toml:44",
+      "published": "2025-06-06T15:03:09.398690Z",
+      "age_days_at_adoption": 495,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "tokio",
+      "version": "1.53.1",
+      "declared": "server/Cargo.toml:45",
+      "published": "2026-07-20T17:06:09.996426Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "jsonschema",
+      "version": "0.58.3",
+      "declared": "server/Cargo.toml:50",
+      "published": "2026-09-30T07:56:38.840489Z",
+      "age_days_at_adoption": 15,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "anyhow",
+      "version": "1.0.104",
+      "declared": "bindings/python/Cargo.toml:13",
+      "published": "2026-07-18T20:59:37.656167Z",
+      "age_days_at_adoption": 87,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "pyo3",
+      "version": "0.29.3",
+      "declared": "bindings/python/Cargo.toml:16",
+      "published": "2026-09-30T18:00:35.517912Z",
+      "age_days_at_adoption": 13,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde",
+      "version": "1.0.229",
+      "declared": "bindings/python/Cargo.toml:17",
+      "published": "2026-07-18T23:05:13.266456Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "cargo",
+      "name": "serde_json",
+      "version": "1.0.154",
+      "declared": "bindings/python/Cargo.toml:18",
+      "published": "2026-10-11T15:31:46.076577Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@codemirror/state",
+      "version": "6.5.0",
+      "declared": "clients/obsidian/package.json:16",
+      "published": "2024-12-09T12:26:28.029Z",
+      "age_days_at_adoption": 676,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@codemirror/view",
+      "version": "6.38.6",
+      "declared": "clients/obsidian/package.json:17",
+      "published": "2025-10-13T07:32:25.479Z",
+      "age_days_at_adoption": 368,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/js",
+      "version": "10.0.1",
+      "declared": "clients/obsidian/package.json:18",
+      "published": "2026-02-06T22:34:56.290Z",
+      "age_days_at_adoption": 252,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/node",
+      "version": "24.19.1",
+      "declared": "clients/obsidian/package.json:19",
+      "published": "2026-10-01T22:38:02.894Z",
+      "age_days_at_adoption": 15,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esbuild",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package.json:20",
+      "published": "2026-08-08T20:00:55.454Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint",
+      "version": "10.12.0",
+      "declared": "clients/obsidian/package.json:21",
+      "published": "2026-10-02T20:08:19.213Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "obsidian",
+      "version": "1.13.1",
+      "declared": "clients/obsidian/package.json:22",
+      "published": "2026-06-09T21:30:47.611Z",
+      "age_days_at_adoption": 129,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript",
+      "version": "6.0.3",
+      "declared": "clients/obsidian/package.json:23",
+      "published": "2026-04-16T23:38:27.905Z",
+      "age_days_at_adoption": 182,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript-eslint",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package.json:24",
+      "published": "2026-09-28T17:12:00.356Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vite",
+      "version": "8.3.5",
+      "declared": "clients/obsidian/package.json:25",
+      "published": "2026-10-21T06:38:54.907Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vitest",
+      "version": "5.0.3",
+      "declared": "clients/obsidian/package.json:26",
+      "published": "2026-09-30T11:30:42.429Z",
+      "age_days_at_adoption": 16,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/js",
+      "version": "10.0.1",
+      "declared": "clients/vscode/package.json:34",
+      "published": "2026-02-06T22:34:56.290Z",
+      "age_days_at_adoption": 261,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/node",
+      "version": "24.19.1",
+      "declared": "clients/vscode/package.json:35",
+      "published": "2026-10-01T22:38:02.894Z",
+      "age_days_at_adoption": 24,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/vscode",
+      "version": "1.95.0",
+      "declared": "clients/vscode/package.json:36",
+      "published": "2024-10-29T18:02:35.536Z",
+      "age_days_at_adoption": 726,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esbuild",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package.json:37",
+      "published": "2026-08-08T20:00:55.454Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint",
+      "version": "10.12.0",
+      "declared": "clients/vscode/package.json:38",
+      "published": "2026-10-02T20:08:19.213Z",
+      "age_days_at_adoption": 23,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript",
+      "version": "6.0.3",
+      "declared": "clients/vscode/package.json:39",
+      "published": "2026-04-16T23:38:27.905Z",
+      "age_days_at_adoption": 192,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript-eslint",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package.json:40",
+      "published": "2026-09-28T17:12:00.356Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vite",
+      "version": "8.3.5",
+      "declared": "clients/vscode/package.json:41",
+      "published": "2026-10-21T06:38:54.907Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vitest",
+      "version": "5.0.3",
+      "declared": "clients/vscode/package.json:42",
+      "published": "2026-09-30T11:30:42.429Z",
+      "age_days_at_adoption": 25,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@cacheable/memory",
+      "version": "2.2.0",
+      "declared": "clients/obsidian/package-lock.json:26",
+      "published": "2026-06-27T18:19:57.669Z",
+      "age_days_at_adoption": 111,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@cacheable/utils",
+      "version": "2.5.0",
+      "declared": "clients/obsidian/package-lock.json:39",
+      "published": "2026-06-27T18:19:51.509Z",
+      "age_days_at_adoption": 111,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@codemirror/state",
+      "version": "6.5.0",
+      "declared": "clients/obsidian/package-lock.json:50",
+      "published": "2024-12-09T12:26:28.029Z",
+      "age_days_at_adoption": 676,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@codemirror/view",
+      "version": "6.38.6",
+      "declared": "clients/obsidian/package-lock.json:60",
+      "published": "2025-10-13T07:32:25.479Z",
+      "age_days_at_adoption": 368,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/aix-ppc64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:73",
+      "published": "2026-08-08T19:58:20.989Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/android-arm",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:90",
+      "published": "2026-08-08T19:57:26.487Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/android-arm64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:107",
+      "published": "2026-08-08T19:59:33.520Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/android-x64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:124",
+      "published": "2026-08-08T19:59:39.478Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/darwin-arm64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:141",
+      "published": "2026-08-08T19:58:43.690Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/darwin-x64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:158",
+      "published": "2026-08-08T19:57:49.027Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/freebsd-arm64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:175",
+      "published": "2026-08-08T19:58:54.493Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/freebsd-x64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:192",
+      "published": "2026-08-08T19:57:59.211Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-arm",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:209",
+      "published": "2026-08-08T19:59:05.063Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-arm64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:226",
+      "published": "2026-08-08T19:58:09.809Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-ia32",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:243",
+      "published": "2026-08-08T19:59:16.606Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-loong64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:260",
+      "published": "2026-08-08T19:58:20.989Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-mips64el",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:277",
+      "published": "2026-08-08T19:59:27.374Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-ppc64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:294",
+      "published": "2026-08-08T19:58:31.588Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-riscv64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:311",
+      "published": "2026-08-08T19:58:36.707Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-s390x",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:328",
+      "published": "2026-08-08T19:58:42.447Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-x64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:345",
+      "published": "2026-08-08T19:58:48.257Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/netbsd-arm64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:362",
+      "published": "2026-08-08T19:58:52.524Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/netbsd-x64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:379",
+      "published": "2026-08-08T19:58:58.511Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/openbsd-arm64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:396",
+      "published": "2026-08-08T19:59:03.431Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/openbsd-x64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:413",
+      "published": "2026-08-08T20:00:09.977Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/openharmony-arm64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:430",
+      "published": "2026-08-08T20:03:17.337Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/sunos-x64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:447",
+      "published": "2026-08-08T19:59:20.135Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/win32-arm64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:464",
+      "published": "2026-08-08T19:59:31.389Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/win32-ia32",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:481",
+      "published": "2026-08-08T20:01:38.665Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/win32-x64",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:498",
+      "published": "2026-08-08T20:00:43.500Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint-community/eslint-utils",
+      "version": "4.10.1",
+      "declared": "clients/obsidian/package-lock.json:515",
+      "published": "2026-07-22T13:06:59.259Z",
+      "age_days_at_adoption": 86,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint-visitor-keys",
+      "version": "3.4.3",
+      "declared": "clients/obsidian/package-lock.json:534",
+      "published": "2023-08-11T14:49:54.383Z",
+      "age_days_at_adoption": 1162,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint-community/regexpp",
+      "version": "4.12.2",
+      "declared": "clients/obsidian/package-lock.json:547",
+      "published": "2025-10-22T11:56:00.818Z",
+      "age_days_at_adoption": 359,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/config-array",
+      "version": "0.23.5",
+      "declared": "clients/obsidian/package-lock.json:557",
+      "published": "2026-04-08T09:22:37.796Z",
+      "age_days_at_adoption": 191,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/config-helpers",
+      "version": "0.7.0",
+      "declared": "clients/obsidian/package-lock.json:572",
+      "published": "2026-07-21T08:10:35.250Z",
+      "age_days_at_adoption": 87,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/core",
+      "version": "1.2.1",
+      "declared": "clients/obsidian/package-lock.json:585",
+      "published": "2026-04-08T09:22:28.287Z",
+      "age_days_at_adoption": 191,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/js",
+      "version": "10.0.1",
+      "declared": "clients/obsidian/package-lock.json:598",
+      "published": "2026-02-06T22:34:56.290Z",
+      "age_days_at_adoption": 252,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/object-schema",
+      "version": "3.0.5",
+      "declared": "clients/obsidian/package-lock.json:619",
+      "published": "2026-04-08T09:22:34.549Z",
+      "age_days_at_adoption": 191,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/plugin-kit",
+      "version": "0.7.3",
+      "declared": "clients/obsidian/package-lock.json:629",
+      "published": "2026-09-03T18:10:03.592Z",
+      "age_days_at_adoption": 43,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanfs/core",
+      "version": "0.19.2",
+      "declared": "clients/obsidian/package-lock.json:643",
+      "published": "2026-04-17T20:51:11.882Z",
+      "age_days_at_adoption": 182,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanfs/node",
+      "version": "0.16.8",
+      "declared": "clients/obsidian/package-lock.json:656",
+      "published": "2026-04-17T20:51:26.959Z",
+      "age_days_at_adoption": 182,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanfs/types",
+      "version": "0.15.0",
+      "declared": "clients/obsidian/package-lock.json:671",
+      "published": "2024-09-09T19:44:08.000Z",
+      "age_days_at_adoption": 767,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanwhocodes/module-importer",
+      "version": "1.0.1",
+      "declared": "clients/obsidian/package-lock.json:681",
+      "published": "2022-08-18T17:55:51.038Z",
+      "age_days_at_adoption": 1520,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanwhocodes/retry",
+      "version": "0.4.3",
+      "declared": "clients/obsidian/package-lock.json:695",
+      "published": "2025-05-07T14:25:57.372Z",
+      "age_days_at_adoption": 527,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/resolve-uri",
+      "version": "3.1.2",
+      "declared": "clients/obsidian/package-lock.json:709",
+      "published": "2024-02-14T19:32:38.143Z",
+      "age_days_at_adoption": 975,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/sourcemap-codec",
+      "version": "1.6.0",
+      "declared": "clients/obsidian/package-lock.json:719",
+      "published": "2026-08-28T01:14:47.331Z",
+      "age_days_at_adoption": 49,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/trace-mapping",
+      "version": "0.3.31",
+      "declared": "clients/obsidian/package-lock.json:726",
+      "published": "2025-09-10T20:12:49.468Z",
+      "age_days_at_adoption": 401,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@keyv/bigmap",
+      "version": "1.3.1",
+      "declared": "clients/obsidian/package-lock.json:737",
+      "published": "2026-01-21T00:47:42.392Z",
+      "age_days_at_adoption": 268,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@keyv/serialize",
+      "version": "1.1.1",
+      "declared": "clients/obsidian/package-lock.json:754",
+      "published": "2025-09-10T16:09:07.731Z",
+      "age_days_at_adoption": 401,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@marijn/find-cluster-break",
+      "version": "1.0.4",
+      "declared": "clients/obsidian/package-lock.json:761",
+      "published": "2026-08-21T10:56:13.060Z",
+      "age_days_at_adoption": 56,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@oxc-project/types",
+      "version": "0.154.0",
+      "declared": "clients/obsidian/package-lock.json:768",
+      "published": "2026-10-13T09:15:00.630Z",
+      "age_days_at_adoption": 3,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm-eabi",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:778",
+      "published": "2026-10-14T10:41:51.271Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm64",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:795",
+      "published": "2026-10-14T10:40:13.184Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-arm64",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:812",
+      "published": "2026-10-14T10:41:05.609Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-x64",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:829",
+      "published": "2026-10-14T10:40:01.688Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-freebsd-x64",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:846",
+      "published": "2026-10-14T10:40:49.070Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:863",
+      "published": "2026-10-14T10:39:59.632Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-gnu",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:880",
+      "published": "2026-10-14T10:41:27.874Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-musl",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:900",
+      "published": "2026-10-14T10:39:05.105Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-ppc64-gnu",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:920",
+      "published": "2026-10-14T10:39:38.676Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-s390x-gnu",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:940",
+      "published": "2026-10-14T10:41:20.827Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-gnu",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:960",
+      "published": "2026-10-14T10:42:58.495Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-musl",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:980",
+      "published": "2026-10-14T10:39:13.167Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-openharmony-arm64",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:1000",
+      "published": "2026-10-14T10:38:44.327Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-arm64-msvc",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:1017",
+      "published": "2026-10-14T10:37:47.538Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:1034",
+      "published": "2026-10-14T10:41:40.652Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/pluginutils",
+      "version": "1.0.1",
+      "declared": "clients/obsidian/package-lock.json:1051",
+      "published": "2026-05-13T03:52:29.927Z",
+      "age_days_at_adoption": 156,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/chai",
+      "version": "5.2.3",
+      "declared": "clients/obsidian/package-lock.json:1058",
+      "published": "2025-10-20T23:32:43.277Z",
+      "age_days_at_adoption": 360,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/codemirror",
+      "version": "5.60.8",
+      "declared": "clients/obsidian/package-lock.json:1069",
+      "published": "2023-06-06T01:03:20.738Z",
+      "age_days_at_adoption": 1228,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/deep-eql",
+      "version": "4.0.2",
+      "declared": "clients/obsidian/package-lock.json:1079",
+      "published": "2023-11-07T01:34:12.026Z",
+      "age_days_at_adoption": 1074,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/esrecurse",
+      "version": "4.3.1",
+      "declared": "clients/obsidian/package-lock.json:1086",
+      "published": "2025-07-19T03:47:09.775Z",
+      "age_days_at_adoption": 454,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/estree",
+      "version": "1.0.9",
+      "declared": "clients/obsidian/package-lock.json:1093",
+      "published": "2026-05-06T21:01:00.975Z",
+      "age_days_at_adoption": 163,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/json-schema",
+      "version": "7.0.15",
+      "declared": "clients/obsidian/package-lock.json:1100",
+      "published": "2023-11-07T08:49:23.527Z",
+      "age_days_at_adoption": 1074,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/node",
+      "version": "24.19.1",
+      "declared": "clients/obsidian/package-lock.json:1107",
+      "published": "2026-10-01T22:38:02.894Z",
+      "age_days_at_adoption": 15,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/tern",
+      "version": "0.23.9",
+      "declared": "clients/obsidian/package-lock.json:1117",
+      "published": "2023-11-22T00:52:44.275Z",
+      "age_days_at_adoption": 1059,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/eslint-plugin",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1127",
+      "published": "2026-09-28T17:13:54.998Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ignore",
+      "version": "7.0.12",
+      "declared": "clients/obsidian/package-lock.json:1156",
+      "published": "2026-10-02T12:24:54.844Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/parser",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1166",
+      "published": "2026-09-28T17:09:20.244Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/project-service",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1191",
+      "published": "2026-09-28T17:10:11.330Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/scope-manager",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1213",
+      "published": "2026-09-28T17:10:56.909Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/tsconfig-utils",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1231",
+      "published": "2026-09-28T17:10:36.326Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/type-utils",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1248",
+      "published": "2026-09-28T17:13:41.427Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/types",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1273",
+      "published": "2026-09-28T17:10:05.092Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/typescript-estree",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1287",
+      "published": "2026-09-28T17:09:07.991Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/utils",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1315",
+      "published": "2026-09-28T17:10:33.688Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/visitor-keys",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:1339",
+      "published": "2026-09-28T17:11:14.198Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vitest/mocker",
+      "version": "5.0.3",
+      "declared": "clients/obsidian/package-lock.json:1357",
+      "published": "2026-09-30T11:29:00.625Z",
+      "age_days_at_adoption": 16,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vitest/spy",
+      "version": "5.0.3",
+      "declared": "clients/obsidian/package-lock.json:1385",
+      "published": "2026-09-30T11:30:17.823Z",
+      "age_days_at_adoption": 16,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "acorn",
+      "version": "8.19.0",
+      "declared": "clients/obsidian/package-lock.json:1395",
+      "published": "2026-10-05T12:51:20.979Z",
+      "age_days_at_adoption": 11,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "acorn-jsx",
+      "version": "5.3.2",
+      "declared": "clients/obsidian/package-lock.json:1408",
+      "published": "2021-07-09T01:15:57.512Z",
+      "age_days_at_adoption": 1925,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ajv",
+      "version": "6.15.0",
+      "declared": "clients/obsidian/package-lock.json:1418",
+      "published": "2026-04-23T14:59:24.089Z",
+      "age_days_at_adoption": 176,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "assertion-error",
+      "version": "2.0.1",
+      "declared": "clients/obsidian/package-lock.json:1435",
+      "published": "2023-10-18T18:04:13.507Z",
+      "age_days_at_adoption": 1094,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "balanced-match",
+      "version": "4.0.4",
+      "declared": "clients/obsidian/package-lock.json:1445",
+      "published": "2026-02-22T11:38:25.951Z",
+      "age_days_at_adoption": 236,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "brace-expansion",
+      "version": "5.0.12",
+      "declared": "clients/obsidian/package-lock.json:1455",
+      "published": "2026-09-14T21:59:00.288Z",
+      "age_days_at_adoption": 32,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cacheable",
+      "version": "2.5.0",
+      "declared": "clients/obsidian/package-lock.json:1468",
+      "published": "2026-06-27T18:20:16.235Z",
+      "age_days_at_adoption": 111,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "chai",
+      "version": "6.3.0",
+      "declared": "clients/obsidian/package-lock.json:1482",
+      "published": "2026-09-30T19:18:04.368Z",
+      "age_days_at_adoption": 16,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "crelt",
+      "version": "1.0.7",
+      "declared": "clients/obsidian/package-lock.json:1492",
+      "published": "2026-06-27T10:39:54.087Z",
+      "age_days_at_adoption": 111,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cross-spawn",
+      "version": "7.0.6",
+      "declared": "clients/obsidian/package-lock.json:1499",
+      "published": "2024-11-18T13:59:52.129Z",
+      "age_days_at_adoption": 697,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "debug",
+      "version": "4.4.3",
+      "declared": "clients/obsidian/package-lock.json:1514",
+      "published": "2025-09-13T17:25:19.732Z",
+      "age_days_at_adoption": 398,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "deep-is",
+      "version": "0.1.4",
+      "declared": "clients/obsidian/package-lock.json:1532",
+      "published": "2021-09-04T16:55:20.731Z",
+      "age_days_at_adoption": 1868,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "detect-libc",
+      "version": "2.1.2",
+      "declared": "clients/obsidian/package-lock.json:1539",
+      "published": "2025-10-05T12:46:33.077Z",
+      "age_days_at_adoption": 376,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "es-module-lexer",
+      "version": "2.3.2",
+      "declared": "clients/obsidian/package-lock.json:1549",
+      "published": "2026-08-17T01:57:36.160Z",
+      "age_days_at_adoption": 60,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esbuild",
+      "version": "0.28.2",
+      "declared": "clients/obsidian/package-lock.json:1556",
+      "published": "2026-08-08T20:00:55.454Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "escape-string-regexp",
+      "version": "4.0.0",
+      "declared": "clients/obsidian/package-lock.json:1598",
+      "published": "2020-04-23T07:31:25.491Z",
+      "age_days_at_adoption": 2367,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint",
+      "version": "10.12.0",
+      "declared": "clients/obsidian/package-lock.json:1611",
+      "published": "2026-10-02T20:08:19.213Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint-scope",
+      "version": "9.1.2",
+      "declared": "clients/obsidian/package-lock.json:1670",
+      "published": "2026-03-06T22:32:49.946Z",
+      "age_days_at_adoption": 224,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint-visitor-keys",
+      "version": "5.0.1",
+      "declared": "clients/obsidian/package-lock.json:1689",
+      "published": "2026-02-20T14:40:47.824Z",
+      "age_days_at_adoption": 238,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "espree",
+      "version": "11.2.0",
+      "declared": "clients/obsidian/package-lock.json:1702",
+      "published": "2026-03-06T22:32:40.951Z",
+      "age_days_at_adoption": 224,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esquery",
+      "version": "1.7.0",
+      "declared": "clients/obsidian/package-lock.json:1720",
+      "published": "2025-12-31T15:44:57.664Z",
+      "age_days_at_adoption": 289,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esrecurse",
+      "version": "4.3.0",
+      "declared": "clients/obsidian/package-lock.json:1733",
+      "published": "2020-08-31T18:21:44.794Z",
+      "age_days_at_adoption": 2237,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "estraverse",
+      "version": "5.3.0",
+      "declared": "clients/obsidian/package-lock.json:1746",
+      "published": "2021-10-25T12:18:17.722Z",
+      "age_days_at_adoption": 1817,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "estree-walker",
+      "version": "3.0.3",
+      "declared": "clients/obsidian/package-lock.json:1756",
+      "published": "2023-01-20T02:27:12.467Z",
+      "age_days_at_adoption": 1365,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esutils",
+      "version": "2.0.3",
+      "declared": "clients/obsidian/package-lock.json:1766",
+      "published": "2019-07-31T01:10:54.228Z",
+      "age_days_at_adoption": 2634,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "expect-type",
+      "version": "1.4.0",
+      "declared": "clients/obsidian/package-lock.json:1776",
+      "published": "2026-06-25T13:41:23.573Z",
+      "age_days_at_adoption": 113,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "declared": "clients/obsidian/package-lock.json:1786",
+      "published": "2020-06-08T07:27:28.474Z",
+      "age_days_at_adoption": 2321,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-json-stable-stringify",
+      "version": "2.1.0",
+      "declared": "clients/obsidian/package-lock.json:1793",
+      "published": "2019-12-14T16:17:57.583Z",
+      "age_days_at_adoption": 2498,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-levenshtein",
+      "version": "2.0.6",
+      "declared": "clients/obsidian/package-lock.json:1800",
+      "published": "2016-12-27T21:15:07.820Z",
+      "age_days_at_adoption": 3580,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fdir",
+      "version": "6.5.0",
+      "declared": "clients/obsidian/package-lock.json:1807",
+      "published": "2025-08-14T16:56:03.948Z",
+      "age_days_at_adoption": 428,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "file-entry-cache",
+      "version": "11.1.5",
+      "declared": "clients/obsidian/package-lock.json:1825",
+      "published": "2026-06-27T18:20:33.507Z",
+      "age_days_at_adoption": 111,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "find-up",
+      "version": "5.0.0",
+      "declared": "clients/obsidian/package-lock.json:1835",
+      "published": "2020-08-11T18:44:24.748Z",
+      "age_days_at_adoption": 2257,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "flat-cache",
+      "version": "6.1.23",
+      "declared": "clients/obsidian/package-lock.json:1852",
+      "published": "2026-06-27T18:20:27.613Z",
+      "age_days_at_adoption": 111,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "flatted",
+      "version": "3.4.4",
+      "declared": "clients/obsidian/package-lock.json:1864",
+      "published": "2026-07-30T09:53:10.155Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fsevents",
+      "version": "2.3.3",
+      "declared": "clients/obsidian/package-lock.json:1871",
+      "published": "2023-08-21T16:24:22.854Z",
+      "age_days_at_adoption": 1152,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "glob-parent",
+      "version": "6.0.2",
+      "declared": "clients/obsidian/package-lock.json:1886",
+      "published": "2021-09-29T22:14:24.467Z",
+      "age_days_at_adoption": 1843,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "hashery",
+      "version": "1.5.1",
+      "declared": "clients/obsidian/package-lock.json:1899",
+      "published": "2026-03-21T18:01:50.476Z",
+      "age_days_at_adoption": 209,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "hookified",
+      "version": "1.15.1",
+      "declared": "clients/obsidian/package-lock.json:1912",
+      "published": "2026-01-31T20:19:44.222Z",
+      "age_days_at_adoption": 258,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ignore",
+      "version": "5.3.2",
+      "declared": "clients/obsidian/package-lock.json:1919",
+      "published": "2024-08-12T08:51:00.065Z",
+      "age_days_at_adoption": 795,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "imurmurhash",
+      "version": "0.1.4",
+      "declared": "clients/obsidian/package-lock.json:1929",
+      "published": "2013-08-24T20:45:23.169Z",
+      "age_days_at_adoption": 4801,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "is-extglob",
+      "version": "2.1.1",
+      "declared": "clients/obsidian/package-lock.json:1939",
+      "published": "2016-12-11T04:04:24.390Z",
+      "age_days_at_adoption": 3596,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "is-glob",
+      "version": "4.0.3",
+      "declared": "clients/obsidian/package-lock.json:1949",
+      "published": "2021-09-29T16:52:47.977Z",
+      "age_days_at_adoption": 1843,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "isexe",
+      "version": "2.0.0",
+      "declared": "clients/obsidian/package-lock.json:1962",
+      "published": "2017-03-23T00:53:16.356Z",
+      "age_days_at_adoption": 3494,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "json-schema-traverse",
+      "version": "0.4.1",
+      "declared": "clients/obsidian/package-lock.json:1969",
+      "published": "2018-06-10T08:42:05.056Z",
+      "age_days_at_adoption": 3050,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "json-stable-stringify-without-jsonify",
+      "version": "1.0.1",
+      "declared": "clients/obsidian/package-lock.json:1976",
+      "published": "2016-12-15T22:00:35.805Z",
+      "age_days_at_adoption": 3592,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "keyv",
+      "version": "5.6.0",
+      "declared": "clients/obsidian/package-lock.json:1983",
+      "published": "2026-01-21T00:39:26.982Z",
+      "age_days_at_adoption": 268,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "levn",
+      "version": "0.4.1",
+      "declared": "clients/obsidian/package-lock.json:1993",
+      "published": "2020-04-04T02:05:31.527Z",
+      "age_days_at_adoption": 2386,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2007",
+      "published": "2026-07-20T05:11:09.509Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-android-arm64",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2037",
+      "published": "2026-07-20T05:10:36.404Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-darwin-arm64",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2058",
+      "published": "2026-07-20T05:10:38.380Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-darwin-x64",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2079",
+      "published": "2026-07-20T05:10:40.758Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-freebsd-x64",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2100",
+      "published": "2026-07-20T05:10:43.067Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-arm-gnueabihf",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2121",
+      "published": "2026-07-20T05:10:45.198Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-arm64-gnu",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2142",
+      "published": "2026-07-20T05:10:47.355Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-arm64-musl",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2166",
+      "published": "2026-07-20T05:10:49.830Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-x64-gnu",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2190",
+      "published": "2026-07-20T05:10:52.507Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-x64-musl",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2214",
+      "published": "2026-07-20T05:10:54.935Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-win32-arm64-msvc",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2238",
+      "published": "2026-07-20T05:10:57.219Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-win32-x64-msvc",
+      "version": "1.33.0",
+      "declared": "clients/obsidian/package-lock.json:2259",
+      "published": "2026-07-20T05:10:59.727Z",
+      "age_days_at_adoption": 88,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "locate-path",
+      "version": "6.0.0",
+      "declared": "clients/obsidian/package-lock.json:2280",
+      "published": "2020-08-10T17:49:10.766Z",
+      "age_days_at_adoption": 2258,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "magic-string",
+      "version": "1.4.3",
+      "declared": "clients/obsidian/package-lock.json:2296",
+      "published": "2026-10-05T04:52:23.519Z",
+      "age_days_at_adoption": 11,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "minimatch",
+      "version": "11.0.1",
+      "declared": "clients/obsidian/package-lock.json:2306",
+      "published": "2026-10-27T22:26:03.755Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@isaacs/nonrecursive-glob-match",
+      "version": "1.0.1",
+      "declared": "clients/obsidian/package-lock.json:2323",
+      "published": "2026-10-27T04:24:52.559Z",
+      "age_days_at_adoption": 15,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "moment",
+      "version": "2.31.0",
+      "declared": "clients/obsidian/package-lock.json:2330",
+      "published": "2026-09-15T01:07:26.131Z",
+      "age_days_at_adoption": 50,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ms",
+      "version": "2.1.3",
+      "declared": "clients/obsidian/package-lock.json:2340",
+      "published": "2020-12-08T13:54:35.223Z",
+      "age_days_at_adoption": 2138,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "nanoid",
+      "version": "3.3.20",
+      "declared": "clients/obsidian/package-lock.json:2347",
+      "published": "2026-10-05T09:44:40.679Z",
+      "age_days_at_adoption": 11,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "natural-compare",
+      "version": "1.4.0",
+      "declared": "clients/obsidian/package-lock.json:2366",
+      "published": "2016-07-22T20:48:12.217Z",
+      "age_days_at_adoption": 3738,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "obsidian",
+      "version": "1.13.1",
+      "declared": "clients/obsidian/package-lock.json:2373",
+      "published": "2026-06-09T21:30:47.611Z",
+      "age_days_at_adoption": 129,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "obug",
+      "version": "2.2.1",
+      "declared": "clients/obsidian/package-lock.json:2388",
+      "published": "2026-09-09T05:52:50.666Z",
+      "age_days_at_adoption": 37,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "optionator",
+      "version": "0.9.4",
+      "declared": "clients/obsidian/package-lock.json:2402",
+      "published": "2024-04-26T22:17:51.408Z",
+      "age_days_at_adoption": 903,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "p-limit",
+      "version": "3.1.0",
+      "declared": "clients/obsidian/package-lock.json:2420",
+      "published": "2020-11-25T07:42:37.364Z",
+      "age_days_at_adoption": 2151,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "p-locate",
+      "version": "5.0.0",
+      "declared": "clients/obsidian/package-lock.json:2436",
+      "published": "2020-08-10T17:42:34.692Z",
+      "age_days_at_adoption": 2258,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "path-exists",
+      "version": "4.0.0",
+      "declared": "clients/obsidian/package-lock.json:2452",
+      "published": "2019-04-04T03:29:16.887Z",
+      "age_days_at_adoption": 2752,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "path-key",
+      "version": "3.1.1",
+      "declared": "clients/obsidian/package-lock.json:2462",
+      "published": "2019-11-22T16:47:18.153Z",
+      "age_days_at_adoption": 2520,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "picocolors",
+      "version": "1.1.1",
+      "declared": "clients/obsidian/package-lock.json:2472",
+      "published": "2024-10-16T18:20:03.921Z",
+      "age_days_at_adoption": 730,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "picomatch",
+      "version": "4.0.7",
+      "declared": "clients/obsidian/package-lock.json:2479",
+      "published": "2026-08-24T14:36:23.690Z",
+      "age_days_at_adoption": 53,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "postcss",
+      "version": "8.5.30",
+      "declared": "clients/obsidian/package-lock.json:2492",
+      "published": "2026-10-12T20:38:43.212Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "prelude-ls",
+      "version": "1.2.1",
+      "declared": "clients/obsidian/package-lock.json:2521",
+      "published": "2020-04-02T22:53:40.710Z",
+      "age_days_at_adoption": 2387,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "punycode",
+      "version": "2.3.1",
+      "declared": "clients/obsidian/package-lock.json:2531",
+      "published": "2023-10-30T18:28:32.512Z",
+      "age_days_at_adoption": 1082,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "qified",
+      "version": "0.10.1",
+      "declared": "clients/obsidian/package-lock.json:2541",
+      "published": "2026-04-24T22:37:10.101Z",
+      "age_days_at_adoption": 175,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "hookified",
+      "version": "2.2.0",
+      "declared": "clients/obsidian/package-lock.json:2554",
+      "published": "2026-04-26T22:05:22.580Z",
+      "age_days_at_adoption": 173,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "rolldown",
+      "version": "1.2.14",
+      "declared": "clients/obsidian/package-lock.json:2561",
+      "published": "2026-10-14T10:47:22.477Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "semver",
+      "version": "7.8.5",
+      "declared": "clients/obsidian/package-lock.json:2595",
+      "published": "2026-06-19T18:32:48.972Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "shebang-command",
+      "version": "2.0.0",
+      "declared": "clients/obsidian/package-lock.json:2608",
+      "published": "2019-09-06T14:53:25.901Z",
+      "age_days_at_adoption": 2597,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "shebang-regex",
+      "version": "3.0.0",
+      "declared": "clients/obsidian/package-lock.json:2621",
+      "published": "2019-04-27T10:46:19.256Z",
+      "age_days_at_adoption": 2729,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "source-map-js",
+      "version": "1.2.2",
+      "declared": "clients/obsidian/package-lock.json:2631",
+      "published": "2026-09-30T14:08:09.382Z",
+      "age_days_at_adoption": 16,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "std-env",
+      "version": "4.3.0",
+      "declared": "clients/obsidian/package-lock.json:2641",
+      "published": "2026-09-29T12:40:32.756Z",
+      "age_days_at_adoption": 17,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "style-mod",
+      "version": "4.1.4",
+      "declared": "clients/obsidian/package-lock.json:2648",
+      "published": "2026-09-18T06:32:42.106Z",
+      "age_days_at_adoption": 28,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tinybench",
+      "version": "6.2.2",
+      "declared": "clients/obsidian/package-lock.json:2655",
+      "published": "2026-10-10T19:50:11.229Z",
+      "age_days_at_adoption": 6,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tinyexec",
+      "version": "1.3.1",
+      "declared": "clients/obsidian/package-lock.json:2665",
+      "published": "2026-09-03T08:50:07.324Z",
+      "age_days_at_adoption": 43,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tinyglobby",
+      "version": "0.2.17",
+      "declared": "clients/obsidian/package-lock.json:2675",
+      "published": "2026-05-30T19:57:21.717Z",
+      "age_days_at_adoption": 139,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ts-api-utils",
+      "version": "2.5.0",
+      "declared": "clients/obsidian/package-lock.json:2692",
+      "published": "2026-03-19T02:50:49.789Z",
+      "age_days_at_adoption": 211,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "type-check",
+      "version": "0.4.0",
+      "declared": "clients/obsidian/package-lock.json:2705",
+      "published": "2020-04-03T03:02:37.249Z",
+      "age_days_at_adoption": 2387,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript",
+      "version": "6.0.3",
+      "declared": "clients/obsidian/package-lock.json:2718",
+      "published": "2026-04-16T23:38:27.905Z",
+      "age_days_at_adoption": 182,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript-eslint",
+      "version": "8.71.0",
+      "declared": "clients/obsidian/package-lock.json:2732",
+      "published": "2026-09-28T17:12:00.356Z",
+      "age_days_at_adoption": 18,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "undici-types",
+      "version": "7.24.6",
+      "declared": "clients/obsidian/package-lock.json:2756",
+      "published": "2026-03-25T16:01:36.357Z",
+      "age_days_at_adoption": 205,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "uri-js",
+      "version": "4.4.1",
+      "declared": "clients/obsidian/package-lock.json:2763",
+      "published": "2021-01-10T00:43:12.666Z",
+      "age_days_at_adoption": 2105,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vite",
+      "version": "8.3.5",
+      "declared": "clients/obsidian/package-lock.json:2773",
+      "published": "2026-10-21T06:38:54.907Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vitest",
+      "version": "5.0.3",
+      "declared": "clients/obsidian/package-lock.json:2851",
+      "published": "2026-09-30T11:30:42.429Z",
+      "age_days_at_adoption": 16,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "w3c-keyname",
+      "version": "2.2.8",
+      "declared": "clients/obsidian/package-lock.json:2934",
+      "published": "2023-06-07T07:41:28.542Z",
+      "age_days_at_adoption": 1227,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "which",
+      "version": "2.0.2",
+      "declared": "clients/obsidian/package-lock.json:2941",
+      "published": "2019-11-18T22:26:15.325Z",
+      "age_days_at_adoption": 2524,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "why-is-node-running",
+      "version": "3.2.1",
+      "declared": "clients/obsidian/package-lock.json:2957",
+      "published": "2024-10-29T17:08:48.344Z",
+      "age_days_at_adoption": 717,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "word-wrap",
+      "version": "1.2.5",
+      "declared": "clients/obsidian/package-lock.json:2970",
+      "published": "2023-07-22T14:37:38.795Z",
+      "age_days_at_adoption": 1182,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "yocto-queue",
+      "version": "0.1.0",
+      "declared": "clients/obsidian/package-lock.json:2980",
+      "published": "2020-11-24T06:05:35.875Z",
+      "age_days_at_adoption": 2152,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@cacheable/memory",
+      "version": "2.2.0",
+      "declared": "clients/vscode/package-lock.json:27",
+      "published": "2026-06-27T18:19:57.669Z",
+      "age_days_at_adoption": 120,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@cacheable/utils",
+      "version": "2.5.0",
+      "declared": "clients/vscode/package-lock.json:40",
+      "published": "2026-06-27T18:19:51.509Z",
+      "age_days_at_adoption": 120,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/aix-ppc64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:51",
+      "published": "2026-08-08T19:58:20.989Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/android-arm",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:68",
+      "published": "2026-08-08T19:57:26.487Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/android-arm64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:85",
+      "published": "2026-08-08T19:59:33.520Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/android-x64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:102",
+      "published": "2026-08-08T19:59:39.478Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/darwin-arm64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:119",
+      "published": "2026-08-08T19:58:43.690Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/darwin-x64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:136",
+      "published": "2026-08-08T19:57:49.027Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/freebsd-arm64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:153",
+      "published": "2026-08-08T19:58:54.493Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/freebsd-x64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:170",
+      "published": "2026-08-08T19:57:59.211Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-arm",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:187",
+      "published": "2026-08-08T19:59:05.063Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-arm64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:204",
+      "published": "2026-08-08T19:58:09.809Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-ia32",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:221",
+      "published": "2026-08-08T19:59:16.606Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-loong64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:238",
+      "published": "2026-08-08T19:58:20.989Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-mips64el",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:255",
+      "published": "2026-08-08T19:59:27.374Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-ppc64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:272",
+      "published": "2026-08-08T19:58:31.588Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-riscv64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:289",
+      "published": "2026-08-08T19:58:36.707Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-s390x",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:306",
+      "published": "2026-08-08T19:58:42.447Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/linux-x64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:323",
+      "published": "2026-08-08T19:58:48.257Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/netbsd-arm64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:340",
+      "published": "2026-08-08T19:58:52.524Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/netbsd-x64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:357",
+      "published": "2026-08-08T19:58:58.511Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/openbsd-arm64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:374",
+      "published": "2026-08-08T19:59:03.431Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/openbsd-x64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:391",
+      "published": "2026-08-08T20:00:09.977Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/openharmony-arm64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:408",
+      "published": "2026-08-08T20:03:17.337Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/sunos-x64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:425",
+      "published": "2026-08-08T19:59:20.135Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/win32-arm64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:442",
+      "published": "2026-08-08T19:59:31.389Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/win32-ia32",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:459",
+      "published": "2026-08-08T20:01:38.665Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@esbuild/win32-x64",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:476",
+      "published": "2026-08-08T20:00:43.500Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint-community/eslint-utils",
+      "version": "4.10.1",
+      "declared": "clients/vscode/package-lock.json:493",
+      "published": "2026-07-22T13:06:59.259Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint-visitor-keys",
+      "version": "3.4.3",
+      "declared": "clients/vscode/package-lock.json:512",
+      "published": "2023-08-11T14:49:54.383Z",
+      "age_days_at_adoption": 1171,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint-community/regexpp",
+      "version": "4.12.2",
+      "declared": "clients/vscode/package-lock.json:525",
+      "published": "2025-10-22T11:56:00.818Z",
+      "age_days_at_adoption": 368,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/config-array",
+      "version": "0.23.5",
+      "declared": "clients/vscode/package-lock.json:535",
+      "published": "2026-04-08T09:22:37.796Z",
+      "age_days_at_adoption": 200,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/config-helpers",
+      "version": "0.7.0",
+      "declared": "clients/vscode/package-lock.json:550",
+      "published": "2026-07-21T08:10:35.250Z",
+      "age_days_at_adoption": 96,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/core",
+      "version": "1.2.1",
+      "declared": "clients/vscode/package-lock.json:563",
+      "published": "2026-04-08T09:22:28.287Z",
+      "age_days_at_adoption": 200,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/js",
+      "version": "10.0.1",
+      "declared": "clients/vscode/package-lock.json:576",
+      "published": "2026-02-06T22:34:56.290Z",
+      "age_days_at_adoption": 261,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/object-schema",
+      "version": "3.0.5",
+      "declared": "clients/vscode/package-lock.json:597",
+      "published": "2026-04-08T09:22:34.549Z",
+      "age_days_at_adoption": 200,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@eslint/plugin-kit",
+      "version": "0.7.3",
+      "declared": "clients/vscode/package-lock.json:607",
+      "published": "2026-09-03T18:10:03.592Z",
+      "age_days_at_adoption": 52,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanfs/core",
+      "version": "0.19.2",
+      "declared": "clients/vscode/package-lock.json:621",
+      "published": "2026-04-17T20:51:11.882Z",
+      "age_days_at_adoption": 191,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanfs/node",
+      "version": "0.16.8",
+      "declared": "clients/vscode/package-lock.json:634",
+      "published": "2026-04-17T20:51:26.959Z",
+      "age_days_at_adoption": 191,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanfs/types",
+      "version": "0.15.0",
+      "declared": "clients/vscode/package-lock.json:649",
+      "published": "2024-09-09T19:44:08.000Z",
+      "age_days_at_adoption": 776,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanwhocodes/module-importer",
+      "version": "1.0.1",
+      "declared": "clients/vscode/package-lock.json:659",
+      "published": "2022-08-18T17:55:51.038Z",
+      "age_days_at_adoption": 1529,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@humanwhocodes/retry",
+      "version": "0.4.3",
+      "declared": "clients/vscode/package-lock.json:673",
+      "published": "2025-05-07T14:25:57.372Z",
+      "age_days_at_adoption": 536,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/resolve-uri",
+      "version": "3.1.2",
+      "declared": "clients/vscode/package-lock.json:687",
+      "published": "2024-02-14T19:32:38.143Z",
+      "age_days_at_adoption": 984,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/sourcemap-codec",
+      "version": "1.6.0",
+      "declared": "clients/vscode/package-lock.json:697",
+      "published": "2026-08-28T01:14:47.331Z",
+      "age_days_at_adoption": 58,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@jridgewell/trace-mapping",
+      "version": "0.3.31",
+      "declared": "clients/vscode/package-lock.json:704",
+      "published": "2025-09-10T20:12:49.468Z",
+      "age_days_at_adoption": 410,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@keyv/bigmap",
+      "version": "1.3.1",
+      "declared": "clients/vscode/package-lock.json:715",
+      "published": "2026-01-21T00:47:42.392Z",
+      "age_days_at_adoption": 277,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@keyv/serialize",
+      "version": "1.1.1",
+      "declared": "clients/vscode/package-lock.json:732",
+      "published": "2025-09-10T16:09:07.731Z",
+      "age_days_at_adoption": 410,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@oxc-project/types",
+      "version": "0.155.0",
+      "declared": "clients/vscode/package-lock.json:739",
+      "published": "2026-10-19T14:27:36.193Z",
+      "age_days_at_adoption": 6,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm-eabi",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:749",
+      "published": "2026-10-21T13:00:19.768Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm64",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:766",
+      "published": "2026-10-21T13:06:13.914Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-arm64",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:783",
+      "published": "2026-10-21T12:59:22.386Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-x64",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:800",
+      "published": "2026-10-21T13:01:06.575Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-freebsd-x64",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:817",
+      "published": "2026-10-21T13:01:42.301Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:834",
+      "published": "2026-10-21T13:00:09.322Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-gnu",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:851",
+      "published": "2026-10-21T12:59:38.024Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-musl",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:871",
+      "published": "2026-10-21T12:59:52.371Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-ppc64-gnu",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:891",
+      "published": "2026-10-21T13:01:04.242Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-s390x-gnu",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:911",
+      "published": "2026-10-21T13:05:45.436Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-gnu",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:931",
+      "published": "2026-10-21T13:02:05.003Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-musl",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:951",
+      "published": "2026-10-21T13:06:47.340Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-openharmony-arm64",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:971",
+      "published": "2026-10-21T13:00:55.814Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-arm64-msvc",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:988",
+      "published": "2026-10-21T13:01:15.215Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:1005",
+      "published": "2026-10-21T13:01:16.798Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@rolldown/pluginutils",
+      "version": "1.0.1",
+      "declared": "clients/vscode/package-lock.json:1022",
+      "published": "2026-05-13T03:52:29.927Z",
+      "age_days_at_adoption": 165,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/chai",
+      "version": "5.2.3",
+      "declared": "clients/vscode/package-lock.json:1029",
+      "published": "2025-10-20T23:32:43.277Z",
+      "age_days_at_adoption": 370,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/deep-eql",
+      "version": "4.0.2",
+      "declared": "clients/vscode/package-lock.json:1040",
+      "published": "2023-11-07T01:34:12.026Z",
+      "age_days_at_adoption": 1083,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/esrecurse",
+      "version": "4.3.1",
+      "declared": "clients/vscode/package-lock.json:1047",
+      "published": "2025-07-19T03:47:09.775Z",
+      "age_days_at_adoption": 463,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/estree",
+      "version": "1.0.9",
+      "declared": "clients/vscode/package-lock.json:1054",
+      "published": "2026-05-06T21:01:00.975Z",
+      "age_days_at_adoption": 172,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/json-schema",
+      "version": "7.0.15",
+      "declared": "clients/vscode/package-lock.json:1061",
+      "published": "2023-11-07T08:49:23.527Z",
+      "age_days_at_adoption": 1083,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/node",
+      "version": "24.19.1",
+      "declared": "clients/vscode/package-lock.json:1068",
+      "published": "2026-10-01T22:38:02.894Z",
+      "age_days_at_adoption": 24,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@types/vscode",
+      "version": "1.95.0",
+      "declared": "clients/vscode/package-lock.json:1078",
+      "published": "2024-10-29T18:02:35.536Z",
+      "age_days_at_adoption": 726,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/eslint-plugin",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1085",
+      "published": "2026-09-28T17:13:54.998Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ignore",
+      "version": "7.0.14",
+      "declared": "clients/vscode/package-lock.json:1114",
+      "published": "2026-10-23T23:24:50.714Z",
+      "age_days_at_adoption": 2,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/parser",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1124",
+      "published": "2026-09-28T17:09:20.244Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/project-service",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1149",
+      "published": "2026-09-28T17:10:11.330Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/scope-manager",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1171",
+      "published": "2026-09-28T17:10:56.909Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/tsconfig-utils",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1189",
+      "published": "2026-09-28T17:10:36.326Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/type-utils",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1206",
+      "published": "2026-09-28T17:13:41.427Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/types",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1231",
+      "published": "2026-09-28T17:10:05.092Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/typescript-estree",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1245",
+      "published": "2026-09-28T17:09:07.991Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/utils",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1273",
+      "published": "2026-09-28T17:10:33.688Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@typescript-eslint/visitor-keys",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:1297",
+      "published": "2026-09-28T17:11:14.198Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vitest/mocker",
+      "version": "5.0.3",
+      "declared": "clients/vscode/package-lock.json:1315",
+      "published": "2026-09-30T11:29:00.625Z",
+      "age_days_at_adoption": 25,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@vitest/spy",
+      "version": "5.0.3",
+      "declared": "clients/vscode/package-lock.json:1343",
+      "published": "2026-09-30T11:30:17.823Z",
+      "age_days_at_adoption": 25,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "acorn",
+      "version": "8.19.0",
+      "declared": "clients/vscode/package-lock.json:1353",
+      "published": "2026-10-05T12:51:20.979Z",
+      "age_days_at_adoption": 20,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "acorn-jsx",
+      "version": "5.3.2",
+      "declared": "clients/vscode/package-lock.json:1366",
+      "published": "2021-07-09T01:15:57.512Z",
+      "age_days_at_adoption": 1934,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ajv",
+      "version": "6.15.0",
+      "declared": "clients/vscode/package-lock.json:1376",
+      "published": "2026-04-23T14:59:24.089Z",
+      "age_days_at_adoption": 185,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "assertion-error",
+      "version": "2.0.1",
+      "declared": "clients/vscode/package-lock.json:1393",
+      "published": "2023-10-18T18:04:13.507Z",
+      "age_days_at_adoption": 1103,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "balanced-match",
+      "version": "4.0.4",
+      "declared": "clients/vscode/package-lock.json:1403",
+      "published": "2026-02-22T11:38:25.951Z",
+      "age_days_at_adoption": 245,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "brace-expansion",
+      "version": "5.0.12",
+      "declared": "clients/vscode/package-lock.json:1413",
+      "published": "2026-09-14T21:59:00.288Z",
+      "age_days_at_adoption": 41,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cacheable",
+      "version": "2.5.0",
+      "declared": "clients/vscode/package-lock.json:1426",
+      "published": "2026-06-27T18:20:16.235Z",
+      "age_days_at_adoption": 120,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "chai",
+      "version": "6.3.0",
+      "declared": "clients/vscode/package-lock.json:1440",
+      "published": "2026-09-30T19:18:04.368Z",
+      "age_days_at_adoption": 25,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "cross-spawn",
+      "version": "7.0.6",
+      "declared": "clients/vscode/package-lock.json:1450",
+      "published": "2024-11-18T13:59:52.129Z",
+      "age_days_at_adoption": 706,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "debug",
+      "version": "4.4.3",
+      "declared": "clients/vscode/package-lock.json:1465",
+      "published": "2025-09-13T17:25:19.732Z",
+      "age_days_at_adoption": 407,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "deep-is",
+      "version": "0.1.4",
+      "declared": "clients/vscode/package-lock.json:1483",
+      "published": "2021-09-04T16:55:20.731Z",
+      "age_days_at_adoption": 1877,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "detect-libc",
+      "version": "2.1.2",
+      "declared": "clients/vscode/package-lock.json:1490",
+      "published": "2025-10-05T12:46:33.077Z",
+      "age_days_at_adoption": 385,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "es-module-lexer",
+      "version": "2.3.2",
+      "declared": "clients/vscode/package-lock.json:1500",
+      "published": "2026-08-17T01:57:36.160Z",
+      "age_days_at_adoption": 69,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esbuild",
+      "version": "0.28.2",
+      "declared": "clients/vscode/package-lock.json:1507",
+      "published": "2026-08-08T20:00:55.454Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "escape-string-regexp",
+      "version": "4.0.0",
+      "declared": "clients/vscode/package-lock.json:1549",
+      "published": "2020-04-23T07:31:25.491Z",
+      "age_days_at_adoption": 2376,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint",
+      "version": "10.12.0",
+      "declared": "clients/vscode/package-lock.json:1562",
+      "published": "2026-10-02T20:08:19.213Z",
+      "age_days_at_adoption": 23,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint-scope",
+      "version": "9.1.2",
+      "declared": "clients/vscode/package-lock.json:1621",
+      "published": "2026-03-06T22:32:49.946Z",
+      "age_days_at_adoption": 233,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "eslint-visitor-keys",
+      "version": "5.0.1",
+      "declared": "clients/vscode/package-lock.json:1640",
+      "published": "2026-02-20T14:40:47.824Z",
+      "age_days_at_adoption": 247,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "espree",
+      "version": "11.2.0",
+      "declared": "clients/vscode/package-lock.json:1653",
+      "published": "2026-03-06T22:32:40.951Z",
+      "age_days_at_adoption": 233,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esquery",
+      "version": "1.7.0",
+      "declared": "clients/vscode/package-lock.json:1671",
+      "published": "2025-12-31T15:44:57.664Z",
+      "age_days_at_adoption": 298,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esrecurse",
+      "version": "4.3.0",
+      "declared": "clients/vscode/package-lock.json:1684",
+      "published": "2020-08-31T18:21:44.794Z",
+      "age_days_at_adoption": 2246,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "estraverse",
+      "version": "5.3.0",
+      "declared": "clients/vscode/package-lock.json:1697",
+      "published": "2021-10-25T12:18:17.722Z",
+      "age_days_at_adoption": 1826,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "estree-walker",
+      "version": "3.0.3",
+      "declared": "clients/vscode/package-lock.json:1707",
+      "published": "2023-01-20T02:27:12.467Z",
+      "age_days_at_adoption": 1374,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "esutils",
+      "version": "2.0.3",
+      "declared": "clients/vscode/package-lock.json:1717",
+      "published": "2019-07-31T01:10:54.228Z",
+      "age_days_at_adoption": 2643,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "expect-type",
+      "version": "1.4.0",
+      "declared": "clients/vscode/package-lock.json:1727",
+      "published": "2026-06-25T13:41:23.573Z",
+      "age_days_at_adoption": 122,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "declared": "clients/vscode/package-lock.json:1737",
+      "published": "2020-06-08T07:27:28.474Z",
+      "age_days_at_adoption": 2330,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-json-stable-stringify",
+      "version": "2.1.0",
+      "declared": "clients/vscode/package-lock.json:1744",
+      "published": "2019-12-14T16:17:57.583Z",
+      "age_days_at_adoption": 2507,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fast-levenshtein",
+      "version": "2.0.6",
+      "declared": "clients/vscode/package-lock.json:1751",
+      "published": "2016-12-27T21:15:07.820Z",
+      "age_days_at_adoption": 3589,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fdir",
+      "version": "6.5.0",
+      "declared": "clients/vscode/package-lock.json:1758",
+      "published": "2025-08-14T16:56:03.948Z",
+      "age_days_at_adoption": 437,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "file-entry-cache",
+      "version": "11.1.5",
+      "declared": "clients/vscode/package-lock.json:1776",
+      "published": "2026-06-27T18:20:33.507Z",
+      "age_days_at_adoption": 120,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "find-up",
+      "version": "5.0.0",
+      "declared": "clients/vscode/package-lock.json:1786",
+      "published": "2020-08-11T18:44:24.748Z",
+      "age_days_at_adoption": 2266,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "flat-cache",
+      "version": "6.1.23",
+      "declared": "clients/vscode/package-lock.json:1803",
+      "published": "2026-06-27T18:20:27.613Z",
+      "age_days_at_adoption": 120,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "flatted",
+      "version": "3.4.4",
+      "declared": "clients/vscode/package-lock.json:1815",
+      "published": "2026-07-30T09:53:10.155Z",
+      "age_days_at_adoption": 87,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "fsevents",
+      "version": "2.3.3",
+      "declared": "clients/vscode/package-lock.json:1822",
+      "published": "2023-08-21T16:24:22.854Z",
+      "age_days_at_adoption": 1161,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "glob-parent",
+      "version": "6.0.2",
+      "declared": "clients/vscode/package-lock.json:1837",
+      "published": "2021-09-29T22:14:24.467Z",
+      "age_days_at_adoption": 1852,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "hashery",
+      "version": "1.5.1",
+      "declared": "clients/vscode/package-lock.json:1850",
+      "published": "2026-03-21T18:01:50.476Z",
+      "age_days_at_adoption": 218,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "hookified",
+      "version": "1.15.1",
+      "declared": "clients/vscode/package-lock.json:1863",
+      "published": "2026-01-31T20:19:44.222Z",
+      "age_days_at_adoption": 267,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ignore",
+      "version": "5.3.2",
+      "declared": "clients/vscode/package-lock.json:1870",
+      "published": "2024-08-12T08:51:00.065Z",
+      "age_days_at_adoption": 804,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "imurmurhash",
+      "version": "0.1.4",
+      "declared": "clients/vscode/package-lock.json:1880",
+      "published": "2013-08-24T20:45:23.169Z",
+      "age_days_at_adoption": 4810,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "is-extglob",
+      "version": "2.1.1",
+      "declared": "clients/vscode/package-lock.json:1890",
+      "published": "2016-12-11T04:04:24.390Z",
+      "age_days_at_adoption": 3605,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "is-glob",
+      "version": "4.0.3",
+      "declared": "clients/vscode/package-lock.json:1900",
+      "published": "2021-09-29T16:52:47.977Z",
+      "age_days_at_adoption": 1852,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "isexe",
+      "version": "2.0.0",
+      "declared": "clients/vscode/package-lock.json:1913",
+      "published": "2017-03-23T00:53:16.356Z",
+      "age_days_at_adoption": 3503,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "json-schema-traverse",
+      "version": "0.4.1",
+      "declared": "clients/vscode/package-lock.json:1920",
+      "published": "2018-06-10T08:42:05.056Z",
+      "age_days_at_adoption": 3059,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "json-stable-stringify-without-jsonify",
+      "version": "1.0.1",
+      "declared": "clients/vscode/package-lock.json:1927",
+      "published": "2016-12-15T22:00:35.805Z",
+      "age_days_at_adoption": 3601,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "keyv",
+      "version": "5.6.0",
+      "declared": "clients/vscode/package-lock.json:1934",
+      "published": "2026-01-21T00:39:26.982Z",
+      "age_days_at_adoption": 277,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "levn",
+      "version": "0.4.1",
+      "declared": "clients/vscode/package-lock.json:1944",
+      "published": "2020-04-04T02:05:31.527Z",
+      "age_days_at_adoption": 2395,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:1958",
+      "published": "2026-07-20T05:11:09.509Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-android-arm64",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:1988",
+      "published": "2026-07-20T05:10:36.404Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-darwin-arm64",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2009",
+      "published": "2026-07-20T05:10:38.380Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-darwin-x64",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2030",
+      "published": "2026-07-20T05:10:40.758Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-freebsd-x64",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2051",
+      "published": "2026-07-20T05:10:43.067Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-arm-gnueabihf",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2072",
+      "published": "2026-07-20T05:10:45.198Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-arm64-gnu",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2093",
+      "published": "2026-07-20T05:10:47.355Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-arm64-musl",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2117",
+      "published": "2026-07-20T05:10:49.830Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-x64-gnu",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2141",
+      "published": "2026-07-20T05:10:52.507Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-linux-x64-musl",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2165",
+      "published": "2026-07-20T05:10:54.935Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-win32-arm64-msvc",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2189",
+      "published": "2026-07-20T05:10:57.219Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lightningcss-win32-x64-msvc",
+      "version": "1.33.0",
+      "declared": "clients/vscode/package-lock.json:2210",
+      "published": "2026-07-20T05:10:59.727Z",
+      "age_days_at_adoption": 97,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "locate-path",
+      "version": "6.0.0",
+      "declared": "clients/vscode/package-lock.json:2231",
+      "published": "2020-08-10T17:49:10.766Z",
+      "age_days_at_adoption": 2267,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "magic-string",
+      "version": "1.4.3",
+      "declared": "clients/vscode/package-lock.json:2247",
+      "published": "2026-10-05T04:52:23.519Z",
+      "age_days_at_adoption": 20,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "minimatch",
+      "version": "11.0.1",
+      "declared": "clients/vscode/package-lock.json:2257",
+      "published": "2026-10-27T22:26:03.755Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "@isaacs/nonrecursive-glob-match",
+      "version": "1.0.1",
+      "declared": "clients/vscode/package-lock.json:2274",
+      "published": "2026-10-27T04:24:52.559Z",
+      "age_days_at_adoption": 15,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ms",
+      "version": "2.1.3",
+      "declared": "clients/vscode/package-lock.json:2281",
+      "published": "2020-12-08T13:54:35.223Z",
+      "age_days_at_adoption": 2147,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "nanoid",
+      "version": "3.3.20",
+      "declared": "clients/vscode/package-lock.json:2288",
+      "published": "2026-10-05T09:44:40.679Z",
+      "age_days_at_adoption": 20,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "natural-compare",
+      "version": "1.4.0",
+      "declared": "clients/vscode/package-lock.json:2307",
+      "published": "2016-07-22T20:48:12.217Z",
+      "age_days_at_adoption": 3747,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "obug",
+      "version": "2.2.1",
+      "declared": "clients/vscode/package-lock.json:2314",
+      "published": "2026-09-09T05:52:50.666Z",
+      "age_days_at_adoption": 46,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "optionator",
+      "version": "0.9.4",
+      "declared": "clients/vscode/package-lock.json:2328",
+      "published": "2024-04-26T22:17:51.408Z",
+      "age_days_at_adoption": 912,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "p-limit",
+      "version": "3.1.0",
+      "declared": "clients/vscode/package-lock.json:2346",
+      "published": "2020-11-25T07:42:37.364Z",
+      "age_days_at_adoption": 2160,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "p-locate",
+      "version": "5.0.0",
+      "declared": "clients/vscode/package-lock.json:2362",
+      "published": "2020-08-10T17:42:34.692Z",
+      "age_days_at_adoption": 2267,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "path-exists",
+      "version": "4.0.0",
+      "declared": "clients/vscode/package-lock.json:2378",
+      "published": "2019-04-04T03:29:16.887Z",
+      "age_days_at_adoption": 2761,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "path-key",
+      "version": "3.1.1",
+      "declared": "clients/vscode/package-lock.json:2388",
+      "published": "2019-11-22T16:47:18.153Z",
+      "age_days_at_adoption": 2529,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "picocolors",
+      "version": "1.1.1",
+      "declared": "clients/vscode/package-lock.json:2398",
+      "published": "2024-10-16T18:20:03.921Z",
+      "age_days_at_adoption": 739,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "picomatch",
+      "version": "4.0.7",
+      "declared": "clients/vscode/package-lock.json:2405",
+      "published": "2026-08-24T14:36:23.690Z",
+      "age_days_at_adoption": 62,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "postcss",
+      "version": "8.5.31",
+      "declared": "clients/vscode/package-lock.json:2418",
+      "published": "2026-10-18T19:39:43.015Z",
+      "age_days_at_adoption": 7,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "prelude-ls",
+      "version": "1.2.1",
+      "declared": "clients/vscode/package-lock.json:2447",
+      "published": "2020-04-02T22:53:40.710Z",
+      "age_days_at_adoption": 2397,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "punycode",
+      "version": "2.3.1",
+      "declared": "clients/vscode/package-lock.json:2457",
+      "published": "2023-10-30T18:28:32.512Z",
+      "age_days_at_adoption": 1091,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "qified",
+      "version": "0.10.1",
+      "declared": "clients/vscode/package-lock.json:2467",
+      "published": "2026-04-24T22:37:10.101Z",
+      "age_days_at_adoption": 184,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "hookified",
+      "version": "2.2.0",
+      "declared": "clients/vscode/package-lock.json:2480",
+      "published": "2026-04-26T22:05:22.580Z",
+      "age_days_at_adoption": 182,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "rolldown",
+      "version": "1.2.15",
+      "declared": "clients/vscode/package-lock.json:2487",
+      "published": "2026-10-21T13:10:11.254Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "npm",
+      "name": "semver",
+      "version": "7.8.5",
+      "declared": "clients/vscode/package-lock.json:2521",
+      "published": "2026-06-19T18:32:48.972Z",
+      "age_days_at_adoption": 128,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "shebang-command",
+      "version": "2.0.0",
+      "declared": "clients/vscode/package-lock.json:2534",
+      "published": "2019-09-06T14:53:25.901Z",
+      "age_days_at_adoption": 2606,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "shebang-regex",
+      "version": "3.0.0",
+      "declared": "clients/vscode/package-lock.json:2547",
+      "published": "2019-04-27T10:46:19.256Z",
+      "age_days_at_adoption": 2738,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "source-map-js",
+      "version": "1.2.2",
+      "declared": "clients/vscode/package-lock.json:2557",
+      "published": "2026-09-30T14:08:09.382Z",
+      "age_days_at_adoption": 25,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "std-env",
+      "version": "4.3.0",
+      "declared": "clients/vscode/package-lock.json:2567",
+      "published": "2026-09-29T12:40:32.756Z",
+      "age_days_at_adoption": 26,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tinybench",
+      "version": "6.2.2",
+      "declared": "clients/vscode/package-lock.json:2574",
+      "published": "2026-10-10T19:50:11.229Z",
+      "age_days_at_adoption": 15,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tinyexec",
+      "version": "1.3.1",
+      "declared": "clients/vscode/package-lock.json:2584",
+      "published": "2026-09-03T08:50:07.324Z",
+      "age_days_at_adoption": 52,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "tinyglobby",
+      "version": "0.2.17",
+      "declared": "clients/vscode/package-lock.json:2594",
+      "published": "2026-05-30T19:57:21.717Z",
+      "age_days_at_adoption": 148,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "ts-api-utils",
+      "version": "2.5.0",
+      "declared": "clients/vscode/package-lock.json:2611",
+      "published": "2026-03-19T02:50:49.789Z",
+      "age_days_at_adoption": 220,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "type-check",
+      "version": "0.4.0",
+      "declared": "clients/vscode/package-lock.json:2624",
+      "published": "2020-04-03T03:02:37.249Z",
+      "age_days_at_adoption": 2396,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript",
+      "version": "6.0.3",
+      "declared": "clients/vscode/package-lock.json:2637",
+      "published": "2026-04-16T23:38:27.905Z",
+      "age_days_at_adoption": 192,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "typescript-eslint",
+      "version": "8.71.0",
+      "declared": "clients/vscode/package-lock.json:2651",
+      "published": "2026-09-28T17:12:00.356Z",
+      "age_days_at_adoption": 27,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "undici-types",
+      "version": "7.24.6",
+      "declared": "clients/vscode/package-lock.json:2675",
+      "published": "2026-03-25T16:01:36.357Z",
+      "age_days_at_adoption": 214,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "uri-js",
+      "version": "4.4.1",
+      "declared": "clients/vscode/package-lock.json:2682",
+      "published": "2021-01-10T00:43:12.666Z",
+      "age_days_at_adoption": 2114,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vite",
+      "version": "8.3.5",
+      "declared": "clients/vscode/package-lock.json:2692",
+      "published": "2026-10-21T06:38:54.907Z",
+      "age_days_at_adoption": 14,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "vitest",
+      "version": "5.0.3",
+      "declared": "clients/vscode/package-lock.json:2770",
+      "published": "2026-09-30T11:30:42.429Z",
+      "age_days_at_adoption": 25,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "which",
+      "version": "2.0.2",
+      "declared": "clients/vscode/package-lock.json:2853",
+      "published": "2019-11-18T22:26:15.325Z",
+      "age_days_at_adoption": 2533,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "why-is-node-running",
+      "version": "3.2.1",
+      "declared": "clients/vscode/package-lock.json:2869",
+      "published": "2024-10-29T17:08:48.344Z",
+      "age_days_at_adoption": 726,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "word-wrap",
+      "version": "1.2.5",
+      "declared": "clients/vscode/package-lock.json:2882",
+      "published": "2023-07-22T14:37:38.795Z",
+      "age_days_at_adoption": 1191,
+      "ok": true
+    },
+    {
+      "ecosystem": "npm",
+      "name": "yocto-queue",
+      "version": "0.1.0",
+      "declared": "clients/vscode/package-lock.json:2892",
+      "published": "2020-11-24T06:05:35.875Z",
+      "age_days_at_adoption": 2161,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "sentence-transformers",
+      "version": "6.1.0",
+      "declared": "research/pyproject.toml:10",
+      "published": "2026-09-18T10:44:22.841108Z",
+      "age_days_at_adoption": 25,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "torch",
+      "version": "2.14.1",
+      "declared": "research/pyproject.toml:11",
+      "published": "2026-09-30T17:43:48.426734Z",
+      "age_days_at_adoption": 13,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "lancedb",
+      "version": "0.40.0",
+      "declared": "research/pyproject.toml:12",
+      "published": "2026-10-07T10:35:02.537180Z",
+      "age_days_at_adoption": 6,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pyarrow",
+      "version": "26.0.0",
+      "declared": "research/pyproject.toml:13",
+      "published": "2026-10-09T08:13:28.874876Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "rank-bm25",
+      "version": "0.2.2",
+      "declared": "research/pyproject.toml:14",
+      "published": "2022-02-16T12:10:50.626909Z",
+      "age_days_at_adoption": 1700,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "networkx",
+      "version": "3.7",
+      "declared": "research/pyproject.toml:15",
+      "published": "2026-09-21T16:45:14.609636Z",
+      "age_days_at_adoption": 22,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "scipy",
+      "version": "1.18.1",
+      "declared": "research/pyproject.toml:16",
+      "published": "2026-08-21T23:23:44.522812Z",
+      "age_days_at_adoption": 52,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "numpy",
+      "version": "2.5.4",
+      "declared": "research/pyproject.toml:17",
+      "published": "2026-10-10T20:02:40.843976Z",
+      "age_days_at_adoption": 3,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "tiktoken",
+      "version": "0.14.0",
+      "declared": "research/pyproject.toml:18",
+      "published": "2026-08-17T19:48:31.788018Z",
+      "age_days_at_adoption": 57,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "anthropic",
+      "version": "1.13.0",
+      "declared": "research/pyproject.toml:19",
+      "published": "2026-10-09T15:29:08.803597Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "matplotlib",
+      "version": "3.11.2",
+      "declared": "research/pyproject.toml:20",
+      "published": "2026-09-11T19:02:59.277416Z",
+      "age_days_at_adoption": 32,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "blake3",
+      "version": "1.0.11",
+      "declared": "research/pyproject.toml:21",
+      "published": "2026-10-08T08:55:18.099814Z",
+      "age_days_at_adoption": 5,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "pytest",
+      "version": "9.1.1",
+      "declared": "research/pyproject.toml:25",
+      "published": "2026-06-19T10:58:31.347074Z",
+      "age_days_at_adoption": 116,
+      "ok": true
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "ruff",
+      "version": "0.17.0",
+      "declared": "research/pyproject.toml:25",
+      "published": "2026-10-09T19:46:38.695158Z",
+      "age_days_at_adoption": 4,
+      "ok": true,
+      "exception": "exception (scripts/dep_age_exceptions.txt)"
+    },
+    {
+      "ecosystem": "pypi",
+      "name": "maturin",
+      "version": "1.15.0",
+      "declared": "research/pyproject.toml:25",
+      "published": "2026-08-24T12:10:53.327344Z",
+      "age_days_at_adoption": 50,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:43",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 115,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:85",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/ci.yml:88",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/ci.yml:103",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 54,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:124",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/ci.yml:127",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/ci.yml:130",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 32,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/setup-node",
+      "version": "v7.0.0",
+      "declared": ".github/workflows/ci.yml:131",
+      "published": "2026-07-14T02:46:05Z",
+      "age_days_at_adoption": 101,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/ci.yml:135",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:155",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/ci.yml:158",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/ci.yml:161",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 32,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/setup-node",
+      "version": "v7.0.0",
+      "declared": ".github/workflows/ci.yml:162",
+      "published": "2026-07-14T02:46:05Z",
+      "age_days_at_adoption": 101,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/ci.yml:166",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:197",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 102,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/ci.yml:200",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/ci.yml:203",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 39,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/setup-node",
+      "version": "v7.0.0",
+      "declared": ".github/workflows/ci.yml:204",
+      "published": "2026-07-14T02:46:05Z",
+      "age_days_at_adoption": 109,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/ci.yml:207",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 126,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/ci.yml:216",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 126,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:243",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 203,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:256",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 102,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/ci.yml:257",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 39,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/download-artifact",
+      "version": "v8.0.1",
+      "declared": ".github/workflows/ci.yml:260",
+      "published": "2026-03-11T15:44:25Z",
+      "age_days_at_adoption": 233,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:279",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 203,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:307",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 103,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/ci.yml:308",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/ci.yml:309",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 40,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/ci.yml:310",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 127,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:325",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 204,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:337",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 103,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/download-artifact",
+      "version": "v8.0.1",
+      "declared": ".github/workflows/ci.yml:338",
+      "published": "2026-03-11T15:44:25Z",
+      "age_days_at_adoption": 234,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/ci.yml:346",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 204,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/pages.yml:29",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/pages.yml:30",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/pages.yml:31",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/configure-pages",
+      "version": "v6.0.0",
+      "declared": ".github/workflows/pages.yml:53",
+      "published": "2026-03-25T17:00:49Z",
+      "age_days_at_adoption": 212,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/jekyll-build-pages",
+      "version": "v1.0.13",
+      "declared": ".github/workflows/pages.yml:54",
+      "published": "2024-08-06T23:48:04Z",
+      "age_days_at_adoption": 807,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-pages-artifact",
+      "version": "v5.0.0",
+      "declared": ".github/workflows/pages.yml:58",
+      "published": "2026-04-10T18:22:59Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/deploy-pages",
+      "version": "v5.0.1",
+      "declared": ".github/workflows/pages.yml:69",
+      "published": "2026-09-01T21:31:19Z",
+      "age_days_at_adoption": 52,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/pilot.yml:21",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 106,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/pilot.yml:44",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 207,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:52",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/release.yml:53",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/release.yml:56",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:121",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:141",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/download-artifact",
+      "version": "v8.0.1",
+      "declared": ".github/workflows/release.yml:142",
+      "published": "2026-03-11T15:44:25Z",
+      "age_days_at_adoption": 226,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/attest-build-provenance",
+      "version": "v4.2.2",
+      "declared": ".github/workflows/release.yml:171",
+      "published": "2026-08-06T19:59:04Z",
+      "age_days_at_adoption": 78,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:178",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/release.yml:185",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/transfer.yml:43",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 117,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/transfer.yml:97",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 217,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/verify.yml:58",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 95,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "dtolnay/rust-toolchain",
+      "version": "1.92.0",
+      "declared": ".github/workflows/verify.yml:62",
+      "published": null,
+      "ok": true,
+      "exception": "no publication time"
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/verify.yml:65",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 32,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/setup-node",
+      "version": "v7.0.0",
+      "declared": ".github/workflows/verify.yml:66",
+      "published": "2026-07-14T02:46:05Z",
+      "age_days_at_adoption": 101,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/verify.yml:71",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 119,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/cache",
+      "version": "v6.1.0",
+      "declared": ".github/workflows/verify.yml:80",
+      "published": "2026-06-26T19:17:06Z",
+      "age_days_at_adoption": 126,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/verify.yml:133",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 196,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/checkout",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/verify.yml:150",
+      "published": "2026-07-20T15:10:05Z",
+      "age_days_at_adoption": 102,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "astral-sh/setup-uv",
+      "version": "v10.2.0",
+      "declared": ".github/workflows/verify.yml:153",
+      "published": "2026-09-21T13:15:15Z",
+      "age_days_at_adoption": 39,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/download-artifact",
+      "version": "v8.0.1",
+      "declared": ".github/workflows/verify.yml:156",
+      "published": "2026-03-11T15:44:25Z",
+      "age_days_at_adoption": 233,
+      "ok": true
+    },
+    {
+      "ecosystem": "actions",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "declared": ".github/workflows/verify.yml:220",
+      "published": "2026-04-10T17:31:14Z",
+      "age_days_at_adoption": 203,
+      "ok": true
+    }
+  ],
+  "registry_missing": false,
+  "pass": true
+}

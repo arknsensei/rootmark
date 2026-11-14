@@ -1,0 +1,60 @@
+# RootMark's quality gates on every pull request to main and every push to
+# main: dependency direction and age, then test + lint + conformance on
+# macOS (arm64, a release target) and Linux (x86_64, a release target).
+name: ci
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deps:
+    name: dependency direction and age
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 0   # check_dep_age dates each declaration by `git blame`
+      - uses: dtolnay/rust-toolchain@1.92.0
+      - run: bash scripts/check_deps.sh
+      # crates, both clients' lock files (transitive packages included) and
+      # every workflow action: published at least 14 days before adoption
+      - run: bash scripts/check_dep_age.sh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}   # the actions' release dates (API rate limit)
+
+  test:
+    name: test + lint + conformance (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: dtolnay/rust-toolchain@1.92.0
+        with:
+          components: rustfmt, clippy
+      - uses: actions/setup-node@v7.0.0
+        with:
+          node-version: "24"
+      # the embedder models (models/MANIFEST*.json, checked by fetch_model.sh)
+      - uses: actions/cache@v6.1.0
+        with:
+          path: |
+            models/minilm-l6-v2
+            models/multilingual-minilm-l12-v2
+          key: models-${{ runner.os }}-${{ hashFiles('models/MANIFEST*.json') }}
+      - run: make models models-multilingual
+      - run: make test
+      - run: make lint
+      - run: make conformance

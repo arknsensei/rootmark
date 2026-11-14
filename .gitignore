@@ -68,3 +68,6 @@ dist/
 
 # P2-V.2/Y2: the full equiv result (~50 MB; its condensed form is committed)
 /reports/rounds/P2-V.2/**/equiv_v0m.full.json
+
+# D-1: the product scripts write their outputs here (research/transfer M rules)
+/out/

@@ -1,0 +1,120 @@
+{
+ ".github/PULL_REQUEST_TEMPLATE.md": {
+  "source": ".github/PULL_REQUEST_TEMPLATE.md",
+  "blob": "fdde96810cb9383bf37ff785968b6dd407f965d0"
+ },
+ ".github/workflows/ci.yml": {
+  "source": ".github/workflows/ci.yml",
+  "blob": "4594026bf3221ba30dc35a866ce9090a096f95de"
+ },
+ ".github/workflows/image.yml": {
+  "source": null
+ },
+ ".github/workflows/pages.yml": {
+  "source": ".github/workflows/pages.yml",
+  "blob": "89cd1175091e81630fd65143c30771ef77129940"
+ },
+ ".github/workflows/release.yml": {
+  "source": ".github/workflows/release.yml",
+  "blob": "179c8b49b18a54bf0b437e10048efa8ab24381c7"
+ },
+ ".github/workflows/transfer-verify.yml": {
+  "source": null
+ },
+ "CLAUDE.md": {
+  "source": "CLAUDE.md",
+  "blob": "2eaa91fc759c436b657359516c79b8cccf553cb3"
+ },
+ "CONTRIBUTING.md": {
+  "source": "CONTRIBUTING.md",
+  "blob": "b4d1b0bb151fef9336213dd3d74ef51c74a4c0fb"
+ },
+ "Dockerfile": {
+  "source": null
+ },
+ "Makefile": {
+  "source": "Makefile",
+  "blob": "9d62c3a677272738092bb24f2c144ed0cf40e77e"
+ },
+ "NOTICE": {
+  "source": "NOTICE",
+  "blob": "0ac39afd1190b40f2f2258737c2f802144fb074d"
+ },
+ "README.md": {
+  "source": "README.md",
+  "blob": "460a9f167589faaacb3fcb7723eee8e6269612e7"
+ },
+ "RELEASING.md": {
+  "source": null
+ },
+ "SECURITY.md": {
+  "source": "SECURITY.md",
+  "blob": "05b4aeb7ef58b814ed3a246dd002643dc0980684"
+ },
+ "about.hbs": {
+  "source": null
+ },
+ "about.toml": {
+  "source": null
+ },
+ "bindings/python/CLAUDE.md": {
+  "source": "bindings/python/CLAUDE.md",
+  "blob": "70f2d52944d74a6286499ed7da2e6ba5918bbc03"
+ },
+ "clients/CLAUDE.md": {
+  "source": "clients/CLAUDE.md",
+  "blob": "a859080a0fc881b57c104480b74779eef079a9a2"
+ },
+ "clients/obsidian/CLAUDE.md": {
+  "source": "clients/obsidian/CLAUDE.md",
+  "blob": "ea0e39da8c591ca50a859b91f486fe0fef404df4"
+ },
+ "docs/CLIENT_CONTRACT.md": {
+  "source": "docs/CLIENT_CONTRACT.md",
+  "blob": "8f2c328f0fc9d5754b04bcc439f84eaf937a3296"
+ },
+ "docs/GUIDE.md": {
+  "source": "docs/GUIDE.md",
+  "blob": "fd0d790cdab930a591b35d39406f89c67cd16e2a"
+ },
+ "docs/THREAT_MODEL.md": {
+  "source": "docs/THREAT_MODEL.md",
+  "blob": "adf1df2a2003cdcd1610c1e36badf42868ddbad4"
+ },
+ "index/CLAUDE.md": {
+  "source": "index/CLAUDE.md",
+  "blob": "b5b2dffdc58994cf767827143d74ab9eb30b1b89"
+ },
+ "packaging/homebrew/rootmark.rb.in": {
+  "source": "packaging/homebrew/rootmark.rb.in",
+  "blob": "9e49f694d84b11754e0b9eda88c7094571857dc9"
+ },
+ "server/CLAUDE.md": {
+  "source": "server/CLAUDE.md",
+  "blob": "48c82a2e011f9fe07700bd0fde8e283e87c72129"
+ },
+ "site/.gitignore": {
+  "source": null
+ },
+ "site/book.toml": {
+  "source": null
+ },
+ "site/build.sh": {
+  "source": null
+ },
+ "site/src/SUMMARY.md": {
+  "source": null
+ },
+ "site/src/git.md": {
+  "source": null
+ },
+ "site/src/install.md": {
+  "source": null
+ },
+ "site/src/introduction.md": {
+  "source": null
+ },
+ "testdata/THIRD_PARTY.md": {
+  "source": null
+ }
+}

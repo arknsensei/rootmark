@@ -12,3 +12,52 @@ pypi pyarrow 26.0.0 GH-0/G2-1
 pypi ruff 0.17.0 GH-0/G2-1
 pypi torch 2.14.1 GH-0/G2-1
 actions dtolnay/rust-toolchain 1.92.0 K-P2A.3 (a branch named after the pinned toolchain; the toolchain itself is rust-toolchain.toml's)
+
+# D-1/R2 (P2-Q.2 verification Ö1): check_dep_age now reads every package of the
+# clients' lock files. These transitive packages of the clients' test and build
+# tools (vitest → vite → rolldown, postcss, …) entered the lock files younger
+# than 14 days; none is in a shipped asset (the Obsidian bundle has no runtime
+# dependency, clients/obsidian/CLAUDE.md). Kept as recorded (no upgrade), each
+# older than 14 days by the time of this check (2026-11-14):
+# reports/rounds/D-1/r2/check_dep_age_lab.json.
+npm @oxc-project/types 0.154.0 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @oxc-project/types 0.155.0 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-android-arm-eabi 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-android-arm-eabi 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-android-arm64 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-android-arm64 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-darwin-arm64 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-darwin-arm64 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-darwin-x64 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-darwin-x64 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-freebsd-x64 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-freebsd-x64 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-arm-gnueabihf 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-arm-gnueabihf 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-arm64-gnu 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-arm64-gnu 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-arm64-musl 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-arm64-musl 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-ppc64-gnu 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-ppc64-gnu 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-s390x-gnu 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-s390x-gnu 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-x64-gnu 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-x64-gnu 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-x64-musl 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-linux-x64-musl 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-openharmony-arm64 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-openharmony-arm64 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-win32-arm64-msvc 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-win32-arm64-msvc 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-win32-x64-msvc 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm @rolldown/binding-win32-x64-msvc 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm acorn 8.19.0 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm ignore 7.0.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm magic-string 1.4.3 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm nanoid 3.3.20 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm postcss 8.5.30 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm postcss 8.5.31 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm rolldown 1.2.14 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm rolldown 1.2.15 D-1/R2-O1 (transitive test/build tool; not shipped)
+npm tinybench 6.2.2 D-1/R2-O1 (transitive test/build tool; not shipped)
