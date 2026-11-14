@@ -108,9 +108,7 @@ def product_files(commit: Commit, lab_tag: str | None, cfg: Commit | None = None
         if cl[k]:
             errors.append(f"{k}: {len(cl[k])} (first: {cl[k][:5]})")
     # overlays and their sources
-    overlays = {
-        p[len(OVERLAY) :]: p for p in cfg.entries if p.startswith(OVERLAY) and p != SOURCES
-    }
+    overlays = {p[len(OVERLAY) :]: p for p in cfg.entries if p.startswith(OVERLAY) and p != SOURCES}
     try:
         sources = json.loads(cfg.read(SOURCES))
     except (TransferError, ValueError) as e:
