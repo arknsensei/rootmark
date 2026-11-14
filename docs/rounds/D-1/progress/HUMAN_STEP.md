@@ -17,11 +17,28 @@ Ajanın son okuması (2026-11-14, salt okuma): `rootmark-ai/rootmark` var, herke
 
 Bitince bu dosyada her satırın "Durum"unu siz değiştirmeyin; ajan (ya da orkestratör) sınamaları koşar ve yazar.
 
-## Adım 2 — Laboratuvar 0.4.0 (R6'da yazılacak)
-Yer tutucu: `release/0.4.0` PR'ının birleşmesi, laboratuvar `release.yml` (doğrulama), etiket `v0.4.0`. Ayrıntılar R1–R5 bitince eklenir.
+## Adım 2 — Laboratuvar 0.4.0 (R6; ajan `release/0.4.0` dalını ve PR'ını hazırlar)
+Ön koşul: ajanın `release/0.4.0` PR'ı açık, CI'ı yeşil, PR gövdesinde `release_check` 22/22 (R21 dahil: güncel Claude Code kaydı ≤ 7 gün).
 
-## Adım 3 — Aktarım ve ürün yayımı (R6'da yazılacak)
-Yer tutucu: `transfer.yml` (`tag=v0.4.0`, `bootstrap=true`), ürün `main`'inin kök commit'ten oluşturulması, dal koruması, ürün etiketi `v0.4.0`, ürün `release.yml`, tap PR'ının birleşmesi, Pages + alan adı + HTTPS, `ghcr.io` paketinin herkese açık yapılması.
+| # | Adım | Beklenen sonuç | Ajanın sınaması |
+|---|---|---|---|
+| 2a | `release/0.4.0` PR'ını **rebase** ile birleştirin (0.3.4'teki #69 gibi; turun PR'ından önce). | `main`'de sürüm 0.4.0, `research/transfer/`, `product/overlay/` | `git show origin/main:Cargo.toml \| grep '^version'` → `0.4.0` |
+| 2b | Laboratuvar `release.yml`'ini birleşmiş `main`'de tetikleyin (laboratuvarın kendi doğrulaması; GitHub sürümü **yayımlanmaz**). | koşu yeşil | `gh run list -R arknsensei/rootmark -w release -L 1` |
+| 2c | Birleşmiş `main` commit'ine etiket: `git tag -a v0.4.0 -m "rootmark 0.4.0" <sha> && git push origin v0.4.0` | etiket var | `git ls-remote --tags origin v0.4.0` |
+
+## Adım 3 — Aktarım ve ürün yayımı (adım 1 ve 2 bittikten sonra)
+| # | Adım | Beklenen sonuç | Ajanın sınaması |
+|---|---|---|---|
+| 3a | Laboratuvarda **Actions → transfer → Run workflow**: `tag = v0.4.0`, `bootstrap = true` (ilk aktarım). | iş yeşil; özet: iki koşu aynı ağaç kimliği; ürün deposunda `transfer/v0.4.0` dalı, kök commit | `gh run list -R arknsensei/rootmark -w transfer -L 1`; `gh api repos/rootmark-ai/rootmark/branches` |
+| 3b | Ürün deposunda varsayılan dalı bu commit'ten oluşturun: `gh api -X POST repos/rootmark-ai/rootmark/git/refs -f ref=refs/heads/main -f sha=<transfer/v0.4.0'ın commit'i>`; Settings → General → Default branch `main`. | `main` = aktarım commit'i | `gh api repos/rootmark-ai/rootmark/commits/main --jq .commit.message` (`Lab-Commit`, `Lab-Tag`, `Transfer-Tree`) |
+| 3c | `main`'e push `ci`, `transfer-verify` ve `pages`'i başlatır: `ci` ve `transfer-verify` yeşil olmalı. Ardından dal koruması (`main`: PR zorunlu, gerekli denetimler `dependency direction and age`, `test + lint + conformance (macos-15)`, `test + lint + conformance (ubuntu-latest)`, `transfer verify`; doğrusal geçmiş; zorla itme yok). | iki iş akışı yeşil; kural seti etkin | `gh run list -R rootmark-ai/rootmark -L 5`; `gh api repos/rootmark-ai/rootmark/rulesets` |
+| 3d | Pages: Settings → Pages → Source **GitHub Actions**; Custom domain `docs.rootmark.ai`; DNS doğrulandıktan sonra **Enforce HTTPS**. `pages` iş akışını yeniden koşun. | `https://docs.rootmark.ai/` 200 | `curl -sI https://docs.rootmark.ai/` |
+| 3e | Ürün etiketi: `git tag -a v0.4.0 -m "RootMark 0.4.0" <ürün main commit'i>` ürün deposuna itilir (ya da `gh api -X POST repos/rootmark-ai/rootmark/git/refs -f ref=refs/tags/v0.4.0 -f sha=<sha>` — hafif etiket de olur). | etiket var | `gh api repos/rootmark-ai/rootmark/git/ref/tags/v0.4.0` |
+| 3f | Ürün deposunda **Actions → release → Run workflow**: `tag = v0.4.0`. GitHub sürümü, `image` ve `tap` işleri bu koşunun içindedir. | koşu yeşil; sürüm 0.4.0 varlıklarıyla; iki kayıt defterinde aynı özet; tap deposunda PR | `gh release view v0.4.0 -R rootmark-ai/rootmark`; `docker buildx imagetools inspect …`; `gh pr list -R rootmark-ai/homebrew-tap` |
+| 3g | `ghcr.io` paketini herkese açık yapın (rootmark-ai → Packages → rootmark → Package settings → Change visibility → Public). | anonim `docker pull ghcr.io/rootmark-ai/rootmark:0.4.0` çalışır | `docker logout ghcr.io; docker pull …` |
+| 3h | Tap PR'ını birleştirin. | `brew install rootmark-ai/tap/rootmark` çalışır | ajanın R6 sınaması |
+
+Bunlardan sonra ajan R6'nın "yayımlanmış kanallardan sınama"sını (temiz Linux konteyneri ve bu Mac) koşar.
 
 ## Adım 4 — İsteğe bağlı (ürün yayımlandıktan sonra; çıkış kriteri değil)
-Laboratuvar Pages yönlendirmesi ve `arknsensei/rootmark` → `arknsensei/rootmark-lab` (K17, D0-K4).
+Laboratuvar Pages yönlendirmesi: `docs/rounds/D-1/progress/lab_redirect/index.html`'i laboratuvarın Pages sitesinin `spec/index.html`'i olarak yayımlamak (laboratuvar `pages.yml`'ini bir kez bu dosyayla koşturmak), sonra `arknsensei/rootmark` → `arknsensei/rootmark-lab` (K17, D0-K4). Eski rozetin `badge.json`'u yönlendirilemez (bilinen sınır).
