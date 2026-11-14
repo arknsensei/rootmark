@@ -23,11 +23,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # K-D0.3: a pull request that touches only round and decision documents
-  # (every changed path is a `.md` under docs/rounds/ or reports/rounds/ outside
-  # a `runs/` directory, or docs/DECISIONS.md, docs/ROADMAP.md) skips the
-  # build jobs; a job skipped by its `if` reports success, so the ruleset's
-  # required checks pass. A push to main is read the same way over the
+  # K-D0.3, widened by K-P2Q4.3 (user decision): a pull request whose every
+  # changed path is under reports/ (the rounds' report outputs, any type) or
+  # is a `.md` file skips the build jobs — except spec/** and
+  # docs/CLIENT_CONTRACT.md, which tests read (they always run everything).
+  # A job skipped by its `if` reports success, so the ruleset's required
+  # checks pass. A push to main is read the same way over the
   # pushed range (before..after; K-P2Q3.4): a merge of documents only skips
   # the build jobs, any other merge runs everything. An unknown range (new
   # branch, a `before` that is not an ancestor of `after`) and
@@ -69,12 +70,12 @@ jobs:
           printf '%s\n' "$raw"
           files="$(printf '%s\n' "$raw" | cut -f2-)"
           badmode="$(printf '%s\n' "$raw" | awk 'NF && (($1 != ":100644" && $1 != ":000000") || ($2 != "100644" && $2 != "000000"))')"
-          other="$(printf '%s\n' "$files" | grep -v -E '^((docs|reports)/rounds/.*\.md|docs/DECISIONS\.md|docs/ROADMAP\.md)$' || true)"
-          runs="$(printf '%s\n' "$files" | grep -E '/runs/' || true)"
-          if [ -z "$files" ] || [ -n "$other" ] || [ -n "$runs" ] || [ -n "$badmode" ]; then
+          other="$(printf '%s\n' "$files" | grep -v -E '^reports/|\.md$' || true)"
+          guarded="$(printf '%s\n' "$files" | grep -E '^spec/|^docs/CLIENT_CONTRACT\.md$' || true)"
+          if [ -z "$files" ] || [ -n "$other" ] || [ -n "$guarded" ] || [ -n "$badmode" ]; then
             echo "code=true" >>"$GITHUB_OUTPUT"; echo "code or other paths changed: full run"
           else
-            echo "code=false" >>"$GITHUB_OUTPUT"; echo "round/decision documents only: build jobs skipped (K-D0.3)"
+            echo "code=false" >>"$GITHUB_OUTPUT"; echo "reports and documents only: build jobs skipped (K-D0.3, K-P2Q4.3)"
           fi
 
   deps:
