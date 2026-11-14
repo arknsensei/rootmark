@@ -91,6 +91,25 @@ jobs:
       - run: bash scripts/check_dep_age.sh
         env:
           GITHUB_TOKEN: ${{ github.token }}   # the actions' release dates (API rate limit)
+      # K-P2Q4.4 (4), D-1/R0: the freeze checks run on every pull request
+      # and push here, not only inside the build jobs' `make lint` — the
+      # document filter (K-P2Q4.3) skips those for reports/** and .md
+      # changes, and some frozen files are exactly such files
+      # (research/FROZEN.md, research/eval/DETERMINISTIC_FIELDS.md,
+      # research/reports/**/commentary.md, reports/rounds/P2-V*/inventory.*).
+      # check_compare_fields imports only numpy and blake3 of research/'s
+      # environment: those two, at research/pyproject.toml's pins, in a
+      # venv of their own (UV_NO_SYNC: `uv run` does not install the rest).
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: frozen files (scripts/check_frozen.sh)
+        run: bash scripts/check_frozen.sh
+      - name: declared comparator fields (scripts/check_compare_fields.sh)
+        run: |
+          set -euo pipefail
+          pins="$(grep -oE '"(numpy|blake3)==[^"]+"' research/pyproject.toml | tr -d '"')"
+          [ "$(printf '%s\n' "$pins" | wc -l)" -eq 2 ] || { echo "numpy/blake3 pins not found in research/pyproject.toml" >&2; exit 1; }
+          (cd research && uv venv -q --python 3.12 && uv pip install -q $pins)
+          UV_NO_SYNC=1 bash scripts/check_compare_fields.sh
 
   test:
     # the check's name is the ruleset's required check and stays; GitHub
