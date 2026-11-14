@@ -33,3 +33,6 @@ Port yarışı (PQ3-8) bu koşuda görülmedi (0/2 400).
 - **Bekleme zamanlayıcısı:** kaldırma her günlükte zamanında (≈1 500 ms) denenir; düşmesinin nedeni denemenin hatasıdır.
 
 **Kök neden:** SIGKILL'in dizin yazımının ortasına (sıcak katmanın dört eki arasına, günlük ile ek arasına ya da kurulumun `remove_dir_all`'ına) düşmesi dizini günlükle tutarsız bırakır; 0.3.3'ün başlangıcı bunu görmez (`start_index` yalnız manifest'i okur), uzlaştırma değişmemiş dosyalar için dizini açmaz, ilk dizin açılışı (kaldırmanın `Store::open`'ı ya da `search`) hata verir ve kaldırma bir daha denenmez. PQ3-9 ve PQ3-7 aynı sınıfın iki yüzüdür. Düzeltme: DESIGN §2–§3.
+
+## Düzeltme eki (R5; gözden geçirici N1)
+"22 kalış" yanlış toplam: kayıtlarda macOS 17 + Linux 7 = **24** (A2 7, C1 17). Sınıflar: (1) 5, (2) A2 2 + C1 2, (3) C1 15. Sonuç değişmez; ayrıntı DESIGN'ın düzeltme ekinde. R1.md'deki "0.3.3'te aynı koşu 22 kalış" da 24 okunur.
