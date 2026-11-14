@@ -4,6 +4,31 @@ All notable changes of the `rootmark` binary, the Rust crates, the Python
 binding and the Obsidian client. One version number for all of them
 (docs/PACKAGES.md); the spec carries its own (`rootmark --spec-version`).
 
+## 0.4.0 — 2026-11-14 (D-1: the first public RootMark release)
+
+The first public release, from the product repository
+[rootmark-ai/rootmark](https://github.com/rootmark-ai/rootmark), which is
+generated from this one per release (round D-1). **The behaviour of the
+binary, the MCP tools (`tools/list` byte for byte), the HTTP API, the client
+contract, the event log and the specification (2.0.3) are those of 0.3.4**;
+the version step marks the new distribution:
+
+- one `SHA256SUMS` for every release asset (archives, installers, the
+  wheel, the Obsidian plugin zip and its `main.js`/`manifest.json`/
+  `styles.css`, `THIRD_PARTY_LICENSES`), each with a build provenance
+  attestation (`gh attestation verify <file> -R rootmark-ai/rootmark`);
+  `SHA256SUMS.local` is gone;
+- `THIRD_PARTY_LICENSES` (the licences of the crates in the binary) in every
+  archive and in the image; `NOTICE` carries the MIT notice of the
+  dendron-site text in the test reference data;
+- a container image `ghcr.io/rootmark-ai/rootmark` and `rootmark/rootmark`
+  (`linux/amd64`, one digest in both registries, the default model inside,
+  MCP over stdio with `--watch` by default, non-root);
+- a Homebrew tap: `brew install rootmark-ai/tap/rootmark`;
+- the documentation site https://docs.rootmark.ai (guide, specification and
+  its measured conformance badge, client contract and threat model in
+  English, and "How RootMark differs from git").
+
 ## 0.3.4 — 2026-11-13 (P2-Q.4: a removal lost to a kill, the index kept whole)
 
 A patch of `rootmark serve` and the index install (round P2-Q.4; findings
