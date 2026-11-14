@@ -33,6 +33,7 @@ scripts/test_*.sh
 scripts/embed_cpu.sh
 scripts/keychain_probe.sh
 scripts/release_check.sh
+scripts/release_gate_claude.sh
 scripts/release.sh
 scripts/release_local.sh
 scripts/governance_scenario.sh

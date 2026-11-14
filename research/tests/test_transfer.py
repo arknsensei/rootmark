@@ -277,3 +277,17 @@ def test_verify_rejects_a_changed_m_file_and_a_wrong_expected_tree(lab, tmp_path
     assert cli.main([*base, "--out", str(tmp_path / "V1")]) == 1
     out = capsys.readouterr().out
     assert "core/Cargo.toml: bytes differ from the rebuilt tree" in out
+
+
+def test_the_lab_head_is_fully_classified():
+    """The lab's own HEAD, with its own lists, overlays and SOURCES.json, as
+    transfer.yml reads a tag (D1F-14: a file added after the last
+    classification reading left a tag that could not be transferred)."""
+    lab_root = Path(__file__).resolve().parents[2]
+    head = B.Commit(lab_root, "HEAD")
+    _files, report = B.product_files(head, None)
+    counts = report["counts"]
+    assert report["unclassified_files"] == [] and counts["unclassified"] == 0
+    assert report["double_files"] == [] and counts["double_classified"] == 0
+    assert counts["product_path_collisions"] == 0 and counts["dead_patterns"] == 0
+    assert report["classification_errors"] == []
