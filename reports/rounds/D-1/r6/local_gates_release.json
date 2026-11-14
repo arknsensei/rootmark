@@ -1,0 +1,11 @@
+{
+  "what": "local gates on release/0.4.0 before the single push to PR #73 (K-D1.2)",
+  "head": "42d7ce2",
+  "make_test": 0,
+  "make_lint_first": 2,
+  "make_lint_first_cause": "ruff format of research/transfer/build.py (fixed, 42d7ce2)",
+  "make_lint": 0,
+  "make_conformance": "0 (39/39)",
+  "release_check": "21/21",
+  "r21_gate": "ok"
+}
