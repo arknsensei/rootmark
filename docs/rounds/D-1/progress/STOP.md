@@ -14,3 +14,9 @@
 - **Karar talebi:** `docs/DECISIONS.md` K-D1-T2 (a, b, c; ajanın önerisi a).
 - **Park edilen:** 3a ve sonrası. Bağımsız iş: düzeltme dalı `release/0.4.0-fix` ve yerel tam kapılar (PR karar gelince).
 - **Kapanış (2026-11-15):** K-D1.3 (kullanıcı kararı, seçenek a): düzeltme PR'ı (`release/0.4.0-fix`) ve laboratuvar `v0.4.0` etiketinin yeniden atılması; sıra HUMAN_STEP adım 2′. R6 PARK'tan çıktı.
+
+## 2026-11-15 · R6 PARK (3b sonrası, 3f öncesi) — ürün `release.yml` geçersiz YAML
+- **Koşul:** düzeltmenin ürüne giden yolu dışa yazan, kısmen yıkıcı insan adımları ve D0-K5/D1-2 sapması içeriyor → karar talebi.
+- **Gözlem:** D1F-17 (kaplama `release.yml:296` tırnaksız ad; actionlint'te tek YAML hatası); düzeltme ve kalıcı test `d-1/round`'da.
+- **Karar talebi:** `docs/DECISIONS.md` K-D1-T3 (a, b, c; ajanın önerisi b).
+- **Park edilen:** 3c'nin dal koruması, 3d–3h.
