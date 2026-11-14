@@ -1,0 +1,22 @@
+{
+  "what": "D-1/R5 local Homebrew check: the product formula template (packaging/homebrew/rootmark.rb.in) filled with a local aarch64-apple-darwin archive packaged as the product release.yml does (rootmark 0.3.4 of the lab tree; LICENSE, NOTICE, README.md, THIRD_PARTY_LICENSES, models/), url file://<scratch>, in a temporary local tap (brew tap-new --no-git), removed afterwards",
+  "brew_install": "ok",
+  "brew_test": "ok (--version, --spec-version)",
+  "caveats_fetch_model": "ok",
+  "version": "rootmark 0.3.4",
+  "conformance": {
+    "level": 3,
+    "passed": 39,
+    "total": 39,
+    "fixtures_manifest": "ok"
+  },
+  "doc_files": [
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "THIRD_PARTY_LICENSES"
+  ],
+  "cleanup": "brew uninstall + brew untap: no rootmark formula or rootmark-d1 tap left",
+  "homebrew": "7.0.12",
+  "pass": true
+}
