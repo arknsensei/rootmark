@@ -30,7 +30,11 @@ RULES: dict[str, list[tuple[bytes, bytes, int]]] = {
                 b"        .success());\n"
                 b"    // product repository (D0-K14): the fixture's store is kept as\n"
                 b"    // dot-rootmark/; the copy gets the name the server reads\n"
-                b'    std::fs::rename(root.join("vault/dot-rootmark"), root.join("vault/.rootmark")).unwrap();\n'
+                b"    std::fs::rename(\n"
+                b'        root.join("vault/dot-rootmark"),\n'
+                b'        root.join("vault/.rootmark"),\n'
+                b"    )\n"
+                b"    .unwrap();\n"
                 b'    root.join("vault")\n}'
             ),
             1,
