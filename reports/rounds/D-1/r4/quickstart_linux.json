@@ -1,0 +1,77 @@
+{
+ "what": "D-1 image quick start (research/d1/image_quickstart.py)",
+ "platform": "Linux (docker:28-dind on the Docker Desktop Linux kernel, linux/amd64 image; vault on the Linux file system)",
+ "docker_platform": "linux/amd64",
+ "image": "rootmark-d1-local:0.3.4",
+ "vault": "copy of spec/fixtures/mini_vault (synthetic)",
+ "image_size_mb": 192.6,
+ "steps": {
+  "1_conformance": {
+   "pass": true,
+   "passed": 39,
+   "total": 39,
+   "level": 3,
+   "s": 24.5
+  },
+  "2_ingest_dir": {
+   "pass": true,
+   "documents": 12,
+   "events_hash": "808a41f21a43e121d7d688fee9f5bc24",
+   "s": 0.4
+  },
+  "3_index_build": {
+   "pass": true,
+   "exit": 0,
+   "s": 1.9
+  },
+  "4_mcp_stdio": {
+   "pass": true,
+   "server": "rootmark",
+   "tools": 11,
+   "propose": true,
+   "search_include_proposal_finds": true,
+   "default_search_hides_proposal": true,
+   "s": 0.8,
+   "exit_after_close": 0
+  },
+  "5_watch_edit_found": {
+   "pass": true,
+   "reps": [
+    {
+     "absent_before": true,
+     "found": true,
+     "after_s": 0.52
+    },
+    {
+     "absent_before": true,
+     "found": true,
+     "after_s": 0.52
+    },
+    {
+     "absent_before": true,
+     "found": true,
+     "after_s": 0.53
+    }
+   ]
+  },
+  "6_non_root": {
+   "pass": true,
+   "uid": "10001"
+  },
+  "7_licences_in_image": {
+   "pass": true,
+   "files": [
+    "ATTRIBUTION",
+    "LICENSE",
+    "NOTICE",
+    "THIRD_PARTY_LICENSES",
+    "model.onnx"
+   ]
+  },
+  "8_version": {
+   "pass": true,
+   "version": "rootmark 0.3.4"
+  }
+ },
+ "pass": true
+}

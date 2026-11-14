@@ -1,0 +1,112 @@
+# The container image of a published release (linux/amd64): called by
+# release.yml after the GitHub release exists, or started by hand for a
+# published tag. The image is built from the release's own Linux archive
+# (checked against the release's SHA256SUMS and its provenance attestation),
+# pushed in ONE build to ghcr.io/rootmark-ai/rootmark and Docker Hub
+# rootmark/rootmark under X.Y.Z, X.Y and latest — one manifest, one digest in
+# both registries — and its provenance is attested in both. The last step
+# reads both registries back and fails unless the digests are equal.
+name: image
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+    secrets:
+      DOCKERHUB_TOKEN:
+        required: true
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "published release tag (vX.Y.Z)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  image:
+    name: image ${{ inputs.tag }} (linux/amd64)
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write      # ghcr.io
+      id-token: write      # provenance (OIDC)
+      attestations: write
+    env:
+      TAG: ${{ inputs.tag }}
+      GHCR: ghcr.io/rootmark-ai/rootmark
+      HUB: rootmark/rootmark
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ inputs.tag }}
+      - name: the release's Linux archive, checked
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$TAG" =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || { echo "tag must be vX.Y.Z: $TAG" >&2; exit 1; }
+          ver="${TAG#v}"; echo "VER=$ver" >>"$GITHUB_ENV"; echo "MINOR=${BASH_REMATCH[1]}.${BASH_REMATCH[2]}" >>"$GITHUB_ENV"
+          a="rootmark-$ver-x86_64-unknown-linux-gnu.tar.gz"
+          mkdir -p ctx/dist
+          gh release download "$TAG" -p "$a" -p SHA256SUMS -D ctx/dist
+          (cd ctx/dist && grep " $a\$" SHA256SUMS | sha256sum -c -)
+          gh attestation verify "ctx/dist/$a" -R "$GITHUB_REPOSITORY"
+          rm ctx/dist/SHA256SUMS
+          cp Dockerfile ctx/
+      - uses: docker/setup-buildx-action@v4.4.1
+      - uses: docker/login-action@v4.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - uses: docker/login-action@v4.7.0
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - id: build
+        uses: docker/build-push-action@v7.4.0
+        with:
+          context: ctx
+          platforms: linux/amd64
+          push: true
+          provenance: false
+          sbom: false
+          build-args: |
+            VERSION=${{ env.VER }}
+            REVISION=${{ github.sha }}
+          tags: |
+            ${{ env.GHCR }}:${{ env.VER }}
+            ${{ env.GHCR }}:${{ env.MINOR }}
+            ${{ env.GHCR }}:latest
+            ${{ env.HUB }}:${{ env.VER }}
+            ${{ env.HUB }}:${{ env.MINOR }}
+            ${{ env.HUB }}:latest
+      - name: provenance (ghcr.io)
+        uses: actions/attest-build-provenance@v4.2.2
+        with:
+          subject-name: ${{ env.GHCR }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
+      - name: provenance (Docker Hub)
+        uses: actions/attest-build-provenance@v4.2.2
+        with:
+          subject-name: index.docker.io/${{ env.HUB }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
+      - name: the same digest in both registries, the image runs
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          set -euo pipefail
+          g="$(docker buildx imagetools inspect "$GHCR:$VER" --format '{{json .Manifest}}' | jq -r .digest)"
+          h="$(docker buildx imagetools inspect "$HUB:$VER" --format '{{json .Manifest}}' | jq -r .digest)"
+          echo "built $DIGEST; ghcr.io $g; Docker Hub $h"
+          [ "$g" = "$DIGEST" ] && [ "$h" = "$DIGEST" ] || { echo "digests differ" >&2; exit 1; }
+          docker run --rm "$GHCR@$DIGEST" --version | grep -qx "rootmark $VER"
+          docker run --rm "$GHCR@$DIGEST" conformance | jq -e '.passed == 39 and .total == 39' >/dev/null
+          [ "$(docker run --rm --entrypoint id "$GHCR@$DIGEST" -u)" = 10001 ]
+          { echo "### image $VER"; echo; echo "digest \`$DIGEST\` — \`$GHCR:$VER\`, \`$HUB:$VER\`"; } >>"$GITHUB_STEP_SUMMARY"
