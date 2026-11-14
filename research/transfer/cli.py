@@ -64,10 +64,36 @@ def cmd_verify(a) -> int:
         return 1
     if not r["ok"]:
         problems.append("the rebuilt transfer is not clean (see transfer_result.json)")
-    for t in a.expect_tree or []:
-        if t != r["tree"]:
-            problems.append(f"tree {r['tree']} != expected {t}")
     prod = Path(a.product)
+    # the product checkout's own tree id, computed here (never taken from the
+    # caller); every --expect-tree (e.g. the commit's Transfer-Tree line) too
+    prod_tree = (
+        subprocess.run(
+            ["git", "-C", str(prod), "rev-parse", "HEAD^{tree}"], capture_output=True, check=True
+        )
+        .stdout.decode()
+        .strip()
+    )
+    for t in [prod_tree, *(a.expect_tree or [])]:
+        if t != r["tree"]:
+            problems.append(f"tree {r['tree']} (rebuilt) != {t}")
+    # and file by file, bytes and set of paths, TRANSFER.json included
+    rebuilt = out / "tree"
+    rb = {q.relative_to(rebuilt).as_posix() for q in rebuilt.rglob("*") if q.is_file()}
+    pd = {
+        x
+        for x in subprocess.run(
+            ["git", "-C", str(prod), "ls-files", "-z"], capture_output=True, check=True
+        )
+        .stdout.decode("utf-8")
+        .split("\0")
+        if x
+    }
+    for x in sorted(rb ^ pd)[:20]:
+        problems.append(f"{x}: only in the {'rebuilt' if x in rb else 'product'} tree")
+    for x in sorted(rb & pd):
+        if (rebuilt / x).read_bytes() != (prod / x).read_bytes():
+            problems.append(f"{x}: bytes differ from the rebuilt tree")
     man = json.loads((prod / "TRANSFER.json").read_text(encoding="utf-8"))
     if man.get("lab_commit") != r["lab_commit"]:
         problems.append(f"TRANSFER.json lab_commit {man.get('lab_commit')} != {r['lab_commit']}")
@@ -100,6 +126,7 @@ def cmd_verify(a) -> int:
         problems.append(f"{len(extra)} product files outside TRANSFER.json: {extra[:10]}")
     res = {
         "tree": r["tree"],
+        "product_tree": prod_tree,
         "expected": a.expect_tree or [],
         "rows": len(man["files"]),
         "problems": problems,
