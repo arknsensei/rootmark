@@ -1,0 +1,68 @@
+{
+  "transfer": "D-1 research/transfer (docs/rounds/D-1/progress/DESIGN.md §1)",
+  "lab_commit": "4ea4c287d5f9a14922dd047e058fb2fbd84ffa29",
+  "lab_tag": null,
+  "config_commit": "4ea4c287d5f9a14922dd047e058fb2fbd84ffa29",
+  "tree": "3914a7d73a8d724938cb1fb7c9f0dfdb41028fb5",
+  "product_files": 1254,
+  "counts": {
+    "lab_files": 16894,
+    "goes": 599,
+    "stays": 15655,
+    "transforms": {
+      "K": 605,
+      "M": 16,
+      "Y": 19
+    },
+    "overlays_with_source": 19,
+    "overlays_product_only": 14,
+    "unclassified": 0,
+    "double_classified": 0,
+    "product_path_collisions": 0,
+    "dead_patterns": 0
+  },
+  "classification_errors": [],
+  "leaks": {
+    "counts": {
+      "lab_prefix": 0,
+      "rootmark_dir": 0,
+      "server_token": 0,
+      "key_pattern": 0,
+      "turkish_process": 0,
+      "secret_content": 0,
+      "host_user": 0,
+      "home_path_unjustified": 0,
+      "email_unjustified": 0,
+      "private_term": 0,
+      "broken_link": 0
+    },
+    "justified": {
+      "home_path": [
+        {
+          "file": "docs/GUIDE.md",
+          "user": "ada"
+        },
+        {
+          "file": "docs/GUIDE.md",
+          "user": "rmhuman"
+        },
+        {
+          "file": "site/src/install.md",
+          "user": "ada"
+        }
+      ],
+      "email": [
+        {
+          "file": ".github/workflows/release.yml",
+          "address": "GH_TOKEN@github.com"
+        },
+        {
+          "file": "testdata/tok_ref.json",
+          "address": "support@dendron.so"
+        }
+      ]
+    },
+    "private_terms_searched": 3
+  },
+  "ok": true
+}
