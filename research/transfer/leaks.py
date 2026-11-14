@@ -113,8 +113,11 @@ def check(files: dict[str, bytes], home_exc: list[dict], mail_exc: list[dict]) -
         b = files[p]
         if SECRET_RE.search(b):
             out["secret_content"].append(p)
-        # the CI runner's user is `runner` (a generic name, not a person)
-        if me not in (b"runner",) and (home in b or me_re.search(b)):
+        # the home directory is always a leak; the user name as a word too,
+        # except the CI runner's generic `runner` (a common English word in
+        # the tree, not a person) — the runner's home (/home/runner,
+        # /Users/runner) is still found, by `home` and by HOME_RE
+        if home in b or (me != b"runner" and me_re.search(b)):
             out["host_user"].append(p)
         for m in sorted(set(HOME_RE.findall(b))):
             s = m.decode("utf-8", "replace")
