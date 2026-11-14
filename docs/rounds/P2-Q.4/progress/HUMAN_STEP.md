@@ -1,4 +1,10 @@
-# P2-Q.4 — İnsan adımı 3 (2026-11-14): tur dalının itilmesi ve 0.3.4'ün yayımının kalanı
+# P2-Q.4 — İnsan adımları
+
+**Bekleyen insan adımı yok** (R5 sürüyor; tur sonunda tek PR ajan tarafından açılır, birleştirme insanın).
+
+**Adım 3 yapıldı (2026-11-14):** tur dalı itildi (`ac9e717`); `release.yml` 43527847034 (`81a923d`, zorunlu iki hedef `ok`, 39/39); `v0.3.4` etiketi `81a923d`'de; GitHub sürümü "rootmark 0.3.4" yayımlı, 12 varlık.
+
+## (Geçmiş) Adım 3 — tur dalının itilmesi ve 0.3.4'ün yayımının kalanı
 
 **Adım 2 yapıldı:** K-P2Q4-T1 → (a) (K-P2Q4.2: Q4-7 lafzen kaldı → tur kaldı; yayım sürer; PQ4-6 ve PQ4-5 sonraki tura). #69 rebase ile birleşti: `main` = `81a923d` (ağacı #69'un ucu `05a4c57` ile eşit); `release/0.3.4` uzakta silindi.
 

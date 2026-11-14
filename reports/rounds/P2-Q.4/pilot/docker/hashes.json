@@ -1,0 +1,22 @@
+{
+ "events_hash": "173c13df79d2d98dbff1df45453e193c",
+ "index_files": {
+  "lexical/.managed.json": "e3f1a4f25bdc3ba40f153e7e9c74450d",
+  "lexical/5e613d71d3d5a0168da09fcfd61912a4.fast": "09e4098d9041819b29e6ccd9df48257f",
+  "lexical/5e613d71d3d5a0168da09fcfd61912a4.fieldnorm": "964d34439c7c5b09d00aafdea064dd04",
+  "lexical/5e613d71d3d5a0168da09fcfd61912a4.idx": "4b6fb35785e8d1324098b30f2ed08910",
+  "lexical/5e613d71d3d5a0168da09fcfd61912a4.pos": "84bb23d8b209a966bafcbd58847725ff",
+  "lexical/5e613d71d3d5a0168da09fcfd61912a4.store": "4c808b74b11467750d64f6b05c755430",
+  "lexical/5e613d71d3d5a0168da09fcfd61912a4.term": "3cefd8fb9452399d46645a3758f8ed37",
+  "lexical/meta.json": "fb34fd7f7b83ac4dc373abc86ee0f2e4",
+  "manifest.json": "7d2af69f0a32d70941cd408ef84b56a5",
+  "records.jsonl": "b121572216bdd047fb9d54c78b44bf3c",
+  "snapshots.jsonl": "0055d1302b9cf7302503c4054c1944a2",
+  "vectors/embedders.jsonl": "bd8583c39f64123cdb3c37a75bf0bb7d",
+  "vectors/vectors.f32": "e25b9b9a1b41e53ed772ec0e1c50b40d"
+ },
+ "manifest": "7d2af69f0a32d70941cd408ef84b56a5",
+ "query_results_b2": "c10c3f852e9ff79fb7db8896c0fb3de998cbdca0afa7554431581817ea482a4d",
+ "rankings_b2": "1aa51b4c33f31b8a2ef43f4c4990ca59bacb9b6fac6315e476b180e46d9bb96d",
+ "vectors": "e25b9b9a1b41e53ed772ec0e1c50b40d"
+}
