@@ -40,6 +40,8 @@ Bitince bu dosyada her satırın "Durum"unu siz değiştirmeyin; ajan (ya da ork
 Ardından adım 3 (3a: `tag = v0.4.0`, `bootstrap = true`).
 
 ## Adım 3 — Aktarım ve ürün yayımı (adım 1 ve 2 bittikten sonra)
+**Durum (2026-11-15):** 3a ✔ — `transfer.yml` koşusu 43652118695 yeşil (545d0b2); ürün `transfer/v0.4.0` = dd0465d (kök commit, ebeveyn 0), ağaç **c61ce297…** = yerel A/B/CI benzetimi = orkestratörün bağımsız koşusu; ajanın `transfer verify`'ı (anonim klon, etiketteki araç) bayt bayt `ok`, 1253 satır, sorun 0 (`reports/rounds/D-1/r6/transfer_3a.json`). Varsayılan dal şimdilik `transfer/v0.4.0` (GitHub ilk dalı varsayılan yaptı); 3b'de `main`'e çevrilir. Sırada 3b.
+
 | # | Adım | Beklenen sonuç | Ajanın sınaması |
 |---|---|---|---|
 | 3a | Laboratuvarda **Actions → transfer → Run workflow**: `tag = v0.4.0`, `bootstrap = true` (ilk aktarım). | iş yeşil; özet: iki koşu aynı ağaç kimliği; ürün deposunda `transfer/v0.4.0` dalı, kök commit | `gh run list -R arknsensei/rootmark -w transfer -L 1`; `gh api repos/rootmark-ai/rootmark/branches` |
