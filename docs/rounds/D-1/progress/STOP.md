@@ -20,3 +20,4 @@
 - **Gözlem:** D1F-17 (kaplama `release.yml:296` tırnaksız ad; actionlint'te tek YAML hatası); düzeltme ve kalıcı test `d-1/round`'da.
 - **Karar talebi:** `docs/DECISIONS.md` K-D1-T3 (a, b, c; ajanın önerisi b).
 - **Park edilen:** 3c'nin dal koruması, 3d–3h.
+- **Kapanış (2026-11-15):** K-D1.4 (kullanıcı kararı, seçenek b): ürün deposu sıfırlanır, aktarım baştan; düzeltme PR'ı `release/0.4.0-fix2`; sıra HUMAN_STEP adım 3′. R6 PARK'tan çıktı.

@@ -42,6 +42,8 @@ Ardından adım 3 (3a: `tag = v0.4.0`, `bootstrap = true`).
 ## Adım 3 — Aktarım ve ürün yayımı (adım 1 ve 2 bittikten sonra)
 **Durum (2026-11-15):** 3a ✔ — `transfer.yml` koşusu 43652118695 yeşil (545d0b2); ürün `transfer/v0.4.0` = dd0465d (kök commit, ebeveyn 0), ağaç **c61ce297…** = yerel A/B/CI benzetimi = orkestratörün bağımsız koşusu; ajanın `transfer verify`'ı (anonim klon, etiketteki araç) bayt bayt `ok`, 1253 satır, sorun 0 (`reports/rounds/D-1/r6/transfer_3a.json`). Varsayılan dal şimdilik `transfer/v0.4.0` (GitHub ilk dalı varsayılan yaptı); 3b'de `main`'e çevrilir. Sırada 3b.
 
+**Durum (2026-11-15, sonra):** 3b yapıldı (ürün `main` = dd0465d, varsayılan `main`; `transfer-verify` 43652466256 yeşil); ürün `release.yml` geçersiz YAML çıktı (D1F-17) → K-D1.4 (b): **adım 3′** (aşağıda). 3c'nin dal koruması ve 3d–3h adım 3′'den sonra.
+
 | # | Adım | Beklenen sonuç | Ajanın sınaması |
 |---|---|---|---|
 | 3a | Laboratuvarda **Actions → transfer → Run workflow**: `tag = v0.4.0`, `bootstrap = true` (ilk aktarım). | iş yeşil; özet: iki koşu aynı ağaç kimliği; ürün deposunda `transfer/v0.4.0` dalı, kök commit | `gh run list -R arknsensei/rootmark -w transfer -L 1`; `gh api repos/rootmark-ai/rootmark/branches` |
@@ -54,6 +56,25 @@ Ardından adım 3 (3a: `tag = v0.4.0`, `bootstrap = true`).
 | 3h | Tap PR'ını birleştirin. | `brew install rootmark-ai/tap/rootmark` çalışır | ajanın R6 sınaması |
 
 Bunlardan sonra ajan R6'nın "yayımlanmış kanallardan sınama"sını (temiz Linux konteyneri ve bu Mac) koşar.
+
+## Adım 3′ — Ürün `release.yml` düzeltmesi ve ürün deposunun sıfırlanması (K-D1.4; 3c'nin dal korumasından ve 3d–3h'den önce)
+İlk aktarımın ürün ağacında `release.yml` geçersiz YAML (D1F-17); karar K-D1.4 (b): ürün deposu sıfırlanır, aktarım baştan. Ürün deposu komutları `rootmark-ai` hesabıyla (`GH_TOKEN=$(gh auth token --user rootmark-ai) gh …`), laboratuvar komutları `arknsensei` ile. **⚠ işaretli adımlar yıkıcıdır: önlerindeki doğrulama satırını okuyun, beklenen çıkmazsa durun.** Ürün deposunda dal koruması bu adımlar bitene kadar kurulmaz (silmeleri engeller).
+
+| # | Adım (insan; ajanın adımları ayrıca belirtilmiş) | Önce okunacak doğrulama → beklenen |
+|---|---|---|
+| 3′a | Laboratuvar düzeltme PR'ını (`release/0.4.0-fix2` → `main`) CI yeşil olunca **rebase** ile birleştirin. | `gh pr checks <no> -R arknsensei/rootmark` → hepsi pass |
+| 3′b | `main` push CI'ı yeşil; laboratuvar `release.yml`'ini yeni `main` commit'inde tetikleyin (`gh workflow run release.yml -R arknsensei/rootmark --ref main`), yeşil. | `gh run list -R arknsensei/rootmark -w release -L 1 --json headSha,conclusion` → `headSha` = yeni `main`, `success` |
+| 3′c | ⚠ Laboratuvar `v0.4.0`'ı **üçüncü ve son kez** yeni `main`'e atın: `git fetch origin --tags --force && git push origin :refs/tags/v0.4.0 && git tag -d v0.4.0 && git tag -a v0.4.0 -m "rootmark 0.4.0" <yeni main sha> && git push origin v0.4.0` | `git rev-parse origin/main` = `<yeni main sha>`; `git show origin/main:product/overlay/.github/workflows/release.yml \| grep -c '"pull request to the tap'` → 1 |
+| 3′d | (ajan) Yeni etiketten yerel ön-kontrol: iki koşu + CI benzetimi aynı ağaç, `ok: true`, sızıntı 0; aktarılmış ağaçta actionlint YAML/şema hatası 0. Kimlik orkestratöre ve `reports/rounds/D-1/r6/`'ya. | ajanın kaydı `ok: true` |
+| 3′e | Ürün deposunun sıfırlanabilir olduğunu okuyun. | `gh api repos/rootmark-ai/rootmark/tags --jq length` → 0; `gh release list -R rootmark-ai/rootmark` → boş; `gh api repos/rootmark-ai/rootmark/rulesets --jq length` → 0; `gh api repos/rootmark-ai/rootmark --jq .forks_count` → 0; `gh api repos/rootmark-ai/rootmark/branches --jq '[.[] \| .name + "=" + .commit.sha[:7]]'` → `main=dd0465d`, `transfer/v0.4.0=dd0465d` (başka dal yok) |
+| 3′f | Geçici dal ve varsayılan: `gh api -X POST repos/rootmark-ai/rootmark/git/refs -f ref=refs/heads/hold -f sha=dd0465d37b2bdd2418dfc174660346809dac3f91` sonra `gh api -X PATCH repos/rootmark-ai/rootmark -f default_branch=hold` | `gh api repos/rootmark-ai/rootmark --jq .default_branch` → `hold` |
+| 3′g | ⚠ Eski dalları silin: `gh api -X DELETE repos/rootmark-ai/rootmark/git/refs/heads/main` ve `gh api -X DELETE repos/rootmark-ai/rootmark/git/refs/heads/transfer/v0.4.0` | önce: varsayılan `hold` (3′f) ve 3′e'nin dal listesi aynı; sonra: `gh api repos/rootmark-ai/rootmark/branches --jq '[.[].name]'` → `["hold"]` |
+| 3′h | Laboratuvarda **Actions → transfer → Run workflow**: `tag = v0.4.0`, `bootstrap = true`. | önce: ürün deposunda `main` ve `transfer/v0.4.0` yok (3′g); sonra: koşu yeşil, özetteki kimlik = 3′d'nin kimliği |
+| 3′i | (ajan) Yeni `transfer/v0.4.0`'ı okur: kök commit (ebeveyn 0), ağaç = 3′d'nin kimliği, mesajda `Lab-Commit` = yeni `main`; anonim klonda `transfer verify` bayt bayt `ok`. | ajanın kaydı |
+| 3′j | `main`'i bu commit'ten açın ve varsayılan yapın: `gh api -X POST repos/rootmark-ai/rootmark/git/refs -f ref=refs/heads/main -f sha=<transfer/v0.4.0'ın commit'i>` sonra `gh api -X PATCH repos/rootmark-ai/rootmark -f default_branch=main` | önce: `<commit>` 3′i'de ajanın okuduğu sha; sonra: `gh api repos/rootmark-ai/rootmark --jq .default_branch` → `main` |
+| 3′k | ⚠ Geçici dalı silin: `gh api -X DELETE repos/rootmark-ai/rootmark/git/refs/heads/hold` | önce: varsayılan `main` (3′j); sonra: dallar `["main","transfer/v0.4.0"]`, ikisi aynı commit'te |
+
+Ardından adım 3'ün 3c'sinden devam (`main` push'unun `ci` + `transfer-verify`'ı yeşil, sonra dal koruması), 3d–3h aynen. Eski kök commit dd0465d hiçbir dalda kalmaz; koşu kayıtlarında görünür (FINAL'de anılır).
 
 ## Adım 5 — Turun dalı `main`'in gerisinde (R7, turun PR'ından önce)
 #73 rebase ile birleşti, commit sha'ları değişti: `d-1/round`'un 25 commit'inin 23'ü `main`'de başka sha'larla var. Ajan zorla itmez. Yerel deneme (2026-11-14; dal itilmedi, silindi): `git rebase origin/main` çatışmasız; yinelenen 23 commit "patch contents already upstream" diye düşüyor, `main`'in üstünde yalnız turun kayıt commit'leri kalıyor. Yeniden tabanlanmış dal ile eski `d-1/round` arasındaki fark yalnız #73'ün sürüm satırları (CHANGELOG, Cargo/npm sürümleri, RELEASE.md başlığı).
