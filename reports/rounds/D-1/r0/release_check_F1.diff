@@ -1,0 +1,44 @@
+diff --git a/scripts/release_check.sh b/scripts/release_check.sh
+index ae411168..fff0a0a6 100755
+--- a/scripts/release_check.sh
++++ b/scripts/release_check.sh
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env bash
+-# Checks every item of docs/RELEASE.md (R1–R20, R4a) against the tree and
++# Checks every item of docs/RELEASE.md (R1–R21, R4a) against the tree and
+ # the release package built by scripts/release.sh. No pipeline ends in an
+ # early-exiting reader (`grep -q`, `head`) under pipefail: a listing is
+ # captured first and then searched (P1-E verification V7: R7's `unzip |
+@@ -197,6 +197,32 @@ item R19 "RELEASE.md: signing and notarization are written human steps" "$(
+ unpinned="$(grep -hoE 'uses: [^ ]+@[^ ]+' .github/workflows/*.yml | grep -vE '@v[0-9]+\.[0-9]+\.[0-9]+$' | grep -v 'dtolnay/rust-toolchain@' | sort -u | tr '\n' ' ' || true)"
+ item R20 "workflow actions pinned to full versions" "$( [ -z "$unpinned" ]; echo $?)" "${unpinned:+unpinned: $unpinned}"
+ 
++# R21 (D-1/R0, freeze exception D-1/F1; GOAL D-1 R6, P2-Q.2 verification
++# recommendation Ö3): real Claude Code, current, listed rootmark's tools and
++# ran `propose` against this version within 7 days before the release — a
++# record of research/p2q2/claude_probe.py under <dist>/claude_probe/ (its
++# `recorded_at`, UTC; never a file time). "Current" is the Claude Code
++# installed here now: the record's version equals `claude --version`. No
++# record, an older one, one without `recorded_at` or another version: FAIL.
++r21=1; r21d="no record (<dist>/claude_probe/*.json: research/p2q2/claude_probe.py --out <dist>/claude_probe)"
++cc_now="$(claude --version 2>/dev/null | head -1 || true)"
++now_s="$(date -u +%s)"
++for f in "$dist"/claude_probe/*.json; do
++  [ -f "$f" ] || continue
++  if jq -e --arg ver "rootmark $ver" --arg cc "$cc_now" --argjson now "$now_s" '
++      (.recorded_at | type == "string")
++      and ((.recorded_at | fromdateiso8601) as $t | $t <= $now and ($now - $t) <= 604800)
++      and .exit == 0 and .rootmark_version == $ver
++      and .tools_listed_count == 11 and .tools_match_0_3_1 == true
++      and ([.tool_calls[]? | tostring | select(test("propose"))] | length) >= 1
++      and .agent_events >= 1
++      and $cc != "" and .claude_code_version == $cc' "$f" >/dev/null 2>&1; then
++    r21=0; r21d="$(jq -r '"\(.label): \(.claude_code_version), recorded \(.recorded_at), tools \(.tools_listed_count), propose"' "$f")"; break
++  fi
++  r21d="$(jq -r --arg cc "${cc_now:-claude not installed}" '"\(.label // "?"): recorded \(.recorded_at // "never"), \(.claude_code_version // "?") (installed: \($cc)), \(.rootmark_version // "?"), exit \(.exit // "?") — not a pass"' "$f" 2>/dev/null || echo "unreadable record")"
++done
++item R21 "real Claude Code (current) lists the tools and proposes, recorded <= 7 days ago" "$r21" "$r21d"
++
+ printf '%s\n' "${items[@]}" | jq -s '{items: ., passed: ([.[] | select(.ok)] | length), total: length} | .pass = (.passed == .total)' >"$dist/release_check.json"
+ jq -r '"release_check: \(.passed)/\(.total)"' "$dist/release_check.json"
+ jq -e .pass "$dist/release_check.json" >/dev/null

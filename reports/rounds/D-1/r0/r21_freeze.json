@@ -1,0 +1,60 @@
+{
+ "what": "D-1/F1: scripts/release_check.sh gains R21; before/after on the same release package (a copy of the lab's stale dist/, 0.3.1) and R21's deliberate corruption with synthetic records derived from reports/rounds/P2-Q.2/claude_code/r4_v0.3.2.json (label, recorded_at, claude_code_version, rootmark_version replaced)",
+ "before": {
+  "passed": 15,
+  "total": 21,
+  "failing": [
+   "R4a",
+   "R4",
+   "R7",
+   "R8",
+   "R12",
+   "R17"
+  ]
+ },
+ "items_equal_except_R21": true,
+ "cases": {
+  "after_norecord": {
+   "record": "no <dist>/claude_probe/",
+   "R21": false,
+   "passed": 15,
+   "total": 22
+  },
+  "after_fresh": {
+   "record": "recorded now, installed Claude Code, this version",
+   "R21": true,
+   "passed": 16,
+   "total": 22
+  },
+  "after_6days": {
+   "record": "recorded 6 days ago",
+   "R21": true,
+   "passed": 16,
+   "total": 22
+  },
+  "after_8days": {
+   "record": "recorded 8 days ago",
+   "R21": false,
+   "passed": 15,
+   "total": 22
+  },
+  "after_no_recorded_at": {
+   "record": "no recorded_at field",
+   "R21": false,
+   "passed": 15,
+   "total": 22
+  },
+  "after_other_cc": {
+   "record": "another Claude Code version",
+   "R21": false,
+   "passed": 15,
+   "total": 22
+  },
+  "after_other_rootmark": {
+   "record": "another rootmark version",
+   "R21": false,
+   "passed": 15,
+   "total": 22
+  }
+ }
+}

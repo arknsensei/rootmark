@@ -1,0 +1,9 @@
+{
+ "what": "D-1/R0 deliberate corruption (K-P2Q4.4 (4), D1-1): a branch that changes only a frozen .md file; the ci.yml 'changes' step skips the build jobs, the 'deps' job (no needs/if: runs on every pull request and push) fails on the freeze checks",
+ "ci_yml_commit": "cca5c2bae13a5445ff3e3ab4d1c0a6a95cb1e078",
+ "method": "local, script level (the branch cannot be a pull request against main before ci.yml is on main: the diff would include ci.yml). The 'changes' step's run script extracted verbatim from ci.yml and run with EVENT=pull_request over base...head; the deps job's two new steps run as separate steps in a clean worktree (fresh research/.venv with numpy and blake3 only, UV_NO_SYNC=1). The probe branch d-1/r0-frozen-probe was never pushed and was deleted.",
+ "probe_1": {"branch_commit": "8f85338ab2420a1502a360520f8eaee8c4e1c05e", "changed": ["research/eval/DETERMINISTIC_FIELDS.md (+2 lines at the end)"], "changes_step": "code=false (reports and documents only: build jobs skipped)", "check_frozen_exit": 1, "check_compare_fields_exit": 0, "deps_job": "fail"},
+ "probe_2": {"changed": ["research/eval/DETERMINISTIC_FIELDS.md (one declared field row removed)"], "changes_step": "code=false (same rule: a .md only)", "check_frozen_exit": 1, "check_compare_fields_exit": 3, "deps_job": "fail"},
+ "control": {"tree": "d-1/round head", "check_frozen_exit": 0, "check_compare_fields_exit": 0, "deps_job": "pass"},
+ "note": "a first local run reported a passing deps for probe 1: the test script joined the steps with && under set -e (a failing left side does not stop such a list); rerun with the steps separate, as CI runs them. A rerun in the same worktree also showed that 'uv venv' refuses an existing .venv: the step now passes --clear (commit after 3e243af)."
+}
