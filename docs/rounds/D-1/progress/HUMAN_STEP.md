@@ -18,7 +18,7 @@ Ajanın son okuması (2026-11-14, salt okuma): `rootmark-ai/rootmark` var, herke
 Bitince bu dosyada her satırın "Durum"unu siz değiştirmeyin; ajan (ya da orkestratör) sınamaları koşar ve yazar.
 
 ## Adım 2 — Laboratuvar 0.4.0 (R6; ajan `release/0.4.0` dalını ve PR'ını hazırlar)
-**Durum (2026-11-14):** PR **#73** (`release/0.4.0` → `main`, "rootmark 0.4.0") açık; laboratuvar `release_check` bu dalda **22/22** (`reports/rounds/D-1/r6/release_check.json`; R21: Claude Code 2.1.325, kayıt 2026-11-14 — 7 günlük pencere 2026-11-21'de kapanır, sonra R21 yeniden koşulmalı). Ön koşul: #73'ün CI'ı yeşil. **Şu an:** #73'ün macOS işi R21'in dondurulmuş E1-4 okumasıyla çelişkisi yüzünden kaldı → **önce karar talebi K-D1-T1** (`docs/DECISIONS.md`; seçenek a/b/c, ajanın önerisi b); karar gelince ajan düzeltmeyi #73'e tek push'la atar.
+**Durum (2026-11-14):** PR **#73** (`release/0.4.0` → `main`, "rootmark 0.4.0") açık; laboratuvar `release_check` bu dalda 21/21 + ayrı R21 kapısı (K-D1.2; ilk koşu F1'le 22/22 idi) (`reports/rounds/D-1/r6/release_check.json`; R21: Claude Code 2.1.325, kayıt 2026-11-14 — 7 günlük pencere 2026-11-21'de kapanır, sonra R21 yeniden koşulmalı). Ön koşul: #73'ün CI'ı yeşil. K-D1-T1 kapandı (K-D1.2, b): R21 ayrı kapı; düzeltme #73'e tek push'la gitti — CI'ın yeşilini bekleyin.
 
 | # | Adım | Beklenen sonuç | Ajanın sınaması |
 |---|---|---|---|

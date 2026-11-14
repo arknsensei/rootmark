@@ -1,0 +1,48 @@
+{
+  "tree": "77ed54263794e6de4dbf61414c8a64bde0895214",
+  "steps": [
+    {
+      "step": "models",
+      "exit": 0,
+      "s": 20
+    },
+    {
+      "step": "cargo_build",
+      "exit": 0,
+      "s": 20
+    },
+    {
+      "step": "make_test",
+      "exit": 0,
+      "s": 1180
+    },
+    {
+      "step": "make_lint",
+      "exit": 2,
+      "s": 0
+    },
+    {
+      "step": "make_conformance",
+      "exit": 0,
+      "s": 21
+    },
+    {
+      "step": "check_dep_age",
+      "exit": 0,
+      "s": 83
+    },
+    {
+      "step": "client_obsidian",
+      "exit": 0,
+      "s": 2
+    },
+    {
+      "step": "client_vscode",
+      "exit": 0,
+      "s": 3
+    }
+  ],
+  "pass": false,
+  "what": "D-1/R1 standalone check of the transferred tree of d-1/round at R5 (before the rustfmt fix of the p2v1_migrate M rule): cargo build/test --locked, product make test/lint/conformance, check_dep_age, both clients npm ci && npm test && npm run build; outside the lab (scratch git repository of the tree)",
+  "note": "make_lint exit 2 = cargo fmt --check on the M rule output of server/tests/p2v1_migrate.rs (fixed in ee8b36d); rerun with the fixed file: fmt, clippy -D warnings, lint-ts, check_deps, gen_client_types --check all pass (check-client-types needs the binary under target/release: a symlink in the scratch repo)"
+}

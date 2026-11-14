@@ -460,6 +460,7 @@ Satır biçimi `yol-kalıbı | dondurulduğu commit | not` — `scripts/check_fr
 | `.github/workflows/verify.yml` | `P2-V.2/Y5:` | yeniden dondurma P2-V.2/F6: başlık yorumundaki envanter yolu (yorum dışı satırlar aynı) |
 | `scripts/release_check.sh` | `P2-Q.1/R4:` | yeniden dondurma P2-Q.1/F1: R16 `### Hüküm` başlıklı raporun hükmünü de okur (P2-Q doğrulaması) |
 | `scripts/release_check.sh` | `D-1/R0-f1:` | yeniden dondurma D-1/F1: R21 güncel Claude Code sınaması (kayıt ≤ 7 gün; Ö3) |
+| `scripts/release_check.sh` | `D-1/R6-f2:` | yeniden dondurma D-1/F2: R21 geri alındı (K-D1.2): dosya F1 öncesi baytları (`ROUND_START` ile bayt eşit) |
 <!-- /frozen-table -->
 
 ## Notlar
