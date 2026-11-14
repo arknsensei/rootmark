@@ -108,7 +108,7 @@ jobs:
           set -euo pipefail
           pins="$(grep -oE '"(numpy|blake3)==[^"]+"' research/pyproject.toml | tr -d '"')"
           [ "$(printf '%s\n' "$pins" | wc -l)" -eq 2 ] || { echo "numpy/blake3 pins not found in research/pyproject.toml" >&2; exit 1; }
-          (cd research && uv venv -q --python 3.12 && uv pip install -q $pins)
+          (cd research && uv venv -q --clear --python 3.12 && uv pip install -q $pins)
           UV_NO_SYNC=1 bash scripts/check_compare_fields.sh
 
   test:
