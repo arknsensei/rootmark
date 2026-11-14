@@ -6,6 +6,7 @@
 | Kayıt | Değişiklik | Görev | Neden |
 |---|---|---|---|
 | `.github/workflows/ci.yml` | `deps` işi `scripts/check_frozen.sh` ve `scripts/check_compare_fields.sh`'i de koşar (Python: `uv` + `numpy`/`blake3` yalnız, `UV_NO_SYNC=1`); başka iş, süzgeç ve gerekli denetim adı aynen | R0 | K-P2Q4.4 (4): yalnız dondurulmuş `.md`/`reports` değiştiren PR dondurma denetiminden kaçıyordu |
+| `.github/workflows/transfer.yml` (yeni) | laboratuvarın aktarım iş akışı (`workflow_dispatch`, girdiler `tag`, `bootstrap`; §2.1); başka iş akışı değişmez | R1 | GOAL R1 |
 | `scripts/release_check.sh` (dondurulmuş) | yeni madde **R21** (güncel Claude Code ile `claude_probe.py` kaydı ≤ 7 gün); öteki 21 madde aynen | R0 | GOAL R6 / Ö3; DEV_PROCESS §4, `FREEZE_EXCEPTIONS.md` D-1/F1; `research/FROZEN.md`'ye yeniden dondurma satırı |
 | `research/FROZEN.md` | yalnız bir satır eklenir (`release_check.sh`, D-1/F1) | R0 | §4 |
 | `docs/RELEASE.md` | R21 satırı ve insan adımı (Claude Code sınaması); 0.4.0 başlığı, adım 1'in doğrulama raporları, ürün deposuna yayımın yeri | R0 (R21), R6 (0.4.0) | R21; laboratuvar 0.4.0 için GitHub sürümü yayımlamaz (TRANSFER_PLAN §3.3) |
