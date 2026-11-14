@@ -1,0 +1,7 @@
+{
+  "what": "D1-5: MCP tools/list of rootmark 0.4.0 (release/0.4.0, local build) against the published 0.3.4 (lab release asset rootmark-0.3.4-aarch64-apple-darwin.tar.gz, checked against its SHA256SUMS): the raw JSON-RPC result line of tools/list after initialize, on a copy of spec/fixtures/mini_vault",
+  "sha256_0_3_4": "9f4ca0c82d96d14c6781b5bc092a950be89117a936a33dbb3ed4694631564807",
+  "sha256_0_4_0": "9f4ca0c82d96d14c6781b5bc092a950be89117a936a33dbb3ed4694631564807",
+  "bytes": 11412,
+  "byte_equal": true
+}
