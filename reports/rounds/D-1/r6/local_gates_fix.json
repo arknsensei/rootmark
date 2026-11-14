@@ -1,0 +1,10 @@
+{
+ "branch": "release/0.4.0-fix",
+ "commit": "114633b7",
+ "base": "9bca7def17f5531a3dd9479033019405e23a8222",
+ "pr": 74,
+ "make_test": {"exit": 0, "vitest": ["164/164", "12/12"], "pytest_last_block": "327 passed, 9 skipped"},
+ "make_lint": {"exit": 0},
+ "make_conformance": {"exit": 0, "result": "level 3, 39/39"},
+ "guard_test": "research/tests/test_transfer.py::test_the_lab_head_is_fully_classified — fails at 9bca7de (unclassified scripts/release_gate_claude.sh), passes at 114633b7; test_transfer 20/20"
+}
