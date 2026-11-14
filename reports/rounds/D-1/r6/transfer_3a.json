@@ -1,0 +1,41 @@
+{
+ "step": "3a",
+ "lab_run": 43652118695,
+ "lab_run_conclusion": "success",
+ "lab_run_head": "545d0b2dd829ff6b6ee26f9cec1cba57240d4e8a",
+ "event": "workflow_dispatch (tag=v0.4.0, bootstrap=true)",
+ "product_repo": "rootmark-ai/rootmark",
+ "product_branch": "transfer/v0.4.0",
+ "product_commit": "dd0465d37b2bdd2418dfc174660346809dac3f91",
+ "product_commit_parents": 0,
+ "product_tree": "c61ce297315db7829f4ec5f60a27a30be91632f4",
+ "author": "github-actions[bot]",
+ "date": "2026-11-14T22:08:39Z",
+ "message_trailers": {
+  "Lab-Commit": "545d0b2dd829ff6b6ee26f9cec1cba57240d4e8a",
+  "Lab-Tag": "v0.4.0",
+  "Transfer-Tree": "c61ce297315db7829f4ec5f60a27a30be91632f4"
+ },
+ "tree_ids_equal": {
+  "local_A_B_CI_sim": "c61ce297\u2026",
+  "orchestrator_independent": "c61ce297\u2026",
+  "transfer_yml_log": "c61ce297\u2026",
+  "product_commit": "c61ce297\u2026"
+ },
+ "default_branch_now": "transfer/v0.4.0 (GitHub made the first pushed branch default; 3b sets main)",
+ "agent_verify": {
+  "how": "anonymous clone of transfer/v0.4.0; research/transfer at v0.4.0: transfer.cli verify --lab-commit 545d0b2 --tag v0.4.0 --expect-tree c61ce297\u2026",
+  "exit": 0,
+  "result": {
+   "tree": "c61ce297315db7829f4ec5f60a27a30be91632f4",
+   "product_tree": "c61ce297315db7829f4ec5f60a27a30be91632f4",
+   "expected": [
+    "c61ce297315db7829f4ec5f60a27a30be91632f4"
+   ],
+   "rows": 1253,
+   "problems": [],
+   "ok": true
+  }
+ },
+ "tracked_files": 1254
+}
