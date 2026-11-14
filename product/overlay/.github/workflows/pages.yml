@@ -1,0 +1,55 @@
+# The documentation site https://docs.rootmark.ai (GitHub Pages, mdBook):
+# site/build.sh copies the guide, the contract, the threat model, the
+# changelog, the security policy and the specification into the book, runs
+# `rootmark conformance` of the binary built from this commit for the
+# measured badge (spec/badge.json, a shields.io endpoint), builds the book
+# and fails on any broken internal link.
+name: pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: build the site
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: dtolnay/rust-toolchain@1.92.0
+      - uses: actions/cache@v6.1.0
+        with:
+          path: |
+            models/minilm-l6-v2
+            ~/.cargo/bin/mdbook
+          key: pages-${{ runner.os }}-${{ hashFiles('models/MANIFEST.json') }}-mdbook-0.5.4
+      - name: mdbook 0.5.4 (published 2026-07-06; pinned, --locked)
+        run: command -v mdbook >/dev/null && [ "$(mdbook --version)" = "mdbook v0.5.4" ] || cargo install --locked --quiet mdbook@0.5.4
+      - run: make models
+      - run: cargo build --release --locked -p rootmark-server --bin rootmark
+      - run: ROOTMARK_MODELS="$PWD/models" bash site/build.sh target/release/rootmark mdbook
+      - uses: actions/configure-pages@v6.0.0
+      - uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: site/book
+
+  deploy:
+    name: deploy
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5.0.1
