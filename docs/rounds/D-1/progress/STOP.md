@@ -6,3 +6,4 @@
 - **Karar talebi:** `docs/DECISIONS.md` K-D1-T1 (seçenekler a, b, c; ajanın önerisi b).
 - **Park edilen:** R6'nın PR #73 birleşmesi ve sonrası. Bağımsız işler: yok (R0–R5 tamam; R6'nın kalanı insan adımı ve bu kararı bekliyor).
 - **Devam:** karar gelince ilgili seçenek uygulanır, yerelde tam `make test` + `make lint`, #73'e tek push.
+- **Kapanış (2026-11-14):** K-D1.2 (kullanıcı kararı, seçenek b): R21 ayrı kapı (`scripts/release_gate_claude.sh`), `release_check.sh` F1 öncesi baytlarına döndü (D-1/F2); D1-10 lafzen kaldı (FINAL). R6 PARK'tan çıktı.

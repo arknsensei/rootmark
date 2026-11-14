@@ -1,0 +1,13 @@
+{
+  "what": "D-1 R21 gate (scripts/release_gate_claude.sh; K-D1.2) deliberate corruption: synthetic records derived from reports/rounds/P2-Q.2/claude_code/r4_v0.3.2.json; exit 0 = pass, 1 = FAIL",
+  "cases": {
+    "no_record": 1,
+    "recorded_now": 0,
+    "recorded_6_days_ago": 0,
+    "recorded_8_days_ago": 1,
+    "no_recorded_at": 1,
+    "other_claude_code": 1,
+    "other_rootmark": 1
+  },
+  "as_expected": true
+}
