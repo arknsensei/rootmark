@@ -23,6 +23,7 @@ import os
 import re
 import subprocess
 import sys
+from datetime import UTC, datetime
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -169,6 +170,9 @@ def main(argv=None) -> int:
     ]
     summary = {
         "label": a.label,
+        # D-1/R0 (release_check.sh R21): the release gate reads the record's
+        # age from here, never from a file time (UTC, seconds)
+        "recorded_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "claude_code_version": version,
         "rootmark_version": rm_version,
         "command": "claude -p <PROMPT> --mcp-config <work>/mcp.json --strict-mcp-config "
