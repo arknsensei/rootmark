@@ -1,0 +1,202 @@
+{
+ "lab_tag": "v0.4.0 (re-tagged, K-D1.3)",
+ "tag_object": "2c8bb1e56505867efd2452d98a205f6a273bb9fd",
+ "lab_commit": "545d0b2dd829ff6b6ee26f9cec1cba57240d4e8a",
+ "local_tags_fetched": "git fetch --tags --force",
+ "tool": "research/transfer at v0.4.0, python3 -E -s -m transfer.cli build --ref v0.4.0 --tag v0.4.0",
+ "runs": {
+  "A": {
+   "what": "this Mac",
+   "ok": true,
+   "tree": "c61ce297315db7829f4ec5f60a27a30be91632f4",
+   "product_files": 1254,
+   "counts": {
+    "lab_files": 16907,
+    "goes": 599,
+    "stays": 15668,
+    "transforms": {
+     "K": 605,
+     "M": 16,
+     "Y": 19
+    },
+    "overlays_with_source": 19,
+    "overlays_product_only": 14,
+    "unclassified": 0,
+    "double_classified": 0,
+    "product_path_collisions": 0,
+    "dead_patterns": 0,
+    "overlay_sources_not_checked": []
+   },
+   "leaks": {
+    "lab_prefix": 0,
+    "rootmark_dir": 0,
+    "server_token": 0,
+    "key_pattern": 0,
+    "turkish_process": 0,
+    "secret_content": 0,
+    "host_user": 0,
+    "home_path_unjustified": 0,
+    "email_unjustified": 0,
+    "private_term": 0,
+    "broken_link": 0
+   },
+   "leaks_justified": {
+    "home_path": [
+     {
+      "file": "docs/GUIDE.md",
+      "user": "ada"
+     },
+     {
+      "file": "docs/GUIDE.md",
+      "user": "rmhuman"
+     },
+     {
+      "file": "site/src/install.md",
+      "user": "ada"
+     }
+    ],
+    "email": [
+     {
+      "file": ".github/workflows/release.yml",
+      "address": "GH_TOKEN@github.com"
+     },
+     {
+      "file": "testdata/tok_ref.json",
+      "address": "support@dendron.so"
+     }
+    ]
+   },
+   "private_terms_searched": 3
+  },
+  "B": {
+   "what": "this Mac (repeat)",
+   "ok": true,
+   "tree": "c61ce297315db7829f4ec5f60a27a30be91632f4",
+   "product_files": 1254,
+   "counts": {
+    "lab_files": 16907,
+    "goes": 599,
+    "stays": 15668,
+    "transforms": {
+     "K": 605,
+     "M": 16,
+     "Y": 19
+    },
+    "overlays_with_source": 19,
+    "overlays_product_only": 14,
+    "unclassified": 0,
+    "double_classified": 0,
+    "product_path_collisions": 0,
+    "dead_patterns": 0,
+    "overlay_sources_not_checked": []
+   },
+   "leaks": {
+    "lab_prefix": 0,
+    "rootmark_dir": 0,
+    "server_token": 0,
+    "key_pattern": 0,
+    "turkish_process": 0,
+    "secret_content": 0,
+    "host_user": 0,
+    "home_path_unjustified": 0,
+    "email_unjustified": 0,
+    "private_term": 0,
+    "broken_link": 0
+   },
+   "leaks_justified": {
+    "home_path": [
+     {
+      "file": "docs/GUIDE.md",
+      "user": "ada"
+     },
+     {
+      "file": "docs/GUIDE.md",
+      "user": "rmhuman"
+     },
+     {
+      "file": "site/src/install.md",
+      "user": "ada"
+     }
+    ],
+    "email": [
+     {
+      "file": ".github/workflows/release.yml",
+      "address": "GH_TOKEN@github.com"
+     },
+     {
+      "file": "testdata/tok_ref.json",
+      "address": "support@dendron.so"
+     }
+    ]
+   },
+   "private_terms_searched": 3
+  },
+  "C": {
+   "what": "CI-simulated host (HOME=/home/runner, USER=runner, private terms via env)",
+   "ok": true,
+   "tree": "c61ce297315db7829f4ec5f60a27a30be91632f4",
+   "product_files": 1254,
+   "counts": {
+    "lab_files": 16907,
+    "goes": 599,
+    "stays": 15668,
+    "transforms": {
+     "K": 605,
+     "M": 16,
+     "Y": 19
+    },
+    "overlays_with_source": 19,
+    "overlays_product_only": 14,
+    "unclassified": 0,
+    "double_classified": 0,
+    "product_path_collisions": 0,
+    "dead_patterns": 0,
+    "overlay_sources_not_checked": []
+   },
+   "leaks": {
+    "lab_prefix": 0,
+    "rootmark_dir": 0,
+    "server_token": 0,
+    "key_pattern": 0,
+    "turkish_process": 0,
+    "secret_content": 0,
+    "host_user": 0,
+    "home_path_unjustified": 0,
+    "email_unjustified": 0,
+    "private_term": 0,
+    "broken_link": 0
+   },
+   "leaks_justified": {
+    "home_path": [
+     {
+      "file": "docs/GUIDE.md",
+      "user": "ada"
+     },
+     {
+      "file": "docs/GUIDE.md",
+      "user": "rmhuman"
+     },
+     {
+      "file": "site/src/install.md",
+      "user": "ada"
+     }
+    ],
+    "email": [
+     {
+      "file": ".github/workflows/release.yml",
+      "address": "GH_TOKEN@github.com"
+     },
+     {
+      "file": "testdata/tok_ref.json",
+      "address": "support@dendron.so"
+     }
+    ]
+   },
+   "private_terms_searched": 3
+  }
+ },
+ "trees_equal": true,
+ "bytes_A_vs_C": "identical",
+ "vs_old_tag_9bca7de": "tree 623553b9… → c61ce297…; only TRANSFER.json differs (lab_commit line); every product file byte-identical",
+ "result": "ok: transfer.yml's summary tree id must be c61ce297315db7829f4ec5f60a27a30be91632f4"
+}
