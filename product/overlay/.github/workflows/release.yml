@@ -291,9 +291,9 @@ jobs:
           mkdir -p tap/Formula
           sed -e "s/@VERSION@/$VER/g" -e "s/@SHA256_AARCH64_APPLE_DARWIN@/$arm/g" -e "s/@SHA256_X86_64_UNKNOWN_LINUX_GNU@/$lin/g" \
             packaging/homebrew/rootmark.rb.in >tap/Formula/rootmark.rb
-          ! grep -q '@[A-Z0-9_]*@' tap/Formula/rootmark.rb
+          if grep -q '@[A-Z0-9_]*@' tap/Formula/rootmark.rb; then echo "unfilled placeholder in the formula" >&2; exit 1; fi
           cat tap/Formula/rootmark.rb
-      - name: pull request to the tap (HOMEBREW_TAP_TOKEN: the tap repository only)
+      - name: "pull request to the tap (HOMEBREW_TAP_TOKEN: the tap repository only)"
         env:
           GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
         run: |
