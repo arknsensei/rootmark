@@ -1,0 +1,346 @@
+{
+ "lab_tag": "v0.4.0",
+ "tag_object": "35cad04",
+ "lab_commit": "9bca7def17f5531a3dd9479033019405e23a8222",
+ "tool": "research/transfer at v0.4.0, python3 -E -s -m transfer.cli build --ref v0.4.0 --tag v0.4.0",
+ "runs": {
+  "A": {
+   "what": "tag lists, this Mac",
+   "ok": false,
+   "tree": "623553b9eb27feaba426d813eee521276244d75e",
+   "product_files": 1254,
+   "unclassified": 1,
+   "double_classified": 0,
+   "product_path_collisions": 0,
+   "dead_patterns": 0,
+   "transforms": {
+    "K": 605,
+    "M": 16,
+    "Y": 19
+   },
+   "leaks": {
+    "lab_prefix": 0,
+    "rootmark_dir": 0,
+    "server_token": 0,
+    "key_pattern": 0,
+    "turkish_process": 0,
+    "secret_content": 0,
+    "host_user": 0,
+    "home_path_unjustified": 0,
+    "email_unjustified": 0,
+    "private_term": 0,
+    "broken_link": 0
+   },
+   "leaks_justified": {
+    "home_path": [
+     {
+      "file": "docs/GUIDE.md",
+      "user": "ada"
+     },
+     {
+      "file": "docs/GUIDE.md",
+      "user": "rmhuman"
+     },
+     {
+      "file": "site/src/install.md",
+      "user": "ada"
+     }
+    ],
+    "email": [
+     {
+      "file": ".github/workflows/release.yml",
+      "address": "GH_TOKEN@github.com"
+     },
+     {
+      "file": "testdata/tok_ref.json",
+      "address": "support@dendron.so"
+     }
+    ]
+   },
+   "private_terms_searched": 3,
+   "errors": []
+  },
+  "B": {
+   "what": "tag lists, this Mac (repeat)",
+   "ok": false,
+   "tree": "623553b9eb27feaba426d813eee521276244d75e",
+   "product_files": 1254,
+   "unclassified": 1,
+   "double_classified": 0,
+   "product_path_collisions": 0,
+   "dead_patterns": 0,
+   "transforms": {
+    "K": 605,
+    "M": 16,
+    "Y": 19
+   },
+   "leaks": {
+    "lab_prefix": 0,
+    "rootmark_dir": 0,
+    "server_token": 0,
+    "key_pattern": 0,
+    "turkish_process": 0,
+    "secret_content": 0,
+    "host_user": 0,
+    "home_path_unjustified": 0,
+    "email_unjustified": 0,
+    "private_term": 0,
+    "broken_link": 0
+   },
+   "leaks_justified": {
+    "home_path": [
+     {
+      "file": "docs/GUIDE.md",
+      "user": "ada"
+     },
+     {
+      "file": "docs/GUIDE.md",
+      "user": "rmhuman"
+     },
+     {
+      "file": "site/src/install.md",
+      "user": "ada"
+     }
+    ],
+    "email": [
+     {
+      "file": ".github/workflows/release.yml",
+      "address": "GH_TOKEN@github.com"
+     },
+     {
+      "file": "testdata/tok_ref.json",
+      "address": "support@dendron.so"
+     }
+    ]
+   },
+   "private_terms_searched": 3,
+   "errors": []
+  },
+  "C": {
+   "what": "tag lists, CI-simulated host (HOME=/home/runner, USER=runner, private terms via env)",
+   "ok": false,
+   "tree": "623553b9eb27feaba426d813eee521276244d75e",
+   "product_files": 1254,
+   "unclassified": 1,
+   "double_classified": 0,
+   "product_path_collisions": 0,
+   "dead_patterns": 0,
+   "transforms": {
+    "K": 605,
+    "M": 16,
+    "Y": 19
+   },
+   "leaks": {
+    "lab_prefix": 0,
+    "rootmark_dir": 0,
+    "server_token": 0,
+    "key_pattern": 0,
+    "turkish_process": 0,
+    "secret_content": 0,
+    "host_user": 0,
+    "home_path_unjustified": 0,
+    "email_unjustified": 0,
+    "private_term": 0,
+    "broken_link": 0
+   },
+   "leaks_justified": {
+    "home_path": [
+     {
+      "file": "docs/GUIDE.md",
+      "user": "ada"
+     },
+     {
+      "file": "docs/GUIDE.md",
+      "user": "rmhuman"
+     },
+     {
+      "file": "site/src/install.md",
+      "user": "ada"
+     }
+    ],
+    "email": [
+     {
+      "file": ".github/workflows/release.yml",
+      "address": "GH_TOKEN@github.com"
+     },
+     {
+      "file": "testdata/tok_ref.json",
+      "address": "support@dendron.so"
+     }
+    ]
+   },
+   "private_terms_searched": 3,
+   "errors": []
+  },
+  "D": {
+   "what": "probe: tag tree + lists with scripts/release_gate_claude.sh in stays (local unpushed config commit, --config-ref)",
+   "ok": true,
+   "tree": "623553b9eb27feaba426d813eee521276244d75e",
+   "product_files": 1254,
+   "unclassified": 0,
+   "double_classified": 0,
+   "product_path_collisions": 0,
+   "dead_patterns": 0,
+   "transforms": {
+    "K": 605,
+    "M": 16,
+    "Y": 19
+   },
+   "leaks": {
+    "lab_prefix": 0,
+    "rootmark_dir": 0,
+    "server_token": 0,
+    "key_pattern": 0,
+    "turkish_process": 0,
+    "secret_content": 0,
+    "host_user": 0,
+    "home_path_unjustified": 0,
+    "email_unjustified": 0,
+    "private_term": 0,
+    "broken_link": 0
+   },
+   "leaks_justified": {
+    "home_path": [
+     {
+      "file": "docs/GUIDE.md",
+      "user": "ada"
+     },
+     {
+      "file": "docs/GUIDE.md",
+      "user": "rmhuman"
+     },
+     {
+      "file": "site/src/install.md",
+      "user": "ada"
+     }
+    ],
+    "email": [
+     {
+      "file": ".github/workflows/release.yml",
+      "address": "GH_TOKEN@github.com"
+     },
+     {
+      "file": "testdata/tok_ref.json",
+      "address": "support@dendron.so"
+     }
+    ]
+   },
+   "private_terms_searched": 3,
+   "errors": []
+  },
+  "E": {
+   "what": "probe D repeat",
+   "ok": true,
+   "tree": "623553b9eb27feaba426d813eee521276244d75e",
+   "product_files": 1254,
+   "unclassified": 0,
+   "double_classified": 0,
+   "product_path_collisions": 0,
+   "dead_patterns": 0,
+   "transforms": {
+    "K": 605,
+    "M": 16,
+    "Y": 19
+   },
+   "leaks": {
+    "lab_prefix": 0,
+    "rootmark_dir": 0,
+    "server_token": 0,
+    "key_pattern": 0,
+    "turkish_process": 0,
+    "secret_content": 0,
+    "host_user": 0,
+    "home_path_unjustified": 0,
+    "email_unjustified": 0,
+    "private_term": 0,
+    "broken_link": 0
+   },
+   "leaks_justified": {
+    "home_path": [
+     {
+      "file": "docs/GUIDE.md",
+      "user": "ada"
+     },
+     {
+      "file": "docs/GUIDE.md",
+      "user": "rmhuman"
+     },
+     {
+      "file": "site/src/install.md",
+      "user": "ada"
+     }
+    ],
+    "email": [
+     {
+      "file": ".github/workflows/release.yml",
+      "address": "GH_TOKEN@github.com"
+     },
+     {
+      "file": "testdata/tok_ref.json",
+      "address": "support@dendron.so"
+     }
+    ]
+   },
+   "private_terms_searched": 3,
+   "errors": []
+  },
+  "F": {
+   "what": "probe D, CI-simulated host",
+   "ok": true,
+   "tree": "623553b9eb27feaba426d813eee521276244d75e",
+   "product_files": 1254,
+   "unclassified": 0,
+   "double_classified": 0,
+   "product_path_collisions": 0,
+   "dead_patterns": 0,
+   "transforms": {
+    "K": 605,
+    "M": 16,
+    "Y": 19
+   },
+   "leaks": {
+    "lab_prefix": 0,
+    "rootmark_dir": 0,
+    "server_token": 0,
+    "key_pattern": 0,
+    "turkish_process": 0,
+    "secret_content": 0,
+    "host_user": 0,
+    "home_path_unjustified": 0,
+    "email_unjustified": 0,
+    "private_term": 0,
+    "broken_link": 0
+   },
+   "leaks_justified": {
+    "home_path": [
+     {
+      "file": "docs/GUIDE.md",
+      "user": "ada"
+     },
+     {
+      "file": "docs/GUIDE.md",
+      "user": "rmhuman"
+     },
+     {
+      "file": "site/src/install.md",
+      "user": "ada"
+     }
+    ],
+    "email": [
+     {
+      "file": ".github/workflows/release.yml",
+      "address": "GH_TOKEN@github.com"
+     },
+     {
+      "file": "testdata/tok_ref.json",
+      "address": "support@dendron.so"
+     }
+    ]
+   },
+   "private_terms_searched": 3,
+   "errors": []
+  }
+ },
+ "result": "BLOCKED: with the tag's own lists the build fails (unclassified 1: scripts/release_gate_claude.sh, added by K-D1.2 after the last classification check); transfer.yml on v0.4.0 would stop before any write to the product repo. Tree id is deterministic (A=B=C) and leaks are 0 in every class; TRANSFER.json carries lab_commit, so a fixed commit gives a different tree id.",
+ "note_ci_private_terms": "transfer.yml sets no ROOTMARK_LEAK_TERMS: in CI the private-term class searches 0 terms; the local run (3 terms) is the one that covers it"
+}

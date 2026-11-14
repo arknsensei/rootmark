@@ -7,3 +7,9 @@
 - **Park edilen:** R6'nın PR #73 birleşmesi ve sonrası. Bağımsız işler: yok (R0–R5 tamam; R6'nın kalanı insan adımı ve bu kararı bekliyor).
 - **Devam:** karar gelince ilgili seçenek uygulanır, yerelde tam `make test` + `make lint`, #73'e tek push.
 - **Kapanış (2026-11-14):** K-D1.2 (kullanıcı kararı, seçenek b): R21 ayrı kapı (`scripts/release_gate_claude.sh`), `release_check.sh` F1 öncesi baytlarına döndü (D-1/F2); D1-10 lafzen kaldı (FINAL). R6 PARK'tan çıktı.
+
+## 2026-11-14 · R6 PARK (3a öncesi) — `v0.4.0` kendi listeleriyle aktarılamıyor
+- **Koşul:** dışarıya yazan adım (3a) öncesi yerel yarıda engel; çözüm etiketi (insanın) ya da aktarım yolunu değiştirir → karar talebi.
+- **Gözlem:** `v0.4.0`'dan iki yerel koşu + CI benzetimi: ağaç aynı (623553b9…), sızıntı 0, ama sınıflandırılmamış 1 (`scripts/release_gate_claude.sh`, K-D1.2'nin eklediği) → `ok: false`; `transfer.yml` ürün deposuna yazmadan kalırdı.
+- **Karar talebi:** `docs/DECISIONS.md` K-D1-T2 (a, b, c; ajanın önerisi a).
+- **Park edilen:** 3a ve sonrası. Bağımsız iş: düzeltme dalı `release/0.4.0-fix` ve yerel tam kapılar (PR karar gelince).

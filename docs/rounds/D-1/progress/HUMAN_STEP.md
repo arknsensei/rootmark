@@ -23,8 +23,8 @@ Bitince bu dosyada her satırın "Durum"unu siz değiştirmeyin; ajan (ya da ork
 | # | Adım | Beklenen sonuç | Ajanın sınaması | Durum |
 |---|---|---|---|---|
 | 2a | PR #73'ü (`release/0.4.0`) **rebase** ile birleştirin (0.3.4'teki #69 gibi; turun PR'ından önce). | `main`'de sürüm 0.4.0, `research/transfer/`, `product/overlay/` | `git show origin/main:Cargo.toml \| grep '^version'` → `0.4.0` | ✔ #73 CI 16/16 (koşu 43628292002, head 42d7ce2); `main` = 9bca7de, ağacı 42d7ce2'ninkiyle aynı (4124d0b7…), sürüm 0.4.0 |
-| 2b | Laboratuvar `release.yml`'ini birleşmiş `main`'de tetikleyin (laboratuvarın kendi doğrulaması; GitHub sürümü **yayımlanmaz**). | koşu yeşil | `gh run list -R arknsensei/rootmark -w release -L 1` | tetiklendi: koşu 43633859618 (9bca7de), son okuma sürüyor |
-| 2c | Birleşmiş `main` commit'ine etiket: `git tag -a v0.4.0 -m "rootmark 0.4.0" <sha> && git push origin v0.4.0` | etiket var | `git ls-remote --tags origin v0.4.0` | bekliyor (2b ve `main` push CI'ı yeşil olunca) |
+| 2b | Laboratuvar `release.yml`'ini birleşmiş `main`'de tetikleyin (laboratuvarın kendi doğrulaması; GitHub sürümü **yayımlanmaz**). | koşu yeşil | `gh run list -R arknsensei/rootmark -w release -L 1` | ✔ koşu 43633859618 (9bca7de) yeşil: aarch64-apple-darwin, x86_64-unknown-linux-gnu, windows; dist/release.json + SHA256SUMS + provenance |
+| 2c | Birleşmiş `main` commit'ine etiket: `git tag -a v0.4.0 -m "rootmark 0.4.0" <sha> && git push origin v0.4.0` | etiket var | `git ls-remote --tags origin v0.4.0` | ✔ açıklamalı etiket 35cad04 → 9bca7de (`main` CI 43633765218 yeşil). **3a PARK:** etiket kendi listeleriyle aktarılamıyor (K-D1-T2) |
 
 ## Adım 3 — Aktarım ve ürün yayımı (adım 1 ve 2 bittikten sonra)
 | # | Adım | Beklenen sonuç | Ajanın sınaması |
