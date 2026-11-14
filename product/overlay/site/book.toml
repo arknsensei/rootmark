@@ -1,0 +1,15 @@
+[book]
+title = "RootMark"
+description = "Block-level lineage, provenance and a deterministic derived index for Markdown written by people and agents together."
+language = "en"
+src = "src"
+
+[build]
+build-dir = "book"
+create-missing = false
+
+[output.html]
+site-url = "/"
+cname = "docs.rootmark.ai"
+git-repository-url = "https://github.com/rootmark-ai/rootmark"
+no-section-label = true
