@@ -1,0 +1,11 @@
+{
+  "check": "MCP tools/list (initialize, notifications/initialized, tools/list over --mcp stdio), published binaries aarch64-apple-darwin",
+  "rootmark 0.3.3": {
+    "sha256": "fad70a6f9be71bc7c2d37cb21267cb82215e701c5272724b3b37a2832a4a849c"
+  },
+  "rootmark 0.3.4": {
+    "sha256": "fad70a6f9be71bc7c2d37cb21267cb82215e701c5272724b3b37a2832a4a849c"
+  },
+  "tools": 11,
+  "byte_equal": true
+}
