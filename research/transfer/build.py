@@ -99,12 +99,17 @@ def product_files(commit: Commit, lab_tag: str | None, cfg: Commit | None = None
     )
     cl = C.classify(sorted(commit.entries), allow, stays, trans)
     errors = []
-    for k in ("unclassified", "double", "collisions", "dead_patterns"):
+    # with another commit's lists (standalone check of an older tree) a
+    # pattern for a file that came later is dead by design: reported only
+    checked = ("unclassified", "double", "collisions") + (
+        () if cfg is not commit else ("dead_patterns",)
+    )
+    for k in checked:
         if cl[k]:
             errors.append(f"{k}: {len(cl[k])} (first: {cl[k][:5]})")
     # overlays and their sources
     overlays = {
-        p[len(OVERLAY) :]: p for p in commit.entries if p.startswith(OVERLAY) and p != SOURCES
+        p[len(OVERLAY) :]: p for p in cfg.entries if p.startswith(OVERLAY) and p != SOURCES
     }
     try:
         sources = json.loads(cfg.read(SOURCES))
@@ -121,6 +126,7 @@ def product_files(commit: Commit, lab_tag: str | None, cfg: Commit | None = None
         )
     files = {}
     y_dests = {}
+    skipped_sources = []
     for f, info in sorted(cl["files"].items()):
         if info["class"] == "stays":
             continue
@@ -153,7 +159,11 @@ def product_files(commit: Commit, lab_tag: str | None, cfg: Commit | None = None
                 continue
             want = sources[dest].get("blob")
             have = commit.entries[lab_src][1]
-            if want != have:
+            # an older tree checked with today's overlays (cfg is another
+            # commit; standalone check only): its sources are older by design
+            if want != have and cfg is not commit:
+                skipped_sources.append(dest)
+            elif want != have:
                 errors.append(
                     f"overlay {dest}: source {lab_src} changed ({str(want)[:12]} -> {have[:12]}); "
                     "update the overlay and its SOURCES.json blob"
@@ -198,6 +208,7 @@ def product_files(commit: Commit, lab_tag: str | None, cfg: Commit | None = None
         "double_classified": len(cl["double"]),
         "product_path_collisions": len(cl["collisions"]),
         "dead_patterns": len(cl["dead_patterns"]),
+        "overlay_sources_not_checked": skipped_sources,
     }
     manifest = {
         "format": 1,
