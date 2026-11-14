@@ -1,0 +1,43 @@
+RootMark
+Copyright 2026 the rootmark authors
+
+This product is licensed under the Apache License, Version 2.0 (LICENSE).
+It includes:
+- the rootmark specification and its conformance fixtures (spec/), Apache
+  License 2.0 (spec/LICENSE);
+- the Obsidian client (clients/obsidian/), Apache License 2.0.
+
+The embedder model all-MiniLM-L6-v2 (sentence-transformers, Apache License
+2.0) is not in this repository or in the release archives; it is fetched at
+a pinned revision and checked by scripts/fetch_model.sh. The container image
+(ghcr.io/rootmark-ai/rootmark, rootmark/rootmark) redistributes it under
+/usr/share/rootmark/models/minilm-l6-v2/ with its licence and attribution.
+
+The test reference data testdata/tok_ref.json and testdata/embed_ref.json
+contain text fragments of the documentation of dendronhq/dendron-site
+(commit fbc0776), used under the MIT License:
+
+  Copyright (c) 2020 Thence LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a
+  copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to permit
+  persons to whom the Software is furnished to do so, subject to the
+  following conditions:
+
+  The above copyright notice and this permission notice shall be included
+  in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+  NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+  USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+The licences of the Rust crates compiled into the `rootmark` binary are
+listed in THIRD_PARTY_LICENSES, generated for each release (cargo-about,
+about.toml) and shipped in every release archive and in the container image.

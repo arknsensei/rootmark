@@ -1,0 +1,7 @@
+# clients/obsidian — agent notes
+Responsibility: the minimal Obsidian client: blame panel, proposal view with Promote/Demote, search, checkpoints, trace viewer; the human side of the product scene.
+Dependency direction: core ← index ← server ← clients. The client reaches the kernel **only** through `docs/CLIENT_CONTRACT.md`: HTTP `POST /v1/<tool>` / `GET /v1/status`, `Authorization: Bearer <.rootmark/server.token>`, `X-Consumer`. Nothing from `core/`, `index/`, `server/`, `bindings/` is imported; no `/v1/<x>` path outside the contract appears in the source (`scripts/check_deps.sh`).
+Language and tools: TypeScript (`tsc --strict`), `esbuild` (bundles `main.js`; `obsidian` and CodeMirror external), `eslint` (typescript-eslint strict), `vitest`. Every package is a dev dependency pinned to an exact version published at least 14 days earlier; **no runtime dependency** (the Obsidian API comes from the app).
+Frozen surfaces: none (the contract is in `docs/CLIENT_CONTRACT.md` and is checked on the server side).
+Test commands: `npm ci && npm test` (`make test-ts`), `npm run lint` (`make lint-ts`), `npm run build`.
+Not in this package: writing Markdown files (`vault.modify`, `vault.create`, `vault.append`, `adapter.write`, `adapter.append` …; the only write path is the HTTP tools); starting `rootmark serve` (no server → passive state); writing `policy.toml` or the token; relying on behaviour outside the contract; several vaults; a remote server; runtime dependencies.

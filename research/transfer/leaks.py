@@ -36,7 +36,9 @@ SECRET_RE = re.compile(
     rb"|xox[baprs]-[A-Za-z0-9-]{10,}"
 )
 HOME_RE = re.compile(rb"/(?:Users|home)/([A-Za-z0-9._-]+)/")
-MAIL_RE = re.compile(rb"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")
+MAIL_RE = re.compile(
+    rb"[A-Za-z0-9._%+-]+@[A-Za-z0-9][A-Za-z0-9-]*(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}"
+)
 # role and documentation addresses that may appear anywhere
 MAIL_OK = re.compile(
     rb"^(?:[A-Za-z0-9._%+-]+@rootmark\.ai|[A-Za-z0-9._%+-]+@example\.(?:com|org|net)|git@github\.com)$"
@@ -129,7 +131,14 @@ def check(files: dict[str, bytes], home_exc: list[dict], mail_exc: list[dict]) -
                 out["email_unjustified"].append(p)
         if any(t in b for t in terms):
             out["private_term"].append(p)
-        if p.endswith(".md") and "/fixtures" not in p and "fixtures_variants/" not in p:
+        # the site's pages link to pages site/build.sh copies in at build
+        # time; the built site's every internal link is checked there
+        if (
+            p.endswith(".md")
+            and "/fixtures" not in p
+            and "fixtures_variants/" not in p
+            and not p.startswith("site/src/")
+        ):
             text = b.decode("utf-8", "replace")
             for t in LINK_RE.findall(text):
                 if re.match(r"^[a-z]+:", t) or t.startswith("#"):

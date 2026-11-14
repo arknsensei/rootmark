@@ -7,9 +7,10 @@
 #     core/, index/, server/, bindings/python/ Cargo.toml with a version
 #     (`=x.y.z` or the lower bound `x.y.z`; path dependencies skipped) —
 #     crates.io `created_at`;
-#   - npm: clients/*/package.json (obsidian, vscode) dependencies, devDependencies —
-#     registry `time`;
-#   - Python: research/pyproject.toml `name==version` lines (dependencies and
+#   - npm: clients/*/package.json (obsidian, vscode) dependencies, devDependencies,
+#     and (D-1/R2) every package of clients/*/package-lock.json, transitive
+#     ones included — registry `time`;
+#   - Python (when research/ exists): research/pyproject.toml `name==version` lines (dependencies and
 #     dependency groups) — PyPI's first upload time of that version;
 #   - GitHub Actions (P2-A/A3): every `uses: <owner>/<repo>@<ref>` of
 #     .github/workflows/*.yml — the GitHub release of that tag, else the
@@ -83,10 +84,29 @@ for pj in clients/*/package.json; do
     entries+=("npm	$name	$ver	$pj	$n")
   done < <(jq -r '((.dependencies // {}) + (.devDependencies // {})) | to_entries[] | "\(.key)\t\(.value)"' "$pj")
 done
+# D-1/R2 (P2-Q.2 verification Ö1): every package of the clients' lock files,
+# transitive ones included (`packages` of package-lock.json v2/v3), dated by
+# the commit that wrote its entry's line in the lock file
+for lk in clients/*/package-lock.json; do
+  [ -f "$lk" ] || continue
+  jq -e '(.lockfileVersion // 0) >= 2 and (.packages | type) == "object"' "$lk" >/dev/null \
+    || { echo "check_dep_age: $lk: not a lockfileVersion >= 2 lock file with packages" >&2; exit 2; }
+  while IFS=$'\t' read -r key name ver; do
+    [[ "$ver" =~ ^[0-9] ]] || { echo "check_dep_age: $lk: $key has no exact version ($ver)" >&2; exit 2; }
+    k="$(grep -n -F "\"$key\": {" "$lk" | head -1 | cut -d: -f1)"
+    [ -n "$k" ] || { echo "check_dep_age: $lk: the line of $key was not found" >&2; exit 2; }
+    # the entry's own "version" line: the commit that set this version
+    n="$(awk -v k="$k" -v v="\"version\": \"$ver\"" 'NR > k && index($0, v) { print NR; exit } NR > k && /^    }/ { exit }' "$lk")"
+    [ -n "$n" ] || { echo "check_dep_age: $lk: the version line of $key ($ver) was not found" >&2; exit 2; }
+    entries+=("npm	$name	$ver	$lk	$n")
+  done < <(jq -r '.packages | to_entries[] | select(.key != "" and (.value.link // false) == false)
+    | "\(.key)\t\(.value.name // (.key | sub("^.*node_modules/"; "")))\t\(.value.version // "")"' "$lk")
+done
+# research/ (its Python project) exists in the development repository only
 pp=research/pyproject.toml
 n=0
 inlist=false
-while IFS= read -r line; do
+[ -f "$pp" ] && while IFS= read -r line; do
   n=$((n + 1))
   # requirement strings live in `dependencies = [ … ]` and the dependency groups
   [[ "$line" =~ ^(dependencies|dev)[[:space:]]*=[[:space:]]*\[ ]] && inlist=true
@@ -132,7 +152,10 @@ iso_to_unix() { jq -rn --arg d "$1" '$d | sub("\\.[0-9]+"; "") | sub("\\+00:00$"
 published_at() { # <eco> <name> <version> → ISO time or empty
   case "$1" in
     cargo) curl -sf -A "$ua" "https://crates.io/api/v1/crates/$2/$3" | jq -r '.version.created_at // empty' ;;
-    npm) curl -sf "https://registry.npmjs.org/$(printf '%s' "$2" | sed 's#/#%2F#')" | jq -r --arg v "$3" '.time[$v] // empty' ;;
+    npm) # one registry document per package name (a lock file lists a name many times)
+      local c; c="$npm_cache/$(printf '%s' "$2" | tr '/@' '__')"
+      [ -s "$c" ] || curl -sf "https://registry.npmjs.org/$(printf '%s' "$2" | sed 's#/#%2F#')" | jq -c '{time}' >"$c" || true
+      [ -s "$c" ] && jq -r --arg v "$3" '.time[$v] // empty' "$c" ;;
     pypi) curl -sf "https://pypi.org/pypi/$2/$3/json" | jq -r '[.urls[].upload_time_iso_8601] | min // empty' ;;
     actions)
       local t sha
@@ -150,6 +173,7 @@ published_at() { # <eco> <name> <version> → ISO time or empty
 }
 
 act_cache="|"
+npm_cache="$(mktemp -d -t rootmark-depage.XXXXXX)"; trap 'rm -rf "$npm_cache"' EXIT
 fail=0; missing=0; rows=()
 for e in "${entries[@]}"; do
   IFS=$'\t' read -r eco name ver file line <<<"$e"

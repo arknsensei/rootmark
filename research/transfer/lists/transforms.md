@@ -60,6 +60,7 @@ Giden dosyalarda bulunan `/Users/<x>/` ya da `/home/<x>/` dizgileri; her biri ku
 |---|---|---|
 | `docs/GUIDE.md` | `ada` | kılavuzun kurgu kullanıcısı (`/Users/ada/notes`: örnek vault, örnek çıktı) |
 | `docs/GUIDE.md` | `rmhuman` | kılavuzun §9 başsız kurulumunda önerilen ayrı OS kullanıcısının adı (`/home/rmhuman/…`), örnek |
+| `site/src/install.md` | `ada` | sitenin kurulum sayfasındaki Docker MCP yapılandırma örneğinin kurgu kullanıcısı (`/Users/ada/notes`), kılavuzunkiyle aynı |
 
 ## E-posta istisnaları
 
@@ -68,3 +69,4 @@ Giden dosyalarda bulunan `/Users/<x>/` ya da `/home/<x>/` dizgileri; her biri ku
 | dosya | adres | gerekçe |
 |---|---|---|
 | `testdata/tok_ref.json` | `support@dendron.so` | dendron-site belgesinin (MIT, K18; `testdata/THIRD_PARTY.md`) metnindeki kamusal destek adresi; başvuru verisi aynen (D0-K18 (a)) |
+| `.github/workflows/release.yml` | `GH_TOKEN@github.com` | bir adres değil: tap deposunun klon URL'sinde (`https://x-access-token:$GH_TOKEN@github.com/…`) gizli değişkenin adı; değer iş akışında GitHub'ın gizli değişkeninden gelir |

@@ -1,0 +1,59 @@
+# This repository is generated from the development repository, one commit
+# per release (README, "How this repository is made"). This workflow checks
+# that the commit under test is exactly what the transfer tool produces from
+# the lab commit it names: it reads Lab-Commit, Lab-Tag and Transfer-Tree
+# from the commit message, clones the (public) development repository at
+# that commit, runs ITS transfer tool (research/transfer/) and requires the
+# rebuilt tree id = this commit's tree id = Transfer-Tree, every file
+# byte-equal, every TRANSFER.json row equal to its lab blob or overlay, and
+# the leak check clean on the rebuilt tree. A commit without these lines
+# fails: main changes only through transfer commits.
+name: transfer-verify
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: transfer verify
+    runs-on: ubuntu-24.04
+    env:
+      LAB_URL: https://github.com/arknsensei/rootmark.git
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          # the pull request's head commit itself (not GitHub's merge commit)
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: product
+      - name: the transfer lines of the commit
+        working-directory: product
+        run: |
+          set -euo pipefail
+          msg="$(git log -1 --format=%B)"
+          lab="$(printf '%s\n' "$msg" | sed -n 's/^Lab-Commit: \([0-9a-f]\{40\}\)$/\1/p')"
+          tag="$(printf '%s\n' "$msg" | sed -n 's/^Lab-Tag: \(v[0-9][0-9.]*\)$/\1/p')"
+          tree="$(printf '%s\n' "$msg" | sed -n 's/^Transfer-Tree: \([0-9a-f]\{40\}\)$/\1/p')"
+          for v in lab tag tree; do [ -n "${!v}" ] || { echo "no $v line in the commit message: not a transfer commit" >&2; exit 1; }; done
+          { echo "LAB_COMMIT=$lab"; echo "LAB_TAG=$tag"; echo "TRANSFER_TREE=$tree"; } >>"$GITHUB_ENV"
+      - name: the development repository at the lab commit
+        run: |
+          set -euo pipefail
+          git clone -q --filter=blob:none --no-checkout "$LAB_URL" lab
+          git -C lab fetch -q --tags origin
+          [ "$(git -C lab rev-parse "refs/tags/$LAB_TAG^{commit}")" = "$LAB_COMMIT" ] \
+            || { echo "lab tag $LAB_TAG is not $LAB_COMMIT" >&2; exit 1; }
+          git -C lab checkout -q --detach "$LAB_COMMIT"
+      - name: rebuild and compare (tree ids, bytes, TRANSFER.json, leaks)
+        working-directory: lab/research
+        run: |
+          set -euo pipefail
+          python3 -E -s -m transfer.cli verify --repo "$GITHUB_WORKSPACE/lab" --product "$GITHUB_WORKSPACE/product" \
+            --lab-commit "$LAB_COMMIT" --tag "$LAB_TAG" --out "$RUNNER_TEMP/rebuilt" --expect-tree "$TRANSFER_TREE" \
+            | tee "$RUNNER_TEMP/verify.json"
+          { echo "### transfer verify"; echo; echo "lab \`$LAB_COMMIT\` ($LAB_TAG), tree \`$TRANSFER_TREE\`"; echo; cat "$RUNNER_TEMP/verify.json"; } >>"$GITHUB_STEP_SUMMARY"

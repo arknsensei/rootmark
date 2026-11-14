@@ -1,0 +1,15 @@
+{
+  "what": "D-1 README quick start blocks run as written (reports/rounds/D-1/r2/readme_quickstart.sh)",
+  "vault": "copy of spec/fixtures/mini_vault",
+  "blocks": [
+    {
+      "block": "Your first vault",
+      "found": true,
+      "lines": 4,
+      "exit": 0,
+      "tail": "rootmark serve: http listening on 127.0.0.1:7357\nrootmark serve: watching <home>/notes\nrootmark serve: watch: start: reconciled 12 files with the log (0 changed, 0 removals held, 0 errors) in 3 ms",
+      "pass": true
+    }
+  ],
+  "pass": true
+}
