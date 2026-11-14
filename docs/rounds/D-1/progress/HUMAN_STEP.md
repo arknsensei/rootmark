@@ -18,11 +18,11 @@ Ajanın son okuması (2026-11-14, salt okuma): `rootmark-ai/rootmark` var, herke
 Bitince bu dosyada her satırın "Durum"unu siz değiştirmeyin; ajan (ya da orkestratör) sınamaları koşar ve yazar.
 
 ## Adım 2 — Laboratuvar 0.4.0 (R6; ajan `release/0.4.0` dalını ve PR'ını hazırlar)
-Ön koşul: ajanın `release/0.4.0` PR'ı açık, CI'ı yeşil, PR gövdesinde `release_check` 22/22 (R21 dahil: güncel Claude Code kaydı ≤ 7 gün).
+**Durum (2026-11-14):** PR **#73** (`release/0.4.0` → `main`, "rootmark 0.4.0") açık; laboratuvar `release_check` bu dalda **22/22** (`reports/rounds/D-1/r6/release_check.json`; R21: Claude Code 2.1.325, kayıt 2026-11-14 — 7 günlük pencere 2026-11-21'de kapanır, sonra R21 yeniden koşulmalı). Ön koşul: #73'ün CI'ı yeşil.
 
 | # | Adım | Beklenen sonuç | Ajanın sınaması |
 |---|---|---|---|
-| 2a | `release/0.4.0` PR'ını **rebase** ile birleştirin (0.3.4'teki #69 gibi; turun PR'ından önce). | `main`'de sürüm 0.4.0, `research/transfer/`, `product/overlay/` | `git show origin/main:Cargo.toml \| grep '^version'` → `0.4.0` |
+| 2a | PR #73'ü (`release/0.4.0`) **rebase** ile birleştirin (0.3.4'teki #69 gibi; turun PR'ından önce). | `main`'de sürüm 0.4.0, `research/transfer/`, `product/overlay/` | `git show origin/main:Cargo.toml \| grep '^version'` → `0.4.0` |
 | 2b | Laboratuvar `release.yml`'ini birleşmiş `main`'de tetikleyin (laboratuvarın kendi doğrulaması; GitHub sürümü **yayımlanmaz**). | koşu yeşil | `gh run list -R arknsensei/rootmark -w release -L 1` |
 | 2c | Birleşmiş `main` commit'ine etiket: `git tag -a v0.4.0 -m "rootmark 0.4.0" <sha> && git push origin v0.4.0` | etiket var | `git ls-remote --tags origin v0.4.0` |
 
