@@ -1,0 +1,47 @@
+{
+  "tree": "2e9ab753666108488e1d05a672884b7770139ade",
+  "steps": [
+    {
+      "step": "models",
+      "exit": 0,
+      "s": 20
+    },
+    {
+      "step": "cargo_build",
+      "exit": 0,
+      "s": 20
+    },
+    {
+      "step": "make_test",
+      "exit": 0,
+      "s": 1215
+    },
+    {
+      "step": "make_lint",
+      "exit": 0,
+      "s": 24
+    },
+    {
+      "step": "make_conformance",
+      "exit": 0,
+      "s": 21
+    },
+    {
+      "step": "check_dep_age",
+      "exit": 0,
+      "s": 38
+    },
+    {
+      "step": "client_obsidian",
+      "exit": 0,
+      "s": 2
+    },
+    {
+      "step": "client_vscode",
+      "exit": 0,
+      "s": 2
+    }
+  ],
+  "pass": true,
+  "what": "D-1/R1 standalone check of the ROUND_START tree (87a042e) transferred with the lists and overlays of d-1/round (transfer.cli build --config-ref; overlay source not checked: .github/workflows/ci.yml, by design), outside the lab"
+}
