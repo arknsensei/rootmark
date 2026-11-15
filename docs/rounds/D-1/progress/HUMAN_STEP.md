@@ -106,4 +106,6 @@ Ajan R7'de kayıtlarını bitirince yeniden tabanlamayı yerelde yapar ve **yeni
 | 5b | Zorla itme istenmezse ajan PR'ı `--head d-1/round-final` ile açar (GOAL'deki `--head`'den sapma; ASSUMPTIONS'a yazılır) | PR `main`'e tek PR | `gh pr list -R arknsensei/rootmark --head d-1/round-final` |
 
 ## Adım 4 — İsteğe bağlı (ürün yayımlandıktan sonra; çıkış kriteri değil)
+⚠ Yeniden adlandırmadan sonra `arknsensei/rootmark` adıyla **yeni bir depo açılmamalı**: GitHub'ın eski addan yönlendirmesi ancak ad boş kaldıkça çalışır; ürün sayfalarının ve README'nin `https://github.com/arknsensei/rootmark/blob/v0.4.0/…` atıfları (16 yol) o zaman kırılır (R7 gözden geçirici notu 6).
+
 Laboratuvar Pages yönlendirmesi: `docs/rounds/D-1/progress/lab_redirect/index.html`'i laboratuvarın Pages sitesinin `spec/index.html`'i olarak yayımlamak (laboratuvar `pages.yml`'ini bir kez bu dosyayla koşturmak), sonra `arknsensei/rootmark` → `arknsensei/rootmark-lab` (K17, D0-K4). Eski rozetin `badge.json`'u yönlendirilemez (bilinen sınır).
