@@ -1,0 +1,11 @@
+{
+ "branch": "release/0.4.0-fix2",
+ "commit": "01635a8151adcb9d72d3aca9f529f5e62953bebd",
+ "base": "545d0b2dd829ff6b6ee26f9cec1cba57240d4e8a",
+ "lab_gates": {"make_test": 0, "make_lint": 0, "make_conformance": 0},
+ "transfer_of_this_commit": {"note": "built with --ref <commit> and no --tag (v0.4.0 still points to 545d0b2); the final tree id comes after the re-tag (HUMAN_STEP 3'd)", "runs": "A = B = CI-simulated host", "tree": "7f1663bb855493d6be219c3dd14738482cdc51bb", "ok": true, "product_files": 1254, "unclassified": 0, "double": 0, "collisions": 0, "dead_patterns": 0, "leaks_total": 0, "private_terms_searched": 3},
+ "actionlint_transferred_tree": {"image": "rhysd/actionlint@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686341fec936f3b79331f9315667 (1.7.12)", "yaml_schema_errors": 0, "shellcheck": {"SC2086": 4, "SC2010": 1, "SC2016": 1, "SC2251": 0}},
+ "standalone_transferred_tree": {"what": "scratch git repo of the transferred tree, outside the lab: product ci.yml commands (models, make test, make lint, make conformance, check_dep_age, check_deps) + both clients npm ci/test/build",
+   "steps": {"models": 0, "cargo_build": 0, "make_test": "2 on the first run (server/tests/p2_0_attest.rs::cli_attest_raises_a_watched_edit: 5 raised instead of 1 — the timing-sensitive test seen in P2-V.1 E1 under load); alone 5/5 pass; full make test rerun 0", "make_lint": 0, "make_conformance": 0, "check_dep_age": 0, "check_deps": 0, "client_obsidian": 0, "client_vscode": 0}},
+ "process_note": "the first two passes of the transfer part failed on the agent's own script (--tag check; then a nested scratch repo created by the standalone script when the tree was missing — removed, worktree clean, nothing pushed); the scripts now stop on a missing tree"
+}

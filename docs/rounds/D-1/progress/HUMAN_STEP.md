@@ -62,7 +62,7 @@ Bunlardan sonra ajan R6'nın "yayımlanmış kanallardan sınama"sını (temiz L
 
 | # | Adım (insan; ajanın adımları ayrıca belirtilmiş) | Önce okunacak doğrulama → beklenen |
 |---|---|---|
-| 3′a | Laboratuvar düzeltme PR'ını (`release/0.4.0-fix2` → `main`) CI yeşil olunca **rebase** ile birleştirin. | `gh pr checks <no> -R arknsensei/rootmark` → hepsi pass |
+| 3′a | Laboratuvar düzeltme PR'ını (**#75**, `release/0.4.0-fix2` → `main`) CI yeşil olunca **rebase** ile birleştirin. | `gh pr checks <no> -R arknsensei/rootmark` → hepsi pass |
 | 3′b | `main` push CI'ı yeşil; laboratuvar `release.yml`'ini yeni `main` commit'inde tetikleyin (`gh workflow run release.yml -R arknsensei/rootmark --ref main`), yeşil. | `gh run list -R arknsensei/rootmark -w release -L 1 --json headSha,conclusion` → `headSha` = yeni `main`, `success` |
 | 3′c | ⚠ Laboratuvar `v0.4.0`'ı **üçüncü ve son kez** yeni `main`'e atın: `git fetch origin --tags --force && git push origin :refs/tags/v0.4.0 && git tag -d v0.4.0 && git tag -a v0.4.0 -m "rootmark 0.4.0" <yeni main sha> && git push origin v0.4.0` | `git rev-parse origin/main` = `<yeni main sha>`; `git show origin/main:product/overlay/.github/workflows/release.yml \| grep -c '"pull request to the tap'` → 1 |
 | 3′d | (ajan) Yeni etiketten yerel ön-kontrol: iki koşu + CI benzetimi aynı ağaç, `ok: true`, sızıntı 0; aktarılmış ağaçta actionlint YAML/şema hatası 0. Kimlik orkestratöre ve `reports/rounds/D-1/r6/`'ya. | ajanın kaydı `ok: true` |
