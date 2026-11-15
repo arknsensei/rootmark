@@ -10,4 +10,4 @@ Okuma: `gh api` (laboratuvar `arknsensei`, ürün `rootmark-ai`; salt okuma). Gi
 ## Ürün `rootmark-ai/rootmark` (2026-11-15)
 - İlk okuma (3h'den sonra): Dependabot uyarıları **kapalı** (API 403 "Dependabot alerts are disabled"), güvenlik güncellemeleri `disabled`; CodeQL analizi **yok** (404 "no analysis found"). Gizli değer taraması ve itme koruması `enabled`, açık uyarı 0.
 - `.github/dependabot.yml` ürün ağacında var (yalnız güvenlik güncellemeleri; sürüm güncellemeleri `open-pull-requests-limit: 0`).
-- Ayar insanındır → HUMAN_STEP **3i**. Sonuç aşağıya yazılır.
+- Ayar insanındır → HUMAN_STEP **3i** ✔: Dependabot uyarıları açık (204), CodeQL varsayılan kurulum `configured`, ilk analiz 43731780721. Güvenlik güncellemeleri (otomatik PR) **bilerek kapalı**: ürün `main`'i yalnız aktarımla dolar; uyarı çıkarsa düzeltme laboratuvarda yapılır, sonraki sürümle aktarılır. Not: ürünün `dependabot.yml` yorumu "security updates are enabled in the repository settings" der (laboratuvar için doğru, ürün için değil) → D1F-20.
