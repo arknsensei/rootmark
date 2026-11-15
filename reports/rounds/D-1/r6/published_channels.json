@@ -1,0 +1,128 @@
+{
+ "what": "D-1/R6 published channels (release v0.4.0 of rootmark-ai/rootmark, read 2026-11-15 after HUMAN_STEP 3h)",
+ "release": {
+  "tag": "v0.4.0",
+  "name": "RootMark 0.4.0",
+  "draft": false,
+  "prerelease": false,
+  "published_at": "2026-11-15T14:44:29Z",
+  "assets": 12,
+  "product_commit": "e6d8ae588eb332afef4c0ea4c097e1002914c2e4"
+ },
+ "sha256sums": {
+  "lines": 11,
+  "assets_not_listed": 0,
+  "linux_sha256sum_c": "debian:trixie-slim, exit 0, 11 OK, MISMATCH 0, missing 0",
+  "macos_shasum_c": "exit 0, 11 OK"
+ },
+ "attestations": {
+  "docker.io_rootmark_rootmark_0.4.0": {
+   "ok": true,
+   "attestations": 2,
+   "signer_workflow": [
+    "workflows/image.yml"
+   ],
+   "source_repository": [
+    "https://github.com/rootmark-ai/RootMark"
+   ]
+  },
+  "ghcr.io_rootmark-ai_rootmark_0.4.0": {
+   "ok": true,
+   "attestations": 2,
+   "signer_workflow": [
+    "workflows/image.yml"
+   ],
+   "source_repository": [
+    "https://github.com/rootmark-ai/RootMark"
+   ]
+  },
+  "rootmark-0.4.0-aarch64-apple-darwin.tar.gz": {
+   "ok": true,
+   "attestations": 1,
+   "signer_workflow": [
+    "workflows/release.yml"
+   ],
+   "source_repository": [
+    "https://github.com/rootmark-ai/RootMark"
+   ]
+  },
+  "rootmark-0.4.0-x86_64-pc-windows-msvc.zip": {
+   "ok": true,
+   "attestations": 1,
+   "signer_workflow": [
+    "workflows/release.yml"
+   ],
+   "source_repository": [
+    "https://github.com/rootmark-ai/RootMark"
+   ]
+  },
+  "rootmark-0.4.0-x86_64-unknown-linux-gnu.tar.gz": {
+   "ok": true,
+   "attestations": 1,
+   "signer_workflow": [
+    "workflows/release.yml"
+   ],
+   "source_repository": [
+    "https://github.com/rootmark-ai/RootMark"
+   ]
+  },
+  "rootmark-obsidian-0.4.0.zip": {
+   "ok": true,
+   "attestations": 1,
+   "signer_workflow": [
+    "workflows/release.yml"
+   ],
+   "source_repository": [
+    "https://github.com/rootmark-ai/RootMark"
+   ]
+  },
+  "rootmark_bindings-0.4.0-cp311-abi3-manylinux_2_34_x86_64.whl": {
+   "ok": true,
+   "attestations": 1,
+   "signer_workflow": [
+    "workflows/release.yml"
+   ],
+   "source_repository": [
+    "https://github.com/rootmark-ai/RootMark"
+   ]
+  }
+ },
+ "attestation_repo_case": "each of the 5 assets and 2 images verified twice, -R rootmark-ai/rootmark and -R rootmark-ai/RootMark: exit 0 both (D1F-18); the details kept here are of the second run (file names collide on a case-insensitive disk); the certificate's source repository reads https://github.com/rootmark-ai/RootMark",
+ "archives": {
+  "files_in_each": [
+   "LICENSE",
+   "NOTICE",
+   "README.md",
+   "THIRD_PARTY_LICENSES"
+  ],
+  "third_party_licenses_equal_release_asset": "aarch64-apple-darwin, x86_64-unknown-linux-gnu: yes",
+  "notice_dendron_mit": true
+ },
+ "obsidian_brat": {
+  "assets": [
+   "main.js",
+   "manifest.json",
+   "styles.css",
+   "rootmark-obsidian-0.4.0.zip"
+  ],
+  "in_sha256sums": true,
+  "zip_equals_loose_assets": true,
+  "manifest_version": "0.4.0"
+ },
+ "install_sh": {
+  "macos_arm64": "this Mac, fresh HOME, from GitHub: install.sh checked against SHA256SUMS, installed, --version 'rootmark 0.4.0', conformance level 3 39/39",
+  "linux_x86_64": "ubuntu:24.04 (linux/amd64 under Docker Desktop's emulation, not a native x86_64 host), fresh user, apt curl jq ca-certificates only: install.sh sha256sum -c OK, installed, --version 'rootmark 0.4.0', conformance 39/39, ingest-dir 12 documents events_hash 808a41f2…, index build 33 records, serve --http 127.0.0.1:7357 --watch listening and stopped"
+ },
+ "homebrew": {
+  "macos_arm64": "Homebrew 7.0.12: brew install rootmark-ai/tap/rootmark ok, brew test ok, --version 'rootmark 0.4.0', fetch_model ok, conformance 39/39; afterwards uninstalled and untapped",
+  "linux_x86_64": "ghcr.io/homebrew/ubuntu24.04 (Homebrew 7.0.13, linux/amd64 emulated): brew install ok, brew test ok, --version 'rootmark 0.4.0', fetch_model ok, conformance 39/39"
+ },
+ "readme_quick_start_macos": "reports/rounds/D-1/r6/readme_quickstart_macos.json",
+ "image": {
+  "digest_ghcr_and_docker_hub": "sha256:d574117090625b6e0b150c70be737f1c1079214b98e2a618bb71010bb0cacd4b (both, anonymous docker buildx imagetools inspect)",
+  "quickstart_macos": "r6/image_quickstart_macos.json",
+  "quickstart_linux": "r6/image_quickstart_linux.json",
+  "claude_code_mcp_stdio": "r6/claude_probe_image_ghcr.json: Claude Code 2.1.325, 1 session, 11 tools, search and propose SUCCEEDED, 2 agent events, probe file written"
+ },
+ "site": "r6/site_check.json"
+}
