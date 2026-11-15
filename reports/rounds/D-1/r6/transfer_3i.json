@@ -1,0 +1,42 @@
+{
+ "step": "3′i (K-D1.4)",
+ "lab_run": 43703150416,
+ "lab_run_conclusion": "success",
+ "event": "workflow_dispatch (tag=v0.4.0, bootstrap=true)",
+ "product_repo": "rootmark-ai/rootmark",
+ "product_branch": "transfer/v0.4.0",
+ "product_commit": "e6d8ae588eb332afef4c0ea4c097e1002914c2e4",
+ "product_commit_parents": 0,
+ "product_tree": "afdcc4589d18627f2dc8cd4085c802fc5c5ba8ec",
+ "author": "github-actions[bot]",
+ "date": "2026-11-15T11:32:26+03:00 (= lab commit date)",
+ "message_trailers": {
+  "Lab-Commit": "66d14e33fcbe3e61a06db84e300f3e0e9fc4ebdd",
+  "Lab-Tag": "v0.4.0",
+  "Transfer-Tree": "afdcc4589d18627f2dc8cd4085c802fc5c5ba8ec"
+ },
+ "tree_ids_equal": {
+  "local_A_B_CI_sim (3′d)": "afdcc458…",
+  "orchestrator_independent": "afdcc458… (orchestrator read)",
+  "product_commit": "afdcc458…"
+ },
+ "remote_heads_anonymous": {
+  "hold": "dd0465d37b2bdd2418dfc174660346809dac3f91",
+  "transfer/v0.4.0": "e6d8ae588eb332afef4c0ea4c097e1002914c2e4"
+ },
+ "agent_verify": {
+  "how": "anonymous clone (no credentials) of transfer/v0.4.0; research/transfer at v0.4.0: transfer.cli verify --lab-commit 66d14e3 --tag v0.4.0 --expect-tree afdcc458…",
+  "exit": 0,
+  "result": {
+   "tree": "afdcc4589d18627f2dc8cd4085c802fc5c5ba8ec",
+   "product_tree": "afdcc4589d18627f2dc8cd4085c802fc5c5ba8ec",
+   "expected": [
+    "afdcc4589d18627f2dc8cd4085c802fc5c5ba8ec"
+   ],
+   "rows": 1253,
+   "problems": [],
+   "ok": true
+  }
+ },
+ "tracked_files": 1254
+}
