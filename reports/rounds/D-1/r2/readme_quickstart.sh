@@ -34,10 +34,14 @@ for want in "$@"; do
   b="${hf%.heading}.sh"
   log="$work/$(basename "$b").log"
   if grep -q 'rootmark serve' "$b"; then
+    # its own process group (job control), so the server — a grandchild — is stopped too
+    set -m
     (cd "$home" && HOME="$home" bash -e "$b" >"$log" 2>&1) &
-    pid=$!; ok=false
+    pid=$!; set +m; ok=false
     for _ in $(seq 1 120); do grep -q 'http listening' "$log" && { ok=true; break; }; sleep 0.5; done
-    pkill -TERM -P "$pid" 2>/dev/null; kill -TERM "$pid" 2>/dev/null; wait "$pid" 2>/dev/null
+    kill -TERM -- "-$pid" 2>/dev/null; wait "$pid" 2>/dev/null
+    for _ in $(seq 1 40); do pgrep -g "$pid" >/dev/null 2>&1 || break; sleep 0.5; done
+    if pgrep -g "$pid" >/dev/null 2>&1; then echo "readme_quickstart: the serve block did not stop" >&2; kill -KILL -- "-$pid" 2>/dev/null; ok=false; fi
     rc=$($ok && echo 0 || echo 1)
   else
     (cd "$home" && HOME="$home" bash -e "$b" >"$log" 2>&1); rc=$?

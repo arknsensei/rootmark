@@ -1,0 +1,90 @@
+{
+ "what": "D-1/R6 published site check (research/d1/site_check.py)",
+ "base": "https://docs.rootmark.ai/",
+ "required": {
+  "install.html": 200,
+  "guide.html": 200,
+  "git.html": 200,
+  "contract.html": 200,
+  "threat-model.html": 200,
+  "spec/index.html": 200,
+  "spec/conformance.html": 200,
+  "changelog.html": 200,
+  "security.html": 200
+ },
+ "pages": {
+  "/": {
+   "status": 200,
+   "title": "Introduction - RootMark"
+  },
+  "/changelog.html": {
+   "status": 200,
+   "title": "Changelog - RootMark"
+  },
+  "/contract.html": {
+   "status": 200,
+   "title": "Client contract - RootMark"
+  },
+  "/git.html": {
+   "status": 200,
+   "title": "How RootMark differs from git - RootMark"
+  },
+  "/guide.html": {
+   "status": 200,
+   "title": "Guide - RootMark"
+  },
+  "/install.html": {
+   "status": 200,
+   "title": "Install - RootMark"
+  },
+  "/introduction.html": {
+   "status": 200,
+   "title": "Introduction - RootMark"
+  },
+  "/print.html": {
+   "status": 200,
+   "title": "RootMark"
+  },
+  "/security.html": {
+   "status": 200,
+   "title": "Security - RootMark"
+  },
+  "/spec/conformance.html": {
+   "status": 200,
+   "title": "Conformance - RootMark"
+  },
+  "/spec/index.html": {
+   "status": 200,
+   "title": "Specification - RootMark"
+  },
+  "/threat-model.html": {
+   "status": 200,
+   "title": "Threat model - RootMark"
+  }
+ },
+ "assets_checked": 18,
+ "assets_not_200": {},
+ "internal_links_broken": [],
+ "offsite_links": [
+  "https://github.com/TfTHacker/obsidian42-brat",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/NORTH_STAR.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/docs/DECISIONS.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/docs/HEADLESS_CHANNEL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/docs/ROADMAP.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/docs/THREAT_MODEL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P1-A/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P1-B.1/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P1-B/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P1-C/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P1-D.1/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P1-D/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P1-E/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P2-0.3/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P2-P/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/reports/rounds/P2-V.1/FINAL.md",
+  "https://github.com/arknsensei/rootmark/blob/v0.4.0/spec/SPEC.md",
+  "https://github.com/rootmark-ai/rootmark",
+  "https://img.shields.io/endpoint"
+ ],
+ "pass": true
+}
