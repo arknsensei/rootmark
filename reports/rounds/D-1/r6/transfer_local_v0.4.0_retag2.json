@@ -1,0 +1,130 @@
+{
+  "step": "HUMAN_STEP 3′d (K-D1.4)",
+  "date": "2026-11-15",
+  "tag": "v0.4.0",
+  "tag_object": "2c0ad4bd884c11e9ec6bb137ab45e63a749b896d",
+  "tag_commit": "66d14e33fcbe3e61a06db84e300f3e0e9fc4ebdd",
+  "command": "python3 -E -s -m transfer.cli build --ref v0.4.0 --tag v0.4.0 (tool read from the tag's worktree); C: HOME=/home/runner USER=runner LOGNAME=runner, ROOTMARK_LEAK_TERMS = local term list contents",
+  "runs": {
+    "local": {
+      "ok": true,
+      "tree": "afdcc4589d18627f2dc8cd4085c802fc5c5ba8ec",
+      "product_files": 1254,
+      "counts": {
+        "lab_files": 16908,
+        "goes": 599,
+        "stays": 15669,
+        "transforms": {
+          "K": 605,
+          "M": 16,
+          "Y": 19
+        },
+        "overlays_with_source": 19,
+        "overlays_product_only": 14,
+        "unclassified": 0,
+        "double_classified": 0,
+        "product_path_collisions": 0,
+        "dead_patterns": 0,
+        "overlay_sources_not_checked": []
+      },
+      "leaks": {
+        "lab_prefix": 0,
+        "rootmark_dir": 0,
+        "server_token": 0,
+        "key_pattern": 0,
+        "turkish_process": 0,
+        "secret_content": 0,
+        "host_user": 0,
+        "home_path_unjustified": 0,
+        "email_unjustified": 0,
+        "private_term": 0,
+        "broken_link": 0
+      },
+      "private_terms_searched": 3,
+      "lab_commit": "66d14e33fcbe3e61a06db84e300f3e0e9fc4ebdd"
+    },
+    "local_repeat": {
+      "ok": true,
+      "tree": "afdcc4589d18627f2dc8cd4085c802fc5c5ba8ec",
+      "product_files": 1254,
+      "counts": {
+        "lab_files": 16908,
+        "goes": 599,
+        "stays": 15669,
+        "transforms": {
+          "K": 605,
+          "M": 16,
+          "Y": 19
+        },
+        "overlays_with_source": 19,
+        "overlays_product_only": 14,
+        "unclassified": 0,
+        "double_classified": 0,
+        "product_path_collisions": 0,
+        "dead_patterns": 0,
+        "overlay_sources_not_checked": []
+      },
+      "leaks": {
+        "lab_prefix": 0,
+        "rootmark_dir": 0,
+        "server_token": 0,
+        "key_pattern": 0,
+        "turkish_process": 0,
+        "secret_content": 0,
+        "host_user": 0,
+        "home_path_unjustified": 0,
+        "email_unjustified": 0,
+        "private_term": 0,
+        "broken_link": 0
+      },
+      "private_terms_searched": 3,
+      "lab_commit": "66d14e33fcbe3e61a06db84e300f3e0e9fc4ebdd"
+    },
+    "ci_simulation": {
+      "ok": true,
+      "tree": "afdcc4589d18627f2dc8cd4085c802fc5c5ba8ec",
+      "product_files": 1254,
+      "counts": {
+        "lab_files": 16908,
+        "goes": 599,
+        "stays": 15669,
+        "transforms": {
+          "K": 605,
+          "M": 16,
+          "Y": 19
+        },
+        "overlays_with_source": 19,
+        "overlays_product_only": 14,
+        "unclassified": 0,
+        "double_classified": 0,
+        "product_path_collisions": 0,
+        "dead_patterns": 0,
+        "overlay_sources_not_checked": []
+      },
+      "leaks": {
+        "lab_prefix": 0,
+        "rootmark_dir": 0,
+        "server_token": 0,
+        "key_pattern": 0,
+        "turkish_process": 0,
+        "secret_content": 0,
+        "host_user": 0,
+        "home_path_unjustified": 0,
+        "email_unjustified": 0,
+        "private_term": 0,
+        "broken_link": 0
+      },
+      "private_terms_searched": 3,
+      "lab_commit": "66d14e33fcbe3e61a06db84e300f3e0e9fc4ebdd"
+    }
+  },
+  "same_tree": true,
+  "actionlint": {
+    "version": "1.7.12",
+    "image": "rhysd/actionlint@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686341fec936f3b79331f9315667",
+    "non_shellcheck_errors": 0,
+    "shellcheck_notes": 6,
+    "SC2251": 0
+  },
+  "release_yml_step_name_quoted": true
+}
