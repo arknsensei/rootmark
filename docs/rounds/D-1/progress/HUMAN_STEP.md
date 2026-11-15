@@ -74,7 +74,7 @@ Bunlardan sonra ajan R6'nın "yayımlanmış kanallardan sınama"sını (temiz L
 | 3′j | `main`'i bu commit'ten açın ve varsayılan yapın: `gh api -X POST repos/rootmark-ai/rootmark/git/refs -f ref=refs/heads/main -f sha=<transfer/v0.4.0'ın commit'i>` sonra `gh api -X PATCH repos/rootmark-ai/rootmark -f default_branch=main` | önce: `<commit>` 3′i'de ajanın okuduğu sha; sonra: `gh api repos/rootmark-ai/rootmark --jq .default_branch` → `main` |
 | 3′k | ⚠ Geçici dalı silin: `gh api -X DELETE repos/rootmark-ai/rootmark/git/refs/heads/hold` | önce: varsayılan `main` (3′j); sonra: dallar `["main","transfer/v0.4.0"]`, ikisi aynı commit'te |
 
-**Durum (adım 3′):** 3′a ✔ — #75 rebase ile birleşti, laboratuvar `main` = 66d14e33fcbe3e61a06db84e300f3e0e9fc4ebdd (ağaç 2fd26126 = PR başı 01635a8'in ağacı). 3′b sürüyor — `main` ci 43694986713, `release.yml` 43694996155. 3′c bekliyor (yeni `main` 66d14e3).
+**Durum (adım 3′):** 3′a ✔ — #75 rebase ile birleşti, laboratuvar `main` = 66d14e33fcbe3e61a06db84e300f3e0e9fc4ebdd (ağaç 2fd26126 = PR başı 01635a8'in ağacı). 3′b sürüyor — `main` ci 43694986713, `release.yml` 43694996155. 3′b ✔ (ikisi yeşil). 3′c ✔ — `v0.4.0` → 66d14e3 (etiket nesnesi 2c0ad4bd). 3′d ✔ — iki koşu + CI benzetimi aynı ağaç **afdcc4589d18627f2dc8cd4085c802fc5c5ba8ec**, `ok: true`, 1254 dosya, sınıflandırma 0/0/0/0, sızıntı 0 (özel terim 3); actionlint YAML/şema hatası 0, shellcheck 6 not, SC2251 0 (`reports/rounds/D-1/r6/transfer_local_v0.4.0_retag2.json`). Sıradaki: 3′e.
 
 Ardından adım 3'ün 3c'sinden devam (`main` push'unun `ci` + `transfer-verify`'ı yeşil, sonra dal koruması), 3d–3h aynen. Eski kök commit dd0465d hiçbir dalda kalmaz; koşu kayıtlarında görünür (FINAL'de anılır).
 
