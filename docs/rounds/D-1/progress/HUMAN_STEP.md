@@ -59,6 +59,9 @@ Ardından adım 3 (3a: `tag = v0.4.0`, `bootstrap = true`).
 | 3i | Ürün deposunda güvenlik taraması (D1-11; laboratuvarla aynı: Dependabot uyarıları, CodeQL varsayılan kurulum; **güvenlik güncellemeleri ürün deposunda kapalı kalır**: ürün `main`'i yalnız aktarımla dolar, Dependabot PR'ı iki depoyu ayrıştırırdı — düzeltme laboratuvarda yapılır ve aktarılır). `rootmark-ai` hesabıyla: `gh api -X PUT repos/rootmark-ai/rootmark/vulnerability-alerts`; `gh api -X PATCH repos/rootmark-ai/rootmark/code-scanning/default-setup -f state=configured -f query_suite=default` (ya da Settings → Code security → Dependabot alerts Enable, CodeQL analysis → Default). | Dependabot uyarıları açık; CodeQL'in ilk analizi `main`'de bitmiş | `gh api repos/rootmark-ai/rootmark/vulnerability-alerts -i` → 204; `gh api repos/rootmark-ai/rootmark/code-scanning/default-setup --jq .state` → `configured`; `…/code-scanning/analyses` boş değil; açık uyarılar `…/dependabot/alerts?state=open`, `…/code-scanning/alerts?state=open` → 0 ya da her biri gerekçeli (`progress/R6_security.md`) |
 | 3j | Ürün deposunun üç CodeQL uyarısını (#1–#3, `js/bad-code-sanitization`, `clients/obsidian/e2e/real/run.ts`) laboratuvardaki eşleriyle aynı gerekçeyle kapatın (P2-Q.1/R3, Q1-7; laboratuvar #2–#4): `gh api -X PATCH repos/rootmark-ai/rootmark/code-scanning/alerts/<n> -f state=dismissed -f dismissed_reason="used in tests" -f dismissed_comment="…"` (n = 1, 2, 3) | açık CodeQL uyarısı 0, üçü `dismissed` gerekçeli | `gh api 'repos/rootmark-ai/rootmark/code-scanning/alerts?state=open' --jq length` → 0 |
 
+**Durum 3j:** ✔ — #1–#3 `dismissed` ("used in tests"); açık CodeQL 0, Dependabot 0, gizli değer 0 (ajanın okuması 2026-11-15).
+
+
 Bunlardan sonra ajan R6'nın "yayımlanmış kanallardan sınama"sını (temiz Linux konteyneri ve bu Mac) koşar.
 
 ### Adım 3f′ — tap (D1F-19; 3g'den bağımsız, 3h'den önce)
