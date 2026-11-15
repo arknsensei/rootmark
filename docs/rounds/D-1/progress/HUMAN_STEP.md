@@ -74,6 +74,8 @@ Bunlardan sonra ajan R6'nın "yayımlanmış kanallardan sınama"sını (temiz L
 | 3′j | `main`'i bu commit'ten açın ve varsayılan yapın: `gh api -X POST repos/rootmark-ai/rootmark/git/refs -f ref=refs/heads/main -f sha=<transfer/v0.4.0'ın commit'i>` sonra `gh api -X PATCH repos/rootmark-ai/rootmark -f default_branch=main` | önce: `<commit>` 3′i'de ajanın okuduğu sha; sonra: `gh api repos/rootmark-ai/rootmark --jq .default_branch` → `main` |
 | 3′k | ⚠ Geçici dalı silin: `gh api -X DELETE repos/rootmark-ai/rootmark/git/refs/heads/hold` | önce: varsayılan `main` (3′j); sonra: dallar `["main","transfer/v0.4.0"]`, ikisi aynı commit'te |
 
+**Durum (adım 3′):** 3′a ✔ — #75 rebase ile birleşti, laboratuvar `main` = 66d14e33fcbe3e61a06db84e300f3e0e9fc4ebdd (ağaç 2fd26126 = PR başı 01635a8'in ağacı). 3′b sürüyor — `main` ci 43694986713, `release.yml` 43694996155. 3′c bekliyor (yeni `main` 66d14e3).
+
 Ardından adım 3'ün 3c'sinden devam (`main` push'unun `ci` + `transfer-verify`'ı yeşil, sonra dal koruması), 3d–3h aynen. Eski kök commit dd0465d hiçbir dalda kalmaz; koşu kayıtlarında görünür (FINAL'de anılır).
 
 ## Adım 5 — Turun dalı `main`'in gerisinde (R7, turun PR'ından önce)
