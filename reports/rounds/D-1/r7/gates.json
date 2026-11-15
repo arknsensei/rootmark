@@ -1,0 +1,12 @@
+{
+ "what": "D-1/R7 gates on the round tree rebased onto origin/main (66d14e3), local macOS, 2026-11-15",
+ "commit": "042816da45fe4626a779756ad60a2946c4996011 (local rebase of d-1/round d7b7f363 onto 66d14e3; later round commits change only docs/, reports/ — checked at the final rebase)",
+ "make_test": {"exit": 0, "s": 1328, "pytest": "339 passed, 9 skipped", "vitest": "164 + 12 passed"},
+ "make_lint": {"exit": 0, "s": 92},
+ "make_conformance": {"exit": 0, "result": "level 3, 39/39"},
+ "make_verify_fast": {"exit": 0, "s": 1230, "result": "fast pair equal (18550 fields)", "run": "20261115T161924Z-042816d"},
+ "check_frozen": {"exit": 0, "result": "OK"},
+ "check_deps": {"exit": 0, "result": "OK (core <- index <- server <- clients; research -> bindings/python)"},
+ "check_dep_age": {"exit": 0, "result": "514 dependencies, minimum age 14 days"},
+ "pass": true
+}
