@@ -101,7 +101,7 @@ Ajan R7'de kayıtlarını bitirince yeniden tabanlamayı yerelde yapar ve **yeni
 
 | # | Adım | Beklenen sonuç | Ajanın sınaması |
 |---|---|---|---|
-| 5a (önerilen) | `git fetch origin && git push --force-with-lease=d-1/round:<ajanın yazdığı eski sha> origin origin/d-1/round-final:refs/heads/d-1/round`; sonra ajan `gh pr create … --head d-1/round` komutunu GOAL'deki gibi koşar | `d-1/round` = `d-1/round-final`, `main`'in üstünde | `git merge-base --is-ancestor origin/main origin/d-1/round` |
+| 5a (önerilen; **seçildi**, K-D1.5) | `git fetch origin && git push --force-with-lease=d-1/round:<ajanın yazdığı eski sha> origin origin/d-1/round-final:refs/heads/d-1/round`; sonra ajan `gh pr create … --head d-1/round` komutunu GOAL'deki gibi koşar | `d-1/round` = `d-1/round-final`, `main`'in üstünde | `git merge-base --is-ancestor origin/main origin/d-1/round` |
 | 5b | Zorla itme istenmezse ajan PR'ı `--head d-1/round-final` ile açar (GOAL'deki `--head`'den sapma; ASSUMPTIONS'a yazılır) | PR `main`'e tek PR | `gh pr list -R arknsensei/rootmark --head d-1/round-final` |
 
 ## Adım 4 — İsteğe bağlı (ürün yayımlandıktan sonra; çıkış kriteri değil)
