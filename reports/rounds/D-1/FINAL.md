@@ -6,8 +6,8 @@
 - Öteki kriterler:
   - D1-1…D1-6 geçti.
   - D1-7, D1-8 ve D1-9 notla geçti (aşağıda).
-  - D1-11, ürün deposundaki üç CodeQL uyarısının gerekçeli kapatılmasını (HUMAN_STEP 3j) bekliyor.
-  - D1-12, turun PR'ının CI'ını bekliyor (`READY.md`).
+  - D1-11 geçti: ürün deposundaki üç CodeQL uyarısı HUMAN_STEP 3j ile gerekçeli kapatıldı.
+  - D1-12 geçti: R7 kapıları temiz, gözden geçirici kabul, turun PR'ının CI'ı yeşil.
 - Ürün davranışı değişmedi: çalışma zamanı dizinlerinde yalnız dört sürüm satırı değişti; `tools/list` 0.3.4 ile bayt eşit.
 
 ## Adresler
@@ -70,8 +70,8 @@ Yeniden tabanlamadan (K-D1.5) önceki sha'lar ile `main`'deki karşılıkları:
 | D1-8 | geçti (notla) | `install.sh`: macOS arm64 ve temiz `ubuntu:24.04`. `brew install` + `brew test`: macOS ve Linuxbrew. BRAT varlıkları sürümde, zip `SHA256SUMS`'ta. Her yolda 0.4.0 ve 39/39. README blokları yazıldığı gibi 4/4. **Not:** Linux x86_64 yolları Docker Desktop'ın amd64 emülasyonunda koştu, yerli x86_64 host değil. |
 | D1-9 | geçti (notla) | `docs.rootmark.ai`: zorunlu 9 sayfa 200, erişilen 12 sayfa 200, kırık iç bağlantı ve çapa 0. 16 laboratuvar atfı `v0.4.0`'da var (`r6/site_check.json`). İddia tablosu `progress/R3_claims.md`. **Not (D1F-22):** README'nin "Scale" satırı atıfsız. Bu satırı kapsam tanımı (NORTH_STAR §8'in tasarım sınırı) olarak sınıfladım, ölçüm iddiası olarak değil. "On every machine" ölçülen üç platformdan geniş. İkisi sonraki sürümün kaplamasında düzelir; yayımlanmış README değişmez. |
 | D1-10 | **lafzen kaldı** | K-D1.2: `release_check` 21/21 + ayrı R21 kapısı ok (`r6/release_gate_claude.json`; kasıtlı bozma `release_gate_claude_tamper.json`). Kayıt yayımdan ≤ 7 gün önce. F1 ve F2 `FREEZE_EXCEPTIONS.md`'de. |
-| D1-11 | bekliyor (3j) | **Laboratuvar:** Dependabot açık 0, CodeQL açık 0.<br>**Ürün:** Dependabot uyarıları açık, açık 0; gizli değer 0; CodeQL 3 açık. Üçü `js/bad-code-sanitization`, `clients/obsidian/e2e/real/run.ts`; laboratuvarda aynı üçü "used in tests" ile gerekçeli kapatılmış. Kapatma insanın (HUMAN_STEP 3j). Güvenlik güncellemeleri ürün deposunda bilerek kapalı (D1F-20).<br>**Sızıntı:** gizli değişkenlerin yalnız adları kayıtta; tur farkının 109 dosyasında belirteç, kişisel e-posta, gerçek ev yolu ve kişi adı 0 (gözden geçirici §5). |
-| D1-12 | bekliyor (PR CI) | R7 kapıları yeniden tabanlanmış ağaçta temiz (`r7/gates.json`): `make test`, `make lint`, `make conformance` 39/39, `make verify FAST=1` (eşit, 18 550 alan), `check_frozen`, `check_deps`, `check_dep_age` (514, ≥ 14 gün). Gözden geçirici: KABUL (notlarla), `progress/R7.review.md`. PR'ın son commit'inin CI'ı `READY.md`'de. **Risk:** D1F-11 (PQ4-6, ubuntu `serve_watch` SIGTERM) PR CI'ında yeniden görülebilir. Görülürse test değiştirilmez; yeniden koşu insan kararıdır (K-P2Q4.4). |
+| D1-11 | geçti | **Laboratuvar:** Dependabot açık 0, CodeQL açık 0.<br>**Ürün:** Dependabot uyarıları açık, açık 0; gizli değer 0; CodeQL ilk analizi (43731780721) 3 uyarı verdi: `js/bad-code-sanitization`, `clients/obsidian/e2e/real/run.ts`. Üçü 3j ile laboratuvardaki eşleri gibi "used in tests" gerekçesiyle kapatıldı; açık 0 (`progress/R6_security.md`). Güvenlik güncellemeleri ürün deposunda bilerek kapalı (D1-11'in ölçütü değil; D1F-20).<br>**Sızıntı:** gizli değişkenlerin yalnız adları kayıtta; tur farkının 109 dosyasında belirteç, kişisel e-posta, gerçek ev yolu ve kişi adı 0 (gözden geçirici §5). |
+| D1-12 | geçti | R7 kapıları yeniden tabanlanmış ağaçta temiz (`r7/gates.json`): `make test`, `make lint`, `make conformance` 39/39, `make verify FAST=1` (eşit, 18 550 alan), `check_frozen`, `check_deps`, `check_dep_age` (514, ≥ 14 gün). Gözden geçirici: KABUL (notlarla), `progress/R7.review.md`; notlar uygulandı. Turun PR'ı #76, başı `08afb15c`: `ci` 43738121952 `success` (iki platform test + lint + conformance, `deps`, tier 1 hızlı çift ve embed), CodeQL 43738119861 `success`. D1F-11 (PQ4-6) bu koşuda görülmedi. READY'den sonraki commit'lerin CI'ı `READY.md`'deki gibi okunur. |
 
 **"Koştu" ile "geçti" ayrımı:** yukarıdaki her "geçti" bu turda koşulmuş bir sınamanın kaydına dayanır. Koşmuş ama kalmış olanlar:
 - PR #73'ün ilk CI'ı (D1F-11, D1F-12).
@@ -82,11 +82,9 @@ Yeniden tabanlamadan (K-D1.5) önceki sha'lar ile `main`'deki karşılıkları:
 Hepsinin düzeltmesi ve yeniden koşusu kayıtta.
 
 ## Karar talebi
-D1-10 lafzen kaldı; karar kuralı bu durumda "tur kaldı; karar talebi" der. İnsandan istenen iki şey var:
-1. D1-10'un kapanışı. Önerim: R21'i kalıcı olarak ayrı kapı tutmak ve kriterin metnini "tablo 21/21 + R21 kapısı" diye değiştirmek. Bu, K-D1.2'nin ilkesidir.
-2. D1-11 ve D1-12'nin bekleyen kanıtları:
-   - 3j'nin sonucu.
-   - Turun PR'ının CI'ı.
+D1-10 lafzen kaldı; karar kuralı bu durumda "tur kaldı; karar talebi" der. İnsandan istenen: D1-10'un kapanışı. Önerim: R21'i kalıcı olarak ayrı kapı tutmak ve kriterin metnini "tablo 21/21 + R21 kapısı" diye değiştirmek. Bu, K-D1.2'nin ilkesidir.
+
+D1-12'nin kanıtı (turun PR'ının CI'ı) yukarıda ve `READY.md`'de.
 
 ## Bulgular
 Bulgular `FINDINGS.md`'de (D1F-1…D1F-23); devredilenlerin kapanışı da aynı dosyada. Sonraki tura önerilenler:
